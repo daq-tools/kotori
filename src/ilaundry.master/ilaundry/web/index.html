@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<!--
+ (c) 2014 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+ derived from https://github.com/tavendo/AutobahnPython/blob/master/examples/twisted/wamp/pubsub/simple/example2/index.html
+-->
+<head>
+
+    <style type="text/css">
+        .block {
+            background-color: #ccc;
+            padding: 1em;
+            margin: 1em;
+        }
+    </style>
+
+    <!-- include AutobahnJS .. that's all you need -->
+    <script src="autobahn.min.js"></script>
+    <script src="ilaundry.js"></script>
+
+    <title>iLaundry Dashboard</title>
+</head>
+<body>
+<h1>iLaundry Dashboard</h1>
+
+<div class="block">
+    <p>
+        Send a text-to-speech message.
+    </p>
+
+    <form name="say">
+        <p>Node: <input id="node_id" name="node_id" type="text" value="washer-1" size="50" maxlength="50"></p>
+        <p>Message: <input id="message" name="message" type="text" value="Herzlich Willkommen!" size="50" maxlength="50"></p>
+    </form>
+    <button onclick="sayText(document.getElementById('node_id').value, document.getElementById('message').value)">Publish Event</button>
+</div>
+
+
+</body>
+</html>
