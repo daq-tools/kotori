@@ -16,25 +16,31 @@ window.onload = function() {
         wsuri = "ws://" + window.location.hostname + ":9000";
     }
 
+    //ab.debug(true, true, true);
+
     // connect to WAMP server
     ab.connect(wsuri,
 
         // WAMP session was established
-        function (session) {
+        function(session) {
 
             sess = session;
             console.log("Connected!");
 
+            sess.prefix("registry", "http://ilaundry.useeds.de/registry#");
             sess.prefix("broadcast", "http://ilaundry.useeds.de/broadcast#");
-            //sess.prefix("node", "http://ilaundry.useeds.de/node/");
+            sess.prefix("dashboard", "http://ilaundry.useeds.de/dashboard#");
+
             sess.subscribe("broadcast:node-heartbeat", node_heartbeat);
-            sess.prefix("washer-1", "http://ilaundry.useeds.de/node/washer-1#");
-            sess.subscribe("washer-1:say", dump_event);
+            sess.subscribe("dashboard:update", dashboard_update);
+
+            // trigger dashboard update
+            sess.publish("dashboard:update", null, false);
+
         },
 
         // WAMP session is gone
-        function (code, reason) {
-
+        function(code, reason) {
             sess = null;
             //alert(reason);
         }
@@ -48,6 +54,20 @@ function dump_event(topic, event) {
 function node_heartbeat(topic, node_id) {
     console.log({'topic': topic, 'node_id': node_id});
 }
+
+function dashboard_update(topic, event) {
+    sess.call("registry:get_nodelist").then(function(nodelist) {
+        ab.log('nodelist: ' + nodelist);
+        var node_select = document.getElementById("node_id");
+        node_select.options.length = 0;
+        for (index in nodelist) {
+            var node_id = nodelist[index];
+            node_select.options[node_select.options.length] = new Option(node_id, node_id);
+        }
+    });
+}
+
+
 
 function sayText(node_id, message) {
     /*

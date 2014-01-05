@@ -29,7 +29,11 @@
     </p>
 
     <form name="say">
-        <p>Node: <input id="node_id" name="node_id" type="text" value="washer-1" size="50" maxlength="50"></p>
+        <!-- <p>Node: <input id="node_id" name="node_id" type="text" value="washer-1" size="50" maxlength="50"></p> -->
+        <p>Node:
+            <select id="node_id" name="node_id">
+            </select>
+        </p>
         <p>Message: <input id="message" name="message" type="text" value="Herzlich Willkommen!" size="50" maxlength="50"></p>
     </form>
     <button onclick="sayText(document.getElementById('node_id').value, document.getElementById('message').value)">Publish Event</button>

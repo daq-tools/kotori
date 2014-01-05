@@ -6,6 +6,10 @@ develop
 -------
 
 
+2014-01-05 0.0.2
+----------------
+- Multiple nodes for real [NodeRegistry]
+
 2014-01-05 0.0.1
 ----------------
 proof-of-concept

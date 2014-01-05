@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 # (c) 2014 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 # derived from https://github.com/tavendo/AutobahnPython/blob/master/examples/twisted/wamp/pubsub/simple/example2/client.py
+import os
 import sys
+import shelve
+from appdirs import user_data_dir
+from uuid import uuid4
 from twisted.python import log
 from twisted.internet import reactor
 from autobahn.twisted.websocket import connectWS
@@ -9,8 +13,33 @@ from autobahn.wamp import WampClientFactory, WampClientProtocol
 
 from util import tts_say
 
-NODE_ID = '0xabcdef'
+NODE_ID = 'NODE_UNKNOWN'
 node_manager = None
+
+class ConfigStore(dict):
+
+    def __init__(self):
+        self.app_data_dir = user_data_dir('iLaundry', 'useeds')
+        if not os.path.exists(self.app_data_dir):
+            os.makedirs(self.app_data_dir)
+        self.config_file = os.path.join(self.app_data_dir, 'config')
+        self.store = shelve.open(self.config_file, writeback=True)
+
+    def has_key(self, key):
+        return self.store.has_key(key)
+
+    def __getitem__(self, key):
+        return self.store[key]
+
+    def __setitem__(self, key, value):
+        self.store[key] = value
+        self.store.sync()
+
+config = ConfigStore()
+if not config.has_key('uuid'):
+    config['uuid'] = str(uuid4())
+NODE_ID = config['uuid']
+
 
 class NodeProtocol(WampClientProtocol):
     """
@@ -28,14 +57,21 @@ class NodeProtocol(WampClientProtocol):
         return tts_say(message, language=language)
 
     def onSessionOpen(self):
-        print "Node service ready"
+
         self.prefix("broadcast", "http://ilaundry.useeds.de/broadcast#")
-        self.prefix("node", "http://ilaundry.useeds.de/node/washer-1#")
+        self.prefix("presence", "http://ilaundry.useeds.de/presence#")
+        self.prefix("node", "http://ilaundry.useeds.de/node/{}#".format(NODE_ID))
+
         self.subscribe("broadcast:node-heartbeat", self.dump_event)
+
+        self.subscribe("presence:{0}".format(NODE_ID), lambda: x)
+
         self.subscribe("node:say", self.dump_event)
         self.subscribe("node:say", self.say)
 
-        self.heartbeat()
+        print "Node service ready"
+
+        #self.heartbeat()
 
     def connectionLost(self, reason):
         print "Node service defunct, reason:", reason
@@ -55,7 +91,7 @@ class NodeClientFactory(WampClientFactory):
     def stopFactory(self):
         WampClientFactory.stopFactory(self)
         # FIXME: make this configurable as "reconnect interval"
-        reactor.callLater(5, node_manager.connect)
+        reactor.callLater(2, node_manager.connect)
 
 
 class NodeManager(object):
@@ -77,7 +113,7 @@ def run():
         debug = False
 
     # startup greeting
-    tts_say('Herzlich Willkommen')
+    #tts_say('Herzlich Willkommen')
 
     # connect to master service
     global node_manager

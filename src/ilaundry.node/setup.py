@@ -3,6 +3,7 @@ from setuptools import setup, find_packages
 requires = [
     'twisted==13.2.0',
     'autobahn==0.7.0',
+    'appdirs==1.2.0',
 ]
 
 setup(name='ilaundry.node',
