@@ -1,3 +1,11 @@
+Get code
+--------
+::
+
+    git clone git@git.elmyra.de:elbasi/useeds-ilaundry.git
+    cd useeds-ilaundry
+
+
 Setup development sandbox
 -------------------------
 ::
