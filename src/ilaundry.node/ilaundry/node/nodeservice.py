@@ -39,6 +39,7 @@ config = ConfigStore()
 if not config.has_key('uuid'):
     config['uuid'] = str(uuid4())
 NODE_ID = config['uuid']
+print "NODE ID:", NODE_ID
 
 
 class NodeProtocol(WampClientProtocol):
