@@ -85,6 +85,7 @@ class NodeProtocol(WampClientProtocol):
 class NodeClientFactory(WampClientFactory):
 
     protocol = NodeProtocol
+    noisy = False
 
     def __init__(self, url, **kwargs):
         return WampClientFactory.__init__(self, url, **kwargs)
