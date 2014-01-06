@@ -14,6 +14,8 @@ from autobahn.wamp import WampClientFactory, WampClientProtocol
 from util import tts_say
 
 NODE_ID = 'NODE_UNKNOWN'
+#WEBSOCKET_URI = 'ws://localhost:9000'
+WEBSOCKET_URI = 'ws://master.ilaundry.useeds.elmyra.de:9000'
 node_manager = None
 
 class ConfigStore(dict):
@@ -98,11 +100,12 @@ class NodeClientFactory(WampClientFactory):
 
 class NodeManager(object):
 
-    def __init__(self, debug=False):
+    def __init__(self, websocket_uri, debug=False):
+        self.websocket_uri = websocket_uri
         self.debug = debug
 
     def connect(self):
-        factory = NodeClientFactory("ws://localhost:9000", debug=False, debugCodePaths=False, debugWamp=self.debug, debugApp=False)
+        factory = NodeClientFactory(self.websocket_uri, debug=False, debugCodePaths=False, debugWamp=self.debug, debugApp=False)
         connectWS(factory)
 
 
@@ -119,7 +122,7 @@ def run():
 
     # connect to master service
     global node_manager
-    node_manager = NodeManager(debug=debug)
+    node_manager = NodeManager(WEBSOCKET_URI, debug=debug)
     reactor.callLater(0, node_manager.connect)
     reactor.run()
 
