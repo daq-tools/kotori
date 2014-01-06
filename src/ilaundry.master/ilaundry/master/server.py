@@ -2,7 +2,6 @@
 # (c) 2014 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 # derived from https://github.com/tavendo/AutobahnPython/blob/master/examples/twisted/wamp/pubsub/simple/example2/server.py
 import sys
-from ilaundry.node.nodeservice import NodeClientFactory
 from pkg_resources import resource_filename
 
 from twisted.python import log
