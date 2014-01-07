@@ -32,6 +32,8 @@ window.onload = function() {
             sess.prefix("dashboard", "http://ilaundry.useeds.de/dashboard#");
 
             sess.subscribe("broadcast:node-heartbeat", node_heartbeat);
+            sess.subscribe("broadcast:node-motion-on", dump_event);
+            sess.subscribe("broadcast:node-motion-off", dump_event);
             sess.subscribe("dashboard:update", dashboard_update);
 
             // trigger dashboard update
