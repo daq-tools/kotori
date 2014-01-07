@@ -63,7 +63,7 @@ class NodeProtocol(WampClientProtocol):
 
         self.prefix("broadcast", "http://ilaundry.useeds.de/broadcast#")
         self.prefix("presence", "http://ilaundry.useeds.de/presence#")
-        self.prefix("node", "http://ilaundry.useeds.de/node/{}#".format(NODE_ID))
+        self.prefix("node", "http://ilaundry.useeds.de/node/{0}#".format(NODE_ID))
 
         self.subscribe("broadcast:node-heartbeat", self.dump_event)
 
