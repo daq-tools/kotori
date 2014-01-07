@@ -11,6 +11,7 @@ from twisted.internet import reactor
 from autobahn.twisted.websocket import connectWS
 from autobahn.wamp import WampClientFactory, WampClientProtocol
 
+from feature import PirMotionDetector
 from util import tts_say
 
 NODE_ID = 'NODE_UNKNOWN'
@@ -54,7 +55,7 @@ class NodeProtocol(WampClientProtocol):
     def heartbeat(self):
         self.publish("broadcast:node-heartbeat", NODE_ID)
         # FIXME: make this configurable as "heartbeat interval"
-        reactor.callLater(15, self.heartbeat)
+        #reactor.callLater(15, self.heartbeat)
 
     def say(self, topic, message, language='de'):
         return tts_say(message, language=language)
@@ -76,6 +77,9 @@ class NodeProtocol(WampClientProtocol):
 
         #self.heartbeat()
 
+        reactor.callLater(0, node_manager.hardware_monitor, self)
+
+
     def connectionLost(self, reason):
         print "Node service defunct, reason:", reason
         #reactor.callLater(2, node_manager.connect)
@@ -95,7 +99,7 @@ class NodeClientFactory(WampClientFactory):
     def stopFactory(self):
         WampClientFactory.stopFactory(self)
         # FIXME: make this configurable as "reconnect interval"
-        reactor.callLater(2, node_manager.connect)
+        reactor.callLater(2, node_manager.master_connect)
 
 
 class NodeManager(object):
@@ -104,9 +108,20 @@ class NodeManager(object):
         self.websocket_uri = websocket_uri
         self.debug = debug
 
-    def connect(self):
+    def master_connect(self):
         factory = NodeClientFactory(self.websocket_uri, debug=False, debugCodePaths=False, debugWamp=self.debug, debugApp=False)
         connectWS(factory)
+
+    def hardware_monitor(self, protocol):
+        #print protocol
+
+        def publish_activity(state):
+            #print "publish_motion:", state
+            if state:
+                protocol.publish('broadcast:node-activity', {'node_id': NODE_ID, 'state': state})
+
+        PirMotionDetector(pir_port='P8_19', signal_port='P8_13', holdtime=10, callback=publish_activity)
+
 
 
 def run():
@@ -123,7 +138,7 @@ def run():
     # connect to master service
     global node_manager
     node_manager = NodeManager(WEBSOCKET_URI, debug=debug)
-    reactor.callLater(0, node_manager.connect)
+    reactor.callLater(0, node_manager.master_connect)
     reactor.run()
 
 if __name__ == '__main__':
