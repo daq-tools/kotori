@@ -2,3 +2,4 @@
 /.venv27
 *.egg-info
 *.pyc
+*.pyo
