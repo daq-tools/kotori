@@ -34,6 +34,7 @@ window.onload = function() {
             sess.subscribe("broadcast:node-heartbeat", node_heartbeat);
             sess.subscribe("broadcast:node-activity", dump_event);
             sess.subscribe("broadcast:node-activity", node_activity);
+            sess.subscribe("broadcast:node-privacy", dump_event);
             sess.subscribe("dashboard:update", dashboard_update);
 
             // trigger dashboard update
