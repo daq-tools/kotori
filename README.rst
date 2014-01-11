@@ -1,3 +1,7 @@
+===============
+iLaundry README
+===============
+
 Get code
 --------
 ::
@@ -6,16 +10,36 @@ Get code
     cd useeds-ilaundry
 
 
-Setup development sandbox
--------------------------
+Setup prerequisites
+-------------------
 ::
 
-    virtualenv-2.7 --no-site-packages .venv27
+    apt-get install python-twisted      # or "pip install Twisted"
+    apt-get install python-virtualenv python-dev
+
+
+Setup node sandbox
+------------------
+::
+
+    apt-get install mplayer
+
+    virtualenv-2.7 --system-site-packages .venv27
     source .venv27/bin/activate
+    pip install distribute==0.6.45
+    pip install Adafruit_BBIO
 
     cd src/ilaundry.node
     python setup.py develop
     cd -
+
+
+Setup master sandbox
+--------------------
+::
+
+    virtualenv-2.7 --no-site-packages .venv27
+    source .venv27/bin/activate
 
     cd src/ilaundry.master
     python setup.py develop
