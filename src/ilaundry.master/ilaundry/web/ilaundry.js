@@ -32,9 +32,9 @@ window.onload = function() {
             sess.prefix("dashboard", "http://ilaundry.useeds.de/dashboard#");
 
             sess.subscribe("broadcast:node-heartbeat", node_heartbeat);
-            sess.subscribe("broadcast:node-activity", dump_event);
-            sess.subscribe("broadcast:node-activity", node_activity);
-            sess.subscribe("broadcast:node-privacy", dump_event);
+            //sess.subscribe("broadcast:node-activity", dump_event);
+            sess.subscribe("broadcast:node-activity", node_state);
+            sess.subscribe("broadcast:node-privacy", node_state);
             sess.subscribe("dashboard:update", dashboard_update);
 
             // trigger dashboard update
@@ -58,7 +58,7 @@ function node_heartbeat(topic, node_id) {
     console.log({'topic': topic, 'node_id': node_id});
 }
 
-function node_activity(topic, event) {
+function node_state(topic, event) {
     var node_id = event.node_id;
     var state = event.state;
     console.log({'topic': topic, 'node_id': node_id, 'state': state});
