@@ -30,7 +30,9 @@ setup(name='ilaundry.node',
       ],
       entry_points={
           'console_scripts': [
+              'ilaundry-master = ilaundry.master.server:run',
               'ilaundry-node = ilaundry.node.nodeservice:run',
-          ],
+              'ilaundry = ilaundry:run',
+              ],
       },
 )

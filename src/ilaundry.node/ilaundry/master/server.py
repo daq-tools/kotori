@@ -3,13 +3,11 @@
 # derived from https://github.com/tavendo/AutobahnPython/blob/master/examples/twisted/wamp/pubsub/simple/example2/server.py
 import sys
 from pkg_resources import resource_filename
-
 from twisted.python import log
 from twisted.internet import reactor
 from twisted.web.server import Site
 from twisted.web.static import File
-
-from autobahn.twisted.websocket import listenWS, connectWS
+from autobahn.twisted import websocket
 from autobahn.wamp import WampServerFactory, \
                           WampServerProtocol, exportRpc, WampClientFactory, WampClientProtocol
 
@@ -82,10 +80,32 @@ class MasterServerFactory(WampServerFactory):
 
 
 class MasterClientProtocol(WampClientProtocol):
-
     def onSessionOpen(self):
         global client
         client = self
+
+class MasterClientFactory(WampClientFactory):
+    protocol = MasterClientProtocol
+
+
+def boot_master(websocket_uri, http_port, debug=False):
+
+    print 'INFO: Starting master node'
+
+    print 'INFO:   Starting WebSocket service on', websocket_uri
+    factory = MasterServerFactory(websocket_uri, debugWamp = True)
+    websocket.listenWS(factory)
+
+    client_factory = MasterClientFactory(websocket_uri, debug=False, debugCodePaths=False, debugWamp=debug, debugApp=False)
+    websocket.connectWS(client_factory)
+
+    document_root = resource_filename('ilaundry.web', '')
+
+    webdir = File(document_root)
+    web = Site(webdir)
+
+    print 'INFO:   Starting HTTP service on port', http_port
+    reactor.listenTCP(http_port, web)
 
 
 def run():
@@ -99,21 +119,7 @@ def run():
     websocket_uri = 'ws://localhost:9000'
     http_port = 35000
 
-    print 'Starting WebSocket service on', websocket_uri
-    factory = MasterServerFactory(websocket_uri, debugWamp = True)
-    listenWS(factory)
-
-    client_factory = WampClientFactory(websocket_uri, debug=False, debugCodePaths=False, debugWamp=debug, debugApp=False)
-    client_factory.protocol = MasterClientProtocol
-    connectWS(client_factory)
-
-    document_root = resource_filename('ilaundry.web', '')
-
-    webdir = File(document_root)
-    web = Site(webdir)
-
-    print 'Starting HTTP service on port', http_port
-    reactor.listenTCP(http_port, web)
+    boot_master(websocket_uri, http_port, debug)
 
     reactor.run()
 

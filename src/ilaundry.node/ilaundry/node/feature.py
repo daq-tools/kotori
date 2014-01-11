@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 # (c) 2014 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
-from twisted.internet import reactor, task
 from bricks import BinaryInputPort, BinaryOutputPort, TimedBinarySemaphore, Blinker, BinaryTopicSignal
 
 PirMotionDetector = BinaryInputPort
@@ -122,11 +121,15 @@ class FeatureSet(FeatureBase):
         self.privacy_enabled = False
 
         self.privacy_monitor = PrivacyMonitor(self.node_id, self.bus, event_filters=[self.privacy_filter])
-        self.privacy_monitor.start(holdtime=60)
         self.activity_monitor = ActivityMonitor(self.node_id, self.bus, event_filters=[self.activity_filter])
-        self.activity_monitor.start(holdtime=5)
 
-        self.show_operator_presence()
+        try:
+            self.privacy_monitor.start(holdtime=60)
+            self.activity_monitor.start(holdtime=5)
+            self.show_operator_presence()
+        except Exception as ex:
+            print "ERROR: Feature start failed:", ex
+
 
     def privacy_filter(self, state):
         self.privacy_enabled = state

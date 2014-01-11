@@ -73,7 +73,7 @@ class NodeProtocol(WampClientProtocol):
         self.subscribe("node:say", self.dump_event)
         self.subscribe("node:say", self.say)
 
-        print "Node service ready"
+        print "INFO:   Slave successfully connected to master"
 
         #self.heartbeat()
 
@@ -120,6 +120,15 @@ class NodeManager(object):
         #actor.blink(0.2)
 
 
+def boot_slave(websocket_uri, debug=False):
+
+    print 'INFO: Starting slave node, connecting to', websocket_uri
+
+    # connect to master service
+    global node_manager
+    node_manager = NodeManager(websocket_uri, debug=debug)
+    reactor.callLater(0, node_manager.master_connect)
+
 
 def run():
     log.startLogging(sys.stdout)
@@ -132,10 +141,8 @@ def run():
     # startup greeting
     #tts_say('Herzlich Willkommen')
 
-    # connect to master service
-    global node_manager
-    node_manager = NodeManager(WEBSOCKET_URI, debug=debug)
-    reactor.callLater(0, node_manager.master_connect)
+    boot_slave(WEBSOCKET_URI, debug)
+
     reactor.run()
 
 if __name__ == '__main__':

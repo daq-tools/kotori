@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 # (c) 2014 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 from twisted.internet import reactor
-import Adafruit_BBIO.GPIO as GPIO
-from util import Singleton
+try:
+    import Adafruit_BBIO.GPIO as GPIO
+except Exception as ex:
+    print "ERROR: No Adafruit_BBIO module installed:", ex
 
 class GpioInput(object):
 
