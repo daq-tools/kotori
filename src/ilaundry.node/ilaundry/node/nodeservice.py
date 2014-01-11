@@ -11,7 +11,7 @@ from twisted.internet import reactor
 from autobahn.twisted.websocket import connectWS
 from autobahn.wamp import WampClientFactory, WampClientProtocol
 
-from feature import PirMotionDetector
+from feature import FeatureSet
 from util import tts_say
 
 NODE_ID = 'NODE_UNKNOWN'
@@ -77,7 +77,7 @@ class NodeProtocol(WampClientProtocol):
 
         #self.heartbeat()
 
-        reactor.callLater(0, node_manager.hardware_monitor, self)
+        reactor.callLater(0, node_manager.start_features, self)
 
 
     def connectionLost(self, reason):
@@ -112,15 +112,12 @@ class NodeManager(object):
         factory = NodeClientFactory(self.websocket_uri, debug=False, debugCodePaths=False, debugWamp=self.debug, debugApp=False)
         connectWS(factory)
 
-    def hardware_monitor(self, protocol):
-        #print protocol
+    def start_features(self, protocol):
 
-        def publish_activity(state):
-            #print "publish_motion:", state
-            if state:
-                protocol.publish('broadcast:node-activity', {'node_id': NODE_ID, 'state': state})
+        features = FeatureSet(NODE_ID, protocol)
 
-        PirMotionDetector(pir_port='P8_19', signal_port='P8_13', holdtime=10, callback=publish_activity)
+        #actor = GpioOutput('P8_13')
+        #actor.blink(0.2)
 
 
 
