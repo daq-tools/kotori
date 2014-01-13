@@ -6,6 +6,13 @@ develop
 -------
 
 
+2014-01-13 0.0.3
+----------------
+- modularized into three components: master, node, web
+- single-daemon mode
+- first feature set on top of Adafruit_BBIO.GPIO
+
+
 2014-01-05 0.0.2
 ----------------
 - Multiple nodes for real [NodeRegistry]

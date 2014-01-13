@@ -61,3 +61,4 @@ master only::
 node only::
 
     ilaundry node --master=ws://beaglebone.local:9000 --debug
+    ilaundry node --master=ws://master.ilaundry.useeds.elmyra.de:9000 --debug
