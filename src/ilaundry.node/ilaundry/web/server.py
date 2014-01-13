@@ -31,7 +31,7 @@ def boot_web(http_port, websocket_uri, debug=False):
 
     dashboard = Resource()
     dashboard.putChild('', WebDashboardIndex(websocket_uri=websocket_uri))
-    dashboard.putChild('js', File(resource_filename('ilaundry.web', 'js')))
+    dashboard.putChild('static', File(resource_filename('ilaundry.web', 'static')))
 
     print 'INFO: Starting HTTP service on port', http_port
     factory = Site(dashboard)
