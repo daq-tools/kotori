@@ -1,3 +1,4 @@
+import sys
 from pkgutil import extend_path
 from ilaundry.master.server import boot_master
 from ilaundry.node.nodeservice import boot_node
@@ -34,9 +35,12 @@ from docopt import docopt
 
 def run():
 
+    log.startLogging(sys.stdout)
+
     arguments = docopt(__doc__, version='iLaundry node service')
     #print arguments
     debug = arguments.get('--debug', False)
+    print "debug:", debug
 
     # defaults
     websocket_uri = 'ws://localhost:9000'

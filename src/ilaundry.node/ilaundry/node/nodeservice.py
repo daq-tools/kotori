@@ -48,7 +48,7 @@ class NodeProtocol(WampClientProtocol):
 
 
     def connectionLost(self, reason):
-        print "Node service defunct, reason:", reason
+        print "ERROR: Connection lost, reason:", reason
         #reactor.callLater(2, node_manager.connect)
 
     def dump_event(self, topic, event):
