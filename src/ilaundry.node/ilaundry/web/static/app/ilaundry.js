@@ -72,6 +72,7 @@ window.onload = function() {
             console.log('[WAMP] ERROR: ' + 'code: ' + code + ', reason: ' + reason);
             sess = null;
             //alert(reason);
+            dashboard_clear();
         }
     );
 };
@@ -90,12 +91,16 @@ function node_state(topic, event) {
     console.log({'topic': topic, 'node_id': node_id, 'state': state});
 }
 
+function dashboard_clear() {
+    $("#item-container").empty();
+}
+
 function dashboard_update(topic, event) {
 
     sess.call("registry:get_nodelist").then(function(nodelist) {
         ab.log('nodelist: ' + nodelist);
 
-        $("#item-container").empty();
+        dashboard_clear();
         for (index in nodelist) {
             var node_id = nodelist[index];
             var template_data = {index: index, node_id: node_id};
