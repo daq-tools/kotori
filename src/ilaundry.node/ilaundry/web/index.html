@@ -17,12 +17,57 @@
     <link href="static/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
 
     <script language="javascript">
-        var wsuri = '%(websocket_uri)s';
+        var wsuri = '$$websocket_uri';
     </script>
 </head>
 <body>
 
 <br/>
+
+<script type="text/template" id="node-template">
+    <div class="col-6 col-sm-6 col-lg-4">
+
+        <h4><%- rc.node_id %></h4>
+
+        <p>
+            Send a text-to-speech message:
+        </p>
+        <p>
+            <form id="say-<%- rc.index %>">
+                <!--
+                <p>Node:
+                    <select id="node_id-0" name="node_id">
+                    </select>
+                </p>
+                -->
+
+                <div class="input-group input-group">
+                    <span class="input-group-addon">TTS</span>
+                    <input id="tts-<%- rc.index %>" name="message" class="form-control" type="text" value="Hallo!" size="50" maxlength="50">
+                </div>
+                </p>
+            </form>
+        </p>
+        <!--
+        <p>
+            <button class="btn btn-default" onclick="sayText($('#node_id-0').val(), $('#message-0').val())">TTS</button>
+        </p>
+        -->
+
+        <script language="javascript">
+            $('#tts-<%- rc.index %>').bind('keypress', function(e) {
+                var code = e.keyCode || e.which;
+                if (code == 13) {
+                    e.preventDefault();
+                    sayText('<%- rc.node_id %>', $('#tts-<%- rc.index %>').val())
+                    //return false;
+                }
+            });
+        </script>
+
+    </div>
+
+</script>
 
 <div class="container">
 
@@ -35,83 +80,9 @@
             </p>
             <div class="jumbotron" style="padding-top: 10px; padding-bottom: 10px">
                 <h2>iLaundry Dashboard</h2>
-                <p>node-id: %(node_id)s</p>
+                <p>node-id: $$node_id</p>
             </div>
-            <div class="row">
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-
-                    <p>
-                        Send a text-to-speech message.
-                    </p>
-                    <p>
-                        <form name="say">
-                            <p>Node:
-                                <select id="node_id" name="node_id">
-                                </select>
-                            </p>
-
-                            <p>Message: <input id="message" name="message" type="text" value="Hallo!" size="50" maxlength="50"></p>
-                        </form>
-
-                    </p>
-                    <p>
-                        <button class="btn btn-default" onclick="sayText($('#node_id').val(), $('#message').val())">
-                            Publish Event
-                        </button>
-                    </p>
-                </div>
-                <!--/span-->
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                        magna mollis euismod. Donec sed odio dui. </p>
-
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                </div>
-                <!--/span-->
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                        magna mollis euismod. Donec sed odio dui. </p>
-
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                </div>
-                <!--/span-->
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                        magna mollis euismod. Donec sed odio dui. </p>
-
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                </div>
-                <!--/span-->
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                        magna mollis euismod. Donec sed odio dui. </p>
-
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                </div>
-                <!--/span-->
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                        magna mollis euismod. Donec sed odio dui. </p>
-
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                </div>
-                <!--/span-->
+            <div class="row" id="item-container">
             </div>
             <!--/row-->
         </div>
@@ -141,7 +112,7 @@
     <hr>
 
     <footer>
-        <p>&copy; Company 2013</p>
+        <p>&copy; 2014 Can Elbasi Media</p>
     </footer>
 
 </div>
@@ -150,6 +121,7 @@
 <script src="static/js/jquery.min.js"></script>
 <script src="static/js/purl.js"></script>
 <script src="static/js/bootstrap.min.js"></script>
+<script src="static/js/underscore-min.js"></script>
 
 <script src="static/js/autobahn.min.js"></script>
 <script src="static/app/ilaundry.js"></script>

@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 # (c) 2014 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
-from ilaundry.util import NodeId
+from string import Template
 from pkg_resources import resource_filename
 from twisted.internet import reactor
 from twisted.web.resource import Resource
 from twisted.web.server import Site
 from twisted.web.static import File
+from ilaundry.util import NodeId
 
+
+class CustomTemplate(Template):
+    delimiter = '$$'
 
 class WebDashboard(Resource):
     def getChild(self, name, request):
@@ -25,7 +29,9 @@ class WebDashboardIndex(Resource):
 
     def render_GET(self, request):
         index = resource_filename('ilaundry.web', 'index.html')
-        return file(index).read() % {'websocket_uri': self.websocket_uri, 'node_id': str(NodeId())}
+        tpl = CustomTemplate(file(index).read())
+        response = tpl.substitute({'websocket_uri': self.websocket_uri, 'node_id': str(NodeId())})
+        return response
 
 def boot_web(http_port, websocket_uri, debug=False):
 

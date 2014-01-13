@@ -4,6 +4,21 @@
  derived from https://github.com/tavendo/AutobahnPython/blob/master/examples/twisted/wamp/pubsub/simple/example2/index.html
  */
 
+// When rending an underscore template, we want top-level
+// variables to be referenced as part of an object. For
+// technical reasons (scope-chain search), this speeds up
+// rendering; however, more importantly, this also allows our
+// templates to look / feel more like our server-side
+// templates that use the rc (Request Context / Colletion) in
+// order to render their markup.
+// http://www.bennadel.com/blog/2411-Using-Underscore-js-Templates-To-Render-HTML-Partials.htm
+_.templateSettings.variable = "rc";
+
+// Grab the HTML out of our template tag and pre-compile it.
+var node_template = _.template(
+    $("#node-template").html()
+);
+
 // WAMP session object
 var sess;
 
@@ -76,14 +91,27 @@ function node_state(topic, event) {
 }
 
 function dashboard_update(topic, event) {
+
     sess.call("registry:get_nodelist").then(function(nodelist) {
         ab.log('nodelist: ' + nodelist);
-        var node_select = document.getElementById("node_id");
+
+        $("#item-container").empty();
+        for (index in nodelist) {
+            var node_id = nodelist[index];
+            var template_data = {index: index, node_id: node_id};
+            var node_html = node_template(template_data);
+            //console.log(node_html);
+            $("#item-container").append(node_html);
+        }
+
+        /*
+        var node_select = document.getElementById("node_id-0");
         node_select.options.length = 0;
         for (index in nodelist) {
             var node_id = nodelist[index];
             node_select.options[node_select.options.length] = new Option(node_id, node_id);
         }
+        */
     });
 }
 

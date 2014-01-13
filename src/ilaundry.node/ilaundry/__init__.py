@@ -46,10 +46,12 @@ def run():
     websocket_uri = 'ws://localhost:9000'
     http_port = 35000
 
-    # run node and web gui only, using a remote master
+    # run master and web gui
     if arguments['master']:
         boot_master(websocket_uri, debug)
+        boot_web(http_port, websocket_uri, debug)
 
+    # run node and web gui only, using a remote master
     elif arguments['node']:
         websocket_uri = arguments['--master']
         boot_web(http_port, websocket_uri, debug)
