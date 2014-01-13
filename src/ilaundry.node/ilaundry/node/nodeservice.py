@@ -22,7 +22,7 @@ class NodeProtocol(WampClientProtocol):
     def heartbeat(self):
         self.publish("broadcast:node-heartbeat", NODE_ID)
         # FIXME: make this configurable as "heartbeat interval"
-        #reactor.callLater(15, self.heartbeat)
+        reactor.callLater(60, self.heartbeat)
 
     def say(self, topic, message, language='de'):
         return tts_say(message, language=language)
@@ -42,7 +42,7 @@ class NodeProtocol(WampClientProtocol):
 
         print "INFO:   -> Node successfully connected to master"
 
-        #self.heartbeat()
+        self.heartbeat()
 
         reactor.callLater(0, node_manager.start_features, self)
 
@@ -63,7 +63,14 @@ class NodeClientFactory(WampClientFactory):
     def __init__(self, url, **kwargs):
         return WampClientFactory.__init__(self, url, **kwargs)
 
+    def clientConnectionFailed(self, connector, reason):
+        print 'NodeClientFactory.clientConnectionFailed:', reason
+
+    def clientConnectionLost(self, connector, reason):
+        print 'NodeClientFactory.clientConnectionLost:', reason
+
     def stopFactory(self):
+        print 'NodeClientFactory.stopFactory'
         WampClientFactory.stopFactory(self)
         # FIXME: make this configurable as "reconnect interval"
         reactor.callLater(2, node_manager.master_connect)
