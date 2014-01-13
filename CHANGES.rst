@@ -6,6 +6,12 @@ develop
 -------
 
 
+2014-01-13 0.0.4
+----------------
+- ui: introduce Bootstrap, jQuery, underscore, etc.
+- ui: reflect multinode capabilities
+
+
 2014-01-13 0.0.3
 ----------------
 - modularized into three components: master, node, web
