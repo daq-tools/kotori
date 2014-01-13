@@ -49,7 +49,7 @@ def run():
     # run master and web gui
     if arguments['master']:
         boot_master(websocket_uri, debug)
-        boot_web(http_port, websocket_uri, debug)
+        boot_web(http_port, '', debug)
 
     # run node and web gui only, using a remote master
     elif arguments['node']:
