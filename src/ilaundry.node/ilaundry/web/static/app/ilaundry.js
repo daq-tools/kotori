@@ -106,5 +106,6 @@ function sayText(node_id, message) {
     sess.prefix(node_id, node_topic);
     //sess.subscribe(node_topic, dump_event);
     var event_topic = node_id + ':say';
+    console.log('publishing: ' + event_topic + ' ' + message)
     sess.publish(event_topic, message);
 }

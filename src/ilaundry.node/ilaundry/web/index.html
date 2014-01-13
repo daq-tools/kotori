@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html>
-<!--
- (c) 2014 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
- derived from https://github.com/tavendo/AutobahnPython/blob/master/examples/twisted/wamp/pubsub/simple/example2/index.html
--->
 <head>
 
     <style type="text/css">
@@ -15,36 +11,148 @@
     </style>
 
     <title>iLaundry Dashboard on %(node_id)s</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="static/js/jquery.min.js"></script>
-    <script src="static/js/purl.js"></script>
-    <script src="static/js/autobahn.min.js"></script>
-    <script src="static/app/ilaundry.js"></script>
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="static/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
 
     <script language="javascript">
         var wsuri = '%(websocket_uri)s';
     </script>
 </head>
 <body>
-<h1>iLaundry Dashboard</h1>
-<h4>NODE-ID: %(node_id)s</h4>
 
-<div class="block">
-    <p>
-        Send a text-to-speech message.
-    </p>
+<br/>
 
-    <form name="say">
-        <!-- <p>Node: <input id="node_id" name="node_id" type="text" value="washer-1" size="50" maxlength="50"></p> -->
-        <p>Node:
-            <select id="node_id" name="node_id">
-            </select>
-        </p>
-        <p>Message: <input id="message" name="message" type="text" value="Hallo!" size="50" maxlength="50"></p>
-    </form>
-    <button onclick="sayText(document.getElementById('node_id').value, document.getElementById('message').value)">Publish Event</button>
+<div class="container">
+
+    <div class="row row-offcanvas row-offcanvas-right">
+
+        <!-- <div class="col-xs-12 col-sm-9"> -->
+        <div class="col-xs-18 col-sm-12">
+            <p class="pull-right visible-xs">
+                <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+            </p>
+            <div class="jumbotron" style="padding-top: 10px; padding-bottom: 10px">
+                <h2>iLaundry Dashboard</h2>
+                <p>node-id: %(node_id)s</p>
+            </div>
+            <div class="row">
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+
+                    <p>
+                        Send a text-to-speech message.
+                    </p>
+                    <p>
+                        <form name="say">
+                            <p>Node:
+                                <select id="node_id" name="node_id">
+                                </select>
+                            </p>
+
+                            <p>Message: <input id="message" name="message" type="text" value="Hallo!" size="50" maxlength="50"></p>
+                        </form>
+
+                    </p>
+                    <p>
+                        <button class="btn btn-default" onclick="sayText($('#node_id').val(), $('#message').val())">
+                            Publish Event
+                        </button>
+                    </p>
+                </div>
+                <!--/span-->
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
+                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
+                        magna mollis euismod. Donec sed odio dui. </p>
+
+                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                </div>
+                <!--/span-->
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
+                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
+                        magna mollis euismod. Donec sed odio dui. </p>
+
+                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                </div>
+                <!--/span-->
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
+                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
+                        magna mollis euismod. Donec sed odio dui. </p>
+
+                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                </div>
+                <!--/span-->
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
+                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
+                        magna mollis euismod. Donec sed odio dui. </p>
+
+                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                </div>
+                <!--/span-->
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
+                        mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
+                        magna mollis euismod. Donec sed odio dui. </p>
+
+                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                </div>
+                <!--/span-->
+            </div>
+            <!--/row-->
+        </div>
+        <!--/span-->
+
+        <!--
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+            <div class="list-group">
+                <a href="#" class="list-group-item active">Link</a>
+                <a href="#" class="list-group-item">Link</a>
+                <a href="#" class="list-group-item">Link</a>
+                <a href="#" class="list-group-item">Link</a>
+                <a href="#" class="list-group-item">Link</a>
+                <a href="#" class="list-group-item">Link</a>
+                <a href="#" class="list-group-item">Link</a>
+                <a href="#" class="list-group-item">Link</a>
+                <a href="#" class="list-group-item">Link</a>
+                <a href="#" class="list-group-item">Link</a>
+            </div>
+        </div>
+        -->
+
+        <!--/span-->
+    </div>
+    <!--/row-->
+
+    <hr>
+
+    <footer>
+        <p>&copy; Company 2013</p>
+    </footer>
+
 </div>
+<!--/.container-->
 
+<script src="static/js/jquery.min.js"></script>
+<script src="static/js/purl.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
+
+<script src="static/js/autobahn.min.js"></script>
+<script src="static/app/ilaundry.js"></script>
 
 </body>
 </html>

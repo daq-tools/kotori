@@ -51,6 +51,7 @@ class NodeId(Singleton):
         if not self.config.has_key('uuid'):
             self.config['uuid'] = str(uuid4())
         self.NODE_ID = self.config['uuid']
+        print "NODE ID:", self.NODE_ID
 
     def __str__(self):
         return str(self.NODE_ID)
