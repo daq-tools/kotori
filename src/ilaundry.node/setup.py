@@ -5,6 +5,7 @@ requires = [
     #'twisted==10.2.0',
     'autobahn==0.7.0',
     'appdirs==1.2.0',
+    'docopt==0.6.1',
 ]
 
 setup(name='ilaundry.node',

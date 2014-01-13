@@ -20,16 +20,3 @@ def tts_say(message, language='de'):
     # FIXME: don't do this synchronously
     # FIXME: show errors (stdout/stderr) if command fails
     os.system(command)
-
-class Singleton(object):
-    """
-    Singleton class by Duncan Booth.
-    Multiple object variables refers to the same object.
-    http://www.suttoncourtenay.org.uk/duncan/accu/pythonpatterns.html
-    """
-    _instance = None
-
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super(Singleton, cls).__new__(cls)
-        return cls._instance

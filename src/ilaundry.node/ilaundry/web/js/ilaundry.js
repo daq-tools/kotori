@@ -6,15 +6,25 @@
 
 // WAMP session object
 var sess;
-var wsuri;
 
 window.onload = function() {
 
-    if (window.location.protocol === "file:") {
-        wsuri = "ws://localhost:9000";
-    } else {
-        wsuri = "ws://" + window.location.hostname + ":9000";
+    // websocket url defaults
+    if (!wsuri) {
+        if (window.location.protocol === "file:") {
+            wsuri = "ws://localhost:9000";
+
+        } else {
+            wsuri = "ws://" + window.location.hostname + ":9000";
+        }
     }
+
+    // explicitly specified websocket url
+    var url = $.url(window.location.href);
+    var master_uri = url.param('master');
+    if (master_uri) wsuri = master_uri;
+
+    console.log('[WAMP] INFO: Connecting to ' + wsuri);
 
     //ab.debug(true, true, true);
 
@@ -44,6 +54,7 @@ window.onload = function() {
 
         // WAMP session is gone
         function(code, reason) {
+            console.log('[WAMP] ERROR: ' + 'code: ' + code + ', reason: ' + reason);
             sess = null;
             //alert(reason);
         }

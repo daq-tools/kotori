@@ -1,49 +1,16 @@
 # -*- coding: utf-8 -*-
 # (c) 2014 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 # derived from https://github.com/tavendo/AutobahnPython/blob/master/examples/twisted/wamp/pubsub/simple/example2/client.py
-import os
 import sys
-import shelve
-from appdirs import user_data_dir
-from uuid import uuid4
+from ilaundry.util import NodeId
 from twisted.python import log
 from twisted.internet import reactor
 from autobahn.twisted.websocket import connectWS
 from autobahn.wamp import WampClientFactory, WampClientProtocol
-
-from feature import FeatureSet
 from util import tts_say
 
-NODE_ID = 'NODE_UNKNOWN'
-#WEBSOCKET_URI = 'ws://localhost:9000'
-WEBSOCKET_URI = 'ws://master.ilaundry.useeds.elmyra.de:9000'
 node_manager = None
-
-class ConfigStore(dict):
-
-    def __init__(self):
-        self.app_data_dir = user_data_dir('iLaundry', 'useeds')
-        if not os.path.exists(self.app_data_dir):
-            os.makedirs(self.app_data_dir)
-        self.config_file = os.path.join(self.app_data_dir, 'config')
-        self.store = shelve.open(self.config_file, writeback=True)
-
-    def has_key(self, key):
-        return self.store.has_key(key)
-
-    def __getitem__(self, key):
-        return self.store[key]
-
-    def __setitem__(self, key, value):
-        self.store[key] = value
-        self.store.sync()
-
-config = ConfigStore()
-if not config.has_key('uuid'):
-    config['uuid'] = str(uuid4())
-NODE_ID = config['uuid']
-print "NODE ID:", NODE_ID
-
+NODE_ID = str(NodeId())
 
 class NodeProtocol(WampClientProtocol):
     """
@@ -73,7 +40,7 @@ class NodeProtocol(WampClientProtocol):
         self.subscribe("node:say", self.dump_event)
         self.subscribe("node:say", self.say)
 
-        print "INFO:   Slave successfully connected to master"
+        print "INFO:   -> Node successfully connected to master"
 
         #self.heartbeat()
 
@@ -114,15 +81,16 @@ class NodeManager(object):
 
     def start_features(self, protocol):
 
+        from feature import FeatureSet
         features = FeatureSet(NODE_ID, protocol)
 
         #actor = GpioOutput('P8_13')
         #actor.blink(0.2)
 
 
-def boot_slave(websocket_uri, debug=False):
+def boot_node(websocket_uri, debug=False):
 
-    print 'INFO: Starting slave node, connecting to', websocket_uri
+    print 'INFO: Starting node service, connecting to', websocket_uri
 
     # connect to master service
     global node_manager
@@ -141,7 +109,9 @@ def run():
     # startup greeting
     #tts_say('Herzlich Willkommen')
 
-    boot_slave(WEBSOCKET_URI, debug)
+    #WEBSOCKET_URI = 'ws://localhost:9000'
+    WEBSOCKET_URI = 'ws://master.ilaundry.useeds.elmyra.de:9000'
+    boot_node(WEBSOCKET_URI, debug)
 
     reactor.run()
 

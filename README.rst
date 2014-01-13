@@ -48,13 +48,16 @@ Setup master sandbox
 
 Run daemons
 -----------
-master::
+single daemon, serve master, node and web gui::
 
-    ilaundry-master [debug]
+    ilaundry --debug
 
-go to http://localhost:35000
+    # visit web dashboard: http://localhost:35000
 
+master only::
 
-node::
+    ilaundry master --debug
 
-    ilaundry-node [debug]
+node only::
+
+    ilaundry node --master=ws://beaglebone.local:9000 --debug

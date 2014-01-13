@@ -14,14 +14,20 @@
         }
     </style>
 
-    <!-- include AutobahnJS .. that's all you need -->
-    <script src="autobahn.min.js"></script>
-    <script src="ilaundry.js"></script>
+    <title>iLaundry Dashboard on %(node_id)s</title>
 
-    <title>iLaundry Dashboard</title>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/purl.js"></script>
+    <script src="js/autobahn.min.js"></script>
+    <script src="js/ilaundry.js"></script>
+
+    <script language="javascript">
+        var wsuri = '%(websocket_uri)s';
+    </script>
 </head>
 <body>
 <h1>iLaundry Dashboard</h1>
+<h4>NODE-ID: %(node_id)s</h4>
 
 <div class="block">
     <p>
@@ -34,7 +40,7 @@
             <select id="node_id" name="node_id">
             </select>
         </p>
-        <p>Message: <input id="message" name="message" type="text" value="Herzlich Willkommen!" size="50" maxlength="50"></p>
+        <p>Message: <input id="message" name="message" type="text" value="Hallo!" size="50" maxlength="50"></p>
     </form>
     <button onclick="sayText(document.getElementById('node_id').value, document.getElementById('message').value)">Publish Event</button>
 </div>
