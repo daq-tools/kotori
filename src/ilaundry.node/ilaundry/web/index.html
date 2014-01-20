@@ -54,16 +54,6 @@
         </p>
         -->
 
-        <script language="javascript">
-            $('#tts-<%- rc.index %>').bind('keypress', function(e) {
-                var code = e.keyCode || e.which;
-                if (code == 13) {
-                    e.preventDefault();
-                    sayText('<%- rc.node_id %>', $('#tts-<%- rc.index %>').val())
-                    //return false;
-                }
-            });
-        </script>
 
     </div>
 

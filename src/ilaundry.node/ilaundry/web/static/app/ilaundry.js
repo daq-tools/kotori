@@ -107,6 +107,19 @@ function dashboard_update(topic, event) {
             var node_html = node_template(template_data);
             //console.log(node_html);
             $("#item-container").append(node_html);
+
+            // initialize behaviours
+
+            // text-to-speech input field
+            var tts_input = '#tts-' + index;
+            $(tts_input).bind('keypress', function(e) {
+                var code = e.keyCode || e.which;
+                if (code == 13) {
+                    e.preventDefault();
+                    sayText(node_id, $(tts_input).val())
+                    //return false;
+                }
+            });
         }
 
         /*
