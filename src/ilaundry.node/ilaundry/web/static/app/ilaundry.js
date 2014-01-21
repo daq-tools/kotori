@@ -21,6 +21,7 @@ var node_template = _.template(
 
 // WAMP session object
 var sess;
+var nodes = {};
 
 window.onload = function() {
 
@@ -107,14 +108,30 @@ function dashboard_clear() {
     $("#item-container").empty();
 }
 
+function node_online(node_id) {
+    $('#online-' + node_id).show();
+    $('#offline-' + node_id).hide();
+}
+
+function node_offline(node_id) {
+    $('#online-' + node_id).hide();
+    $('#offline-' + node_id).show();
+}
+
 function dashboard_update(topic, event) {
 
     sess.call("registry:get_nodelist").then(function(nodelist) {
         ab.log('nodelist: ' + nodelist);
 
-        dashboard_clear();
+        //dashboard_clear();
+
         for (index in nodelist) {
             var node_id = nodelist[index];
+            if (node_id in nodes) {
+                continue;
+            }
+            nodes[node_id] = true;
+
             var template_data = {node_id: node_id};
             var node_html = node_template(template_data);
             //console.log(node_html);
@@ -135,10 +152,25 @@ function dashboard_update(topic, event) {
             }
             var tts_input = '#tts-' + node_id;
             $(tts_input).bind('keypress', tts_listener(node_id, tts_input));
+
             // various indicators: switch from bootstrap hiding to jQuery hiding
             // https://stackoverflow.com/questions/18568736/how-to-hide-element-using-twitter-bootstrap-3-and-show-it-using-jquery/20529829#20529829
+            $('#online-' + node_id).hide().removeClass('hide');
+            $('#offline-' + node_id).hide().removeClass('hide');
             $('#activity-' + node_id).hide().removeClass('hide');
+
         }
+
+        // indicate node online/offline state
+        $.each(nodes, function(node_id, state) {
+            console.log(node_id);
+            if ($.inArray(node_id, nodelist) != -1) {
+                node_online(node_id);
+            } else {
+                nodes[node_id] = false;
+                node_offline(node_id);
+            }
+        });
 
         /*
         var node_select = document.getElementById("node_id-0");
