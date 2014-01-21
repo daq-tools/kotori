@@ -101,6 +101,12 @@ function node_state(topic, event) {
         } else {
             $('#activity-' + node_id).hide();
         }
+    } else if (topic_short == 'node-privacy') {
+        if (state) {
+            $('#privacy-' + node_id).show();
+        } else {
+            $('#privacy-' + node_id).hide();
+        }
     }
 }
 
@@ -158,6 +164,7 @@ function dashboard_update(topic, event) {
             $('#online-' + node_id).hide().removeClass('hide');
             $('#offline-' + node_id).hide().removeClass('hide');
             $('#activity-' + node_id).hide().removeClass('hide');
+            $('#privacy-' + node_id).hide().removeClass('hide');
 
         }
 
