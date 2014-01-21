@@ -27,45 +27,77 @@
 <script type="text/template" id="node-template">
     <div class="col-6 col-sm-6 col-lg-4">
 
-        <h4><%- rc.node_id %></h4>
-        <span id="online-<%- rc.node_id %>" class="label label-success">Online</span>
-        <span id="offline-<%- rc.node_id %>" class="label label-danger">Offline</span>
+        <div class="panel panel-success">
 
-        <br/><br/>
+        <div class="panel-heading">
+            <h3 class="panel-title"><%- rc.node_label %></h3>
+        </div>
+        <div class="panel-body">
+            <h6>
+                Hostname: <%- rc.node_hostname %>
+                <br/>
+                Node Id: <%- rc.node_id %>
+            </h6>
+            <span id="online-<%- rc.node_id %>" class="label label-success">Online</span>
+            <span id="offline-<%- rc.node_id %>" class="label label-danger">Offline</span>
 
-        <p>
-            Send a text-to-speech message:
-        </p>
-        <p>
-            <form id="say-<%- rc.node_id %>">
-                <!--
-                <p>Node:
-                    <select id="node_id-0" name="node_id">
-                    </select>
-                </p>
-                -->
+            <br/><br/>
 
-                <div class="input-group input-group">
-                    <span class="input-group-addon">TTS</span>
-                    <input id="tts-<%- rc.node_id %>" name="message" class="form-control" type="text" value="Hallo!" size="50" maxlength="50">
-                </div>
-                </p>
-            </form>
-        </p>
-        <!--
-        <p>
-            <button class="btn btn-default" onclick="sayText($('#node_id-0').val(), $('#message-0').val())">TTS</button>
-        </p>
-        -->
+            <p>
+                Send a text-to-speech message:
+            </p>
+            <p>
+                <form id="say-<%- rc.node_id %>">
+                    <!--
+                    <p>Node:
+                        <select id="node_id-0" name="node_id">
+                        </select>
+                    </p>
+                    -->
 
-        <div id="activity-<%- rc.node_id %>" class="alert alert-success text-center hide"><b>PIR SENSOR ACTIVITY</b></div>
-        <div id="privacy-<%- rc.node_id %>" class="alert alert-danger text-center hide"><b>PRIVACY MODE</b></div>
+                    <div class="input-group input-group">
+                        <span class="input-group-addon">TTS</span>
+                        <input id="tts-<%- rc.node_id %>" name="message" class="form-control" type="text" value="Hallo!" size="50" maxlength="50">
+                    </div>
+                    </p>
+                </form>
+            </p>
+            <!--
+            <p>
+                <button class="btn btn-default" onclick="sayText($('#node_id-0').val(), $('#message-0').val())">TTS</button>
+            </p>
+            -->
+
+            <div id="activity-<%- rc.node_id %>" class="alert alert-success text-center hide"><b>PIR SENSOR ACTIVITY</b></div>
+            <div id="privacy-<%- rc.node_id %>" class="alert alert-danger text-center hide"><b>PRIVACY MODE</b></div>
+
+        </div>
+        </div>
 
     </div>
 
 </script>
 
+
 <div class="container">
+
+    <div class="row panel panel-default panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">iLaundry Dashboard</h3>
+        </div>
+        <div class="panel-body">
+            <div class="pull-left">
+                Hostname: $$hostname
+                <br/>
+                Node Id: $$node_id
+                <br/>
+                Websocket URI: $$websocket_uri
+            </div>
+            <div class="pull-right">
+                <button id="operator-presence" type="button" class="btn active btn-primary btn-lg" data-toggle="button">OperatorPresence</button>
+            </div>
+        </div>
+    </div>
 
     <div class="row row-offcanvas row-offcanvas-right">
 
@@ -76,17 +108,7 @@
                 <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
             </p>
             -->
-            <div class="jumbotron container" style="padding-top: 10px; padding-bottom: 10px">
-                <div class="pull-left">
-                    <h2>iLaundry Dashboard</h2>
-                    <p>node-id: $$node_id</p>
-                </div>
-                <div class="pull-right">
-                    <h2>
-                        <button id="operator-presence" type="button" class="btn active btn-primary btn-lg" data-toggle="button">OperatorPresence</button>
-                    </h2>
-                </div>
-            </div>
+
             <div class="row" id="item-container"/>
             <!--/row-->
         </div>
