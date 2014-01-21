@@ -71,15 +71,23 @@
 
         <!-- <div class="col-xs-12 col-sm-9"> -->
         <div class="col-xs-18 col-sm-12">
+            <!--
             <p class="pull-right visible-xs">
                 <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
             </p>
-            <div class="jumbotron" style="padding-top: 10px; padding-bottom: 10px">
-                <h2>iLaundry Dashboard</h2>
-                <p>node-id: $$node_id</p>
+            -->
+            <div class="jumbotron container" style="padding-top: 10px; padding-bottom: 10px">
+                <div class="pull-left">
+                    <h2>iLaundry Dashboard</h2>
+                    <p>node-id: $$node_id</p>
+                </div>
+                <div class="pull-right">
+                    <h2>
+                        <button id="operator-presence" type="button" class="btn active btn-primary btn-lg" data-toggle="button">OperatorPresence</button>
+                    </h2>
+                </div>
             </div>
-            <div class="row" id="item-container">
-            </div>
+            <div class="row" id="item-container"/>
             <!--/row-->
         </div>
         <!--/span-->
@@ -105,7 +113,7 @@
     </div>
     <!--/row-->
 
-    <hr>
+
 
     <footer>
         <p>&copy; 2014 Can Elbasi Media</p>

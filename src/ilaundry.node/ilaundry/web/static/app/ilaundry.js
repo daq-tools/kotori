@@ -57,10 +57,13 @@ window.onload = function() {
             sess.prefix("broadcast", "http://ilaundry.useeds.de/broadcast#");
             sess.prefix("dashboard", "http://ilaundry.useeds.de/dashboard#");
 
+            gui_init();
+
             sess.subscribe("broadcast:node-heartbeat", node_heartbeat);
             //sess.subscribe("broadcast:node-activity", dump_event);
             sess.subscribe("broadcast:node-activity", node_state);
             sess.subscribe("broadcast:node-privacy", node_state);
+            sess.subscribe("broadcast:operator-presence", dump_event);
             sess.subscribe("dashboard:update", dashboard_update);
 
             // trigger dashboard update
@@ -77,6 +80,18 @@ window.onload = function() {
         }
     );
 };
+
+function gui_init() {
+    // operator presence
+    $('#operator-presence').on('click', function() {
+        var btn = this;
+        setTimeout(function() {
+            var presence = $(btn).hasClass('active');
+            //console.log(presence);
+            sess.publish("broadcast:operator-presence", presence, false);
+        });
+    });
+}
 
 function dump_event(topic, event) {
     console.log({'topic': topic, 'event': event});
@@ -170,7 +185,7 @@ function dashboard_update(topic, event) {
 
         // indicate node online/offline state
         $.each(nodes, function(node_id, state) {
-            console.log(node_id);
+            //console.log(node_id);
             if ($.inArray(node_id, nodelist) != -1) {
                 node_online(node_id);
             } else {
@@ -178,6 +193,7 @@ function dashboard_update(topic, event) {
                 node_offline(node_id);
             }
         });
+
 
         /*
         var node_select = document.getElementById("node_id-0");
