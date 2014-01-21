@@ -6,7 +6,7 @@ from twisted.internet import reactor
 from twisted.web.resource import Resource
 from twisted.web.server import Site
 from twisted.web.static import File
-from ilaundry.util import NodeId
+from ilaundry.util import NodeId, get_hostname
 
 
 class CustomTemplate(Template):
@@ -30,7 +30,11 @@ class WebDashboardIndex(Resource):
     def render_GET(self, request):
         index = resource_filename('ilaundry.web', 'index.html')
         tpl = CustomTemplate(file(index).read())
-        response = tpl.substitute({'websocket_uri': self.websocket_uri, 'node_id': str(NodeId())})
+        response = tpl.substitute({
+            'websocket_uri': self.websocket_uri,
+            'node_id': str(NodeId()),
+            'hostname': get_hostname(),
+        })
         return response
 
 def boot_web(http_port, websocket_uri, debug=False):

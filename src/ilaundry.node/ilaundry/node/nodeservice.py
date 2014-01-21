@@ -2,15 +2,16 @@
 # (c) 2014 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 # derived from https://github.com/tavendo/AutobahnPython/blob/master/examples/twisted/wamp/pubsub/simple/example2/client.py
 import sys
-from ilaundry.util import NodeId
 from twisted.python import log
 from twisted.internet import reactor
 from autobahn.twisted.websocket import connectWS
 from autobahn.wamp import WampClientFactory, WampClientProtocol
+from ilaundry.util import NodeId, get_hostname
 from util import tts_say
 
 node_manager = None
 NODE_ID = str(NodeId())
+NODE_HOSTNAME = get_hostname()
 
 class NodeProtocol(WampClientProtocol):
     """
@@ -30,12 +31,12 @@ class NodeProtocol(WampClientProtocol):
     def onSessionOpen(self):
 
         self.prefix("broadcast", "http://ilaundry.useeds.de/broadcast#")
-        self.prefix("presence", "http://ilaundry.useeds.de/presence#")
+        self.prefix("presence", "http://ilaundry.useeds.de/presence?")
         self.prefix("node", "http://ilaundry.useeds.de/node/{0}#".format(NODE_ID))
 
         self.subscribe("broadcast:node-heartbeat", self.dump_event)
 
-        self.subscribe("presence:{0}".format(NODE_ID), lambda: x)
+        self.subscribe("presence:node_id={0}&hostname={1}".format(NODE_ID, NODE_HOSTNAME), lambda: x)
 
         self.subscribe("node:say", self.dump_event)
         self.subscribe("node:say", self.say)

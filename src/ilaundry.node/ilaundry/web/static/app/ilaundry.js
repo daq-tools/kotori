@@ -21,7 +21,7 @@ var node_template = _.template(
 
 // WAMP session object
 var sess;
-var nodes = {};
+var nodes_ui = {};
 
 window.onload = function() {
 
@@ -76,7 +76,7 @@ window.onload = function() {
             console.log('[WAMP] ERROR: ' + 'code: ' + code + ', reason: ' + reason);
             sess = null;
             //alert(reason);
-            dashboard_clear();
+            //dashboard_clear();
         }
     );
 };
@@ -141,19 +141,19 @@ function node_offline(node_id) {
 
 function dashboard_update(topic, event) {
 
-    sess.call("registry:get_nodelist").then(function(nodelist) {
-        ab.log('nodelist: ' + nodelist);
+    sess.call("registry:get_nodes").then(function(nodes_registry) {
+        ab.log('nodes_registry:', nodes_registry);
 
         //dashboard_clear();
 
-        for (index in nodelist) {
-            var node_id = nodelist[index];
-            if (node_id in nodes) {
-                continue;
-            }
-            nodes[node_id] = true;
+        $.each(nodes_registry, function(node_id, node_info) {
 
-            var template_data = {node_id: node_id};
+            if (node_id in nodes_ui) {
+                return;
+            }
+            nodes_ui[node_id] = true;
+
+            var template_data = {node_id: node_id, node_hostname: node_info['hostname'], node_label: node_id};
             var node_html = node_template(template_data);
             //console.log(node_html);
             $("#item-container").append(node_html);
@@ -181,15 +181,15 @@ function dashboard_update(topic, event) {
             $('#activity-' + node_id).hide().removeClass('hide');
             $('#privacy-' + node_id).hide().removeClass('hide');
 
-        }
+        });
 
         // indicate node online/offline state
-        $.each(nodes, function(node_id, state) {
+        $.each(nodes_ui, function(node_id, state) {
             //console.log(node_id);
-            if ($.inArray(node_id, nodelist) != -1) {
+            if (node_id in nodes_registry) {
                 node_online(node_id);
             } else {
-                nodes[node_id] = false;
+                nodes_ui[node_id] = false;
                 node_offline(node_id);
             }
         });

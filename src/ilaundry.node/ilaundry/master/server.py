@@ -8,7 +8,7 @@ from autobahn.twisted import websocket
 from autobahn.wamp import WampServerFactory, \
                           WampServerProtocol, exportRpc, WampClientFactory, WampClientProtocol
 
-from urlparse import urlparse
+from urlparse import urlparse, parse_qs
 
 
 client = None
@@ -20,9 +20,9 @@ class NodeRegistry(object):
         self.nodes = {}
         self.sessions = {}
 
-    def register(self, node_id):
+    def register(self, node_id, hostname=None):
         print "NodeRegistry.register:", node_id
-        self.nodes[node_id] = True
+        self.nodes[node_id] = {'hostname': hostname}
         client.publish('http://ilaundry.useeds.de/dashboard#update', None)
 
     def unregister(self, node_id):
@@ -34,10 +34,9 @@ class NodeRegistry(object):
         client.publish('http://ilaundry.useeds.de/dashboard#update', None)
 
     @exportRpc
-    def get_nodelist(self):
-        nodelist = self.nodes.keys()
-        print "NodeRegistry.get_nodelist:", nodelist
-        return nodelist
+    def get_nodes(self):
+        print "NodeRegistry.get_nodes:", self.nodes
+        return self.nodes
 
 registry = NodeRegistry()
 
@@ -48,7 +47,7 @@ class MasterServerProtocol(WampServerProtocol):
         self.registerForRpc(registry, "http://ilaundry.useeds.de/registry#")
         self.registerForPubSub("http://ilaundry.useeds.de/broadcast#", True)
         self.registerForPubSub("http://ilaundry.useeds.de/dashboard#", True)
-        self.registerForPubSub("http://ilaundry.useeds.de/presence#", True)
+        self.registerForPubSub("http://ilaundry.useeds.de/presence", True)
         self.registerForPubSub("http://ilaundry.useeds.de/node/", True)
 
 
@@ -65,14 +64,17 @@ class MasterServerFactory(WampServerFactory):
         print "subscribed:  ", proto, topic
         uri = urlparse(topic)
         if uri.path == '/presence':
-            node_id = uri.fragment
-            registry.register(node_id)
+            params = parse_qs(uri.query)
+            node_id = params['node_id'][0]
+            hostname = params['hostname'][0]
+            registry.register(node_id, hostname)
 
     def onClientUnsubscribed(self, proto, topic):
         print "unsubscribed:", proto, topic
         uri = urlparse(topic)
         if uri.path == '/presence':
-            node_id = uri.fragment
+            params = parse_qs(uri.query)
+            node_id = params['node_id'][0]
             registry.unregister(node_id)
 
 

@@ -2,6 +2,7 @@
 # (c) 2014 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import os
 import shelve
+import socket
 from uuid import uuid4
 from appdirs import user_data_dir
 
@@ -55,3 +56,6 @@ class NodeId(Singleton):
 
     def __str__(self):
         return str(self.NODE_ID)
+
+def get_hostname():
+    return socket.gethostname()
