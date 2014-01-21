@@ -103,23 +103,26 @@ function dashboard_update(topic, event) {
         dashboard_clear();
         for (index in nodelist) {
             var node_id = nodelist[index];
-            var template_data = {index: index, node_id: node_id};
+            var template_data = {node_id: node_id};
             var node_html = node_template(template_data);
             //console.log(node_html);
             $("#item-container").append(node_html);
 
             // initialize behaviours
 
-            // text-to-speech input field
-            var tts_input = '#tts-' + index;
-            $(tts_input).bind('keypress', function(e) {
-                var code = e.keyCode || e.which;
-                if (code == 13) {
-                    e.preventDefault();
-                    sayText(node_id, $(tts_input).val())
-                    //return false;
+            // text-to-speech input field: submit text on enter
+            var tts_listener = function(node_id, text_element) {
+                return function(e) {
+                    var code = e.keyCode || e.which;
+                    if (code == 13) {
+                        e.preventDefault();
+                        sayText(node_id, $(text_element).val())
+                        //return false;
+                    }
                 }
-            });
+            }
+            var tts_input = '#tts-' + node_id;
+            $(tts_input).bind('keypress', tts_listener(node_id, tts_input));
         }
 
         /*

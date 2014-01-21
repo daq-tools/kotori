@@ -33,7 +33,7 @@
             Send a text-to-speech message:
         </p>
         <p>
-            <form id="say-<%- rc.index %>">
+            <form id="say-<%- rc.node_id %>">
                 <!--
                 <p>Node:
                     <select id="node_id-0" name="node_id">
@@ -43,7 +43,7 @@
 
                 <div class="input-group input-group">
                     <span class="input-group-addon">TTS</span>
-                    <input id="tts-<%- rc.index %>" name="message" class="form-control" type="text" value="Hallo!" size="50" maxlength="50">
+                    <input id="tts-<%- rc.node_id %>" name="message" class="form-control" type="text" value="Hallo!" size="50" maxlength="50">
                 </div>
                 </p>
             </form>
