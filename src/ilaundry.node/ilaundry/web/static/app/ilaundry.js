@@ -89,6 +89,18 @@ function node_state(topic, event) {
     var node_id = event.node_id;
     var state = event.state;
     console.log({'topic': topic, 'node_id': node_id, 'state': state});
+
+    var topic_url = $.url(topic);
+    var topic_short = topic_url.attr('fragment');
+
+    // show activity indicator
+    if (topic_short == 'node-activity') {
+        if (state) {
+            $('#activity-' + node_id).show();
+        } else {
+            $('#activity-' + node_id).hide();
+        }
+    }
 }
 
 function dashboard_clear() {
@@ -123,6 +135,9 @@ function dashboard_update(topic, event) {
             }
             var tts_input = '#tts-' + node_id;
             $(tts_input).bind('keypress', tts_listener(node_id, tts_input));
+            // various indicators: switch from bootstrap hiding to jQuery hiding
+            // https://stackoverflow.com/questions/18568736/how-to-hide-element-using-twitter-bootstrap-3-and-show-it-using-jquery/20529829#20529829
+            $('#activity-' + node_id).hide().removeClass('hide');
         }
 
         /*
