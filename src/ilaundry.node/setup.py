@@ -9,7 +9,7 @@ requires = [
 ]
 
 setup(name='ilaundry.node',
-      version='0.0.1',
+      version='0.1.0',
       description='ilaundry.node',
       long_description='iLaundry node service',
       classifiers=[
