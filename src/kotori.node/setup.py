@@ -1,18 +1,16 @@
 from setuptools import setup, find_packages
 
 requires = [
-    #'twisted==13.2.0',
-    #'twisted==10.2.0',
-    'autobahn==0.7.0',
-    'appdirs==1.2.0',
-    'docopt==0.6.1',
+    'autobahn==0.10.1',
+    'appdirs==1.4.0',
+    'docopt==0.6.2',
     'json-store==2.1',
 ]
 
-setup(name='ilaundry.node',
-      version='0.1.0',
-      description='ilaundry.node',
-      long_description='iLaundry node service',
+setup(name='kotori.node',
+      version='0.2.0',
+      description='kotori.node',
+      long_description='Kotori node service',
       classifiers=[
         "Programming Language :: Python",
         "Framework :: Twisted",
@@ -25,16 +23,16 @@ setup(name='ilaundry.node',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
-      test_suite='ilaundry.test',
+      test_suite='kotori.test',
       install_requires=requires,
       dependency_links=[
           #'https://github.com/tavendo/AutobahnPython/tarball/cb322f78ffaa2a5#egg=autobahn-0.7.0',
       ],
       entry_points={
           'console_scripts': [
-              'ilaundry-master = ilaundry.master.server:run',
-              'ilaundry-node = ilaundry.node.nodeservice:run',
-              'ilaundry = ilaundry:run',
+              'kotori-master = kotori.master.server:run',
+              'kotori-node = kotori.node.nodeservice:run',
+              'kotori = kotori:run',
               ],
       },
 )

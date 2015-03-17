@@ -1,22 +1,22 @@
 import sys
 from pkgutil import extend_path
-from ilaundry.master.server import boot_master
-from ilaundry.node.nodeservice import boot_node
-from ilaundry.web.server import boot_web
+from kotori.master.server import boot_master
+from kotori.node.nodeservice import boot_node
+from kotori.web.server import boot_web
 from twisted.internet import reactor
 from twisted.python import log
 
 __path__ = extend_path(__path__, __name__)
 
 
-__doc__ = """iLaundry node service.
+__doc__ = """Kotori node service.
 
 Usage:
-  ilaundry [--debug]
-  ilaundry master [--debug]
-  ilaundry node --master=<> [--debug]
-  ilaundry (-h | --help)
-  ilaundry --version
+  kotori [--debug]
+  kotori master [--debug]
+  kotori node --master=<> [--debug]
+  kotori (-h | --help)
+  kotori --version
 
 Options:
   -h --help     Show this screen.
@@ -28,16 +28,16 @@ from docopt import docopt
 
 
 """
-#ilaundry ship <name> move <x> <y> [--speed=<kn>]
-#ilaundry ship shoot <x> <y>
-#ilaundry mine (set|remove) <x> <y> [--moored | --drifting]
+#kotori ship <name> move <x> <y> [--speed=<kn>]
+#kotori ship shoot <x> <y>
+#kotori mine (set|remove) <x> <y> [--moored | --drifting]
 """
 
 def run():
 
     log.startLogging(sys.stdout)
 
-    arguments = docopt(__doc__, version='iLaundry node service')
+    arguments = docopt(__doc__, version='Kotori node service')
     #print arguments
     debug = arguments.get('--debug', False)
     print "debug:", debug

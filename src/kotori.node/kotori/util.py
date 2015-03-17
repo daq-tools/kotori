@@ -29,7 +29,7 @@ class ConfigStore(dict):
     def __init__(self):
         if not ConfigStore.store:
             print "###################### ConfigStore init"
-            self.app_data_dir = user_data_dir('iLaundry', 'useeds')
+            self.app_data_dir = user_data_dir('kotori', 'elmyra')
             if not os.path.exists(self.app_data_dir):
                 os.makedirs(self.app_data_dir)
             self.config_file = os.path.join(self.app_data_dir, 'config')
@@ -55,7 +55,7 @@ class BetterConfigStore(dict):
     def __init__(self):
         if not BetterConfigStore.store:
             print "###################### ConfigStore init"
-            self.app_data_dir = user_data_dir('iLaundry', 'useeds')
+            self.app_data_dir = user_data_dir('kotori', 'elmyra')
             if not os.path.exists(self.app_data_dir):
                 os.makedirs(self.app_data_dir)
             self.config_file = os.path.join(self.app_data_dir, 'config.json')

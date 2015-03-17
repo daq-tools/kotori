@@ -6,7 +6,7 @@ from twisted.python import log
 from twisted.internet import reactor
 from autobahn.twisted.websocket import connectWS
 from autobahn.wamp import WampClientFactory, WampClientProtocol
-from ilaundry.util import NodeId, get_hostname
+from kotori.util import NodeId, get_hostname
 from util import tts_say
 
 node_manager = None
@@ -30,9 +30,9 @@ class NodeProtocol(WampClientProtocol):
 
     def onSessionOpen(self):
 
-        self.prefix("broadcast", "http://ilaundry.useeds.de/broadcast#")
-        self.prefix("presence", "http://ilaundry.useeds.de/presence?")
-        self.prefix("node", "http://ilaundry.useeds.de/node/{0}#".format(NODE_ID))
+        self.prefix("broadcast", "http://kotori.elmyra.de/broadcast#")
+        self.prefix("presence", "http://kotori.elmyra.de/presence?")
+        self.prefix("node", "http://kotori.elmyra.de/node/{0}#".format(NODE_ID))
 
         self.subscribe("broadcast:node-heartbeat", self.dump_event)
 
@@ -117,8 +117,8 @@ def run():
     # startup greeting
     #tts_say('Herzlich Willkommen')
 
-    #WEBSOCKET_URI = 'ws://localhost:9000'
-    WEBSOCKET_URI = 'ws://master.ilaundry.useeds.elmyra.de:9000'
+    WEBSOCKET_URI = 'ws://localhost:9000'
+    #WEBSOCKET_URI = 'ws://master.example.com:9000'
     boot_node(WEBSOCKET_URI, debug)
 
     reactor.run()

@@ -56,9 +56,9 @@ window.onload = function() {
             sess = session;
             console.log("Connected!");
 
-            sess.prefix("registry", "http://ilaundry.useeds.de/registry#");
-            sess.prefix("broadcast", "http://ilaundry.useeds.de/broadcast#");
-            sess.prefix("dashboard", "http://ilaundry.useeds.de/dashboard#");
+            sess.prefix("registry", "http://kotori.elmyra.de/registry#");
+            sess.prefix("broadcast", "http://kotori.elmyra.de/broadcast#");
+            sess.prefix("dashboard", "http://kotori.elmyra.de/dashboard#");
 
             gui_init();
 
@@ -230,11 +230,11 @@ function sayText(node_id, message) {
     */
 
     if (!sess) {
-        console.error('ERROR: No WAMP session with iLaundry master service');
+        console.error('ERROR: No WAMP session with Kotori master service');
         return;
     }
 
-    var node_topic = 'http://ilaundry.useeds.de/node/' + node_id + '#';
+    var node_topic = 'http://kotori.elmyra.de/node/' + node_id + '#';
     sess.prefix(node_id, node_topic);
     //sess.subscribe(node_topic, dump_event);
     var event_topic = node_id + ':say';

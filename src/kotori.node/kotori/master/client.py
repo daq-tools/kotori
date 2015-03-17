@@ -43,7 +43,7 @@ class MyClientProtocol(WampClientProtocol):
         """
 
 
-        self.prefix("broadcast", "http://ilaundry.useeds.de/broadcast#")
+        self.prefix("broadcast", "http://kotori.elmyra.de/broadcast#")
         self.publish("broadcast:node-activity", {'node_id': 'Hello!', 'state': True}, excludeMe=False)
         self.publish("broadcast:operator-presence", True, excludeMe=False)
         #self.publish("broadcast:operator-presence", False, excludeMe=False)
@@ -53,8 +53,8 @@ class MyClientProtocol(WampClientProtocol):
 if __name__ == '__main__':
 
     log.startLogging(sys.stdout)
-    #factory = WampClientFactory("ws://localhost:9000")
-    factory = WampClientFactory("ws://master.ilaundry.useeds.elmyra.de:9000")
+    factory = WampClientFactory("ws://localhost:9000")
+    #factory = WampClientFactory("ws://master.example.com:9000")
     factory.protocol = MyClientProtocol
     connectWS(factory)
     reactor.run()

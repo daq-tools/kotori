@@ -8,7 +8,7 @@ from twisted.python import log
 from twisted.internet import reactor
 from autobahn.twisted import websocket
 from autobahn.wamp import WampServerFactory, WampServerProtocol, exportRpc, WampClientFactory, WampClientProtocol
-from ilaundry.util import ConfigStore, BetterConfigStore
+from kotori.util import ConfigStore, BetterConfigStore
 
 
 client = None
@@ -42,7 +42,7 @@ class NodeRegistry(object):
         print "NodeRegistry.register:", node_id
         self.nodes[node_id] = {'hostname': hostname}
         self.persist()
-        client.publish('http://ilaundry.useeds.de/dashboard#update', None)
+        client.publish('http://kotori.elmyra.de/dashboard#update', None)
 
     def unregister(self, node_id):
         print "NodeRegistry.unregister:", node_id
@@ -51,7 +51,7 @@ class NodeRegistry(object):
             self.persist()
         except KeyError:
             pass
-        client.publish('http://ilaundry.useeds.de/dashboard#update', None)
+        client.publish('http://kotori.elmyra.de/dashboard#update', None)
 
     @exportRpc
     def get_nodes(self):
@@ -71,11 +71,11 @@ registry = NodeRegistry()
 class MasterServerProtocol(WampServerProtocol):
 
     def onSessionOpen(self):
-        self.registerForRpc(registry, "http://ilaundry.useeds.de/registry#")
-        self.registerForPubSub("http://ilaundry.useeds.de/broadcast#", True)
-        self.registerForPubSub("http://ilaundry.useeds.de/dashboard#", True)
-        self.registerForPubSub("http://ilaundry.useeds.de/presence", True)
-        self.registerForPubSub("http://ilaundry.useeds.de/node/", True)
+        self.registerForRpc(registry, "http://kotori.elmyra.de/registry#")
+        self.registerForPubSub("http://kotori.elmyra.de/broadcast#", True)
+        self.registerForPubSub("http://kotori.elmyra.de/dashboard#", True)
+        self.registerForPubSub("http://kotori.elmyra.de/presence", True)
+        self.registerForPubSub("http://kotori.elmyra.de/node/", True)
 
 
 

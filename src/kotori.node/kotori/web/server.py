@@ -6,7 +6,7 @@ from twisted.internet import reactor
 from twisted.web.resource import Resource
 from twisted.web.server import Site
 from twisted.web.static import File
-from ilaundry.util import NodeId, get_hostname
+from kotori.util import NodeId, get_hostname
 
 
 class CustomTemplate(Template):
@@ -18,7 +18,7 @@ class WebDashboard(Resource):
         if name == '':
             return WebDashboardIndex()
         else:
-            document_root = resource_filename('ilaundry.web', '')
+            document_root = resource_filename('kotori.web', '')
             return File(document_root)
 
 class WebDashboardIndex(Resource):
@@ -28,7 +28,7 @@ class WebDashboardIndex(Resource):
         self.websocket_uri = websocket_uri
 
     def render_GET(self, request):
-        index = resource_filename('ilaundry.web', 'index.html')
+        index = resource_filename('kotori.web', 'index.html')
         tpl = CustomTemplate(file(index).read())
         response = tpl.substitute({
             'websocket_uri': self.websocket_uri,
@@ -41,7 +41,7 @@ def boot_web(http_port, websocket_uri, debug=False):
 
     dashboard = Resource()
     dashboard.putChild('', WebDashboardIndex(websocket_uri=websocket_uri))
-    dashboard.putChild('static', File(resource_filename('ilaundry.web', 'static')))
+    dashboard.putChild('static', File(resource_filename('kotori.web', 'static')))
 
     print 'INFO: Starting HTTP service on port', http_port
     factory = Site(dashboard)
