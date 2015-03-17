@@ -14,6 +14,9 @@
 // http://www.bennadel.com/blog/2411-Using-Underscore-js-Templates-To-Render-HTML-Partials.htm
 _.templateSettings.variable = "rc";
 
+// X-editable: turn to inline mode
+$.fn.editable.defaults.mode = 'inline';
+
 // Grab the HTML out of our template tag and pre-compile it.
 var node_template = _.template(
     $("#node-template").html()
@@ -153,7 +156,7 @@ function dashboard_update(topic, event) {
             }
             nodes_ui[node_id] = true;
 
-            var template_data = {node_id: node_id, node_hostname: node_info['hostname'], node_label: node_id};
+            var template_data = {node_id: node_id, node_hostname: node_info['hostname'], node_label: node_info['label'] || node_id};
             var node_html = node_template(template_data);
             //console.log(node_html);
             $("#item-container").append(node_html);
@@ -180,6 +183,16 @@ function dashboard_update(topic, event) {
             $('#offline-' + node_id).hide().removeClass('hide');
             $('#activity-' + node_id).hide().removeClass('hide');
             $('#privacy-' + node_id).hide().removeClass('hide');
+
+            // setup editable fields
+            $('#node-label-' + node_id).editable({
+                type: 'text',
+                success: function(response, value) {
+                    //userModel.set('username', value); //update backbone model
+                    sess.call("registry:set_node_label", node_id, value);
+                    console.log('edit:', node_id, value);
+                }
+            });
 
         });
 

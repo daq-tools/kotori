@@ -5,6 +5,7 @@ import shelve
 import socket
 from uuid import uuid4
 from appdirs import user_data_dir
+import json_store
 
 
 class Singleton(object):
@@ -23,22 +24,54 @@ class Singleton(object):
 
 class ConfigStore(dict):
 
+    store = None
+
     def __init__(self):
-        self.app_data_dir = user_data_dir('iLaundry', 'useeds')
-        if not os.path.exists(self.app_data_dir):
-            os.makedirs(self.app_data_dir)
-        self.config_file = os.path.join(self.app_data_dir, 'config')
-        self.store = shelve.open(self.config_file, writeback=True)
+        if not ConfigStore.store:
+            print "###################### ConfigStore init"
+            self.app_data_dir = user_data_dir('iLaundry', 'useeds')
+            if not os.path.exists(self.app_data_dir):
+                os.makedirs(self.app_data_dir)
+            self.config_file = os.path.join(self.app_data_dir, 'config')
+            ConfigStore.store = shelve.open(self.config_file, writeback=True)
 
     def has_key(self, key):
-        return self.store.has_key(key)
+        return ConfigStore.store.has_key(key)
 
     def __getitem__(self, key):
-        return self.store[key]
+        print 'ConfigStore.__getitem__'
+        return ConfigStore.store[key]
 
     def __setitem__(self, key, value):
-        self.store[key] = value
-        self.store.sync()
+        print 'ConfigStore.__setitem__', key, value
+        ConfigStore.store[key] = value
+        ConfigStore.store.sync()
+
+
+class BetterConfigStore(dict):
+
+    store = None
+
+    def __init__(self):
+        if not BetterConfigStore.store:
+            print "###################### ConfigStore init"
+            self.app_data_dir = user_data_dir('iLaundry', 'useeds')
+            if not os.path.exists(self.app_data_dir):
+                os.makedirs(self.app_data_dir)
+            self.config_file = os.path.join(self.app_data_dir, 'config.json')
+            BetterConfigStore.store = json_store.open(self.config_file)
+
+    def has_key(self, key):
+        return BetterConfigStore.store.has_key(key)
+
+    def __getitem__(self, key):
+        print 'BetterConfigStore.__getitem__'
+        return BetterConfigStore.store[key]
+
+    def __setitem__(self, key, value):
+        print 'BetterConfigStore.__setitem__', key, value
+        BetterConfigStore.store[key] = value
+        BetterConfigStore.store.sync()
 
 
 class NodeId(Singleton):

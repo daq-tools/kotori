@@ -4,8 +4,8 @@ iLaundry TODO
 
 Prio 1
 ======
-- [o] register hostname with node id
-- [o] node-id to label translator
+- [x] node registration: send hostname along
+- [o] node_id-to-label translator with server-side persistence at master node
 - [o] run as init.d daemon
 
 Prio 2

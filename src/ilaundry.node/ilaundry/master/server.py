@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 # (c) 2014 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 # derived from https://github.com/tavendo/AutobahnPython/blob/master/examples/twisted/wamp/pubsub/simple/example2/server.py
+from copy import deepcopy
 import sys
+from urlparse import urlparse, parse_qs
 from twisted.python import log
 from twisted.internet import reactor
 from autobahn.twisted import websocket
-from autobahn.wamp import WampServerFactory, \
-                          WampServerProtocol, exportRpc, WampClientFactory, WampClientProtocol
-
-from urlparse import urlparse, parse_qs
+from autobahn.wamp import WampServerFactory, WampServerProtocol, exportRpc, WampClientFactory, WampClientProtocol
+from ilaundry.util import ConfigStore, BetterConfigStore
 
 
 client = None
@@ -19,16 +19,36 @@ class NodeRegistry(object):
     def __init__(self):
         self.nodes = {}
         self.sessions = {}
+        self.config = BetterConfigStore()
+        print '----------------------', self.config.store
+        print '----------------------', self.config.get('nodes')
+        #self.nodes = self.config.get('nodes', {})
+        print '======================', self.nodes
+
+    def persist(self):
+        print "============= persist", self.nodes
+        #self.config['nodes'].update(self.nodes)
+        #del self.config['nodes']
+        self.config['nodes'] = {'haha': {'hehe': 'dscsdcsdcsdcc'}}
+        #self.config['nodes'] = self.nodes.copy()
+        self.config['nodes2'] = deepcopy(self.nodes)
+        self.config['ttt'] = 'huhu'
+
+        #   self.config['nodes']['abc'] = 'def2'
+        #self.nodes.setdefault('ghi', {})['kli'] = 'DEFUNCT'
+        #self.config['ghi']['jkl'] = 'defunct'
 
     def register(self, node_id, hostname=None):
         print "NodeRegistry.register:", node_id
         self.nodes[node_id] = {'hostname': hostname}
+        self.persist()
         client.publish('http://ilaundry.useeds.de/dashboard#update', None)
 
     def unregister(self, node_id):
         print "NodeRegistry.unregister:", node_id
         try:
             del self.nodes[node_id]
+            self.persist()
         except KeyError:
             pass
         client.publish('http://ilaundry.useeds.de/dashboard#update', None)
@@ -37,6 +57,13 @@ class NodeRegistry(object):
     def get_nodes(self):
         print "NodeRegistry.get_nodes:", self.nodes
         return self.nodes
+
+    @exportRpc
+    def set_node_label(self, node_id, label):
+        print "NodeRegistry.set_node_label:", node_id, label
+        self.nodes.setdefault(node_id, {})['label'] = label
+        print self.nodes[node_id]
+        self.persist()
 
 registry = NodeRegistry()
 

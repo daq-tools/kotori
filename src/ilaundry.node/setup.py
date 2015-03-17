@@ -6,6 +6,7 @@ requires = [
     'autobahn==0.7.0',
     'appdirs==1.2.0',
     'docopt==0.6.1',
+    'json-store==2.1',
 ]
 
 setup(name='ilaundry.node',
