@@ -1,7 +1,9 @@
 from setuptools import setup, find_packages
 
 requires = [
+    'Twisted==15.0.0',
     'autobahn==0.10.1',
+    'crossbar==0.10.2',
     'appdirs==1.4.0',
     'docopt==0.6.2',
     'json-store==2.1',
