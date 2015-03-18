@@ -36,6 +36,7 @@ setup(name='kotori.node',
               'kotori-node   = kotori.node.nodeservice:run',
               'kotori        = kotori:run',
               'kotori-wamp-client = kotori.master.client:run_wamp_client',
-          ],
+              'kotori-udp-client  = kotori.master.client:run_udp_client',
+              ],
       },
 )

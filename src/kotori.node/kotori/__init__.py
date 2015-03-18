@@ -1,10 +1,13 @@
+# -*- coding: utf-8 -*-
+# (c) 2014-2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import sys
 from pkgutil import extend_path
+from twisted.internet import reactor
+from twisted.python import log
 from kotori.master.server import boot_master
 from kotori.node.nodeservice import boot_node
 from kotori.web.server import boot_web
-from twisted.internet import reactor
-from twisted.python import log
+from kotori.node.udp import boot_udp_adapter
 
 __path__ = extend_path(__path__, __name__)
 
@@ -45,23 +48,27 @@ def run():
     # defaults
     websocket_uri = 'ws://localhost:9000/ws'
     http_port = 35000
+    udp_port = 7777
 
     # run master and web gui
     if arguments['master']:
         boot_master(websocket_uri, debug)
         boot_web(http_port, '', debug)
+        boot_udp_adapter(udp_port, debug)
 
     # run node and web gui only, using a remote master
     elif arguments['node']:
         websocket_uri = arguments['--master']
         boot_web(http_port, websocket_uri, debug)
         boot_node(websocket_uri, debug)
+        boot_udp_adapter(udp_port, debug)
 
     # run master, node and web gui
     else:
         boot_master(websocket_uri, debug)
         boot_web(http_port, websocket_uri, debug)
         boot_node(websocket_uri, debug)
+        boot_udp_adapter(udp_port, debug)
 
     reactor.run()
 

@@ -52,6 +52,16 @@ node only::
     kotori node --master=ws://master.example.com:9000/ws --debug
 
 
+Send telemetry data
+-------------------
+- Open Browser at http://localhost:35000/
+- Run::
+
+    kotori-wamp-client
+    kotori-udp-client
+
+
+
 Embedded use
 ============
 
