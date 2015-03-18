@@ -33,8 +33,9 @@ setup(name='kotori.node',
       entry_points={
           'console_scripts': [
               'kotori-master = kotori.master.server:run',
-              'kotori-node = kotori.node.nodeservice:run',
-              'kotori = kotori:run',
-              ],
+              'kotori-node   = kotori.node.nodeservice:run',
+              'kotori        = kotori:run',
+              'kotori-wamp-client = kotori.master.client:run_wamp_client',
+          ],
       },
 )

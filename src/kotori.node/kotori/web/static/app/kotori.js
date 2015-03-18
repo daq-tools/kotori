@@ -1,6 +1,6 @@
 // -*- coding: utf-8 -*-
 /*
- (c) 2014 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+ (c) 2014-2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
  derived from https://github.com/tavendo/AutobahnPython/blob/master/examples/twisted/wamp/pubsub/simple/example2/index.html
  */
 
@@ -48,51 +48,95 @@ window.onload = function() {
     //ab.debug(true, true, true);
 
     // connect to WAMP server
-    ab.connect(wsuri,
+    var connection = new autobahn.Connection({
+        url: wsuri,
+        realm: 'kotori-realm'
+    });
 
-        // WAMP session was established
-        function(session) {
+    // WAMP session was established
+    connection.onopen = function (session) {
 
-            sess = session;
-            console.log("Connected!");
+        sess = session;
+        console.log("Connected!");
 
-            sess.prefix("registry", "http://kotori.elmyra.de/registry#");
-            sess.prefix("broadcast", "http://kotori.elmyra.de/broadcast#");
-            sess.prefix("dashboard", "http://kotori.elmyra.de/dashboard#");
 
-            gui_init();
+        /*
+        sess.prefix("registry", "http://kotori.elmyra.de/registry#");
+        sess.prefix("broadcast", "de.elmyra.kotori.broadcast");
+        sess.prefix("dashboard", "http://kotori.elmyra.de/dashboard#");
+        */
 
-            sess.subscribe("broadcast:node-heartbeat", node_heartbeat);
-            //sess.subscribe("broadcast:node-activity", dump_event);
-            sess.subscribe("broadcast:node-activity", node_state);
-            sess.subscribe("broadcast:node-privacy", node_state);
-            sess.subscribe("broadcast:operator-presence", dump_event);
-            sess.subscribe("dashboard:update", dashboard_update);
+        sess.prefix("registry",  "de.elmyra.kotori.registry");
+        sess.prefix("broadcast", "de.elmyra.kotori.broadcast");
+        sess.prefix("telemetry", "de.elmyra.kotori.telemetry");
+        sess.prefix("dashboard", "de.elmyra.kotori.dashboard");
 
-            // trigger dashboard update
-            sess.publish("dashboard:update", null, false);
+        gui_init();
 
-        },
+        sess.subscribe("broadcast:heartbeat", node_heartbeat);
+        //sess.subscribe("broadcast:node-activity", dump_event);
+        sess.subscribe("broadcast:node-activity", node_state);
+        sess.subscribe("broadcast:node-privacy", node_state);
+        sess.subscribe("telemetry:data", node_data);
+        sess.subscribe("broadcast:operator-presence", dump_event);
+        sess.subscribe("dashboard:update", dashboard_update);
 
-        // WAMP session is gone
-        function(code, reason) {
-            console.log('[WAMP] ERROR: ' + 'code: ' + code + ', reason: ' + reason);
-            sess = null;
-            //alert(reason);
-            //dashboard_clear();
-        }
-    );
+        // trigger dashboard update
+        sess.publish("dashboard:update", null, false);
+
+        session.call('com.timeservice.now').then(session.log);
+
+        /*
+         session.publish('broadcast:heartbeat', ['abc', 'def']);
+         window.setInterval(function() {
+         console.log('publish from javascript');
+         //session.publish('broadcast:heartbeat', ['abc', 'def']);
+         session.publish('broadcast:heartbeat', ['abc', 'def']);
+         }, 60000);
+         console.log('YEAH!');
+         return;
+         */
+
+    }
+
+    // WAMP session is gone
+    //function(code, reason) {
+    connection.onclose = function (evt, reason) {
+        console.log('[WAMP] Closing session. event:', evt, 'reason:', reason);
+        //console.log('[WAMP] ERROR: ' + 'code: ' + code + ', reason: ' + reason);
+        //sess = null;
+        //alert(reason);
+        //dashboard_clear();
+    }
+
+    connection.open();
+
 };
 
+function node_data(data) {
+    console.log('data:', data);
+    if (_.isObject(data)) {
+        data = JSON.stringify(data);
+    }
+    $('#telemetry-content').append(data, '<br/>');
+}
+
 function gui_init() {
+
     // operator presence
     $('#operator-presence').on('click', function() {
         var btn = this;
         setTimeout(function() {
             var presence = $(btn).hasClass('active');
-            //console.log(presence);
-            sess.publish("broadcast:operator-presence", presence, false);
+            console.log('presence:', presence);
+            sess.publish("broadcast:operator-presence", [presence, false]);
+            //sess.call("broadcast:operator-presence", [presence, false]);
+
         });
+    });
+
+    $('#telemetry-clear').on('click', function() {
+        $('#telemetry-content').empty();
     });
 }
 
@@ -101,6 +145,7 @@ function dump_event(topic, event) {
 }
 
 function node_heartbeat(topic, node_id) {
+    console.log('node_heartbeat');
     console.log({'topic': topic, 'node_id': node_id});
 }
 

@@ -43,7 +43,7 @@ def run():
     print "debug:", debug
 
     # defaults
-    websocket_uri = 'ws://localhost:9000'
+    websocket_uri = 'ws://localhost:9000/ws'
     http_port = 35000
 
     # run master and web gui

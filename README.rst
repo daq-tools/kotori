@@ -29,15 +29,14 @@ Setup node sandbox
     virtualenv-2.7 --system-site-packages .venv27
     source .venv27/bin/activate
 
-    cd src/kotori.node
-    python setup.py develop
-    cd -
+    python src/kotori.node/setup.py develop
 
 
 Run daemons
 -----------
 single daemon, serve master, node and web gui::
 
+    crossbar start
     kotori --debug
 
     # visit web dashboard: http://localhost:35000
@@ -48,9 +47,9 @@ master only::
 
 node only::
 
-    kotori node --master=ws://beaglebone.local:9000 --debug
-    kotori node --master=ws://offgrid:9000 --debug
-    kotori node --master=ws://master.example.com:9000 --debug
+    kotori node --master=ws://offgrid:9000/ws --debug
+    kotori node --master=ws://beaglebone.local:9000/ws --debug
+    kotori node --master=ws://master.example.com:9000/ws --debug
 
 
 Embedded use

@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
-# (c) 2014 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2014-2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+#
 # derived from https://github.com/tavendo/AutobahnPython/blob/master/examples/twisted/wamp/pubsub/simple/example2/server.py
-from copy import deepcopy
 import sys
+import datetime
+from copy import deepcopy
 from urlparse import urlparse, parse_qs
+from autobahn.twisted.wamp import ApplicationRunner, ApplicationSession
+from autobahn.twisted.websocket import WampWebSocketClientProtocol, WampWebSocketClientFactory
+from autobahn.twisted.websocket import WampWebSocketServerProtocol, WampWebSocketServerFactory
 from twisted.python import log
 from twisted.internet import reactor
-from autobahn.twisted import websocket
-from autobahn.wamp import WampServerFactory, WampServerProtocol, exportRpc, WampClientFactory, WampClientProtocol
 from kotori.util import ConfigStore, BetterConfigStore
 
 
@@ -53,12 +56,12 @@ class NodeRegistry(object):
             pass
         client.publish('http://kotori.elmyra.de/dashboard#update', None)
 
-    @exportRpc
+    #@exportRpc
     def get_nodes(self):
         print "NodeRegistry.get_nodes:", self.nodes
         return self.nodes
 
-    @exportRpc
+    #@exportRpc
     def set_node_label(self, node_id, label):
         print "NodeRegistry.set_node_label:", node_id, label
         self.nodes.setdefault(node_id, {})['label'] = label
@@ -68,7 +71,7 @@ class NodeRegistry(object):
 registry = NodeRegistry()
 
 
-class MasterServerProtocol(WampServerProtocol):
+class MasterServerProtocol(WampWebSocketServerProtocol):
 
     def onSessionOpen(self):
         self.registerForRpc(registry, "http://kotori.elmyra.de/registry#")
@@ -79,7 +82,7 @@ class MasterServerProtocol(WampServerProtocol):
 
 
 
-class MasterServerFactory(WampServerFactory):
+class MasterServerFactory(WampWebSocketServerFactory):
 
     protocol = MasterServerProtocol
 
@@ -105,24 +108,42 @@ class MasterServerFactory(WampServerFactory):
             registry.unregister(node_id)
 
 
-class MasterClientProtocol(WampClientProtocol):
+class MasterClientProtocol(WampWebSocketClientProtocol):
     def onSessionOpen(self):
         global client
         client = self
 
-class MasterClientFactory(WampClientFactory):
+class MasterClientFactory(WampWebSocketClientFactory):
     protocol = MasterClientProtocol
 
+
+class Component(ApplicationSession):
+
+    """
+    A simple time service application component.
+    """
+
+    def onJoin(self, details):
+
+        def utcnow():
+            now = datetime.datetime.utcnow()
+            return now.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+        self.register(utcnow, 'com.timeservice.now')
 
 def boot_master(websocket_uri, debug=False):
 
     print 'INFO: Starting WebSocket master service on', websocket_uri
+    """
     factory = MasterServerFactory(websocket_uri, debugWamp = True)
     websocket.listenWS(factory)
 
     client_factory = MasterClientFactory(websocket_uri, debug=False, debugCodePaths=False, debugWamp=debug, debugApp=False)
     websocket.connectWS(client_factory)
+    """
 
+    runner = ApplicationRunner(websocket_uri, "kotori-realm", debug=True, debug_wamp=True, debug_app=True)
+    runner.run(Component, start_reactor=False)
 
 
 def run():
