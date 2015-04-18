@@ -46,7 +46,7 @@ def run():
     print "debug:", debug
 
     # defaults
-    websocket_uri = 'ws://localhost:9000/ws'
+    websocket_uri = 'ws://0.0.0.0:9000/ws'
     http_port = 35000
     udp_port = 7777
 
