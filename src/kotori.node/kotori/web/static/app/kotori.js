@@ -31,11 +31,12 @@ var ringbuffer_size = 100;
 var telemetry_graph = {
     'mma_x': [],
     'mma_y': [],
-
+    'temp': [],
 };
 var telemetry = {
     'mma_x': new CBuffer(ringbuffer_size),
     'mma_y': new CBuffer(ringbuffer_size),
+    'temp': new CBuffer(ringbuffer_size),
 };
 var graph;
 
@@ -60,6 +61,10 @@ window.onload = function() {
             {
                 color: palette.color(),
                 data: telemetry_graph['mma_y'],
+            },
+            {
+                color: palette.color(),
+                data: telemetry_graph['temp'],
             },
         ]
     });
@@ -172,11 +177,14 @@ function node_data(data) {
     var values = data[0].split(';');
     var mma_x = values[0];
     var mma_y = values[1];
+    var temp = values[2];
+
     var now = new Date().getTime();
     //console.log(mma_x, mma_y);
     //console.log({ x: now, y: parseFloat(mma_x) });
     telemetry['mma_x'].push({ x: now, y: parseFloat(mma_x) });
     telemetry['mma_y'].push({ x: now, y: parseFloat(mma_y) });
+    telemetry['temp'].push({ x: now, y: parseFloat(temp) });
 
     //console.log(telemetry['mma_x'].data);
 
@@ -185,6 +193,9 @@ function node_data(data) {
 
     telemetry_graph['mma_y'].splice(0, telemetry_graph['mma_y'].length);
     telemetry['mma_y'].toArray().forEach(function(v) {telemetry_graph['mma_y'].push(v)}, this);
+
+    telemetry_graph['temp'].splice(0, telemetry_graph['temp'].length);
+    telemetry['temp'].toArray().forEach(function(v) {telemetry_graph['temp'].push(v)}, this);
 
     graph.update();
 
