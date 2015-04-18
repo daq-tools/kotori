@@ -46,7 +46,12 @@ def run_wamp_client():
 def run_udp_client():
     log.startLogging(sys.stdout)
 
-    data = 'UDP hello'
+    #data = 'UDP hello'
+    #data = '5;3;'
+    try:
+        data = sys.argv[1]
+    except IndexError:
+        data = ''
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)

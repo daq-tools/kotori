@@ -26,7 +26,32 @@ var node_template = _.template(
 var sess;
 var nodes_ui = {};
 
+// data sink for udp adapter
+var telemetry = {'mma_x': [], 'mma_y': []};
+var graph;
+
+
 window.onload = function() {
+
+    var palette = new Rickshaw.Color.Palette( { scheme: '' } );
+    graph = new Rickshaw.Graph( {
+        element: document.querySelector("#chart"),
+        renderer: 'line',
+        width: 800,
+        height: 200,
+        series: [
+            {
+                color: palette.color(),
+                data: telemetry['mma_x'],
+            },
+            {
+                color: palette.color(),
+                data: telemetry['mma_y'],
+            },
+        ]
+    });
+    graph.render();
+
 
     // websocket url defaults
     if (!wsuri) {
@@ -113,13 +138,33 @@ window.onload = function() {
 
 };
 
+
+// receive UDP data here
 function node_data(data) {
+
     console.log('data:', data);
+
+    // display raw telemtry data
+    var data_display = data;
     if (_.isObject(data)) {
-        data = JSON.stringify(data);
+        data_display = JSON.stringify(data_display);
     }
-    $('#telemetry-content').append(data, '<br/>');
+    $('#telemetry-content').prepend(data_display, '<br/>');
+
+    // add data point to timeseries graph
+    var values = data[0].split(';');
+    var mma_x = values[0];
+    var mma_y = values[1];
+    var now = new Date().getTime();
+    //console.log(mma_x, mma_y);
+    //console.log({ x: now, y: parseFloat(mma_x) });
+    telemetry['mma_x'].push({ x: now, y: parseFloat(mma_x) });
+    telemetry['mma_y'].push({ x: now, y: parseFloat(mma_y) });
+    graph.update();
+
 }
+
+
 
 function gui_init() {
 
