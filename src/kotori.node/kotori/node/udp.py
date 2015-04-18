@@ -49,7 +49,7 @@ class UdpAdapter(DatagramProtocol):
         #self.transport.write(data, (host, port))
 
         # forward
-        app_session.publish('de.elmyra.kotori.telemetry.data', data)
+        app_session.publish(u'de.elmyra.kotori.telemetry.data', data)
 
 
 

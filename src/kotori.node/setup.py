@@ -7,6 +7,7 @@ requires = [
     'appdirs==1.4.0',
     'docopt==0.6.2',
     'json-store==2.1',
+    'alchimia==0.4',
 ]
 
 setup(name='kotori.node',
