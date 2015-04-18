@@ -27,26 +27,39 @@ var sess;
 var nodes_ui = {};
 
 // data sink for udp adapter
-var telemetry = {'mma_x': [], 'mma_y': []};
+var ringbuffer_size = 100;
+var telemetry_graph = {
+    'mma_x': [],
+    'mma_y': [],
+
+};
+var telemetry = {
+    'mma_x': new CBuffer(ringbuffer_size),
+    'mma_y': new CBuffer(ringbuffer_size),
+};
 var graph;
 
 
 window.onload = function() {
 
+
+    // ------------------------------------------
+    //   telemetry timeseries graph
+    // ------------------------------------------
     var palette = new Rickshaw.Color.Palette( { scheme: '' } );
     graph = new Rickshaw.Graph( {
         element: document.querySelector("#chart"),
         renderer: 'line',
         width: 800,
-        height: 200,
+        height: 300,
         series: [
             {
                 color: palette.color(),
-                data: telemetry['mma_x'],
+                data: telemetry_graph['mma_x'],
             },
             {
                 color: palette.color(),
-                data: telemetry['mma_y'],
+                data: telemetry_graph['mma_y'],
             },
         ]
     });
@@ -54,14 +67,17 @@ window.onload = function() {
 
 
     // websocket url defaults
+    wsuri = "ws://" + window.location.hostname + ":9000/ws";
+    /*
     if (!wsuri) {
         if (window.location.protocol === "file:") {
-            wsuri = "ws://localhost:9000";
+            wsuri = "ws://localhost:9000/ws";
 
         } else {
-            wsuri = "ws://" + window.location.hostname + ":9000";
+            wsuri = "ws://" + window.location.hostname + ":9000/ws";
         }
     }
+    */
 
     // explicitly specified websocket url
     var url = $.url(window.location.href);
@@ -151,6 +167,7 @@ function node_data(data) {
     }
     $('#telemetry-content').prepend(data_display, '<br/>');
 
+
     // add data point to timeseries graph
     var values = data[0].split(';');
     var mma_x = values[0];
@@ -160,6 +177,15 @@ function node_data(data) {
     //console.log({ x: now, y: parseFloat(mma_x) });
     telemetry['mma_x'].push({ x: now, y: parseFloat(mma_x) });
     telemetry['mma_y'].push({ x: now, y: parseFloat(mma_y) });
+
+    //console.log(telemetry['mma_x'].data);
+
+    telemetry_graph['mma_x'].splice(0, telemetry_graph['mma_x'].length);
+    telemetry['mma_x'].toArray().forEach(function(v) {telemetry_graph['mma_x'].push(v)}, this);
+
+    telemetry_graph['mma_y'].splice(0, telemetry_graph['mma_y'].length);
+    telemetry['mma_y'].toArray().forEach(function(v) {telemetry_graph['mma_y'].push(v)}, this);
+
     graph.update();
 
 }
