@@ -8,6 +8,7 @@ requires = [
     'docopt==0.6.2',
     'json-store==2.1',
     'alchimia==0.4',
+    'txmongo==0.6',
 ]
 
 setup(name='kotori.node',

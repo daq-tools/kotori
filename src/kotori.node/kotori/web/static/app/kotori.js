@@ -130,7 +130,7 @@ window.onload = function() {
         // trigger dashboard update
         sess.publish("dashboard:update", null, false);
 
-        session.call('com.timeservice.now').then(session.log);
+        //session.call('com.timeservice.now').then(session.log);
 
         /*
          session.publish('broadcast:heartbeat', ['abc', 'def']);
