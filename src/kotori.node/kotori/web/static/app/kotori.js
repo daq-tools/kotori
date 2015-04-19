@@ -56,6 +56,8 @@ window.onload = function() {
    	 	maxZoom: 18
 	}).addTo(map);
 
+	var marker = L.marker([51.5, -0.09]).addTo(map);
+
 
     // ------------------------------------------
     //   telemetry timeseries graph
@@ -186,11 +188,19 @@ function node_data(data) {
     $('#telemetry-content').prepend(data_display, '<br/>');
 
 
+
     // add data point to timeseries graph
     var values = data[0].split(';');
     var mma_x = values[0];
     var mma_y = values[1];
     var temp = values[2];
+    var lat = values[3];
+    var lng = values[4];
+    
+
+    var marker = L.marker(lat, lng).update();
+
+
 
     var now = new Date().getTime();
     //console.log(mma_x, mma_y);
