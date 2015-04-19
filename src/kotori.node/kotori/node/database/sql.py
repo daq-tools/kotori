@@ -23,6 +23,8 @@ class SqlDatabaseService(ApplicationSession):
             Column("mma_x", Integer()),
             Column("mma_y", Integer()),
             Column("temp", Numeric()),
+	    Column("lat", Numeric()),
+	    Column("lng", Numeric()),
         )
 
     @inlineCallbacks
@@ -69,10 +71,12 @@ class SqlDatabaseService(ApplicationSession):
         mma_x = int(payload[0])
         mma_y = int(payload[1])
         temp = float(payload[2])
+	lat = float(payload[3])
+	lng = float(payload[4])
 
         # store data to database
         if self.engine:
-            yield self.engine.execute(self.telemetry.insert().values(mma_x = mma_x, mma_y = mma_y, temp = temp))
+            yield self.engine.execute(self.telemetry.insert().values(mma_x = mma_x, mma_y = mma_y, temp = temp, lat = lat, lng = lng))
 
 
 def boot_sql_database(websocket_uri, debug=False):
