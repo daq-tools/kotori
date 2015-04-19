@@ -39,7 +39,7 @@ var telemetry = {
     'temp': new CBuffer(ringbuffer_size),
 };
 var graph;
-
+var marker;
 
 window.onload = function() {
 
@@ -48,6 +48,9 @@ window.onload = function() {
     // ------------------------------------------
     //   realtime Map powered by leaflet
     // ------------------------------------------
+
+    L.Icon.Default.imagePath = 'static/img';
+
 	var map = L.map('map').setView([51.505, -0.09], 13);
 
 	L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
@@ -56,7 +59,7 @@ window.onload = function() {
    	 	maxZoom: 18
 	}).addTo(map);
 
-	var marker = L.marker([51.5, -0.09]).addTo(map);
+	marker = L.marker([51.5, -0.09]).addTo(map);
 
 
     // ------------------------------------------
@@ -178,7 +181,7 @@ window.onload = function() {
 // receive UDP data here
 function node_data(data) {
 
-    console.log('data:', data);
+    //console.log('data:', data);
 
     // display raw telemtry data
     var data_display = data;
@@ -196,9 +199,11 @@ function node_data(data) {
     var temp = values[2];
     var lat = values[3];
     var lng = values[4];
-    
 
-    var marker = L.marker(lat, lng).update();
+
+    var latlng = L.latLng(parseFloat(lat), parseFloat(lng));
+    marker.setLatLng(latlng);
+    marker.update();
 
 
 
