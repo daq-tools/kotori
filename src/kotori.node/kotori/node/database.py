@@ -70,7 +70,7 @@ class DatabaseService(ApplicationSession):
 
     @inlineCallbacks
     def receive(self, data):
-        print "RECEIVE:", data
+        #print "RECEIVE:", data
 
         # decode data
         payload = data.split(';')
@@ -78,7 +78,7 @@ class DatabaseService(ApplicationSession):
         mma_y = int(payload[1])
         temp = float(payload[2])
 
-        print self.engine
+        #print self.engine
         if self.engine:
             yield self.engine.execute(self.telemetry.insert().values(mma_x = mma_x, mma_y = mma_y, temp = temp))
 
@@ -97,7 +97,7 @@ def boot_database(websocket_uri, debug=False):
     reactor.callLater(0, node_manager.master_connect)
     """
 
-    runner = ApplicationRunner(websocket_uri, "kotori-realm", debug=True, debug_wamp=True, debug_app=True)
+    runner = ApplicationRunner(websocket_uri, "kotori-realm", debug=False, debug_wamp=False, debug_app=False)
     runner.run(DatabaseService, start_reactor=False)
 
     #app = Application()
