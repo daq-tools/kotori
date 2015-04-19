@@ -114,7 +114,7 @@ class KotoriNode(ApplicationSession):
     def onJoin(self, details):
         print("Realm joined (WAMP session started).")
 
-        self.heartbeat_loop()
+        #self.heartbeat_loop()
 
         self.subscribe(self.heartbeat, u'de.elmyra.kotori.broadcast.heartbeat')
         self.subscribe(self.dump_event, u'de.elmyra.kotori.broadcast.operator-presence')

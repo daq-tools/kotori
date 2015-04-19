@@ -42,6 +42,7 @@ def run_wamp_client():
 
 class UdpAdapter(DatagramProtocol):
 
+    @inlineCallbacks
     def datagramReceived(self, data, (host, port)):
         print "received %r from %s:%d" % (data, host, port)
 
@@ -49,7 +50,7 @@ class UdpAdapter(DatagramProtocol):
         #self.transport.write(data, (host, port))
 
         # forward
-        app_session.publish(u'de.elmyra.kotori.telemetry.data', data)
+        yield app_session.publish(u'de.elmyra.kotori.telemetry.data', data)
 
 
 

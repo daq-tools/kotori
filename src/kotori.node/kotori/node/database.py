@@ -25,8 +25,8 @@ class DatabaseService(ApplicationSession):
         metadata = MetaData()
         self.telemetry = Table("telemetry", metadata,
             Column("id", Integer(), primary_key=True),
-            Column("mma_x", Numeric()),
-            Column("mma_y", Numeric()),
+            Column("mma_x", Integer()),
+            Column("mma_y", Integer()),
             Column("temp", Numeric()),
         )
 
