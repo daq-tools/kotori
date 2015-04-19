@@ -39,8 +39,14 @@ class SqlDatabaseService(ApplicationSession):
     @inlineCallbacks
     def startDatabase(self):
         self.engine = create_engine(
+
+            # sqlite in-memory
             #"sqlite://", reactor=reactor, strategy=TWISTED_STRATEGY
+
+            # sqlite on filesystem
             "sqlite:////tmp/kotori.sqlite", reactor=reactor, strategy=TWISTED_STRATEGY
+
+            # mysql... todo
         )
 
         # Create the table

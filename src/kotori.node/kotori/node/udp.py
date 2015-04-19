@@ -34,8 +34,11 @@ class UdpPublisher(ApplicationSession):
 
 def run_wamp_client():
     #log.startLogging(sys.stdout)
+
+    # connect to crossbar router/broker
     runner = ApplicationRunner("ws://localhost:9000/ws", "kotori-realm")
     #runner = ApplicationRunner("ws://master.example.com:9000/ws", "kotori-realm")
+
     runner.run(UdpPublisher, start_reactor=False)
 
 

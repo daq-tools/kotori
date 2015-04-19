@@ -35,6 +35,7 @@ class MongoDatabaseService(ApplicationSession):
 
     @inlineCallbacks
     def startDatabase(self):
+        #self.mongo = yield txmongo.MongoConnection(host='127.0.0.0', port=27017)
         self.mongo = yield txmongo.MongoConnection()
 
     def onLeave(self, details):
