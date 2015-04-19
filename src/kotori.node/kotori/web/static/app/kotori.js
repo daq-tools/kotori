@@ -197,13 +197,19 @@ function node_data(data) {
     var mma_x = values[0];
     var mma_y = values[1];
     var temp = values[2];
-    var lat = values[3];
-    var lng = values[4];
 
+    try {
+        var lat = values[3];
+        var lng = values[4];
 
-    var latlng = L.latLng(parseFloat(lat), parseFloat(lng));
-    marker.setLatLng(latlng);
-    marker.update();
+        var latlng = L.latLng(parseFloat(lat), parseFloat(lng));
+        marker.setLatLng(latlng);
+        marker.update();
+
+    } catch (ex) {
+        console.warn('Could not decode GPS position:', ex);
+
+    }
 
 
 
