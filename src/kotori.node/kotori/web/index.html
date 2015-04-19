@@ -82,7 +82,39 @@
 
 <div class="container">
 
+    
+
     <div class="row panel panel-default panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="display: inline">Timeseries prototype</h3>
+        </div>
+        <div class="panel-body">
+            <div id="chart"></div>
+        </div>
+    </div>
+
+    <div class="row panel panel-default panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="display: inline">Map</h3>
+        </div>
+        <div class="panel-body">
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <div class="row panel panel-default panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="display: inline">Telemetry Data</h3>
+            &nbsp;&nbsp;&nbsp;
+            <button id="telemetry-clear">Clear</button>
+        </div>
+        <div class="panel-body">
+            <div id="telemetry-content">
+            </div>
+        </div>
+    </div>
+
+<div class="row panel panel-default panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">Kotori Dashboard</h3>
         </div>
@@ -96,27 +128,6 @@
             </div>
             <div class="pull-right">
                 <button id="operator-presence" type="button" class="btn active btn-primary btn-lg" data-toggle="button">OperatorPresence</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="row panel panel-default panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title" style="display: inline">Timeseries prototype</h3>
-        </div>
-        <div class="panel-body">
-            <div id="chart"></div>
-        </div>
-    </div>
-
-    <div class="row panel panel-default panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title" style="display: inline">Telemetry Data</h3>
-            &nbsp;&nbsp;&nbsp;
-            <button id="telemetry-clear">Clear</button>
-        </div>
-        <div class="panel-body">
-            <div id="telemetry-content">
             </div>
         </div>
     </div>
@@ -169,6 +180,12 @@
 <script src="static/js/bootstrap.min.js"></script>
 <script src="static/js/bootstrap-editable.min.js"></script>
 <script src="static/js/underscore-min.js"></script>
+
+<!-- Load leaflet.js -->
+<link rel="stylesheet" href="static/css/leaflet.css" />
+<script src="static/js/leaflet.js"></script>
+
+
 
 <!-- Load d3.js -->
 <script src="static/js/d3.v3.min.js" charset="utf-8"></script>
