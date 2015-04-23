@@ -39,6 +39,8 @@ var telemetry = {
     'temp': new CBuffer(ringbuffer_size),
 };
 var graph;
+
+var map;
 var marker;
 
 window.onload = function() {
@@ -51,7 +53,7 @@ window.onload = function() {
 
     L.Icon.Default.imagePath = 'static/img';
 
-	var map = L.map('map').setView([51.505, -0.09], 13);
+	map = L.map('map').setView([51.505, -0.09], 13);
 
 	L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
     		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
@@ -203,6 +205,7 @@ function node_data(data) {
         var lng = values[4];
 
         var latlng = L.latLng(parseFloat(lat), parseFloat(lng));
+        //map.panTo(latlng);
         marker.setLatLng(latlng);
         marker.update();
 
