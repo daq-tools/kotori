@@ -91,6 +91,7 @@ Query database
 --------------
 
 See also:
+
 - https://pypi.python.org/pypi/influxdb
 - http://influxdb.com/docs/v0.8/introduction/getting_started.html
 
