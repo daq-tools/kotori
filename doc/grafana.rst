@@ -48,19 +48,18 @@ Add InfluxDB datasource
 See also:
 http://docs.grafana.org/datasources/influxdb/
 
-| URL: http://192.168.59.103:3000/datasources/new
-| Name: Kotori Telemetry
-| Default: yes
-| Type: InfluxDB 0.8.x
-
-| Http settings
-| Url: http://192.168.59.103:8086/
-| Access: proxy
-
-| InfluxDB Details
-| Database: kotori
-| User: root
-| Password: root
+- Base settings
+    - URL: http://192.168.59.103:3000/datasources/new
+    - Name: Kotori Telemetry
+    - Default: yes
+    - Type: InfluxDB 0.8.x
+- Http settings
+    - Url: http://192.168.59.103:8086/
+    - Access: proxy
+- InfluxDB Details
+    - Database: kotori
+    - User: root
+    - Password: root
 
 
 Add Kotori dashboard
