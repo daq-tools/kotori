@@ -2,6 +2,7 @@
 # (c) 2014-2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import sys
 from pkgutil import extend_path
+from kotori.node.database.influx import boot_influx_database
 from kotori.node.database.mongo import boot_mongo_database
 from twisted.internet import reactor
 from twisted.python import log
@@ -73,6 +74,7 @@ def run():
         boot_udp_adapter(udp_port, debug)
         boot_sql_database(websocket_uri)
         boot_mongo_database(websocket_uri)
+        boot_influx_database(websocket_uri)
 
     reactor.run()
 

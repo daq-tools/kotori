@@ -71,8 +71,12 @@ class SqlDatabaseService(ApplicationSession):
         mma_x = int(payload[0])
         mma_y = int(payload[1])
         temp = float(payload[2])
-	lat = float(payload[3])
-	lng = float(payload[4])
+        try:
+            lat = float(payload[3])
+            lng = float(payload[4])
+        except:
+            lat = 0
+            lng = 0
 
         # store data to database
         if self.engine:

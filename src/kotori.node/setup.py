@@ -9,6 +9,7 @@ requires = [
     'json-store==2.1',
     'alchimia==0.4',
     'txmongo==0.6',
+    'influxdb==2.0.2',
 ]
 
 setup(name='kotori.node',
@@ -39,6 +40,7 @@ setup(name='kotori.node',
               'kotori        = kotori:run',
               'kotori-wamp-client = kotori.master.client:run_wamp_client',
               'kotori-udp-client  = kotori.master.client:run_udp_client',
+              'kotori-udp-telemetry-fuzzer  = kotori.master.client:run_udp_telemetry_fuzzer',
               ],
       },
 )
