@@ -53,7 +53,7 @@ window.onload = function() {
 
     L.Icon.Default.imagePath = 'static/img';
 
-	map = L.map('map').setView([48.137222, 11.575556], 13);
+	map = L.map('map').setView([48.137222, 11.575556], 17);
 
 	L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
     		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
@@ -201,8 +201,8 @@ function node_data(data) {
     var temp = values[2];
 
     try {
-        var lat = values[3];
-        var lng = values[4];
+        var lat = values[30];
+        var lng = values[31];
 
         var latlng = L.latLng(parseFloat(lat), parseFloat(lng));
         //map.panTo(latlng);

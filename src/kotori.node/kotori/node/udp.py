@@ -6,6 +6,7 @@ from autobahn.twisted.wamp import ApplicationRunner, ApplicationSession, Applica
 from twisted.internet import reactor
 from twisted.internet.defer import inlineCallbacks
 from twisted.internet.protocol import DatagramProtocol
+import geo_helper
 
 app_session = None
 
@@ -49,11 +50,42 @@ class UdpAdapter(DatagramProtocol):
     def datagramReceived(self, data, (host, port)):
         print "received %r from %s:%d" % (data, host, port)
 
+        try:
+         payload = data.split(';')
+         GPS_X           = int(payload[24])
+         GPS_Y           = int(payload[25])
+         GPS_Z           = int(payload[26])
+
+         x = GPS_X / 100.0
+         y = GPS_Y / 100.0
+         z = GPS_Z / 100.0
+
+
+         llh = geo_helper.turn_xyz_into_llh(x, y, z, "wgs84")
+         lat = llh[0]
+         lng = llh[1]
+
+         seq = (data, str(lat), str(lng))
+
+         jdata = ";".join(seq)
+
+#         lat = float(lat_i) / 100.0
+#         lng = float(lng_i) / 100.0
+
+#         data.append(';')
+#         data.append(lat)
+#         data.append(';')
+#         data.append(str(lng))
+
+        except ValueError:
+            print('Could not decode data: {}'.format(jdata))
+
+
         # ECHO
         #self.transport.write(data, (host, port))
 
         # forward
-        yield app_session.publish(u'de.elmyra.kotori.telemetry.data', data)
+        yield app_session.publish(u'de.elmyra.kotori.telemetry.data', jdata)
 
 
 
