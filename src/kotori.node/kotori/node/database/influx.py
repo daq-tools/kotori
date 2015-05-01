@@ -35,7 +35,7 @@ class InfluxDatabaseService(ApplicationSession):
 
     @inlineCallbacks
     def startDatabase(self):
-        self.influx = InfluxDBClient('192.168.59.103', 8086, 'root', 'root', 'kotori')
+        self.influx = InfluxDBClient('127.0.0.1', 8086, 'root', 'BCqIJvslOnJ9S4', 'kotori')
         self.influx.create_database('kotori')
 
     def onLeave(self, details):

@@ -29,7 +29,8 @@ Setup node sandbox
     virtualenv-2.7 --system-site-packages .venv27
     source .venv27/bin/activate
 
-    python src/kotori.node/setup.py develop
+    cd src/kotori.node/
+    python setup.py develop
 
 
 Run daemons

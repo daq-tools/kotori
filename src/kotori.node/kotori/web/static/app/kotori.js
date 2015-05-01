@@ -53,7 +53,7 @@ window.onload = function() {
 
     L.Icon.Default.imagePath = 'static/img';
 
-	map = L.map('map').setView([51.505, -0.09], 13);
+	map = L.map('map').setView([48.137222, 11.575556], 13);
 
 	L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
     		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
@@ -61,7 +61,7 @@ window.onload = function() {
    	 	maxZoom: 18
 	}).addTo(map);
 
-	marker = L.marker([51.5, -0.09]).addTo(map);
+	marker = L.marker([48.137222, 11.575556]).addTo(map);
 
 
     // ------------------------------------------
