@@ -82,13 +82,14 @@ class MongoDatabaseService(ApplicationSession):
             GPS_Speed       = int(payload[27])
             V_Safety        = int(payload[28])
             H2_Level        = int(payload[29])
-            lat             = float(payload[30])
-            lng             = float(payload[31])
+            O2_calc         = float(payload[30])
+            lat             = float(payload[31])
+            lng             = float(payload[32])
 
             # store data to database
             if self.mongo:
                 telemetry = self.mongo.kotori.telemetry
-                yield telemetry.insert(dict(MSG_ID = MSG_ID, V_FC = V_FC, V_CAP = V_CAP, A_ENG = A_ENG, A_CAP = A_CAP, T_O2_In = T_O2_In, T_O2_Out = T_O2_Out, T_FC_H2O_Out = T_FC_H2O_Out, Water_In = Water_In, Water_Out = Water_Out, Master_SW = Master_SW, CAP_Down_SW = CAP_Down_SW, Drive_SW = Drive_SW, FC_state = FC_state, Mosfet_state = Mosfet_state, Safety_state = Safety_state, Air_Pump_load = Air_Pump_load, Mosfet_load = Mosfet_load, Water_Pump_load = Water_Pump_load, Fan_load = Fan_load, Acc_X = Acc_X, Acc_Y = Acc_Y, Acc_Z = Acc_Z, AUX = AUX, GPS_X = GPS_X, GPS_Y = GPS_Y, GPS_Z = GPS_Z, GPS_Speed = GPS_Speed, V_Safety = V_Safety, H2_Level = H2_Level, lat = lat, lng = lng))
+                yield telemetry.insert(dict(MSG_ID = MSG_ID, V_FC = V_FC, V_CAP = V_CAP, A_ENG = A_ENG, A_CAP = A_CAP, T_O2_In = T_O2_In, T_O2_Out = T_O2_Out, T_FC_H2O_Out = T_FC_H2O_Out, Water_In = Water_In, Water_Out = Water_Out, Master_SW = Master_SW, CAP_Down_SW = CAP_Down_SW, Drive_SW = Drive_SW, FC_state = FC_state, Mosfet_state = Mosfet_state, Safety_state = Safety_state, Air_Pump_load = Air_Pump_load, Mosfet_load = Mosfet_load, Water_Pump_load = Water_Pump_load, Fan_load = Fan_load, Acc_X = Acc_X, Acc_Y = Acc_Y, Acc_Z = Acc_Z, AUX = AUX, GPS_X = GPS_X, GPS_Y = GPS_Y, GPS_Z = GPS_Z, GPS_Speed = GPS_Speed, V_Safety = V_Safety, H2_Level = H2_Level, O2_calc = O2_calc, lat = lat, lng = lng))
 
         except ValueError:
             print('Could not decode data: {}'.format(data))

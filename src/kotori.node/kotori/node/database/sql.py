@@ -51,6 +51,7 @@ class SqlDatabaseService(ApplicationSession):
             Column("GPS_Speed", Integer()),
             Column("V_Safety", Integer()),
             Column("H2_Level", Integer()),
+            Column("O2_calc", Numeric()),
             Column("lat", Numeric()),
             Column("lng", Numeric()),
             )
@@ -137,8 +138,9 @@ class SqlDatabaseService(ApplicationSession):
         GPS_Speed       = int(payload[27])
         V_Safety        = int(payload[28])
         H2_Level        = int(payload[29])
-        lat             = float(payload[30])
-        lng             = float(payload[31])
+        O2_calc         = float(payload[30])
+        lat             = float(payload[31])
+        lng             = float(payload[32])
 
 
 

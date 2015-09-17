@@ -25,18 +25,22 @@ var node_template = _.template(
 // WAMP session object
 var sess;
 var nodes_ui = {};
+var lat;
+var lng;
 
 // data sink for udp adapter
-var ringbuffer_size = 100;
+var ringbuffer_size = 640;
 var telemetry_graph = {
-    'mma_x': [],
-    'mma_y': [],
-    'temp': [],
+    'V_FC': [],
+    'V_CAP': [],
+    'A_ENG': [],
+	'A_CAP': [],
 };
 var telemetry = {
-    'mma_x': new CBuffer(ringbuffer_size),
-    'mma_y': new CBuffer(ringbuffer_size),
-    'temp': new CBuffer(ringbuffer_size),
+    'V_FC': new CBuffer(ringbuffer_size),
+    'V_CAP': new CBuffer(ringbuffer_size),
+    'A_ENG': new CBuffer(ringbuffer_size),
+	'A_CAP': new CBuffer(ringbuffer_size),
 };
 var graph;
 
@@ -53,15 +57,15 @@ window.onload = function() {
 
     L.Icon.Default.imagePath = 'static/img';
 
-	map = L.map('map').setView([48.137222, 11.575556], 17);
+	map = L.map('map').setView([48.1565963663, 11.5571667218], 17);
 
-	L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+	L.tileLayer('https://{s}.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYmFzdGlhbmhlbm5la2UiLCJhIjoiczZLeUpYbyJ9.01Znhen2le-PF6G4307P9Q', {
     		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-		id: 'examples.map-i875mjb7',
+		id: 'bastianhenneke.m4ep44jb',
    	 	maxZoom: 18
 	}).addTo(map);
 
-	marker = L.marker([48.137222, 11.575556]).addTo(map);
+	marker = L.marker([48.1565963663, 11.5571667218]).addTo(map);
 
 
     // ------------------------------------------
@@ -76,15 +80,19 @@ window.onload = function() {
         series: [
             {
                 color: palette.color(),
-                data: telemetry_graph['mma_x'],
+                data: telemetry_graph['V_FC'],
             },
             {
                 color: palette.color(),
-                data: telemetry_graph['mma_y'],
+                data: telemetry_graph['V_CAP'],
             },
             {
                 color: palette.color(),
-                data: telemetry_graph['temp'],
+                data: telemetry_graph['A_ENG'],
+            },
+			{
+                color: palette.color(),
+                data: telemetry_graph['A_CAP'],
             },
         ]
     });
@@ -186,23 +194,24 @@ function node_data(data) {
     //console.log('data:', data);
 
     // display raw telemtry data
-    var data_display = data;
-    if (_.isObject(data)) {
-        data_display = JSON.stringify(data_display);
-    }
-    $('#telemetry-content').prepend(data_display, '<br/>');
+//    var data_display = data;
+//    if (_.isObject(data)) {
+//        data_display = JSON.stringify(data_display);
+//    }
+//    $('#telemetry-content').prepend(data_display, '<br/>');
 
 
 
     // add data point to timeseries graph
     var values = data[0].split(';');
-    var mma_x = values[0];
-    var mma_y = values[1];
-    var temp = values[2];
+    var V_FC = values[1];
+    var V_CAP = values[2];
+    var A_ENG = values[3];
+	var A_CAP = values[4];
 
     try {
-        var lat = values[30];
-        var lng = values[31];
+        lat = values[30];
+        lng = values[31];
 
         var latlng = L.latLng(parseFloat(lat), parseFloat(lng));
         //map.panTo(latlng);
@@ -219,20 +228,24 @@ function node_data(data) {
     var now = new Date().getTime();
     //console.log(mma_x, mma_y);
     //console.log({ x: now, y: parseFloat(mma_x) });
-    telemetry['mma_x'].push({ x: now, y: parseFloat(mma_x) });
-    telemetry['mma_y'].push({ x: now, y: parseFloat(mma_y) });
-    telemetry['temp'].push({ x: now, y: parseFloat(temp) });
+    telemetry['V_FC'].push({ x: now, y: parseFloat(V_FC) });
+    telemetry['V_CAP'].push({ x: now, y: parseFloat(V_CAP) });
+    telemetry['A_ENG'].push({ x: now, y: parseFloat(A_ENG) });
+	telemetry['A_CAP'].push({ x: now, y: parseFloat(A_CAP) });
 
     //console.log(telemetry['mma_x'].data);
 
-    telemetry_graph['mma_x'].splice(0, telemetry_graph['mma_x'].length);
-    telemetry['mma_x'].toArray().forEach(function(v) {telemetry_graph['mma_x'].push(v)}, this);
+    telemetry_graph['V_FC'].splice(0, telemetry_graph['V_FC'].length);
+    telemetry['V_FC'].toArray().forEach(function(v) {telemetry_graph['V_FC'].push(v)}, this);
 
-    telemetry_graph['mma_y'].splice(0, telemetry_graph['mma_y'].length);
-    telemetry['mma_y'].toArray().forEach(function(v) {telemetry_graph['mma_y'].push(v)}, this);
+    telemetry_graph['V_CAP'].splice(0, telemetry_graph['V_CAP'].length);
+    telemetry['V_CAP'].toArray().forEach(function(v) {telemetry_graph['V_CAP'].push(v)}, this);
 
-    telemetry_graph['temp'].splice(0, telemetry_graph['temp'].length);
-    telemetry['temp'].toArray().forEach(function(v) {telemetry_graph['temp'].push(v)}, this);
+    telemetry_graph['A_ENG'].splice(0, telemetry_graph['A_ENG'].length);
+    telemetry['A_ENG'].toArray().forEach(function(v) {telemetry_graph['A_ENG'].push(v)}, this);
+	
+	telemetry_graph['A_CAP'].splice(0, telemetry_graph['A_CAP'].length);
+    telemetry['A_CAP'].toArray().forEach(function(v) {telemetry_graph['A_CAP'].push(v)}, this);
 
     graph.update();
 
@@ -256,6 +269,10 @@ function gui_init() {
 
     $('#telemetry-clear').on('click', function() {
         $('#telemetry-content').empty();
+    });
+	
+	$('#CenterMap').on('click', function() {
+        map.panTo(new L.LatLng(parseFloat(lat), parseFloat(lng)));
     });
 }
 

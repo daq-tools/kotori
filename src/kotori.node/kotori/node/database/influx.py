@@ -35,8 +35,8 @@ class InfluxDatabaseService(ApplicationSession):
 
     @inlineCallbacks
     def startDatabase(self):
-        self.influx = InfluxDBClient('127.0.0.1', 8086, 'root', 'BCqIJvslOnJ9S4', 'kotori')
-        self.influx.create_database('kotori')
+        self.influx = InfluxDBClient('127.0.0.1', 8086, 'root', 'BCqIJvslOnJ9S4', 'kotori_2')
+        self.influx.create_database('kotori_2')
 
     def onLeave(self, details):
         print("Realm left (WAMP session ended).")
@@ -44,6 +44,9 @@ class InfluxDatabaseService(ApplicationSession):
     def onDisconnect(self):
         print("Transport disconnected.")
         #reactor.stop()
+
+
+
 
     @inlineCallbacks
     def receive(self, data):
@@ -53,37 +56,40 @@ class InfluxDatabaseService(ApplicationSession):
         payload = data.split(';')
         try:
             MSG_ID          = int(payload[0])
-            V_FC            = int(payload[1])
-            V_CAP           = int(payload[2])
-            A_ENG           = int(payload[3])
-            A_CAP           = int(payload[4])
-            T_O2_In         = int(payload[5])
-            T_O2_Out        = int(payload[6])
-            T_FC_H2O_Out    = int(payload[7])
-            Water_In        = int(payload[8])
-            Water_Out       = int(payload[9])
+            V_FC            = float(payload[1]) * 0.001
+            V_CAP           = float(payload[2]) * 0.001
+            A_ENG           = float(payload[3]) * 0.001
+            A_CAP           = float(payload[4]) * 0.001
+            T_O2_In         = float(payload[5]) * 0.1
+            T_O2_Out        = float(payload[6]) * 0.1
+            T_FC_H2O_Out    = float(payload[7]) * 0.1
+            Water_In        = float(payload[8])
+            Water_Out       = float(payload[9])
             Master_SW       = bool(payload[10])
             CAP_Down_SW     = bool(payload[11])
             Drive_SW        = bool(payload[12])
             FC_state        = bool(payload[13])
             Mosfet_state    = bool(payload[14])
             Safety_state    = bool(payload[15])
-            Air_Pump_load   = float(payload[16])
-            Mosfet_load     = int(payload[17])
-            Water_Pump_load = int(payload[18])
-            Fan_load        = int(payload[19])
-            Acc_X           = int(payload[20])
-            Acc_Y           = int(payload[21])
-            Acc_Z           = int(payload[22])
-            AUX             = float(payload[23])
-            GPS_X           = int(payload[24])
-            GPS_Y           = int(payload[25])
-            GPS_Z           = int(payload[26])
-            GPS_Speed       = int(payload[27])
-            V_Safety        = int(payload[28])
+            Air_Pump_load   = float(payload[16]) * 0.1
+            Mosfet_load     = float(payload[17]) * 0.1
+            Water_Pump_load = float(payload[18]) * 0.1
+            Fan_load        = float(payload[19]) * 0.1
+            Acc_X           = float(payload[20]) * 0.001
+            Acc_Y           = float(payload[21]) * 0.001
+            Acc_Z           = float(payload[22]) * 0.001
+            H2_flow         = float(payload[23]) * 0.001
+            GPS_X           = float(payload[24]) * 0.01
+            GPS_Y           = float(payload[25]) * 0.01
+            GPS_Z           = float(payload[26]) * 0.01
+            GPS_Speed       = float(payload[27]) * 0.01
+            V_Safety        = float(payload[28]) * 0.001
             H2_Level        = int(payload[29])
-            lat             = float(payload[30])
-            lng             = float(payload[31])
+            O2_calc         = float(payload[30]) * 0.01
+            lat             = float(payload[31])
+            lng             = float(payload[32])
+            P_In            = A_CAP * V_FC
+            P_Out           = A_ENG * V_CAP
 
 			
 			
@@ -94,9 +100,9 @@ class InfluxDatabaseService(ApplicationSession):
                data = [
                    {
                        "name" : "telemetry",
-                       "columns" : ["MSG_ID", "V_FC", "V_CAP", "A_ENG", "A_CAP", "T_O2_In", "T_O2_Out", "T_FC_H2O_Out", "Water_In", "Water_Out", "Master_SW", "CAP_Down_SW", "Drive_SW", "FC_state", "Mosfet_state", "Safety_state", "Air_Pump_load", "Mosfet_load", "Water_Pump_load", "Fan_load", "Acc_X", "Acc_Y", "Acc_Z", "AUX", "GPS_X", "GPS_Y", "GPS_Z", "GPS_Speed", "V_Safety", "H2_Level", "lat", "lng"],
+                       "columns" : ["MSG_ID", "V_FC", "V_CAP", "A_ENG", "A_CAP", "T_O2_In", "T_O2_Out", "T_FC_H2O_Out", "Water_In", "Water_Out", "Master_SW", "CAP_Down_SW", "Drive_SW", "FC_state", "Mosfet_state", "Safety_state", "Air_Pump_load", "Mosfet_load", "Water_Pump_load", "Fan_load", "Acc_X", "Acc_Y", "Acc_Z", "H2_flow", "GPS_X", "GPS_Y", "GPS_Z", "GPS_Speed", "V_Safety", "H2_Level", "O2_calc", "lat", "lng", "P_In", "P_Out"],
                        "points" : [
-                           [MSG_ID, V_FC, V_CAP, A_ENG, A_CAP, T_O2_In, T_O2_Out, T_FC_H2O_Out, Water_In, Water_Out, Master_SW, CAP_Down_SW, Drive_SW, FC_state, Mosfet_state, Safety_state, Air_Pump_load, Mosfet_load, Water_Pump_load, Fan_load, Acc_X, Acc_Y, Acc_Z, AUX, GPS_X, GPS_Y, GPS_Z, GPS_Speed, V_Safety, H2_Level, lat, lng]
+                           [MSG_ID, V_FC, V_CAP, A_ENG, A_CAP, T_O2_In, T_O2_Out, T_FC_H2O_Out, Water_In, Water_Out, Master_SW, CAP_Down_SW, Drive_SW, FC_state, Mosfet_state, Safety_state, Air_Pump_load, Mosfet_load, Water_Pump_load, Fan_load, Acc_X, Acc_Y, Acc_Z, H2_flow, GPS_X, GPS_Y, GPS_Z, GPS_Speed, V_Safety, H2_Level, O2_calc, lat, lng, P_In, P_Out]
                        ]
                    }
                ]
