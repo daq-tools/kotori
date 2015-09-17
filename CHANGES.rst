@@ -6,6 +6,51 @@ develop
 -------
 
 
+2015-05-21 0.2.2
+----------------
+- hydro2motion: production improvements from May 2015 in Rotterdam
+
+
+2015-05-01 0.2.1
+----------------
+- hydro2motion: ui: set map position to Munich
+- hydro2motion: ui: add lat long conversion
+- hydro2motion: backend: use InfluxDB on localhost
+- hydro2motion: backend: process complete Fuelcell telemetry data package
+
+
+2015-04-24 0.2.0
+----------------
+- ui: add d3 and rickshaw
+- ui: add timeseries prototype
+- ui: add cbuffer.js
+- ui: use ringbuffer for telemetry data
+- backend: more convenient default setting: listen on all interfaces
+- sensors: add temp sensor
+- backend: store telemetry data to sqlite database
+- middleware: reduce lag because of debug messages
+- middleware: disable heartbeat
+- backend: add mongodb adapter
+- ui: add leaflet map
+- ui: fix image baseurl for leaflet.js
+- ui: add marker to leaflet widget
+- ui: be graceful to old wire format for telemetry data
+- backend: store latitude and longitude into databases
+- ui: mapview: let the marker follow the position (map.panTo), but disable it
+- backend: add database adapter for InfluxDB and some documentation along the lines
+- improve documentation
+
+
+2015-03-18 0.1.1
+----------------
+- ui/backend: add persistent configuration store
+- ui: add bootstrap-editable css
+- namespace refactoring from ilaundry.node to kotori.node
+- upgrade javascript libraries to autobahn 0.10.1, add crossbar configuration
+- partial upgrade to autobahn 0.10.1
+- backend: add udp adapter
+
+
 2014-01-21 0.1.0
 ----------------
 - node: reactivate heartbeat
