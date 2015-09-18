@@ -1,0 +1,15 @@
+================
+Kotori DAQ Tasks
+================
+
+
+-----------
+Milestone 1
+-----------
+- dynamic receiver channels
+
+
+-----------
+Milestone 2
+-----------
+- pdf renderer
