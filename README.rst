@@ -10,7 +10,7 @@ Get code
 --------
 ::
 
-    git clone git@git.elmyra.de:ums/kotori-mqtt.git
+    git clone git@git.elmyra.de:isar-engineering/kotori-daq.git
     cd kotori-mqtt
 
 
@@ -28,6 +28,7 @@ Setup node sandbox
 
     virtualenv-2.7 --system-site-packages .venv27
     source .venv27/bin/activate
+    pip install 'setuptools>=18.3.1'
 
     cd src/kotori.node/
     python setup.py develop

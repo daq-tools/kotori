@@ -22,7 +22,7 @@ class MongoDatabaseService(ApplicationSession):
         """
         return self.__class__.__name__
 
-    @inlineCallbacks
+    #@inlineCallbacks
     def onJoin(self, details):
         print("Realm joined (WAMP session started).")
 
@@ -33,19 +33,20 @@ class MongoDatabaseService(ApplicationSession):
 
         #self.leave()
 
-    @inlineCallbacks
+    #@inlineCallbacks
     def startDatabase(self):
         #self.mongo = yield txmongo.MongoConnection(host='127.0.0.0', port=27017)
         self.mongo = yield txmongo.MongoConnection()
 
     def onLeave(self, details):
         print("Realm left (WAMP session ended).")
+        ApplicationSession.onLeave(self, details)
 
     def onDisconnect(self):
         print("Transport disconnected.")
         #reactor.stop()
 
-    @inlineCallbacks
+    #@inlineCallbacks
     def receive(self, data):
         #print "RECEIVE:", data
 
@@ -95,9 +96,9 @@ class MongoDatabaseService(ApplicationSession):
             print('Could not decode data: {}'.format(data))
 
 
-def boot_mongo_database(websocket_uri, debug=False):
+def boot_mongo_database(websocket_uri, debug=False, trace=False):
 
     print 'INFO: Starting mongo database service, connecting to broker', websocket_uri
 
-    runner = ApplicationRunner(websocket_uri, "kotori-realm", debug=False, debug_wamp=False, debug_app=False)
+    runner = ApplicationRunner(websocket_uri, u'kotori-realm', debug=trace, debug_wamp=debug, debug_app=debug)
     runner.run(MongoDatabaseService, start_reactor=False)

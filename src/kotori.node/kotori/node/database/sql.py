@@ -67,7 +67,7 @@ class SqlDatabaseService(ApplicationSession):
 #	    Column("lng", Numeric()),
 #        )
 
-    @inlineCallbacks
+    #@inlineCallbacks
     def onJoin(self, details):
         print("Realm joined (WAMP session started).")
 
@@ -78,7 +78,7 @@ class SqlDatabaseService(ApplicationSession):
 
         #self.leave()
 
-    @inlineCallbacks
+    #@inlineCallbacks
     def startDatabase(self):
         self.engine = create_engine(
 
@@ -97,12 +97,13 @@ class SqlDatabaseService(ApplicationSession):
 
     def onLeave(self, details):
         print("Realm left (WAMP session ended).")
+        ApplicationSession.onLeave(self, details)
 
     def onDisconnect(self):
         print("Transport disconnected.")
         #reactor.stop()
 
-    @inlineCallbacks
+    #@inlineCallbacks
     def receive(self, data):
         #print "RECEIVE:", data
 
@@ -160,9 +161,9 @@ class SqlDatabaseService(ApplicationSession):
             yield self.engine.execute(self.telemetry.insert().values(MSG_ID = MSG_ID, V_FC = V_FC, V_CAP = V_CAP, A_ENG = A_ENG, A_CAP = A_CAP, T_O2_In = T_O2_In, T_O2_Out = T_O2_Out, T_FC_H2O_Out = T_FC_H2O_Out, Water_In = Water_In, Water_Out = Water_Out, Master_SW = Master_SW, CAP_Down_SW = CAP_Down_SW, Drive_SW = Drive_SW, FC_state = FC_state, Mosfet_state = Mosfet_state, Safety_state = Safety_state, Air_Pump_load = Air_Pump_load, Mosfet_load = Mosfet_load, Water_Pump_load = Water_Pump_load, Fan_load = Fan_load, Acc_X = Acc_X, Acc_Y = Acc_Y, Acc_Z = Acc_Z, AUX = AUX, GPS_X = GPS_X, GPS_Y = GPS_Y, GPS_Z = GPS_Z, GPS_Speed = GPS_Speed, V_Safety = V_Safety, H2_Level = H2_Level, lat = lat, lng = lng))
 
 
-def boot_sql_database(websocket_uri, debug=False):
+def boot_sql_database(websocket_uri, debug=False, trace=False):
 
     print 'INFO: Starting sql database service, connecting to broker', websocket_uri
 
-    runner = ApplicationRunner(websocket_uri, "kotori-realm", debug=False, debug_wamp=False, debug_app=False)
+    runner = ApplicationRunner(websocket_uri, u'kotori-realm', debug=trace, debug_wamp=debug, debug_app=debug)
     runner.run(SqlDatabaseService, start_reactor=False)

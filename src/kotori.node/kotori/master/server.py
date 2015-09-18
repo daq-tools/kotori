@@ -11,7 +11,7 @@ from autobahn.twisted.websocket import WampWebSocketClientProtocol, WampWebSocke
 from autobahn.twisted.websocket import WampWebSocketServerProtocol, WampWebSocketServerFactory
 from twisted.python import log
 from twisted.internet import reactor
-from kotori.util import ConfigStore, BetterConfigStore
+from kotori.util import ConfigStoreJson
 
 
 client = None
@@ -22,11 +22,11 @@ class NodeRegistry(object):
     def __init__(self):
         self.nodes = {}
         self.sessions = {}
-        self.config = BetterConfigStore()
-        print '----------------------', self.config.store
-        print '----------------------', self.config.get('nodes')
+        self.config = ConfigStoreJson()
+        #print '----------------------', self.config.store
+        #print '----------------------', self.config.get('nodes')
         #self.nodes = self.config.get('nodes', {})
-        print '======================', self.nodes
+        #print '======================', self.nodes
 
     def persist(self):
         print "============= persist", self.nodes
@@ -131,7 +131,8 @@ class Component(ApplicationSession):
 
         self.register(utcnow, 'com.timeservice.now')
 
-def boot_master(websocket_uri, debug=False):
+
+def boot_master(websocket_uri, debug=False, trace=False):
 
     print 'INFO: Starting WebSocket master service on', websocket_uri
     """
@@ -142,7 +143,7 @@ def boot_master(websocket_uri, debug=False):
     websocket.connectWS(client_factory)
     """
 
-    runner = ApplicationRunner(websocket_uri, "kotori-realm", debug=True, debug_wamp=True, debug_app=True)
+    runner = ApplicationRunner(websocket_uri, u'kotori-realm', debug=trace, debug_wamp=debug, debug_app=debug)
     runner.run(Component, start_reactor=False)
 
 

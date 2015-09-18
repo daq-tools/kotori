@@ -22,13 +22,13 @@ class Singleton(object):
         return cls._instance
 
 
-class ConfigStore(dict):
+class ConfigStoreShelve(dict):
 
     store = None
 
     def __init__(self):
         if not ConfigStore.store:
-            print "###################### ConfigStore init"
+            print "ConfigStoreShelve.__init__"
             self.app_data_dir = user_data_dir('kotori', 'elmyra')
             if not os.path.exists(self.app_data_dir):
                 os.makedirs(self.app_data_dir)
@@ -39,39 +39,40 @@ class ConfigStore(dict):
         return ConfigStore.store.has_key(key)
 
     def __getitem__(self, key):
-        print 'ConfigStore.__getitem__'
+        print 'ConfigStoreShelve.__getitem__'
         return ConfigStore.store[key]
 
     def __setitem__(self, key, value):
-        print 'ConfigStore.__setitem__', key, value
+        print 'ConfigStoreShelve.__setitem__', key, value
         ConfigStore.store[key] = value
         ConfigStore.store.sync()
 
 
-class BetterConfigStore(dict):
+class ConfigStoreJson(dict):
 
     store = None
 
     def __init__(self):
-        if not BetterConfigStore.store:
-            print "###################### ConfigStore init"
-            self.app_data_dir = user_data_dir('kotori', 'elmyra')
+        if not ConfigStoreJson.store:
+            print "ConfigStoreJson.__init__"
+            self.app_data_dir = user_data_dir('kotori-daq', 'Elmyra')
+            print "ConfigStoreJson app_data_dir:", self.app_data_dir
             if not os.path.exists(self.app_data_dir):
                 os.makedirs(self.app_data_dir)
             self.config_file = os.path.join(self.app_data_dir, 'config.json')
-            BetterConfigStore.store = json_store.open(self.config_file)
+            ConfigStoreJson.store = json_store.open(self.config_file)
 
     def has_key(self, key):
-        return BetterConfigStore.store.has_key(key)
+        return ConfigStoreJson.store.has_key(key)
 
     def __getitem__(self, key):
-        print 'BetterConfigStore.__getitem__'
-        return BetterConfigStore.store[key]
+        print 'ConfigStoreJson.__getitem__'
+        return ConfigStoreJson.store[key]
 
     def __setitem__(self, key, value):
-        print 'BetterConfigStore.__setitem__', key, value
-        BetterConfigStore.store[key] = value
-        BetterConfigStore.store.sync()
+        print 'ConfigStoreJson.__setitem__', key, value
+        ConfigStoreJson.store[key] = value
+        ConfigStoreJson.store.sync()
 
 
 class NodeId(Singleton):
@@ -81,7 +82,7 @@ class NodeId(Singleton):
 
     def __init__(self):
         if not self.config:
-            self.config = ConfigStore()
+            self.config = ConfigStoreJson()
         if not self.config.has_key('uuid'):
             self.config['uuid'] = str(uuid4())
         self.NODE_ID = self.config['uuid']

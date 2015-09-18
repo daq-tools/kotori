@@ -22,7 +22,7 @@ class InfluxDatabaseService(ApplicationSession):
         """
         return self.__class__.__name__
 
-    @inlineCallbacks
+    #@inlineCallbacks
     def onJoin(self, details):
         print("Realm joined (WAMP session started).")
 
@@ -33,13 +33,14 @@ class InfluxDatabaseService(ApplicationSession):
 
         #self.leave()
 
-    @inlineCallbacks
+    #@inlineCallbacks
     def startDatabase(self):
         self.influx = InfluxDBClient('127.0.0.1', 8086, 'root', 'BCqIJvslOnJ9S4', 'kotori_2')
         self.influx.create_database('kotori_2')
 
     def onLeave(self, details):
         print("Realm left (WAMP session ended).")
+        ApplicationSession.onLeave(self, details)
 
     def onDisconnect(self):
         print("Transport disconnected.")
@@ -48,7 +49,7 @@ class InfluxDatabaseService(ApplicationSession):
 
 
 
-    @inlineCallbacks
+    #@inlineCallbacks
     def receive(self, data):
         #print "RECEIVE:", data
 
@@ -91,8 +92,8 @@ class InfluxDatabaseService(ApplicationSession):
             P_In            = A_CAP * V_FC
             P_Out           = A_ENG * V_CAP
 
-			
-			
+
+
 
            # store data to database
             if self.influx:
@@ -133,9 +134,9 @@ class InfluxDatabaseService(ApplicationSession):
             print('Could not decode data: {}'.format(data))
 
 
-def boot_influx_database(websocket_uri, debug=False):
+def boot_influx_database(websocket_uri, debug=False, trace=False):
 
     print 'INFO: Starting influx database service, connecting to broker', websocket_uri
 
-    runner = ApplicationRunner(websocket_uri, "kotori-realm", debug=False, debug_wamp=False, debug_app=False)
+    runner = ApplicationRunner(websocket_uri, u'kotori-realm', debug=trace, debug_wamp=debug, debug_app=debug)
     runner.run(InfluxDatabaseService, start_reactor=False)

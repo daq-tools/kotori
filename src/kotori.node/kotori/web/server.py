@@ -35,7 +35,7 @@ class WebDashboardIndex(Resource):
             'node_id': str(NodeId()),
             'hostname': get_hostname(),
         })
-        return response
+        return response.encode('utf-8')
 
 def boot_web(http_port, websocket_uri, debug=False):
 

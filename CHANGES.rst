@@ -4,6 +4,7 @@ kotori-mqtt CHANGES
 
 develop
 -------
+- upgrade foundation libraries: Twisted, Autobahn, Crossbar
 
 
 2015-05-21 0.2.2

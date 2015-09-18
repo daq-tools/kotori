@@ -138,6 +138,7 @@ class KotoriNode(ApplicationSession):
             self.join("kotori-realm")
         else:
             self.disconnect()
+        ApplicationSession.onLeave(self, details)
 
     def onDisconnect(self):
         print("Transport disconnected.")
@@ -158,7 +159,7 @@ class KotoriNode(ApplicationSession):
         #print self, dir(self)
 
 
-def boot_node(websocket_uri, debug=False):
+def boot_node(websocket_uri, debug=False, trace=False):
 
     print 'INFO: Starting node service, connecting to', websocket_uri
 
@@ -169,7 +170,7 @@ def boot_node(websocket_uri, debug=False):
     reactor.callLater(0, node_manager.master_connect)
     """
 
-    runner = ApplicationRunner(websocket_uri, "kotori-realm", debug=True, debug_wamp=True, debug_app=True)
+    runner = ApplicationRunner(websocket_uri, u'kotori-realm', debug=trace, debug_wamp=debug, debug_app=debug)
     runner.run(KotoriNode, start_reactor=False)
 
     #app = Application()

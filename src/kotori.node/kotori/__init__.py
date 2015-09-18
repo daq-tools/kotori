@@ -49,7 +49,7 @@ def run():
     print "debug:", debug
 
     # defaults
-    websocket_uri = 'ws://0.0.0.0:9000/ws'
+    websocket_uri = u'ws://0.0.0.0:9000/ws'
     http_port = 35000
     udp_port = 7777
 
@@ -68,14 +68,15 @@ def run():
 
     # run master, node and web gui
     else:
-        boot_master(websocket_uri, debug)
-        boot_web(http_port, websocket_uri, debug)
-        boot_node(websocket_uri, debug)
-        boot_udp_adapter(udp_port, debug)
+        boot_master(websocket_uri, debug=debug)
+        boot_web(http_port, websocket_uri, debug=debug)
+        boot_node(websocket_uri, debug=debug)
+        boot_udp_adapter(udp_port, debug=debug)
         boot_sql_database(websocket_uri)
         boot_mongo_database(websocket_uri)
         boot_influx_database(websocket_uri)
 
+    # now enter the Twisted reactor loop
     reactor.run()
 
 

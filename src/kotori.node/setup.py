@@ -1,9 +1,9 @@
 from setuptools import setup, find_packages
 
 requires = [
-    'Twisted==15.0.0',
-    'autobahn==0.10.1',
-    'crossbar==0.10.2',
+    'Twisted==15.4.0',
+    'autobahn==0.10.9',
+    'crossbar==0.11.1',
     'appdirs==1.4.0',
     'docopt==0.6.2',
     'json-store==2.1',
@@ -13,7 +13,7 @@ requires = [
 ]
 
 setup(name='kotori.node',
-      version='0.2.0',
+      version='0.3.0',
       description='kotori.node',
       long_description='Kotori node service',
       classifiers=[
@@ -41,6 +41,6 @@ setup(name='kotori.node',
               'kotori-wamp-client = kotori.master.client:run_wamp_client',
               'kotori-udp-client  = kotori.master.client:run_udp_client',
               'kotori-udp-telemetry-fuzzer  = kotori.master.client:run_udp_telemetry_fuzzer',
-              ],
+          ],
       },
 )
