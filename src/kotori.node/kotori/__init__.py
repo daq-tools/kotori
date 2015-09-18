@@ -2,6 +2,7 @@
 # (c) 2014-2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import sys
 from pkgutil import extend_path
+from kotori.frontend.server import boot_frontend
 from kotori.node.database.influx import boot_influx_database
 from kotori.node.database.mongo import boot_mongo_database
 from twisted.internet import reactor
@@ -51,6 +52,7 @@ def run():
     # defaults
     websocket_uri = u'ws://0.0.0.0:9000/ws'
     http_port = 35000
+    frontend_port = 36000
     udp_port = 7777
 
     # run master and web gui
@@ -70,6 +72,7 @@ def run():
     else:
         boot_master(websocket_uri, debug=debug)
         boot_web(http_port, websocket_uri, debug=debug)
+        boot_frontend(frontend_port, websocket_uri, debug=debug)
         boot_node(websocket_uri, debug=debug)
         boot_udp_adapter(udp_port, debug=debug)
         boot_sql_database(websocket_uri)
