@@ -1,0 +1,77 @@
+.btn-2x {
+    padding-top: .3em !important;
+    padding-left: .18em !important;
+}
+
+.width-1x {
+    width: 1.2em;
+}
+
+.channel-item {
+    padding-top: 1em !important;
+    padding-bottom: 1em !important;
+    border-bottom: 1px solid #ddd !important;
+    overflow: visible !important;
+}
+
+.middle {
+    vertical-align: middle;
+}
+
+.footer {
+    margin: 5px;
+}
+
+.text-large {
+    font-size: 16px;
+    font-weight: 300;
+}
+@media (min-width: 768px) {
+    .text-large {
+        font-size: 21px;
+        font-weight: 300;
+    }
+}
+
+
+@media (min-width: 1200px) {
+    .area-collapse.rank-1 {
+        width: auto;
+        border-top: 0;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+    .area-collapse.rank-1.collapse {
+        display: block !important;
+        height: auto !important;
+        padding-bottom: 0;
+        overflow: visible !important;
+    }
+    .area-collapse.rank-1.collapse.inline {
+        display: inline !important;
+    }
+    .area-collapse.rank-1.in {
+        overflow-y: visible;
+    }
+}
+
+@media (min-width: 768px) {
+    .area-collapse.rank-2 {
+        width: auto;
+        border-top: 0;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+    .area-collapse.rank-2.collapse {
+        display: block !important;
+        height: auto !important;
+        padding-bottom: 0;
+        overflow: visible !important;
+    }
+    .area-collapse.rank-2.collapse.inline {
+        display: inline !important;
+    }
+    .area-collapse.rank-2.in {
+        overflow-y: visible;
+    }
+}
