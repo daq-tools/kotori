@@ -1,1 +1,223 @@
-Kotori DAQ
+<!DOCTYPE html>
+<!-- -*- coding: utf-8 -*- -->
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Kotori DAQ</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="static/lib/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Material Design -->
+    <link href="static/lib/css/roboto.min.css" rel="stylesheet">
+    <link href="static/lib/css/material.min.css" rel="stylesheet">
+    <link href="static/lib/css/ripples.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="static/lib/css/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Fontawesome -->
+    <link href="static/lib/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="static/lib/js/html5shiv.js"></script>
+        <script src="static/lib/js/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Custom CSS -->
+    <link href="static/app/css/sb-admin-2.css" rel="stylesheet">
+    <link href="static/app/css/main.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href=".">
+                <h2 style="display: inline;">Kotori DAQ</h2>
+                <span class="inline collapse area-collapse rank-2">
+                    &nbsp;&nbsp;
+                    <span class="small middle">multi-channel, multi-protocol data acquisition and graphing</span>
+                </span>
+            </a>
+        </div>
+
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+
+                    <li>
+                        <a href="#" class="text-large"><i class="mdi-device-multitrack-audio mdi-2x middle"></i> Channels</a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-large"><i class="mdi-action-settings mdi-2x middle"></i> Settings</a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-large"><i class="mdi-communication-email mdi-2x middle"></i> About</a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+    <!-- /.navbar-static-side -->
+    </nav>
+
+
+    <div id="page-wrapper">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-header" >
+                    <h1 style="display: inline; vertical-align: middle;">Channels</h1>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-2x btn-fab btn-material-blue add-channel">
+                        <i class="mdi-2x mdi-content-add"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="list-group">
+                    <li class="list-group-item channel-item">
+                        <h4 class="list-group-item-heading">FuelCell</h4>
+                        <div class="list-group-item-text">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="togglebutton">
+                                        <label>
+                                            <i class="mdi-av-play-arrow middle"></i>&nbsp; Enabled
+                                            &nbsp;
+                                            <input type="checkbox" checked="checked"/>
+                                        </label>
+                                    </div>
+                                    <i class="mdi-action-swap-horiz middle"></i>&nbsp; UDP 9000
+                                    <br/>
+                                    <i class="mdi-action-reorder middle"></i>&nbsp; Decoder: custom "hydro2motion"
+                                </div>
+
+                                <div class="col-lg-5">
+                                    <button class="btn btn-lg btn-raised">
+                                        configure
+                                    </button>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Explore <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="http://lablab.cicer.de:8083/" target="_blank">
+                                                    <i class="mdi-device-storage middle width-1x"></i>
+                                                    Database "kotori.telemetry"
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="http://lablab.cicer.de:3000/dashboard/db/new-dashboard" target="_blank">
+                                                    <i class="mdi-action-trending-up middle width-1x"></i>
+                                                    Graph dashboards
+                                                </a>
+                                            </li>
+                                            <!--
+                                            <li role="separator" class="divider"></li>
+                                            -->
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <p>
+                                        <strong>size</strong>
+                                        <span class="pull-right text-muted">42 data points</span>
+                                    </p>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="42" aria-valuemin="0" aria-valuemax="1000" style="width: 4.2%">
+                                            <span class="sr-only">Received 42 data points</span>
+                                        </div>
+                                    </div>
+
+                                    <p>
+                                        <strong>frequency</strong>
+                                        <span class="pull-right text-muted">50 Hz</span>
+                                    </p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="250" style="width: 20%">
+                                            <span class="sr-only">Measured 50 Hz throughput</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <br/>
+
+    </div>
+    <!-- /#page-wrapper -->
+
+    <hr/>
+    <div class="row text-muted">
+        <div class="col-lg-6">
+            <div class="footer">
+                Software release: 0.97.10
+            </div>
+        </div>
+        <div class="col-lg-6 text-right">
+            <div class="footer">
+                &copy; 2014-2015 IsarEngineering GmbH and Elmyra UG — All rights reserved.
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /#wrapper -->
+
+<!-- jQuery -->
+<script src="static/lib/js/jquery-1.11.3.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="static/lib/js/bootstrap.min.js"></script>
+
+<!-- Bootstrap Material Design -->
+<script src="static/lib/js/ripples.min.js"></script>
+<script src="static/lib/js/material.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // This command is used to initialize some elements and make them work properly
+        $.material.init();
+    });
+</script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="static/lib/js/metisMenu.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="static/app/js/sb-admin-2.js"></script>
+
+</body>
+</html>

@@ -8,6 +8,7 @@ develop
 - add frontend foundation based on Pyramid web framework
 - ui: add jQuery, Bootstrap, Fontawesome, html5shiv and respond.js
 - ui: add material design for bootstrap
+- ui: add prototype html based on SB Admin 2 bootstrap template
 
 
 2015-05-21 0.2.2
