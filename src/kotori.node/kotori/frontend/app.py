@@ -17,7 +17,8 @@ def main(global_config, **settings):
     config.include('cornice')
 
     # Views and routes
-    config.add_static_view('static', 'static', cache_max_age=0)
+    config.add_static_view('static/app', 'static/app', cache_max_age=0)
+    config.add_static_view('static/lib', 'static/lib', cache_max_age=60 * 24)
     config.add_route('index', '/')
 
     config.scan()
