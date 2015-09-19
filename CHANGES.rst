@@ -7,6 +7,7 @@ develop
 - upgrade foundation libraries: Twisted, Autobahn, Crossbar
 - add frontend foundation based on Pyramid web framework
 - ui: add jQuery, Bootstrap, Fontawesome, html5shiv and respond.js
+- ui: add material design for bootstrap
 
 
 2015-05-21 0.2.2
