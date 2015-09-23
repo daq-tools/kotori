@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 from influxdb.influxdb08 import InfluxDBClient
+from influxdb.influxdb08.client import InfluxDBClientError
 from autobahn.twisted.wamp import ApplicationRunner, ApplicationSession
 from twisted.internet.defer import inlineCallbacks
 from twisted.internet.interfaces import ILoggingContext
@@ -35,8 +36,24 @@ class InfluxDatabaseService(ApplicationSession):
 
     #@inlineCallbacks
     def startDatabase(self):
-        self.influx = InfluxDBClient('127.0.0.1', 8086, 'root', 'BCqIJvslOnJ9S4', 'kotori_2')
-        self.influx.create_database('kotori_2')
+
+        # production: InfluxDB on localhost
+        #database_name = 'kotori_2'
+        #self.influx = InfluxDBClient('127.0.0.1', 8086, 'root', 'BCqIJvslOnJ9S4', database_name)
+
+        # development: InfluxDB on Docker host
+        database_name = 'kotori-dev'
+        self.influx = InfluxDBClient('192.168.59.103', 8086, 'root', 'root', database_name)
+
+        try:
+            self.influx.create_database(database_name)
+
+        except InfluxDBClientError as ex:
+            # ignore "409: database kotori-dev exists"
+            if ex.code == 409:
+                pass
+            else:
+                raise
 
     def onLeave(self, details):
         print("Realm left (WAMP session ended).")
@@ -108,10 +125,10 @@ class InfluxDatabaseService(ApplicationSession):
                    }
                ]
                self.influx.write_points(data)
+               print "Saved event to InfluxDB"
 
 
-#
-#		mma_x = int(payload[0])
+#            mma_x = int(payload[0])
 #            mma_y = int(payload[1])
 #            temp = float(payload[2])
 #
@@ -134,7 +151,7 @@ class InfluxDatabaseService(ApplicationSession):
             print('Could not decode data: {}'.format(data))
 
 
-def boot_influx_database(websocket_uri, debug=False, trace=False):
+def h2m_boot_influx_database(websocket_uri, debug=False, trace=False):
 
     print 'INFO: Starting influx database service, connecting to broker', websocket_uri
 

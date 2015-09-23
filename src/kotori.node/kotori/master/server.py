@@ -68,7 +68,7 @@ class NodeRegistry(object):
         print self.nodes[node_id]
         self.persist()
 
-registry = NodeRegistry()
+#registry = NodeRegistry()
 
 
 class MasterServerProtocol(WampWebSocketServerProtocol):

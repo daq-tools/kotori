@@ -2,16 +2,13 @@
 # (c) 2014-2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import sys
 from pkgutil import extend_path
-from kotori.frontend.server import boot_frontend
-from kotori.node.database.influx import boot_influx_database
-from kotori.node.database.mongo import boot_mongo_database
 from twisted.internet import reactor
 from twisted.python import log
 from kotori.master.server import boot_master
 from kotori.node.nodeservice import boot_node
 from kotori.web.server import boot_web
-from kotori.node.udp import boot_udp_adapter
-from kotori.node.database.sql import boot_sql_database
+from kotori.hydro2motion.database.influx import h2m_boot_influx_database
+from kotori.hydro2motion.network.udp import h2m_boot_udp_adapter
 
 __path__ = extend_path(__path__, __name__)
 
@@ -59,17 +56,18 @@ def run():
     if arguments['master']:
         boot_master(websocket_uri, debug)
         boot_web(http_port, '', debug)
-        boot_udp_adapter(udp_port, debug)
+        #boot_udp_adapter(udp_port, debug)
 
     # run node and web gui only, using a remote master
     elif arguments['node']:
         websocket_uri = arguments['--master']
         boot_web(http_port, websocket_uri, debug)
         boot_node(websocket_uri, debug)
-        boot_udp_adapter(udp_port, debug)
+        #boot_udp_adapter(udp_port, debug)
 
     # run master, node and web gui
     else:
+        """
         boot_master(websocket_uri, debug=debug)
         boot_web(http_port, websocket_uri, debug=debug)
         boot_frontend(frontend_port, websocket_uri, debug=debug)
@@ -78,6 +76,16 @@ def run():
         boot_sql_database(websocket_uri)
         boot_mongo_database(websocket_uri)
         boot_influx_database(websocket_uri)
+        """
+
+        # hydro2motion
+        boot_web(http_port, websocket_uri, debug=debug)
+        h2m_boot_udp_adapter(udp_port, debug=debug)
+        h2m_boot_influx_database(websocket_uri)
+
+        # generic daq
+        boot_frontend(frontend_port, websocket_uri, debug=debug)
+
 
     # now enter the Twisted reactor loop
     reactor.run()

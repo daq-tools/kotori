@@ -54,9 +54,9 @@ class ConfigStoreJson(dict):
 
     def __init__(self):
         if not ConfigStoreJson.store:
-            print "ConfigStoreJson.__init__"
+            #print "ConfigStoreJson.__init__"
             self.app_data_dir = user_data_dir('kotori-daq', 'Elmyra')
-            print "ConfigStoreJson app_data_dir:", self.app_data_dir
+            #print "ConfigStoreJson app_data_dir:", self.app_data_dir
             if not os.path.exists(self.app_data_dir):
                 os.makedirs(self.app_data_dir)
             self.config_file = os.path.join(self.app_data_dir, 'config.json')
@@ -66,11 +66,11 @@ class ConfigStoreJson(dict):
         return ConfigStoreJson.store.has_key(key)
 
     def __getitem__(self, key):
-        print 'ConfigStoreJson.__getitem__'
+        #print 'ConfigStoreJson.__getitem__'
         return ConfigStoreJson.store[key]
 
     def __setitem__(self, key, value):
-        print 'ConfigStoreJson.__setitem__', key, value
+        #print 'ConfigStoreJson.__setitem__', key, value
         ConfigStoreJson.store[key] = value
         ConfigStoreJson.store.sync()
 

@@ -10,6 +10,7 @@ develop
 - ui: add material design for bootstrap
 - ui: add prototype html based on SB Admin 2 bootstrap template
 - http: cache really static resources longer than volatile ones
+- refactor hydro2motion code
 
 
 2015-05-21 0.2.2

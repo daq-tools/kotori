@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
-#
-# https://twistedmatrix.com/documents/15.0.0/core/howto/udp.html
-from autobahn.twisted.wamp import ApplicationRunner, ApplicationSession, ApplicationSessionFactory
 from twisted.internet import reactor
 from twisted.internet.defer import inlineCallbacks
 from twisted.internet.protocol import DatagramProtocol
-import geo_helper
+from autobahn.twisted.wamp import ApplicationRunner, ApplicationSession, ApplicationSessionFactory
+from kotori.hydro2motion.util.geo import turn_xyz_into_llh
+
+# https://twistedmatrix.com/documents/15.0.0/core/howto/udp.html
 
 app_session = None
 
@@ -48,7 +48,7 @@ class UdpAdapter(DatagramProtocol):
 
     @inlineCallbacks
     def datagramReceived(self, data, (host, port)):
-        print "received %r from %s:%d" % (data, host, port)
+        print "Received via UDP from %s:%d: %r " % (host, port, data)
 
         try:
          payload = data.split(';')
@@ -61,7 +61,7 @@ class UdpAdapter(DatagramProtocol):
          z = GPS_Z / 100.0
 
 
-         llh = geo_helper.turn_xyz_into_llh(x, y, z, "wgs84")
+         llh = turn_xyz_into_llh(x, y, z, "wgs84")
          lat = llh[0]
          lng = llh[1]
 
@@ -89,7 +89,7 @@ class UdpAdapter(DatagramProtocol):
 
 
 
-def boot_udp_adapter(udp_port, debug=False):
+def h2m_boot_udp_adapter(udp_port, debug=False):
 
     run_wamp_client()
 
