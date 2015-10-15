@@ -2,6 +2,7 @@
 kotori-mqtt CHANGES
 ===================
 
+
 develop
 -------
 - upgrade foundation libraries: Twisted, Autobahn, Crossbar
@@ -11,6 +12,7 @@ develop
 - ui: add prototype html based on SB Admin 2 bootstrap template
 - http: cache really static resources longer than volatile ones
 - refactor hydro2motion code
+- ui: add modernizr and underscore
 
 
 2015-05-21 0.2.2
