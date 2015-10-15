@@ -13,6 +13,7 @@ develop
 - http: cache really static resources longer than volatile ones
 - refactor hydro2motion code
 - ui: add modernizr and underscore
+- ui: add foundation for page transitions from codrops
 
 
 2015-05-21 0.2.2
