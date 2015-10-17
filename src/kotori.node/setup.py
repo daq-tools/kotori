@@ -14,6 +14,7 @@ requires = [
     'pyramid_jinja2==2.5',
     'cornice==1.0.0',
     'twisted-mqtt==0.1.2',
+    'Bunch==1.0.1',
 ]
 
 setup(name='kotori.node',

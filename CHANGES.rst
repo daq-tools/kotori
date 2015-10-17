@@ -14,6 +14,7 @@ develop
 - refactor hydro2motion code
 - ui: add modernizr and underscore
 - ui: add foundation for page transitions from codrops
+- hiveeyes: receive messages via MQTT and store data points into InfluxDB
 
 
 2015-05-21 0.2.2

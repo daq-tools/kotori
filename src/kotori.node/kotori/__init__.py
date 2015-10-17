@@ -9,6 +9,7 @@ from kotori.node.nodeservice import boot_node
 from kotori.web.server import boot_web
 from kotori.hydro2motion.database.influx import h2m_boot_influx_database
 from kotori.hydro2motion.network.udp import h2m_boot_udp_adapter
+from kotori.hiveeyes.application import hiveeyes_boot
 
 __path__ = extend_path(__path__, __name__)
 
@@ -52,6 +53,9 @@ def run():
     frontend_port = 36000
     udp_port = 7777
 
+    mqtt_broker_host = '192.168.59.103'
+    influxdb_host = '192.168.59.103'
+
     # run master and web gui
     if arguments['master']:
         boot_master(websocket_uri, debug)
@@ -82,6 +86,9 @@ def run():
         boot_web(http_port, websocket_uri, debug=debug)
         h2m_boot_udp_adapter(udp_port, debug=debug)
         h2m_boot_influx_database(websocket_uri)
+
+        # hiveeyes
+        hiveeyes_boot(broker_host=mqtt_broker_host, influxdb_host=influxdb_host)
 
         # generic daq
         boot_frontend(frontend_port, websocket_uri, debug=debug)

@@ -8,10 +8,24 @@ from twisted.application.service import Service
 from twisted.internet.endpoints import TCP4ClientEndpoint
 from mqtt.client.factory import MQTTFactory
 
-log = Logger()
-
+logger = Logger()
 
 class HiveeyesMqttAdapter(Service):
+
+    def __init__(self, broker_host, broker_port=1883, debug=False, callback=None, subscriptions=None):
+        self.broker_host = broker_host
+        self.broker_port = broker_port
+        self.callback = callback or self.onPublish
+        self.subscriptions = subscriptions or {}
+        self.connect()
+
+    def connect(self):
+        print 'INFO: Starting MQTT adapter. broker=', self.broker_host, self.broker_port
+
+        factory = MQTTFactory(profile=MQTTFactory.PUBLISHER | MQTTFactory.SUBSCRIBER)
+        point   = TCP4ClientEndpoint(reactor, self.broker_host, self.broker_port)
+
+        d = point.connect(factory).addCallback(self.gotProtocol)
 
     def gotProtocol(self, p):
         self.protocol = p
@@ -20,17 +34,14 @@ class HiveeyesMqttAdapter(Service):
         #d.addCallback(self.prepareToPublish)
 
     def subscribe(self, *args):
-        d = self.protocol.subscribe("foo/bar/baz", 0)
-        e = self.protocol.subscribe("hiveeyes/#", 0)
-        self.protocol.setPublishHandler(self.onPublish)
+        #d = self.protocol.subscribe("foo/bar/baz", 0)
+        for topic in self.subscriptions:
+            e = self.protocol.subscribe(topic, 0)
+        self.protocol.setPublishHandler(self.callback)
 
     def onPublish(self, topic, payload, qos, dup, retain, msgId):
-        log.debug("topic={topic}, msg={payload} qos={qos}, dup={dup} retain={retain}, msgId={id}", topic=topic, payload=payload,
+        logger.debug("topic={topic}, msg={payload} qos={qos}, dup={dup} retain={retain}, msgId={id}", topic=topic, payload=payload,
             qos=qos, dup=dup, retain=retain, id=msgId)
-
-        if topic.startswith('hiveeyes'):
-            # TODO: store to database
-            pass
 
     def prepareToPublish(self, *args):
         self.task = task.LoopingCall(self.publish)
@@ -41,16 +52,5 @@ class HiveeyesMqttAdapter(Service):
         d.addErrback(self.printError)
 
     def printError(self, *args):
-        log.debug("args={args!s}", args=args)
+        logger.debug("args={args!s}", args=args)
         reactor.stop()
-
-
-def he_boot_mqtt_adapter(broker_host, broker_port=1883, debug=False):
-
-    print 'INFO: Starting MQTT adapter. broker=', broker_host, broker_port
-
-    factory = MQTTFactory(profile=MQTTFactory.PUBLISHER | MQTTFactory.SUBSCRIBER)
-    point   = TCP4ClientEndpoint(reactor, broker_host, broker_port)
-    serv    = HiveeyesMqttAdapter()
-
-    d = point.connect(factory).addCallback(serv.gotProtocol)
