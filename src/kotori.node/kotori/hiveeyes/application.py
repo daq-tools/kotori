@@ -1,19 +1,26 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import json
-from kotori.daq.storage.influx import InfluxDBAdapter
 from bunch import Bunch
 from twisted.logger import Logger
 from kotori.hiveeyes.mqtt_adapter import HiveeyesMqttAdapter
+from kotori.daq.storage.influx import InfluxDBAdapter
 
 logger = Logger()
 
 class HiveeyesApplication(object):
 
-    def __init__(self, broker_host, broker_port, influxdb_host):
-        self.broker_host = broker_host
-        self.broker_port = broker_port
-        self.influxdb_host = influxdb_host
+    def __init__(self, config):
+
+        if not config.has_option('mqtt', 'host'):
+            config.set('mqtt', 'host', 'localhost')
+
+        if not config.has_option('mqtt', 'port'):
+            config.set('mqtt', 'port', '1883')
+
+        self.broker_host = config.get('mqtt', 'host')
+        self.broker_port = int(config.get('mqtt', 'port'))
+        self.influxdb_host = config.get('influxdb', 'host')
 
         self.subscriptions = ['hiveeyes/#']
 
@@ -64,5 +71,5 @@ class HiveeyesApplication(object):
         influx.write(series, data)
 
 
-def hiveeyes_boot(broker_host='localhost', broker_port=1883, influxdb_host='localhost', debug=False):
-    ha = HiveeyesApplication(broker_host=broker_host, broker_port=broker_port, influxdb_host=influxdb_host)
+def hiveeyes_boot(config, debug=False):
+    ha = HiveeyesApplication(config)

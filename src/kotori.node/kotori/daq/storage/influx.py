@@ -53,5 +53,5 @@ class InfluxDBAdapter(object):
                 ]
             }
         ]
-        self.influx.write_points(data)
-        print "Saved event to InfluxDB"
+        response = self.influx.write_points(data)
+        print "Saved event to InfluxDB:", response

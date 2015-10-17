@@ -1,71 +1,81 @@
 # -*- coding: utf-8 -*-
 # (c) 2014-2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+import os
 import sys
 from pkgutil import extend_path
+from ConfigParser import ConfigParser
 from twisted.internet import reactor
-from twisted.python import log
+from twisted.python.log import startLogging
+from twisted.logger import Logger
 from kotori.master.server import boot_master
 from kotori.node.nodeservice import boot_node
 from kotori.web.server import boot_web
 from kotori.hydro2motion.database.influx import h2m_boot_influx_database
 from kotori.hydro2motion.network.udp import h2m_boot_udp_adapter
 from kotori.hiveeyes.application import hiveeyes_boot
+from .version import __VERSION__
 
 __path__ = extend_path(__path__, __name__)
-
 
 __doc__ = """Kotori node service.
 
 Usage:
-  kotori [--debug]
+  kotori --config=<kotori.ini> [--debug]
   kotori master [--debug]
   kotori node --master=<> [--debug]
   kotori (-h | --help)
   kotori --version
 
 Options:
-  -h --help     Show this screen.
-  --version     Show version.
-  --debug       Enable debug messages
+  -h --help                 Show this screen.
+  --version                 Show version.
+  --config=<kotori.ini>     Configuration file
+  --debug                   Enable debug messages
 
 """
 from docopt import docopt
 
-
-"""
-#kotori ship <name> move <x> <y> [--speed=<kn>]
-#kotori ship shoot <x> <y>
-#kotori mine (set|remove) <x> <y> [--moored | --drifting]
-"""
+logger = Logger()
 
 def run():
 
-    log.startLogging(sys.stdout)
+    startLogging(sys.stdout)
 
-    arguments = docopt(__doc__, version='Kotori node service')
-    #print arguments
-    debug = arguments.get('--debug', False)
+    application_string = 'Kotori DAQ version ' + __VERSION__
+    logger.info(application_string)
+
+    options = docopt(__doc__, version=application_string)
+    print 'options: {}'.format(options)
+    debug = options.get('--debug', False)
     print "debug:", debug
 
-    # defaults
-    websocket_uri = u'ws://0.0.0.0:9000/ws'
-    http_port = 35000
-    frontend_port = 36000
-    udp_port = 7777
+    configfile = options['--config']
+    config = ConfigParser()
+    success = config.read([configfile, os.path.expanduser('~/.kotori.ini')])
+    if success:
+        logger.info('Read configuration files: {}'.format(success))
+        logger.info('config: {}'.format(config))
+    else:
+        msg = 'Could not read configuration file {}'.format(configfile)
+        logger.error(msg)
+        raise ValueError(msg)
 
-    mqtt_broker_host = '192.168.59.103'
-    influxdb_host = '192.168.59.103'
+    # defaults
+    websocket_uri = unicode(config.get('wamp', 'listen'))
+    udp_port = int(config.get('hydro2motion', 'udp_port'))
+    http_port_v1 = int(config.get('hydro2motion', 'http_port'))
+    http_port_v2 = int(config.get('kotori-daq', 'http_port'))
 
     # run master and web gui
-    if arguments['master']:
+    if options['master']:
         boot_master(websocket_uri, debug)
-        boot_web(http_port, '', debug)
+        boot_web(http_port_v1, '', debug)
         #boot_udp_adapter(udp_port, debug)
 
     # run node and web gui only, using a remote master
-    elif arguments['node']:
-        websocket_uri = arguments['--master']
-        boot_web(http_port, websocket_uri, debug)
+    elif options['node']:
+        websocket_uri = options['--master']
+        boot_web(http_port_v1, websocket_uri, debug)
         boot_node(websocket_uri, debug)
         #boot_udp_adapter(udp_port, debug)
 
@@ -83,12 +93,12 @@ def run():
         """
 
         # hydro2motion
-        boot_web(http_port, websocket_uri, debug=debug)
+        boot_web(http_port_v1, websocket_uri, debug=debug)
         h2m_boot_udp_adapter(udp_port, debug=debug)
         h2m_boot_influx_database(websocket_uri)
 
         # hiveeyes
-        hiveeyes_boot(broker_host=mqtt_broker_host, influxdb_host=influxdb_host)
+        hiveeyes_boot(config, debug=debug)
 
         # generic daq
         boot_frontend(frontend_port, websocket_uri, debug=debug)

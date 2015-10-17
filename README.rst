@@ -34,24 +34,26 @@ Setup node sandbox
     python setup.py develop
 
 
-Run daemons
------------
+
+Start database
+--------------
+- Run InfluxDB Docker container::
+
+    boot2docker up
+    eval "$(boot2docker shellinit)"
+    docker start influxdb
+
+
+Start application
+-----------------
 single daemon, serve master, node and web gui::
 
     crossbar start
-    kotori --debug
+    kotori --config=development.ini --debug
 
-    # visit web dashboard: http://localhost:35000
-
-master only::
-
-    kotori master --debug
-
-node only::
-
-    kotori node --master=ws://offgrid:9000/ws --debug
-    kotori node --master=ws://beaglebone.local:9000/ws --debug
-    kotori node --master=ws://master.example.com:9000/ws --debug
+Visit web dashboards at
+    - http://localhost:35000
+    - http://localhost:36000
 
 
 Send telemetry data
