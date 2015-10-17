@@ -7,8 +7,8 @@ requires = [
     'appdirs==1.4.0',
     'docopt==0.6.2',
     'json-store==2.1',
-    'alchimia==0.4',
-    'txmongo==0.6',
+    'alchimia==0.4',    # 0.6.1
+    'txmongo==0.6',     # 15.2.2
     'influxdb==2.9.2',
     'pyramid==1.5.7',
     'pyramid_jinja2==2.5',
@@ -17,10 +17,10 @@ requires = [
     'Bunch==1.0.1',
 ]
 
-setup(name='kotori.node',
+setup(name='kotori-daq',
       version='0.3.0',
-      description='kotori.node',
-      long_description='Kotori node service',
+      description='Kotori DAQ',
+      long_description='Kotori DAQ',
       classifiers=[
         "Programming Language :: Python",
         "Framework :: Twisted",
@@ -40,12 +40,12 @@ setup(name='kotori.node',
       ],
       entry_points={
           'console_scripts': [
-              'kotori        = kotori:run',
-              'kotori-master = kotori.master.server:run',
-              'kotori-node   = kotori.node.nodeservice:run',
-              'kotori-wamp-client = kotori.master.client:run_wamp_client',
+              'kotori             = kotori:run',
+              #'kotori-master      = kotori.master.server:run',
+              #'kotori-node        = kotori.node.nodeservice:run',
+              #'kotori-wamp-client = kotori.master.client:run_wamp_client',
               'kotori-udp-client  = kotori.master.client:run_udp_client',
-              'kotori-udp-telemetry-fuzzer  = kotori.master.client:run_udp_telemetry_fuzzer',
+              'h2m-udp-sender     = kotori.master.client:run_udp_telemetry_fuzzer',
           ],
           'paste.app_factory': [
               'main = kotori.frontend.app:main',
