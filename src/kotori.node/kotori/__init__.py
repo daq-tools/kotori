@@ -10,6 +10,7 @@ from twisted.logger import Logger
 from kotori.master.server import boot_master
 from kotori.node.nodeservice import boot_node
 from kotori.web.server import boot_web
+from kotori.frontend.server import boot_frontend
 from kotori.hydro2motion.database.influx import h2m_boot_influx_database
 from kotori.hydro2motion.network.udp import h2m_boot_udp_adapter
 from kotori.hiveeyes.application import hiveeyes_boot
@@ -106,7 +107,7 @@ def run():
         hiveeyes_boot(config, debug=debug)
 
         # generic daq
-        boot_frontend(frontend_port, websocket_uri, debug=debug)
+        boot_frontend(http_port_v2, websocket_uri, debug=debug)
 
 
     # now enter the Twisted reactor loop
