@@ -21,8 +21,6 @@ __doc__ = """Kotori node service.
 
 Usage:
   kotori --config=<kotori.ini> [--debug]
-  kotori master [--debug]
-  kotori node --master=<> [--debug]
   kotori (-h | --help)
   kotori --version
 
@@ -32,6 +30,11 @@ Options:
   --config=<kotori.ini>     Configuration file
   --debug                   Enable debug messages
 
+"""
+"""
+deprecated:
+  #kotori master [--debug]
+  #kotori node --master=<> [--debug]
 """
 from docopt import docopt
 
@@ -62,20 +65,18 @@ def run():
 
     # defaults
     websocket_uri = unicode(config.get('wamp', 'listen'))
-    udp_port = int(config.get('hydro2motion', 'udp_port'))
-    http_port_v1 = int(config.get('hydro2motion', 'http_port'))
     http_port_v2 = int(config.get('kotori-daq', 'http_port'))
 
     # run master and web gui
-    if options['master']:
+    if 'master' in options:
         boot_master(websocket_uri, debug)
-        boot_web(http_port_v1, '', debug)
+        boot_web(35000, '', debug)
         #boot_udp_adapter(udp_port, debug)
 
     # run node and web gui only, using a remote master
-    elif options['node']:
+    if 'node' in options:
         websocket_uri = options['--master']
-        boot_web(http_port_v1, websocket_uri, debug)
+        boot_web(35000, websocket_uri, debug)
         boot_node(websocket_uri, debug)
         #boot_udp_adapter(udp_port, debug)
 
@@ -93,9 +94,13 @@ def run():
         """
 
         # hydro2motion
-        boot_web(http_port_v1, websocket_uri, debug=debug)
-        h2m_boot_udp_adapter(udp_port, debug=debug)
-        h2m_boot_influx_database(websocket_uri)
+        if config.has_section('hydro2motion'):
+            udp_port = int(config.get('hydro2motion', 'udp_port'))
+            http_port_v1 = int(config.get('hydro2motion', 'http_port'))
+
+            boot_web(http_port_v1, websocket_uri, debug=debug)
+            h2m_boot_udp_adapter(udp_port, debug=debug)
+            h2m_boot_influx_database(config)
 
         # hiveeyes
         hiveeyes_boot(config, debug=debug)

@@ -18,14 +18,12 @@ class HiveeyesApplication(object):
         if not config.has_option('mqtt', 'port'):
             config.set('mqtt', 'port', '1883')
 
-        self.broker_host = config.get('mqtt', 'host')
-        self.broker_port = int(config.get('mqtt', 'port'))
-        self.influxdb_host = config.get('influxdb', 'host')
+        self.config = config
 
         self.subscriptions = ['hiveeyes/#']
 
         self.mqtt = HiveeyesMqttAdapter(
-            broker_host=self.broker_host, broker_port=self.broker_port,
+            broker_host=self.config.get('mqtt', 'host'), broker_port=int(self.config.get('mqtt', 'port')),
             callback=self.mqtt_receive,
             subscriptions=self.subscriptions)
 
@@ -54,10 +52,11 @@ class HiveeyesApplication(object):
     def storage_address_from_topic(self, topic):
         parts = topic.split('/')
         address = Bunch({
-            'database': '.'.join(parts[0:2]),
+            # use "_" as database name fragment separator: "/" does not work in InfluxDB 0.8, "." does not work in InfluxDB 0.9
+            'database': '_'.join(parts[0:2]),
             'series': '.'.join(parts[2:4]),
         })
-        print 'address:', address
+        print 'database address:', dict(address)
         return address
 
     def mungle_data(self, data):
@@ -67,7 +66,10 @@ class HiveeyesApplication(object):
         return data
 
     def store_message(self, database, series, data):
-        influx = InfluxDBAdapter(host=self.influxdb_host, database=database)
+        influx = InfluxDBAdapter(
+            version  = self.config.get('influxdb', 'version'),
+            host     = self.config.get('influxdb', 'host'),
+            database = database)
         influx.write(series, data)
 
 

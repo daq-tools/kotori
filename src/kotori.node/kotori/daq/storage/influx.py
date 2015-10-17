@@ -1,30 +1,37 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
-from influxdb.influxdb08 import InfluxDBClient
-from influxdb.influxdb08.client import InfluxDBClientError
+import requests
+from twisted.logger import Logger
+
+logger = Logger()
 
 class InfluxDBAdapter(object):
 
-    def __init__(self, host='localhost', port=8086, username='root', password='root', database='kotori-dev'):
+    def __init__(self, host='localhost', port=8086, version='0.8', username='root', password='root', database='kotori_dev'):
         self.host = host
         self.port = port
+        self.version = version
         self.username = username
         self.password = password
         self.database = database
         self.influx = None
 
+        self.connected = False
         self.connect()
 
     def connect(self):
-        """
-        # production: InfluxDB on localhost
-        #database_name = 'kotori_2'
-        #self.influx = InfluxDBClient('127.0.0.1', 8086, 'root', 'BCqIJvslOnJ9S4', database_name)
 
-        # development: InfluxDB on Docker host
-        database_name = 'kotori-dev'
-        self.influx = InfluxDBClient('192.168.59.103', 8086, 'root', 'root', database_name)
-        """
+        if self.connected:
+            return True
+
+        if self.version == '0.8':
+            from influxdb.influxdb08.client import InfluxDBClient, InfluxDBClientError
+
+        elif self.version == '0.9':
+            from influxdb.client import InfluxDBClient, InfluxDBClientError
+
+        else:
+            raise ValueError('Unknown InfluxDB protocol version "{}"'.format(self.version))
 
         self.influx = InfluxDBClient(
             host=self.host, port=self.port,
@@ -34,24 +41,95 @@ class InfluxDBAdapter(object):
         try:
             self.influx.create_database(self.database)
 
+        except requests.exceptions.ConnectionError as ex:
+            self.connected = False
+            logger.error('InfluxDB network error: {}'.format(unicode(ex)))
+            return False
+
         except InfluxDBClientError as ex:
-            # ignore "409: database kotori-dev exists"
-            if ex.code == 409:
+            # [0.8] ignore "409: database kotori-dev exists"
+            # [0.9] ignore "database already exists"
+            if ex.code == 409 or ex.message == 'database already exists':
                 pass
             else:
-                raise
+                self.connected = False
+                logger.error('InfluxDBClientError: {}'.format(unicode(ex)))
+                return False
+
+        self.connected = True
+        return True
+
+
+    def write_real(self, chunk):
+        """
+        format 0.8::
+
+            [
+                {
+                    "name": "telemetry",
+                    "columns": ["value"],
+                    "points": [
+                        [0.42]
+                    ]
+                }
+            ]
+
+        format 0.9::
+
+            [
+                {
+                    "measurement": "hiveeyes_100",
+                    "tags": {
+                        "host": "server01",
+                        "region": "europe"
+                    },
+                    "time": "2015-10-17T19:30:00Z",
+                    "fields": {
+                        "value": 0.42
+                    }
+                }
+            ]
+
+        """
+
+        try:
+            if self.version == '0.8':
+                response = self.influx.write_points([chunk])
+                logger.info("Saved event to InfluxDB. response={}".format(response))
+
+            elif self.version == '0.9':
+                response = self.influx.write_points([self.v08_to_09(chunk)])
+                logger.info("Saved event to InfluxDB. response={}".format(response))
+
+            else:
+                raise ValueError('Unknown InfluxDB protocol version "{}"'.format(self.version))
+
+        except requests.exceptions.ConnectionError as ex:
+            logger.error('InfluxDB network error: {}'.format(unicode(ex)))
+
+
+    def v08_to_09(self, chunk08):
+        chunk09 = {
+            "measurement": chunk08["name"],
+            #"tags": {
+            #    "host": "server01",
+            #    "region": "us-west"
+            #},
+            #"time": "2009-11-10T23:00:00Z",  # TODO: use timestamp from downstream chunk
+            "fields": dict(zip(chunk08["columns"], chunk08["points"][0])),
+        }
+        print 'chunk09:', chunk09
+        return chunk09
 
     def write(self, name, data):
         columns = data.keys()
         points = data.values()
-        data = [
-                {
-                "name" : name,
-                "columns" : columns,
-                "points" : [
-                    points
-                ]
-            }
-        ]
-        response = self.influx.write_points(data)
-        print "Saved event to InfluxDB:", response
+        return self.write_points(name, columns, points)
+
+    def write_points(self, name, columns, points):
+        chunk = {
+                    "name": name,
+                    "columns": columns,
+                    "points": [points],
+                }
+        return self.write_real(chunk)

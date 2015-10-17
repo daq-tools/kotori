@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
-from influxdb.influxdb08 import InfluxDBClient
-from influxdb.influxdb08.client import InfluxDBClientError
-from autobahn.twisted.wamp import ApplicationRunner, ApplicationSession
+from twisted.python import log
 from twisted.internet.defer import inlineCallbacks
 from twisted.internet.interfaces import ILoggingContext
-from twisted.python import log
 from zope.interface.declarations import implementer
+from autobahn.twisted.wamp import ApplicationRunner, ApplicationSession
+from kotori.daq.storage.influx import InfluxDBAdapter
 
 @implementer(ILoggingContext)
 class InfluxDatabaseService(ApplicationSession):
@@ -37,23 +36,13 @@ class InfluxDatabaseService(ApplicationSession):
     #@inlineCallbacks
     def startDatabase(self):
 
-        # production: InfluxDB on localhost
-        #database_name = 'kotori_2'
-        #self.influx = InfluxDBClient('127.0.0.1', 8086, 'root', 'BCqIJvslOnJ9S4', database_name)
+        print self.config.extra['influxdb']['host']
+        print self.config.extra['influxdb']['version']
 
-        # development: InfluxDB on Docker host
-        database_name = 'kotori-dev'
-        self.influx = InfluxDBClient('192.168.59.103', 8086, 'root', 'root', database_name)
-
-        try:
-            self.influx.create_database(database_name)
-
-        except InfluxDBClientError as ex:
-            # ignore "409: database kotori-dev exists"
-            if ex.code == 409:
-                pass
-            else:
-                raise
+        self.influx = InfluxDBAdapter(
+            version  = self.config.extra['influxdb']['version'],
+            host     = self.config.extra['influxdb']['host'],
+            database = self.config.extra['influxdb']['database'])
 
     def onLeave(self, details):
         print("Realm left (WAMP session ended).")
@@ -115,16 +104,13 @@ class InfluxDatabaseService(ApplicationSession):
            # store data to database
             if self.influx:
 
-               data = [
-                   {
-                       "name" : "telemetry",
-                       "columns" : ["MSG_ID", "V_FC", "V_CAP", "A_ENG", "A_CAP", "T_O2_In", "T_O2_Out", "T_FC_H2O_Out", "Water_In", "Water_Out", "Master_SW", "CAP_Down_SW", "Drive_SW", "FC_state", "Mosfet_state", "Safety_state", "Air_Pump_load", "Mosfet_load", "Water_Pump_load", "Fan_load", "Acc_X", "Acc_Y", "Acc_Z", "H2_flow", "GPS_X", "GPS_Y", "GPS_Z", "GPS_Speed", "V_Safety", "H2_Level", "O2_calc", "lat", "lng", "P_In", "P_Out"],
-                       "points" : [
-                           [MSG_ID, V_FC, V_CAP, A_ENG, A_CAP, T_O2_In, T_O2_Out, T_FC_H2O_Out, Water_In, Water_Out, Master_SW, CAP_Down_SW, Drive_SW, FC_state, Mosfet_state, Safety_state, Air_Pump_load, Mosfet_load, Water_Pump_load, Fan_load, Acc_X, Acc_Y, Acc_Z, H2_flow, GPS_X, GPS_Y, GPS_Z, GPS_Speed, V_Safety, H2_Level, O2_calc, lat, lng, P_In, P_Out]
-                       ]
-                   }
-               ]
-               self.influx.write_points(data)
+               self.influx.write_points(
+                   'telemetry',
+                   ["MSG_ID", "V_FC", "V_CAP", "A_ENG", "A_CAP", "T_O2_In", "T_O2_Out", "T_FC_H2O_Out", "Water_In", "Water_Out", "Master_SW", "CAP_Down_SW", "Drive_SW", "FC_state", "Mosfet_state", "Safety_state", "Air_Pump_load", "Mosfet_load", "Water_Pump_load", "Fan_load", "Acc_X", "Acc_Y", "Acc_Z", "H2_flow", "GPS_X", "GPS_Y", "GPS_Z", "GPS_Speed", "V_Safety", "H2_Level", "O2_calc", "lat", "lng", "P_In", "P_Out"],
+                   [
+                       [MSG_ID, V_FC, V_CAP, A_ENG, A_CAP, T_O2_In, T_O2_Out, T_FC_H2O_Out, Water_In, Water_Out, Master_SW, CAP_Down_SW, Drive_SW, FC_state, Mosfet_state, Safety_state, Air_Pump_load, Mosfet_load, Water_Pump_load, Fan_load, Acc_X, Acc_Y, Acc_Z, H2_flow, GPS_X, GPS_Y, GPS_Z, GPS_Speed, V_Safety, H2_Level, O2_calc, lat, lng, P_In, P_Out]
+                   ]
+               )
                print "Saved event to InfluxDB"
 
 
@@ -151,9 +137,14 @@ class InfluxDatabaseService(ApplicationSession):
             print('Could not decode data: {}'.format(data))
 
 
-def h2m_boot_influx_database(websocket_uri, debug=False, trace=False):
+def h2m_boot_influx_database(config, debug=False, trace=False):
 
-    print 'INFO: Starting influx database service, connecting to broker', websocket_uri
+    websocket_uri = unicode(config.get('wamp', 'listen'))
 
-    runner = ApplicationRunner(websocket_uri, u'kotori-realm', debug=trace, debug_wamp=debug, debug_app=debug)
+    print 'INFO: Starting InfluxDB database service, connecting to WAMP broker', websocket_uri
+
+    runner = ApplicationRunner(
+        websocket_uri, u'kotori-realm',
+        extra={'influxdb': dict(config.items('influxdb'))},
+        debug=trace, debug_wamp=debug, debug_app=debug)
     runner.run(InfluxDatabaseService, start_reactor=False)

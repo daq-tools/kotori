@@ -67,17 +67,30 @@ This Dockerfile pulls the "latest" version, which is InfluxDB 0.8.8 (influxdb-0.
 On the other hand, the 0.9 series in the making.
 
 
-Running
--------
+
+Setup
+-----
 - Run InfluxDB Docker container::
 
     boot2docker up
     eval "$(boot2docker shellinit)"
 
+    # 0.8
     docker run --publish=0.0.0.0:8083:8083 --publish=0.0.0.0:8086:8086 --name=influxdb influxdb:latest
 
-    # or:
+    # 0.9
+    docker run --publish=0.0.0.0:8083:8083 --publish=0.0.0.0:8086:8086 --name=influxdb09 influxdb/influxdb:latest
+
+
+Running
+-------
+::
+
+    # 0.8
     docker start influxdb
+
+    # 0.9
+    docker start influxdb09
 
 - Stop and remove Docker container::
 
@@ -105,11 +118,15 @@ Inquire IP address from boot2docker host::
 
 Query database using curl::
 
-    # pretty-print json using python
+    # [0.8] pretty-print json using python
     curl --silent --get 'http://192.168.59.103:8086/db/kotori/series?u=root&p=root' --data-urlencode 'q=select * from telemetry;' | python -mjson.tool
 
-    # pretty-print json using jq
+    # [0.8] pretty-print json using jq
     curl --silent --get 'http://192.168.59.103:8086/db/kotori/series?u=root&p=root' --data-urlencode 'q=select * from telemetry;' | jq '.'
+
+    # [0.9] pretty-print json using jq
+    curl --silent --get 'http://192.168.59.103:8086/query?pretty=true' --user root:root --data-urlencode 'db=hiveeyes_100' --data-urlencode 'q=select * from "1.99";' | jq '.'
+
 
 Query database using Python::
 
