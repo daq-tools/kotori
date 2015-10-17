@@ -63,23 +63,3 @@ Send telemetry data
 
     kotori-wamp-client
     kotori-udp-client
-
-
-
-Embedded use
-============
-
-Setup node sandbox
-------------------
-::
-
-    apt-get install mplayer
-
-    virtualenv-2.7 --system-site-packages .venv27
-    source .venv27/bin/activate
-    pip install distribute==0.6.45
-    pip install Adafruit_BBIO
-
-    cd src/kotori.node
-    python setup.py develop
-    cd -

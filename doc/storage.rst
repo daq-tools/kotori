@@ -76,6 +76,9 @@ Running
 
     docker run --publish=0.0.0.0:8083:8083 --publish=0.0.0.0:8086:8086 --name=influxdb influxdb:latest
 
+    # or:
+    docker start influxdb
+
 - Stop and remove Docker container::
 
     docker stop influxdb
