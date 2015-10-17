@@ -1,6 +1,7 @@
 ================
-kotori-mqtt TODO
+Kotori DAQ Tasks
 ================
+
 
 Prio 1
 ======
@@ -24,3 +25,65 @@ Prio 3
 ======
 - [o] send dates in messages
 - [o] notifications: Pushover- and SMS-integration
+
+
+
+-----------
+Milestone 1
+-----------
+- dynamic receiver channels
+- realtime scope views: embed grafana Graphs or render directly e.g. using Rickshaw.js?
+    - http://docs.grafana.org/v2.0/reference/sharing/
+    - https://github.com/grafana/grafana/issues/1622
+
+
+-----------
+Milestone 2
+-----------
+- pdf renderer
+- derivation and integration
+
+
+
+Improve commandline interface
+=============================
+
+"""
+#kotori ship <name> move <x> <y> [--speed=<kn>]
+#kotori ship shoot <x> <y>
+#kotori mine (set|remove) <x> <y> [--moored | --drifting]
+"""
+
+
+Embedded use
+============
+
+Setup node sandbox
+------------------
+::
+
+    apt-get install mplayer
+
+    virtualenv-2.7 --system-site-packages .venv27
+    source .venv27/bin/activate
+    pip install distribute==0.6.45
+    pip install Adafruit_BBIO
+
+    cd src/kotori.node
+    python setup.py develop
+    cd -
+
+
+Master/node modes
+=================
+
+master only::
+
+    kotori master --debug
+
+node only::
+
+    kotori node --master=ws://offgrid:9000/ws --debug
+    kotori node --master=ws://beaglebone.local:9000/ws --debug
+    kotori node --master=ws://master.example.com:9000/ws --debug
+

@@ -1,6 +1,6 @@
-==================
-kotori-mqtt README
-==================
+============================
+Kotori DAQ application setup
+============================
 
 
 Basic use
@@ -12,17 +12,6 @@ Get code
 
     git clone git@git.elmyra.de:isar-engineering/kotori-daq.git
     cd kotori-daq
-
-
-Setup prerequisites
--------------------
-Debian::
-
-    aptitude install python-virtualenv build-essential python-dev libffi-dev libssl-dev
-
-Workstation::
-
-    pip install Twisted
 
 
 Setup node sandbox
@@ -57,31 +46,16 @@ solution::
     pip install pyasn1
 
 
-Start database
---------------
-- Run InfluxDB Docker container::
-
-    boot2docker up
-    eval "$(boot2docker shellinit)"
-    docker start influxdb
-
-
 Start application
 -----------------
-single daemon, serve master, node and web gui::
+crossbar router::
 
     crossbar start
-    kotori --config=development.ini --debug
+
+main application::
+
+    kotori --config=etc/development.ini --debug
 
 Visit web dashboards at
     - http://localhost:35000
     - http://localhost:36000
-
-
-Send telemetry data
--------------------
-- Open Browser at http://localhost:35000/
-- Run::
-
-    kotori-wamp-client
-    kotori-udp-client
