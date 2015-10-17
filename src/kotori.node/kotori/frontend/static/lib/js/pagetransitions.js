@@ -24,16 +24,26 @@ var PageTransitions = (function() {
 
     function init() {
 
-        $pages.each( function() {
+        // collect pages
+        $pages = $main.children( 'div.pt-page' );
+
+        // initialize all pages
+        $pages.each(function() {
             var $page = $( this );
-            $page.data( 'originalClassList', $page.attr( 'class' ) );
-        } );
+            //console.log('originalClassList', $page, $page.data('originalClassList'));
+            if (!$page.data('originalClassList')) {
+                $page.data('originalClassList', $page.attr('class'));
+            }
+        });
 
         //console.log('$pages:', $pages);
 
+        // set current page
         //$pages.eq( current ).addClass( 'pt-page-current' );
         //$($pages[0]).addClass( 'pt-page-current' );
-        $currentPage.addClass( 'pt-page-current' );
+        if (!$currentPage.hasClass('class')) {
+            $currentPage.addClass('pt-page-current');
+        }
 
     }
 

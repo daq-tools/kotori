@@ -26,6 +26,10 @@
     <!-- Fontawesome -->
     <link href="static/lib/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <!-- Page Transitions -->
+    <link href="static/lib/css/pagetransitions-animations.css" rel="stylesheet" type="text/css">
+    <link href="static/lib/css/pagetransitions.css" rel="stylesheet" type="text/css">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -67,13 +71,13 @@
                 <ul class="nav" id="side-menu">
 
                     <li>
-                        <a href="#" class="text-large"><i class="mdi-device-multitrack-audio mdi-2x middle"></i> Channels</a>
+                        <a href="#" class="text-large navigate-channels"><i class="mdi-device-multitrack-audio mdi-2x middle"></i> Channels</a>
                     </li>
                     <li>
                         <a href="#" class="text-large"><i class="mdi-action-settings mdi-2x middle"></i> Settings</a>
                     </li>
                     <li>
-                        <a href="#" class="text-large"><i class="mdi-communication-email mdi-2x middle"></i> About</a>
+                        <a href="#" class="text-large" data-toggle="modal" data-target="#modal-about"><i class="mdi-communication-email mdi-2x middle"></i> About</a>
                     </li>
 
                 </ul>
@@ -84,7 +88,9 @@
     </nav>
 
 
-    <div id="page-wrapper">
+    <div id="page-wrapper" class="pt-perspective">
+
+        <div id="channels-list-page" class="pt-page">
 
         <div class="row">
             <div class="col-lg-12">
@@ -102,7 +108,7 @@
             <div class="col-lg-12">
                 <ul class="list-group">
                     <li class="list-group-item channel-item">
-                        <h4 class="list-group-item-heading">FuelCell</h4>
+                        <h4 class="list-group-item-heading">FuelCell CSV</h4>
                         <div class="list-group-item-text">
                             <div class="row">
                                 <div class="col-lg-4">
@@ -115,11 +121,11 @@
                                     </div>
                                     <i class="mdi-action-swap-horiz middle"></i>&nbsp; UDP 9000
                                     <br/>
-                                    <i class="mdi-action-reorder middle"></i>&nbsp; Decoder: custom "hydro2motion"
+                                    <i class="mdi-action-reorder middle"></i>&nbsp; Decoder: custom "hydro2motion-csv"
                                 </div>
 
                                 <div class="col-lg-5">
-                                    <button class="btn btn-lg btn-raised">
+                                    <button class="btn btn-lg btn-raised edit-channel">
                                         configure
                                     </button>
                                     <div class="btn-group">
@@ -148,22 +154,32 @@
 
                                 <div class="col-lg-3">
                                     <p>
-                                        <strong>size</strong>
-                                        <span class="pull-right text-muted">42 data points</span>
-                                    </p>
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="42" aria-valuemin="0" aria-valuemax="1000" style="width: 4.2%">
-                                            <span class="sr-only">Received 42 data points</span>
-                                        </div>
-                                    </div>
-
-                                    <p>
                                         <strong>frequency</strong>
                                         <span class="pull-right text-muted">50 Hz</span>
                                     </p>
                                     <div class="progress progress-striped active">
                                         <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="250" style="width: 20%">
-                                            <span class="sr-only">Measured 50 Hz throughput</span>
+                                            <span class="sr-only">Measured frequency of 50 Hz</span>
+                                        </div>
+                                    </div>
+
+                                    <p>
+                                        <strong>throughput</strong>
+                                        <span class="pull-right text-muted">2.5 kB/s</span>
+                                    </p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="2.5" aria-valuemin="0" aria-valuemax="20" style="width: 12.5%">
+                                            <span class="sr-only">Measured throughput of 1 kB/s</span>
+                                        </div>
+                                    </div>
+
+                                    <p>
+                                        <strong>total size</strong>
+                                        <span class="pull-right text-muted">42 data points</span>
+                                    </p>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="42" aria-valuemin="0" aria-valuemax="1000" style="width: 4.2%">
+                                            <span class="sr-only">Received 42 data points</span>
                                         </div>
                                     </div>
                                 </div>
@@ -177,6 +193,8 @@
         </div>
         <br/>
 
+        </div>
+
     </div>
     <!-- /#page-wrapper -->
 
@@ -184,7 +202,7 @@
     <div class="row text-muted">
         <div class="col-lg-6">
             <div class="footer">
-                Software release: 0.97.10
+                Software version: {{ software_version }}
             </div>
         </div>
         <div class="col-lg-6 text-right">
@@ -196,6 +214,109 @@
 
 </div>
 <!-- /#wrapper -->
+
+<!-- Modal dialog "About" -->
+<div class="modal fade" id="modal-about" tabindex="-1" role="dialog" aria-labelledby="modal-about-label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title" id="modal-about-label">About</h3>
+            </div>
+            <div class="modal-body">
+                <p class2="text-large">
+                    Kotori DAQ is a multi-channel, multi-protocol data acquisition and graphing toolkit based on
+                    <a href="https://influxdb.com/" target="_blank">InfluxDB</a>,
+                    <a href="http://grafana.org/" target="_blank">Grafana</a> and
+                    <a href="https://twistedmatrix.com/" target="_blank">Twisted</a>.
+                </p>
+                <p>
+                    It is made from people building test benches and addresses different aspects of collecting
+                    and storing sensor data from testing setups.
+                    For making their lives easier, we have two audiences in mind.
+                </p>
+
+                <h3>For users</h3>
+                <p>
+                    Interactively create data sinks, add decoding- and mapping-rules and finally store data points into InfluxDB,
+                    a leading open-source time series database suitable for realtime analytics and sensor data storage.
+                </p>
+                <p>
+                    Interactively build realtime dashboards to visualize time series with Grafana,
+                    an open source, feature rich metrics dashboard and graph editor.
+                </p>
+
+                <h3>For developers</h3>
+                <p>
+                    Ingest and distribute data between multiple publishers and subscribers across
+                    different devices using the underpinning software bus based on
+                    <a href="https://tools.ietf.org/html/rfc6455" target="_blank">The WebSocket Protocol</a> and
+                    <a href="http://wamp.ws/" target="_blank">The Web Application Messaging Protocol</a>.
+                </p>
+                <p>
+                    Leverage the open infrastructure based on Twisted - an event-driven networking engine -
+                    to implement custom software components.
+                    Accept new protocols, write adapters, decoders and handlers for specific devices and data formats.
+                </p>
+
+                <hr/>
+
+                Software version: {{ software_version }}
+
+                <hr/>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        IsarEngineering GmbH
+                        <br/><br/>
+
+                        <i class="mdi-communication-business"></i> Lindenstraße 66, 84030 Ergolding
+                        <br/>
+
+                        <i class="mdi-communication-email"></i> <a href="mailto:support@isarengineering.de">support@isarengineering.de</a>
+                        <br/>
+
+                        <i class="mdi-communication-call"></i> +49-177-3938038
+
+                    </div>
+                    <div class="col-lg-6">
+                        Elmyra UG
+                        <br/><br/>
+
+                        <i class="mdi-communication-business"></i> Aufkirchner Straße 5, 82335 Berg
+                        <br/>
+
+                        <i class="mdi-communication-email"></i> <a href="mailto:support@elmyra.de">support@elmyra.de</a>
+                        <br/>
+
+                        <i class="mdi-communication-call"></i> +49-177-3938038
+
+                    </div>
+                </div>
+                <br/>
+                &copy; 2014-2015 All rights reserved.
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script id="channel-configure-template" type="text/x-underscore-template">
+    <div id="channel-configure-page" class="pt-page">
+        <div class="alert alert-danger alert-block alert-inline">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4><%= title %></h4>
+            <br/>
+            <%= description %>
+        </div>
+    </div>
+</script>
+
+
 
 <!-- jQuery -->
 <script src="static/lib/js/jquery-1.11.3.min.js"></script>
@@ -213,11 +334,23 @@
     });
 </script>
 
+
+<!-- Underscore.js -->
+<script src="static/lib/js/underscore-min.js"></script>
+
+<!-- Page Transitions -->
+<script src="static/lib/js/modernizr.custom.js"></script>
+<script src="static/lib/js/pagetransitions.js"></script>
+
 <!-- Metis Menu Plugin JavaScript -->
 <script src="static/lib/js/metisMenu.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
 <script src="static/app/js/sb-admin-2.js"></script>
+
+<!-- main application -->
+<script src="static/app/js/app.js"></script>
+
 
 </body>
 </html>

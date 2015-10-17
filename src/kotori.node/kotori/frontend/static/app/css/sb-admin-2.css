@@ -133,6 +133,7 @@ body {
         position: absolute;
         width: 250px;
         margin-top: 60px;
+        min-height: 500px;
     }
 
     .navbar-top-links .dropdown-messages,

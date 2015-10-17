@@ -20,7 +20,10 @@ def includeme(config):
 
 @view_config(route_name='index', renderer='kotori.frontend:templates/index.html')
 def index_page(request):
-    tplvars = {}
+    software_version = request.registry.settings['SOFTWARE_VERSION']
+    tplvars = {
+        'software_version': software_version,
+    }
     return tplvars
 
 
