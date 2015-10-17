@@ -69,6 +69,8 @@ class HiveeyesApplication(object):
         influx = InfluxDBAdapter(
             version  = self.config.get('influxdb', 'version'),
             host     = self.config.get('influxdb', 'host'),
+            username = self.config.get('influxdb', 'username'),
+            password = self.config.get('influxdb', 'password'),
             database = database)
         influx.write(series, data)
 

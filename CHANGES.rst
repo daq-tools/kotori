@@ -18,6 +18,7 @@ develop
 - app: use configuration file instead of hardcoded configuration values
 - storage: add support for InfluxDB 0.9
 - ui: add pages with page transitions, about content, etc.
+- storage: minor tweaks to enable influxdb database authentication
 
 
 2015-05-21 0.2.2

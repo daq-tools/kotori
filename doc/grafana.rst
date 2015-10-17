@@ -10,6 +10,35 @@ Howtos
 - http://docs.grafana.org/datasources/influxdb/
 
 
+Installation on Debian
+======================
+Install package::
+
+    aptitude install apt-transport-https curl
+
+    cat /etc/apt/sources.list.d/grafana.list
+    deb https://packagecloud.io/grafana/stable/debian/ wheezy main
+
+    curl https://packagecloud.io/gpg.key | apt-key add -
+    aptitude update
+    aptitude install grafana
+
+
+Configure::
+
+    /etc/grafana/grafana.ini
+    admin_password = XYZ
+
+
+Run::
+    /etc/init.d/grafana-server start
+    tail -F /var/log/grafana/grafana.log
+
+
+
+
+
+
 Installation via Docker
 =======================
 See also: http://docs.grafana.org/installation/docker/
