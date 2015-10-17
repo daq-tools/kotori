@@ -127,6 +127,8 @@ Query database using curl::
     # [0.9] pretty-print json using jq
     curl --silent --get 'http://192.168.59.103:8086/query?pretty=true' --user root:root --data-urlencode 'db=hiveeyes_100' --data-urlencode 'q=select * from "1.99";' | jq '.'
 
+    # [0.9] drop database
+    curl --silent --get 'http://192.168.59.103:8086/query?pretty=true' --user root:root --data-urlencode 'db=hiveeyes_100' --data-urlencode 'q=drop database "hiveeyes_100"'
 
 Query database using Python::
 
