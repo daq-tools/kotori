@@ -5,3 +5,4 @@
 *.pyo
 /.crossbar/node.pid
 /var
+*.deb
