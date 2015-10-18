@@ -17,7 +17,7 @@ requires = [
     'Bunch==1.0.1',
 ]
 
-setup(name='kotori-daq',
+setup(name='kotori.daq',
       version='0.3.0',
       description='Kotori DAQ',
       long_description='Kotori DAQ',
