@@ -2,6 +2,9 @@
 Kotori DAQ Tasks
 ================
 
+- investigate and improve mqtt connection robustness and recycling
+- lizenz
+
 
 Prio 1
 ======

@@ -2,27 +2,44 @@
 Kotori Hiveeyes README
 ======================
 
-Run Kotori DAQ
-==============
+Start Kotori DAQ
+================
+
+Run interactively::
+
+    ssh kotori@elbanco.hiveeyes.org
+    source ~/develop/kotori-daq/.venv27/bin/activate
+    kotori --config ~/develop/kotori-daq/etc/hiveeyes.ini --debug
+
+
+Run in tmux session::
+
+    ssh kotori@elbanco.hiveeyes.org
+    tmux new -s kotori 'bash -c "source ~/develop/kotori-daq/.venv27/bin/activate; kotori --config ~/develop/kotori-daq/etc/hiveeyes.ini --debug; exec bash"'
+
+
+Attach to running Kotori DAQ
+============================
 ::
 
-    kotori --config=etc/hiveeyes.ini
+    ssh kotori@elbanco.hiveeyes.org
+    tmux att -t kotori
 
 
 URL entrypoints
 ===============
 
 InfluxDB user interface
-http://elbanco.hiveeyes.org:8083/
+http://swarm.hiveeyes.org:8083/
 
 InfluxDB API
-http://elbanco.hiveeyes.org:8086/
+http://swarm.hiveeyes.org:8086/
 
 Grafana
-http://elbanco.hiveeyes.org:3000/
+http://swarm.hiveeyes.org:3000/
 
 Kotori DAQ user interface
-http://elbanco.hiveeyes.org:36000/
+http://swarm.hiveeyes.org:36000/
 
 
 Serial to MQTT forwarding
@@ -31,7 +48,7 @@ Serial to MQTT forwarding
 publish message::
 
     $ cd mqtt-to-serial
-    $ make pretend   # make pretend-elbanco
+    $ make pretend   # make pretend-swarm
     publish: hiveeyes/100/1/99/temp1 2218
     publish: hiveeyes/100/1/99/temp2 2318
     publish: hiveeyes/100/1/99/temp3 2462
@@ -47,7 +64,7 @@ https://influxdb.com/docs/v0.9/administration/authentication_and_authorization.h
 
 create admin user::
 
-     $ curl --silent --get 'http://elbanco.hiveeyes.org:8086/query?pretty=true' --user root:root --data-urlencode 'q=CREATE USER admin WITH PASSWORD 'Armoojwi' WITH ALL PRIVILEGES'
+     $ curl --silent --get 'http://swarm.hiveeyes.org:8086/query?pretty=true' --user root:root --data-urlencode 'q=CREATE USER admin WITH PASSWORD 'Armoojwi' WITH ALL PRIVILEGES'
 
 
 
@@ -57,11 +74,11 @@ InfluxDB querying
 
 list databases::
 
-     $ curl --silent --get 'http://elbanco.hiveeyes.org:8086/query?pretty=true' --user admin:Armoojwi --data-urlencode 'q=SHOW DATABASES' | jq '.'
+     $ curl --silent --get 'http://swarm.hiveeyes.org:8086/query?pretty=true' --user admin:Armoojwi --data-urlencode 'q=SHOW DATABASES' | jq '.'
 
 query influxdb::
 
-    $ curl --silent --get 'http://elbanco.hiveeyes.org:8086/query?pretty=true' --user admin:Armoojwi --data-urlencode 'db=hiveeyes_999' --data-urlencode 'q=select * from "1.99";' | jq '.'
+    $ curl --silent --get 'http://swarm.hiveeyes.org:8086/query?pretty=true' --user admin:Armoojwi --data-urlencode 'db=hiveeyes_999' --data-urlencode 'q=select * from "1.99";' | jq '.'
     [
       {
         "name": "1.99",

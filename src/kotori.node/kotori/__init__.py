@@ -18,18 +18,19 @@ from .version import __VERSION__
 
 __path__ = extend_path(__path__, __name__)
 
-__doc__ = """Kotori node service.
+APP_NAME = 'Kotori DAQ version ' + __VERSION__
+__doc__ = APP_NAME + """
 
 Usage:
-  kotori --config=<kotori.ini> [--debug]
-  kotori (-h | --help)
+  kotori --config etc/development.ini [--debug]
   kotori --version
+  kotori (-h | --help)
 
 Options:
-  -h --help                 Show this screen.
-  --version                 Show version.
-  --config=<kotori.ini>     Configuration file
+  --config etc/kotori.ini   Start Kotori with configuration file
+  --version                 Show version information
   --debug                   Enable debug messages
+  -h --help                 Show this screen
 
 """
 """
@@ -44,11 +45,9 @@ logger = Logger()
 def run():
 
     startLogging(sys.stdout)
+    logger.info(APP_NAME)
 
-    application_string = 'Kotori DAQ version ' + __VERSION__
-    logger.info(application_string)
-
-    options = docopt(__doc__, version=application_string)
+    options = docopt(__doc__, version=APP_NAME)
     print 'options: {}'.format(options)
     debug = options.get('--debug', False)
     print "debug:", debug
