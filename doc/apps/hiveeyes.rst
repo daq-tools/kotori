@@ -29,17 +29,12 @@ Attach to running Kotori DAQ
 URL entrypoints
 ===============
 
-InfluxDB user interface
-http://swarm.hiveeyes.org:8083/
-
-InfluxDB API
-http://swarm.hiveeyes.org:8086/
-
-Grafana
-http://swarm.hiveeyes.org:3000/
-
-Kotori DAQ user interface
-http://swarm.hiveeyes.org:36000/
+- | InfluxDB UI
+  | http://swarm.hiveeyes.org:8083/
+- | InfluxDB API
+  | http://swarm.hiveeyes.org:8086/
+- | Grafana
+  | http://swarm.hiveeyes.org:3000/
 
 
 Serial to MQTT forwarding
