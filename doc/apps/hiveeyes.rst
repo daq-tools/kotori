@@ -115,19 +115,20 @@ and a series called ``1.99``::
     |                 |         |
 
 The code implementing this lives in ``src/kotori.node/kotori/hiveeyes/application.py``, lines 52 ff.::
-class HiveeyesApplication(object):
 
-    # [...]
+    class HiveeyesApplication(object):
 
-    def storage_address_from_topic(self, topic):
-        parts = topic.split('/')
-        address = Bunch({
-            # use "_" as database name fragment separator: "/" does not work in InfluxDB 0.8, "." does not work in InfluxDB 0.9
-            'database': '_'.join(parts[0:2]),
-            'series': '.'.join(parts[2:4]),
-        })
-        print 'database address:', dict(address)
-        return address
+        # [...]
+
+        def storage_address_from_topic(self, topic):
+            parts = topic.split('/')
+            address = Bunch({
+                # use "_" as database name fragment separator: "/" does not work in InfluxDB 0.8, "." does not work in InfluxDB 0.9
+                'database': '_'.join(parts[0:2]),
+                'series': '.'.join(parts[2:4]),
+            })
+            print 'database address:', dict(address)
+            return address
 
 
 
