@@ -44,12 +44,12 @@ publish message::
 
     $ cd mqtt-to-serial
     $ make pretend   # make pretend-swarm
-    publish: hiveeyes/100/1/99/temp1 2218
-    publish: hiveeyes/100/1/99/temp2 2318
-    publish: hiveeyes/100/1/99/temp3 2462
-    publish: hiveeyes/100/1/99/temp4 2250
-    publish: hiveeyes/100/1/99/message-bencode li100ei99ei1ei2218ei2318ei2462ei2250ee
-    publish: hiveeyes/100/1/99/message-json {"network_id": 100, "node_id": 99, "gateway_id": 1, "temp1": 2218, "temp2": 2318, "temp3": 2462, "temp4": 2250}
+    publish: hiveeyes/999/1/99/temp1 2218
+    publish: hiveeyes/999/1/99/temp2 2318
+    publish: hiveeyes/999/1/99/temp3 2462
+    publish: hiveeyes/999/1/99/temp4 2250
+    publish: hiveeyes/999/1/99/message-bencode li999ei99ei1ei2218ei2318ei2462ei2250ee
+    publish: hiveeyes/999/1/99/message-json {"network_id": 999, "node_id": 99, "gateway_id": 1, "temp1": 2218, "temp2": 2318, "temp3": 2462, "temp4": 2250}
 
 
 InfluxDB authentication
@@ -97,3 +97,48 @@ query influxdb::
         ]
       }
     ]
+
+
+Hacking
+=======
+
+The most desirable thing to amend when hacking on Kotori DAQ in the context of Hiveeyes might be the mapping
+implementation of how to route incoming MQTT data messages appropriatly into InfluxDB databases and time series.
+
+Currently, a data message sent to topic ``hiveeyes/999/1/99`` will be stored in a database called ``hiveeyes_999``
+and a series called ``1.99``::
+
+    hiveeyes  /  999  /  1  /  99
+    |                 |         |
+    |    database     | series  |
+    |   hiveeyes_999  |  1.99   |
+    |                 |         |
+
+The code implementing this lives in ``src/kotori.node/kotori/hiveeyes/application.py``, lines 52 ff.::
+class HiveeyesApplication(object):
+
+    # [...]
+
+    def storage_address_from_topic(self, topic):
+        parts = topic.split('/')
+        address = Bunch({
+            # use "_" as database name fragment separator: "/" does not work in InfluxDB 0.8, "." does not work in InfluxDB 0.9
+            'database': '_'.join(parts[0:2]),
+            'series': '.'.join(parts[2:4]),
+        })
+        print 'database address:', dict(address)
+        return address
+
+
+
+Wishlist
+========
+- Aggregate measurements over time ranges (e.g. daily) and republish summary to MQTT
+    - Provide reasonable "delta" values in relation to the point of last summary
+    - Proposal for summary topics: hiveeyes/username/summary/foo/daily/bar
+    - Schedule at: Morning, Noon, Evening
+- Threshold alerting
+- Weather data publishing, see `<weather.rst>`__
+- "Stockkarte" subsystem
+    - marking point in graphs and filling the Stockkarte questioning
+- Timeseries anomaly detection using machine learning
