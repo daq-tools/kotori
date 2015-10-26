@@ -1,0 +1,14 @@
+{
+    "alias": "{{ alias }}",
+    "fields": [
+        {
+            "func": "mean",
+            "name": "{{ name }}"
+        }
+    ],
+    "groupByTags": [],
+    "measurement": "{{ measurement }}",
+    "query": "SELECT mean({{ name }}) FROM \"{{ measurement }}\" WHERE $timeFilter GROUP BY time($interval)",
+    "rawQuery": false,
+    "tags": []
+}
