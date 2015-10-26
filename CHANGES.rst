@@ -19,6 +19,7 @@ develop
 - storage: add support for InfluxDB 0.9
 - ui: add pages with page transitions, about content, etc.
 - storage: minor tweaks to enable influxdb database authentication
+- minor update to BERadio receiving
 
 
 2015-05-21 0.2.2
