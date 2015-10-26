@@ -40,30 +40,21 @@ class HiveeyesApplication(object):
             # compute storage address from topic
             db_address = self.storage_address_from_topic(topic)
 
-            # decode data from json format
-            data = json.loads(payload)
-
-            # remove some non-data fields
-            data = self.mungle_data(data)
+            # decode message from json format
+            message = json.loads(payload)
 
             # store data
-            self.store_message(db_address.database, db_address.series, data)
+            self.store_message(db_address.database, db_address.series, message)
 
     def storage_address_from_topic(self, topic):
         parts = topic.split('/')
         address = Bunch({
             # use "_" as database name fragment separator: "/" does not work in InfluxDB 0.8, "." does not work in InfluxDB 0.9
             'database': '_'.join(parts[0:2]),
-            'series': '.'.join(parts[2:4]),
+            'series': '_'.join(parts[2:4]),
         })
         print 'database address:', dict(address)
         return address
-
-    def mungle_data(self, data):
-        del data['network_id']
-        del data['gateway_id']
-        del data['node_id']
-        return data
 
     def store_message(self, database, series, data):
         influx = InfluxDBAdapter(
@@ -72,6 +63,7 @@ class HiveeyesApplication(object):
             username = self.config.get('influxdb', 'username'),
             password = self.config.get('influxdb', 'password'),
             database = database)
+
         influx.write(series, data)
 
 
