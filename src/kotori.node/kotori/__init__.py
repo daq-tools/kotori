@@ -5,8 +5,8 @@ import sys
 from pkgutil import extend_path
 from ConfigParser import ConfigParser
 from twisted.internet import reactor
-from twisted.python.log import startLogging
-from twisted.logger import Logger
+from twisted.logger import Logger, LogLevel
+from kotori.logger import startLogging
 from kotori.master.server import boot_master
 from kotori.node.nodeservice import boot_node
 from kotori.web.server import boot_web
@@ -14,6 +14,7 @@ from kotori.frontend.server import boot_frontend
 from kotori.hydro2motion.database.influx import h2m_boot_influx_database
 from kotori.hydro2motion.network.udp import h2m_boot_udp_adapter
 from kotori.hiveeyes.application import hiveeyes_boot
+from kotori.util import slm
 from .version import __VERSION__
 
 __path__ = extend_path(__path__, __name__)
@@ -44,20 +45,22 @@ logger = Logger()
 
 def run():
 
-    startLogging(sys.stdout)
     logger.info(APP_NAME)
 
     options = docopt(__doc__, version=APP_NAME)
-    print 'options: {}'.format(options)
+    logger.info('options: {}'.format(slm(dict(options))))
     debug = options.get('--debug', False)
-    print "debug:", debug
+    logger.info("debug: {}".format(debug))
+
+    log_level = 'debug' if debug else 'info'
+    startLogging(sys.stdout, level=LogLevel.levelWithName(log_level))
 
     configfile = options['--config']
     config = ConfigParser()
     success = config.read([configfile, os.path.expanduser('~/.kotori.ini')])
     if success:
         logger.info('Read configuration files: {}'.format(success))
-        logger.info('config: {}'.format(config))
+        #logger.info('config: {}'.format(config))
     else:
         msg = 'Could not read configuration file {}'.format(configfile)
         logger.error(msg)

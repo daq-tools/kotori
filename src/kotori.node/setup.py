@@ -15,6 +15,9 @@ requires = [
     'cornice==1.0.0',
     'twisted-mqtt==0.1.2',
     'Bunch==1.0.1',
+    'grafana_api_client==0.1.4',
+    #'grafana-dashboard-builder==0.1.0a7',
+    'Jinja2==2.8',
 ]
 
 setup(name='kotori_daq',
