@@ -249,11 +249,13 @@ class GrafanaManager(object):
 
     # field name collection helper
     @staticmethod
-    def collect_fields(data, prefix=''):
+    def collect_fields(data, prefix='', sorted=True):
         fields = []
         for field in data.keys():
             if field.startswith(prefix):
                 fields.append(field)
+        if sorted:
+            fields.sort()
         return fields
 
 
