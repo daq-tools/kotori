@@ -78,7 +78,7 @@ Installation via Docker
     eval "$(boot2docker shellinit)"
 
     docker run \
-        --name=grafana \
+        --name=grafana213 \
         --detach=false \
         --publish=3000:3000 \
         --volume=/var/lib/grafana:/var/lib/grafana \
