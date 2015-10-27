@@ -64,6 +64,9 @@ Commercial
   | http://open.sen.se/
   | http://blog.sen.se/
 
+- | Brillo
+  | https://developers.google.com/brillo/
+
 
 Related cloud platforms
 -----------------------
@@ -81,3 +84,17 @@ Related open source projects
 ----------------------------
 - http://emoncms.org/
 - http://openenergymonitor.org/emon/
+
+
+Grafana
+-------
+- https://pypi.python.org/pypi/grafana_alerts
+- https://pypi.python.org/pypi/grafana_api_client
+- https://pypi.python.org/pypi/grafyaml
+- https://pypi.python.org/pypi/grafcli
+- https://github.com/m110/grafcli
+- https://github.com/m110/climb
+- https://pypi.python.org/pypi/monasca-ui
+- https://github.com/openstack/horizon
+- http://docs.grafana.org/guides/gettingstarted/
+- https://www.youtube.com/watch?v=sKNZMtoSHN4&index=7&list=PLDGkOdUX1Ujo3wHw9-z5Vo12YLqXRjzg2
