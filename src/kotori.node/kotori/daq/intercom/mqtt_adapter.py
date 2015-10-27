@@ -10,17 +10,17 @@ from mqtt.client.factory import MQTTFactory
 
 logger = Logger()
 
-class HiveeyesMqttAdapter(Service):
+class MqttAdapter(Service):
 
     def __init__(self, broker_host, broker_port=1883, debug=False, callback=None, subscriptions=None):
         self.broker_host = broker_host
         self.broker_port = broker_port
         self.callback = callback or self.onPublish
-        self.subscriptions = subscriptions or {}
+        self.subscriptions = subscriptions or []
         self.connect()
 
     def connect(self):
-        print 'INFO: Starting MQTT adapter. broker=', self.broker_host, self.broker_port
+        logger.info('Starting MQTT adapter. broker={}:{}'.format(self.broker_host, self.broker_port))
 
         factory = MQTTFactory(profile=MQTTFactory.PUBLISHER | MQTTFactory.SUBSCRIBER)
         point   = TCP4ClientEndpoint(reactor, self.broker_host, self.broker_port)
@@ -35,6 +35,7 @@ class HiveeyesMqttAdapter(Service):
 
     def subscribe(self, *args):
         #d = self.protocol.subscribe("foo/bar/baz", 0)
+        logger.info("Subscribing to topics '{}'".format(self.subscriptions))
         for topic in self.subscriptions:
             e = self.protocol.subscribe(topic, 0)
         self.protocol.setPublishHandler(self.callback)
@@ -53,4 +54,4 @@ class HiveeyesMqttAdapter(Service):
 
     def printError(self, *args):
         logger.debug("args={args!s}", args=args)
-        reactor.stop()
+        #reactor.stop()

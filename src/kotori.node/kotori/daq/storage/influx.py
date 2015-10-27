@@ -2,6 +2,7 @@
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import requests
 from twisted.logger import Logger
+from kotori.util import slm
 
 logger = Logger()
 
@@ -43,7 +44,7 @@ class InfluxDBAdapter(object):
 
         except requests.exceptions.ConnectionError as ex:
             self.connected = False
-            logger.error('InfluxDB network error: {}'.format(unicode(ex)))
+            logger.error('InfluxDB network error: {}'.format(slm(ex)))
             return False
 
         except InfluxDBClientError as ex:
@@ -53,7 +54,7 @@ class InfluxDBAdapter(object):
                 pass
             else:
                 self.connected = False
-                logger.error('InfluxDBClientError: {}'.format(unicode(ex)))
+                logger.error('InfluxDBClientError: {}'.format(slm(ex)))
                 return False
 
         self.connected = True
@@ -94,18 +95,22 @@ class InfluxDBAdapter(object):
 
         try:
             if self.version == '0.8':
-                response = self.influx.write_points([chunk])
-                logger.info("Saved event to InfluxDB. response={}".format(response))
+                pass
 
             elif self.version == '0.9':
-                response = self.influx.write_points([self.v08_to_09(chunk)])
-                logger.info("Saved event to InfluxDB. response={}".format(response))
+                chunk = self.v08_to_09(chunk)
 
             else:
                 raise ValueError('Unknown InfluxDB protocol version "{}"'.format(self.version))
 
+            success = self.influx.write_points([chunk])
+            if success:
+                logger.info("Storing measurement succeeded: {}".format(slm(chunk)))
+            else:
+                logger.error("Storing measurement failed: {}".format(slm(chunk)))
+
         except requests.exceptions.ConnectionError as ex:
-            logger.error('InfluxDB network error: {}'.format(unicode(ex)))
+            logger.error('InfluxDB network error: {}'.format(slm(ex)))
 
 
     def v08_to_09(self, chunk08):
@@ -118,7 +123,7 @@ class InfluxDBAdapter(object):
             #"time": "2009-11-10T23:00:00Z",  # TODO: use timestamp from downstream chunk
             "fields": dict(zip(chunk08["columns"], chunk08["points"][0])),
         }
-        print 'chunk09:', chunk09
+        logger.debug('chunk09: {}'.format(slm(chunk09)))
         return chunk09
 
     def write(self, name, data):
