@@ -6,3 +6,4 @@
 /.crossbar/node.pid
 /var
 *.deb
+/tmp
