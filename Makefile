@@ -35,11 +35,8 @@ fpm: prepare-production-build
 deb:
 	fab deb_build_and_release:gitrepo=$(gitrepo),gitref=$(version),tenant=$(tenant),kind=$(kind),flavor=fpm
 
-release:
+release-deb:
 	$(MAKE) deb gitrepo=ssh://git@git.elmyra.de/isar-engineering/kotori-daq.git gitref=master tenant=elmyra/kotori kind=staging version=$(version)
-
-upload:
-	rsync -auv kotori-daq*.deb root@elbanco.hiveeyes.org:/tmp/
 
 prepare-production-build:
 	@if test "$(version)" = ""; then \

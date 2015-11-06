@@ -3,14 +3,46 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Kotori's documentation!
-==================================
+Welcome to Kotori!
+==================
 
-Contents:
+About
+-----
 
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 1
 
+    README
+
+
+Applications
+------------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    applications/*
+
+
+Setup
+-----
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    setup/*
+
+
+Development
+-----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    development/index
 
 
 Indices and tables

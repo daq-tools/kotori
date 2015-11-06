@@ -1,6 +1,6 @@
-======================
-Kotori Hiveeyes README
-======================
+===================
+Kotori for HiveEyes
+===================
 
 Start Kotori DAQ
 ================
