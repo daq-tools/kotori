@@ -2,25 +2,38 @@
 Kotori DAQ Tasks
 ================
 
-- investigate and improve mqtt connection robustness and recycling
-- lizenz
+Hiveeyes
+========
+
+Todo
+----
+- [o] Improve inline docs
+- [o] License and open sourcing
+- [o] Enhance mechanism of how GrafanaManager (re)creates dashboard, when deleted by user at runtime.
+      Currently, dashboards are only created on packages arriving after a Kotori restart.
+      They are never ever deleted automatically right now.
 
 
-- MQTTFactory shuts down after exception when storing via InfluxDB::
+Done
+----
+- [x] Sort "collect_fields" result before passing to grafana manager
+- [x] investigate and improve mqtt connection robustness and recycling::
 
-          File "/home/kotori/develop/kotori-daq/src/kotori.node/kotori/daq/storage/influx.py", line 101, in write_real
-            response = self.influx.write_points([self.v08_to_09(chunk)])
-          File "/home/kotori/develop/kotori-daq/.venv27/local/lib/python2.7/site-packages/influxdb-2.9.2-py2.7.egg/influxdb/client.py", line 387, in write_points
-            tags=tags)
-          File "/home/kotori/develop/kotori-daq/.venv27/local/lib/python2.7/site-packages/influxdb-2.9.2-py2.7.egg/influxdb/client.py", line 432, in _write_points
-            expected_response_code=204
-          File "/home/kotori/develop/kotori-daq/.venv27/local/lib/python2.7/site-packages/influxdb-2.9.2-py2.7.egg/influxdb/client.py", line 277, in write
-            headers=headers
-          File "/home/kotori/develop/kotori-daq/.venv27/local/lib/python2.7/site-packages/influxdb-2.9.2-py2.7.egg/influxdb/client.py", line 247, in request
-            raise InfluxDBClientError(response.content, response.status_code)
-        influxdb.exceptions.InfluxDBClientError: 400: unable to parse 'w.t ': invalid field format
+    - MQTTFactory shuts down after exception when storing via InfluxDB::
 
-    2015-10-20 06:12:59+0200 [-] Stopping factory <mqtt.client.factory.MQTTFactory instance at 0x7fda346ccb48>
+              File "/home/kotori/develop/kotori-daq/src/kotori.node/kotori/daq/storage/influx.py", line 101, in write_real
+                response = self.influx.write_points([self.v08_to_09(chunk)])
+              File "/home/kotori/develop/kotori-daq/.venv27/local/lib/python2.7/site-packages/influxdb-2.9.2-py2.7.egg/influxdb/client.py", line 387, in write_points
+                tags=tags)
+              File "/home/kotori/develop/kotori-daq/.venv27/local/lib/python2.7/site-packages/influxdb-2.9.2-py2.7.egg/influxdb/client.py", line 432, in _write_points
+                expected_response_code=204
+              File "/home/kotori/develop/kotori-daq/.venv27/local/lib/python2.7/site-packages/influxdb-2.9.2-py2.7.egg/influxdb/client.py", line 277, in write
+                headers=headers
+              File "/home/kotori/develop/kotori-daq/.venv27/local/lib/python2.7/site-packages/influxdb-2.9.2-py2.7.egg/influxdb/client.py", line 247, in request
+                raise InfluxDBClientError(response.content, response.status_code)
+            influxdb.exceptions.InfluxDBClientError: 400: unable to parse 'w.t ': invalid field format
+
+        2015-10-20 06:12:59+0200 [-] Stopping factory <mqtt.client.factory.MQTTFactory instance at 0x7fda346ccb48>
 
 
 
@@ -107,4 +120,3 @@ node only::
     kotori node --master=ws://offgrid:9000/ws --debug
     kotori node --master=ws://beaglebone.local:9000/ws --debug
     kotori node --master=ws://master.example.com:9000/ws --debug
-

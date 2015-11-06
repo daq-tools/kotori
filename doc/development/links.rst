@@ -1,6 +1,20 @@
+Protocols
+---------
+- OWFS: http://www.cupidcontrols.com/2014/01/owfs-owserver-owhttp-owpython-and-a-little-1wire-pi/
+
+LabJack
+-------
+- https://www.interfaceinnovations.org/labjackproducts.html
+- https://labjack.com/products/u3
+
+
 Crossbar
 --------
 - https://www.reddit.com/r/Python/comments/27d0km/is_crossbario_the_future_of_python_web_apps/
+
+JeeLabs Jet
+-----------
+- https://github.com/jeelabs/jet
 
 Zato
 ----

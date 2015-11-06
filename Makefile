@@ -11,6 +11,7 @@ fpm: prepare-production-build
 		-s python -t deb \
 		--prefix /opt/elmyra/kotori-daq \
 		--python-scripts-executable '/usr/bin/env python' \
+		--python-obey-requirements-txt \
 		--name kotori-daq \
 		--force \
 		--version $(version) --iteration 1 \

@@ -22,6 +22,7 @@ develop
 - minor update to BERadio receiving
 - integrate grafana datasource- and dashboard automation
 - improve logging
+- Sort "collect_fields" result before passing to grafana manager
 
 
 2015-05-21 0.2.2
