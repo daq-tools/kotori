@@ -4,6 +4,8 @@
 *.pyc
 *.pyo
 /.crossbar/node.pid
-/var
 *.deb
+/build
+/dist
 /tmp
+/var
