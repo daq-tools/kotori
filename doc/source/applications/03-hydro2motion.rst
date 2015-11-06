@@ -25,11 +25,13 @@ URL entrypoints
 ===============
 
 GUI
+---
 - | Kotori Telemetry Dashboard for Hydro2Motion
   | http://lablab.cicer.de:35000/
   | http://h2mdata.cicer.de/
 
 Components
+----------
 - | InfluxDB UI
   | http://lablab.cicer.de:8083/
 - | InfluxDB API
