@@ -22,7 +22,6 @@ Setup node sandbox
     source .venv27/bin/activate
     pip install 'setuptools>=18.3.1'
 
-    cd src/kotori.node/
     python setup.py develop
 
 
