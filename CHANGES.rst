@@ -1,10 +1,14 @@
-===================
-kotori-mqtt CHANGES
-===================
+==============
+Kotori CHANGES
+==============
 
 
 develop
 -------
+
+
+2015-11-06 0.3.2
+----------------
 - upgrade foundation libraries: Twisted, Autobahn, Crossbar
 - add frontend foundation based on Pyramid web framework
 - ui: add jQuery, Bootstrap, Fontawesome, html5shiv and respond.js
@@ -14,6 +18,7 @@ develop
 - refactor hydro2motion code
 - ui: add modernizr and underscore
 - ui: add foundation for page transitions from codrops
+- add vendor "hiveeyes"
 - hiveeyes: receive messages via MQTT and store data points into InfluxDB
 - app: use configuration file instead of hardcoded configuration values
 - storage: add support for InfluxDB 0.9
@@ -23,6 +28,7 @@ develop
 - integrate grafana datasource- and dashboard automation
 - improve logging
 - Sort "collect_fields" result before passing to grafana manager
+- refactor project layout
 
 
 2015-05-21 0.2.2
