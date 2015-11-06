@@ -47,7 +47,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Kotori'
-copyright = u'2015, Kotori Developers'
+copyright = u'2014-2015, Kotori Developers'
 author = u'Kotori Developers'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -267,8 +267,8 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   (master_doc, 'Kotori', u'Kotori Documentation',
-   author, 'Kotori', 'One line description of project.',
-   'Miscellaneous'),
+   author, 'Kotori', 'Data Acquisition and Telemetry',
+   'DAQ'),
 ]
 
 # Documents to append as an appendix to all manuals.
@@ -282,3 +282,27 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
+
+
+# -- Custom options -------------------------------------------
+
+html_logo = '_static/img/kotori-logo.png'
+html_theme_options = {
+    'description': 'Data Acquisition and Telemetry',
+    'page_width': '1152px',
+    'sidebar_width': '220px',
+    'github_button': False,
+    }
+
+html_sidebars = {
+    '**': [
+        'about.html',
+        'navigation.html',
+        'searchbox.html',
+        ]
+}
+
+def setup(app):
+    # https://github.com/snide/sphinx_rtd_theme/issues/117#issuecomment-41571653
+    #app.add_javascript("custom.js")
+    app.add_stylesheet("css/kotori-sphinx.css")
