@@ -9,6 +9,7 @@ from appdirs import user_data_dir
 import json_store
 
 def slm(message):
+    """sanitize log message"""
     return unicode(message).replace('{', '{{').replace('}', '}}')
 
 

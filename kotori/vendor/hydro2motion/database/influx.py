@@ -1,28 +1,15 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
-from twisted.python import log
-from twisted.internet.defer import inlineCallbacks
-from twisted.internet.interfaces import ILoggingContext
-from zope.interface.declarations import implementer
+from twisted.logger import Logger
+from twisted.internet import reactor
 from autobahn.twisted.wamp import ApplicationRunner, ApplicationSession
 from kotori.daq.storage.influx import InfluxDBAdapter
 
-@implementer(ILoggingContext)
+logger = Logger()
+
 class InfluxDatabaseService(ApplicationSession):
     """An application component for logging telemetry data to InfluxDB databases"""
 
-    #@inlineCallbacks
-    #def __init__(self, config):
-    #    ApplicationSession.__init__(self, config)
-
-    def logPrefix(self):
-        """
-        Return a prefix matching the class name, to identify log messages
-        related to this protocol instance.
-        """
-        return self.__class__.__name__
-
-    #@inlineCallbacks
     def onJoin(self, details):
         print("Realm joined (WAMP session started).")
 
@@ -33,11 +20,11 @@ class InfluxDatabaseService(ApplicationSession):
 
         #self.leave()
 
-    #@inlineCallbacks
     def startDatabase(self):
 
-        print self.config.extra['influxdb']['host']
-        print self.config.extra['influxdb']['version']
+        print 'InfluxDB host={host}, version={version}'.format(
+            host=self.config.extra['influxdb']['host'],
+            version=self.config.extra['influxdb']['version'])
 
         self.influx = InfluxDBAdapter(
             version  = self.config.extra['influxdb']['version'],
@@ -53,14 +40,13 @@ class InfluxDatabaseService(ApplicationSession):
         #reactor.stop()
 
 
-
-
-    #@inlineCallbacks
     def receive(self, data):
         #print "RECEIVE:", data
 
         # decode wire data
         payload = data.split(';')
+        #print 'payload:', payload
+
         try:
             MSG_ID          = int(payload[0])
             V_FC            = float(payload[1]) * 0.001
@@ -98,43 +84,19 @@ class InfluxDatabaseService(ApplicationSession):
             P_In            = A_CAP * V_FC
             P_Out           = A_ENG * V_CAP
 
-
-
-
-           # store data to database
+            # store data to database
             if self.influx:
 
-               self.influx.write_points(
+                success = self.influx.write_points(
                    'telemetry',
                    ["MSG_ID", "V_FC", "V_CAP", "A_ENG", "A_CAP", "T_O2_In", "T_O2_Out", "T_FC_H2O_Out", "Water_In", "Water_Out", "Master_SW", "CAP_Down_SW", "Drive_SW", "FC_state", "Mosfet_state", "Safety_state", "Air_Pump_load", "Mosfet_load", "Water_Pump_load", "Fan_load", "Acc_X", "Acc_Y", "Acc_Z", "H2_flow", "GPS_X", "GPS_Y", "GPS_Z", "GPS_Speed", "V_Safety", "H2_Level", "O2_calc", "lat", "lng", "P_In", "P_Out"],
-                   [
-                       [MSG_ID, V_FC, V_CAP, A_ENG, A_CAP, T_O2_In, T_O2_Out, T_FC_H2O_Out, Water_In, Water_Out, Master_SW, CAP_Down_SW, Drive_SW, FC_state, Mosfet_state, Safety_state, Air_Pump_load, Mosfet_load, Water_Pump_load, Fan_load, Acc_X, Acc_Y, Acc_Z, H2_flow, GPS_X, GPS_Y, GPS_Z, GPS_Speed, V_Safety, H2_Level, O2_calc, lat, lng, P_In, P_Out]
-                   ]
-               )
-               print "Saved event to InfluxDB"
-
-
-#            mma_x = int(payload[0])
-#            mma_y = int(payload[1])
-#            temp = float(payload[2])
-#
-#            # store data to database
-#            if self.influx:
-#
-#                data = [
-#                    {
-#                        "name" : "telemetry",
-#                        "columns" : ["mma_x", "mma_y", "temp"],
-#                        "points" : [
-#                            [mma_x, mma_y, temp]
-#                        ]
-#                    }
-#                ]
-#
+                   [MSG_ID, V_FC, V_CAP, A_ENG, A_CAP, T_O2_In, T_O2_Out, T_FC_H2O_Out, Water_In, Water_Out, Master_SW, CAP_Down_SW, Drive_SW, FC_state, Mosfet_state, Safety_state, Air_Pump_load, Mosfet_load, Water_Pump_load, Fan_load, Acc_X, Acc_Y, Acc_Z, H2_flow, GPS_X, GPS_Y, GPS_Z, GPS_Speed, V_Safety, H2_Level, O2_calc, lat, lng, P_In, P_Out]
+                )
+                logger.info("Saved event to InfluxDB: %s" % success)
 
 
         except ValueError:
-            print('Could not decode data: {}'.format(data))
+            logger.warn('Could not decode data: {}'.format(data))
 
 
 def h2m_boot_influx_database(config, debug=False, trace=False):
@@ -147,4 +109,13 @@ def h2m_boot_influx_database(config, debug=False, trace=False):
         websocket_uri, u'kotori-realm',
         extra={'influxdb': dict(config.items('influxdb'))},
         debug=trace, debug_wamp=debug, debug_app=debug)
-    runner.run(InfluxDatabaseService, start_reactor=False)
+
+    d = runner.run(InfluxDatabaseService, start_reactor=False)
+
+    def croak(ex, *args):
+        logger.error('Problem in InfluxDBAdapter, please also check if "crossbar" WAMP broker is running at {websocket_uri}'.format(websocket_uri=websocket_uri))
+        logger.error("{ex}, args={args!s}", ex=ex.getTraceback(), args=args)
+        reactor.stop()
+        raise ex
+    #d.addErrback(croak)
+
