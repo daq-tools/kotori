@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import requests
+from twisted.internet import reactor
 from twisted.logger import Logger
 from kotori.util import slm
 
@@ -108,6 +109,7 @@ class InfluxDBAdapter(object):
                 logger.info("Storing measurement succeeded: {}".format(slm(chunk)))
             else:
                 logger.error("Storing measurement failed: {}".format(slm(chunk)))
+            return success
 
         except requests.exceptions.ConnectionError as ex:
             logger.error('InfluxDB network error: {}'.format(slm(ex)))

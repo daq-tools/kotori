@@ -20,10 +20,10 @@ requires = [
     'Jinja2==2.8',
 ]
 
-setup(name='kotori_daq',
-      version='0.3.0',
-      description='Kotori DAQ',
-      long_description='Kotori DAQ',
+setup(name='kotori',
+      version='0.3.1',
+      description='Kotori',
+      long_description='Kotori',
       classifiers=[
         "Programming Language :: Python",
         "Framework :: Twisted",
@@ -47,8 +47,8 @@ setup(name='kotori_daq',
               #'kotori-master      = kotori.master.server:run',
               #'kotori-node        = kotori.node.nodeservice:run',
               #'kotori-wamp-client = kotori.master.client:run_wamp_client',
-              'kotori-udp-client  = kotori.master.client:run_udp_client',
-              'h2m-udp-sender     = kotori.master.client:run_udp_telemetry_fuzzer',
+              'h2m-udp-client     = kotori.vendor.hydro2motion.client:run_udp_client',
+              'h2m-udp-fuzzer     = kotori.vendor.hydro2motion.client:run_udp_fuzzer',
           ],
           'paste.app_factory': [
               'main = kotori.frontend.app:main',

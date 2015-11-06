@@ -28,7 +28,7 @@ class WebDashboardIndex(Resource):
         self.websocket_uri = websocket_uri
 
     def render_GET(self, request):
-        index = resource_filename('kotori.web', 'index.html')
+        index = resource_filename('kotori.vendor.hydro2motion.web', 'index.html')
         tpl = CustomTemplate(file(index).read())
         response = tpl.substitute({
             'websocket_uri': self.websocket_uri,
@@ -41,7 +41,7 @@ def boot_web(http_port, websocket_uri, debug=False):
 
     dashboard = Resource()
     dashboard.putChild('', WebDashboardIndex(websocket_uri=websocket_uri))
-    dashboard.putChild('static', File(resource_filename('kotori.web', 'static')))
+    dashboard.putChild('static', File(resource_filename('kotori.vendor.hydro2motion.web', 'static')))
 
     print 'INFO: Starting HTTP service on port', http_port
     factory = Site(dashboard)

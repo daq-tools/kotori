@@ -2,7 +2,7 @@
 # (c) 2014 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 from twisted.internet import reactor
 from twisted.internet.task import LoopingCall
-from gpio import GpioInput, GpioOutput
+from kotori.io.node.gpio import GpioInput, GpioOutput
 
 class BinaryInputPort(object):
 

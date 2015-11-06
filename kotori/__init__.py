@@ -7,13 +7,13 @@ from ConfigParser import ConfigParser
 from twisted.internet import reactor
 from twisted.logger import Logger, LogLevel
 from kotori.logger import startLogging
-from kotori.master.server import boot_master
-from kotori.node.nodeservice import boot_node
-from kotori.web.server import boot_web
+from kotori.io.master.server import boot_master
+from kotori.io.node.nodeservice import boot_node
 from kotori.frontend.server import boot_frontend
-from kotori.hydro2motion.database.influx import h2m_boot_influx_database
-from kotori.hydro2motion.network.udp import h2m_boot_udp_adapter
-from kotori.hiveeyes.application import hiveeyes_boot
+from kotori.vendor.hydro2motion.database.influx import h2m_boot_influx_database
+from kotori.vendor.hydro2motion.network.udp import h2m_boot_udp_adapter
+from kotori.vendor.hydro2motion.web.server import boot_web
+from kotori.vendor.hiveeyes.application import hiveeyes_boot
 from kotori.util import slm
 from .version import __VERSION__
 
@@ -73,13 +73,13 @@ def run():
     # run master and web gui
     if 'master' in options:
         boot_master(websocket_uri, debug)
-        boot_web(35000, '', debug)
+        #boot_web(35000, '', debug)
         #boot_udp_adapter(udp_port, debug)
 
     # run node and web gui only, using a remote master
     if 'node' in options:
         websocket_uri = options['--master']
-        boot_web(35000, websocket_uri, debug)
+        #boot_web(35000, websocket_uri, debug)
         boot_node(websocket_uri, debug)
         #boot_udp_adapter(udp_port, debug)
 
@@ -98,18 +98,19 @@ def run():
 
         # hydro2motion
         if config.has_section('hydro2motion'):
-            udp_port = int(config.get('hydro2motion', 'udp_port'))
             http_port_v1 = int(config.get('hydro2motion', 'http_port'))
 
             boot_web(http_port_v1, websocket_uri, debug=debug)
-            h2m_boot_udp_adapter(udp_port, debug=debug)
+            h2m_boot_udp_adapter(config, debug=debug)
             h2m_boot_influx_database(config)
 
         # hiveeyes
-        hiveeyes_boot(config, debug=debug)
+        if config.has_section('hiveeyes'):
+            hiveeyes_boot(config, debug=debug)
 
         # generic daq
-        boot_frontend(http_port_v2, websocket_uri, debug=debug)
+        if config.has_section('kotori-daq'):
+            boot_frontend(http_port_v2, websocket_uri, debug=debug)
 
 
     # now enter the Twisted reactor loop

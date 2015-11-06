@@ -9,7 +9,7 @@ from twisted.python import log
 from twisted.internet import reactor
 from autobahn.twisted.websocket import connectWS, WampWebSocketClientProtocol, WampWebSocketClientFactory
 from kotori.util import NodeId, get_hostname
-from util import tts_say
+from kotori.io.node.util import tts_say
 
 node_manager = None
 NODE_ID = str(NodeId())
@@ -91,7 +91,7 @@ class NodeManager(object):
 
     def start_features(self, protocol):
 
-        from feature import FeatureSet
+        from kotori.io.node.feature import FeatureSet
         features = FeatureSet(NODE_ID, protocol)
 
         #actor = GpioOutput('P8_13')

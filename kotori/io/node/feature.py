@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2014 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
-from bricks import BinaryInputPort, BinaryOutputPort, TimedBinarySemaphore, Blinker, BinaryTopicSignal
+from kotori.io.node.bricks import BinaryInputPort, BinaryOutputPort, TimedBinarySemaphore, Blinker, BinaryTopicSignal
 
 PirMotionDetector = BinaryInputPort
 PrivacyButton = BinaryInputPort
