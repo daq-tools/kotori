@@ -1,6 +1,6 @@
 
 egg:
-	fab egg_build_and_release:setup_py=src/kotori.node/setup.py
+	fab egg_build_and_release:setup_py=setup.py
 
 
 # make fpm version=0.3.0

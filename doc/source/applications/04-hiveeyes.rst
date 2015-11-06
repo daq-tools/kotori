@@ -105,30 +105,38 @@ Hacking
 The most desirable thing to amend when hacking on Kotori DAQ in the context of Hiveeyes might be the mapping
 implementation of how to route incoming MQTT data messages appropriatly into InfluxDB databases and time series.
 
-Currently, a data message sent to topic ``hiveeyes/999/1/99`` will be stored in a database called ``hiveeyes_999``
-and a series called ``1.99``::
+Currently, a data message sent to the topic ``hiveeyes/999/1/99`` will be stored in a database called ``hiveeyes_999``
+and a series called ``1_99``::
 
     hiveeyes  /  999  /  1  /  99
     |                 |         |
     |    database     | series  |
-    |   hiveeyes_999  |  1.99   |
+    |   hiveeyes_999  |  1_99   |
     |                 |         |
 
-The code implementing this lives in ``src/kotori.node/kotori/hiveeyes/application.py``, lines 52 ff.::
+The code implementing this lives in ``kotori/vendor/hiveeyes/application.py``, lines 44 ff.::
 
     class HiveeyesApplication(object):
 
         # [...]
 
-        def storage_address_from_topic(self, topic):
-            parts = topic.split('/')
-            address = Bunch({
-                # use "_" as database name fragment separator: "/" does not work in InfluxDB 0.8, "." does not work in InfluxDB 0.9
-                'database': '_'.join(parts[0:2]),
-                'series': '.'.join(parts[2:4]),
+        def topology_to_database(self, topology):
+            sanitize = self.sanitize_db_identifier
+            database = Bunch({
+                'database': '{}_{}'.format(sanitize(topology.realm), sanitize(topology.network)),
+                'series':   '{}_{}'.format(sanitize(topology.gateway), sanitize(topology.node)),
             })
-            print 'database address:', dict(address)
-            return address
+            return database
+
+        @staticmethod
+        def sanitize_db_identifier(value):
+            value = value.replace('/', '_').replace('.', '_').replace('-', '_')
+            return value
+
+
+The pattern which segments the topic name into its semantic parts is in lines 31 ff.::
+
+    ^(?P<realm>.+?)/(?P<network>.+?)/(?P<gateway>.+?)/(?P<node>.+?)(?:/(?P<kind>.+?))?$
 
 
 
@@ -139,7 +147,7 @@ Wishlist
     - Proposal for summary topics: hiveeyes/username/summary/foo/daily/bar
     - Schedule at: Morning, Noon, Evening
 - Threshold alerting
-- Weather data publishing, see `<weather.rst>`__
+- Weather data publishing, see `<weather.html>`_
 - "Stockkarte" subsystem
     - marking point in graphs and filling the Stockkarte questioning
 - Timeseries anomaly detection using machine learning
