@@ -5,6 +5,7 @@ Kotori CHANGES
 
 develop
 -------
+- add release and documentation infrastructure through Makefile targets
 
 
 2015-11-06 0.3.2
