@@ -14,12 +14,12 @@ endef
 source   := $(name).cpp
 elf      := $(name)
 
-all: elf run
+all: run
 
 elf:
 	@$(compiler) $(cppflags) $(INCLUDE) -o $(elf) udp.cpp $(source)
 
-run:
+run: elf
 	@./$(elf)
 
 

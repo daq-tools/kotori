@@ -50,6 +50,7 @@ Development
     :glob:
 
     development/index
+    changes
 
 
 Indices and tables
