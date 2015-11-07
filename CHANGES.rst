@@ -6,6 +6,7 @@ Kotori CHANGES
 develop
 -------
 - add release and documentation infrastructure through Makefile targets
+- add vendor “lst”, add struct definitions of h2m project
 
 
 2015-11-06 0.3.2
