@@ -17,8 +17,11 @@ elf      := $(name)
 all: elf run
 
 elf:
-	@$(compiler) $(cppflags) $(INCLUDE) -o $(elf) $(source)
+	@$(compiler) $(cppflags) $(INCLUDE) -o $(elf) udp.cpp $(source)
 
 run:
 	@./$(elf)
 
+
+server:
+	socat -x udp-listen:8888 stdout
