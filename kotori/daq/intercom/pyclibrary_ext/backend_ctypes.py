@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import types
 import pyclibrary
+import ctypes
 from ctypes import Union, Structure
 
 # taken verbatim from pyclibrary.backends.ctypes.CTypesCLibrary._get_struct
@@ -29,6 +30,15 @@ class StructureWithDefaults(Structure):
         # appropriately initialize ctypes.Structure
         #super().__init__(**values)                     # Python 3 syntax
         return Structure.__init__(self, **values)       # Python 2 syntax
+
+    # http://stackoverflow.com/questions/1825715/how-to-pack-and-unpack-using-ctypes-structure-str/1827666#1827666
+    # https://wiki.python.org/moin/ctypes
+    def _dump_(self):
+        return buffer(self)[:]
+
+    def _load_(self, bytes):
+        fit = min(len(bytes), ctypes.sizeof(self))
+        ctypes.memmove(ctypes.addressof(self), bytes, fit)
 
 
 def _get_struct(self, str_type, str_name):

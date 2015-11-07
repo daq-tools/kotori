@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import os
-import sys
 import logging
-from pprint import pprint
 from cornice.util import to_list
-from ctypes import c_int, c_uint, c_long, c_uint8, c_uint16, c_uint32
+from collections import OrderedDict
+from ctypes import c_uint8, c_uint16, c_uint32, c_int8, c_int16, c_int32
 from pyclibrary import CLibrary, auto_init
 from pyclibrary.utils import add_header_locations, add_library_locations
 from pyclibrary.c_parser import Type, integer
 from kotori.daq.intercom.pyclibrary_ext.c_parser import CParserEnhanced
 from kotori.daq.intercom.pyclibrary_ext.backend_ctypes import monkeypatch_pyclibrary_ctypes_struct
 
-#logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
@@ -41,6 +39,7 @@ class LibraryAdapter(object):
         # https://pyclibrary.readthedocs.org/en/latest/get_started/configuration.html#specifying-headers-and-libraries-locations
         #curr_dir = os.path.dirname(__file__)
         curr_dir = os.curdir
+        # TODO: this probably acts on a global basis; think about it
         add_header_locations([self.include_path])
         add_library_locations([self.library_path])
 
@@ -49,11 +48,14 @@ class LibraryAdapter(object):
             'uint8_t': c_uint8,
             'uint16_t': c_uint16,
             'uint32_t': c_uint32,
-        }
+            'int8_t': c_int8,
+            'int16_t': c_int16,
+            'int32_t': c_int32,
+            }
         auto_init(extra_types=types)
 
     def parse(self):
-        # use an improved CParser which can grok more constructor flavours
+        # use an improved CParser which can grok/skip more constructor flavours
         self.parser = CParserEnhanced(self.header_files, cache=self.cache_file)
 
     def load(self):
@@ -85,94 +87,48 @@ class StructRegistry(object):
 
     def __init__(self, library):
         self.library = library
+
+        # dictionary of structs, by name
         self.structs = {}
+
+        # dictionary of structs, by id
+        self.structs_by_id = {}
+
         self.build()
 
     def build(self):
         for name in self.library.struct_names():
-            self.structs[name] = StructAdapter(name, self.library)
+
+            logger.info('Rolling in name={}'.format(name))
+            adapter = StructAdapter(name, self.library)
+
+            # store adapter object by name
+            self.structs[name] = adapter
+
+            # store adapter object by id
+            struct_id = adapter.create().ID
+            if self.structs_by_id.has_key(struct_id):
+                o_a = self.structs_by_id[struct_id]
+                name_owner = o_a.name
+                logger.warning('Struct "{}" has ID "{}", but this is already owned by "{}". ' \
+                               'Please check if struct provides reasonable default values for attribute "ID".'.format(name, struct_id, name_owner))
+            else:
+                logger.info('Struct "{}" now owns ID "{}".'.format(name, struct_id))
+                self.structs_by_id[struct_id] = adapter
 
     def get(self, name):
         return self.structs[name]
 
+    def get_by_id(self, struct_id):
+        return self.structs_by_id[struct_id]
+
     def create(self, name, **attributes):
         return self.get(name).create(**attributes)
 
-
-def main():
-
-    curr_dir = os.curdir
-    lib_dir = os.path.join(curr_dir, 'kotori', 'vendor', 'lst', 'client', 'cpp')
-    cache_dir = os.path.join(curr_dir, 'var', 'cache')
-
-    library = LibraryAdapter(u'h2m_structs.h', u'h2m_structs.so', include_path=lib_dir, library_path=lib_dir, cache_path=cache_dir)
-    sr = StructRegistry(library)
-
-
-
-    #values = struct_program.from_buffer_copy(b"\x01\x00\x00\x00\x00\x00\x00\x00")
-    #print 'values:', values
-
-
-
-    #clib = sa.clib
-
-
-    #p = clib.struct_program(1, 2) #(abc=9)
-    #p = clib.Tstruct_program() #(abc=9)
-
-    #pprint(clib.struct_cap_r._objects)
-
-
-    #c = clib.struct_cap_r #(abc=9)
-
-
-    # create a "cap_r" struct and print attributes with default values
-    print '-' * 42
-    p = sr.create('struct_cap_r')
-    print 'thing: ', p
-    print 'length:', p.length
-    print 'ID:    ', p.ID
-
-    # create a "cap_r" struct overriding default values and print the relevant attributes
-    print '-' * 42
-    p = sr.create('struct_cap_r', ID=88)
-    print 'thing: ', p
-    print 'length:', p.length
-    print 'ID:    ', p.ID
-
-
-    # get lowlevel pyclibrary ctypes backend handle of "struct_program"
-    print '-' * 42
-    print 'struct_program (schema):'
-    struct_program = sr.get('struct_program')
-    pprint(struct_program)
-    csp = struct_program.obj() #(abc=9)
-    print 'thing:      ', csp
-    print 'length:     ', csp.length
-    print 'ID:         ', csp.ID
-    print 'send_ser:   ', csp.send_ser
-    print 'cfg_loaded: ', csp.cfg_loaded
-
-    print '-' * 42
-    print 'struct_program (instance):'
-    print 'thing:      ', csp()
-    print 'length:     ', csp().length
-    print 'ID:         ', csp().ID
-
-
-    # get lowlevel pyclibrary ctypes backend handle of "struct_cap_r"
-    print '-' * 42
-    c = sr.get('struct_cap_r').obj()
-    print 'thing: ', c
-    print 'length:', c.length
-    print 'ID:    ', c.ID
-
-    print 'FIELDS:'
-    pprint(c._fields_)
-    print 'DEFAULTS:'
-    pprint(c._defaults_)
-
-
-if __name__ == '__main__':
-    main()
+    @staticmethod
+    def to_dict(struct):
+        fieldnames = [field[0] for field in struct._fields_]
+        d = OrderedDict()
+        for fieldname in fieldnames:
+            d[fieldname] = getattr(struct, fieldname)
+        return d
