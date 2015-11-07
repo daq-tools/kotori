@@ -9,6 +9,7 @@ develop
 - add vendor “lst”
     - add struct definitions of h2m project
     - add c++ udp sender
+    - add infrastructure for parsing schema mappings from c/c++ header files based on pyclibrary
 
 2015-11-06 0.3.2
 ----------------
