@@ -13,11 +13,13 @@
 
 typedef struct struct_program         // added 06.03.2014 C.L.
 {
+    /*
     struct_program()
     : length(13), ID(0)
     {}
-    uint8_t  length;             //  1 Length of struct (byte)
-    uint8_t  ID;                 //  2 Struct ID
+    */
+    uint8_t  length = 13;        //  1 Length of struct (byte)
+    uint8_t  ID = 0;             //  2 Struct ID
     uint8_t  send_ser        :1; //w 3.0 FlagByte 1
     uint8_t  cfg_loaded      :1; //w 3.1
     uint8_t  clamped         :1; //w 3.2
@@ -39,7 +41,7 @@ typedef struct struct_program         // added 06.03.2014 C.L.
     uint8_t  gps_payload_pos   ; //w  9
     uint8_t  send_internet     ; //w 10
     uint16_t xbee_reset_count  ; //w 12
-    uint8_t  ck;                //   13 checksum
+    uint8_t  ck;                 //  13 checksum
 } Tstruct_program;
 
 // REQUEST
@@ -47,11 +49,13 @@ typedef struct struct_program         // added 06.03.2014 C.L.
 
 typedef struct struct_request
 {
+    /*
     struct_request()
     : length(9), ID(1)
     {}
-    uint8_t  length;        //  1 Length of struct (byte)
-    uint8_t  ID;            //  2 Struct ID
+    */
+    uint8_t  length = 9;      //  1 Length of struct (byte)
+    uint8_t  ID = 1;          //  2 Struct ID
     uint8_t akt         : 1;  //r 3.0
     uint8_t save_config : 1;  //r 3.1
     uint8_t read_config : 1;  //r 3.2
@@ -68,8 +72,8 @@ typedef struct struct_request
     uint8_t s13         : 1;  //r 4.5
     uint8_t s14         : 1;  //r 4.6
     uint8_t s15         : 1;  //r 4.7
-    uint32_t send_ID;          //r 8
-    uint8_t  ck;               //  9 checksum
+    uint32_t send_ID;         //r 8
+    uint8_t  ck;              //  9 checksum
 } Tstruct_request;
 
 // CAP
@@ -80,8 +84,8 @@ typedef struct struct_cap_r
     struct_cap_r()
     : length(5), ID(2)
     {}
-    uint8_t  length;            //  1 Length of struct (byte)
-    uint8_t  ID;                //  2 Struct ID
+    uint8_t  length = 5;            //  1 Length of struct (byte)
+    uint8_t  ID = 2;                //  2 Struct ID
     uint16_t voltage_act;       //r 4 Actual CAP Voltage
     uint8_t  ck;                //  5 checksum
 } Tstruct_cap_r;

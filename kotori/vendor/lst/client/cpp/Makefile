@@ -25,3 +25,8 @@ run:
 
 server:
 	socat -x udp-listen:8888 stdout
+
+
+lib:
+	$(compiler) $(cppflags) $(INCLUDE) -shared -o h2m_structs.so -fPIC h2m_structs.cpp
+

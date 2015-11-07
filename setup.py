@@ -18,6 +18,7 @@ requires = [
     'grafana_api_client==0.1.4',
     #'grafana-dashboard-builder==0.1.0a7',
     'Jinja2==2.8',
+    'pyclibrary==0.1.2',
 ]
 
 setup(name='kotori',
