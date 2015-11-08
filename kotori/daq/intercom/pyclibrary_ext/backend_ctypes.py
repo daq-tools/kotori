@@ -55,10 +55,14 @@ def _get_struct(self, str_type, str_name):
             class s(StructureWithDefaults):
                 def __repr__(self):
                     return "<ctypes struct '%s'>" % str_name
+                def _name_(self):
+                    return str_name
         elif str_type == 'unions':
             class s(Union):
                 def __repr__(self):
                     return "<ctypes union '%s'>" % str_name
+                def _name_(self):
+                    return str_name
 
         # Must register struct here to allow recursive definitions.
         self._structs_[str_name] = s

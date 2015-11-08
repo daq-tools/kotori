@@ -2,6 +2,7 @@
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import os
 import logging
+from pprint import pprint
 from cornice.util import to_list
 from collections import OrderedDict
 from ctypes import c_uint8, c_uint16, c_uint32, c_int8, c_int16, c_int32
@@ -25,6 +26,8 @@ class LibraryAdapter(object):
 
         cache_key = u'_'.join(self.header_files) + '.pyclibrary'
         self.cache_file = os.path.join(self.cache_path, cache_key)
+
+        logger.info('Setting up library "{}" with headers "{}"'.format(self.library_file, ', '.join(self.header_files)))
 
         self.setup()
         self.parse()
@@ -99,7 +102,7 @@ class StructRegistry(object):
             self.register_adapter(name)
 
     def register_adapter(self, name):
-                # store adapter object by name
+        # store adapter object by name
         adapter = StructAdapter(name, self.library)
         self.structs[name] = adapter
         return adapter
@@ -113,13 +116,19 @@ class StructRegistry(object):
     def create(self, name, **attributes):
         return self.get(name).create(**attributes)
 
-    @staticmethod
-    def to_dict(struct):
+    @classmethod
+    def to_dict(cls, struct):
         fieldnames = [field[0] for field in struct._fields_]
         d = OrderedDict()
         for fieldname in fieldnames:
             d[fieldname] = getattr(struct, fieldname)
         return d
+
+    @classmethod
+    def pprint(cls, struct):
+        print 'name:', struct._name_()
+        pprint(list(cls.to_dict(struct).iteritems()))
+
 
 
 class StructRegistryByID(StructRegistry):
