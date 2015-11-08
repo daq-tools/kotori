@@ -2,13 +2,14 @@
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import os
 import logging
-from pprint import pprint
-from cornice.util import to_list
 from collections import OrderedDict
+from cornice.util import to_list
+from pprint import pprint
+from binascii import hexlify
+from tabulate import tabulate
 from ctypes import c_uint8, c_uint16, c_uint32, c_int8, c_int16, c_int32
 from pyclibrary import CLibrary, auto_init
 from pyclibrary.utils import add_header_locations, add_library_locations
-from pyclibrary.c_parser import Type, integer
 from kotori.daq.intercom.pyclibrary_ext.c_parser import CParserEnhanced
 from kotori.daq.intercom.pyclibrary_ext.backend_ctypes import monkeypatch_pyclibrary_ctypes_struct
 
@@ -85,6 +86,9 @@ class StructAdapter(object):
     def create(self, **attributes):
         return self.obj()(**attributes)
 
+    def __repr__(self):
+        return "<Kotori StructAdapter '{name}' object at {id}>".format(name=self.name, id=hex(id(self)))
+
 
 class StructRegistry(object):
 
@@ -125,9 +129,27 @@ class StructRegistry(object):
         return d
 
     @classmethod
-    def pprint(cls, struct):
-        print 'name:', struct._name_()
-        pprint(list(cls.to_dict(struct).iteritems()))
+    def pprint(cls, struct, format='pprint'):
+        name = struct._name_()
+        payload_hex = hexlify(struct._dump_())
+        payload_data = list(cls.to_dict(struct).items())
+
+        if format == 'pprint':
+            print 'name:', name
+            print 'hex: ', payload_hex
+            pprint(payload_data, indent=4, width=42)
+
+        elif format == 'tabulate-plain':
+            meta = OrderedDict()
+            meta['name'] = name
+            meta['hex']  = payload_hex
+            output = list(meta.items())
+            output += payload_data
+            print tabulate(output, tablefmt='plain')
+            #print tabulate(list(meta.items()), tablefmt='plain')
+            #print tabulate(payload_data, missingval='n/a', tablefmt='simple')
+        else:
+            raise ValueError('Unknown format "{}" for pretty printer'.format(format))
 
 
 
@@ -149,8 +171,8 @@ class StructRegistryByID(StructRegistry):
         if self.structs_by_id.has_key(struct_id):
             o_a = self.structs_by_id[struct_id]
             name_owner = o_a.name
-            logger.warning('Struct "{}" has ID "{}", but this is already owned by "{}". '\
-                           'Please check if struct provides reasonable default values for attribute "ID".'.format(name, struct_id, name_owner))
+            logger.warning('Struct "{}" has ID "{}", but this ID is already mapped to struct "{}", '\
+                           'please check if struct provides reasonable default values for attribute "ID"'.format(name, struct_id, name_owner))
         else:
-            logger.info('Struct "{}" now owns ID "{}".'.format(name, struct_id))
+            logger.info('Struct "{}" mapped to ID "{}"'.format(name, struct_id))
             self.structs_by_id[struct_id] = adapter

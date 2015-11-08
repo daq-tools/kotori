@@ -100,19 +100,25 @@ def fill_and_dump(sr):
 def pretend_receive_and_process(sr):
 
     # let's pretend this is the message received, having ID=2
-    remote = unhexlify('0d02000000000000000000000000')
+    payload = unhexlify('05022a0021')
 
-    # first, look up proper struct, it should be "struct_cap_r"
-    #struct_cap_r = sr.get_by_id(2)
-    #print 'struct_cap_r:', struct_cap_r
+    # decode struct ID from binary data
+    message_id = ord(payload[1])
 
-    #cap_r = struct_cap_r.create()
+    # look up proper StructAdapter object
+    # it should be "struct_cap_r", registered with ID=2
+    struct_cap_r = sr.get_by_id(message_id)
 
-    #cap_r = sr.create('struct_cap_r')
-    #cap_r._load_(remote)
+    # create instance of struct
+    cap_r = struct_cap_r.create()
 
-    #print 'ID:    ', cap_r.ID
-    #print 'length:', cap_r.length
+    # load binary message payload into struct
+    cap_r._load_(payload)
+
+    # pretty-print struct content
+    #sr.pprint(cap_r)
+    #print '=' * 21
+    sr.pprint(cap_r, format='tabulate-plain')
 
 def display_schema(sr):
     # struct_h2o_w
@@ -132,7 +138,7 @@ def main():
     cache_dir = os.path.join(os.curdir, 'var', 'cache')
 
     here = os.path.dirname(__file__)
-    lib_dir = os.path.join(here, '..', 'client', 'cpp')
+    lib_dir = os.path.join(here, 'cpp')
 
     library = LibraryAdapter(u'h2m_structs.h', u'h2m_structs.so', include_path=lib_dir, library_path=lib_dir, cache_path=cache_dir)
     sr = StructRegistryByID(library)
@@ -141,9 +147,9 @@ def main():
     #print 'values:', values
 
     #getting_started(sr)
-    dump_full(sr)
+    #dump_full(sr)
     #fill_and_dump(sr)
-    #pretend_receive_and_process(sr)
+    pretend_receive_and_process(sr)
     #display_schema(sr)
 
 
