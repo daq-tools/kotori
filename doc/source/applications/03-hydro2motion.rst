@@ -1,6 +1,10 @@
-=========================
-Kotori for Hydro 2 Motion
-=========================
+============
+Hydro2Motion
+============
+
+.. contents:: Table of Contents
+   :local:
+   :depth: 2
 
 Run Kotori
 ==========

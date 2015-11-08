@@ -4,16 +4,16 @@ Kotori README
 
 Kotori DAQ is a multi-channel, multi-protocol data acquisition and graphing toolkit based on InfluxDB_, Grafana_ and Twisted_.
 
-It is a convenient component for building test benches addressing different aspects of collecting
-and storing sensor data from testing setups. It has two audiences in mind.
+It is a convenient component for building telemetry solutions and test benches. It addresses different aspects of collecting
+and storing sensor data from a multitude of data sources. The framework design has two audiences in mind.
 
 
 For users
 ---------
 Interactively create data sinks, add decoding- and mapping-rules and finally store data points into InfluxDB_,
-a leading open-source time series database suitable for realtime analytics and sensor data storage.
+a leading open source time series database suitable for realtime analytics and sensor data storage.
 
-Interactively build realtime dashboards to visualize time series with Grafana_,
+Interactively build realtime dashboards to visualize time series data with Grafana_,
 an open source, feature rich metrics dashboard and graph editor.
 
 

@@ -2,6 +2,14 @@
 Kotori DAQ Tasks
 ================
 
+
+LST
+===
+- [o] kotori.daq.intercom.c should perform the compilation step for getting a msglib.so out of a msglib.h
+- [o] Console based message receiver and decoder
+- [o] Rename repository to "kotori"
+
+
 Hiveeyes
 ========
 

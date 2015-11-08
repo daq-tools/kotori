@@ -2,18 +2,70 @@
 LST: Labor für Systemtechnik
 ============================
 
-Goal:
-- Receive binary messages over UDP.
-- Decode and enrich them by using information from structs of real C/C++ header files.
-- Store measurements to database.
+.. contents:: Table of Contents
+   :local:
+   :depth: 2
+
+Goals
+=====
+- Receive telemetry messages over UDP in binary format.
+- Decode and enrich them by using information from structs of real *C/C++* header files.
+- Store measurements to database, with attribute names matching the header file struct declarations.
+- While doing all this, it should get out of the way by honoring *LST* best practices:
+
+    - Must handle and dispatch multiple struct definitions per project, each with unique ``ID`` e.g.::
+
+        uint8_t  length;            //  1 Length of struct (byte)
+        uint8_t  ID;                //  2 Struct ID
+
+    - Must handle bit fields directly declared in struct, e.g.::
+
+        uint8_t  send_ser        :1; //w 3.0 FlagByte 1
+        uint8_t  cfg_loaded      :1; //w 3.1
+        uint8_t  clamped         :1; //w 3.2
+        // [...]
+
+
+Handbook
+========
+To be written.
+::
+
+    h2m-message info struct_fuelcell_r
+    h2m-message encode
+    h2m-message decode
+    h2m-message send
+    h2m-message receive
 
 
 Troubleshooting
 ===============
+
+h2m-message Exception
+---------------------
+
+Symptom
+.......
+An exception is raised when using ``h2m-message``.
+
+Problem
+.......
 ::
 
     TypeError: bit fields not allowed for type c_char
 
+Analysis
+........
+
+The exception would be raised when e.g. using the ``char`` type, which is a non-integer::
+
+    char     send_ser        :1; //w 3.0 FlagByte 1
+    char     cfg_loaded      :1; //w 3.1
+    char     clamped         :1; //w 3.2
+    // [...]
+
+Solution
+........
 Bit fields must be encoded with integers::
 
     uint8_t  send_ser        :1; //w 3.0 FlagByte 1
@@ -25,11 +77,43 @@ Bit fields must be encoded with integers::
     uint8_t  base_clock      :1; //w 3.6
     uint8_t  do_O2_IN        :1; //w 3.7
 
-The error would be raised when having::
 
-    char     send_ser        :1; //w 3.0 FlagByte 1
-    char     cfg_loaded      :1; //w 3.1
-    char     clamped         :1; //w 3.2
+h2m-message Warning
+-------------------
+
+Symptom
+.......
+One or more WARNING log messages occur when using ``h2m-message``.
+
+Problem
+.......
+::
+
+    2015-11-08 02:22:30,400 [kotori.daq.intercom.c    ]
+    WARNING:
+        Struct "struct_system_r" has ID "0", but this is already owned by "struct_gps_w".
+        Please check if struct provides reasonable default values for attribute "ID".
+
+Analysis
+........
+When initializing a struct, it looks like it doesn't have a unique value in its ``ID`` attribute.
+Another message struct already is registered with that ``ID``.
+
+Solution
+........
+Apply initial values properly. Unfortunately, this initializer syntax currently doesn't work::
+
+    struct_system_r()
+    : length(15), ID(14)
+    {}
+    uint8_t  length;        //  1 Length of struct (byte)
+    uint8_t  ID;            //  2 Struct ID
+    // [...]
+
+So please amend your header file towards::
+
+    uint8_t  length = 15;   //  1 Length of struct (byte)
+    uint8_t  ID     = 14;   //  2 Struct ID
     // [...]
 
 
@@ -42,7 +126,7 @@ The simple UDP sender program is currently configured to send UDP messages to ``
     udp_client_server::udp_client client("localhost", 8888);
 
 
-Build ``udp_sender.cpp`` and send some binary messages::
+Amend, build and send some binary messages using ``udp_sender.cpp``::
 
     amo offgrid $ cd ~/dev/foss/open.nshare.de/kotori-daq/kotori/vendor/lst/client/cpp
 
