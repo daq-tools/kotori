@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import os
+import sys
 import logging
 from pprint import pprint
 from binascii import unhexlify, hexlify
@@ -118,7 +119,12 @@ def display_schema(sr):
 def main():
 
     #logging.basicConfig(level=logging.DEBUG)
-    logging.basicConfig(level=logging.INFO)
+    #logging.basicConfig(level=logging.INFO)
+    log_format = '%(asctime)-15s [%(name)-25s] %(levelname)-7s: %(message)s'
+    logging.basicConfig(
+        format=log_format,
+        stream=sys.stderr,
+        level=logging.INFO)
 
     cache_dir = os.path.join(os.curdir, 'var', 'cache')
 
