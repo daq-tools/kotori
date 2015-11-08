@@ -1,5 +1,5 @@
 // -*- coding: utf-8 -*-
-// (c) 2014-2015 Hydro 2 Motion Developers, h2m@hm.edu
+// (c) 2013-2015 Hydro 2 Motion Developers, h2m@hm.edu
 
 // target: Mbed
 //#include "mbed.h"
@@ -19,7 +19,7 @@ typedef struct struct_program         // added 06.03.2014 C.L.
     {}
     */
     uint8_t  length = 13;        //  1 Length of struct (byte)
-    uint8_t  ID = 0;             //  2 Struct ID
+    uint8_t  ID     =  0;        //  2 Struct ID
     uint8_t  send_ser        :1; //w 3.0 FlagByte 1
     uint8_t  cfg_loaded      :1; //w 3.1
     uint8_t  clamped         :1; //w 3.2
@@ -54,8 +54,8 @@ typedef struct struct_request
     : length(9), ID(1)
     {}
     */
-    uint8_t  length = 9;      //  1 Length of struct (byte)
-    uint8_t  ID = 1;          //  2 Struct ID
+    uint8_t length = 9;       //  1 Length of struct (byte)
+    uint8_t ID     = 1;       //  2 Struct ID
     uint8_t akt         : 1;  //r 3.0
     uint8_t save_config : 1;  //r 3.1
     uint8_t read_config : 1;  //r 3.2
@@ -81,22 +81,26 @@ typedef struct struct_request
 
 typedef struct struct_cap_r
 {
+    /*
     struct_cap_r()
     : length(5), ID(2)
     {}
-    uint8_t  length = 5;            //  1 Length of struct (byte)
-    uint8_t  ID = 2;                //  2 Struct ID
+    */
+    uint8_t  length = 5;        //  1 Length of struct (byte)
+    uint8_t  ID     = 2;        //  2 Struct ID
     uint16_t voltage_act;       //r 4 Actual CAP Voltage
     uint8_t  ck;                //  5 checksum
 } Tstruct_cap_r;
 
 typedef struct struct_cap_w
 {
+    /*
     struct_cap_w()
     : length(15), ID(3)
     {}
-    uint8_t  length;            //  1 Length of struct (byte)
-    uint8_t  ID;                //  2 Struct ID
+    */
+    uint8_t  length = 15;       //  1 Length of struct (byte)
+    uint8_t  ID     =  3;       //  2 Struct ID
     uint16_t voltage_low;       //w 4 Switch to full current
     uint16_t voltage_mid;       //w 6 Switch to medium current
     uint16_t voltage_max;       //w 8 Stopp loading
@@ -111,11 +115,13 @@ typedef struct struct_cap_w
 
 typedef struct struct_fuelcell_r
 {
+    /*
     struct_fuelcell_r()
     : length(11), ID(4)
     {}
-    uint8_t  length;            //  1 Length of struct (byte)
-    uint8_t  ID;                //  2 Struct ID
+    */
+    uint8_t  length = 11;       //  1 Length of struct (byte)
+    uint8_t  ID     =  4;       //  2 Struct ID
     uint16_t current_act;       //r 4
     uint16_t current_req;       //r 6
     uint16_t voltage_act;       //r 8
@@ -125,11 +131,13 @@ typedef struct struct_fuelcell_r
 
 typedef struct struct_fuelcell_w
 {
+    /*
     struct_fuelcell_w()
     : length(19), ID(5)
     {}
-    uint8_t  length;            //  1 Length of struct (byte)
-    uint8_t  ID;                //  2 Struct ID
+    */
+    uint8_t  length = 19;       //  1 Length of struct (byte)
+    uint8_t  ID     =  5;       //  2 Struct ID
     uint16_t temp_max;          //w 4
     uint16_t voltage_max;       //w 6
     uint16_t voltage_low;       //w 8 minimum current
@@ -146,11 +154,13 @@ typedef struct struct_fuelcell_w
 
 typedef struct struct_h2o_r
 {
+    /*
     struct_h2o_r()
     : length(23), ID(6)
     {}
-    uint8_t  length;            //  1 Length of struct (byte)
-    uint8_t  ID;                //  2 Struct ID
+    */
+    uint8_t  length = 23;       //  1 Length of struct (byte)
+    uint8_t  ID     =  6;       //  2 Struct ID
     short    fan_up_count;      //r 4 add
     short    fan_pwm;           //r 6
     uint16_t fan_pwm_act;       //r 8                       (not found!!!)
@@ -166,13 +176,15 @@ typedef struct struct_h2o_r
 
 typedef struct struct_h2o_w
 {
+    /*
     struct_h2o_w()
     : length(29), ID(7)
     {}
-    uint8_t  length;            //  1 Length of struct (byte)
-    uint8_t  ID;                //  2 Struct ID
-    char     fan_override  : 1; //w 3.0
-    char     pump_override : 1; //w 3.1
+    */
+    uint8_t  length = 29;       //  1 Length of struct (byte)
+    uint8_t  ID     =  7;       //  2 Struct ID
+    uint8_t  fan_override  : 1; //w 3.0
+    uint8_t  pump_override : 1; //w 3.1
     char     FlagByte2;         //w 4
     uint16_t fan_over_pwm;      //w 6 name
     uint16_t fan_p;             //w 8
@@ -194,11 +206,13 @@ typedef struct struct_h2o_w
 
 typedef struct struct_mosfet_r
 {
+    /*
     struct_mosfet_r()
     : length(11), ID(8)
     {}
-    uint8_t  length;            //  1 Length of struct (byte)
-    uint8_t  ID;                //  2 Struct ID
+    */
+    uint8_t  length = 11;       //  1 Length of struct (byte)
+    uint8_t  ID     =  8;       //  2 Struct ID
     short    current_delta;     //r 4      (not found!!!)
     uint16_t pwm;               //r 6
     uint16_t pwm_act;           //r 8      (not found!!!)
@@ -208,11 +222,13 @@ typedef struct struct_mosfet_r
 
 typedef struct struct_mosfet_w
 {
+    /*
     struct_mosfet_w()
     : length(16), ID(9)
     {}
-    uint8_t  length;            //   1 Length of struct (byte)
-    uint8_t  ID;                //   2 Struct ID
+    */
+    uint8_t  length = 16;       //   1 Length of struct (byte)
+    uint8_t  ID     =  9;       //   2 Struct ID
     uint16_t i;                 //w  4 Ki integral added
     uint16_t temp_max;          //w  6
     uint16_t load_cur_min;      //w  8
@@ -228,13 +244,15 @@ typedef struct struct_mosfet_w
 
 typedef struct struct_o2_r
 {
+    /*
     struct_o2_r()
     : length(43), ID(10)
     {}
-    uint8_t  length;            //  1 Length of struct (byte)
-    uint8_t  ID;                //  2 Struct ID
-    char     pump_on        : 1;//r 3.0
-    char     pump_dual      : 1;//r 3.1
+    */
+    uint8_t  length = 43;       //  1 Length of struct (byte)
+    uint8_t  ID     = 10;       //  2 Struct ID
+    uint8_t  pump_on        : 1;//r 3.0
+    uint8_t  pump_dual      : 1;//r 3.1
     char     flag_byte2;        //r 4
     char     pump_up_count1;    //r 5
     char     pump_up_count2;    //r 6
@@ -262,11 +280,13 @@ typedef struct struct_o2_r
 
 typedef struct struct_o2_w
 {
+    /*
     struct_o2_w()
     : length(35), ID(11)
     {}
-    uint8_t  length;            //  1 Length of struct (byte)
-    uint8_t  ID;                //  2 Struct ID
+    */
+    uint8_t  length = 35;       //  1 Length of struct (byte)
+    uint8_t  ID     = 11;       //  2 Struct ID
     bool     pump_override;     //w 3
     char     pump_up;           //w 4
     uint16_t lambda_min;        //w 6
@@ -293,15 +313,17 @@ typedef struct struct_o2_w
 
 typedef struct struct_sensors_r
 {
+    /*
     struct_sensors_r()
     : length(45), ID(12)
     {}
-    uint8_t  length;        //   1 Length of struct (byte)
-    uint8_t  ID;            //   2 Struct ID
-    char capdown : 1;       //r  3.0
-    char drive   : 1;       //r  3.1
-    char master  : 1;       //r  3.2
-    char safety  : 1;       //r  3.3
+    */
+    uint8_t  length = 45;   //   1 Length of struct (byte)
+    uint8_t  ID     = 12;   //   2 Struct ID
+    uint8_t capdown : 1;    //r  3.0
+    uint8_t drive   : 1;    //r  3.1
+    uint8_t master  : 1;    //r  3.2
+    uint8_t safety  : 1;    //r  3.3
     char Flag_Byte_2;       //r  4
     uint16_t h2_analog;     //r  6
     uint16_t fc_voltage;    //r  8
@@ -328,11 +350,13 @@ typedef struct struct_sensors_r
 
 typedef struct struct_sensors_w
 {
+    /*
     struct_sensors_w()
     : length(65), ID(13)
     {}
-    uint8_t  length;                //   1 Length of struct (byte)
-    uint8_t  ID;                    //   2 Struct ID
+    */
+    uint8_t  length = 65;           //   1 Length of struct (byte)
+    uint8_t  ID     = 13;           //   2 Struct ID
     uint16_t h2o_temp_out_elow;     //w  4 Lower Temperature Sensor Limit   added 19.02.2014 C.L.
     uint16_t h2o_temp_out_ehigh;    //w  6 Upper Temperature Sensor Limit   added 19.02.2014 C.L.
     uint16_t h2o_temp_out_evalue;   //w  8 Error Temperature Value          added 19.02.2014 C.L.
@@ -372,28 +396,30 @@ typedef struct struct_sensors_w
 
 typedef struct struct_system_r
 {
+    /*
     struct_system_r()
     : length(15), ID(14)
     {}
-    uint8_t  length;        //  1 Length of struct (byte)
-    uint8_t  ID;            //  2 Struct ID
-    char cap_d_load        : 1; //r 3.0 Flag Byte 1
-    char cap_d_load_reset  : 1; //r 3.1
-    char cap_load          : 1; //r 3.2
-    char cap_load_reset    : 1; //r 3.3
-    char cap_voltage_reset : 1; //r 3.4
-    char fuelcell          : 1; //r 3.5
-    char fc_overtemp       : 1; //r 3.6
-    char fc_overvoltage    : 1; //r 3.7
-    char load              : 1; //r 4.0 Flag Byte 2
-    char load_act          : 1; //r 4.1
-    char load_reset        : 1; //r 4.2
-    char mos_overcur       : 1; //r 4.3
-    char mos_overtemp      : 1; //r 4.4
-    char run               : 1; //r 4.5
-    char run_over          : 1; //r 4.6 added C.L.
-    char temp              : 1; //r 4.7
-    char reload_ready      : 1; //r 5.0 Flag Byte 3
+    */
+    uint8_t  length = 15;          //  1 Length of struct (byte)
+    uint8_t  ID     = 14;          //  2 Struct ID
+    uint8_t cap_d_load        : 1; //r 3.0 Flag Byte 1
+    uint8_t cap_d_load_reset  : 1; //r 3.1
+    uint8_t cap_load          : 1; //r 3.2
+    uint8_t cap_load_reset    : 1; //r 3.3
+    uint8_t cap_voltage_reset : 1; //r 3.4
+    uint8_t fuelcell          : 1; //r 3.5
+    uint8_t fc_overtemp       : 1; //r 3.6
+    uint8_t fc_overvoltage    : 1; //r 3.7
+    uint8_t load              : 1; //r 4.0 Flag Byte 2
+    uint8_t load_act          : 1; //r 4.1
+    uint8_t load_reset        : 1; //r 4.2
+    uint8_t mos_overcur       : 1; //r 4.3
+    uint8_t mos_overtemp      : 1; //r 4.4
+    uint8_t run               : 1; //r 4.5
+    uint8_t run_over          : 1; //r 4.6 added C.L.
+    uint8_t temp              : 1; //r 4.7
+    uint8_t reload_ready      : 1; //r 5.0 Flag Byte 3
     char purge;                 //r 6   Flag Byte 4
     uint16_t count;             //r 8
     uint16_t send_count;        //r 10
@@ -404,11 +430,13 @@ typedef struct struct_system_r
 
 typedef struct struct_system_w
 {
+    /*
     struct_system_w()
     : length(23), ID(15)
     {}
-    uint8_t  length;        //  1 Length of struct (byte)
-    uint8_t  ID;            //  2 Struct ID
+    */
+    uint8_t  length = 23;   //  1 Length of struct (byte)
+    uint8_t  ID     = 15;   //  2 Struct ID
     bool     serial_on;     //  3 Send on X-Bee
     bool     ethernet_on;   //  4 Ethernet Schnittstelle
     bool     internet_on;   //  5 Send UDP Paket
@@ -428,37 +456,39 @@ typedef struct struct_system_w
 
 typedef struct struct_error_r
 {
+    /*
     struct_error_r()
     : length(7), ID(16)
     {}
-    uint8_t  length;    //  1 Length of struct (byte)
-    uint8_t  ID;        //  2 Struct ID
-    char o2_in        : 1;  //r 3.0
-    char o2_out       : 1;  //r 3.1
-    char mosfet_temp  : 1;  //r 3.2
-    char fc_voltage   : 1;  //r 3.3
-    char cap_voltage  : 1;  //r 3.4
-    char fc_current   : 1;  //r 3.5
-    char h2o_temp_out : 1;  //r 3.6
-    char safety_v     : 1;  //r 3.7
-    char h2           : 1;  //r 4.0 !!!
-    char sys_cur      : 1;  //r 4.1 !!!
-    char t_1          : 1;  //r 4.2
-    char t_2          : 1;  //r 4.3
-    char t_3          : 1;  //r 4.4
-    char t_4          : 1;  //r 4.5
-    char t_5_0        : 1;  //r 4.6
-    char t_5_1        : 1;  //r 4.7
-    char t_6          : 1;  //r 5.0
-    char t_7          : 1;  //r 5.1
-    char t_8          : 1;  //r 5.2
-    char o_1          : 1;  //r 5.3
-    char o_2          : 1;  //r 5.4
-    char o_3          : 1;  //r 5.5
-    char o_4          : 1;  //r 5.6
-    char o_5          : 1;  //r 5.7
-    char o_6          : 1;  //r 6.0
-    char o_7          : 1;  //r 6.1
+    */
+    uint8_t  length =  7;      //  1 Length of struct (byte)
+    uint8_t  ID     = 16;      //  2 Struct ID
+    uint8_t o2_in        : 1;  //r 3.0
+    uint8_t o2_out       : 1;  //r 3.1
+    uint8_t mosfet_temp  : 1;  //r 3.2
+    uint8_t fc_voltage   : 1;  //r 3.3
+    uint8_t cap_voltage  : 1;  //r 3.4
+    uint8_t fc_current   : 1;  //r 3.5
+    uint8_t h2o_temp_out : 1;  //r 3.6
+    uint8_t safety_v     : 1;  //r 3.7
+    uint8_t h2           : 1;  //r 4.0 !!!
+    uint8_t sys_cur      : 1;  //r 4.1 !!!
+    uint8_t t_1          : 1;  //r 4.2
+    uint8_t t_2          : 1;  //r 4.3
+    uint8_t t_3          : 1;  //r 4.4
+    uint8_t t_4          : 1;  //r 4.5
+    uint8_t t_5_0        : 1;  //r 4.6
+    uint8_t t_5_1        : 1;  //r 4.7
+    uint8_t t_6          : 1;  //r 5.0
+    uint8_t t_7          : 1;  //r 5.1
+    uint8_t t_8          : 1;  //r 5.2
+    uint8_t o_1          : 1;  //r 5.3
+    uint8_t o_2          : 1;  //r 5.4
+    uint8_t o_3          : 1;  //r 5.5
+    uint8_t o_4          : 1;  //r 5.6
+    uint8_t o_5          : 1;  //r 5.7
+    uint8_t o_6          : 1;  //r 6.0
+    uint8_t o_7          : 1;  //r 6.1
     uint8_t  ck;            //  7 checksum
 } Tstruct_error_r;
 
@@ -467,11 +497,13 @@ typedef struct struct_error_r
 
 typedef struct struct_gps_r         // added 06.03.2014 C.L.
 {
+    /*
     struct_gps_r()
     : length(19), ID(18)
     {}
-    uint8_t  length;            //  1 Length of struct (byte)
-    uint8_t  ID;                //  2 Struct ID
+    */
+    uint8_t  length = 19;       //  1 Length of struct (byte)
+    uint8_t  ID     = 18;       //  2 Struct ID
     uint8_t  akt;               //r 3
     uint8_t  sats_used;         //r 4
      int32_t position_x;        //r 8
@@ -484,18 +516,20 @@ typedef struct struct_gps_r         // added 06.03.2014 C.L.
 
 typedef struct struct_gps_w         // added 06.03.2014 C.L.
 {
+    /*
     struct_gps_w()
     : length(63), ID(19),Header1(0xB5),Header2(0x62),
       ID_1(0x01), ID_2(0x06), gps_length(0x34), fill(0x00)
     {}
-    uint8_t  length;            //  1 Length of struct (byte)
-    uint8_t  ID;                //  2 Struct ID
-    uint8_t  Header1;           //  3
-    uint8_t  Header2;           //  4
-    uint8_t  ID_1;              //  5
-    uint8_t  ID_2;              //  6
-    uint8_t  gps_length;        //  7
-    uint8_t  fill;              //  8
+    */
+    uint8_t  length     = 63;   //  1 Length of struct (byte)
+    uint8_t  ID         = 19;   //  2 Struct ID
+    uint8_t  Header1    = 0xB5; //  3
+    uint8_t  Header2    = 0x62; //  4
+    uint8_t  ID_1       = 0x01; //  5
+    uint8_t  ID_2       = 0x06; //  6
+    uint8_t  gps_length = 0x34; //  7
+    uint8_t  fill       = 0x00; //  8
     uint32_t TOW;               //r 12
     int32_t  fTOW;              //r 16
     int16_t  week;              //r 18

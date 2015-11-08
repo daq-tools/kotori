@@ -2,7 +2,6 @@
 Kotori CHANGES
 ==============
 
-
 develop
 -------
 - add release and documentation infrastructure through Makefile targets
@@ -14,6 +13,8 @@ develop
     - introduce struct registry
     - decouple lst/h2m specific struct registry behavior
     - add initial docs about lst/h2m experiments
+    - properly tweak h2m_structs.h
+
 
 2015-11-06 0.3.2
 ----------------
