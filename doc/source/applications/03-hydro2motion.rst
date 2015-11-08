@@ -20,9 +20,17 @@ Receive telemetry data
 
 Send telemetry data
 -------------------
-- Run::
+- Fixed data::
 
-    h2m-udp-client "24000;15718;75813;1756;15253;229;220;204;811;1769;0;0;0;0;0;1;0;12;0;0;0;-18;0;4011;417633984;85402624;472851424;0;12242;43;42;0;0"
+    h2m-csv-udp-client "24000;15718;75813;1756;15253;229;220;204;811;1769;0;0;0;0;0;1;0;12;0;0;0;-18;0;4011;417633984;85402624;472851424;0;12242;43;42;0;0"
+
+- Random data::
+
+    h2m-csv-udp-fuzzer
+
+- Continuously send random data::
+
+    watch -n0.5 h2m-csv-udp-fuzzer
 
 
 URL entrypoints
