@@ -1,5 +1,5 @@
-===================
-Kotori for iLaundry
-===================
+========
+iLaundry
+========
 
 TODO: Placeholder for describing the mesh aspects in this scenario.

@@ -1,6 +1,10 @@
-===================
-Kotori for HiveEyes
-===================
+========
+HiveEyes
+========
+
+.. contents:: Table of Contents
+   :local:
+   :depth: 2
 
 Start Kotori DAQ
 ================
@@ -103,7 +107,7 @@ Hacking
 =======
 
 The most desirable thing to amend when hacking on Kotori DAQ in the context of Hiveeyes might be the mapping
-implementation of how to route incoming MQTT data messages appropriatly into InfluxDB databases and time series.
+implementation of how to route incoming MQTT data messages appropriatly into InfluxDB databases and time series (tables).
 
 Currently, a data message sent to the topic ``hiveeyes/999/1/99`` will be stored in a database called ``hiveeyes_999``
 and a series called ``1_99``::
@@ -147,7 +151,7 @@ Wishlist
     - Proposal for summary topics: hiveeyes/username/summary/foo/daily/bar
     - Schedule at: Morning, Noon, Evening
 - Threshold alerting
-- Weather data publishing, see `<weather.html>`_
+- `Weather data publishing <../development/weather.html>`_
 - "Stockkarte" subsystem
     - marking point in graphs and filling the Stockkarte questioning
 - Timeseries anomaly detection using machine learning
