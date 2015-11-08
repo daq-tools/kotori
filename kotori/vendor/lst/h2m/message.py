@@ -69,8 +69,11 @@ def dump_full(sr):
     """
 
     program = sr.create('struct_program')
-    d = sr.to_dict(program)
-    pprint(list(d.iteritems()))
+    sr.pprint(program)
+
+    gps_w = sr.create('struct_gps_w')
+    sr.pprint(gps_w)
+
 
 
 def fill_and_dump(sr):
@@ -141,7 +144,7 @@ def main():
     dump_full(sr)
     #fill_and_dump(sr)
     #pretend_receive_and_process(sr)
-    display_schema(sr)
+    #display_schema(sr)
 
 
 if __name__ == '__main__':
