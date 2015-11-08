@@ -87,7 +87,98 @@ class StructAdapter(object):
         return self.obj()(**attributes)
 
     def __repr__(self):
-        return "<Kotori StructAdapter '{name}' object at {id}>".format(name=self.name, id=hex(id(self)))
+        return "<StructAdapter '{name}' object at {id}>".format(name=self.name, id=hex(id(self)))
+
+    def print_schema(self):
+        width = 84
+
+        def print_header(text):
+            print '-' * width
+            print text.center(width)
+            print '-' * width
+            print
+
+        print_header('struct "{}"'.format(self.name))
+
+        print 'Header information'
+        print
+        print tabulate(self.ast_members_repr(), headers=['name', 'type', 'default', 'bitfield'])
+        print; print
+
+        print 'Library information'
+        print
+        print tabulate(self.lib_fields_repr(), headers=['name', 'type', 'symbol', 'field', 'bitfield'])
+        print; print
+
+        print 'Representations'
+        print
+        print tabulate(self.lib_binary_repr(), headers=['kind', 'representation'])
+        print; print
+
+    def ast_members_repr(self):
+
+        def ast_type_repr(t):
+            type_qual_str = ('' if not any(t.type_quals) else
+                             ', type_quals='+repr(t.type_quals))
+            return (', '.join(map(str, t)) + type_qual_str)
+
+        members = []
+        for member in self.ast().members:
+            member_length = len(member)
+            bitfield = None
+            if member_length == 3:
+                name, type, default = member
+            elif member_length == 4:
+                name, type, default, bitfield = member
+            else:
+                raise ValueError("Don't know how to handle ast members with length={}".format(member_length))
+
+            # use name of type object
+            type = ast_type_repr(type)
+
+            entry = (name, type, default, bitfield)
+            members.append(entry)
+
+        return members
+
+    def lib_fields_repr(self):
+        fields = []
+        o = self.obj()
+        for field_item in o._fields_:
+
+            field_length = len(field_item)
+            bitfield = None
+            if field_length == 2:
+                name, ctype = field_item
+            elif field_length == 3:
+                name, ctype, bitfield = field_item
+            else:
+                raise ValueError("Don't know how to handle lib fields with length={}".format(field_length))
+
+            # use name of ctypes object
+            ctype_name = ctype.__name__
+            symbol = ctype._type_
+
+            # get ctypes Field object
+            field = getattr(o, name)
+
+            entry = (name, ctype_name, symbol, str(field), bitfield)
+            fields.append(entry)
+
+        return fields
+
+    def lib_binary_repr(self):
+        payload = self.create()._dump_()
+        return self.binary_reprs(payload)
+
+    @staticmethod
+    def binary_reprs(payload):
+        reprs = [
+            ('hex',     hexlify(payload)),
+            ('decimal', map(ord, payload)),
+            ('bytes',   repr(payload)),
+        ]
+        return reprs
 
 
 class StructRegistry(object):
@@ -102,7 +193,7 @@ class StructRegistry(object):
 
     def build(self):
         for name in self.library.struct_names():
-            logger.info('Rolling in struct "{}"'.format(name))
+            logger.debug('Rolling in struct "{}"'.format(name))
             self.register_adapter(name)
 
     def register_adapter(self, name):
@@ -131,7 +222,8 @@ class StructRegistry(object):
     @classmethod
     def pprint(cls, struct, format='pprint'):
         name = struct._name_()
-        payload_hex = hexlify(struct._dump_())
+        payload = struct._dump_()
+        payload_hex = hexlify(payload)
         payload_data = list(cls.to_dict(struct).items())
 
         if format == 'pprint':
@@ -140,14 +232,20 @@ class StructRegistry(object):
             pprint(payload_data, indent=4, width=42)
 
         elif format == 'tabulate-plain':
-            meta = OrderedDict()
-            meta['name'] = name
-            meta['hex']  = payload_hex
-            output = list(meta.items())
+            seperator = ('----', '')
+            output = [
+                seperator,
+                ('name', name),
+                seperator,
+            ]
+            output += StructAdapter.binary_reprs(payload)
+            output += [seperator]
             output += payload_data
             print tabulate(output, tablefmt='plain')
+
             #print tabulate(list(meta.items()), tablefmt='plain')
             #print tabulate(payload_data, missingval='n/a', tablefmt='simple')
+
         else:
             raise ValueError('Unknown format "{}" for pretty printer'.format(format))
 
@@ -174,5 +272,5 @@ class StructRegistryByID(StructRegistry):
             logger.warning('Struct "{}" has ID "{}", but this ID is already mapped to struct "{}", '\
                            'please check if struct provides reasonable default values for attribute "ID"'.format(name, struct_id, name_owner))
         else:
-            logger.info('Struct "{}" mapped to ID "{}"'.format(name, struct_id))
+            logger.debug('Struct "{}" mapped to ID "{}"'.format(name, struct_id))
             self.structs_by_id[struct_id] = adapter

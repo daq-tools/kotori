@@ -47,12 +47,13 @@ setup(name='kotori',
       ],
       entry_points={
           'console_scripts': [
-              'kotori             = kotori:run',
+              'kotori              = kotori:run',
               #'kotori-master      = kotori.master.server:run',
               #'kotori-node        = kotori.node.nodeservice:run',
               #'kotori-wamp-client = kotori.master.client:run_wamp_client',
-              'h2m-udp-client     = kotori.vendor.hydro2motion.client:run_udp_client',
-              'h2m-udp-fuzzer     = kotori.vendor.hydro2motion.client:run_udp_fuzzer',
+              'h2m-csv-udp-client  = kotori.vendor.hydro2motion.client:run_udp_client',
+              'h2m-csv-udp-fuzzer  = kotori.vendor.hydro2motion.client:run_udp_fuzzer',
+              'h2m-message         = kotori.vendor.lst.h2m.commands:h2m_message_cmd',
           ],
           'paste.app_factory': [
               'main = kotori.frontend.app:main',

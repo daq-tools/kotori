@@ -2,11 +2,14 @@
 # (c) 2014,2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import os
 import sys
+import logging
 import shelve
 import socket
 from uuid import uuid4
 from appdirs import user_data_dir
 import json_store
+
+logger = logging.getLogger()
 
 def slm(message):
     """sanitize log message"""
@@ -61,7 +64,7 @@ class ConfigStoreJson(dict):
         if not ConfigStoreJson.store:
             #print "ConfigStoreJson.__init__"
             self.app_data_dir = user_data_dir('kotori-daq', 'Elmyra')
-            print >>sys.stderr, "ConfigStoreJson app_data_dir:", self.app_data_dir
+            logger.debug("ConfigStoreJson app_data_dir: {}".format(self.app_data_dir))
             if not os.path.exists(self.app_data_dir):
                 os.makedirs(self.app_data_dir)
             self.config_file = os.path.join(self.app_data_dir, 'config.json')
@@ -91,7 +94,7 @@ class NodeId(Singleton):
         if not self.config.has_key('uuid'):
             self.config['uuid'] = str(uuid4())
         self.NODE_ID = self.config['uuid']
-        print >>sys.stderr, "NODE ID:", self.NODE_ID
+        logger.debug("NODE ID: {}".format(self.NODE_ID))
 
     def __str__(self):
         return str(self.NODE_ID)
