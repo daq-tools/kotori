@@ -12,6 +12,8 @@ develop
     - add infrastructure for parsing schema mappings from c/c++ header files based on pyclibrary
     - instantiate structs from compiled c/c++ header files/libraries
     - introduce struct registry
+    - decouple lst/h2m specific struct registry behavior
+    - add initial docs about lst/h2m experiments
 
 2015-11-06 0.3.2
 ----------------

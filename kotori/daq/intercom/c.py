@@ -91,30 +91,18 @@ class StructRegistry(object):
         # dictionary of structs, by name
         self.structs = {}
 
-        # dictionary of structs, by id
-        self.structs_by_id = {}
-
         self.build()
 
     def build(self):
         for name in self.library.struct_names():
+            logger.info('Rolling in struct "{}"'.format(name))
+            self.register_adapter(name)
 
-            logger.info('Rolling in name={}'.format(name))
-            adapter = StructAdapter(name, self.library)
-
-            # store adapter object by name
-            self.structs[name] = adapter
-
-            # store adapter object by id
-            struct_id = adapter.create().ID
-            if self.structs_by_id.has_key(struct_id):
-                o_a = self.structs_by_id[struct_id]
-                name_owner = o_a.name
-                logger.warning('Struct "{}" has ID "{}", but this is already owned by "{}". ' \
-                               'Please check if struct provides reasonable default values for attribute "ID".'.format(name, struct_id, name_owner))
-            else:
-                logger.info('Struct "{}" now owns ID "{}".'.format(name, struct_id))
-                self.structs_by_id[struct_id] = adapter
+    def register_adapter(self, name):
+                # store adapter object by name
+        adapter = StructAdapter(name, self.library)
+        self.structs[name] = adapter
+        return adapter
 
     def get(self, name):
         return self.structs[name]
@@ -132,3 +120,28 @@ class StructRegistry(object):
         for fieldname in fieldnames:
             d[fieldname] = getattr(struct, fieldname)
         return d
+
+
+class StructRegistryByID(StructRegistry):
+
+    # TODO: Make generic like ``sr = StructRegistryByID(library, indexes=['ID'])``
+
+    def __init__(self, library, indexes=None):
+        # dictionary of structs, by id
+        self.structs_by_id = {}
+        StructRegistry.__init__(self, library)
+
+    def register_adapter(self, name):
+
+        adapter = StructRegistry.register_adapter(self, name)
+
+        # store adapter object by id
+        struct_id = adapter.create().ID
+        if self.structs_by_id.has_key(struct_id):
+            o_a = self.structs_by_id[struct_id]
+            name_owner = o_a.name
+            logger.warning('Struct "{}" has ID "{}", but this is already owned by "{}". '\
+                           'Please check if struct provides reasonable default values for attribute "ID".'.format(name, struct_id, name_owner))
+        else:
+            logger.info('Struct "{}" now owns ID "{}".'.format(name, struct_id))
+            self.structs_by_id[struct_id] = adapter

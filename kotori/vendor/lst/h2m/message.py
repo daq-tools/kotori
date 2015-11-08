@@ -4,9 +4,10 @@ import os
 import logging
 from pprint import pprint
 from binascii import unhexlify, hexlify
-from kotori.daq.intercom.c import LibraryAdapter, StructRegistry
+from kotori.daq.intercom.c import LibraryAdapter, StructRegistry, StructRegistryByID
 
 logger = logging.getLogger(__name__)
+
 
 def getting_started(sr):
 # create a "cap_r" struct and print attributes with default values
@@ -85,11 +86,12 @@ def fill_and_dump(sr):
     program.ID = 88
     print 'dump-3:', hexlify(program._dump_())
     d = sr.to_dict(program)
-    pprint(list(d.iteritems()))
 
-def display_schema():
-    # struct_h2o_w
-    pass
+    # https://stackoverflow.com/questions/4301069/any-way-to-properly-pretty-print-ordered-dictionaries-in-python
+    # https://bugs.python.org/issue10592
+    # https://bugs.python.org/issue7434
+    # https://stackoverflow.com/questions/21420243/pretty-printing-ordereddicts-using-pprint
+    pprint(dict(d.items()))
 
 def pretend_receive_and_process(sr):
 
@@ -108,6 +110,10 @@ def pretend_receive_and_process(sr):
     #print 'ID:    ', cap_r.ID
     #print 'length:', cap_r.length
 
+def display_schema(sr):
+    # struct_h2o_w
+    pass
+
 
 def main():
 
@@ -120,15 +126,16 @@ def main():
     lib_dir = os.path.join(here, '..', 'client', 'cpp')
 
     library = LibraryAdapter(u'h2m_structs.h', u'h2m_structs.so', include_path=lib_dir, library_path=lib_dir, cache_path=cache_dir)
-    sr = StructRegistry(library)
+    sr = StructRegistryByID(library)
 
     #values = struct_program.from_buffer_copy(b"\x01\x00\x00\x00\x00\x00\x00\x00")
     #print 'values:', values
 
     #getting_started(sr)
-    #dump_full(sr)
+    dump_full(sr)
     #fill_and_dump(sr)
-    pretend_receive_and_process(sr)
+    #pretend_receive_and_process(sr)
+    display_schema(sr)
 
 
 if __name__ == '__main__':
