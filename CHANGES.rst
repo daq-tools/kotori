@@ -7,13 +7,14 @@ develop
 - add release and documentation infrastructure through Makefile targets
 - add vendor “lst”
     - add struct definitions of h2m project
-    - add c++ udp sender
+    - add basic udp message sender in c++ based on h2m struct definitions
     - add infrastructure for parsing schema mappings from c/c++ header files based on pyclibrary
     - instantiate structs from compiled c/c++ header files/libraries
-    - introduce struct registry
-    - decouple lst/h2m specific struct registry behavior
-    - add initial docs about lst/h2m experiments
-    - properly tweak h2m_structs.h
+    - introduce struct registry for bookkeeping
+    - decouple lst/h2m specific struct registry behavior based on ID attribute
+    - add initial docs about lst/h2m spikes
+    - properly tweak "h2m_structs.h" to be grokked by patched pyclibrary
+    - make message receiving actually work in dry-dock, improve pretty-printing
 
 
 2015-11-06 0.3.2

@@ -34,7 +34,8 @@ class StructureWithDefaults(Structure):
     # http://stackoverflow.com/questions/1825715/how-to-pack-and-unpack-using-ctypes-structure-str/1827666#1827666
     # https://wiki.python.org/moin/ctypes
     def _dump_(self):
-        return buffer(self)[:]
+        right = ctypes.sizeof(self) - 1
+        return buffer(self)[:right]
 
     def _load_(self, bytes):
         fit = min(len(bytes), ctypes.sizeof(self))

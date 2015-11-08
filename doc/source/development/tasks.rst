@@ -5,9 +5,15 @@ Kotori DAQ Tasks
 
 LST
 ===
+- [x] Rename repository to "kotori"
+- [x] Publish docs to https://docs.elmyra.de/isar-engineering/kotori/
+- [o] Proper commandline interface for encoding and decoding message structs à la ``beradio``
+- [o] Flexible pretending UDP sender programs for generating and sending message struct payloads
+- [o] Properly implement checksumming, honor field ``ck``
 - [o] kotori.daq.intercom.c should perform the compilation step for getting a msglib.so out of a msglib.h
 - [o] Console based message receiver and decoder
-- [o] Rename repository to "kotori"
+- [o] Generate HTML overview of all message struct schemas using tabulate
+- [o] Publish docs to http://isarengineering.de/docs/kotori/
 
 
 Hiveeyes
