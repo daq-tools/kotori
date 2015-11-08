@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+from tabulate import tabulate
+from kotori.vendor.lst.h2m.util import setup_h2m_structs, setup_logging
 import os
 import sys
 import logging
@@ -75,7 +77,6 @@ def dump_full(sr):
     sr.pprint(gps_w)
 
 
-
 def fill_and_dump(sr):
 
     program = sr.create('struct_program')
@@ -96,6 +97,7 @@ def fill_and_dump(sr):
     # https://bugs.python.org/issue7434
     # https://stackoverflow.com/questions/21420243/pretty-printing-ordereddicts-using-pprint
     pprint(dict(d.items()))
+
 
 def pretend_receive_and_process(sr):
 
@@ -120,37 +122,25 @@ def pretend_receive_and_process(sr):
     #print '=' * 21
     sr.pprint(cap_r, format='tabulate-plain')
 
+
 def display_schema(sr):
-    # struct_h2o_w
-    pass
+    struct_h2o_w = sr.get('struct_h2o_w')
+    struct_h2o_w.print_schema()
 
 
 def main():
 
-    #logging.basicConfig(level=logging.DEBUG)
-    #logging.basicConfig(level=logging.INFO)
-    log_format = '%(asctime)-15s [%(name)-25s] %(levelname)-7s: %(message)s'
-    logging.basicConfig(
-        format=log_format,
-        stream=sys.stderr,
-        level=logging.INFO)
+    setup_logging(logging.INFO)
 
-    cache_dir = os.path.join(os.curdir, 'var', 'cache')
+    # initialize "h2m_structs" library
+    sr = setup_h2m_structs()
 
-    here = os.path.dirname(__file__)
-    lib_dir = os.path.join(here, 'cpp')
-
-    library = LibraryAdapter(u'h2m_structs.h', u'h2m_structs.so', include_path=lib_dir, library_path=lib_dir, cache_path=cache_dir)
-    sr = StructRegistryByID(library)
-
-    #values = struct_program.from_buffer_copy(b"\x01\x00\x00\x00\x00\x00\x00\x00")
-    #print 'values:', values
-
+    # call some examples
     #getting_started(sr)
     #dump_full(sr)
     #fill_and_dump(sr)
-    pretend_receive_and_process(sr)
-    #display_schema(sr)
+    #pretend_receive_and_process(sr)
+    display_schema(sr)
 
 
 if __name__ == '__main__':
