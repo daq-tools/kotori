@@ -1,5 +1,5 @@
 // -*- coding: utf-8 -*-
-// (c) 2013-2015 Hydro 2 Motion Developers, h2m@hm.edu
+// (c) 2013-2015 Hydro2Motion Developers, h2m@hm.edu
 
 // target: Mbed
 //#include "mbed.h"

@@ -65,5 +65,6 @@ Configure::
 
 
 Run::
+
     /etc/init.d/grafana-server start
     tail -F /var/log/grafana/grafana.log

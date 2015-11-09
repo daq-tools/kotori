@@ -55,7 +55,7 @@ author = u'Kotori Developers'
 # built documents.
 #
 # The short X.Y version.
-version = '=0.3.2'
+version = '0.3.2'
 # The full version, including alpha/beta/rc tags.
 release = '0.3.2'
 
@@ -108,7 +108,7 @@ todo_include_todos = False
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -287,21 +287,6 @@ texinfo_documents = [
 # -- Custom options -------------------------------------------
 
 html_logo = '_static/img/kotori-logo.png'
-html_theme_options = {
-    'description': 'Data Acquisition and Telemetry',
-    'page_width': '1152px',
-    'sidebar_width': '220px',
-    'github_button': False,
-    }
-
-html_sidebars = {
-    '**': [
-        'about.html',
-        'navigation.html',
-        'searchbox.html',
-        ]
-}
-
 def setup(app):
     # https://github.com/snide/sphinx_rtd_theme/issues/117#issuecomment-41571653
     #app.add_javascript("custom.js")
