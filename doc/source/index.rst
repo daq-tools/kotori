@@ -6,11 +6,17 @@
 Welcome to Kotori!
 ==================
 
-Kotori DAQ is a multi-channel, multi-protocol data acquisition and graphing toolkit based on InfluxDB_, Grafana_ and Twisted_.
+*Kotori* is a multi-channel, multi-protocol data acquisition and graphing toolkit based on
+InfluxDB_, Grafana_, Mosquitto_, Twisted_ and Autobahn_.
+
+Being a convenient component for building telemetry solutions and test benches, it addresses different aspects of collecting
+and storing sensor data from a multitude of data sources and devices.
 
 .. _InfluxDB: https://influxdb.com/
 .. _Grafana: http://grafana.org/
 .. _Twisted: https://twistedmatrix.com/
+.. _Mosquitto: http://mosquitto.org/
+.. _Autobahn: http://autobahn.ws/
 
 
 About

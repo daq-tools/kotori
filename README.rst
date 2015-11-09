@@ -2,10 +2,14 @@
 Kotori README
 =============
 
-Kotori DAQ is a multi-channel, multi-protocol data acquisition and graphing toolkit based on InfluxDB_, Grafana_ and Twisted_.
+*Kotori* is a multi-channel, multi-protocol data acquisition and graphing toolkit based on
+InfluxDB_, Grafana_, Mosquitto_, Twisted_ and Autobahn_.
 
-It is a convenient component for building telemetry solutions and test benches. It addresses different aspects of collecting
-and storing sensor data from a multitude of data sources. The framework design has two audiences in mind.
+Being a convenient component for building telemetry solutions and test benches, it addresses different aspects of collecting
+and storing sensor data from a multitude of data sources and devices.
+
+
+The framework design has two audiences in mind.
 
 
 For users
@@ -20,17 +24,22 @@ an open source, feature rich metrics dashboard and graph editor.
 For developers
 --------------
 Ingest and distribute data between multiple publishers and subscribers across
-different devices using the underpinning software bus based on
-`The WebSocket Protocol`_ and `The Web Application Messaging Protocol`_.
+different devices using the underpinning software bus systems based on
+    - MQTT_, the *MQ Telemetry Transport* connectivity protocol.
+    - WAMP_, the *Web Application Messaging Protocol*, in turn based on WebSockets_.
 
 Leverage the open infrastructure based on Twisted_ - an event-driven networking engine -
 to implement custom software components.
-Accept new protocols, write adapters, decoders and handlers for specific devices and data formats.
+Accept new protocols, write adapters, decoders and handlers for specific devices, data formats
+and databases.
 
 
 
 .. _InfluxDB: https://influxdb.com/
 .. _Grafana: http://grafana.org/
 .. _Twisted: https://twistedmatrix.com/
-.. _The WebSocket Protocol: https://tools.ietf.org/html/rfc6455
-.. _The Web Application Messaging Protocol: http://wamp.ws/
+.. _WebSockets: https://tools.ietf.org/html/rfc6455
+.. _WAMP: http://wamp.ws/
+.. _MQTT: http://mqtt.org/
+.. _Mosquitto: http://mosquitto.org/
+.. _Autobahn: http://autobahn.ws/

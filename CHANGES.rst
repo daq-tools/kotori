@@ -10,7 +10,7 @@ develop
     - add basic udp message sender in c++ based on h2m struct definitions
     - add infrastructure for parsing schema mappings from c/c++ header files based on pyclibrary
     - instantiate structs from compiled c/c++ header files/libraries
-    - introduce struct registry for bookkeeping
+    - introduce struct registry for bookkeeping and runtime dispatching
     - decouple lst/h2m specific struct registry behavior based on ID attribute
     - add initial docs about lst/h2m spikes
     - properly tweak "h2m_structs.h" to be grokked by patched pyclibrary

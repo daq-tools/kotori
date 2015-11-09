@@ -1,8 +1,11 @@
+/*
 body, div.body {
     background-color: #add8e6;
 }
+*/
 
-.logo {
+.wy-side-nav-search > a img.logo {
     display: inline-block;
+    margin: inherit;
     vertical-align: middle;
 }
