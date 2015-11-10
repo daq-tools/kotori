@@ -32,8 +32,8 @@ Handbook
 
 There is some tooling for conveniently working with native binary message structs defined in ``h2m_structs.h``.
 
-Message decoding
-----------------
+Decode message
+--------------
 Decode a short message in hex format, display struct name and decoded content::
 
     $ h2m-message decode 0x05022a0021
@@ -50,8 +50,18 @@ Decode a short message in hex format, display struct name and decoded content::
     ck           33
 
 
-Struct info
------------
+Send message
+------------
+Send a message in hex format to UDP server::
+
+    $ h2m-message send 0x05022a0021 --target=udp://localhost:8888
+    Message "0x05022a0021" sent to "udp://localhost:8888"
+
+Use this tool to generate and send binary messages without having the hardware in place.
+
+
+Display message schema
+----------------------
 Display struct metadata information::
 
     $ h2m-message info struct_fuelcell_r
@@ -95,22 +105,82 @@ Display struct metadata information::
     bytes    '\x0b\x04\x00\x00\x00\x00\x00\x00\x00\x00\x00'
 
 
-Message sending
----------------
-Send a message in hex format to UDP server::
-
-    $ h2m-message send 0x05022a0021 --target=udp://localhost:8888
-    Message "0x05022a0021" sent to "udp://localhost:8888"
-
-
 Todo
 ----
 ::
 
     h2m-message encode
-    h2m-message send
     h2m-message receive
 
+
+Query InfluxDB
+==============
+
+List databases::
+
+    $ curl --silent --get 'http://192.168.59.103:8086/query?pretty=true' --user admin:Armoojwi --data-urlencode 'q=SHOW DATABASES' | jq '.'
+
+    {
+      "results": [
+        {
+          "series": [
+            {
+              "name": "databases",
+              "columns": [
+                "name"
+              ],
+              "values": [
+                [
+                  "_internal"
+                ],
+                [
+                  "edu_hm_lst_h2m"
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    }
+
+Query timeseries::
+
+    $ export INFLUX_URI=http://192.168.59.103:8086/query?pretty=true
+    $ curl --silent --get $INFLUX_URI --user admin:Armoojwi --data-urlencode 'db=edu_hm_lst_h2m' --data-urlencode 'q=select * from "02_cap_r";' | jq '.'
+
+    {
+      "results": [
+        {
+          "series": [
+            {
+              "name": "02_cap_r",
+              "columns": [
+                "time",
+                "_hex_",
+                "voltage_act"
+              ],
+              "values": [
+                [
+                  "2015-11-10T13:44:43.945864544Z",
+                  "05022a0021",
+                  42
+                ],
+                [
+                  "2015-11-10T13:46:35.678928928Z",
+                  "05022a0021",
+                  42
+                ],
+                [
+                  "2015-11-10T14:48:33.475860964Z",
+                  "05022a0021",
+                  42
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    }
 
 Development
 ===========
