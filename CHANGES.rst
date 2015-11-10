@@ -17,6 +17,7 @@ develop
     - make message receiving actually work in dry-dock, improve pretty-printing
     - add command line entrypoint “h2m-message” with “decode” and “info” actions
     - implement “h2m-message send”
+    - lst main application component: receive, decode and store binary messages
 
 
 2015-11-06 0.3.2

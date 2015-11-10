@@ -23,14 +23,14 @@ class UdpPublisher(ApplicationSession):
     """
 
     def onJoin(self, details):
-        print("session attached")
+        logger.info("session attached")
 
         global app_session
         app_session = self
 
 
     def onDisconnect(self):
-        print("disconnected")
+        logger.info("disconnected")
         #reactor.stop()
 
 
@@ -88,7 +88,7 @@ def connect_wamp(wsuri):
 
 
 def listen_udp(udp_port):
-    print 'INFO: Starting udp adapter on port', udp_port
+    logger.info('Starting udp adapter on port "{}"'.format(udp_port))
     reactor.listenUDP(udp_port, UdpAdapter())
 
 

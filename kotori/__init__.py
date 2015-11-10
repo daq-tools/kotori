@@ -14,6 +14,7 @@ from kotori.vendor.hydro2motion.database.influx import h2m_boot_influx_database
 from kotori.vendor.hydro2motion.network.udp import h2m_boot_udp_adapter
 from kotori.vendor.hydro2motion.web.server import boot_web
 from kotori.vendor.hiveeyes.application import hiveeyes_boot
+from kotori.vendor.lst.application import lst_boot
 from kotori.util import slm
 from .version import __VERSION__
 
@@ -107,6 +108,9 @@ def run():
         # hiveeyes
         if config.has_section('hiveeyes'):
             hiveeyes_boot(config, debug=debug)
+
+        if config.has_section('lst-h2m'):
+            lst_boot(config)
 
         # generic daq
         if config.has_section('kotori-daq'):
