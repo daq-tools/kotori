@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import logging
-from binascii import unhexlify
-from tabulate import tabulate
 
 logger = logging.getLogger(__name__)
 
@@ -12,10 +10,6 @@ class BinaryMessageAdapter(object):
         self.struct_registry = struct_registry
 
     def decode(self, payload):
-
-        # decode data payload from 8-bit clean hex format, e.g. ``05022a0021``
-        logger.debug('Decoding hex payload "{}"'.format(payload))
-        payload = unhexlify(payload)
 
         # decode struct ID from binary data, it's always at the second byte
         message_id = ord(payload[1])
