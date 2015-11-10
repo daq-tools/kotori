@@ -213,6 +213,7 @@ class StructRegistry(object):
 
     @classmethod
     def to_dict(cls, struct):
+        # TODO: maybe refactor to struct._dict_
         fieldnames = [field[0] for field in struct._fields_]
         d = OrderedDict()
         for fieldname in fieldnames:
@@ -221,6 +222,7 @@ class StructRegistry(object):
 
     @classmethod
     def pprint(cls, struct, format='pprint'):
+        # TODO: maybe refactor to struct._pprint_
         name = struct._name_()
         payload = struct._dump_()
         payload_hex = hexlify(payload)

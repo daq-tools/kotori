@@ -11,7 +11,7 @@ class InfluxDatabaseService(ApplicationSession):
     """An application component for logging telemetry data to InfluxDB databases"""
 
     def onJoin(self, details):
-        print("Realm joined (WAMP session started).")
+        logger.info("Realm joined (WAMP session started).")
 
         # subscribe to telemetry data channel
         self.subscribe(self.receive, u'de.elmyra.kotori.telemetry.data')
@@ -22,9 +22,9 @@ class InfluxDatabaseService(ApplicationSession):
 
     def startDatabase(self):
 
-        print 'InfluxDB host={host}, version={version}'.format(
+        logger.info('InfluxDB host={host}, version={version}'.format(
             host=self.config.extra['influxdb']['host'],
-            version=self.config.extra['influxdb']['version'])
+            version=self.config.extra['influxdb']['version']))
 
         self.influx = InfluxDBAdapter(
             version  = self.config.extra['influxdb']['version'],
@@ -32,11 +32,11 @@ class InfluxDatabaseService(ApplicationSession):
             database = self.config.extra['influxdb']['database'])
 
     def onLeave(self, details):
-        print("Realm left (WAMP session ended).")
+        logger.info("Realm left (WAMP session ended).")
         ApplicationSession.onLeave(self, details)
 
     def onDisconnect(self):
-        print("Transport disconnected.")
+        logger.info("Transport disconnected.")
         #reactor.stop()
 
 
@@ -103,7 +103,7 @@ def h2m_boot_influx_database(config, debug=False, trace=False):
 
     websocket_uri = unicode(config.get('wamp', 'listen'))
 
-    print 'INFO: Starting InfluxDB database service, connecting to WAMP broker', websocket_uri
+    logger.info('Starting InfluxDB database service, connecting to WAMP broker "{}"'.format(websocket_uri))
 
     runner = ApplicationRunner(
         websocket_uri, u'kotori-realm',

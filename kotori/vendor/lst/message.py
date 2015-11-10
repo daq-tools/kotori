@@ -28,5 +28,10 @@ class BinaryMessageAdapter(object):
 
     def pprint(self, struct, format='tabulate-plain'):
         # pretty-print struct content
+        # TODO: maybe refactor to struct._pprint_
         self.struct_registry.pprint(struct, format=format)
 
+    def to_dict(self, struct):
+        # convert struct content to json
+        # TODO: maybe refactor to struct._json_
+        return self.struct_registry.to_dict(struct)

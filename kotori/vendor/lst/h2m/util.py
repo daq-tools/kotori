@@ -3,6 +3,7 @@
 import os
 import sys
 import logging
+from appdirs import user_cache_dir
 from kotori.daq.intercom.c import LibraryAdapter, StructRegistryByID
 
 def setup_logging(level=logging.INFO):
@@ -13,7 +14,8 @@ def setup_logging(level=logging.INFO):
         level=level)
 
 def setup_h2m_structs():
-    cache_dir = os.path.join(os.curdir, 'var', 'cache')
+    cache_dir = user_cache_dir('lst', 'elmyra')
+    if not os.path.isdir(cache_dir): os.makedirs(cache_dir)
     lib_dir = os.path.join(os.path.dirname(__file__), 'cpp')
     library = LibraryAdapter(u'h2m_structs.h', u'h2m_structs.so', include_path=lib_dir, library_path=lib_dir, cache_path=cache_dir)
     struct_registry = StructRegistryByID(library)

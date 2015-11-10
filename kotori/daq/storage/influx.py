@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import requests
-from twisted.internet import reactor
-from twisted.logger import Logger
 from kotori.util import slm
+from twisted.logger import Logger
+from kotori.errors import last_error_and_traceback
 
 logger = Logger()
 
@@ -140,3 +140,77 @@ class InfluxDBAdapter(object):
                     "points": [points],
                 }
         return self.write_real(chunk)
+
+
+class BusInfluxForwarder(object):
+    """
+    Generic software bus -> influxdb forwarder based on prototypic implementation at HiveEyes
+    TODO: Generalize and refactor
+    """
+
+    def __init__(self, bus, topic, config):
+        self.bus = bus
+        self.topic = topic
+        self.config = config
+
+        self.bus.subscribe(self.bus_receive, self.topic)
+
+
+    def topic_to_topology(self, topic):
+        raise NotImplementedError()
+
+    @staticmethod
+    def sanitize_db_identifier(value):
+        value = unicode(value).replace('/', '_').replace('.', '_').replace('-', '_')
+        return value
+
+    def bus_receive(self, payload):
+        try:
+            return self.process_message(self.topic, payload)
+        except Exception as ex:
+            logger.error('Processing Bus message failed: {}\n{}'.format(ex, slm(last_error_and_traceback())))
+
+    def process_message(self, topic, payload, *args):
+
+        msg = 'Bus receive: topic={}, payload={}'.format(topic, payload)
+        logger.info(slm(msg))
+
+        # TODO: filter by realm/topic
+
+        # decode message from json format
+        #message = json.loads(payload)
+        message = payload
+
+        # compute storage location from topic and message
+        storage = self.storage_location(message)
+        logger.info('Storage location:  {}'.format(slm(dict(storage))))
+
+        # store data
+        self.store_message(storage.database, storage.series, message)
+
+        # provision graphing subsystem
+        #self.graphing.provision(storage.database, storage.series, message)
+
+
+    def storage_location(self, data):
+        raise NotImplementedError()
+
+    def store_encode(self, data):
+        return data
+
+    def store_message(self, database, series, data):
+
+        data = self.store_encode(data)
+
+        if not 'port' in self.config['influxdb']:
+            self.config['influxdb']['port'] = '8086'
+
+        influx = InfluxDBAdapter(
+            version  = self.config['influxdb']['version'],
+            host     = self.config['influxdb']['host'],
+            port     = int(self.config['influxdb']['port']),
+            username = self.config['influxdb']['username'],
+            password = self.config['influxdb']['password'],
+            database = database)
+
+        influx.write(series, data)
