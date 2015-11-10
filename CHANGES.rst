@@ -16,6 +16,7 @@ develop
     - properly tweak "h2m_structs.h" to be grokked by patched pyclibrary
     - make message receiving actually work in dry-dock, improve pretty-printing
     - add command line entrypoint “h2m-message” with “decode” and “info” actions
+    - implement “h2m-message send”
 
 
 2015-11-06 0.3.2

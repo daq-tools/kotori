@@ -36,9 +36,14 @@ Message decoding
 ----------------
 Decode a short message in hex format, display struct name and decoded content::
 
-    $ h2m-message decode 05022a0021
+    $ h2m-message decode 0x05022a0021
+    ----
     name         struct_cap_r
-    hex          05022a0021
+    ----
+    hex          0x05022a0021
+    decimal      [5, 2, 42, 0, 33]
+    bytes        '\x05\x02*\x00!'
+    ----
     length       5
     ID           2
     voltage_act  42
@@ -85,9 +90,17 @@ Display struct metadata information::
 
     kind     representation
     -------  ----------------------------------------------
-    hex      0b04000000000000000000
+    hex      0x0b04000000000000000000
     decimal  [11, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     bytes    '\x0b\x04\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+
+
+Message sending
+---------------
+Send a message in hex format to UDP server::
+
+    $ h2m-message send 0x05022a0021 --target=udp://localhost:8888
+    Message "0x05022a0021" sent to "udp://localhost:8888"
 
 
 Todo

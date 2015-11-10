@@ -174,7 +174,7 @@ class StructAdapter(object):
     @staticmethod
     def binary_reprs(payload):
         reprs = [
-            ('hex',     hexlify(payload)),
+            ('hex',     '0x' + hexlify(payload)),
             ('decimal', map(ord, payload)),
             ('bytes',   repr(payload)),
         ]
