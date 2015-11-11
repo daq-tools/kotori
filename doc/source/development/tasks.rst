@@ -2,31 +2,45 @@
 Kotori DAQ Tasks
 ================
 
-
 LST
 ===
+
+Prio 1
+------
+- [o] The order of fields provisioned into Grafana panel is wrong due to unordered-dict-republishing on Bus
+      Example: "03_cap_w" has voltage_low, voltage_mid, voltage_load, voltage_max, ...
+               but "voltage_load" should be after the other three!
+      Solution: Either publish something self-contained to the Bus which reflects the very order,
+                or add some bookkeeping (a struct->fieldname registry) at the decoding level,
+                where order is correct. Reuse this information when creating the Grafana stuff.
+- [o] kotori.daq.intercom.c should perform the compilation step for getting a msglib.so out of a msglib.h
+
+Prio 2
+------
+- [o] Intro to the H2M scenario with pictures, drawing, source code (header file) and nice Grafana graph
+- [o] Flexible pretending UDP sender programs for generating and sending message struct payloads
+- [o] Generate HTML overview of all message struct schemas using tabulate
+- [o] Console based message receiver and decoder
+- [o] Properly implement checksumming, honor field ``ck``
+
+Done
+----
 - [x] Rename repository to "kotori"
 - [x] Publish docs to https://docs.elmyra.de/isar-engineering/kotori/
-- [o] Proper commandline interface for encoding and decoding message structs à la ``beradio``
-- [o] Flexible pretending UDP sender programs for generating and sending message struct payloads
-- [o] Properly implement checksumming, honor field ``ck``
-- [o] kotori.daq.intercom.c should perform the compilation step for getting a msglib.so out of a msglib.h
-- [o] Console based message receiver and decoder
-- [o] Generate HTML overview of all message struct schemas using tabulate
-- [o] Publish docs to http://isarengineering.de/docs/kotori/
+- [x] Proper commandline interface for encoding and decoding message structs à la ``beradio``
+- [x] Publish docs to http://isarengineering.de/docs/kotori/
 
 
 Hiveeyes
 ========
 
-Todo
-----
+Prio 2
+------
 - [o] Improve inline docs
 - [o] License and open sourcing
 - [o] Enhance mechanism of how GrafanaManager (re)creates dashboard, when deleted by user at runtime.
       Currently, dashboards are only created on packages arriving after a Kotori restart.
       They are never ever deleted automatically right now.
-
 
 Done
 ----
@@ -50,15 +64,17 @@ Done
         2015-10-20 06:12:59+0200 [-] Stopping factory <mqtt.client.factory.MQTTFactory instance at 0x7fda346ccb48>
 
 
+General
+=======
 
 Prio 1
-======
+------
 - [x] node registration: send hostname along
 - [o] node_id-to-label translator with server-side persistence at master node
 - [o] run as init.d daemon
 
 Prio 2
-======
+------
 - [o] show embedded video when node signals activity
 - [o] Bug when speaking umlauts, like "Bolognesääää!"::
 
@@ -70,7 +86,7 @@ Prio 2
     2014-01-13 20:01:24+0100 [MasterServerProtocol,5,77.186.145.150] UnicodeEncodeError: 'ascii' codec can't encode characters in position 8-12: ordinal not in range(128)
 
 Prio 3
-======
+------
 - [o] send dates in messages
 - [o] notifications: Pushover- and SMS-integration
 
@@ -134,3 +150,4 @@ node only::
     kotori node --master=ws://offgrid:9000/ws --debug
     kotori node --master=ws://beaglebone.local:9000/ws --debug
     kotori node --master=ws://master.example.com:9000/ws --debug
+
