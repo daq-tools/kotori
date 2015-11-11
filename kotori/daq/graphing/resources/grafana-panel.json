@@ -49,7 +49,7 @@
     ],
     "timeFrom": null,
     "timeShift": null,
-    "title": "{{ title }} @ {{ row_title }}",
+    "title": "{{ panel_title }}",
     "tooltip": {
         "shared": true,
         "value_type": "cumulative"

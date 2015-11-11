@@ -16,7 +16,7 @@
             "panels": [
                 {{ panels }}
             ],
-            "title": "{{ row_title }},net={{ title }}"
+            "title": "{{ row_title }}"
         }
     ],
     "nav": [
