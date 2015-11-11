@@ -77,7 +77,7 @@ class GrafanaApi(object):
                     raise
 
         try:
-            logger.info('Creating dashboard "{}"'.format(name))
+            logger.info('Creating/updating dashboard "{}"'.format(name))
             response = self.grafana.dashboards.db.create(**dashboard.wrap_api())
             logger.info(slm(response))
 
@@ -97,6 +97,18 @@ class GrafanaApi(object):
             else:
                 raise
 
+    def get_dashboard(self, name):
+        try:
+            logger.info('Getting dashboard "{}"'.format(name))
+            dashboard = self.grafana.dashboards.db[name].get()
+            return dashboard['dashboard']
+        except GrafanaClientError as ex:
+            if '404' in ex.message or 'Dashboard not found' in ex.message:
+                logger.warn(slm(ex.message))
+            else:
+                raise
+
+
     def demo(self):
         print grafana.org()
         #    {"id":1,"name":"Main Org."}
@@ -106,18 +118,27 @@ class GrafanaApi(object):
 
 class GrafanaDashboard(object):
 
-    def __init__(self, datasource='default', title='default'):
+    def __init__(self, datasource='default', title='default', dashboard=None):
 
         self.datasource = datasource
         self.dashboard_title = title
 
-        self.dashboard = None
+        self.dashboard = dashboard
+
+        # bookkeeping which panel id to use when adding new panels
+        # use the maximum id currently used
+        self.panel_id = 0
+        if dashboard:
+            # TODO: this is hardcoded on row=0
+            panels = dashboard['rows'][0]['panels']
+            panel_ids = [panel['id'] for panel in panels]
+            self.panel_id = max(panel_ids)
 
         self.tpl_dashboard = self.get_template('grafana-dashboard.json')
         self.tpl_panel = self.get_template('grafana-panel.json')
         self.tpl_target = self.get_template('grafana-target.json')
 
-    def create(self, measurement, row_title='row', panels=None):
+    def build(self, measurement, row_title='default', panel_title_suffix='', panels=None):
 
         panels = panels or []
 
@@ -130,33 +151,8 @@ class GrafanaDashboard(object):
 
         # build panels list
         panels_json = []
-        index = 0
         for panel in panels:
-
-            index += 1
-
-            data_panel = {
-                'id': index,
-                'datasource': self.datasource,
-                'title': panel['title'],
-                'label_y': panel.get('label', ''),
-                'format_y': panel.get('format', 'none'),
-            }
-            self.setdefaults(data_panel, data_dashboard)
-
-            # build targets list from fieldnames
-            targets_json = []
-            for fieldname in panel['fieldnames']:
-                data_target = {
-                    'name': fieldname,
-                    'alias': fieldname,
-                    'measurement': measurement,
-                }
-                self.setdefaults(data_target, data_panel)
-                target_json = self.tpl_target.render(data_target)
-                targets_json.append(target_json)
-
-            panel_json = self.tpl_panel.render(data_panel, targets=',\n'.join(targets_json))
+            panel_json = json.dumps(self.build_panel(measurement, panel, panel_title_suffix))
             panels_json.append(panel_json)
 
         dashboard_json = self.tpl_dashboard.render(data_dashboard, panels=',\n'.join(panels_json))
@@ -167,13 +163,43 @@ class GrafanaDashboard(object):
 
         return self.dashboard
 
+    def build_panel(self, measurement, panel, title_suffix=None):
+
+        self.panel_id += 1
+
+        panel_title = panel['title']
+        if title_suffix:
+            panel_title += ' @ ' + title_suffix
+
+        data_panel = {
+            'id': self.panel_id,
+            'datasource': self.datasource,
+            'panel_title': panel_title,
+            'label_y': panel.get('label', ''),
+            'format_y': panel.get('format', 'none'),
+        }
+
+        # build targets list from fieldnames
+        targets_json = []
+        for fieldname in panel['fieldnames']:
+            data_target = {
+                'name': fieldname,
+                'alias': fieldname,
+                'measurement': measurement,
+            }
+            target_json = self.tpl_target.render(data_target)
+            targets_json.append(target_json)
+
+        panel_json = self.tpl_panel.render(data_panel, targets=',\n'.join(targets_json))
+        return json.loads(panel_json)
+
     def get_title(self):
         return self.dashboard.get('title')
 
     def wrap_api(self):
         payload = {
             "dashboard": self.dashboard,
-            "overwrite": False
+            "overwrite": False,
         }
         return payload
 
@@ -190,9 +216,10 @@ class GrafanaDashboard(object):
 class GrafanaManager(object):
 
     def __init__(self, config):
+        logger.info('Starting GrafanaManager "{}"'.format(self.__class__.__name__))
         self.config = config
-        if not self.config.has_option('grafana', 'port'):
-            self.config.set('grafana', 'port', '3000')
+        if not 'port' in self.config['grafana']:
+            self.config['grafana']['port'] = '3000'
 
         self.skip_cache = {}
 
@@ -215,37 +242,91 @@ class GrafanaManager(object):
         if self._skip_creation(database, series, data):
             return
 
+        logger.info('Provisioning Grafana for database "{}" and series "{}"'.format(database, series))
+
         grafana = GrafanaApi(
-            host = self.config.get('grafana', 'host'),
-            port = int(self.config.get('grafana', 'port')),
+            host = self.config['grafana']['host'],
+            port = int(self.config['grafana']['port']),
             # TODO: improve multi-tenancy / per-user isolation by using distinct credentials for each user
-            username = self.config.get('grafana', 'username'),
-            password = self.config.get('grafana', 'password'),
+            username = self.config['grafana']['username'],
+            password = self.config['grafana']['password'],
         )
         grafana.create_datasource(database, {
             "type":     "influxdb",
             "url":      "http://{host}:{port}/".format(
-                host=self.config.get('influxdb', 'host'),
-                port=self.config.get('influxdb', 'port')),
+                host=self.config['influxdb']['host'],
+                port=self.config['influxdb']['port']),
             "database": database,
             # TODO: improve multi-tenancy / per-user isolation by using distinct credentials for each user
-            "user":     self.config.get('influxdb', 'username'),
-            "password": self.config.get('influxdb', 'password'),
+            "user":     self.config['influxdb']['username'],
+            "password": self.config['influxdb']['password'],
             })
 
 
+        # get dashboard if already exists
+        dashboard_data = grafana.get_dashboard(name=database)
+
+        # wrap into convenience object
+        dashboard = GrafanaDashboard(datasource=database, title=database, dashboard=dashboard_data)
+
         # generate panels
-        panels = self.panel_generator(data)
+        panels_new = self.panel_generator(database, series, data)
 
-        dashboard = GrafanaDashboard(datasource=database, title=database)
-        row_title = 'node={node},gw={gateway}'.format(**topology)
-        dashboard.create(measurement=series, row_title=row_title, panels=panels)
-        grafana.create_dashboard(dashboard)
+        # create whole dashboard with all panels
+        if not dashboard_data:
 
+            if 'node' in topology and 'gateway' in topology:
+                panel_title_suffix = 'node={node},gw={gateway}'.format(**topology)
+                row_title = panel_title_suffix
+                if 'network' in topology:
+                    row_title += ',net={network}'.format(**topology)
+                dashboard.build(measurement=series, row_title=row_title, panel_title_suffix=panel_title_suffix, panels=panels_new)
+            else:
+                row_title = database
+                dashboard.build(measurement=series, row_title=row_title, panels=panels_new)
+
+            # create new dashboard
+            grafana.create_dashboard(dashboard, name=database)
+
+        # update existing dashboard, only with new panels
+        else:
+
+            # compute which panels are missing
+            # TODO: this is hardcoded on row=0
+            panels_exists = dashboard_data['rows'][0]['panels']
+            panels_exists_titles = [panel['title'] for panel in panels_exists]
+            panels_new_titles = [panel['title'] for panel in panels_new]
+            panels_missing_titles = set(panels_new_titles) - set(panels_exists_titles)
+
+            if panels_missing_titles:
+
+                logger.info('Adding missing panels {}'.format(panels_missing_titles))
+
+                # propagate title suffix
+                panel_title_suffix = None
+                if 'node' in topology and 'gateway' in topology:
+                    panel_title_suffix = 'node={node},gw={gateway}'.format(**topology)
+
+                # establish new panels
+                for panel in panels_new:
+                    panel_title = panel.get('title')
+                    if panel_title in panels_missing_titles:
+                        panels_exists.append(dashboard.build_panel(measurement=series, panel=panel, title_suffix=panel_title_suffix))
+
+                # update dashboard with new panels
+                grafana.create_dashboard(dashboard, name=database)
+
+            else:
+                logger.info('No missing panels to add')
+
+
+        # remember dashboard/panel creation for this kind of data inflow
         self._signal_creation(database, series, data)
+
 
     def panel_generator(self, data):
         raise NotImplementedError()
+
 
     # field name collection helper
     @staticmethod

@@ -4,9 +4,12 @@ from bunch import Bunch
 from binascii import hexlify
 from twisted.logger import Logger
 from twisted.internet import reactor
+from kotori.util import slm
+from kotori.errors import traceback_get_exception, last_error_and_traceback
 from kotori.daq.intercom.wamp import WampApplication, WampSession
 from kotori.daq.intercom.udp import UdpBusForwarder
 from kotori.daq.storage.influx import BusInfluxForwarder
+from kotori.daq.graphing.grafana import GrafanaManager
 from kotori.vendor.lst.message import BinaryMessageAdapter
 from kotori.vendor.lst.h2m.util import setup_h2m_structs
 
@@ -71,6 +74,16 @@ class InfluxStorage(BusInfluxForwarder):
     Receive messages from software bus and store them into InfluxDB timeseries database
     """
 
+    def __init__(self, *args, **kwargs):
+        BusInfluxForwarder.__init__(self, *args, **kwargs)
+
+        # grafana setup
+        try:
+            self.graphing = GraphingManager(self.config)
+        except Exception as ex:
+            logger.error(slm("{ex}, args={args!s}\n{details}\n{traceback}".format(
+                ex=ex, args=args, details=traceback_get_exception(), traceback=last_error_and_traceback())))
+
     def storage_location(self, data):
         """
         Compute storage location (database- and timeseries-names) from message information
@@ -96,6 +109,10 @@ class InfluxStorage(BusInfluxForwarder):
                 del data[entry]
         return data
 
+    def on_store(self, database, series, data):
+        # provision graphing subsystem
+        self.graphing.provision(database, series, data)
+
 
 class StorageAdapter(object):
     """
@@ -108,6 +125,22 @@ class StorageAdapter(object):
         logger.info('Starting InfluxStorage')
         topic = unicode(self.config['lst-h2m']['wamp_topic'])
         InfluxStorage(bus=self.bus, topic=topic, config=self.config)
+
+
+
+class GraphingManager(GrafanaManager):
+
+    def panel_generator(self, database, series, data):
+        print 'panel_generator, series: {}, data: {}'.format(series, data)
+
+        fieldnames = [key for key in data.keys() if key not in ['_hex_']]
+
+        # generate panels
+        panels = []
+        panels.append({'title': series,  'fieldnames': fieldnames})
+
+        return panels
+
 
 
 class UdpSession(WampSession):

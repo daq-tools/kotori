@@ -182,14 +182,11 @@ class BusInfluxForwarder(object):
         message = payload
 
         # compute storage location from topic and message
-        storage = self.storage_location(message)
-        logger.info('Storage location:  {}'.format(slm(dict(storage))))
+        storage_location = self.storage_location(message)
+        logger.info('Storage location:  {}'.format(slm(dict(storage_location))))
 
         # store data
-        self.store_message(storage.database, storage.series, message)
-
-        # provision graphing subsystem
-        #self.graphing.provision(storage.database, storage.series, message)
+        self.store_message(storage_location.database, storage_location.series, message)
 
 
     def storage_location(self, data):
@@ -214,3 +211,9 @@ class BusInfluxForwarder(object):
             database = database)
 
         influx.write(series, data)
+
+        self.on_store(database, series, data)
+
+    def on_store(self, database, series, data):
+        pass
+

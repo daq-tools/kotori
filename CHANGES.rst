@@ -18,6 +18,7 @@ develop
     - add command line entrypoint “h2m-message” with “decode” and “info” actions
     - implement “h2m-message send”
     - lst main application component: receive, decode and store binary messages
+    - automatic Grafana dashboard- and panel creation
 
 
 2015-11-06 0.3.2

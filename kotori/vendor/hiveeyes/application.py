@@ -2,6 +2,7 @@
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import re
 from bunch import Bunch
+from ConfigParser import ConfigParser
 from twisted.logger import Logger
 from kotori.daq.application.beradio import BERadioNetworkApplication
 from kotori.daq.graphing.grafana import GrafanaManager
@@ -22,10 +23,22 @@ class HiveeyesApplication(BERadioNetworkApplication):
         self.subscriptions = [self.realm + '/#']
 
         # grafana setup
-        self.graphing = HiveeyesGrafanaManager(self.config)
+        self.graphing = HiveeyesGrafanaManager(self.config_dict())
 
         # generic setup
         self.setup()
+
+    def config_dict(self):
+        # serialize section-based ConfigParser contents into nested dict
+        # TODO: refactor
+        if isinstance(self.config, ConfigParser):
+            config = {}
+            for section in self.config.sections():
+                config[section] = dict(self.config.items(section))
+            return config
+
+        else:
+            return self.config
 
 
     def topic_to_topology(self, topic):
@@ -57,7 +70,7 @@ class HiveeyesApplication(BERadioNetworkApplication):
 
 class HiveeyesGrafanaManager(GrafanaManager):
 
-    def panel_generator(self, data):
+    def panel_generator(self, database, series, data):
         # generate panels
         panels = []
         if 'temp1' in data:
