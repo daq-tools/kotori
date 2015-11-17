@@ -199,13 +199,10 @@ class BusInfluxForwarder(object):
 
         data = self.store_encode(data)
 
-        if not 'port' in self.config['influxdb']:
-            self.config['influxdb']['port'] = '8086'
-
         influx = InfluxDBAdapter(
             version  = self.config['influxdb']['version'],
             host     = self.config['influxdb']['host'],
-            port     = int(self.config['influxdb']['port']),
+            port     = int(self.config['influxdb'].get('port', '8086')),
             username = self.config['influxdb']['username'],
             password = self.config['influxdb']['password'],
             database = database)

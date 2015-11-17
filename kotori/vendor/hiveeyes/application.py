@@ -70,7 +70,7 @@ class HiveeyesApplication(BERadioNetworkApplication):
 
 class HiveeyesGrafanaManager(GrafanaManager):
 
-    def panel_generator(self, database, series, data):
+    def panel_generator(self, database, series, data, topology):
         # generate panels
         panels = []
         if 'temp1' in data:
@@ -81,6 +81,18 @@ class HiveeyesGrafanaManager(GrafanaManager):
             panels.append({'title': 'weight',    'fieldnames': self.collect_fields(data, 'wght'), 'label': 'kg'})
 
         return panels
+
+    def row_title(self, database, series, topology):
+        if 'node' in topology and 'gateway' in topology:
+            row_title = self.panel_title_suffix(database, series, topology)
+            if 'network' in topology:
+                row_title += ',net={network}'.format(**topology)
+            return row_title
+
+    def panel_title_suffix(self, database, series, topology):
+        if 'node' in topology and 'gateway' in topology:
+            return 'node={node},gw={gateway}'.format(**topology)
+
 
 
 def hiveeyes_boot(config, debug=False):
