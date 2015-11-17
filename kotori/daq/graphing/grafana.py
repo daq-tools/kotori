@@ -255,7 +255,7 @@ class GrafanaManager(object):
             "type":     "influxdb",
             "url":      "http://{host}:{port}/".format(
                 host=self.config['influxdb']['host'],
-                port=self.config['influxdb']['port']),
+                port=int(self.config['influxdb'].get('port', '8086'))),
             "database": database,
             # TODO: improve multi-tenancy / per-user isolation by using distinct credentials for each user
             "user":     self.config['influxdb']['username'],
@@ -270,22 +270,19 @@ class GrafanaManager(object):
         dashboard = GrafanaDashboard(datasource=database, title=database, dashboard=dashboard_data)
 
         # generate panels
-        panels_new = self.panel_generator(database, series, data)
+        panels_new = self.panel_generator(database=database, series=series, data=data, topology=topology)
+
+        # get labels for titles
+        row_title = self.row_title(database, series, topology)
+        panel_title_suffix = self.panel_title_suffix(database, series, topology)
 
         # create whole dashboard with all panels
         if not dashboard_data:
 
-            if 'node' in topology and 'gateway' in topology:
-                panel_title_suffix = 'node={node},gw={gateway}'.format(**topology)
-                row_title = panel_title_suffix
-                if 'network' in topology:
-                    row_title += ',net={network}'.format(**topology)
-                dashboard.build(measurement=series, row_title=row_title, panel_title_suffix=panel_title_suffix, panels=panels_new)
-            else:
-                row_title = database
-                dashboard.build(measurement=series, row_title=row_title, panels=panels_new)
+            # build dashboard
+            dashboard.build(measurement=series, row_title=row_title, panel_title_suffix=panel_title_suffix, panels=panels_new)
 
-            # create new dashboard
+            # create dashboard
             grafana.create_dashboard(dashboard, name=database)
 
         # update existing dashboard, only with new panels
@@ -298,14 +295,12 @@ class GrafanaManager(object):
             panels_new_titles = [panel['title'] for panel in panels_new]
             panels_missing_titles = set(panels_new_titles) - set(panels_exists_titles)
 
+            logger.info('panels_exists_titles: {}'.format(panels_exists_titles))
+            logger.info('panels_new_titles:    {}'.format(panels_new_titles))
+
             if panels_missing_titles:
 
                 logger.info('Adding missing panels {}'.format(panels_missing_titles))
-
-                # propagate title suffix
-                panel_title_suffix = None
-                if 'node' in topology and 'gateway' in topology:
-                    panel_title_suffix = 'node={node},gw={gateway}'.format(**topology)
 
                 # establish new panels
                 for panel in panels_new:
@@ -323,10 +318,26 @@ class GrafanaManager(object):
         # remember dashboard/panel creation for this kind of data inflow
         self._signal_creation(database, series, data)
 
+    def row_title(self, database, series, topology):
+        return database
 
-    def panel_generator(self, data):
-        raise NotImplementedError()
+    def panel_title_suffix(self, database, series, topology):
+        return ''
 
+    def panel_generator(self, database, series, data, topology):
+        #print 'panel_generator, series: {}, data: {}'.format(series, data)
+
+        # blacklist fields
+        # _hex_ is from intercom.c
+        # time is from  intercom.mqtt
+        field_blacklist = ['_hex_', 'time']
+        fieldnames = [key for key in data.keys() if key not in field_blacklist]
+
+        # generate panels
+        panels = []
+        panels.append({'title': series,  'fieldnames': fieldnames})
+
+        return panels
 
     # field name collection helper
     @staticmethod

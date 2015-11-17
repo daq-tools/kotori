@@ -79,7 +79,7 @@ class InfluxStorage(BusInfluxForwarder):
 
         # grafana setup
         try:
-            self.graphing = GraphingManager(self.config)
+            self.graphing = GrafanaManager(self.config)
         except Exception as ex:
             logger.error(slm("{ex}, args={args!s}\n{details}\n{traceback}".format(
                 ex=ex, args=args, details=traceback_get_exception(), traceback=last_error_and_traceback())))
@@ -125,22 +125,6 @@ class StorageAdapter(object):
         logger.info('Starting InfluxStorage')
         topic = unicode(self.config['lst-h2m']['wamp_topic'])
         InfluxStorage(bus=self.bus, topic=topic, config=self.config)
-
-
-
-class GraphingManager(GrafanaManager):
-
-    def panel_generator(self, database, series, data):
-        print 'panel_generator, series: {}, data: {}'.format(series, data)
-
-        fieldnames = [key for key in data.keys() if key not in ['_hex_']]
-
-        # generate panels
-        panels = []
-        panels.append({'title': series,  'fieldnames': fieldnames})
-
-        return panels
-
 
 
 class UdpSession(WampSession):
