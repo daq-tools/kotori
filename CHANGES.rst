@@ -20,6 +20,7 @@ develop
     - lst main application component: receive, decode and store binary messages
     - automatic Grafana dashboard- and panel creation
 - fix panel generation for vendor hiveeyes
+- use nanosecond time precision with InfluxDB
 
 
 2015-11-06 0.3.2
