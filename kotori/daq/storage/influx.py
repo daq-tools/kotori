@@ -104,7 +104,7 @@ class InfluxDBAdapter(object):
             else:
                 raise ValueError('Unknown InfluxDB protocol version "{}"'.format(self.version))
 
-            success = self.influx.write_points([chunk])
+            success = self.influx.write_points([chunk], time_precision='n')
             if success:
                 logger.info("Storing measurement succeeded: {}".format(slm(chunk)))
             else:
