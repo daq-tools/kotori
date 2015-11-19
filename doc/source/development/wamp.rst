@@ -2,6 +2,13 @@
 WAMP Protocol
 #############
 
+News
+----
+September/October 2015: WAMP becomes IETF Draft:
+- https://tools.ietf.org/html/draft-oberstet-hybi-tavendo-wamp-02
+
+Misc Links
+----------
 - http://autobahn.ws/js/tutorial.html
 - https://xkcd.com/927/
 - https://github.com/oberstet/wsperf_results

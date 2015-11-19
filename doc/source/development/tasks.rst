@@ -7,13 +7,9 @@ LST
 
 Prio 1
 ------
-- [o] The order of fields provisioned into Grafana panel is wrong due to unordered-dict-republishing on Bus
-      Example: "03_cap_w" has voltage_low, voltage_mid, voltage_load, voltage_max, ...
-               but "voltage_load" should be after the other three!
-      Solution: Either publish something self-contained to the Bus which reflects the very order,
-                or add some bookkeeping (a struct->fieldname registry) at the decoding level,
-                where order is correct. Reuse this information when creating the Grafana stuff.
 - [o] kotori.daq.intercom.c should perform the compilation step for getting a msglib.so out of a msglib.h
+- [o] Use cffi instead of pyclibrary, see https://cffi.readthedocs.org/en/latest/using.html#working-with-pointers-structures-and-arrays
+- [o] Establish mechanism to reset Grafana Dashboard creation state, the "GrafanaManager.skip_cache"
 
 Prio 2
 ------
@@ -23,7 +19,6 @@ Prio 2
 - [o] Generate HTML overview of all message struct schemas using tabulate
 - [o] Console based message receiver and decoder
 - [o] Properly implement checksumming, honor field ``ck``
-- [o] Use cffi instead of pyclibrary, see https://cffi.readthedocs.org/en/latest/using.html#working-with-pointers-structures-and-arrays
 
 Done
 ----
@@ -31,6 +26,13 @@ Done
 - [x] Publish docs to https://docs.elmyra.de/isar-engineering/kotori/
 - [x] Proper commandline interface for encoding and decoding message structs à la ``beradio``
 - [x] Publish docs to http://isarengineering.de/docs/kotori/
+- [x] The order of fields provisioned into Grafana panel is wrong due to unordered-dict-republishing on Bus
+      Example: "03_cap_w" has "voltage_low, voltage_mid, voltage_load, voltage_max, ..."
+               but should be  "voltage_low, voltage_mid, voltage_max, voltage_load, ..."
+      Proposal: Either publish something self-contained to the Bus which reflects the very order,
+                or add some bookkeeping (a struct->fieldname registry) at the decoding level,
+                where order is correct. Reuse this information when creating the Grafana stuff.
+      Solution: Send data as list of lists to the WAMP bus.
 
 
 Hiveeyes
