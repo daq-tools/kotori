@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+import types
 import requests
-from kotori.util import slm
+from collections import OrderedDict
 from twisted.logger import Logger
+from kotori.util import slm
 from kotori.errors import last_error_and_traceback
 
 logger = Logger()
@@ -177,9 +179,13 @@ class BusInfluxForwarder(object):
 
         # TODO: filter by realm/topic
 
-        # decode message from json format
-        #message = json.loads(payload)
-        message = payload
+        # decode message
+        if type(payload) is types.DictionaryType:
+            message = payload.copy()
+        elif type(payload) is types.ListType:
+            message = OrderedDict(payload)
+        else:
+            raise TypeError('Unable to handle data type "{}" from bus'.format(type(payload)))
 
         # compute storage location from topic and message
         storage_location = self.storage_location(message)

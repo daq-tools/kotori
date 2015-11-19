@@ -61,12 +61,14 @@ class UDPReceiver(object):
         """
         Mungle decoded message before publishing to software bus, add two more fields:
         - ``_name_``: name of the struct
-        - ``_hex_``: raw message encoded in hex
+        - ``_hex_``:  raw message payload encoded in hex
         """
         data = self.messenger.to_dict(struct)
         data['_name_'] = struct._name_()
         data['_hex_'] = hexlify(struct._dump_())
-        return data
+        # bus message should be a list of tuples to keep field order
+        data_bus = data.items()
+        return data_bus
 
 
 class InfluxStorage(BusInfluxForwarder):
@@ -99,7 +101,6 @@ class InfluxStorage(BusInfluxForwarder):
         """
         Filter designated fields from message payload before storing into database
         """
-        data = data.copy()
         blacklist_full  = ['_name_', '_hex_', 'ID', 'length', 'ck']
         blacklist_medium  = ['_name_', 'ID', 'length', 'ck']
         blacklist_minor = ['_name_', 'ID']
