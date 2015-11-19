@@ -7,8 +7,8 @@ Kotori README
 *Kotori* is a multi-channel, multi-protocol data acquisition and graphing toolkit based on
 InfluxDB_, Grafana_, Mosquitto_, Twisted_ and Autobahn_.
 
-Being a convenient component for building telemetry solutions and test benches, it addresses different aspects of collecting
-and storing sensor data from a multitude of data sources and devices.
+It is a convenient component for building telemetry solutions and test benches addressing different
+aspects of collecting and storing sensor data from a multitude of data sources and devices.
 
 
 The framework design has two audiences in mind.
