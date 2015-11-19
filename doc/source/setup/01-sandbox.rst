@@ -1,6 +1,6 @@
-========================
-Kotori DAQ sandbox setup
-========================
+===================
+Development Sandbox
+===================
 
 Global python packages
 ----------------------

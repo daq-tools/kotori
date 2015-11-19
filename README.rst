@@ -1,3 +1,5 @@
+.. include:: _resources.rst
+
 =============
 Kotori README
 =============
@@ -25,6 +27,7 @@ For developers
 --------------
 Ingest and distribute data between multiple publishers and subscribers across
 different devices using the underpinning software bus systems based on
+
     - MQTT_, the *MQ Telemetry Transport* connectivity protocol.
     - WAMP_, the *Web Application Messaging Protocol*, in turn based on WebSockets_.
 
@@ -33,13 +36,3 @@ to implement custom software components.
 Accept new protocols, write adapters, decoders and handlers for specific devices, data formats
 and databases.
 
-
-
-.. _InfluxDB: https://influxdb.com/
-.. _Grafana: http://grafana.org/
-.. _Twisted: https://twistedmatrix.com/
-.. _WebSockets: https://tools.ietf.org/html/rfc6455
-.. _WAMP: http://wamp.ws/
-.. _MQTT: http://mqtt.org/
-.. _Mosquitto: http://mosquitto.org/
-.. _Autobahn: http://autobahn.ws/

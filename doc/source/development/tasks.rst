@@ -19,9 +19,11 @@ Prio 2
 ------
 - [o] Intro to the H2M scenario with pictures, drawing, source code (header file) and nice Grafana graph
 - [o] Flexible pretending UDP sender programs for generating and sending message struct payloads
+- [o] Waveform publishers
 - [o] Generate HTML overview of all message struct schemas using tabulate
 - [o] Console based message receiver and decoder
 - [o] Properly implement checksumming, honor field ``ck``
+- [o] Use cffi instead of pyclibrary, see https://cffi.readthedocs.org/en/latest/using.html#working-with-pointers-structures-and-arrays
 
 Done
 ----
@@ -33,6 +35,19 @@ Done
 
 Hiveeyes
 ========
+
+Prio 1
+------
+- [x] Fix dashboard creation
+- [o] Don't always do CREATE DATABASE hiveeyes_3733a169_70d2_450b_b717_6f002a13716b
+      see: root@elbanco:~# tail -f /var/log/influxdb/influxd.log
+- [o] Receive timestamp from MQTT and use this one
+    - InfluxDB sends "2015-11-14T16:29:42.157025953Z" when accessed via HTTP
+    - Timestamps must be in Unix time and are assumed to be in nanoseconds,
+      see https://influxdb.com/docs/v0.9/write_protocols/write_syntax.html
+- [o] Use UDP for sending measurement points to InfluxDB:
+      cli = InfluxDBClient.from_DSN('udp+influxdb://username:pass@localhost:8086/databasename', timeout=5, udp_port=159)
+
 
 Prio 2
 ------
@@ -89,7 +104,9 @@ Prio 3
 ------
 - [o] send dates in messages
 - [o] notifications: Pushover- and SMS-integration
-
+- [o] check realtime things
+    - scope
+    - livefft: https://github.com/ricklupton/livefft
 
 
 -----------
@@ -99,7 +116,7 @@ Milestone 1
 - realtime scope views: embed grafana Graphs or render directly e.g. using Rickshaw.js?
     - http://docs.grafana.org/v2.0/reference/sharing/
     - https://github.com/grafana/grafana/issues/1622
-
+    - https://github.com/ricklupton/livefft
 
 -----------
 Milestone 2

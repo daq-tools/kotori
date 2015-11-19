@@ -1,13 +1,10 @@
-=============
-Grafana setup
-=============
+=======
+Grafana
+=======
 
 Howtos
 ======
-- https://influxdb.com/docs/v0.8/ui/grafana.html
-- https://influxdb.com/docs/v0.9/tools/grafana.html
 - http://docs.grafana.org/datasources/influxdb/
-- http://www.rittmanmead.com/2015/02/obiee-monitoring-and-diagnostics-with-influxdb-and-grafana/
 
 
 Configuration
@@ -61,10 +58,3 @@ Or by importing:
 View Dashboard:
 
 - http://192.168.59.103:3000/dashboard/db/kotori
-
-
-Send some testing data
-----------------------
-::
-
-    h2m-udp-sender
