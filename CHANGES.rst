@@ -22,6 +22,7 @@ develop
 - fix panel generation for vendor hiveeyes
 - use nanosecond time precision with InfluxDB
 - lst: honour struct field order in Grafana
+- add more details to Grafana dashboard panels
 
 
 2015-11-06 0.3.2
