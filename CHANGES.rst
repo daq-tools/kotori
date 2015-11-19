@@ -21,6 +21,7 @@ develop
     - automatic Grafana dashboard- and panel creation
 - fix panel generation for vendor hiveeyes
 - use nanosecond time precision with InfluxDB
+- lst: honour struct field order in Grafana
 
 
 2015-11-06 0.3.2
