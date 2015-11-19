@@ -23,14 +23,14 @@
     "legend": {
         "alignAsTable": true,
         "avg": false,
-        "current": false,
+        "current": true,
         "hideEmpty": false,
-        "max": false,
-        "min": false,
+        "max": true,
+        "min": true,
         "rightSide": true,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
     },
     "lines": true,
     "linewidth": 2,

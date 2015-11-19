@@ -16,7 +16,8 @@
             "panels": [
                 {{ panels }}
             ],
-            "title": "{{ row_title }}"
+            "title": "{{ row_title }}",
+            "showTitle": true
         }
     ],
     "nav": [
