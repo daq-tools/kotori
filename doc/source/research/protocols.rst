@@ -1,0 +1,18 @@
+#########
+Protocols
+#########
+
+CoAP
+====
+- https://github.com/siskin/txThings
+- http://www.sixpinetrees.pl/2013/09/txthings-good-enough-is-good-enough.html
+- https://github.com/exosite-garage/CoAPExample
+- https://github.com/exosite-garage/CoAPExample/blob/master/example_client_read.py
+- https://github.com/exosite-garage/CoAPExample/blob/master/example_client_write.py
+- https://github.com/exosite-garage/CoAPExample/blob/master/coap.py
+- https://github.com/exosite-garage/PicoCoAP/blob/master/tests/coap_test.c
+
+Misc
+====
+- http://playground.arduino.cc/Main/LibraryList#Comm
+- OWFS: http://www.cupidcontrols.com/2014/01/owfs-owserver-owhttp-owpython-and-a-little-1wire-pi/

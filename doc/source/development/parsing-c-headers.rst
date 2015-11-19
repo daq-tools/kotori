@@ -2,7 +2,6 @@
 Parsing C headers
 =================
 
-
 - https://pypi.python.org/pypi/pyclibrary
 - https://pyclibrary.readthedocs.org/
 

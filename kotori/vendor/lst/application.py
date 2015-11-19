@@ -116,7 +116,7 @@ class InfluxStorage(BusInfluxForwarder):
 
 class StorageAdapter(object):
     """
-    Encapsulate receiving messages from software bus, mungling and storing into InfluxDB
+    Encapsulation for receiving messages from software bus, mungling and storing into InfluxDB
     """
 
     def __init__(self, bus, config):

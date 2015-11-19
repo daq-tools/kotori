@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 requires = [
     'setuptools>=18.3.1',   # setuptools>=18.3.1 is required by set(['crossbar'])
-    'pyasn1==0.1.9',
+    'pyasn1==0.1.9',        # required by service-identity
     'Twisted==15.4.0',
     'autobahn==0.10.9',
     'crossbar==0.11.1',

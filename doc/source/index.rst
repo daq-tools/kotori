@@ -3,6 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. include:: _resources.rst
+
 Welcome to Kotori!
 ==================
 
@@ -11,12 +13,6 @@ InfluxDB_, Grafana_, Mosquitto_, Twisted_ and Autobahn_.
 
 Being a convenient component for building telemetry solutions and test benches, it addresses different aspects of collecting
 and storing sensor data from a multitude of data sources and devices.
-
-.. _InfluxDB: https://influxdb.com/
-.. _Grafana: http://grafana.org/
-.. _Twisted: https://twistedmatrix.com/
-.. _Mosquitto: http://mosquitto.org/
-.. _Autobahn: http://autobahn.ws/
 
 
 About
@@ -48,6 +44,16 @@ Setup
     setup/*
 
 
+Handbooks
+---------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    handbook/*
+
+
 Development
 -----------
 
@@ -57,6 +63,16 @@ Development
 
     development/index
     changes
+
+
+Research
+--------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    research/index
 
 
 Indices and tables

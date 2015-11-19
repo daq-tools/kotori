@@ -1,6 +1,9 @@
-=======================
-Kotori DAQ Debian setup
-=======================
+================
+Production setup
+================
+
+This is currently Debian-only.
+
 
 System level packages
 ---------------------

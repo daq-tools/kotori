@@ -45,3 +45,4 @@ Query database
 
     $ mongo kotori
     > db.telemetry.find()
+
