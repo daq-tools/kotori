@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import os
+import sys
 import logging
 from collections import OrderedDict
 from cornice.util import to_list
@@ -206,7 +207,11 @@ class StructRegistry(object):
         return self.structs[name]
 
     def get_by_id(self, struct_id):
-        return self.structs_by_id[struct_id]
+        try:
+            return self.structs_by_id[struct_id]
+        except KeyError:
+            logger.error('Struct with id {} ({}) not registered'.format(struct_id, hex(struct_id)))
+            sys.exit(1)
 
     def create(self, name, **attributes):
         return self.get(name).create(**attributes)
