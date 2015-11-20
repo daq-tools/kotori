@@ -7,8 +7,6 @@ LST
 
 Prio 1
 ------
-- [o] kotori.daq.intercom.c should perform the compilation step for getting a msglib.so out of a msglib.h
-- [o] Use cffi instead of pyclibrary, see https://cffi.readthedocs.org/en/latest/using.html#working-with-pointers-structures-and-arrays
 - [o] Establish mechanism to reset Grafana Dashboard creation state, the "GrafanaManager.skip_cache"
 
 Prio 2
@@ -19,6 +17,10 @@ Prio 2
 - [o] Generate HTML overview of all message struct schemas using tabulate
 - [o] Console based message receiver and decoder
 - [o] Properly implement checksumming, honor field ``ck``
+
+Prio 3
+------
+- [o] Maybe use cffi instead of pyclibrary, see https://cffi.readthedocs.org/en/latest/using.html#working-with-pointers-structures-and-arrays
 
 Done
 ----
@@ -33,6 +35,8 @@ Done
                 or add some bookkeeping (a struct->fieldname registry) at the decoding level,
                 where order is correct. Reuse this information when creating the Grafana stuff.
       Solution: Send data as list of lists to the WAMP bus.
+- [x] kotori.daq.intercom.c should perform the compilation step for getting a msglib.so out of a msglib.h
+- [x] decouple main application from self.config['lst-h2m']
 
 
 Hiveeyes

@@ -20,7 +20,7 @@ from .version import __VERSION__
 
 __path__ = extend_path(__path__, __name__)
 
-APP_NAME = 'Kotori DAQ version ' + __VERSION__
+APP_NAME = 'Kotori version ' + __VERSION__
 __doc__ = APP_NAME + """
 
 Usage:
@@ -56,16 +56,7 @@ def run():
     log_level = 'debug' if debug else 'info'
     startLogging(sys.stdout, level=LogLevel.levelWithName(log_level))
 
-    configfile = options['--config']
-    config = ConfigParser()
-    success = config.read([configfile, os.path.expanduser('~/.kotori.ini')])
-    if success:
-        logger.info('Read configuration files: {}'.format(success))
-        #logger.info('config: {}'.format(config))
-    else:
-        msg = 'Could not read configuration file {}'.format(configfile)
-        logger.error(msg)
-        raise ValueError(msg)
+    config = get_configuration(options['--config'])
 
     # defaults
     websocket_uri = unicode(config.get('wamp', 'listen'))
@@ -119,6 +110,21 @@ def run():
 
     # now enter the Twisted reactor loop
     reactor.run()
+
+
+def get_configuration(configfile):
+    print 'configfile:', configfile
+    logger.info('configfile: {}'.format(configfile))
+    config = ConfigParser()
+    success = config.read([configfile, os.path.expanduser('~/.kotori.ini')])
+    if success:
+        logger.info('Read configuration files: {}'.format(success))
+        #logger.info('config: {}'.format(config))
+    else:
+        msg = 'Could not read configuration file {}'.format(configfile)
+        logger.error(msg)
+        raise ValueError(msg)
+    return config
 
 
 if __name__ == '__main__':

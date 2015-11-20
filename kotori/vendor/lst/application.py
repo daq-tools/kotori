@@ -2,16 +2,17 @@
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 from bunch import Bunch
 from binascii import hexlify
+from copy import deepcopy
 from twisted.logger import Logger
 from twisted.internet import reactor
-from kotori.util import slm
+from kotori.util import slm, configparser_to_dict
 from kotori.errors import traceback_get_exception, last_error_and_traceback
+from kotori.daq.intercom.c import LibraryAdapter, StructRegistryByID
 from kotori.daq.intercom.wamp import WampApplication, WampSession
 from kotori.daq.intercom.udp import UdpBusForwarder
 from kotori.daq.storage.influx import BusInfluxForwarder
 from kotori.daq.graphing.grafana import GrafanaManager
 from kotori.vendor.lst.message import BinaryMessageAdapter
-from kotori.vendor.lst.h2m.util import setup_h2m_structs
 
 logger = Logger()
 
@@ -29,17 +30,21 @@ class UDPReceiver(object):
         """
         self.bus = bus
         self.config = config
-        logger.info('Starting UDPReceiver')
-        # TODO: decouple hardcoded "setup_h2m_structs()"
-        self.messenger = BinaryMessageAdapter(struct_registry=setup_h2m_structs())
+
+        udp_port = int(self.config['_active_']['udp_port'])
+        logger.info('Starting UDPReceiver on port {}'.format(udp_port))
+
+        # create decoder adapter
+        self.messenger = setup_binary_message_adapter(self.config)
+
         self.run()
 
     def run(self):
         """
         Run forwarding component, which actually moves data between UDP and the software bus
         """
-        udp_port = int(self.config['lst-h2m']['udp_port'])
-        topic = unicode(self.config['lst-h2m']['wamp_topic'])
+        udp_port = int(self.config['_active_']['udp_port'])
+        topic = unicode(self.config['_active_']['wamp_topic'])
 
         logger.info('Starting udp adapter on port "{}", publishing to topic "{}"'.format(udp_port, topic))
         reactor.listenUDP(
@@ -124,7 +129,7 @@ class StorageAdapter(object):
         self.bus = bus
         self.config = config
         logger.info('Starting InfluxStorage')
-        topic = unicode(self.config['lst-h2m']['wamp_topic'])
+        topic = unicode(self.config['_active_']['wamp_topic'])
         InfluxStorage(bus=self.bus, topic=topic, config=self.config)
 
 
@@ -134,7 +139,36 @@ class UdpSession(WampSession):
 class StorageSession(WampSession):
     component = StorageAdapter
 
+
+def setup_binary_message_adapter(config):
+
+    # build and load library
+    library = LibraryAdapter.from_header(
+        include_path=config['_active_']['include_path'],
+        header_files=config['_active_']['header_files'].split(','))
+
+    # register structs
+    struct_registry = StructRegistryByID(library)
+
+    # wrap into decoder adapter
+    adapter = BinaryMessageAdapter(struct_registry=struct_registry)
+
+    return adapter
+
+
 def lst_boot(config, debug=False):
     wamp_uri = unicode(config.get('wamp', 'listen'))
-    WampApplication(url=wamp_uri, realm=u'lst', session_class=UdpSession, config=config).make()
-    WampApplication(url=wamp_uri, realm=u'lst', session_class=StorageSession, config=config).make()
+
+    # serialize section-based ConfigParser contents into nested dict
+    config = configparser_to_dict(config)
+
+    # activate/mount multiple "lst" applications
+    for application_name in config['lst']['applications'].split(','):
+        logger.info('Starting "lst" application "{}"'.format(application_name))
+        application = config[application_name]
+
+        config = deepcopy(config)
+        config['_active_'] = application
+
+        WampApplication(url=wamp_uri, realm=u'lst', session_class=UdpSession, config=config).make()
+        WampApplication(url=wamp_uri, realm=u'lst', session_class=StorageSession, config=config).make()

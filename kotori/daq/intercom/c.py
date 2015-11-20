@@ -2,20 +2,23 @@
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import os
 import sys
-import logging
 from collections import OrderedDict
 from cornice.util import to_list
 from pprint import pprint
 from binascii import hexlify
 from tabulate import tabulate
+from appdirs import user_cache_dir
+from pyclibrary.c_parser import CParser
 from ctypes import c_uint8, c_uint16, c_uint32, c_int8, c_int16, c_int32
 from pyclibrary import CLibrary, auto_init
 from pyclibrary.utils import add_header_locations, add_library_locations
+from twisted.logger import Logger
 from kotori.daq.intercom.pyclibrary_ext.c_parser import CParserEnhanced
 from kotori.daq.intercom.pyclibrary_ext.backend_ctypes import monkeypatch_pyclibrary_ctypes_struct
+from kotori.util import slm
 
-logger = logging.getLogger(__name__)
-
+#logger = logging.getLogger(__name__)
+logger = Logger()
 
 class LibraryAdapter(object):
 
@@ -42,11 +45,11 @@ class LibraryAdapter(object):
 
         # register header- and library paths
         # https://pyclibrary.readthedocs.org/en/latest/get_started/configuration.html#specifying-headers-and-libraries-locations
-        #curr_dir = os.path.dirname(__file__)
-        curr_dir = os.curdir
         # TODO: this probably acts on a global basis; think about it
-        add_header_locations([self.include_path])
-        add_library_locations([self.library_path])
+        if self.include_path:
+            add_header_locations([self.include_path])
+        if self.library_path:
+            add_library_locations([self.library_path])
 
         # define extra types suitable for embedded use
         types = {
@@ -57,7 +60,8 @@ class LibraryAdapter(object):
             'int16_t': c_int16,
             'int32_t': c_int32,
             }
-        auto_init(extra_types=types)
+        if not (CParser._init or CLibrary._init):
+            auto_init(extra_types=types)
 
     def parse(self):
         # use an improved CParser which can grok/skip more constructor flavours
@@ -68,6 +72,48 @@ class LibraryAdapter(object):
 
     def struct_names(self):
         return self.parser.defs['structs'].keys()
+
+    @classmethod
+    def from_header(cls, include_path=None, header_files=None):
+        cache_dir = user_cache_dir('lst', 'kotori')
+        if not os.path.isdir(cache_dir): os.makedirs(cache_dir)
+        library = LibraryAdapter(
+            header_files, cls.compile(include_path, header_files),
+            include_path=include_path, library_path=include_path,
+            cache_path=cache_dir)
+        return library
+
+    @classmethod
+    def compile(cls, include_path, header_files):
+        """
+        compiler := /opt/local/bin/g++-mp-5
+        cppflags := -std=c++11
+        define INCLUDE
+            -I.
+        endef
+        """
+        #$(compiler) $(cppflags) $(INCLUDE) -shared -fPIC -lm -o h2m_structs.so h2m_structs.h
+
+        library_file = header_files[0].rstrip('.h') + '.so'
+
+        library_file = os.path.join(include_path, library_file)
+        source_files = map(lambda header_file: os.path.join(include_path, header_file), header_files)
+
+        #command = 'g++ -I{include_path} -shared -fPIC -lm -o {library_file} {source_files}'.format(**locals())
+        source_files = ' '.join(source_files)
+
+        # TODO: make compiler configurable
+        command = '/opt/local/bin/g++-mp-5 -std=c++11 -shared -fPIC -lm -o {library_file} {source_files}'.format(**locals())
+
+        logger.info(slm('Compiling library: {}'.format(command)))
+        retval = os.system(command)
+        if retval == 0:
+            logger.info('Successfully compiled {}'.format(library_file))
+            return library_file
+        else:
+            msg = 'Failed compiling library {}'.format(library_file)
+            logger.error(msg)
+            raise ValueError(msg)
 
 
 class StructAdapter(object):

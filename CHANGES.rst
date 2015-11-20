@@ -24,6 +24,7 @@ develop
 - lst: honour struct field order in Grafana
 - add more details to Grafana dashboard panels
 - improve error messages “h2m-message send/decode”
+- generalize c library adapter
 
 
 2015-11-06 0.3.2
