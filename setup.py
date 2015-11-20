@@ -55,6 +55,7 @@ setup(name='kotori',
               'h2m-csv-udp-client  = kotori.vendor.hydro2motion.client:run_udp_client',
               'h2m-csv-udp-fuzzer  = kotori.vendor.hydro2motion.client:run_udp_fuzzer',
               'h2m-message         = kotori.vendor.lst.h2m.commands:h2m_message_cmd',
+              'sattracker-message  = kotori.vendor.lst.sattracker.commands:sattracker_message_cmd',
           ],
           'paste.app_factory': [
               'main = kotori.frontend.app:main',

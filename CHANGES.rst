@@ -4,6 +4,7 @@ Kotori CHANGES
 
 develop
 -------
+- add lst-sattracker application
 
 
 2015-11-20 0.4.0
