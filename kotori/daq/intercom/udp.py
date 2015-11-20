@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+from binascii import hexlify
 from cornice.util import to_list
 from twisted.logger import Logger
 from twisted.internet.protocol import DatagramProtocol
@@ -19,7 +20,7 @@ class UdpBusForwarder(DatagramProtocol):
 
     @inlineCallbacks
     def datagramReceived(self, data, (host, port)):
-        logger.info("Received via UDP from %s:%d: %r " % (host, port, data))
+        logger.info("Received via UDP from %s:%d: %r " % (host, port, hexlify(data)))
 
         # ECHO
         #self.transport.write(data, (host, port))
