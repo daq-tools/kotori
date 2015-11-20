@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 from tabulate import tabulate
-from kotori.vendor.lst.h2m.util import setup_h2m_structs, setup_logging
+from kotori.vendor.lst.commands import setup_logging
+from kotori.vendor.lst.h2m.util import setup_h2m_structs
 import os
 import sys
 import logging

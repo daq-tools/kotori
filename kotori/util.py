@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2014,2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+from ConfigParser import ConfigParser
 import os
 import sys
 import logging
@@ -102,3 +103,14 @@ class NodeId(Singleton):
 
 def get_hostname():
     return socket.gethostname()
+
+
+def configparser_to_dict(config):
+    # serialize section-based ConfigParser contents into nested dict
+    if isinstance(config, ConfigParser):
+        config_dict = {}
+        for section in config.sections():
+            config_dict[section] = dict(config.items(section))
+        return config_dict
+    else:
+        return config

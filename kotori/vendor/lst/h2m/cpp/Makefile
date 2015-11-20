@@ -28,5 +28,5 @@ server:
 
 
 lib:
-	$(compiler) $(cppflags) $(INCLUDE) -shared -o h2m_structs.so -fPIC h2m_structs.cpp
+	$(compiler) $(cppflags) $(INCLUDE) -shared -fPIC -lm -o h2m_structs.so h2m_structs.h
 

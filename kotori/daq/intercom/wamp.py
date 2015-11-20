@@ -2,7 +2,9 @@
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 from ConfigParser import ConfigParser
 import sys
+from kotori.errors import traceback_get_exception, last_error_and_traceback
 from kotori.logger import startLogging
+from kotori.util import configparser_to_dict
 from twisted.logger import Logger
 from twisted.internet import reactor
 from autobahn.twisted.wamp import ApplicationRunner, ApplicationSession
@@ -24,8 +26,11 @@ class WampSession(ApplicationSession):
 
     def onJoin(self, details):
         logger.info("WAMP session joined: {}".format(details))
-        if self.component:
-            self.component(bus=self, config=self.config.extra)
+        try:
+            if self.component:
+                self.component(bus=self, config=self.config.extra)
+        except Exception as ex:
+            logger.error(last_error_and_traceback())
 
     def onDisconnect(self):
         logger.info("WAMP session disconnected")
@@ -43,11 +48,7 @@ class WampApplication(object):
         self.config = config
 
         # serialize section-based ConfigParser contents into nested dict
-        if isinstance(self.config, ConfigParser):
-            config = {}
-            for section in self.config.sections():
-                config[section] = dict(self.config.items(section))
-            self.config = config
+        self.config = configparser_to_dict(self.config)
 
     def make(self):
 
@@ -58,8 +59,8 @@ class WampApplication(object):
         self.deferred = self.runner.run(self.session_class, start_reactor=False)
 
         def croak(ex, *args):
-            logger.error('Problem in {name}, please also check if "crossbar" WAMP broker is running at {wsuri}'.format(
-                name=self.__class__.__name__, wsuri=wsuri))
+            logger.error('Problem in {name}, please check if "crossbar" WAMP broker is running. args={args}'.format(
+                name=self.__class__.__name__, args=args))
             logger.error("{ex}, args={args!s}", ex=ex.getTraceback(), args=args)
             reactor.stop()
             raise ex
