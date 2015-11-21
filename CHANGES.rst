@@ -6,6 +6,7 @@ develop
 -------
 - add lst-sattracker application
 
+.. _v0.4.0:
 
 2015-11-20 0.4.0
 ----------------
