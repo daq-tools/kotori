@@ -17,7 +17,18 @@ Sympy
 ::
 
     from sympy import sympify
-    sympify('sin(x)').subs({'x': 2}).evalf()
+
+    # simple math
+    sympify('x + 40').subs({'x': 2}).evalf()
+    42.0000000000000
+
+    # derivatives
+    sympify('diff(cos(x), x)').subs({'x': 42}).evalf()
+    0.916521547915634
+
+    # integrals
+    sympify('integrate(sin(x), x)').subs({'x': 42}).evalf()
+    0.399985314988351
 
 
 Suitable
