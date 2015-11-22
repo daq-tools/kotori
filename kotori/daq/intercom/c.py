@@ -428,12 +428,15 @@ class StructRegistry(object):
         return d
 
     @classmethod
-    def pprint(cls, struct, format='pprint'):
+    def pprint(cls, struct, data=None, format='pprint'):
         # TODO: maybe refactor to struct._pprint_
         name = struct._name_()
         payload = struct._dump_()
         payload_hex = hexlify(payload)
-        payload_data = list(cls.to_dict(struct).items())
+        if data:
+            payload_data = list(data.items())
+        else:
+            payload_data = list(cls.to_dict(struct).items())
 
         if format == 'pprint':
             print 'name:', name

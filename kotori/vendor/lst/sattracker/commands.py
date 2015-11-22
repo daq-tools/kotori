@@ -16,6 +16,7 @@ def sattracker_message_cmd():
     """
     Usage:
       sattracker-message decode <payload> [--debug]
+      sattracker-message transform <payload> [--debug]
       sattracker-message send   <payload> --target=udp://localhost:8888
       sattracker-message info   <name>    [--debug]
       sattracker-message --version
