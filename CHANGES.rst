@@ -9,6 +9,7 @@ develop
 - lst: augment c source file before compilation re. ``#include "mbed.h"`` vs. ``#include "stdint.h"``
 - lst: parse transformation rules from source code annotation
 - lst: apply transformation rules before publishing to software bus
+- fix grafana dashboard update when having no panels
 
 
 .. _v0.4.0:
