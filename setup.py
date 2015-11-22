@@ -23,6 +23,7 @@ requires = [
     'pyclibrary==0.1.2',
     #'cffi==1.3.1',
     'tabulate==0.7.5',
+    'msgpack-python==0.4.6',
 ]
 
 setup(name='kotori',

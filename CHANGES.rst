@@ -5,6 +5,7 @@ Kotori CHANGES
 develop
 -------
 - add lst-sattracker application
+- fix WAMP serialization error when publishing binary data (e.g. "char 0x9c") by using MsgPack serialization
 
 .. _v0.4.0:
 
