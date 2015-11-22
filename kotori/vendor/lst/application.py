@@ -68,7 +68,13 @@ class UDPReceiver(object):
         - ``_name_``: name of the struct
         - ``_hex_``:  raw message payload encoded in hex
         """
-        data = self.messenger.to_dict(struct)
+
+        # plain
+        #data = self.messenger.to_dict(struct)
+
+        # with transformation rules
+        data = self.messenger.transform(struct)
+
         data['_name_'] = struct._name_()
         data['_hex_'] = hexlify(struct._dump_())
         # bus message should be a list of tuples to keep field order

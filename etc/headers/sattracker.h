@@ -11,6 +11,6 @@ typedef struct struct_position         // added 06.03.2014 C.L.
     uint8_t  ID     = 1         ;//2
     uint16_t flag_1             ;//4
     int16_t  hdg                ;//6        /* @rule: name=heading; expr=hdg * 20; unit=degrees */
-    int16_t  pitch              ;//8        // @rule: name=pitch;expr=hdg * 20;unit=degrees
+    int16_t  pitch              ;//8        // @rule: name=pitch;expr=pitch * 10;unit=degrees
     char     ck                 ;//9
 } Tstruct_prog;

@@ -1,26 +1,27 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+import sys
 import socket
 import logging
 from binascii import unhexlify
-import sys
 from urlparse import urlparse
+from pprint import pprint
 
 logger = logging.getLogger(__name__)
 
 def lst_message(adapter, options):
 
     target = options.get('--target')
+    payload_ascii = options.get('<payload>')
 
     if options.get('decode'):
-        payload = options.get('<payload>')
-
-        # decode from 8-bit clean hex format, e.g. ``0x05022a0021``
-        payload = decode_payload(payload)
-
-        # decode binary message
-        struct = adapter.decode(payload)
+        struct = decode_payload(adapter, payload_ascii)
         adapter.pprint(struct)
+
+    elif options.get('transform'):
+        struct = decode_payload(adapter, payload_ascii)
+        data = adapter.transform(struct)
+        adapter.pprint(struct, data=data)
 
     elif options.get('info'):
         name = options.get('<name>')
@@ -31,13 +32,7 @@ def lst_message(adapter, options):
         uri = urlparse(target)
         if uri.scheme == 'udp':
 
-            payload_ascii = options.get('<payload>')
-
-            # decode from 8-bit clean hex format, e.g. ``0x05022a0021``
-            payload = decode_payload(payload_ascii)
-
-            # decode binary message
-            struct = adapter.decode(payload)
+            struct = decode_payload(adapter, payload_ascii)
             #messenger.pprint(struct)
 
             # send message via UDP
@@ -50,7 +45,7 @@ def lst_message(adapter, options):
             raise ValueError('Can not send message to target "{}", unknown protocol "{}"'.format(target, uri.scheme))
 
 
-def decode_payload(payload):
+def read_payload(payload):
     # decode data payload from 8-bit clean hex format, e.g. ``0x05022a0021``
     logger.debug('Decoding payload "{}"'.format(payload))
     if payload.startswith('0x'):
@@ -60,6 +55,17 @@ def decode_payload(payload):
         raise ValueError('Can not decode "{}"'.format(payload))
 
     return payload
+
+
+def decode_payload(adapter, payload_ascii):
+
+    # decode from 8-bit clean hex format, e.g. ``0x05022a0021``
+    payload = read_payload(payload_ascii)
+
+    # decode binary message
+    struct = adapter.decode(payload)
+
+    return struct
 
 
 def setup_logging(level=logging.INFO):

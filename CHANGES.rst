@@ -8,6 +8,7 @@ develop
 - fix WAMP serialization error when publishing binary data (e.g. "char 0x9c") by using MsgPack serialization
 - augment c source file before compilation re. ``#include "mbed.h"`` vs. ``#include "stdint.h"``
 - lst: parse transformation rules from source code annotation
+- lst: apply transformation rules before publishing to software bus
 
 
 .. _v0.4.0:
