@@ -60,6 +60,8 @@ class LibraryAdapter(object):
             'int16_t': c_int16,
             'int32_t': c_int32,
             }
+
+        # TODO: this probably acts on a global basis; think about it
         if not (CParser._init or CLibrary._init):
             auto_init(extra_types=types)
 

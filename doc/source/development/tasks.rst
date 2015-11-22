@@ -11,42 +11,6 @@ Showstoppers
 Besides making it work in approx. 30 min. on the first hand (cheers!), there are some remaining issues making the wash&go usage
 of Kotori somehow inconvenient in day-to-day business. Let's fix them!
 
-- [o] unsanitized log output exception::
-
-    2015-11-20T16:56:57+0100 [kotori.daq.storage.influx        ] INFO: Storage location:  {'series': '01_position', 'database': u'edu_hm_lst_sattracker'}
-    2015-11-20T16:56:57+0100 [kotori.daq.storage.influx        ] ERROR: InfluxDBClientError: 401: {"error":"user not found"}
-    2015-11-20T16:56:57+0100 [kotori.daq.storage.influx        ] ERROR: Unable to format event {'log_namespace': 'kotori.daq.storage.influx', 'log_level': <LogLevel=error>, 'log_logger': <Logger 'kotori.daq.storage.influx'>, 'log_time': 1448035017.722721, 'log_source': None, 'log_format': 'Processing Bus message failed: 401: {"error":"user not found"}\nERROR: InfluxDBClientError: 401: {{"error":"user not found"}}\n\n------------------------------------------------------------\nEntry point:\nFilename:    /home/basti/kotori/kotori/daq/storage/influx.py\nLine number: 171\nFunction:    bus_receive\nCode:        return self.process_message(self.topic, payload)\n------------------------------------------------------------\nSource of exception:\nFilename:    /home/basti/kotori/.venv27/local/lib/python2.7/site-packages/influxdb-2.9.2-py2.7.egg/influxdb/client.py\nLine number: 247\nFunction:    request\nCode:        raise InfluxDBClientError(response.content, response.status_code)\n\nTraceback (most recent call last):\n  File "/home/basti/kotori/kotori/daq/storage/influx.py", line 171, in bus_receive\n    return self.process_message(self.topic, payload)\n  File "/home/basti/kotori/kotori/daq/storage/influx.py", line 195, in process_message\n    self.store_mes
-
-- [o] non-ascii "char" value can't be published to WAMP Bus
-
-    send message::
-
-        sattracker-message send 0x09010000fe0621019c --target=udp://localhost:8889
-
-    exception::
-
-        2015-11-20T17:32:29+0100 [kotori.daq.intercom.udp          ] INFO: Received via UDP from 192.168.0.40:49153: '\t\x01\x00\x00@\x06H\x01\xf2'
-        2015-11-20T17:32:29+0100 [kotori.daq.intercom.udp          ] INFO: Publishing to topic 'edu.hm.lst.sattracker' with realm 'lst': [(u'length', 9), (u'ID', 1), (u'flag_1', 0), (u'hdg', 1600), (u'pitch', 328), (u'ck', '\xf2'), ('_name_', u'struct_position'), ('_hex_', '0901000040064801f2')]
-        2015-11-20T17:32:29+0100 [twisted.internet.defer           ] CRITICAL: Unhandled error in Deferred:
-
-        Traceback (most recent call last):
-          File "/home/basti/kotori/.venv27/local/lib/python2.7/site-packages/Twisted-15.4.0-py2.7-linux-x86_64.egg/twisted/python/context.py", line 81, in callWithContext
-            return func(*args,**kw)
-          File "/home/basti/kotori/.venv27/local/lib/python2.7/site-packages/Twisted-15.4.0-py2.7-linux-x86_64.egg/twisted/internet/posixbase.py", line 597, in _doReadOrWrite
-            why = selectable.doRead()
-          File "/home/basti/kotori/.venv27/local/lib/python2.7/site-packages/Twisted-15.4.0-py2.7-linux-x86_64.egg/twisted/internet/udp.py", line 248, in doRead
-            self.protocol.datagramReceived(data, addr)
-          File "/home/basti/kotori/.venv27/local/lib/python2.7/site-packages/Twisted-15.4.0-py2.7-linux-x86_64.egg/twisted/internet/defer.py", line 1274, in unwindGenerator
-            return _inlineCallbacks(None, gen, Deferred())
-        --- <exception caught here> ---
-          File "/home/basti/kotori/.venv27/local/lib/python2.7/site-packages/Twisted-15.4.0-py2.7-linux-x86_64.egg/twisted/internet/defer.py", line 1128, in _inlineCallbacks
-            result = g.send(result)
-          File "/home/basti/kotori/kotori/daq/intercom/udp.py", line 32, in datagramReceived
-            yield self.bus.publish(self.topic, data_out)
-          File "/home/basti/kotori/.venv27/local/lib/python2.7/site-packages/autobahn-0.10.9-py2.7.egg/autobahn/wamp/protocol.py", line 1034, in publish
-            raise e
-        autobahn.wamp.exception.SerializationError: WAMP serialization error ('ascii' codec can't decode byte 0xf2 in position 1: ordinal not in range(128))
-
 - [o] C Header parsing convenience
     - [o] automatically translate struct initializer like::
 
@@ -111,6 +75,32 @@ Done
       - Solution: Send data as list of lists to the WAMP bus.
 - [x] kotori.daq.intercom.c should perform the compilation step for getting a msglib.so out of a msglib.h
 - [x] decouple main application from self.config['lst-h2m']
+- [x] unsanitized log output exception::
+
+    2015-11-20T16:56:57+0100 [kotori.daq.storage.influx        ] INFO: Storage location:  {'series': '01_position', 'database': u'edu_hm_lst_sattracker'}
+    2015-11-20T16:56:57+0100 [kotori.daq.storage.influx        ] ERROR: InfluxDBClientError: 401: {"error":"user not found"}
+    2015-11-20T16:56:57+0100 [kotori.daq.storage.influx        ] ERROR: Unable to format event {'log_namespace': 'kotori.daq.storage.influx', 'log_level': <LogLevel=error>, 'log_logger': <Logger 'kotori.daq.storage.influx'>, 'log_time': 1448035017.722721, 'log_source': None, 'log_format': 'Processing Bus message failed: 401: {"error":"user not found"}\nERROR: InfluxDBClientError: 401: {{"error":"user not found"}}\n\n------------------------------------------------------------\nEntry point:\nFilename:    /home/basti/kotori/kotori/daq/storage/influx.py\nLine number: 171\nFunction:    bus_receive\nCode:        return self.process_message(self.topic, payload)\n------------------------------------------------------------\nSource of exception:\nFilename:    /home/basti/kotori/.venv27/local/lib/python2.7/site-packages/influxdb-2.9.2-py2.7.egg/influxdb/client.py\nLine number: 247\nFunction:    request\nCode:        raise InfluxDBClientError(response.content, response.status_code)\n\nTraceback (most recent call last):\n  File "/home/basti/kotori/kotori/daq/storage/influx.py", line 171, in bus_receive\n    return self.process_message(self.topic, payload)\n  File "/home/basti/kotori/kotori/daq/storage/influx.py", line 195, in process_message\n    self.store_mes
+
+- [x] non-ascii "char" value can't be published to WAMP Bus
+
+    send message::
+
+        sattracker-message send 0x09010000fe0621019c --target=udp://localhost:8889
+
+    exception::
+
+        2015-11-20T17:32:29+0100 [kotori.daq.intercom.udp          ] INFO: Received via UDP from 192.168.0.40:49153: '\t\x01\x00\x00@\x06H\x01\xf2'
+        2015-11-20T17:32:29+0100 [kotori.daq.intercom.udp          ] INFO: Publishing to topic 'edu.hm.lst.sattracker' with realm 'lst': [(u'length', 9), (u'ID', 1), (u'flag_1', 0), (u'hdg', 1600), (u'pitch', 328), (u'ck', '\xf2'), ('_name_', u'struct_position'), ('_hex_', '0901000040064801f2')]
+        2015-11-20T17:32:29+0100 [twisted.internet.defer           ] CRITICAL: Unhandled error in Deferred:
+
+        Traceback (most recent call last):
+          [...]
+          File "/home/basti/kotori/kotori/daq/intercom/udp.py", line 32, in datagramReceived
+            yield self.bus.publish(self.topic, data_out)
+          File "/home/basti/kotori/.venv27/local/lib/python2.7/site-packages/autobahn-0.10.9-py2.7.egg/autobahn/wamp/protocol.py", line 1034, in publish
+            raise e
+        autobahn.wamp.exception.SerializationError: WAMP serialization error ('ascii' codec can't decode byte 0xf2 in position 1: ordinal not in range(128))
+
 
 
 Hiveeyes
