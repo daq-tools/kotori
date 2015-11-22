@@ -12,6 +12,10 @@ typedef struct struct_program         // added 06.03.2014 C.L.
     struct_program()
     : length(13), ID(0)
     {}
+
+    struct_program(): length(13), ID(0) {}
+    uint8_t  length;             //  1 Length of struct (byte)
+    uint8_t  ID;                 //  2 Struct ID
     */
     uint8_t  length = 13;        //  1 Length of struct (byte)
     uint8_t  ID     =  0;        //  2 Struct ID

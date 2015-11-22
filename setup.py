@@ -21,7 +21,6 @@ requires = [
     #'grafana-dashboard-builder==0.1.0a7',
     'Jinja2==2.8',
     'pyclibrary==0.1.2',
-    #'cffi==1.3.1',
     'tabulate==0.7.5',
     'sympy==0.7.6.1',
     'msgpack-python==0.4.6',

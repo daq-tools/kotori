@@ -25,6 +25,8 @@ class UdpBusForwarder(DatagramProtocol):
 
         # ECHO
         #self.transport.write(data, (host, port))
+
+        # apply transformation steps
         data_out = data
         for transform in self.transform:
             data_out = transform(data_out)
