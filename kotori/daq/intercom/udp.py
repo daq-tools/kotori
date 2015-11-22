@@ -5,6 +5,7 @@ from cornice.util import to_list
 from twisted.logger import Logger
 from twisted.internet.protocol import DatagramProtocol
 from twisted.internet.defer import inlineCallbacks
+from kotori.util import slm
 
 logger = Logger()
 
@@ -20,7 +21,7 @@ class UdpBusForwarder(DatagramProtocol):
 
     @inlineCallbacks
     def datagramReceived(self, data, (host, port)):
-        logger.info("Received via UDP from %s:%d: %r " % (host, port, hexlify(data)))
+        logger.info(slm(u"Received via UDP from %s:%d: 0x%s" % (host, port, hexlify(data))))
 
         # ECHO
         #self.transport.write(data, (host, port))
@@ -29,5 +30,5 @@ class UdpBusForwarder(DatagramProtocol):
             data_out = transform(data_out)
 
         # forward
-        logger.info("Publishing to topic '{}' with realm '{}': {}".format(self.topic, self.bus._realm, data_out))
+        logger.info(slm(u"Publishing to topic '{}' with realm '{}': {}".format(self.topic, self.bus._realm, data_out)))
         yield self.bus.publish(self.topic, data_out)
