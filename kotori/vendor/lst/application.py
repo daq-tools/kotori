@@ -141,6 +141,7 @@ class StorageSession(WampSession):
 
 
 def setup_binary_message_adapter(config):
+    # TODO: refactor towards OO; e.g. BinaryMessageAdapterFactory
 
     # build and load library
     library = LibraryAdapter.from_header(
@@ -157,6 +158,8 @@ def setup_binary_message_adapter(config):
 
 
 def lst_boot(config, debug=False):
+    # TODO: refactor towards OO; e.g. BinaryMessageApplicationFactory
+
     wamp_uri = unicode(config.get('wamp', 'listen'))
 
     # serialize section-based ConfigParser contents into nested dict

@@ -78,6 +78,7 @@ Python compiler
 Misc
 ----
 - https://github.com/pydata/numexpr
+- http://deeplearning.net/software/theano/
 
 .. seealso::
 
