@@ -26,8 +26,9 @@ of Kotori somehow inconvenient in day-to-day business. Let's fix them.
               uint8_t  ID     = 1         ;//2
 
       Unfortunately, the Mbed compiler croaks on the second variant. Let's investigate.
+      => Make an issue @ upstream re. ctor syntax with small canonical example.
 
-    - [o] Automatically add ``#include "stdint.h"`` (required for types ``uint8_t``, etc.) and
+    - [x] Automatically add ``#include "stdint.h"`` (required for types ``uint8_t``, etc.) and
           remove ``#include "mbed.h"`` (croaks on Intel)
     - [o] Establish flexible scaling
     - [o] Improve transcoding convenience by using annotations like
@@ -35,7 +36,18 @@ of Kotori somehow inconvenient in day-to-day business. Let's fix them.
           Use it for renaming fields and scaling values in Kotori and assigning units in Grafana.
 
 - [o] Make compiler configurable (/usr/bin/g++ on Linux vs. /opt/local/bin/g++-mp-5 on OSX)
-- [o] Topic "measurement tightness" / "sending timestamps"
+
+- [o] Field type conflicts in InfluxDB, e.g. when adding transformation rules afterwards::
+
+        2015-11-22T17:00:52+0100 [kotori.daq.storage.influx        ] ERROR: Processing Bus message failed: 400: write failed: field type conflict: input field "pitch" on measurement "01_position" is type float64, already exists as type integer
+
+            ERROR: InfluxDBClientError: 400: write failed: field type conflict: input field "pitch" on measurement "01_position" is type float64, already exists as type integer
+
+      Here, "pitch" was initially coming in as an Integer, but now has changed its type to a Float64,
+      due to applying a transformation rule.
+
+      => At least add possibility to drop database via Web.
+
 
 
 Prio 1
@@ -47,10 +59,12 @@ Prio 1
 - [o] rename ``lst-h2m.ini`` to ``lst.ini``
 - [o] new message command "h2m|sattracker-message list" to show all struct names
 - [o] sanity checks for struct schema e.g. against declared length
+- [o] new "influxdb" maintenance command with e.g. "drop database"
 
 
 Prio 2
 ------
+- [o] Topic "measurement tightness" / "sending timestamps"
 - [o] Properly implement checksumming, honor field ``ck``
       sum up all bytes: 0 to n-1 (w/o ck), then mod 255
 - [o] database export
@@ -58,6 +72,8 @@ Prio 2
 - [o] Flexible pretending UDP sender programs for generating and sending message struct payloads
 - [o] Waveform publishers
 - [o] Bring xyz-message info|decode|list to the web
+- [o] Bring "Add Project" (c header file) to the web, including compilation error messages
+- [o] refactor classmethods of LibraryAdapter into separate LibraryAdapterFactory
 
 
 Prio 3
