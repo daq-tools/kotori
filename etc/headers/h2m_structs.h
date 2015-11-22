@@ -1,12 +1,7 @@
 // -*- coding: utf-8 -*-
 // (c) 2013-2015 Hydro2Motion Developers, h2m@hm.edu
 
-// target: Mbed
-//#include "mbed.h"
-
-// target: PC
-#include "stdint.h"
-
+#include "mbed.h"
 
 // Program variable
 //----------------------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-#include "stdint.h"
+#include "mbed.h"
 
 typedef struct struct_position         // added 06.03.2014 C.L.
 {
