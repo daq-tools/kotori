@@ -2,6 +2,7 @@
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import os
 import sys
+import re
 from collections import OrderedDict
 from cornice.util import to_list
 from pprint import pprint
@@ -96,26 +97,77 @@ class LibraryAdapter(object):
         """
         #$(compiler) $(cppflags) $(INCLUDE) -shared -fPIC -lm -o h2m_structs.so h2m_structs.h
 
-        library_file = header_files[0].rstrip('.h') + '.so'
-
-        library_file = os.path.join(include_path, library_file)
+        # compute list of source files (.h) with absolute paths
         source_files = map(lambda header_file: os.path.join(include_path, header_file), header_files)
-
-        #command = 'g++ -I{include_path} -shared -fPIC -lm -o {library_file} {source_files}'.format(**locals())
+        source_files = cls.augment_sources(source_files)
         source_files = ' '.join(source_files)
 
+        # compute absolute path to library (.so) file
+        library_file = header_files[0].rstrip('.h') + '.so'
+        library_file = os.path.join(include_path, library_file)
+
         # TODO: make compiler configurable
+        #command = 'g++ -I{include_path} -shared -fPIC -lm -o {library_file} {source_files}'.format(**locals())
         command = '/opt/local/bin/g++-mp-5 -std=c++11 -shared -fPIC -lm -o {library_file} {source_files}'.format(**locals())
 
         logger.info(slm('Compiling library: {}'.format(command)))
         retval = os.system(command)
         if retval == 0:
-            logger.info('Successfully compiled {}'.format(library_file))
+            logger.info(slm('Successfully compiled {}'.format(library_file)))
             return library_file
         else:
             msg = 'Failed compiling library {}'.format(library_file)
-            logger.error(msg)
+            logger.error(slm(msg))
             raise ValueError(msg)
+
+    @classmethod
+    def augment_sources(cls, source_files):
+        """
+        Augments source files and puts them under /tmp:
+        - Automatically add ``#include "stdint.h"`` (required for types ``uint8_t``, etc.)
+          and remove ``#include "mbed.h"`` (croaks on Intel)
+        """
+        source_files_augmented = []
+        for source_file in source_files:
+
+            # split source file into parts ...
+            dirname = os.path.dirname(source_file)
+            basename = os.path.basename(source_file)
+            name, ext = os.path.splitext(basename)
+
+            # and compute augmented file name
+            name_intel = name
+            name_intel += '_intel'
+            name_intel += ext
+            source_file_augmented = os.path.join(dirname, name_intel)
+
+            # augment sourcecode
+            source_payload = cls.augment_source(source_file)
+
+            # write augmented file
+            file(source_file_augmented, 'w').write(source_payload)
+            source_files_augmented.append(source_file_augmented)
+
+        return source_files_augmented
+
+    @classmethod
+    def augment_source(cls, source_file):
+        """
+        No matter if there's a ``#include "mbed.h"``, make sure it gets removed.
+        Also make sure that there is a single ``#include "stdint.h"``.
+        """
+        payload = file(source_file).read()
+        if re.search('^#include "stdint.h"', payload, re.MULTILINE):
+            amendment = ''
+        else:
+            amendment = '#include "stdint.h"'
+
+        if re.search('^#include "mbed.h"', payload, re.MULTILINE):
+            payload = payload.replace('#include "mbed.h"', amendment)
+        else:
+            if amendment:
+                payload = amendment + '\n' + payload
+        return payload
 
 
 class StructAdapter(object):
