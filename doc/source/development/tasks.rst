@@ -9,37 +9,44 @@ Showstoppers
 ------------
 
 Besides making it work in approx. 30 min. on the first hand (cheers!), there are some remaining issues making the wash&go usage
-of Kotori somehow inconvenient in day-to-day business. Let's fix them!
+of Kotori somehow inconvenient in day-to-day business. Let's fix them.
 
 - [o] C Header parsing convenience
-    - [o] automatically translate struct initializer like::
+    - [o] Automatically translate struct initializer like::
 
               /*
               struct_position()
               : length(9), ID(1)
               {}
               */
+
+      Into::
+
               uint8_t  length = 9         ;//1
               uint8_t  ID     = 1         ;//2
 
-      Unfortunately, the Mbed compiler croaks on the second variant. Let's investigate!
+      Unfortunately, the Mbed compiler croaks on the second variant. Let's investigate.
 
-    - [o] automatically add ``#include "stdint.h"`` and remove ``#include "mbed.h"``
-    - [o] parse things like ``// name=heading; expr=hdg * 20; unit=degrees``, see :ref:`math-expressions`. use it for scaling.
+    - [o] Automatically add ``#include "stdint.h"`` (required for types ``uint8_t``, etc.) and
+          remove ``#include "mbed.h"`` (croaks on Intel)
+    - [o] Establish flexible scaling
+    - [o] Improve transcoding convenience by using annotations like
+          ``// name=heading; expr=hdg * 20; unit=degrees``, see :ref:`math-expressions`.
+          Use it for renaming fields and scaling values in Kotori and assigning units in Grafana.
 
-- [o] make compiler configurable
-- [o] measurement tightness / send timestamps
+- [o] Make compiler configurable (/usr/bin/g++ on Linux vs. /opt/local/bin/g++-mp-5 on OSX)
+- [o] Topic "measurement tightness" / "sending timestamps"
 
 
 Prio 1
 ------
 - [o] generalize ``h2m-message`` vs. ``sattracker-message`` into ``lst-message``,
       maybe read default config via ``~/.kotori.ini`` which transitively points to ``./etc/lst.ini`` to keep the comfort.
-      otherwise, the ini file must be specified every time
+      otherwise, the ini file must be specified every time. Other variants:
+      - export KOTORI_CONFIG=/etc/kotori/lst.ini
 - [o] rename ``lst-h2m.ini`` to ``lst.ini``
 - [o] new message command "h2m|sattracker-message list" to show all struct names
 - [o] sanity checks for struct schema e.g. against declared length
-- [o] establish flexible scaling
 
 
 Prio 2
@@ -50,6 +57,7 @@ Prio 2
 - [o] Intro to the H2M scenario with pictures, drawing, source code (header file) and nice Grafana graph
 - [o] Flexible pretending UDP sender programs for generating and sending message struct payloads
 - [o] Waveform publishers
+- [o] Bring xyz-message info|decode|list to the web
 
 
 Prio 3

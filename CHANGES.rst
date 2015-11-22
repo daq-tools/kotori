@@ -11,6 +11,8 @@ develop
 
 2015-11-20 0.4.0
 ----------------
+proof-of-concept for vendor :ref:`vendor-lst`
+
 - add release and documentation infrastructure through Makefile targets
 - add vendor “lst”
     - add struct definitions of h2m project
@@ -31,11 +33,13 @@ develop
 - lst: honour struct field order in Grafana
 - add more details to Grafana dashboard panels
 - improve error messages “h2m-message send/decode”
-- generalize c library adapter
+- generalize c library adapter, multi-project capabilities for vendor lst
 
 
 2015-11-06 0.3.2
 ----------------
+proof-of-concept for vendor :ref:`vendor-hiveeyes`
+
 - upgrade foundation libraries: Twisted, Autobahn, Crossbar
 - add frontend foundation based on Pyramid web framework
 - ui: add jQuery, Bootstrap, Fontawesome, html5shiv and respond.js
@@ -73,6 +77,8 @@ develop
 
 2015-04-24 0.2.0
 ----------------
+proof-of-concept for vendor :ref:`vendor-hydro2motion`
+
 - ui: add d3 and rickshaw
 - ui: add timeseries prototype
 - ui: add cbuffer.js
@@ -135,7 +141,7 @@ develop
 
 2014-01-05 0.0.1
 ----------------
-proof-of-concept
+proof-of-concept for vendor :ref:`vendor-ilaundry`
 
 - Two daemons: master service and node service
 - Communication infrastructure on top of Autobahn using PubSub
