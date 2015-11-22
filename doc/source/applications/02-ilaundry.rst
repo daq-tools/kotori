@@ -1,3 +1,5 @@
+.. _vendor-ilaundry:
+
 ########
 iLaundry
 ########
