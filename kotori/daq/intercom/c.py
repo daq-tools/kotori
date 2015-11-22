@@ -9,10 +9,11 @@ from pprint import pprint
 from binascii import hexlify
 from tabulate import tabulate
 from appdirs import user_cache_dir
-from pyclibrary.c_parser import CParser
 from ctypes import c_uint8, c_uint16, c_uint32, c_int8, c_int16, c_int32
+from pyclibrary.c_parser import CParser
 from pyclibrary import CLibrary, auto_init
 from pyclibrary.utils import add_header_locations, add_library_locations
+from sympy.core.sympify import sympify
 from twisted.logger import Logger
 from kotori.daq.intercom.pyclibrary_ext.c_parser import CParserEnhanced
 from kotori.daq.intercom.pyclibrary_ext.backend_ctypes import monkeypatch_pyclibrary_ctypes_struct
@@ -35,8 +36,14 @@ class LibraryAdapter(object):
 
         logger.info('Setting up library "{}" with headers "{}"'.format(self.library_file, ', '.join(self.header_files)))
 
+        # holding the library essentials
+        self.parser = None
+        self.clib = None
+        self.annotations = None
+
         self.setup()
         self.parse()
+        self.parse_annotations()
         self.load()
 
     def setup(self):
@@ -70,6 +77,19 @@ class LibraryAdapter(object):
         # use an improved CParser which can grok/skip more constructor flavours
         self.parser = CParserEnhanced(self.header_files, cache=self.cache_file)
 
+    def parse_annotations(self):
+        """
+        Grok annotations like::
+
+            // name=heading; expr=hdg * 20; unit=degrees
+        """
+
+        # compute list of source files (.h) with absolute paths
+        source_files = [os.path.join(self.include_path, header_file) for header_file in self.header_files]
+
+        # parse and compute annotations
+        self.annotations = AnnotationParser(source_files, cache=self.cache_file + '.anno')
+
     def load(self):
         self.clib = CLibrary(self.library_file, self.parser, prefix='Lib_', lock_calls=False, convention='cdll', backend='ctypes')
 
@@ -98,7 +118,7 @@ class LibraryAdapter(object):
         #$(compiler) $(cppflags) $(INCLUDE) -shared -fPIC -lm -o h2m_structs.so h2m_structs.h
 
         # compute list of source files (.h) with absolute paths
-        source_files = map(lambda header_file: os.path.join(include_path, header_file), header_files)
+        source_files = [os.path.join(include_path, header_file) for header_file in header_files]
         source_files = cls.augment_sources(source_files)
         source_files = ' '.join(source_files)
 
@@ -170,6 +190,73 @@ class LibraryAdapter(object):
         return payload
 
 
+class AnnotationParser(object):
+
+    def __init__(self, source_files, cache=None):
+
+        self.source_files = source_files
+
+        # keep all parsed information here
+        self.info = {'structs': {}}
+
+        # parse all annotations
+        self.parse()
+
+    def parse(self):
+        """
+        Parse rule annotations like::
+
+                int16_t  hdg                ;//6        /* @rule: name=heading; expr=hdg * 20; unit=degrees */
+
+        """
+
+        # e.g. "typedef struct struct_position         // added 06.03.2014 C.L."
+        struct_head_pattern  = re.compile('^.*struct\s+([\w]+).*?$')
+
+        # e.g. "/* @rule: name=heading; expr=hdg * 20; unit=degrees */"
+        rule_extract_pattern = re.compile('^.*name=(?P<name>\w+?);.*expr=(?P<expression>.+?);.*unit=(?P<unit>\w+).*$')
+
+        # e.g. "   int16_t  hdg                ;"
+        original_fieldname_pattern = re.compile('^.*?(?P<type>[\w]+)\s+(?P<name>[\w]+).*;.*$')
+
+        for source_file in self.source_files:
+
+            struct_name = None
+            with file(source_file) as f:
+                for line in f.readlines():
+                    line = line.strip()
+
+                    # check for beginning of struct
+                    m = struct_head_pattern.match(line)
+                    if m:
+                        struct_name = m.group(1)
+
+                    # check for transformation rule annotation
+                    if '@rule:' in line:
+                        m = rule_extract_pattern.match(line)
+                        if m:
+                            rule = m.groupdict()
+                            if 'expression' in rule:
+                                rule['expression_sympy'] = sympify(rule['expression'])
+
+                            # parse original field name to map against
+                            m = original_fieldname_pattern.match(line)
+                            if m:
+                                vanilla_field = m.groupdict()
+                                field_name = vanilla_field['name']
+                                self.info['structs'].setdefault(struct_name, {})
+                                self.info['structs'][struct_name][field_name] = rule
+
+        #pprint(self.info)
+
+    def get_struct_rules(self, struct_name):
+        return self.info['structs'].get(struct_name, {})
+
+    def get_struct_rule(self, struct_name, field_name):
+        struct_rules = self.get_struct_rules(struct_name)
+        return struct_rules.get(field_name)
+
+
 class StructAdapter(object):
 
     def __init__(self, name, library):
@@ -177,6 +264,7 @@ class StructAdapter(object):
         self.library = library
         self.parser = self.library.parser
         self.clib = self.library.clib
+        self.annotations = self.library.annotations
 
     def ast(self):
         return self.parser.defs['structs'][self.name]
@@ -209,6 +297,11 @@ class StructAdapter(object):
         print 'Library information'
         print
         print tabulate(self.lib_fields_repr(), headers=['name', 'type', 'symbol', 'field', 'bitfield'])
+        print; print
+
+        print 'Transformation rules'
+        print
+        print tabulate(self.annotations_repr(), headers=['name-real', 'name-human', 'expression', 'expression-sympy', 'unit'])
         print; print
 
         print 'Representations'
@@ -271,6 +364,15 @@ class StructAdapter(object):
     def lib_binary_repr(self):
         payload = self.create()._dump_()
         return self.binary_reprs(payload)
+
+    def annotations_repr(self):
+        entries = []
+        annos = self.annotations.get_struct_rules(self.name)
+        if annos:
+            for fieldname, rule in annos.iteritems():
+                entry = (fieldname, rule['name'], rule['expression'], rule['expression_sympy'], rule['unit'])
+                entries.append(entry)
+        return entries
 
     @staticmethod
     def binary_reprs(payload):
