@@ -132,7 +132,8 @@ class GrafanaDashboard(object):
             # TODO: this is hardcoded on row=0
             panels = dashboard['rows'][0]['panels']
             panel_ids = [panel['id'] for panel in panels]
-            self.panel_id = max(panel_ids)
+            if panel_ids:
+                self.panel_id = max(panel_ids)
 
         self.tpl_dashboard = self.get_template('grafana-dashboard.json')
         self.tpl_panel = self.get_template('grafana-panel.json')
