@@ -272,8 +272,56 @@ class StructAdapter(object):
     def obj(self):
         return self.clib('structs', self.name)
 
-    def create(self, **attributes):
-        return self.obj()(**attributes)
+    def create(self):
+        """
+        Create and initialize ctypes struct.
+        """
+        # wrapper class from pyclibrary.backend_ctypes
+        obj_wrapper = self.obj()
+
+        # <ctypes struct 'struct_foo'>
+        obj = obj_wrapper()
+
+        # initialize struct content
+        self.initialize(obj)
+
+        return obj
+
+    def initialize(self, obj):
+        """
+        Initialize struct instance with initializer data
+        """
+        data = self._get_initializer_data()
+        if data:
+            bytes = ''.join(map(chr, data))
+            obj._load_(bytes)
+
+    def _get_initializer_data(self):
+        """
+        Nasty hack to get proper initializer data from CParser results.
+
+        This works by traversing the CParser result nodes from the variable ``position``
+        back to the struct ``struct_position`` to correlate struct with initializer data.
+
+        Example struct declaration::
+
+            struct struct_position
+            {
+                uint8_t  length             ;//1
+                uint8_t  ID                 ;//2
+                // ...
+            } position = {9,1};
+
+        Obviously, this will only work for singletons, where each struct used is instantiated only once.
+        You have been warned.
+        """
+        for key, value in self.parser.defs['variables'].iteritems():
+            data, type = value
+            type_spec = 'struct ' + self.name
+            if type_spec == type.type_spec:
+                return data
+
+        logger.warn('Could not find initialization data for struct "{}"'.format(self.name))
 
     def __repr__(self):
         return "<StructAdapter '{name}' object at {id}>".format(name=self.name, id=hex(id(self)))
