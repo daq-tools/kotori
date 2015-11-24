@@ -10,6 +10,7 @@ develop
 - lst: parse transformation rules from source code annotation
 - lst: apply transformation rules before publishing to software bus
 - fix grafana dashboard update when having no panels
+- lst: nasty hack to get proper struct initializer data from CParser results
 
 
 .. _v0.4.0:
