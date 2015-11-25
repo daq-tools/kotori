@@ -13,6 +13,7 @@ develop
 - lst: nasty hack to get proper struct initializer data from CParser results
 - show “average” column in Grafana
 - lst: flexible compiler detection re. Linux vs. Mac OSX (MacPorts)
+- improve error handling when using interactive commands
 
 
 .. _v0.4.0:

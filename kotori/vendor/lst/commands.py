@@ -15,8 +15,14 @@ def lst_message(adapter, options):
     payload_ascii = options.get('<payload>')
 
     if options.get('decode'):
-        struct = decode_payload(adapter, payload_ascii)
-        adapter.pprint(struct)
+        try:
+            struct = decode_payload(adapter, payload_ascii)
+            adapter.pprint(struct)
+        except KeyError as ex:
+            message = 'Decoding binary data "{}" to struct failed.'.format(payload_ascii)
+            message += ' ' + ex.message
+            logger.error(message)
+            sys.exit(1)
 
     elif options.get('transform'):
         struct = decode_payload(adapter, payload_ascii)
@@ -25,8 +31,12 @@ def lst_message(adapter, options):
 
     elif options.get('info'):
         name = options.get('<name>')
-        struct_adapter = adapter.struct_registry.get(name)
-        struct_adapter.print_schema()
+        try:
+            struct_adapter = adapter.struct_registry.get(name)
+            struct_adapter.print_schema()
+        except KeyError:
+            logger.error('No struct named "{}"'.format(name))
+            sys.exit(1)
 
     elif options.get('send'):
         uri = urlparse(target)
