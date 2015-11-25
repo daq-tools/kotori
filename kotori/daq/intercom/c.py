@@ -2,16 +2,18 @@
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import os
 import sys
+import re
 from collections import OrderedDict
 from cornice.util import to_list
 from pprint import pprint
 from binascii import hexlify
 from tabulate import tabulate
 from appdirs import user_cache_dir
-from pyclibrary.c_parser import CParser
 from ctypes import c_uint8, c_uint16, c_uint32, c_int8, c_int16, c_int32
+from pyclibrary.c_parser import CParser
 from pyclibrary import CLibrary, auto_init
 from pyclibrary.utils import add_header_locations, add_library_locations
+from sympy.core.sympify import sympify
 from twisted.logger import Logger
 from kotori.daq.intercom.pyclibrary_ext.c_parser import CParserEnhanced
 from kotori.daq.intercom.pyclibrary_ext.backend_ctypes import monkeypatch_pyclibrary_ctypes_struct
@@ -34,8 +36,14 @@ class LibraryAdapter(object):
 
         logger.info('Setting up library "{}" with headers "{}"'.format(self.library_file, ', '.join(self.header_files)))
 
+        # holding the library essentials
+        self.parser = None
+        self.clib = None
+        self.annotations = None
+
         self.setup()
         self.parse()
+        self.parse_annotations()
         self.load()
 
     def setup(self):
@@ -60,12 +68,27 @@ class LibraryAdapter(object):
             'int16_t': c_int16,
             'int32_t': c_int32,
             }
+
+        # TODO: this probably acts on a global basis; think about it
         if not (CParser._init or CLibrary._init):
             auto_init(extra_types=types)
 
     def parse(self):
         # use an improved CParser which can grok/skip more constructor flavours
         self.parser = CParserEnhanced(self.header_files, cache=self.cache_file)
+
+    def parse_annotations(self):
+        """
+        Grok annotations like::
+
+            // name=heading; expr=hdg * 20; unit=degrees
+        """
+
+        # compute list of source files (.h) with absolute paths
+        source_files = [os.path.join(self.include_path, header_file) for header_file in self.header_files]
+
+        # parse and compute annotations
+        self.annotations = AnnotationParser(source_files, cache=self.cache_file + '.anno')
 
     def load(self):
         self.clib = CLibrary(self.library_file, self.parser, prefix='Lib_', lock_calls=False, convention='cdll', backend='ctypes')
@@ -94,26 +117,144 @@ class LibraryAdapter(object):
         """
         #$(compiler) $(cppflags) $(INCLUDE) -shared -fPIC -lm -o h2m_structs.so h2m_structs.h
 
-        library_file = header_files[0].rstrip('.h') + '.so'
-
-        library_file = os.path.join(include_path, library_file)
-        source_files = map(lambda header_file: os.path.join(include_path, header_file), header_files)
-
-        #command = 'g++ -I{include_path} -shared -fPIC -lm -o {library_file} {source_files}'.format(**locals())
+        # compute list of source files (.h) with absolute paths
+        source_files = [os.path.join(include_path, header_file) for header_file in header_files]
+        source_files = cls.augment_sources(source_files)
         source_files = ' '.join(source_files)
 
+        # compute absolute path to library (.so) file
+        library_file = header_files[0].rstrip('.h') + '.so'
+        library_file = os.path.join(include_path, library_file)
+
         # TODO: make compiler configurable
+        #command = 'g++ -I{include_path} -shared -fPIC -lm -o {library_file} {source_files}'.format(**locals())
         command = '/opt/local/bin/g++-mp-5 -std=c++11 -shared -fPIC -lm -o {library_file} {source_files}'.format(**locals())
 
         logger.info(slm('Compiling library: {}'.format(command)))
         retval = os.system(command)
         if retval == 0:
-            logger.info('Successfully compiled {}'.format(library_file))
+            logger.info(slm('Successfully compiled {}'.format(library_file)))
             return library_file
         else:
             msg = 'Failed compiling library {}'.format(library_file)
-            logger.error(msg)
+            logger.error(slm(msg))
             raise ValueError(msg)
+
+    @classmethod
+    def augment_sources(cls, source_files):
+        """
+        Augments source files and puts them under /tmp:
+        - Automatically add ``#include "stdint.h"`` (required for types ``uint8_t``, etc.)
+          and remove ``#include "mbed.h"`` (croaks on Intel)
+        """
+        source_files_augmented = []
+        for source_file in source_files:
+
+            # split source file into parts ...
+            dirname = os.path.dirname(source_file)
+            basename = os.path.basename(source_file)
+            name, ext = os.path.splitext(basename)
+
+            # and compute augmented file name
+            name_intel = name
+            name_intel += '_intel'
+            name_intel += ext
+            source_file_augmented = os.path.join(dirname, name_intel)
+
+            # augment sourcecode
+            source_payload = cls.augment_source(source_file)
+
+            # write augmented file
+            file(source_file_augmented, 'w').write(source_payload)
+            source_files_augmented.append(source_file_augmented)
+
+        return source_files_augmented
+
+    @classmethod
+    def augment_source(cls, source_file):
+        """
+        No matter if there's a ``#include "mbed.h"``, make sure it gets removed.
+        Also make sure that there is a single ``#include "stdint.h"``.
+        """
+        payload = file(source_file).read()
+        if re.search('^#include "stdint.h"', payload, re.MULTILINE):
+            amendment = ''
+        else:
+            amendment = '#include "stdint.h"'
+
+        if re.search('^#include "mbed.h"', payload, re.MULTILINE):
+            payload = payload.replace('#include "mbed.h"', amendment)
+        else:
+            if amendment:
+                payload = amendment + '\n' + payload
+        return payload
+
+
+class AnnotationParser(object):
+
+    def __init__(self, source_files, cache=None):
+
+        self.source_files = source_files
+
+        # keep all parsed information here
+        self.info = {'structs': {}}
+
+        # parse all annotations
+        self.parse()
+
+    def parse(self):
+        """
+        Parse rule annotations like::
+
+                int16_t  hdg                ;//6        /* @rule: name=heading; expr=hdg * 20; unit=degrees */
+
+        """
+
+        # e.g. "typedef struct struct_position         // added 06.03.2014 C.L."
+        struct_head_pattern  = re.compile('^.*struct\s+([\w]+).*?$')
+
+        # e.g. "/* @rule: name=heading; expr=hdg * 20; unit=degrees */"
+        rule_extract_pattern = re.compile('^.*name=(?P<name>\w+?);.*expr=(?P<expression>.+?);.*unit=(?P<unit>\w+).*$')
+
+        # e.g. "   int16_t  hdg                ;"
+        original_fieldname_pattern = re.compile('^.*?(?P<type>[\w]+)\s+(?P<name>[\w]+).*;.*$')
+
+        for source_file in self.source_files:
+
+            struct_name = None
+            with file(source_file) as f:
+                for line in f.readlines():
+                    line = line.strip()
+
+                    # check for beginning of struct
+                    m = struct_head_pattern.match(line)
+                    if m:
+                        struct_name = m.group(1)
+
+                    # check for transformation rule annotation
+                    if '@rule:' in line:
+                        m = rule_extract_pattern.match(line)
+                        if m:
+                            rule = m.groupdict()
+                            if 'expression' in rule:
+                                rule['expression_sympy'] = sympify(rule['expression'])
+
+                            # parse original field name to map against
+                            m = original_fieldname_pattern.match(line)
+                            if m:
+                                vanilla_field = m.groupdict()
+                                field_name = vanilla_field['name']
+                                self.info['structs'].setdefault(struct_name, {})
+                                self.info['structs'][struct_name][field_name] = rule
+
+        #pprint(self.info)
+
+    def get_struct_rules(self, struct_name):
+        return self.info['structs'].get(struct_name, {})
+
+    def get_struct_rule(self, struct_name, field_name):
+        struct_rules = self.get_struct_rules(struct_name)
+        return struct_rules.get(field_name)
 
 
 class StructAdapter(object):
@@ -123,6 +264,7 @@ class StructAdapter(object):
         self.library = library
         self.parser = self.library.parser
         self.clib = self.library.clib
+        self.annotations = self.library.annotations
 
     def ast(self):
         return self.parser.defs['structs'][self.name]
@@ -130,8 +272,56 @@ class StructAdapter(object):
     def obj(self):
         return self.clib('structs', self.name)
 
-    def create(self, **attributes):
-        return self.obj()(**attributes)
+    def create(self):
+        """
+        Create and initialize ctypes struct.
+        """
+        # wrapper class from pyclibrary.backend_ctypes
+        obj_wrapper = self.obj()
+
+        # <ctypes struct 'struct_foo'>
+        obj = obj_wrapper()
+
+        # initialize struct content
+        self.initialize(obj)
+
+        return obj
+
+    def initialize(self, obj):
+        """
+        Initialize struct instance with initializer data
+        """
+        data = self._get_initializer_data()
+        if data:
+            bytes = ''.join(map(chr, data))
+            obj._load_(bytes)
+
+    def _get_initializer_data(self):
+        """
+        Nasty hack to get proper initializer data from CParser results.
+
+        This works by traversing the CParser result nodes from the variable ``position``
+        back to the struct ``struct_position`` to correlate struct with initializer data.
+
+        Example struct declaration::
+
+            struct struct_position
+            {
+                uint8_t  length             ;//1
+                uint8_t  ID                 ;//2
+                // ...
+            } position = {9,1};
+
+        Obviously, this will only work for singletons, where each struct used is instantiated only once.
+        You have been warned.
+        """
+        for key, value in self.parser.defs['variables'].iteritems():
+            data, type = value
+            type_spec = 'struct ' + self.name
+            if type_spec == type.type_spec:
+                return data
+
+        logger.warn('Could not find initialization data for struct "{}"'.format(self.name))
 
     def __repr__(self):
         return "<StructAdapter '{name}' object at {id}>".format(name=self.name, id=hex(id(self)))
@@ -155,6 +345,11 @@ class StructAdapter(object):
         print 'Library information'
         print
         print tabulate(self.lib_fields_repr(), headers=['name', 'type', 'symbol', 'field', 'bitfield'])
+        print; print
+
+        print 'Transformation rules'
+        print
+        print tabulate(self.annotations_repr(), headers=['name-real', 'name-human', 'expression', 'expression-sympy', 'unit'])
         print; print
 
         print 'Representations'
@@ -218,6 +413,15 @@ class StructAdapter(object):
         payload = self.create()._dump_()
         return self.binary_reprs(payload)
 
+    def annotations_repr(self):
+        entries = []
+        annos = self.annotations.get_struct_rules(self.name)
+        if annos:
+            for fieldname, rule in annos.iteritems():
+                entry = (fieldname, rule['name'], rule['expression'], rule['expression_sympy'], rule['unit'])
+                entries.append(entry)
+        return entries
+
     @staticmethod
     def binary_reprs(payload):
         reprs = [
@@ -272,12 +476,15 @@ class StructRegistry(object):
         return d
 
     @classmethod
-    def pprint(cls, struct, format='pprint'):
+    def pprint(cls, struct, data=None, format='pprint'):
         # TODO: maybe refactor to struct._pprint_
         name = struct._name_()
         payload = struct._dump_()
         payload_hex = hexlify(payload)
-        payload_data = list(cls.to_dict(struct).items())
+        if data:
+            payload_data = list(data.items())
+        else:
+            payload_data = list(cls.to_dict(struct).items())
 
         if format == 'pprint':
             print 'name:', name
