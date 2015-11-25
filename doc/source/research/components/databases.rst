@@ -24,3 +24,5 @@ Timeseries databases
     - http://kairosdb.github.io/
 - Pyro: A Spatial-Temporal Big-Data Storage System
     - https://www.usenix.org/conference/atc15/technical-session/presentation/li_shen
+- | A relational database for embedded devices and sensors nodes
+  | https://github.com/graemedouglas/LittleD
