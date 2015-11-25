@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import os
-import sys
 import re
 from collections import OrderedDict
 from cornice.util import to_list
@@ -107,14 +106,6 @@ class LibraryAdapter(object):
 
     @classmethod
     def compile(cls, include_path, header_files):
-        """
-        compiler := /opt/local/bin/g++-mp-5
-        cppflags := -std=c++11
-        define INCLUDE
-            -I.
-        endef
-        """
-        #$(compiler) $(cppflags) $(INCLUDE) -shared -fPIC -lm -o h2m_structs.so h2m_structs.h
 
         # compute list of source files (.h) with absolute paths
         source_files = [os.path.join(include_path, header_file) for header_file in header_files]
@@ -125,9 +116,11 @@ class LibraryAdapter(object):
         library_file = header_files[0].rstrip('.h') + '.so'
         library_file = os.path.join(include_path, library_file)
 
-        # TODO: make compiler configurable
-        #command = 'g++ -I{include_path} -shared -fPIC -lm -o {library_file} {source_files}'.format(**locals())
-        command = '/opt/local/bin/g++-mp-5 -std=c++11 -shared -fPIC -lm -o {library_file} {source_files}'.format(**locals())
+        # assemble compiler command
+        compiler = cls.find_compiler()
+        if not compiler:
+            raise ValueError('Could not find compiler')
+        command = '{compiler} -std=c++11 -shared -fPIC -lm -o {library_file} {source_files}'.format(**locals())
 
         # run compile command
         logger.info(slm('Compiling: {}'.format(command)))
@@ -139,6 +132,15 @@ class LibraryAdapter(object):
             msg = 'Failed compiling library "{library_file}" from "{source_files}"'.format(**locals())
             logger.error(slm(msg))
             raise ValueError(msg)
+
+    @classmethod
+    def find_compiler(cls):
+        # TODO: make compiler configurable via ini file
+        # TODO: investigate problem with /usr/bin/clang++: "clang: error: cannot specify -o when generating multiple output files"
+        compilers = ['/opt/local/bin/g++-mp-4.7', '/usr/bin/g++']
+        for compiler in compilers:
+            if os.path.isfile(compiler):
+                return compiler
 
     @classmethod
     def augment_sources(cls, source_files):
