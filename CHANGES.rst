@@ -12,6 +12,7 @@ develop
 - fix grafana dashboard update when having no panels
 - lst: nasty hack to get proper struct initializer data from CParser results
 - show “average” column in Grafana
+- lst: flexible compiler detection re. Linux vs. Mac OSX (MacPorts)
 
 
 .. _v0.4.0:
