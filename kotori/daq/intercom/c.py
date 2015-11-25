@@ -463,9 +463,9 @@ class StructRegistry(object):
         try:
             return self.structs_by_id[struct_id]
         except KeyError:
-            sys.exit(1)
             msg = 'Struct with id {} ({}) not registered.'.format(struct_id, hex(struct_id))
             logger.error(slm(msg))
+            raise KeyError(msg)
 
     def create(self, name, **attributes):
         return self.get(name).create(**attributes)
