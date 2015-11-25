@@ -5,83 +5,110 @@ Kotori Tasks
 LST
 ===
 
-Showstoppers
-------------
+Prio 1 - Showstoppers
+---------------------
 
 Besides making it work in approx. 30 min. on the first hand (cheers!), there are some remaining issues making the wash&go usage
 of Kotori somehow inconvenient in day-to-day business. Let's fix them.
 
-- [o] C Header parsing convenience
-    - [o] Automatically translate struct initializer like::
-
-              /*
-              struct_position()
-              : length(9), ID(1)
-              {}
-              */
-
-      Into::
-
-              uint8_t  length = 9         ;//1
-              uint8_t  ID     = 1         ;//2
-
-      Unfortunately, the Mbed compiler croaks on the second variant. Let's investigate.
-      => Make an issue @ upstream re. ctor syntax with small canonical example.
-
-    - [x] Automatically add ``#include "stdint.h"`` (required for types ``uint8_t``, etc.) and
-          remove ``#include "mbed.h"`` (croaks on Intel)
-    - [o] Establish flexible scaling
-    - [o] Improve transcoding convenience by using annotations like
-          ``// name=heading; expr=hdg * 20; unit=degrees``, see :ref:`math-expressions`.
-          Use it for renaming fields and scaling values in Kotori and assigning units in Grafana.
-
-- [o] Make compiler configurable (/usr/bin/g++ on Linux vs. /opt/local/bin/g++-mp-5 on OSX)
-
-- [o] Field type conflicts in InfluxDB, e.g. when adding transformation rules afterwards::
-
-        2015-11-22T17:00:52+0100 [kotori.daq.storage.influx        ] ERROR: Processing Bus message failed: 400: write failed: field type conflict: input field "pitch" on measurement "01_position" is type float64, already exists as type integer
-
-            ERROR: InfluxDBClientError: 400: write failed: field type conflict: input field "pitch" on measurement "01_position" is type float64, already exists as type integer
-
-      Here, "pitch" was initially coming in as an Integer, but now has changed its type to a Float64,
-      due to applying a transformation rule.
-
-      => At least add possibility to drop database via Web.
+- Currently nothing on stack.
 
 
-
-Prio 1
-------
+Prio 1.5 - Important
+--------------------
 - [o] generalize ``h2m-message`` vs. ``sattracker-message`` into ``lst-message``,
       maybe read default config via ``~/.kotori.ini`` which transitively points to ``./etc/lst.ini`` to keep the comfort.
-      otherwise, the ini file must be specified every time. Other variants:
-      - export KOTORI_CONFIG=/etc/kotori/lst.ini
-- [o] rename ``lst-h2m.ini`` to ``lst.ini``
-- [o] new message command "h2m|sattracker-message list" to show all struct names
-- [o] sanity checks for struct schema e.g. against declared length
-- [o] new "influxdb" maintenance command with e.g. "drop database"
+      otherwise, the ini file must be specified every time. Other variant:
+      ``export KOTORI_CONFIG=/etc/kotori/lst.ini``
+- [o] Field-level granularity for GrafanaManager to counter field-renaming by rule-adding problem
+      i.e. if field "hdg" is renamed to "heading", this won't get reflected in Grafana automatically
+- [o] Honour annotation attribute "unit" when adding Grafana panels
+- [o] SymPy annotations should be able to declare virtual fields
 
 
 Prio 2
 ------
+- [o] new message command ``h2m|sattracker-message list`` to show all struct names
+- [o] new "influxdb" maintenance command with e.g. "drop database"
+- [o] add to docs: https://developer.mbed.org/users/HMFK03LST1/code/Telemetrie_eth_h2m/
+- [o] pyclibrary upstreaming: patches and ctor issue
+- [o] refactor ``config['_active_']`` mechanics in ``lst/application.py``
+
+Prio 3
+------
+- [o] sanity checks for struct schema e.g. against declared length
 - [o] Topic "measurement tightness" / "sending timestamps"
 - [o] Properly implement checksumming, honor field ``ck``
       sum up all bytes: 0 to n-1 (w/o ck), then mod 255
 - [o] database export
+- [o] check with pyclibrary development branch: https://github.com/MatthieuDartiailh/pyclibrary/tree/new-backend-api
 - [o] Intro to the H2M scenario with pictures, drawing, source code (header file) and nice Grafana graph
 - [o] Flexible pretending UDP sender programs for generating and sending message struct payloads
 - [o] Waveform publishers
 - [o] Bring xyz-message info|decode|list to the web
 - [o] Bring "Add Project" (c header file) to the web, including compilation error messages
 - [o] refactor classmethods of LibraryAdapter into separate LibraryAdapterFactory
+- [o] cache compilation step
+- [o] add link to Telemetry.cpp
+- [o] ctor syntax
+- [o] document rule-based Transformations
+    - syntax
+    - math expressions
+    - sattracker-message transform
+- [o] troubleshooting docs
+
+    - sattracker-message decode 0x090200000100000000
+      configfile: etc/lst-h2m.ini
+      2015-11-24 21:52:09,325 [kotori.vendor.lst.commands] ERROR  : Decoding binary data "0x090200000100000000" to struct failed. Struct with id 2 (0x2) not registered.
+
+    - sattracker-message info struct_position2
+      configfile: etc/lst-h2m.ini
+      2015-11-24 21:52:58,642 [kotori.vendor.lst.commands] ERROR  : No struct named "struct_position2"
+
+- [o] make issue @ pyclibrary re. brace-or-equal-initializers:
+
+    http://stackoverflow.com/questions/16782103/initializing-default-values-in-a-struct/16783513#16783513
+
+- [o] highlevel influxdb client
+- [o] runtime-update of c struct or restart automatism
+    - [o] Make brace-or-equal-initializers work properly.
+
+          ::
+
+              # brace-initializer
+              struct_position()
+              : length(9), ID(1)
+              {}
+
+          ::
+
+              # equal-initializer
+              uint8_t  length = 9         ;//1
+              uint8_t  ID     = 1         ;//2
+
+      Unfortunately, pyclibrary croaks on the first variant.
+
+      On the other hand, the Mbed compiler croaks on the second variant or the program
+      fails to initialize the struct properly at runtime. Let's investigate.
+
+      #. => Make an issue @ upstream re. ctor syntax with small canonical example.
+      #. => Investigate why the Mbed compiler doesn't grok the equal-initializer style.
+
+    - [o] Make infrastructure based on typedefs instead of structs to honor initializer semantics
 
 
-Prio 3
+Prio 4
 ------
 - [o] Generate HTML overview of all message struct schemas using tabulate
 - [o] Console based message receiver and decoder
 - [o] Establish mechanism to reset Grafana Dashboard creation state, the "GrafanaManager.skip_cache"
 - [o] receive messages containing sequential numbers, check database for continuity to determine if data points get lost
+- [o] think about automatically updating structs at runtime, e.g. from https://developer.mbed.org/users/HMFK03LST1/code/H2M_2014_race/file/adf68d4b873f/components.cpp
+- [o] more header files from LST:
+    - https://developer.mbed.org/users/HMFK03LST1/code/H2M_2014_race/file/adf68d4b873f/components.cpp
+- [o] investigate cffi
+    cffi:
+    cffi.api.CDefError: cannot parse "struct_position(): length(9), ID(1) {}"
 
 
 Done
@@ -125,6 +152,34 @@ Done
             raise e
         autobahn.wamp.exception.SerializationError: WAMP serialization error ('ascii' codec can't decode byte 0xf2 in position 1: ordinal not in range(128))
 
+- [x] Make compiler configurable (/usr/bin/g++ on Linux vs. /opt/local/bin/g++-mp-5 on OSX)
+
+- [x] Field type conflicts in InfluxDB, e.g. when adding a transformation rule on the same name, this changing the data type on an existing field::
+
+        2015-11-22T17:00:52+0100 [kotori.daq.storage.influx        ] ERROR: Processing Bus message failed: 400: write failed: field type conflict: input field "pitch" on measurement "01_position" is type float64, already exists as type integer
+
+            ERROR: InfluxDBClientError: 400: write failed: field type conflict: input field "pitch" on measurement "01_position" is type float64, already exists as type integer
+
+      Here, "pitch" was initially coming in as an Integer, but now has changed its type to a Float64,
+      due to applying a transformation rule, which (always) yields floats.
+
+      | => Is it possible (and appropriate) to ALTER TABLE on demand?
+      | => At least add possibility to drop database via Web.
+
+      - [x] Upgrade to python module "influxdb-2.10.0" => didn't help
+      - [x] Store all numerical data as floats
+
+- [x] C Header parsing convenience
+
+    - [x] Automatically add ``#include "stdint.h"`` (required for types ``uint8_t``, etc.) and
+          remove ``#include "mbed.h"`` (croaks on Intel)
+    - [x] Improve transcoding convenience by using annotations like
+          ``// name=heading; expr=hdg * 20; unit=degrees``, see :ref:`math-expressions`.
+          Use it for renaming fields and scaling values in Kotori and assigning units in Grafana.
+          => Implemented based on SymPy, use it for flexible scaling.
+
+- [x] proper error message when decoding unknown message
+- [x] rename ``lst-h2m.ini`` to ``lst.ini``
 
 
 Hiveeyes
