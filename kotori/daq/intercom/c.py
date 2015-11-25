@@ -19,7 +19,6 @@ from kotori.daq.intercom.pyclibrary_ext.c_parser import CParserEnhanced
 from kotori.daq.intercom.pyclibrary_ext.backend_ctypes import monkeypatch_pyclibrary_ctypes_struct
 from kotori.util import slm
 
-#logger = logging.getLogger(__name__)
 logger = Logger()
 
 class LibraryAdapter(object):
@@ -130,13 +129,14 @@ class LibraryAdapter(object):
         #command = 'g++ -I{include_path} -shared -fPIC -lm -o {library_file} {source_files}'.format(**locals())
         command = '/opt/local/bin/g++-mp-5 -std=c++11 -shared -fPIC -lm -o {library_file} {source_files}'.format(**locals())
 
-        logger.info(slm('Compiling library: {}'.format(command)))
+        # run compile command
+        logger.info(slm('Compiling: {}'.format(command)))
         retval = os.system(command)
         if retval == 0:
-            logger.info(slm('Successfully compiled {}'.format(library_file)))
+            logger.info(slm('Successfully compiled library "{library_file}" from "{source_files}"'.format(**locals())))
             return library_file
         else:
-            msg = 'Failed compiling library {}'.format(library_file)
+            msg = 'Failed compiling library "{library_file}" from "{source_files}"'.format(**locals())
             logger.error(slm(msg))
             raise ValueError(msg)
 
@@ -321,7 +321,8 @@ class StructAdapter(object):
             if type_spec == type.type_spec:
                 return data
 
-        logger.warn('Could not find initialization data for struct "{}"'.format(self.name))
+        # don't log, this would be triggered erroneously when using equal-style-initializers
+        #logger.warn('Could not find initialization data for struct "{}"'.format(self.name))
 
     def __repr__(self):
         return "<StructAdapter '{name}' object at {id}>".format(name=self.name, id=hex(id(self)))
@@ -460,8 +461,9 @@ class StructRegistry(object):
         try:
             return self.structs_by_id[struct_id]
         except KeyError:
-            logger.error('Struct with id {} ({}) not registered'.format(struct_id, hex(struct_id)))
             sys.exit(1)
+            msg = 'Struct with id {} ({}) not registered.'.format(struct_id, hex(struct_id))
+            logger.error(slm(msg))
 
     def create(self, name, **attributes):
         return self.get(name).create(**attributes)
@@ -529,7 +531,7 @@ class StructRegistryByID(StructRegistry):
         if self.structs_by_id.has_key(struct_id):
             o_a = self.structs_by_id[struct_id]
             name_owner = o_a.name
-            logger.warning('Struct "{}" has ID "{}", but this ID is already mapped to struct "{}", '\
+            logger.warn('Struct "{}" has ID "{}", but this ID is already mapped to struct "{}", '\
                            'please check if struct provides reasonable default values for attribute "ID"'.format(name, struct_id, name_owner))
         else:
             logger.debug('Struct "{}" mapped to ID "{}"'.format(name, struct_id))
