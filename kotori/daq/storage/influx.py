@@ -106,6 +106,14 @@ class InfluxDBAdapter(object):
             else:
                 raise ValueError('Unknown InfluxDB protocol version "{}"'.format(self.version))
 
+            """
+            Prevent errors like
+            ERROR: InfluxDBClientError: 400:
+                           write failed: field type conflict:
+                           input field "pitch" on measurement "01_position" is type float64, already exists as type integer
+            """
+            self.chunk_to_float(chunk)
+
             success = self.influx.write_points([chunk], time_precision='n')
             if success:
                 logger.info("Storing measurement succeeded: {}".format(slm(chunk)))
@@ -129,6 +137,17 @@ class InfluxDBAdapter(object):
         }
         logger.debug('chunk09: {}'.format(slm(chunk09)))
         return chunk09
+
+    def chunk_to_float(self, chunk):
+        fields = chunk['fields']
+        for key, value in fields.iteritems():
+            if type(value) in types.StringTypes:
+                continue
+            try:
+                fields[key] = float(value)
+            except ValueError:
+                pass
+
 
     def write(self, name, data):
         columns = data.keys()
