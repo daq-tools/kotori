@@ -74,7 +74,7 @@ class BinaryMessageAdapter(object):
                     # convert to Python-native data types
                     # TODO: check if SymPy provides a generic builtin for that
                     if value.is_zero:
-                        value = 0
+                        value = 0.0
                     elif value.is_Float:
                         value = float(value)
 

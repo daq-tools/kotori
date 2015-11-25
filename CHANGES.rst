@@ -14,6 +14,7 @@ develop
 - show “average” column in Grafana
 - lst: flexible compiler detection re. Linux vs. Mac OSX (MacPorts)
 - improve error handling when using interactive commands
+- explicitly convert values to float when evaluating SymPy expressions
 
 
 .. _v0.4.0:
