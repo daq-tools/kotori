@@ -11,7 +11,7 @@ requires = [
     'json-store==2.1',
     'alchimia==0.4',    # 0.6.1
     'txmongo==0.6',     # 15.2.2
-    'influxdb==2.9.2',
+    'influxdb==2.10.0',
     'pyramid==1.5.7',
     'pyramid_jinja2==2.5',
     'cornice==1.0.0',
