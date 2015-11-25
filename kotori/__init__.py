@@ -54,7 +54,7 @@ def run():
     logger.info("debug: {}".format(debug))
 
     log_level = 'debug' if debug else 'info'
-    startLogging(sys.stdout, level=LogLevel.levelWithName(log_level))
+    startLogging(sys.stderr, level=LogLevel.levelWithName(log_level))
 
     config = get_configuration(options['--config'])
 
