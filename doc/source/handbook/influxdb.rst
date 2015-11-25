@@ -20,7 +20,7 @@ Database operations
 -------------------
 Create database::
 
-    curl --silent --get 'http://192.168.59.103:8086/query?pretty=true' --user admin:admin --data-urlencode --data-urlencode 'q=CREATE DATABASE "hiveeyes_100"'
+    curl --silent --get 'http://192.168.59.103:8086/query?pretty=true' --user admin:admin --data-urlencode 'q=CREATE DATABASE "hiveeyes_100"'
 
 
 List databases::
@@ -30,7 +30,7 @@ List databases::
 
 Drop database::
 
-    curl --silent --get 'http://192.168.59.103:8086/query?pretty=true' --user admin:admin --data-urlencode 'db=hiveeyes_100' --data-urlencode 'q=DROP DATABASE "hiveeyes_100"'
+    curl --silent --get 'http://192.168.59.103:8086/query?pretty=true' --user admin:admin --data-urlencode 'q=DROP DATABASE "hiveeyes_100"'
 
 
 Query operations

@@ -1,26 +1,88 @@
-================
-Kotori DAQ Tasks
-================
+============
+Kotori Tasks
+============
 
 LST
 ===
 
+Showstoppers
+------------
+
+Besides making it work in approx. 30 min. on the first hand (cheers!), there are some remaining issues making the wash&go usage
+of Kotori somehow inconvenient in day-to-day business. Let's fix them.
+
+- [o] C Header parsing convenience
+    - [o] Automatically translate struct initializer like::
+
+              /*
+              struct_position()
+              : length(9), ID(1)
+              {}
+              */
+
+      Into::
+
+              uint8_t  length = 9         ;//1
+              uint8_t  ID     = 1         ;//2
+
+      Unfortunately, the Mbed compiler croaks on the second variant. Let's investigate.
+      => Make an issue @ upstream re. ctor syntax with small canonical example.
+
+    - [x] Automatically add ``#include "stdint.h"`` (required for types ``uint8_t``, etc.) and
+          remove ``#include "mbed.h"`` (croaks on Intel)
+    - [o] Establish flexible scaling
+    - [o] Improve transcoding convenience by using annotations like
+          ``// name=heading; expr=hdg * 20; unit=degrees``, see :ref:`math-expressions`.
+          Use it for renaming fields and scaling values in Kotori and assigning units in Grafana.
+
+- [o] Make compiler configurable (/usr/bin/g++ on Linux vs. /opt/local/bin/g++-mp-5 on OSX)
+
+- [o] Field type conflicts in InfluxDB, e.g. when adding transformation rules afterwards::
+
+        2015-11-22T17:00:52+0100 [kotori.daq.storage.influx        ] ERROR: Processing Bus message failed: 400: write failed: field type conflict: input field "pitch" on measurement "01_position" is type float64, already exists as type integer
+
+            ERROR: InfluxDBClientError: 400: write failed: field type conflict: input field "pitch" on measurement "01_position" is type float64, already exists as type integer
+
+      Here, "pitch" was initially coming in as an Integer, but now has changed its type to a Float64,
+      due to applying a transformation rule.
+
+      => At least add possibility to drop database via Web.
+
+
+
 Prio 1
 ------
-- [o] Establish mechanism to reset Grafana Dashboard creation state, the "GrafanaManager.skip_cache"
+- [o] generalize ``h2m-message`` vs. ``sattracker-message`` into ``lst-message``,
+      maybe read default config via ``~/.kotori.ini`` which transitively points to ``./etc/lst.ini`` to keep the comfort.
+      otherwise, the ini file must be specified every time. Other variants:
+      - export KOTORI_CONFIG=/etc/kotori/lst.ini
+- [o] rename ``lst-h2m.ini`` to ``lst.ini``
+- [o] new message command "h2m|sattracker-message list" to show all struct names
+- [o] sanity checks for struct schema e.g. against declared length
+- [o] new "influxdb" maintenance command with e.g. "drop database"
+
 
 Prio 2
 ------
+- [o] Topic "measurement tightness" / "sending timestamps"
+- [o] Properly implement checksumming, honor field ``ck``
+      sum up all bytes: 0 to n-1 (w/o ck), then mod 255
+- [o] database export
 - [o] Intro to the H2M scenario with pictures, drawing, source code (header file) and nice Grafana graph
 - [o] Flexible pretending UDP sender programs for generating and sending message struct payloads
 - [o] Waveform publishers
-- [o] Generate HTML overview of all message struct schemas using tabulate
-- [o] Console based message receiver and decoder
-- [o] Properly implement checksumming, honor field ``ck``
+- [o] Bring xyz-message info|decode|list to the web
+- [o] Bring "Add Project" (c header file) to the web, including compilation error messages
+- [o] refactor classmethods of LibraryAdapter into separate LibraryAdapterFactory
+
 
 Prio 3
 ------
-- [o] Maybe use cffi instead of pyclibrary, see https://cffi.readthedocs.org/en/latest/using.html#working-with-pointers-structures-and-arrays
+- [o] Generate HTML overview of all message struct schemas using tabulate
+- [o] Console based message receiver and decoder
+- [o] Establish mechanism to reset Grafana Dashboard creation state, the "GrafanaManager.skip_cache"
+- [o] receive messages containing sequential numbers, check database for continuity to determine if data points get lost
+
 
 Done
 ----
@@ -29,14 +91,40 @@ Done
 - [x] Proper commandline interface for encoding and decoding message structs à la ``beradio``
 - [x] Publish docs to http://isarengineering.de/docs/kotori/
 - [x] The order of fields provisioned into Grafana panel is wrong due to unordered-dict-republishing on Bus
-      Example: "03_cap_w" has "voltage_low, voltage_mid, voltage_load, voltage_max, ..."
-               but should be  "voltage_low, voltage_mid, voltage_max, voltage_load, ..."
-      Proposal: Either publish something self-contained to the Bus which reflects the very order,
-                or add some bookkeeping (a struct->fieldname registry) at the decoding level,
-                where order is correct. Reuse this information when creating the Grafana stuff.
-      Solution: Send data as list of lists to the WAMP bus.
+      - Example: "03_cap_w" has "voltage_low, voltage_mid, voltage_load, voltage_max, ..."
+                 but should be  "voltage_low, voltage_mid, voltage_max, voltage_load, ..."
+      - Proposal: Either publish something self-contained to the Bus which reflects the very order,
+                  or add some bookkeeping (a struct->fieldname registry) at the decoding level,
+                  where order is correct. Reuse this information when creating the Grafana stuff.
+      - Solution: Send data as list of lists to the WAMP bus.
 - [x] kotori.daq.intercom.c should perform the compilation step for getting a msglib.so out of a msglib.h
 - [x] decouple main application from self.config['lst-h2m']
+- [x] unsanitized log output exception::
+
+    2015-11-20T16:56:57+0100 [kotori.daq.storage.influx        ] INFO: Storage location:  {'series': '01_position', 'database': u'edu_hm_lst_sattracker'}
+    2015-11-20T16:56:57+0100 [kotori.daq.storage.influx        ] ERROR: InfluxDBClientError: 401: {"error":"user not found"}
+    2015-11-20T16:56:57+0100 [kotori.daq.storage.influx        ] ERROR: Unable to format event {'log_namespace': 'kotori.daq.storage.influx', 'log_level': <LogLevel=error>, 'log_logger': <Logger 'kotori.daq.storage.influx'>, 'log_time': 1448035017.722721, 'log_source': None, 'log_format': 'Processing Bus message failed: 401: {"error":"user not found"}\nERROR: InfluxDBClientError: 401: {{"error":"user not found"}}\n\n------------------------------------------------------------\nEntry point:\nFilename:    /home/basti/kotori/kotori/daq/storage/influx.py\nLine number: 171\nFunction:    bus_receive\nCode:        return self.process_message(self.topic, payload)\n------------------------------------------------------------\nSource of exception:\nFilename:    /home/basti/kotori/.venv27/local/lib/python2.7/site-packages/influxdb-2.9.2-py2.7.egg/influxdb/client.py\nLine number: 247\nFunction:    request\nCode:        raise InfluxDBClientError(response.content, response.status_code)\n\nTraceback (most recent call last):\n  File "/home/basti/kotori/kotori/daq/storage/influx.py", line 171, in bus_receive\n    return self.process_message(self.topic, payload)\n  File "/home/basti/kotori/kotori/daq/storage/influx.py", line 195, in process_message\n    self.store_mes
+
+- [x] non-ascii "char" value can't be published to WAMP Bus
+
+    send message::
+
+        sattracker-message send 0x09010000fe0621019c --target=udp://localhost:8889
+
+    exception::
+
+        2015-11-20T17:32:29+0100 [kotori.daq.intercom.udp          ] INFO: Received via UDP from 192.168.0.40:49153: '\t\x01\x00\x00@\x06H\x01\xf2'
+        2015-11-20T17:32:29+0100 [kotori.daq.intercom.udp          ] INFO: Publishing to topic 'edu.hm.lst.sattracker' with realm 'lst': [(u'length', 9), (u'ID', 1), (u'flag_1', 0), (u'hdg', 1600), (u'pitch', 328), (u'ck', '\xf2'), ('_name_', u'struct_position'), ('_hex_', '0901000040064801f2')]
+        2015-11-20T17:32:29+0100 [twisted.internet.defer           ] CRITICAL: Unhandled error in Deferred:
+
+        Traceback (most recent call last):
+          [...]
+          File "/home/basti/kotori/kotori/daq/intercom/udp.py", line 32, in datagramReceived
+            yield self.bus.publish(self.topic, data_out)
+          File "/home/basti/kotori/.venv27/local/lib/python2.7/site-packages/autobahn-0.10.9-py2.7.egg/autobahn/wamp/protocol.py", line 1034, in publish
+            raise e
+        autobahn.wamp.exception.SerializationError: WAMP serialization error ('ascii' codec can't decode byte 0xf2 in position 1: ordinal not in range(128))
+
 
 
 Hiveeyes
@@ -129,48 +217,3 @@ Milestone 2
 -----------
 - pdf renderer
 - derivation and integration
-
-
-
-Improve commandline interface
-=============================
-
-"""
-#kotori ship <name> move <x> <y> [--speed=<kn>]
-#kotori ship shoot <x> <y>
-#kotori mine (set|remove) <x> <y> [--moored | --drifting]
-"""
-
-
-Embedded use
-============
-
-Setup node sandbox
-------------------
-::
-
-    apt-get install mplayer
-
-    virtualenv-2.7 --system-site-packages .venv27
-    source .venv27/bin/activate
-    pip install distribute==0.6.45
-    pip install Adafruit_BBIO
-
-    cd src/kotori.node
-    python setup.py develop
-    cd -
-
-
-Master/node modes
-=================
-
-master only::
-
-    kotori master --debug
-
-node only::
-
-    kotori node --master=ws://offgrid:9000/ws --debug
-    kotori node --master=ws://beaglebone.local:9000/ws --debug
-    kotori node --master=ws://master.example.com:9000/ws --debug
-

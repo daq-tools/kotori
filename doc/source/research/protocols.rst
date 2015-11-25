@@ -4,6 +4,10 @@ Protocols
 
 CoAP
 ====
+- https://en.wikipedia.org/wiki/Constrained_Application_Protocol
+- http://coap.technology/
+- http://cbor.io/
+- https://tools.ietf.org/html/rfc7252
 - https://github.com/siskin/txThings
 - http://www.sixpinetrees.pl/2013/09/txthings-good-enough-is-good-enough.html
 - https://github.com/exosite-garage/CoAPExample
@@ -11,6 +15,10 @@ CoAP
 - https://github.com/exosite-garage/CoAPExample/blob/master/example_client_write.py
 - https://github.com/exosite-garage/CoAPExample/blob/master/coap.py
 - https://github.com/exosite-garage/PicoCoAP/blob/master/tests/coap_test.c
+
+DTLS
+====
+- https://en.wikipedia.org/wiki/DTLS
 
 Misc
 ====

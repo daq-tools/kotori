@@ -1,3 +1,5 @@
+.. _vendor-hydro2motion:
+
 ============
 Hydro2Motion
 ============

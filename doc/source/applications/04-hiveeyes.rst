@@ -1,3 +1,5 @@
+.. _vendor-hiveeyes:
+
 ========
 HiveEyes
 ========
@@ -154,4 +156,5 @@ Wishlist
 - `Weather data publishing <../development/weather.html>`_
 - "Stockkarte" subsystem
     - marking point in graphs and filling the Stockkarte questioning
+    - https://github.com/Dieterbe/anthracite/
 - Timeseries anomaly detection using machine learning
