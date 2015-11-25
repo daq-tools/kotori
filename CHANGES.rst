@@ -11,6 +11,7 @@ develop
 - lst: apply transformation rules before publishing to software bus
 - fix grafana dashboard update when having no panels
 - lst: nasty hack to get proper struct initializer data from CParser results
+- show “average” column in Grafana
 
 
 .. _v0.4.0:

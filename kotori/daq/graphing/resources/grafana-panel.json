@@ -22,7 +22,7 @@
     "leftYAxisLabel": "{{ label_y }}",
     "legend": {
         "alignAsTable": true,
-        "avg": false,
+        "avg": true,
         "current": true,
         "hideEmpty": false,
         "max": true,
