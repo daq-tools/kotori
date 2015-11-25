@@ -17,6 +17,7 @@ develop
 - explicitly convert values to float when evaluating SymPy expressions
 - influxdb: prevent float<->integer casting errors by converting all numerical values to float
 - upgrade to python influxdb-2.10.0
+- lst: rename ``etc/lst-h2m.ini`` to ``etc/lst.ini``
 
 
 .. _v0.4.0:

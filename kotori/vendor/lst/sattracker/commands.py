@@ -42,7 +42,7 @@ def sattracker_message_cmd():
     setup_logging(log_level)
 
     # load configuration
-    config = get_configuration('etc/lst-h2m.ini')
+    config = get_configuration('etc/lst.ini')
 
     # serialize section-based ConfigParser contents into nested dict
     config = configparser_to_dict(config)
