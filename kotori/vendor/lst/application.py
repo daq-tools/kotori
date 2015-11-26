@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+import os
 from bunch import Bunch
 from binascii import hexlify
 from copy import deepcopy
+from pkg_resources import resource_filename
 from twisted.logger import Logger
 from twisted.internet import reactor
-from kotori.util import slm, configparser_to_dict
+from kotori.configuration import configparser_to_dict, augment_configuration
+from kotori.util import slm
 from kotori.errors import traceback_get_exception, last_error_and_traceback
 from kotori.daq.intercom.c import LibraryAdapter, StructRegistryByID
 from kotori.daq.intercom.wamp import WampApplication, WampSession
@@ -149,9 +152,15 @@ class StorageSession(WampSession):
 def setup_binary_message_adapter(config):
     # TODO: refactor towards OO; e.g. BinaryMessageAdapterFactory
 
+    # TODO: improve path handling
+    include_path = config['_active_']['include_path']
+    if not include_path.startswith('/'):
+        kotori_path = resource_filename('kotori', '')
+        include_path = os.path.join(kotori_path, '..', include_path)
+
     # build and load library
     library = LibraryAdapter.from_header(
-        include_path=config['_active_']['include_path'],
+        include_path=include_path,
         header_files=config['_active_']['header_files'].split(','))
 
     # register structs
@@ -170,14 +179,15 @@ def lst_boot(config, debug=False):
 
     # serialize section-based ConfigParser contents into nested dict
     config = configparser_to_dict(config)
+    augment_configuration(config)
 
     # activate/mount multiple "lst" applications
-    for application_name in config['lst']['applications'].split(','):
-        logger.info('Starting "lst" application "{}"'.format(application_name))
-        application = config[application_name]
+    for channel_name in config['lst']['channels']:
+        logger.info('Starting "lst" channel "{}"'.format(channel_name))
+        channel = config[channel_name]
 
         config = deepcopy(config)
-        config['_active_'] = application
+        config['_active_'] = channel
 
         WampApplication(url=wamp_uri, realm=u'lst', session_class=UdpSession, config=config).make()
         WampApplication(url=wamp_uri, realm=u'lst', session_class=StorageSession, config=config).make()

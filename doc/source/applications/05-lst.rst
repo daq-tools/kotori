@@ -34,11 +34,28 @@ Handbook
 
 There is some tooling for conveniently working with native binary message structs defined in ``h2m_structs.h``.
 
+The general syntax is ``lst-message <action> <payload> --config etc/lst.ini``.
+In order to omit ``--config etc/lst.ini``, just do::
+
+    export KOTORI_CONFIG=`pwd`/etc/lst.ini
+
+
+Show list of channels
+---------------------
+::
+
+    lst-message list-channels
+
+    Channel names:
+    lst-h2m
+    lst-sattracker
+
+
 Decode message
 --------------
 Decode a short message in hex format, display struct name and decoded content::
 
-    $ h2m-message decode 0x05022a0021
+    $ lst-message h2m decode 0x05022a0021
     ----
     name         struct_cap_r
     ----
@@ -56,7 +73,7 @@ Send message
 ------------
 Send a message in hex format to UDP server::
 
-    $ h2m-message send 0x05022a0021 --target=udp://localhost:8888
+    $ lst-message h2m send 0x05022a0021 --target=udp://localhost:8888
     Message "0x05022a0021" sent to "udp://localhost:8888"
 
 Use this tool to generate and send binary messages without having the hardware in place.
@@ -66,7 +83,7 @@ Display message schema
 ----------------------
 Display struct metadata information::
 
-    $ h2m-message info struct_fuelcell_r
+    $ lst-message h2m info struct_fuelcell_r
 
     ------------------------------------------------------------------------------------
                                  struct "struct_fuelcell_r"
@@ -111,8 +128,8 @@ Todo
 ----
 ::
 
-    h2m-message encode
-    h2m-message receive
+    lst-message h2m encode
+    lst-message h2m receive
 
 
 Query InfluxDB

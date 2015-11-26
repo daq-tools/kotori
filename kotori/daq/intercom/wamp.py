@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
-from ConfigParser import ConfigParser
 import sys
+from kotori.configuration import configparser_to_dict
 from kotori.errors import traceback_get_exception, last_error_and_traceback
 from kotori.logger import startLogging
-from kotori.util import configparser_to_dict
 from twisted.logger import Logger
 from twisted.internet import reactor
 from autobahn.twisted.wamp import ApplicationRunner, ApplicationSession
