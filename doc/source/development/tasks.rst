@@ -16,10 +16,6 @@ of Kotori somehow inconvenient in day-to-day business. Let's fix them.
 
 Prio 1.5 - Important
 --------------------
-- [o] generalize ``h2m-message`` vs. ``sattracker-message`` into ``lst-message``,
-      maybe read default config via ``~/.kotori.ini`` which transitively points to ``./etc/lst.ini`` to keep the comfort.
-      otherwise, the ini file must be specified every time. Other variant:
-      ``export KOTORI_CONFIG=/etc/kotori/lst.ini``
 - [o] Field-level granularity for GrafanaManager to counter field-renaming by rule-adding problem
       i.e. if field "hdg" is renamed to "heading", this won't get reflected in Grafana automatically
 - [o] Honour annotation attribute "unit" when adding Grafana panels
@@ -180,6 +176,10 @@ Done
 
 - [x] proper error message when decoding unknown message
 - [x] rename ``lst-h2m.ini`` to ``lst.ini``
+- [x] generalize ``h2m-message`` vs. ``sattracker-message`` into ``lst-message``,
+      maybe read default config via ``~/.kotori.ini`` which transitively points to ``./etc/lst.ini`` to keep the comfort.
+      otherwise, the ini file must be specified every time. Other variant:
+      ``export KOTORI_CONFIG=/etc/kotori/lst.ini``
 
 
 Hiveeyes
