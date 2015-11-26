@@ -8,4 +8,8 @@
 .. _MQTT: http://mqtt.org/
 .. _Mosquitto: http://mosquitto.org/
 .. _Autobahn: http://autobahn.ws/
-
+.. _SymPy: http://www.sympy.org/
+.. _SymPy Features: http://www.sympy.org/en/features.html
+.. _mbed: https://mbed.org/
+.. _Hydro2Motion: http://hydro2motion.de/
+.. _Shell Eco-marathon: http://www.shell.com/global/environment-society/ecomarathon.html
