@@ -1,3 +1,5 @@
+.. include:: ../_resources.rst
+
 .. _vendor-hydro2motion:
 
 ============
@@ -7,6 +9,11 @@ Hydro2Motion
 .. contents:: Table of Contents
    :local:
    :depth: 2
+
+Introduction
+============
+Kotori was at `Shell Eco-marathon`_ in Rotterdam with Hydro2Motion_.
+
 
 Run Kotori
 ==========
@@ -52,3 +59,12 @@ Components
   | http://lablab.cicer.de:8086/
 - | Grafana
   | http://lablab.cicer.de:3000/
+
+
+Query InfluxDB
+==============
+::
+
+    $ export INFLUX_URI=http://localhost:8086/query?pretty=true
+    $ curl --silent --get $INFLUX_URI --user admin:admin --data-urlencode 'db=hydro2motion' --data-urlencode 'q=select * from "telemetry";' | jq '.'
+

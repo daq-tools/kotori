@@ -16,6 +16,9 @@ of Kotori somehow inconvenient in day-to-day business. Let's fix them.
 
 Prio 1.5 - Important
 --------------------
+- [o] improve: lst-message sattracker send 0x090100000000000000 --target=udp://localhost:8889
+      take --target from configuration, matching channel "sattracker"
+- [o] lst-message sattracker list-structs
 - [o] Field-level granularity for GrafanaManager to counter field-renaming by rule-adding problem
       i.e. if field "hdg" is renamed to "heading", this won't get reflected in Grafana automatically
 - [o] Honour annotation attribute "unit" when adding Grafana panels
@@ -24,11 +27,6 @@ Prio 1.5 - Important
 
 Prio 2
 ------
-- [o] add to docs: https://developer.mbed.org/users/HMFK03LST1/code/Telemetrie_eth_h2m/
-- [o] document rule-based Transformations
-    - syntax
-    - math expressions
-    - sattracker-message transform
 - [o] troubleshooting docs
 
     - sattracker-message decode 0x090200000100000000
@@ -91,6 +89,12 @@ Prio 3
       #. => Investigate why the Mbed compiler doesn't grok the equal-initializer style.
 
     - [o] Make infrastructure based on typedefs instead of structs to honor initializer semantics
+- [o] improve error handling (show full stacktrace in log or web frontend), especially when sending payloads to wrong handlers, e.g.::
+
+        2015-11-26T11:30:12+0100 [kotori.daq.intercom.udp          ] INFO: Received via UDP from 141.39.249.176:61473: 0x303b303b32332e37353b35312e3033323b2d302e303136
+        2015-11-26T11:30:12+0100 [kotori.daq.intercom.c            ] ERROR: Struct with id 59 (0x3b) not registered.
+        2015-11-26T11:30:12+0100 [twisted.internet.defer           ] CRITICAL: Unhandled error in Deferred:
+
 
 
 Prio 4
@@ -180,6 +184,12 @@ Done
       maybe read default config via ``~/.kotori.ini`` which transitively points to ``./etc/lst.ini`` to keep the comfort.
       otherwise, the ini file must be specified every time. Other variant:
       ``export KOTORI_CONFIG=/etc/kotori/lst.ini``
+- [x] document how to add a new channel
+- [x] document rule-based Transformations
+    - syntax
+    - math expressions
+    - sattracker-message transform
+- [x] add to docs: https://developer.mbed.org/users/HMFK03LST1/code/Telemetrie_eth_h2m/
 
 
 Hiveeyes
