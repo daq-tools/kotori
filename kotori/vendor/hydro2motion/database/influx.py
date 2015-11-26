@@ -29,6 +29,8 @@ class InfluxDatabaseService(ApplicationSession):
         self.influx = InfluxDBAdapter(
             version  = self.config.extra['influxdb']['version'],
             host     = self.config.extra['influxdb']['host'],
+            username = self.config.extra['influxdb']['username'],
+            password = self.config.extra['influxdb']['password'],
             database = self.config.extra['hydro2motion']['database'])
 
     def onLeave(self, details):

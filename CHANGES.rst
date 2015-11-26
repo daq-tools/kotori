@@ -5,6 +5,7 @@ Kotori CHANGES
 develop
 -------
 - overhaul configuration files, activate “hydro2motion” channel with vendor “lst”
+- fix hydro2motion re. database authentication
 
 
 2015-11-26 0.5.0
