@@ -24,9 +24,23 @@ Prio 1.5 - Important
 
 Prio 2
 ------
+- [o] add to docs: https://developer.mbed.org/users/HMFK03LST1/code/Telemetrie_eth_h2m/
+- [o] document rule-based Transformations
+    - syntax
+    - math expressions
+    - sattracker-message transform
+- [o] troubleshooting docs
+
+    - sattracker-message decode 0x090200000100000000
+      configfile: etc/lst-h2m.ini
+      2015-11-24 21:52:09,325 [kotori.vendor.lst.commands] ERROR  : Decoding binary data "0x090200000100000000" to struct failed. Struct with id 2 (0x2) not registered.
+
+    - sattracker-message info struct_position2
+      configfile: etc/lst-h2m.ini
+      2015-11-24 21:52:58,642 [kotori.vendor.lst.commands] ERROR  : No struct named "struct_position2"
+
 - [o] new message command ``h2m|sattracker-message list`` to show all struct names
 - [o] new "influxdb" maintenance command with e.g. "drop database"
-- [o] add to docs: https://developer.mbed.org/users/HMFK03LST1/code/Telemetrie_eth_h2m/
 - [o] pyclibrary upstreaming: patches and ctor issue
 - [o] refactor ``config['_active_']`` mechanics in ``lst/application.py``
 
@@ -47,20 +61,6 @@ Prio 3
 - [o] cache compilation step
 - [o] add link to Telemetry.cpp
 - [o] ctor syntax
-- [o] document rule-based Transformations
-    - syntax
-    - math expressions
-    - sattracker-message transform
-- [o] troubleshooting docs
-
-    - sattracker-message decode 0x090200000100000000
-      configfile: etc/lst-h2m.ini
-      2015-11-24 21:52:09,325 [kotori.vendor.lst.commands] ERROR  : Decoding binary data "0x090200000100000000" to struct failed. Struct with id 2 (0x2) not registered.
-
-    - sattracker-message info struct_position2
-      configfile: etc/lst-h2m.ini
-      2015-11-24 21:52:58,642 [kotori.vendor.lst.commands] ERROR  : No struct named "struct_position2"
-
 - [o] make issue @ pyclibrary re. brace-or-equal-initializers:
 
     http://stackoverflow.com/questions/16782103/initializing-default-values-in-a-struct/16783513#16783513
