@@ -19,7 +19,7 @@ struct struct_position
     uint8_t  ID                 ;//2
     uint8_t  flagbyte_1         ;//3
     uint8_t  flagbyte_2         ;//4
-    int16_t  hdg                ;//6        // @rule: name=heading; expr=hdg * 20; unit=degrees
-    int16_t  pitch              ;//8        // @rule: name=pitch; expr=pitch * 10; unit=degrees
+    int16_t  hdg                ;//6        // @ rule: name=heading; expr=hdg * 20.1; unit=degrees
+    int16_t  pitch              ;//8        // @ rule: name=pitch; expr=pitch * 10; unit=degrees
     uint8_t  ck                 ;//9
 } position = {9,1};
