@@ -11,7 +11,7 @@ logger = Logger()
 
 class InfluxDBAdapter(object):
 
-    def __init__(self, host='localhost', port=8086, version='0.8', username='root', password='root', database='kotori_dev'):
+    def __init__(self, host='localhost', port=8086, version='0.9', username='root', password='root', database='kotori_dev'):
         self.host = host
         self.port = port
         self.version = version

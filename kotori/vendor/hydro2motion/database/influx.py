@@ -29,7 +29,7 @@ class InfluxDatabaseService(ApplicationSession):
         self.influx = InfluxDBAdapter(
             version  = self.config.extra['influxdb']['version'],
             host     = self.config.extra['influxdb']['host'],
-            database = self.config.extra['influxdb']['database'])
+            database = self.config.extra['hydro2motion']['database'])
 
     def onLeave(self, details):
         logger.info("Realm left (WAMP session ended).")
@@ -107,7 +107,7 @@ def h2m_boot_influx_database(config, debug=False, trace=False):
 
     runner = ApplicationRunner(
         websocket_uri, u'kotori-realm',
-        extra={'influxdb': dict(config.items('influxdb'))},
+        extra={'influxdb': dict(config.items('influxdb')), 'hydro2motion': dict(config.items('hydro2motion'))},
         debug=trace, debug_wamp=debug, debug_app=debug)
 
     d = runner.run(InfluxDatabaseService, start_reactor=False)
