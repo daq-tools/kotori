@@ -4,6 +4,7 @@ Kotori CHANGES
 
 develop
 -------
+- overhaul configuration files, activate “hydro2motion” channel with vendor “lst”
 
 
 2015-11-26 0.5.0
