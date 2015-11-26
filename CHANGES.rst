@@ -4,6 +4,10 @@ Kotori CHANGES
 
 develop
 -------
+
+
+2015-11-26 0.5.0
+----------------
 - lst: add sattracker application
 - lst: fix WAMP serialization error when publishing binary data (e.g. "char 0x9c") by using MsgPack serialization
 - lst: augment c source file before compilation re. ``#include "mbed.h"`` vs. ``#include "stdint.h"``
