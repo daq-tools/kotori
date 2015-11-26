@@ -41,6 +41,11 @@ Main application::
 
     kotori --config=etc/development.ini --debug
 
+Alternatively::
+
+    export KOTORI_CONFIG=`pwd`/etc/development.ini
+    kotori
+
 Visit web dashboards at
     - http://localhost:35000
     - http://localhost:36000

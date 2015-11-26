@@ -18,6 +18,11 @@ develop
 - influxdb: prevent float<->integer casting errors by converting all numerical values to float
 - upgrade to python influxdb-2.10.0
 - lst: rename ``etc/lst-h2m.ini`` to ``etc/lst.ini``
+- lst: generalize h2m-message and sattracker-message into lst-message
+- specify configuration file via KOTORI_CONFIG environment variable
+- lst: add “lst-message list-channels” command
+- lst: wording: change “application” to “channel”
+- refactor configuration mechanics
 
 
 .. _v0.4.0:

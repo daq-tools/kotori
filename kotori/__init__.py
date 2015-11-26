@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 # (c) 2014-2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
-import os
 import sys
 from pkgutil import extend_path
-from ConfigParser import ConfigParser
 from twisted.internet import reactor
 from twisted.logger import Logger, LogLevel
+from kotori.configuration import get_configuration, get_configuration_file
 from kotori.logger import startLogging
 from kotori.io.master.server import boot_master
 from kotori.io.node.nodeservice import boot_node
@@ -24,7 +23,7 @@ APP_NAME = 'Kotori version ' + __VERSION__
 __doc__ = APP_NAME + """
 
 Usage:
-  kotori --config etc/development.ini [--debug]
+  kotori [--config etc/development.ini] [--debug]
   kotori --version
   kotori (-h | --help)
 
@@ -56,7 +55,8 @@ def run():
     log_level = 'debug' if debug else 'info'
     startLogging(sys.stderr, level=LogLevel.levelWithName(log_level))
 
-    config = get_configuration(options['--config'])
+    config_file = get_configuration_file(options['--config'])
+    config = get_configuration(config_file)
 
     # defaults
     websocket_uri = unicode(config.get('wamp', 'listen'))
@@ -110,21 +110,6 @@ def run():
 
     # now enter the Twisted reactor loop
     reactor.run()
-
-
-def get_configuration(configfile):
-    print 'configfile:', configfile
-    logger.info('configfile: {}'.format(configfile))
-    config = ConfigParser()
-    success = config.read([configfile, os.path.expanduser('~/.kotori.ini')])
-    if success:
-        logger.info('Read configuration files: {}'.format(success))
-        #logger.info('config: {}'.format(config))
-    else:
-        msg = 'Could not read configuration file {}'.format(configfile)
-        logger.error(msg)
-        raise ValueError(msg)
-    return config
 
 
 if __name__ == '__main__':
