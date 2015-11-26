@@ -27,7 +27,7 @@ requires = [
 ]
 
 setup(name='kotori',
-      version='0.4.0',
+      version='0.5.0',
       description='Kotori',
       long_description='Kotori',
       classifiers=[
