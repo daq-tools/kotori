@@ -28,8 +28,8 @@ var nodes_ui = {};
 var lat;
 var lng;
 var legend;
-var polyline;
 
+/*
 // data sink for udp adapter
 var ringbuffer_size = 240;
 var telemetry_graph = {
@@ -43,10 +43,12 @@ var telemetry_graph = {
     'Water_in': [],
     'Water_out': [],
     'Drive_SW': [],
-    'H2_flow': [],
     'GPS_Speed': [],
     'V_Safety': [],
 };
+*/
+
+/*
 var telemetry = {
     'V_FC': new CBuffer(ringbuffer_size),
     'V_CAP': new CBuffer(ringbuffer_size),
@@ -58,11 +60,11 @@ var telemetry = {
     'Water_in': new CBuffer(ringbuffer_size),
     'Water_out': new CBuffer(ringbuffer_size),
     'Drive_SW': new CBuffer(ringbuffer_size),
-    'H2_flow': new CBuffer(ringbuffer_size),
     'GPS_Speed': new CBuffer(ringbuffer_size),
     'V_Safety': new CBuffer(ringbuffer_size),
 };
 var graph;
+*/
 
 var map;
 var marker;
@@ -75,7 +77,7 @@ window.onload = function() {
 
     L.Icon.Default.imagePath = 'static/img';
 
-	map = L.map('map').setView([51.882804, 4.488303], 16);
+	map = L.map('map').setView([51.882804, 4.488303], 17);
 
 	L.tileLayer('https://{s}.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYmFzdGlhbmhlbm5la2UiLCJhIjoiczZLeUpYbyJ9.01Znhen2le-PF6G4307P9Q', {
     		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
@@ -83,116 +85,107 @@ window.onload = function() {
    	 	maxZoom: 18
 	}).addTo(map);
 
-	var polylinePoints = [
-            new L.LatLng(51.882804, 4.488303),
-            new L.LatLng(51.883645, 4.488357),
-			];
-
 	marker = L.marker([51.882804, 4.488303]).addTo(map);
-	polyline =	L.polyline(polylinePoints, {color: 'green'}).addTo(map);
+
 
     // ------------------------------------------
     //   telemetry timeseries graph
     // ------------------------------------------
-    var palette = new Rickshaw.Color.Palette( { scheme: '' } );
-    graph = new Rickshaw.Graph( {
-        element: document.querySelector("#chart"),
-        renderer: 'line',
-        width: 680,
-        height: 300,
-        series: [
-            {
-                name: "V_FC",
-		color: palette.color(),
-                data: telemetry_graph['V_FC'],
-            },
-            {
-                name: "V_CAP",
-		color: palette.color(),
-                data: telemetry_graph['V_CAP'],
-            },
-            {
-                name: "A_ENG",
-		color: palette.color(),
-                data: telemetry_graph['A_ENG'],
-            },
-	    {
-                name: "A_CAP",
-		color: palette.color(),
-                data: telemetry_graph['A_CAP'],
-            },
-	    {
-                name: "T_Air_in",
-		color: palette.color(),
-                data: telemetry_graph['T_Air_in'],
-            },
-	    {
-                name: "T_Air_out",
-		color: palette.color(),
-                data: telemetry_graph['T_Air_out'],
-            },
-	    {
-                name: "T_FC_H2O_out",
-		color: palette.color(),
-                data: telemetry_graph['T_FC_H2O_out'],
-            },
-	    {
-                name: "Water_in",
-		color: palette.color(),
-                data: telemetry_graph['Water_in'],
-            },
-	    {
-                name: "Water_out",
-		color: palette.color(),
-                data: telemetry_graph['Water_out'],
-            },
-	    {
-                name: "Drive_SW",
-		color: palette.color(),
-                data: telemetry_graph['Drive_SW'],
-            },
-	    {
-                name: "H2_flow",
-		color: palette.color(),
-                data: telemetry_graph['H2_flow'],
-            },
-	    {
-                name: "GPS_Speed",
-		color: palette.color(),
-                data: telemetry_graph['GPS_Speed'],
-            },
-	    {
-                name: "V_Safety",
-		color: palette.color(),
-                data: telemetry_graph['V_Safety'],
-            },
-
-        ]
-    });
-
-    var y_axis = new Rickshaw.Graph.Axis.Y( {
-        graph: graph,
-        orientation: 'left',
-        tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-        element: document.getElementById('y_axis'),
-    } );
-
-    var legend = new Rickshaw.Graph.Legend( {
-    	element: document.querySelector('#legend'),
-        graph: graph
-    } );
-
-    var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
-    graph: graph,
-    legend: legend
-    });
-
-    var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight({
-    graph: graph,
-    legend: legend
-    });
-
-    graph.render();
+//
+//  var palette = new Rickshaw.Color.Palette( { scheme: '' } );
+//    graph = new Rickshaw.Graph( {
+//        element: document.querySelector("#chart"),
+//        renderer: 'line',
+//        width: 800,
+//        height: 300,
+//        series: [
+//            {
+//                name: "V_FC",
+//		color: palette.color(),
+//                data: telemetry_graph['V_FC'],
+//            },
+//            {
+//                name: "V_CAP",
+//		color: palette.color(),
+//                data: telemetry_graph['V_CAP'],
+//            },
+//            {
+//                name: "A_ENG",
+//		color: palette.color(),
+//                data: telemetry_graph['A_ENG'],
+//            },
+//	    {
+//                name: "A_CAP",
+//		color: palette.color(),
+//                data: telemetry_graph['A_CAP'],
+//            },
+//	    {
+//                name: "T_Air_in",
+//		color: palette.color(),
+//                data: telemetry_graph['T_Air_in'],
+//            },
+//	    {
+//                name: "T_Air_out",
+//		color: palette.color(),
+//                data: telemetry_graph['T_Air_out'],
+//            },
+//	    {
+//                name: "T_FC_H2O_out",
+//		color: palette.color(),
+//                data: telemetry_graph['T_FC_H2O_out'],
+//            },
+//	    {
+//                name: "Water_in",
+//		color: palette.color(),
+//                data: telemetry_graph['Water_in'],
+//            },
+//	    {
+//                name: "Water_out",
+//		color: palette.color(),
+//                data: telemetry_graph['Water_out'],
+//            },
+//	    {
+//                name: "Drive_SW",
+//		color: palette.color(),
+//                data: telemetry_graph['Drive_SW'],
+//            },
+//	    {
+//                name: "GPS_Speed",
+//		color: palette.color(),
+//                data: telemetry_graph['GPS_Speed'],
+//            },
+//	    {
+//                name: "V_Safety",
+//		color: palette.color(),
+//                data: telemetry_graph['V_Safety'],
+//            },
+//
+//        ]
+//    });
+//
+//    var y_axis = new Rickshaw.Graph.Axis.Y( {
+//        graph: graph,
+//        orientation: 'left',
+//        tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+//        element: document.getElementById('y_axis'),
+//    } );
+//
+//    var legend = new Rickshaw.Graph.Legend( {
+//    	element: document.querySelector('#legend'),
+//        graph: graph
+//    } );
+//
+//    var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
+//    graph: graph,
+//    legend: legend
+//    });
+//
+//    var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight({
+//    graph: graph,
+//    legend: legend
+//    });
+//
+//*/
 
 
     // websocket url defaults
@@ -294,7 +287,8 @@ function node_data(data) {
 
     // add data point to timeseries graph
     var values = data[0].split(';');
-    var V_FC_temp = values[1];
+
+/*    var V_FC_temp = values[1];
     var V_CAP_temp = values[2];
     var A_ENG_temp = values[3];
     var A_CAP_temp = values[4];
@@ -304,10 +298,8 @@ function node_data(data) {
     var Water_in_temp = values[8];
     var Water_out_temp = values[9];
     var Drive_SW_temp = values[12];
-    var H2_flow_temp = values[23];
     var GPS_Speed_temp = values[27];
     var V_Safety_temp = values[28];
-    var O2_calc_temp = values[30];
 
 
     var V_FC;
@@ -320,10 +312,8 @@ function node_data(data) {
     var Water_in;
     var Water_out;
     var Drive_SW;
-    var H2_flow;
     var GPS_Speed;
     var V_Safety;
-    var O2_calc;
 
 
     V_FC = parseFloat(V_FC_temp) * 0.001;
@@ -336,11 +326,9 @@ function node_data(data) {
     Water_in = parseFloat(Water_in_temp) * 0.001;
     Water_out = parseFloat(Water_out_temp) * 0.001;
     Drive_SW = parseFloat(Drive_SW_temp) * 10;
-    H2_flow = parseFloat(H2_flow_temp) * 0.01;
     GPS_Speed = parseFloat(GPS_Speed_temp) * 0.01;
     V_Safety = parseFloat(V_Safety_temp) * 0.001;
-    O2_calc = parseFloat(O2_calc_temp) * 0.01;
-
+*/
 
 
     // update marker on map
@@ -353,16 +341,13 @@ function node_data(data) {
         marker.setLatLng(latlng);
         marker.update();
 
-	polyline.addLatLng(latlng);
-	polyline.redraw();
-
     } catch (ex) {
         console.warn('Could not decode GPS position:', ex);
 
     }
 
 
-
+/*
     var now = new Date().getTime();
     //console.log(mma_x, mma_y);
     //console.log({ x: now, y: parseFloat(mma_x) });
@@ -376,7 +361,6 @@ function node_data(data) {
     telemetry['Water_in'].push({ x: now, y: parseFloat(Water_in) });
     telemetry['Water_out'].push({ x: now, y: parseFloat(Water_out) });
     telemetry['Drive_SW'].push({ x: now, y: parseFloat(Drive_SW) });
-    telemetry['H2_flow'].push({ x: now, y: parseFloat(H2_flow) });
     telemetry['GPS_Speed'].push({ x: now, y: parseFloat(GPS_Speed) });
     telemetry['V_Safety'].push({ x: now, y: parseFloat(V_Safety) });
 
@@ -411,17 +395,14 @@ function node_data(data) {
 	
     telemetry_graph['Drive_SW'].splice(0, telemetry_graph['Drive_SW'].length);
     telemetry['Drive_SW'].toArray().forEach(function(v) {telemetry_graph['Drive_SW'].push(v)}, this);
-
-    telemetry_graph['H2_flow'].splice(0, telemetry_graph['H2_flow'].length);
-    telemetry['H2_flow'].toArray().forEach(function(v) {telemetry_graph['H2_flow'].push(v)}, this);
 	
     telemetry_graph['GPS_Speed'].splice(0, telemetry_graph['GPS_Speed'].length);
     telemetry['GPS_Speed'].toArray().forEach(function(v) {telemetry_graph['GPS_Speed'].push(v)}, this);
 	
     telemetry_graph['V_Safety'].splice(0, telemetry_graph['V_Safety'].length);
     telemetry['V_Safety'].toArray().forEach(function(v) {telemetry_graph['V_Safety'].push(v)}, this);
+*/
 
-    graph.update();
 
 }
 
