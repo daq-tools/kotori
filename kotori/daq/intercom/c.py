@@ -29,10 +29,18 @@ class LibraryAdapter(object):
         self.library_path = library_path or os.curdir
         self.cache_path = cache_path or './var'
 
-        cache_key = u'_'.join(self.header_files) + '.pyclibrary'
+        self.include_path = os.path.abspath(self.include_path)
+        self.library_path = os.path.abspath(self.library_path)
+
+        cache_key = \
+            self.include_path.replace('/', '_') + \
+            u'-' + \
+            u'_'.join(self.header_files) + \
+            u'.pyclibrary'
         self.cache_file = os.path.join(self.cache_path, cache_key)
 
-        logger.info('Setting up library "{}" with headers "{}"'.format(self.library_file, ', '.join(self.header_files)))
+        logger.info('Setting up library "{}" with headers "{}", cache file is "{}"'.format(
+            self.library_file, ', '.join(self.header_files), self.cache_file))
 
         # holding the library essentials
         self.parser = None

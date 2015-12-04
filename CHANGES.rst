@@ -4,6 +4,7 @@ Kotori CHANGES
 
 develop
 -------
+- lst: resolve collision on parsed C header files when using identical filenames for different channels
 
 
 2015-11-26 0.5.1
