@@ -8,9 +8,34 @@
             padding: 1em;
             margin: 1em;
         }
+
+	#chart_container {
+        position: relative;
+        display: inline-block;
+        font-family: Arial, Helvetica, sans-serif;
+	}
+
+	#chart {
+        display: inline-block;
+        margin-left: 40px;
+	}
+
+	#y_axis {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 40px;
+	}
+
+	#legend {
+        display: inline-block;
+        vertical-align: top;
+        margin: 0 0 0 10px;
+	}
+
     </style>
 
-    <title>Kotori Dashboard on $$node_id</title>
+    <title>Kotori Dashboard on h2m.isareng.de</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="static/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -34,44 +59,14 @@
             <h3 class="panel-title"><span id="node-label-<%- rc.node_id %>"><%- rc.node_label %></span></h3>
         </div>
         <div class="panel-body">
-            <h6>
-                Hostname: <%- rc.node_hostname %>
-                <br/>
-                Node Id: <%- rc.node_id %>
-            </h6>
             <span id="online-<%- rc.node_id %>" class="label label-success">Online</span>
             <span id="offline-<%- rc.node_id %>" class="label label-danger">Offline</span>
 
-            <br/><br/>
 
-            <p>
-                Send a text-to-speech message:
+                
             </p>
-            <p>
-                <form id="say-<%- rc.node_id %>">
-                    <!--
-                    <p>Node:
-                        <select id="node_id-0" name="node_id">
-                        </select>
-                    </p>
-                    -->
-
-                    <div class="input-group input-group">
-                        <span class="input-group-addon">TTS</span>
-                        <input id="tts-<%- rc.node_id %>" name="message" class="form-control" type="text" value="Hallo!" size="50" maxlength="50">
-                    </div>
-                    </p>
-                </form>
-            </p>
-            <!--
-            <p>
-                <button class="btn btn-default" onclick="sayText($('#node_id-0').val(), $('#message-0').val())">TTS</button>
-            </p>
-            -->
-
-            <div id="activity-<%- rc.node_id %>" class="alert alert-success text-center hide"><b>PIR SENSOR ACTIVITY</b></div>
-            <div id="privacy-<%- rc.node_id %>" class="alert alert-danger text-center hide"><b>PRIVACY MODE</b></div>
-
+            
+            
         </div>
         </div>
 
@@ -82,22 +77,11 @@
 
 <div class="container">
 
-
-
-    <div class="row panel panel-default panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title" style="display: inline">Timeseries prototype</h3>
-        </div>
-        <div class="panel-body">
-            <div id="chart"></div>
-        </div>
-    </div>
-
     <div class="row panel panel-default panel-info">
         <div class="panel-heading">
             <h3 class="panel-title" style="display: inline">Map</h3>
             &nbsp;&nbsp;&nbsp;
-            <button id="CenterMap">Where is my car?</button>
+            <button id="CenterMap">Where is my car?</button>&nbsp;&nbsp;&nbsp;<a href="fs.html" target="_blank">View Map on full screen</a>
         </div>
         <div class="panel-body">
             <div id="map"></div>
@@ -106,72 +90,31 @@
 
     <div class="row panel panel-default panel-info">
         <div class="panel-heading">
-            <h3 class="panel-title" style="display: inline">Telemetry Data</h3>
-            &nbsp;&nbsp;&nbsp;
-            <button id="telemetry-clear">Clear</button>
+            <h3 class="panel-title" style="display: inline">Telemetry Values</h3>
         </div>
         <div class="panel-body">
-            <div id="telemetry-content">
-            </div>
+		<div id="chart_container">
+        		<div id="y_axis"></div>
+        		<div id="chart"></div>
+		</div>
+		<div id="legend"></div>
         </div>
     </div>
 
-<div class="row panel panel-default panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title">Kotori Dashboard</h3>
-        </div>
-        <div class="panel-body">
-            <div class="pull-left">
-                Hostname: $$hostname
-                <br/>
-                Node Id: $$node_id
-                <br/>
-                Websocket URI: $$websocket_uri
-            </div>
-            <div class="pull-right">
-                <button id="operator-presence" type="button" class="btn active btn-primary btn-lg" data-toggle="button">OperatorPresence</button>
-            </div>
-        </div>
-    </div>
+
 
     <div class="row row-offcanvas row-offcanvas-right">
 
-        <!-- <div class="col-xs-12 col-sm-9"> -->
-        <div class="col-xs-18 col-sm-12">
-            <!--
-            <p class="pull-right visible-xs">
-                <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-            </p>
-            -->
+         <div class="col-xs-18 col-sm-12">
+          
 
             <div class="row" id="item-container"/>
-            <!--/row-->
         </div>
-        <!--/span-->
 
-        <!--
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-            <div class="list-group">
-                <a href="#" class="list-group-item active">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-                <a href="#" class="list-group-item">Link</a>
-            </div>
-        </div>
-        -->
-
-        <!--/span-->
     </div>
-    <!--/row-->
-
+    
     <footer>
-        <p>&copy; 2015 IsarEngineering GmbH, Elmyra UG</p>
+        <p>&copy; 2015 Elmyra UG / IsarEngineering GmbH (DosyIT Unternehmensdienstleistung GmbH)</p>
     </footer>
 
 </div>
