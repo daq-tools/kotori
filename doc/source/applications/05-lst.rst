@@ -190,6 +190,18 @@ There's a commandline tool for applying transformation rules to payloads, see :r
 Operating Kotori LST
 ====================
 
+Little bit of linux howto
+---------------
+
+WinSCP connect basti@raider.isarengineering.de
+create a subfolder named after the channel in the folder /home/basti/kotori/etc/headers where the components.h needs to be saved
+in the file /home/basti/kotori/etc/lst.ini the Channel needs to be created and the components.h needs to be linked
+using the User Basti the command  "tmux att -t kotori" attaches to the console where kotori is running, press Strg-C to stop kotori, "kotori --debug" restarts kotori
+never close tmux sessions, just detache, them using Strg-B and then d.
+
+
+For using the channel operations, the user basti should navigate to /home/basti/kotori and then start "source .venv27/bin/activate". The Channel Operations should be available 
+
 .. highlight:: bash
 
 There is some tooling for conveniently working with native binary message structs defined in ``etc/headers/*.h``.
