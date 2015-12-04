@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <style type="text/css">
+        .block {
+            background-color: #ccc;
+            padding: 1em;
+            margin: 1em;
+        }
+
+	#chart_container {
+        position: relative;
+        display: inline-block;
+        font-family: Arial, Helvetica, sans-serif;
+	}
+
+	#chart {
+        display: inline-block;
+        margin-left: 40px;
+	}
+
+	#y_axis {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 40px;
+	}
+
+	#legend {
+        display: inline-block;
+        vertical-align: top;
+        margin: 0 0 0 10px;
+	}
+        
+           html, body, #map {
+           height:100%;
+           width:100%;
+           padding:0px;
+           margin:0px;
+           } 
+
+    </style>
+
+    <title>Kotori Dashboard on h2m.isareng.de</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="static/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="static/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+    <link href="static/css/bootstrap-editable.css" rel="stylesheet" type="text/css"/>
+
+    <script language="javascript">
+        var wsuri = '$$websocket_uri';
+    </script>
+</head>
+<body>
+
+
+<script type="text/template" id="node-template">
+    <div class="col-6 col-sm-6 col-lg-4">
+
+        <div class="panel panel-success">
+
+        <div class="panel-heading">
+            <h3 class="panel-title"><span id="node-label-<%- rc.node_id %>"><%- rc.node_label %></span></h3>
+        </div>
+        <div class="panel-body">
+            <span id="online-<%- rc.node_id %>" class="label label-success">Online</span>
+            <span id="offline-<%- rc.node_id %>" class="label label-danger">Offline</span>
+
+
+                
+            </p>
+            
+            
+        </div>
+        </div>
+
+    </div>
+
+</script>
+
+<div id="map"></div>
+<div id="chart"></div>
+
+<!-- <div class="container">
+
+    <div class="row panel panel-default panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="display: inline">Map</h3>
+            &nbsp;&nbsp;&nbsp;
+            <button id="CenterMap">Where is my car?</button>
+        </div>
+        <div class="panel-body">
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <div class="row panel panel-default panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="display: inline">Timeseries prototype</h3>
+        </div>
+        <div class="panel-body">
+		<div id="chart_container">
+        		<div id="y_axis"></div>
+        		<div id="chart"></div>
+		</div>
+		<div id="legend"></div>
+        </div>
+    </div>
+
+
+
+    <div class="row row-offcanvas row-offcanvas-right">
+
+         <div class="col-xs-18 col-sm-12">
+          
+
+            <div class="row" id="item-container"/>
+        </div>
+
+    </div>
+    
+    <footer>
+        <p>&copy; 2015 Elmyra UG / IsarEngineering GmbH (DosyIT Unternehmensdienstleistung GmbH)</p>
+    </footer>
+
+</div> 
+-->
+
+
+<!--/.container-->
+
+<script src="static/js/jquery.min.js"></script>
+<script src="static/js/purl.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
+<script src="static/js/bootstrap-editable.min.js"></script>
+<script src="static/js/underscore-min.js"></script>
+
+<!-- Load leaflet.js -->
+<link rel="stylesheet" href="static/css/leaflet_fs.css" />
+<script src="static/js/leaflet.js"></script>
+
+
+
+<!-- Load d3.js -->
+<script src="static/js/d3.v3.min.js" charset="utf-8"></script>
+<!-- Rickshaw -->
+<link href="static/css/rickshaw.min.css" rel="stylesheet" type="text/css">
+<!--<script src="static/js/rickshaw.min.js"></script>-->
+
+<script src="static/js/cbuffer.js"></script>
+
+<script src="static/js/autobahn.min.js"></script>
+<script src="static/app/kotori_fs.js"></script>
+
+</body>
+</html>
