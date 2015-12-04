@@ -110,10 +110,6 @@ Example::
     include_path = etc/headers
     header_files = foo.h
 
-.. note::
-
-    We are working on the *brace-or-equal-initializer* style as well.
-
 
 .. _lst-header-file-anatomy:
 
@@ -123,6 +119,10 @@ In order to make Kotori grok the message structs defined in standard C/C++ heade
 to be followed. The initializer flavor to be used currently is the "list-initializer" style as seen below.
 Further, transformation rules can be attached to specific fields by adding annotations in comments.
 See also example below and :ref:`lst-transformation-rules`.
+
+.. note::
+
+    We are working on the *brace-or-equal-initializer* style.
 
 .. highlight:: c++
 
