@@ -157,4 +157,5 @@ Wishlist
 - "Stockkarte" subsystem
     - marking point in graphs and filling the Stockkarte questioning
     - https://github.com/Dieterbe/anthracite/
+    - https://twitter.github.io/labella.js/
 - Timeseries anomaly detection using machine learning

@@ -39,8 +39,25 @@ Prio 2
 
 - [o] new message command ``h2m|sattracker-message list`` to show all struct names
 - [o] new "influxdb" maintenance command with e.g. "drop database"
-- [o] pyclibrary upstreaming: patches and ctor issue
+- [o] pyclibrary upstreaming: patches and ctor issue::
+
+    Traceback (most recent call last):
+      File "kotori/daq/intercom/c.py", line 112, in <module>
+        main()
+      File "kotori/daq/intercom/c.py", line 72, in main
+        p = clib.struct_program() #(abc=9)
+      File "/Users/amo/dev/foss/open.nshare.de/kotori-mqtt/.venv27/lib/python2.7/site-packages/pyclibrary-0.1.2-py2.7.egg/pyclibrary/c_library.py", line 230, in __getattr__
+        obj = self(k, n)
+      File "/Users/amo/dev/foss/open.nshare.de/kotori-mqtt/.venv27/lib/python2.7/site-packages/pyclibrary-0.1.2-py2.7.egg/pyclibrary/c_library.py", line 210, in __call__
+        self._objs_[typ][name] = self._make_obj_(typ, name)
+      File "/Users/amo/dev/foss/open.nshare.de/kotori-mqtt/.venv27/lib/python2.7/site-packages/pyclibrary-0.1.2-py2.7.egg/pyclibrary/c_library.py", line 277, in _make_obj_
+        return self._get_struct('structs', n)
+      File "/Users/amo/dev/foss/open.nshare.de/kotori-mqtt/.venv27/lib/python2.7/site-packages/pyclibrary-0.1.2-py2.7.egg/pyclibrary/backends/ctypes.py", line 294, in _get_struct
+        (m[0], self._get_type(m[1]), m[2]) for m in defs]
+    ValueError: number of bits invalid for bit field
+
 - [o] refactor ``config['_active_']`` mechanics in ``lst/application.py``
+
 
 Prio 3
 ------
