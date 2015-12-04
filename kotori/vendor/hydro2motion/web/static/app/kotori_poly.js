@@ -31,7 +31,7 @@ var legend;
 var polyline;
 
 // data sink for udp adapter
-var ringbuffer_size = 240;
+var ringbuffer_size = 300;
 var telemetry_graph = {
     'V_FC': [],
     'V_CAP': [],
@@ -43,9 +43,11 @@ var telemetry_graph = {
     'Water_in': [],
     'Water_out': [],
     'Drive_SW': [],
-    'H2_flow': [],
+    'O2_pload': [],
     'GPS_Speed': [],
+    'H2_flow': [],
     'V_Safety': [],
+    'O2_calc': [],
 };
 var telemetry = {
     'V_FC': new CBuffer(ringbuffer_size),
@@ -58,9 +60,11 @@ var telemetry = {
     'Water_in': new CBuffer(ringbuffer_size),
     'Water_out': new CBuffer(ringbuffer_size),
     'Drive_SW': new CBuffer(ringbuffer_size),
+    'O2_pload': new CBuffer(ringbuffer_size),
     'H2_flow': new CBuffer(ringbuffer_size),
     'GPS_Speed': new CBuffer(ringbuffer_size),
     'V_Safety': new CBuffer(ringbuffer_size),
+    'O2_calc': new CBuffer(ringbuffer_size),
 };
 var graph;
 
@@ -75,14 +79,13 @@ window.onload = function() {
 
     L.Icon.Default.imagePath = 'static/img';
 
-	map = L.map('map').setView([51.882804, 4.488303], 16);
+	map = L.map('map').setView([51.882804, 4.488303], 17);
 
 	L.tileLayer('https://{s}.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYmFzdGlhbmhlbm5la2UiLCJhIjoiczZLeUpYbyJ9.01Znhen2le-PF6G4307P9Q', {
     		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
 		id: 'bastianhenneke.m565ad47',
    	 	maxZoom: 18
 	}).addTo(map);
-
 	var polylinePoints = [
             new L.LatLng(51.882804, 4.488303),
             new L.LatLng(51.883645, 4.488357),
@@ -91,6 +94,7 @@ window.onload = function() {
 	marker = L.marker([51.882804, 4.488303]).addTo(map);
 	polyline =	L.polyline(polylinePoints, {color: 'green'}).addTo(map);
 
+
     // ------------------------------------------
     //   telemetry timeseries graph
     // ------------------------------------------
@@ -98,8 +102,8 @@ window.onload = function() {
     graph = new Rickshaw.Graph( {
         element: document.querySelector("#chart"),
         renderer: 'line',
-        width: 680,
-        height: 300,
+        width: 1700,
+        height: 400,
         series: [
             {
                 name: "V_FC",
@@ -152,6 +156,11 @@ window.onload = function() {
                 data: telemetry_graph['Drive_SW'],
             },
 	    {
+                name: "O2_pump_load",
+		color: palette.color(),
+                data: telemetry_graph['O2_pload'],
+            },
+	    {
                 name: "H2_flow",
 		color: palette.color(),
                 data: telemetry_graph['H2_flow'],
@@ -165,6 +174,11 @@ window.onload = function() {
                 name: "V_Safety",
 		color: palette.color(),
                 data: telemetry_graph['V_Safety'],
+            },
+	    {
+                name: "O2_calc",
+		color: palette.color(),
+                data: telemetry_graph['O2_calc'],
             },
 
         ]
@@ -304,6 +318,7 @@ function node_data(data) {
     var Water_in_temp = values[8];
     var Water_out_temp = values[9];
     var Drive_SW_temp = values[12];
+    var O2_pload_temp = values[16];
     var H2_flow_temp = values[23];
     var GPS_Speed_temp = values[27];
     var V_Safety_temp = values[28];
@@ -320,6 +335,7 @@ function node_data(data) {
     var Water_in;
     var Water_out;
     var Drive_SW;
+    var O2_pload;
     var H2_flow;
     var GPS_Speed;
     var V_Safety;
@@ -336,10 +352,11 @@ function node_data(data) {
     Water_in = parseFloat(Water_in_temp) * 0.001;
     Water_out = parseFloat(Water_out_temp) * 0.001;
     Drive_SW = parseFloat(Drive_SW_temp) * 10;
+    O2_pload = parseFloat(O2_pload_temp) * 0.01;
     H2_flow = parseFloat(H2_flow_temp) * 0.01;
     GPS_Speed = parseFloat(GPS_Speed_temp) * 0.01;
     V_Safety = parseFloat(V_Safety_temp) * 0.001;
-    O2_calc = parseFloat(O2_calc_temp) * 0.01;
+    O2_calc = parseFloat(O2_calc_temp) * 0.001;
 
 
 
@@ -352,9 +369,8 @@ function node_data(data) {
         //map.panTo(latlng);
         marker.setLatLng(latlng);
         marker.update();
-
-	polyline.addLatLng(latlng);
-	polyline.redraw();
+		polyline.addLatLng(latlng);
+		polyline.redraw();
 
     } catch (ex) {
         console.warn('Could not decode GPS position:', ex);
@@ -376,9 +392,11 @@ function node_data(data) {
     telemetry['Water_in'].push({ x: now, y: parseFloat(Water_in) });
     telemetry['Water_out'].push({ x: now, y: parseFloat(Water_out) });
     telemetry['Drive_SW'].push({ x: now, y: parseFloat(Drive_SW) });
+    telemetry['O2_pload'].push({ x: now, y: parseFloat(O2_pload) });
     telemetry['H2_flow'].push({ x: now, y: parseFloat(H2_flow) });
     telemetry['GPS_Speed'].push({ x: now, y: parseFloat(GPS_Speed) });
     telemetry['V_Safety'].push({ x: now, y: parseFloat(V_Safety) });
+    telemetry['O2_calc'].push({ x: now, y: parseFloat(O2_calc) });
 
     //console.log(telemetry['mma_x'].data);
 
@@ -411,7 +429,10 @@ function node_data(data) {
 	
     telemetry_graph['Drive_SW'].splice(0, telemetry_graph['Drive_SW'].length);
     telemetry['Drive_SW'].toArray().forEach(function(v) {telemetry_graph['Drive_SW'].push(v)}, this);
-
+	
+    telemetry_graph['O2_pload'].splice(0, telemetry_graph['O2_pload'].length);
+    telemetry['O2_pload'].toArray().forEach(function(v) {telemetry_graph['O2_pload'].push(v)}, this);
+	
     telemetry_graph['H2_flow'].splice(0, telemetry_graph['H2_flow'].length);
     telemetry['H2_flow'].toArray().forEach(function(v) {telemetry_graph['H2_flow'].push(v)}, this);
 	
@@ -420,6 +441,9 @@ function node_data(data) {
 	
     telemetry_graph['V_Safety'].splice(0, telemetry_graph['V_Safety'].length);
     telemetry['V_Safety'].toArray().forEach(function(v) {telemetry_graph['V_Safety'].push(v)}, this);
+	
+    telemetry_graph['O2_calc'].splice(0, telemetry_graph['O2_calc'].length);
+    telemetry['O2_calc'].toArray().forEach(function(v) {telemetry_graph['O2_calc'].push(v)}, this);
 
     graph.update();
 

@@ -33,6 +33,7 @@
         margin: 0 0 0 10px;
 	}
 
+
     </style>
 
     <title>Kotori Dashboard on h2m.isareng.de</title>
@@ -49,6 +50,7 @@
 <body>
 
 <br/>
+
 
 <script type="text/template" id="node-template">
     <div class="col-6 col-sm-6 col-lg-4">
@@ -73,8 +75,16 @@
     </div>
 
 </script>
+<div id="map"></div>
+<br>
+<br>
+		<div id="chart_container">
+        		<div id="y_axis"></div>
+        		<div id="chart"></div>
+		</div>
+		<div id="legend"></div>
 
-
+<!--
 <div class="container">
 
     <div class="row panel panel-default panel-info">
@@ -118,6 +128,7 @@
     </footer>
 
 </div>
+-->
 <!--/.container-->
 
 <script src="static/js/jquery.min.js"></script>
@@ -127,7 +138,7 @@
 <script src="static/js/underscore-min.js"></script>
 
 <!-- Load leaflet.js -->
-<link rel="stylesheet" href="static/css/leaflet.css" />
+<link rel="stylesheet" href="static/css/leaflet_po.css" />
 <script src="static/js/leaflet.js"></script>
 
 
@@ -141,7 +152,7 @@
 <script src="static/js/cbuffer.js"></script>
 
 <script src="static/js/autobahn.min.js"></script>
-<script src="static/app/kotori.js"></script>
+<script src="static/app/kotori_poly.js"></script>
 
 </body>
 </html>
