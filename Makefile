@@ -96,6 +96,6 @@ sdist:
 	python setup.py sdist
 
 upload:
-	rsync -auv ./dist/kotori-*.tar.gz isareng@packages.elmyra.de:/srv/packages/customers/isarengineering/python/eggs/kotori/
+	rsync -auv ./dist/kotori-*.tar.gz isareng@packages.elmyra.de:/srv/packages/organizations/isarengineering/python/eggs/kotori/
 
 release: virtualenv bumpversion push sdist upload
