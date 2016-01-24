@@ -17,14 +17,13 @@ class MqttAdapter(Service):
         self.broker_port = broker_port
         self.callback = callback or self.onPublish
         self.subscriptions = subscriptions or []
+
+        logger.info('Starting MQTTAdapter. broker={}:{}'.format(self.broker_host, self.broker_port))
         self.connect()
 
     def connect(self):
-        logger.info('Starting MQTT adapter. broker={}:{}'.format(self.broker_host, self.broker_port))
-
         factory = MQTTFactory(profile=MQTTFactory.PUBLISHER | MQTTFactory.SUBSCRIBER)
         point   = TCP4ClientEndpoint(reactor, self.broker_host, self.broker_port)
-
         d = point.connect(factory).addCallback(self.gotProtocol)
 
     def gotProtocol(self, p):
