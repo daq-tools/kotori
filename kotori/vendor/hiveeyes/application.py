@@ -73,12 +73,16 @@ class HiveeyesGrafanaManager(GrafanaManager):
     def panel_generator(self, database, series, data, topology):
         # generate panels
         panels = []
-        if 'temp1' in data:
+        if 'temp1' in data or 'temperature' in data:
             panels.append({'title': 'temp',      'fieldnames': self.collect_fields(data, 'temp'), 'format': 'celsius'})
         if 'hum1' in data:
             panels.append({'title': 'humidity',  'fieldnames': self.collect_fields(data, 'hum')})
         if 'wght1' in data:
             panels.append({'title': 'weight',    'fieldnames': self.collect_fields(data, 'wght'), 'label': 'kg'})
+
+        #
+        if 'volume' in data:
+            panels.append({'title': 'temp',      'fieldnames': self.collect_fields(data, 'volume')})
 
         return panels
 
