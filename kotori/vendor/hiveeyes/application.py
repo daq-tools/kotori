@@ -80,9 +80,9 @@ class HiveeyesGrafanaManager(GrafanaManager):
         if 'wght1' in data:
             panels.append({'title': 'weight',    'fieldnames': self.collect_fields(data, 'wght'), 'label': 'kg'})
 
-        #
+        # c-base amendments
         if 'volume' in data:
-            panels.append({'title': 'temp',      'fieldnames': self.collect_fields(data, 'volume')})
+            panels.append({'title': 'volume',      'fieldnames': self.collect_fields(data, 'volume')})
 
         return panels
 
