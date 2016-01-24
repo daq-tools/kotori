@@ -6,6 +6,7 @@ develop
 -------
 - lst: resolve collision on parsed C header files when using identical filenames for different channels
 - hiveeyes: improve configuration file “hiveeyes.ini” and logging
+- hiveeyes: fix Grafana panel creation
 
 
 2015-11-26 0.5.1
