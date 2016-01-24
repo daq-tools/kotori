@@ -37,6 +37,7 @@ class InfluxDBAdapter(object):
         else:
             raise ValueError('Unknown InfluxDB protocol version "{}"'.format(self.version))
 
+        logger.info('Storage target:   influxdb={}:{}'.format(self.host, self.port))
         self.influx = InfluxDBClient(
             host=self.host, port=self.port,
             username=self.username, password=self.password,

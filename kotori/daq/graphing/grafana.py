@@ -217,10 +217,15 @@ class GrafanaDashboard(object):
 class GrafanaManager(object):
 
     def __init__(self, config):
-        logger.info('Starting GrafanaManager "{}"'.format(self.__class__.__name__))
         self.config = config
         if not 'port' in self.config['grafana']:
             self.config['grafana']['port'] = '3000'
+
+        name = self.__class__.__name__
+        logger.info('Starting GrafanaManager "{}". grafana={}:{}'.format(
+            name,
+            self.config['grafana']['host'],
+            self.config['grafana']['port']))
 
         self.skip_cache = {}
 

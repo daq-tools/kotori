@@ -59,7 +59,8 @@ def run():
     config = get_configuration(config_file)
 
     # defaults
-    websocket_uri = unicode(config.get('wamp', 'listen'))
+    if config.has_section('wamp'):
+        websocket_uri = unicode(config.get('wamp', 'listen'))
 
     # run master and web gui
     if 'master' in options:
