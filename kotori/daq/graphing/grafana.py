@@ -299,7 +299,20 @@ class GrafanaManager(object):
             panels_exists = dashboard_data['rows'][0]['panels']
             panels_exists_titles = [panel['title'] for panel in panels_exists]
             panels_new_titles = [panel['title'] for panel in panels_new]
-            panels_missing_titles = set(panels_new_titles) - set(panels_exists_titles)
+
+            # v1 - naive
+            #panels_missing_titles = set(panels_new_titles) - set(panels_exists_titles)
+
+            # v2 - prefix search
+            panels_missing_titles = []
+            for new_title in panels_new_titles:
+                found = False
+                for existing_title in panels_exists_titles:
+                    if existing_title.startswith(new_title):
+                        found = True
+                        break
+                if not found:
+                    panels_missing_titles.append(new_title)
 
             logger.info('panels_exists_titles: {}'.format(panels_exists_titles))
             logger.info('panels_new_titles:    {}'.format(panels_new_titles))
