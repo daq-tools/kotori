@@ -60,7 +60,6 @@ def run():
 
     # defaults
     websocket_uri = unicode(config.get('wamp', 'listen'))
-    http_port_v2 = int(config.get('kotori-daq', 'http_port'))
 
     # run master and web gui
     if 'master' in options:
@@ -105,6 +104,7 @@ def run():
 
         # generic daq
         if config.has_section('kotori-daq'):
+            http_port_v2 = int(config.get('kotori-daq', 'http_port'))
             boot_frontend(http_port_v2, websocket_uri, debug=debug)
 
 
