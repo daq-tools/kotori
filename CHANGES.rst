@@ -1,10 +1,77 @@
-===================
-kotori-mqtt CHANGES
-===================
-
+==============
+Kotori CHANGES
+==============
 
 develop
 -------
+- lst: resolve collision on parsed C header files when using identical filenames for different channels
+- hiveeyes: improve configuration file “hiveeyes.ini” and logging
+- hiveeyes: fix Grafana panel creation
+
+
+2015-11-26 0.5.1
+----------------
+- overhaul configuration files, activate “hydro2motion” channel with vendor “lst”
+- fix hydro2motion re. database authentication
+- lst: improve documentation
+
+
+2015-11-26 0.5.0
+----------------
+- lst: add sattracker application
+- lst: fix WAMP serialization error when publishing binary data (e.g. "char 0x9c") by using MsgPack serialization
+- lst: augment c source file before compilation re. ``#include "mbed.h"`` vs. ``#include "stdint.h"``
+- lst: parse transformation rules from source code annotation
+- lst: apply transformation rules before publishing to software bus
+- fix grafana dashboard update when having no panels
+- lst: nasty hack to get proper struct initializer data from CParser results
+- show “average” column in Grafana
+- lst: flexible compiler detection re. Linux vs. Mac OSX (MacPorts)
+- improve error handling when using interactive commands
+- explicitly convert values to float when evaluating SymPy expressions
+- influxdb: prevent float<->integer casting errors by converting all numerical values to float
+- upgrade to python influxdb-2.10.0
+- lst: rename ``etc/lst-h2m.ini`` to ``etc/lst.ini``
+- lst: generalize h2m-message and sattracker-message into lst-message
+- specify configuration file via KOTORI_CONFIG environment variable
+- lst: add “lst-message list-channels” command
+- lst: wording: change “application” to “channel”
+- refactor configuration mechanics
+
+
+.. _v0.4.0:
+
+2015-11-20 0.4.0
+----------------
+proof-of-concept for vendor :ref:`vendor-lst`
+
+- add release and documentation infrastructure through Makefile targets
+- add vendor “lst”
+    - add struct definitions of h2m project
+    - add basic udp message sender in c++ based on h2m struct definitions
+    - add infrastructure for parsing schema mappings from c/c++ header files based on pyclibrary
+    - instantiate structs from compiled c/c++ header files/libraries
+    - introduce struct registry for bookkeeping and runtime dispatching
+    - decouple lst/h2m specific struct registry behavior based on ID attribute
+    - add initial docs about lst/h2m spikes
+    - properly tweak "h2m_structs.h" to be grokked by patched pyclibrary
+    - make message receiving actually work in dry-dock, improve pretty-printing
+    - add command line entrypoint “h2m-message” with “decode” and “info” actions
+    - implement “h2m-message send”
+    - lst main application component: receive, decode and store binary messages
+    - automatic Grafana dashboard- and panel creation
+- fix panel generation for vendor hiveeyes
+- use nanosecond time precision with InfluxDB
+- lst: honour struct field order in Grafana
+- add more details to Grafana dashboard panels
+- improve error messages “h2m-message send/decode”
+- generalize c library adapter, multi-project capabilities for vendor lst
+
+
+2015-11-06 0.3.2
+----------------
+proof-of-concept for vendor :ref:`vendor-hiveeyes`
+
 - upgrade foundation libraries: Twisted, Autobahn, Crossbar
 - add frontend foundation based on Pyramid web framework
 - ui: add jQuery, Bootstrap, Fontawesome, html5shiv and respond.js
@@ -14,6 +81,7 @@ develop
 - refactor hydro2motion code
 - ui: add modernizr and underscore
 - ui: add foundation for page transitions from codrops
+- add vendor "hiveeyes"
 - hiveeyes: receive messages via MQTT and store data points into InfluxDB
 - app: use configuration file instead of hardcoded configuration values
 - storage: add support for InfluxDB 0.9
@@ -22,6 +90,8 @@ develop
 - minor update to BERadio receiving
 - integrate grafana datasource- and dashboard automation
 - improve logging
+- Sort "collect_fields" result before passing to grafana manager
+- refactor project layout
 
 
 2015-05-21 0.2.2
@@ -39,6 +109,8 @@ develop
 
 2015-04-24 0.2.0
 ----------------
+proof-of-concept for vendor :ref:`vendor-hydro2motion`
+
 - ui: add d3 and rickshaw
 - ui: add timeseries prototype
 - ui: add cbuffer.js
@@ -101,7 +173,7 @@ develop
 
 2014-01-05 0.0.1
 ----------------
-proof-of-concept
+proof-of-concept for vendor :ref:`vendor-ilaundry`
 
 - Two daemons: master service and node service
 - Communication infrastructure on top of Autobahn using PubSub
