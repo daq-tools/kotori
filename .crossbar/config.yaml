@@ -1,11 +1,23 @@
 controller: {}
 workers:
+
 - realms:
+  - name: kotori
+    roles:
+    - name: anonymous
+      permissions:
+      - {call: true, publish: true, register: true, subscribe: true, uri: '*'}
   - name: kotori-realm
     roles:
     - name: anonymous
       permissions:
       - {call: true, publish: true, register: true, subscribe: true, uri: '*'}
+  - name: lst
+    roles:
+    - name: anonymous
+      permissions:
+      - {call: true, publish: true, register: true, subscribe: true, uri: '*'}
+
   transports:
   - endpoint: {port: 9000, type: tcp}
     paths:
