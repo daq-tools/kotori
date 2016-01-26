@@ -10,6 +10,7 @@ develop
 - hiveeyes: fix Grafana panel creation re. InfluxDB select expression
 - hiveeyes: Grafana 2.6.0 compatibility, Grafana 2.1.3 still works though
 - hiveeyes: don’t put global realm “hiveeyes” into Grafana dashboard name
+- hiveeyes: improve Grafana panel automation
 
 
 2015-11-26 0.5.1

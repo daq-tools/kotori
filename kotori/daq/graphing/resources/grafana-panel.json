@@ -6,7 +6,7 @@
     "error": false,
     "fill": 1,
     "grid": {
-        "leftLogBase": 1,
+        "leftLogBase": {{ left_log_base }},
         "leftMax": null,
         "leftMin": null,
         "rightLogBase": 1,

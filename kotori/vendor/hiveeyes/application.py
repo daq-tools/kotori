@@ -70,19 +70,48 @@ class HiveeyesApplication(BERadioNetworkApplication):
 
 class HiveeyesGrafanaManager(GrafanaManager):
 
-    def panel_generator(self, database, series, data, topology):
-        # generate panels
-        panels = []
-        if 'temp1' in data or 'temperature' in data:
-            panels.append({'title': 'temp',      'fieldnames': self.collect_fields(data, 'temp'), 'format': 'celsius'})
-        if 'hum1' in data:
-            panels.append({'title': 'humidity',  'fieldnames': self.collect_fields(data, 'hum')})
-        if 'wght1' in data:
-            panels.append({'title': 'weight',    'fieldnames': self.collect_fields(data, 'wght'), 'label': 'kg'})
+    def get_panel_options(self, data, fieldname):
+        knowledge = [
+            {'prefixes': ['temp'],           'format': 'celsius'},
+            {'prefixes': ['hum'],            'format': 'humidity'},
+            {'prefixes': ['wght', 'weight'], 'label':  'kg'},
+            {'prefixes': ['volume'],         'label':  'dB', 'scale': 10},
+        ]
+        for rule in knowledge:
+            for prefix in rule['prefixes']:
+                if fieldname.startswith(prefix):
+                    return rule
 
+        return {}
+
+    def get_panel_data(self, data, title, fieldname_prefix):
+        panel = {'title': title, 'fieldnames': self.collect_fields(data, fieldname_prefix)}
+        panel.update(self.get_panel_options(data, fieldname_prefix))
+        return panel
+
+    def panel_generator(self, database, series, data, topology):
+        """
+        Generate fine Grafana panels
+        """
+
+        panels = []
+
+        # multi-field panels v1: naive / BERadio-specific
+        # detect this payload flavor by checking whether field names have
+        # the signature of being sent from a BERadio transmitter
+        if 'temp1' in data or 'hum1' in data or 'wght1' in data:
+            if 'temp1' in data:
+                panels.append(self.get_panel_data(data, 'temperature', 'temp'))
+            if 'hum1' in data:
+                panels.append(self.get_panel_data(data, 'humidity', 'hum'))
+            if 'wght1' in data:
+                panels.append(self.get_panel_data(data, 'weight', 'wght'))
+
+        # regular panels: one panel per field
         # c-base amendments
-        if 'volume' in data:
-            panels.append({'title': 'volume',      'fieldnames': self.collect_fields(data, 'volume')})
+        else:
+            for fieldname in sorted(data.keys()):
+                panels.append(self.get_panel_data(data, fieldname, fieldname))
 
         return panels
 
