@@ -78,6 +78,8 @@ class GrafanaApi(object):
 
         try:
             logger.info('Creating/updating dashboard "{}"'.format(name))
+            #print 'dashboard:'
+            #pprint(dashboard.dashboard)
             response = self.grafana.dashboards.db.create(**dashboard.wrap_api())
             logger.info(slm(response))
 
@@ -244,11 +246,12 @@ class GrafanaManager(object):
     def provision(self, database, series, data, topology=None):
 
         topology = topology or {}
+        dashboard_name = topology.get('network', database)
 
         if self._skip_creation(database, series, data):
             return
 
-        logger.info('Provisioning Grafana for database "{}" and series "{}"'.format(database, series))
+        logger.info('Provisioning Grafana for database "{}" and series "{}". dashboard={}'.format(database, series, dashboard_name))
 
         grafana = GrafanaApi(
             host = self.config['grafana']['host'],
@@ -270,10 +273,10 @@ class GrafanaManager(object):
 
 
         # get dashboard if already exists
-        dashboard_data = grafana.get_dashboard(name=database)
+        dashboard_data = grafana.get_dashboard(name=dashboard_name)
 
         # wrap into convenience object
-        dashboard = GrafanaDashboard(datasource=database, title=database, dashboard=dashboard_data)
+        dashboard = GrafanaDashboard(datasource=database, title=dashboard_name, dashboard=dashboard_data)
 
         # generate panels
         panels_new = self.panel_generator(database=database, series=series, data=data, topology=topology)
@@ -289,7 +292,7 @@ class GrafanaManager(object):
             dashboard.build(measurement=series, row_title=row_title, panel_title_suffix=panel_title_suffix, panels=panels_new)
 
             # create dashboard
-            grafana.create_dashboard(dashboard, name=database)
+            grafana.create_dashboard(dashboard, name=dashboard_name)
 
         # update existing dashboard, only with new panels
         else:
@@ -328,7 +331,7 @@ class GrafanaManager(object):
                         panels_exists.append(dashboard.build_panel(measurement=series, panel=panel, title_suffix=panel_title_suffix))
 
                 # update dashboard with new panels
-                grafana.create_dashboard(dashboard, name=database)
+                grafana.create_dashboard(dashboard, name=dashboard_name)
 
             else:
                 logger.info('No missing panels to add')
