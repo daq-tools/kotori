@@ -178,6 +178,7 @@ class GrafanaDashboard(object):
             'id': self.panel_id,
             'datasource': self.datasource,
             'panel_title': panel_title,
+            'left_log_base': panel.get('scale', 1),
             'label_y': panel.get('label', ''),
             'format_y': panel.get('format', 'none'),
         }
@@ -361,9 +362,13 @@ class GrafanaManager(object):
 
         return panels
 
-    # field name collection helper
     @staticmethod
     def collect_fields(data, prefix='', sorted=True):
+        """
+        Field name collection helper.
+        Does a prefix search over all fields in "data" and builds
+        a list of field names like temp1, temp2, etc. in sorted order.
+        """
         fields = []
         for field in data.keys():
             if field.startswith(prefix):
