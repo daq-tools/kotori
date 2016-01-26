@@ -1,10 +1,25 @@
 {
     "alias": "{{ alias }}",
+    "resultFormat": "time_series",
     "fields": [
         {
             "func": "mean",
             "name": "{{ name }}"
         }
+    ],
+    "select": [
+        [
+            {
+                "params": [
+                    "{{ name }}"
+                ],
+                "type": "field"
+            },
+            {
+                "params": [],
+                "type": "mean"
+            }
+        ]
     ],
     "groupByTags": [],
     "measurement": "{{ measurement }}",

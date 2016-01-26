@@ -8,6 +8,7 @@ develop
 - hiveeyes: improve configuration file “hiveeyes.ini” and logging
 - hiveeyes: fix Grafana panel creation
 - hiveeyes: fix Grafana panel creation re. InfluxDB select expression
+- hiveeyes: Grafana 2.6.0 compatibility, Grafana 2.1.3 still works though
 
 
 2015-11-26 0.5.1

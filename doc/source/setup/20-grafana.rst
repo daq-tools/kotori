@@ -58,3 +58,17 @@ Or by importing:
 View Dashboard:
 
 - http://192.168.59.103:3000/dashboard/db/kotori
+
+
+Auto configuration
+==================
+
+Kotori automatically creates dashboards. Read the source, YMMV.
+This is a notepad re. interesting information.
+
+Grafana 2.6.0 added some attributes on the "target" level, where fields and query expressions are defined::
+
+    "dsType": "influxdb",
+    "resultFormat": "time_series",
+    "refId": "A",
+
