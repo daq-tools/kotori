@@ -11,6 +11,7 @@ develop
 - hiveeyes: Grafana 2.6.0 compatibility, Grafana 2.1.3 still works though
 - hiveeyes: don’t put global realm “hiveeyes” into Grafana dashboard name
 - hiveeyes: improve Grafana panel automation
+- hiveeyes: accept single values on mqtt topic
 
 
 2015-11-26 0.5.1
