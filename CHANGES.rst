@@ -12,6 +12,7 @@ develop
 - hiveeyes: don’t put global realm “hiveeyes” into Grafana dashboard name
 - hiveeyes: improve Grafana panel automation
 - hiveeyes: accept single values on mqtt topic
+- hiveeyes: tune the default Grafana dashboard and panel
 
 
 2015-11-26 0.5.1
