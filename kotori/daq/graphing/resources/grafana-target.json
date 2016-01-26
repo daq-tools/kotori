@@ -8,7 +8,7 @@
     ],
     "groupByTags": [],
     "measurement": "{{ measurement }}",
-    "query": "SELECT mean({{ name }}) FROM \"{{ measurement }}\" WHERE $timeFilter GROUP BY time($interval)",
+    "query": "SELECT mean(\"{{ name }}\") FROM \"{{ measurement }}\" WHERE $timeFilter GROUP BY time($interval)",
     "rawQuery": false,
     "tags": []
 }
