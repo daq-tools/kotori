@@ -53,23 +53,49 @@ class BERadioNetworkApplication(object):
         msg = 'MQTT receive: topic={}, payload={}'.format(topic, payload)
         logger.debug(slm(msg))
 
-        if topic.startswith(self.realm) and topic.endswith('message-json'):
+        if topic.startswith(self.realm):
 
-            # compute storage address from topic
-            topology = self.topic_to_topology(topic)
-            logger.info('Topology address: {}'.format(slm(dict(topology))))
+            # entry point for multiple measurements in json object
+            if topic.endswith('message-json'):
 
-            storage = self.topology_to_database(topology)
-            logger.info('Storage address:  {}'.format(slm(dict(storage))))
+                # compute storage address from topic
+                topology = self.topic_to_topology(topic)
+                logger.info('Topology address: {}'.format(slm(dict(topology))))
 
-            # decode message from json format
-            message = json.loads(payload)
+                storage = self.topology_to_database(topology)
+                logger.info('Storage address:  {}'.format(slm(dict(storage))))
 
-            # store data
-            self.store_message(storage.database, storage.series, message)
+                # decode message from json format
+                message = json.loads(payload)
 
-            # provision graphing subsystem
-            self.graphing.provision(storage.database, storage.series, message, topology=topology)
+                # store data
+                self.store_message(storage.database, storage.series, message)
+
+                # provision graphing subsystem
+                self.graphing.provision(storage.database, storage.series, message, topology=topology)
+
+            # entry point for single measurement as plain value; assume float
+            elif 'measure/' in topic:
+
+                topology = self.topic_to_topology(topic)
+                logger.info('Topology address: {}'.format(slm(dict(topology))))
+
+                storage = self.topology_to_database(topology)
+                logger.info('Storage address:  {}'.format(slm(dict(storage))))
+
+                # compute storage message from single scalar value
+                name  = topology.kind.replace('measure/', '')
+                value = float(payload)
+                message = {name: value}
+
+                # store data
+                self.store_message(storage.database, storage.series, message)
+
+                # provision graphing subsystem
+                self.graphing.provision(storage.database, storage.series, message, topology=topology)
+
+        else:
+            logger.info('Ignoring message to topic={}'.format(topic))
 
     def store_message(self, database, series, data):
 

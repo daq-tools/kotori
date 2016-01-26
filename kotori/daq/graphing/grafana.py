@@ -312,7 +312,9 @@ class GrafanaManager(object):
             for new_title in panels_new_titles:
                 found = False
                 for existing_title in panels_exists_titles:
-                    if existing_title.startswith(new_title):
+                    exact_match = existing_title == new_title
+                    fuzzy_match = existing_title.startswith(new_title + ' ')
+                    if exact_match or fuzzy_match:
                         found = True
                         break
                 if not found:
