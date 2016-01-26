@@ -27,7 +27,7 @@
         "hideEmpty": false,
         "max": true,
         "min": true,
-        "rightSide": true,
+        "rightSide": false,
         "show": true,
         "total": false,
         "values": true
@@ -37,13 +37,13 @@
     "links": [],
     "nullPointMode": "connected",
     "percentage": false,
-    "pointradius": 5,
-    "points": false,
+    "pointradius": 1,
+    "points": true,
     "renderer": "flot",
     "seriesOverrides": [],
     "span": 12,
     "stack": false,
-    "steppedLine": false,
+    "steppedLine": true,
     "targets": [
         {{ targets }}
     ],

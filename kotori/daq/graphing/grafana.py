@@ -149,7 +149,7 @@ class GrafanaDashboard(object):
             'id': 'null',
             'title': self.dashboard_title,
             'row_title': row_title,
-            'row_height': '200px',
+            'row_height': '300px',
         }
 
         # build panels list
