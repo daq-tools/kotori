@@ -44,7 +44,7 @@ class BERadioNetworkApplication(object):
         try:
             return self.process_message(topic, payload, *args)
         except Exception as ex:
-            logger.error('Processing MQTT message failed: {}\n{}'.format(ex, slm(last_error_and_traceback())))
+            logger.error(slm('Processing MQTT message failed: {}\n{}'.format(ex, last_error_and_traceback())))
 
     def process_message(self, topic, payload, *args):
 
