@@ -1,8 +1,8 @@
 .. _influxdb-handbook:
 
-========================
-Kotori InfluxDB Handbook
-========================
+=================
+InfluxDB Handbook
+=================
 
 
 Authentication

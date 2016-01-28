@@ -56,6 +56,7 @@ No new panel gets created::
 - [o] Packaging
     - Make Debian package
     - Make OPKG package http://www.jumpnowtek.com/yocto/Managing-a-private-opkg-repository.html
+    - http://www.jumpnowtek.com/yocto/Using-your-build-workstation-as-a-remote-package-repository.html
 
 - [o] Create table panel?
       http://docs.grafana.org/guides/whats-new-in-v2-6/#table-panel
