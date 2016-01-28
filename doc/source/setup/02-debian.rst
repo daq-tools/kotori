@@ -131,14 +131,14 @@ Into virtualenv::
 
     mkdir -p ~/develop/kotori
     virtualenv ~/develop/kotori/.venv27
-    ~/develop/kotori/.venv27/bin/pip install kotori \
+    ~/develop/kotori/.venv27/bin/pip install kotori[daq] \
         --extra-index-url=https://packages.elmyra.de/isarengineering/python/eggs/ \
         --upgrade
 
 Into system::
 
     aptitude install python-pip
-    pip install kotori \
+    pip install kotori[daq] \
         --extra-index-url=https://packages.elmyra.de/isarengineering/python/eggs/ \
         --upgrade
 
