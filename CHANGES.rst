@@ -14,6 +14,7 @@ develop
 - hiveeyes: accept single values on mqtt topic
 - hiveeyes: tune the default Grafana dashboard and panel
 - documentation updates
+- lst: add project “proptest”
 
 
 2015-11-26 0.5.1
