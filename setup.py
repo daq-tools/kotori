@@ -4,6 +4,7 @@ requires = [
     'Twisted==15.4.0',
     'autobahn==0.10.9',
     'crossbar==0.11.1',
+    'Jinja2==2.8',
     'pyramid==1.5.7',
     'pyramid_jinja2==2.5',
     'cornice==1.0.0',
@@ -25,7 +26,6 @@ extras = {
         'influxdb==2.10.0',
         'grafana_api_client==0.1.4',
         #'grafana-dashboard-builder==0.1.0a7',
-        'Jinja2==2.8',
     ],
     'daq_binary': [
         'pyclibrary==0.1.2',
