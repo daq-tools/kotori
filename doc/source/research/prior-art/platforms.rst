@@ -54,6 +54,9 @@ Commercial
   | https://yaler.net/
   | http://playground.arduino.cc/Code/Yaler
 
+- | wot.io
+  | http://www.wot.io
+
 
 Keen IO
 -------

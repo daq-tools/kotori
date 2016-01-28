@@ -24,3 +24,20 @@ Parsing C headers
 - http://docs.cython.org/src/userguide/external_C_code.html
 - http://svn.python.org/projects/python/trunk/Modules/parsermodule.c
 - https://pypi.python.org/pypi/CppHeaderParser/
+
+Initializer styles
+==================
+- http://stackoverflow.com/questions/20303525/c-evaluation-order-between-brace-or-equal-initializer-and-initialization-list
+- http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0134r0.html
+- http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3605.html
+- http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2008/n2756.htm
+- http://stackoverflow.com/questions/3016107/what-is-tagged-structure-initialization-syntax
+- http://stackoverflow.com/questions/11516657/c-structure-initialization
+- http://stackoverflow.com/questions/1601201/c-struct-initialization-using-labels-it-works-but-how-documentation
+- https://gcc.gnu.org/onlinedocs/gcc-4.2.1/gcc/Designated-Inits.html
+
+
+Interfacing with C/C++
+======================
+- https://github.com/wjakob/pybind11
+- https://pybind11.readthedocs.org/

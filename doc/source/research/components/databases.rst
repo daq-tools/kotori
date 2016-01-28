@@ -12,8 +12,12 @@ Timeseries databases
         - https://github.com/exoscale/workshop-visibility/blob/master/blocks/cyanite.md
         - https://github.com/ashelley/docker-cyanite-grafana
 - https://mabrek.github.io/blog/spark-cassandra-timeseries/
-- | Evaluation of NoSQL databases for DIRAC monitoring and beyond
+- | From CERN
+  | Evaluation of NoSQL databases for DIRAC monitoring and beyond
   | http://cds.cern.ch/record/2011172/files/LHCb-TALK-2015-060.pdf
+  | https://medium.com/@ghoranyi/needle-in-a-haystack-873c97a99983
+  | https://www.elastic.co/blog/grid-monitoring-at-cern-with-elastic
+  | http://openstack-in-production.blogspot.de/2013/10/log-handling-and-dashboards-in-cern.html
 - https://discuss.elastic.co/t/elk-vs-grafana-influxdb/1686/13
 - https://discuss.elastic.co/t/elk-vs-grafana-influxdb/1686/20
 - Heroic
