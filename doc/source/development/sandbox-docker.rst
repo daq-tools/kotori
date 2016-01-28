@@ -1,6 +1,6 @@
-===================
-Development Sandbox
-===================
+===============================
+Development sandbox with Docker
+===============================
 
 Global python packages
 ----------------------

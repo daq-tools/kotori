@@ -12,6 +12,16 @@ LST - Development
 Troubleshooting
 ===============
 
+_cffi_backend.so woes
+---------------------
+Problem::
+
+    ImportError: /tmp/easy_install-Scu8_1/cryptography-1.0.2/.eggs/cffi-1.2.1-py2.7-linux-x86_64.egg/_cffi_backend.so: failed to map segment from shared object: Operation not permitted
+
+Solution::
+
+    TMPDIR=/var/tmp python setup.py develop
+
 h2m-message Exception
 ---------------------
 

@@ -17,7 +17,11 @@ Kotori was at `Shell Eco-marathon`_ in Rotterdam with Hydro2Motion_.
 
 Run Kotori
 ==========
-::
+Crossbar router::
+
+    crossbar start
+
+Main application::
 
     kotori --config=etc/hydro2motion.ini
 
