@@ -1,36 +1,139 @@
+# ==========================================
+#             Debian packages
+# ==========================================
+#
+# Makefile-based poor man's version of:
+#
+#   - https://hynek.me/articles/python-app-deployment-with-native-packages/
+#   - https://parcel.readthedocs.org/
+#
+# Status: Work in progress
+#
+# Synopsis::
+#
+#   make fpm-full version=0.6.0
+#   dpkg-deb --contents kotori_0.6.0-1_amd64.deb
+#
 
-egg:
-	fab egg_build_and_release:setup_py=setup.py
+
+fpm-options := \
+	--name kotori \
+	--iteration 1 \
+	--deb-user kotori \
+	--deb-group kotori \
+	--no-deb-use-file-permissions \
+	--no-python-obey-requirements-txt \
+	--no-python-dependencies \
+	--depends "python" \
+	--deb-suggests "influxdb, mosquitto, mosquitto-clients, grafana" \
+	--maintainer "andreas.motl@elmyra.de" \
+	--vendor "Elmyra UG" \
+	--license "Other/Proprietary" \
+	--deb-changelog CHANGES.rst \
+	--deb-meta-file README.rst \
+	--description "Kotori data acquisition and graphing toolkit" \
+	--url "http://isarengineering.de/docs/kotori/"
 
 
-# make fpm version=0.3.0
-# dpkg-deb --contents kotori-daq_0.3.0-1_all.deb
+branch   := $(shell git symbolic-ref HEAD | sed -e 's/refs\/heads\///')
+commit   := $(shell git rev-parse --short HEAD)
 
-fpm: prepare-production-build
+deb-full: prepare-production-build
+
+	mkdir -p ./dist
+
+	virtualenv --always-copy ./build/virt
+
+	# install kotori in development mode, enable extra feature "daq"
+	#./build/virt/bin/python setup.py install
+	./build/virt/bin/pip install -e .[daq]
+
+	# update the python interpreter in the shebang of installed scripts
+	# in order to relocate the virtualenv
+	./build/virt/bin/pip install virtualenv-tools==1.0
+	cd ./build/virt; ./bin/virtualenv-tools --update-path=/opt/kotori
+
+	#rm -f ./build/virt/{.Python,pip-selfcheck.json}
+
+	fpm \
+		-s dir -t deb \
+		$(fpm-options) \
+		--version $(version) \
+		--deb-field 'Branch: $(branch) Commit: $(commit)' \
+		--package ./dist/ \
+		--config-files "/etc/kotori/kotori.ini" \
+		--deb-default ./packaging/etc/default \
+		--before-install ./packaging/scripts/before-install \
+		--after-install ./packaging/scripts/after-install \
+		--verbose \
+		--force \
+		./build/virt/=/opt/kotori \
+		./etc/hiveeyes.ini=/etc/kotori/kotori.ini \
+		./packaging/systemd/kotori.service=/usr/lib/systemd/system/kotori.service
+
+#		--debug \
+
+
+deb-pure: prepare-production-build
 	fpm \
 		-s python -t deb \
-		--prefix /opt/elmyra/kotori-daq \
+		$(fpm-options) \
 		--python-scripts-executable '/usr/bin/env python' \
-		--python-obey-requirements-txt \
-		--name kotori-daq \
-		--force \
 		--version $(version) --iteration 1 \
-		--depends influxdb \
-		--depends grafana \
-		--no-python-dependencies \
+		--depends python \
+		--depends python-pip \
 		--architecture noarch \
-		--vendor "Elmyra UG" --maintainer "andreas.motl@elmyra.de" \
-		--no-deb-use-file-permissions \
 		--verbose \
 		--debug \
+		--force \
+		.
+
+# -------------------------------------------------------------
+#   development options on your fingertips (enable on demand)
+# -------------------------------------------------------------
+
+# general debugging
+#		--debug \
+
+# don't delete working directory (to introspect the cruft in case something went wrong)
 		--debug-workspace \
-		src/kotori.node/setup.py
+
+# we don't prefix, instead use the convenient mapping syntax {source}={target}
+#		--prefix /opt/kotori \
+
+# we don't set any architecture, let the package builder do it
+#		--architecture noarch \
+
+# there are currently just --deb-init and --deb-upstart options for designating an init- or upstart script
+# we already use systemd
+
+# Add FILEPATH as /etc/default configuration
+#		--deb-default abc \
+
+# amend the shebang of scripts
+#	--python-scripts-executable '/usr/bin/env python' \
+
+# Add custom fields to DEBIAN/control file
+#		--deb-field 'Branch: master Commit: deadbeef' \
+
+# TODO: use --before-install for creating the "kotori" user
+# TODO: use --after-install for installing and enabling running as a systemd service
 
 
-	#--deb-user kotori \
-	#--deb-group kotori \
-    #--config-files '/etc/hydro2motion.ini' \
-    #--config-files '/etc/hiveeyes.ini' \
+# ------------------
+#   upload package
+# ------------------
+
+deb-upload:
+	scp kotori_0.6.1-1_amd64.deb root@blur.cicer.de:/tmp/
+
+
+# patch against deb.rb of fpm fame::
+#
+#   def write_meta_files
+#      #files = attributes[:meta_files]
+#      files = attributes[:deb_meta_file]
+
 
 deb:
 	fab deb_build_and_release:gitrepo=$(gitrepo),gitref=$(version),tenant=$(tenant),kind=$(kind),flavor=fpm
@@ -44,6 +147,8 @@ prepare-production-build:
 		exit 1; \
 	fi
 
+egg:
+	fab egg_build_and_release:setup_py=setup.py
 
 # ==========================================
 #                 utilities

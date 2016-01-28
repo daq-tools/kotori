@@ -1,0 +1,4 @@
+#!/bin/sh
+
+systemctl reenable kotori
+systemctl restart kotori

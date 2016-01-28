@@ -198,9 +198,11 @@ Configure as systemd service:
 
 3. Copy the systemd script ``kotori.service`` into the system::
 
-    cp /home/kotori/develop/kotori/etc/systemd/kotori.service /usr/lib/systemd/system/
+     cp /home/kotori/develop/kotori/packaging/systemd/kotori.service /usr/lib/systemd/system/
 
-.. attention:: Symlinking doesn't work! See also:
+   Amend ``/usr/lib/systemd/system/kotori.service`` and adapt path to executable to ``/usr/local/sbin/kotori`` in ExecStart
+
+.. attention:: Symlinking does not work in any case! See also:
 
     | systemctl enable fails for symlinks in /etc/systemd/system
     | https://bugzilla.redhat.com/show_bug.cgi?id=955379

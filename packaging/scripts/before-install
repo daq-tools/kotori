@@ -1,0 +1,5 @@
+#!/bin/sh
+
+useradd --create-home --home-dir /opt/kotori --shell /bin/bash kotori
+mkdir -p /var/log/kotori
+chown -R kotori:kotori /var/log/kotori
