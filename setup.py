@@ -2,25 +2,26 @@ from setuptools import setup, find_packages
 
 requires = [
     'Twisted==15.4.0',
+    'cryptography>=0.7',
     'autobahn==0.10.9',
     'crossbar==0.11.1',
     'Jinja2==2.8',
     'pyramid==1.5.7',
     'pyramid_jinja2==2.5',
     'cornice==1.0.0',
-    'appdirs==1.4.0',
-    'docopt==0.6.2',
-    'Bunch==1.0.1',
     'twisted-mqtt==0.1.2',
-    'setuptools>=18.3.1',   # setuptools>=18.3.1 is required by set(['crossbar'])
     'pyasn1==0.1.9',        # required by service-identity
+    'Bunch==1.0.1',
+    'appdirs==1.4.0',
+    'json-store==2.1',
+    'docopt==0.6.2',
+    'setuptools>=18.3.1',   # setuptools>=18.3.1 is required by set(['crossbar'])
 ]
 
 extras = {
     'storage': [
         'alchimia==0.4',    # 0.6.1
         'txmongo==0.6',     # 15.2.2
-        'json-store==2.1',
     ],
     'daq': [
         'influxdb==2.10.0',

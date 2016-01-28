@@ -14,9 +14,9 @@ develop
 - hiveeyes: accept single values on mqtt topic
 - hiveeyes: tune the default Grafana dashboard and panel
 - documentation updates
-- lst: add project “proptest”
+- lst: add project "proptest"
 - modularize python dependencies into extra features
-- improve fpm-based packaging for Debian
+- Debian packaging with FPM
 
 
 2015-11-26 0.5.1
