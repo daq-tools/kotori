@@ -10,7 +10,7 @@ LimitNOFILE=65536
 Environment='STDOUT=/var/log/kotori/kotori.log'
 Environment='STDERR=/var/log/kotori/kotori.log'
 EnvironmentFile=-/etc/default/kotori
-ExecStart=/bin/sh -c "/usr/local/sbin/kotori --config /etc/kotori/kotori.ini ${KOTORI_OPTS} >>${STDOUT} 2>>${STDERR}"
+ExecStart=/bin/sh -c "/opt/kotori/bin/kotori --config /etc/kotori/kotori.ini ${KOTORI_OPTS} >>${STDOUT} 2>>${STDERR}"
 KillMode=control-group
 Restart=on-failure
 
