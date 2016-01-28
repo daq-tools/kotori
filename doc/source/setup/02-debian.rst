@@ -1,10 +1,10 @@
-######
-Debian
-######
+############
+Debian AMD64
+############
 
 .. contents:: Table of Contents
    :local:
-   :depth: 1
+   :depth: 2
 
 ----
 
@@ -14,9 +14,9 @@ Intro
 Install the whole stack on a Debian-based system. It is currently made of:
 
 - Mosquitto_, an open source MQTT message broker
-- InfluxDB_, an open source time-series database designed for high-performance writes and compact disk storage
-- Grafana_, the leading graph and dashboard builder for visualizing time series metrics
-- Kotori_, a data acquisition and graphing toolkit
+- InfluxDB_, an open source time-series database
+- Grafana_, a graph and dashboard builder for visualizing time series metrics
+- Kotori_, a data acquisition and graphing toolkit acting as a mediator
 
 
 **************
@@ -42,10 +42,10 @@ InfluxDB
 
 Alternatives:
 
-    - https://s3.amazonaws.com/influxdb/influxdb_0.9.4.2_amd64.deb
-    - https://s3.amazonaws.com/influxdb/influxdb_0.9.6.1_amd64.deb
     - https://s3.amazonaws.com/influxdb/influxdb_0.10.0-0.beta2_amd64.deb
-    - https://s3.amazonaws.com/influxdb/influxdb_0.10.0-0.beta2_arm.deb
+    - https://s3.amazonaws.com/influxdb/influxdb_0.9.6.1_amd64.deb
+    - https://s3.amazonaws.com/influxdb/influxdb_0.9.4.2_amd64.deb
+    - https://s3.amazonaws.com/influxdb/influxdb_0.8.8_amd64.deb
 
 
 /etc/influxdb/influxdb.conf::
@@ -79,11 +79,9 @@ Grafana
 Install package::
 
     aptitude install apt-transport-https curl
-
-    cat /etc/apt/sources.list.d/grafana.list
-    deb https://packagecloud.io/grafana/stable/debian/ wheezy main
-
     curl https://packagecloud.io/gpg.key | apt-key add -
+    echo 'deb https://packagecloud.io/grafana/stable/debian/ wheezy main' > /etc/apt/sources.list.d/grafana.list
+
     aptitude update
     aptitude install grafana
 
@@ -102,6 +100,7 @@ Run::
     tail -F /var/log/grafana/grafana.log
 
 
+
 ******
 Kotori
 ******
@@ -112,6 +111,7 @@ System packages
 ::
 
     aptitude install python-virtualenv build-essential python-dev libffi-dev libssl-dev
+
 
 ============
 Manual setup
@@ -173,7 +173,8 @@ Run ad hoc
 
     An alternative way to specify the configuration file::
 
-        export KOTORI_CONFIG=`pwd`/etc/development.ini
+        export KOTORI_CONFIG=/etc/kotori/kotori.ini
+
         kotori
 
 
