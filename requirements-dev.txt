@@ -2,3 +2,4 @@ Sphinx==1.3.1
 bumpversion==0.5.3
 nose==1.3.7
 coverage==4.0.1
+virtualenv-tools==1.0
