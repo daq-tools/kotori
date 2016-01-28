@@ -1,6 +1,69 @@
-============
+############
 Kotori Tasks
-============
+############
+
+2016
+####
+
+2016-01-25
+----------
+When sending::
+
+    mosquitto_pub -h swarm.hiveeyes.org -t hiveeyes/testdrive/999/1/message-json -m '{"temperature": 42.84}'
+
+first and afterwards::
+
+    mosquitto_pub -h swarm.hiveeyes.org -t hiveeyes/testdrive/area-42/1/message-json -m '{"temperature": 42.84}'
+
+
+No new panel gets created::
+
+    2016-01-26T00:25:12+0100 [kotori.daq.graphing.grafana      ] INFO: Creating datasource "hiveeyes_testdrive"
+    2016-01-26T00:25:12+0100 [kotori.daq.graphing.grafana      ] INFO: Getting dashboard "hiveeyes_testdrive"
+    2016-01-26T00:25:12+0100 [kotori.daq.graphing.grafana      ] INFO: panels_exists_titles: [u'temp @ node=1,gw=999']
+    2016-01-26T00:25:12+0100 [kotori.daq.graphing.grafana      ] INFO: panels_new_titles:    ['temp']
+    2016-01-26T00:25:12+0100 [kotori.daq.graphing.grafana      ] INFO: No missing panels to add
+
+
+2016-01-26
+----------
+- [o] Grafana Manager: Create dashboard row per gateway in same network
+- [o] MQTT signals on thresholds
+- [o] Add email alerts on tresholds
+- [o] When sending whole bunches of measurements, ignore fields having leading underscores for Grafana panel creation
+- [o] The order of the Grafana panels (temperature, humidity, weight) works in Grafana 2.1.3, but not in Grafana 2.6.0
+
+
+2016-01-27 A
+------------
+- [x] systemd init script
+- [o] Send measurements by HTTP POST and UDP, republish to MQTT
+- [o] Mechanism / button to reset the "testdrive" database (or any other?).
+      This is required when changing scalar types (e.g. str -> float64, etc.)
+
+2016-01-27 B
+------------
+- [o] Numbers and gauges about message throughput
+- [o] systemd init script for crossbar
+
+2016-01-28
+----------
+- [o] Get rid of the [vendor] configuration settings, use instead::
+
+    [kotori]
+    vendors = hiveeyes
+
+- [o] Packaging
+    - Make Debian package
+    - Make OPKG package http://www.jumpnowtek.com/yocto/Managing-a-private-opkg-repository.html
+
+- [o] Create table panel?
+      http://docs.grafana.org/guides/whats-new-in-v2-6/#table-panel
+
+
+
+2015
+####
 
 LST
 ===
@@ -23,6 +86,7 @@ Prio 1.5 - Important
       i.e. if field "hdg" is renamed to "heading", this won't get reflected in Grafana automatically
 - [o] Honour annotation attribute "unit" when adding Grafana panels
 - [o] SymPy annotations should be able to declare virtual fields
+- [o] reduce logging
 
 
 Prio 2

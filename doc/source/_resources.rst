@@ -2,7 +2,8 @@
 
 .. _InfluxDB: https://influxdb.com/
 .. _Grafana: http://grafana.org/
-.. _Twisted: https://twistedmatrix.com/
+.. _Twisted: https://en.wikipedia.org/wiki/Twisted_(software)
+.. _Twisted Matrix Labs: https://twistedmatrix.com/
 .. _WebSockets: https://tools.ietf.org/html/rfc6455
 .. _WAMP: http://wamp.ws/
 .. _MQTT: http://mqtt.org/
