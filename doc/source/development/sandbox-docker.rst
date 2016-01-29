@@ -1,3 +1,5 @@
+.. _docker-infrastructure::
+
 ===============================
 Development sandbox with Docker
 ===============================

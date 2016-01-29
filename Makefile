@@ -57,8 +57,8 @@ deb-full: prepare-production-build
 	# install package in development mode, enable extra feature "daq"
 	#./build/virt/bin/python setup.py install
 
-        # use different directory for temp files, because /tmp usually has noexec attributes
-        # otherwise: _cffi_backend.so: failed to map segment from shared object: Operation not permitted
+	# use different directory for temp files, because /tmp usually has noexec attributes
+	# otherwise: _cffi_backend.so: failed to map segment from shared object: Operation not permitted
 	# TMPDIR=/var/tmp
 
 	# build from egg on package server

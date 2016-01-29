@@ -46,21 +46,48 @@ No new panel gets created::
 - [o] Numbers and gauges about message throughput
 - [o] systemd init script for crossbar
 
-2016-01-28
-----------
+2016-01-28 A
+------------
 - [o] Get rid of the [vendor] configuration settings, use instead::
 
     [kotori]
     vendors = hiveeyes
 
 - [o] Packaging
-    - Make Debian package
-    - Make OPKG package http://www.jumpnowtek.com/yocto/Managing-a-private-opkg-repository.html
-    - http://www.jumpnowtek.com/yocto/Using-your-build-workstation-as-a-remote-package-repository.html
+    - [o] Make Debian package
+    - [o] polish Makefile
+    - [o] proper version schwummsing
+    - [o] Update docs
+    - [o] Use RAM disk for building::
+
+        mkdir /mnt/ramdisk
+        mount -t tmpfs -o size=512m tmpfs /mnt/ramdisk
+
+        - http://www.jamescoyle.net/how-to/943-create-a-ram-disk-in-linux
+        - http://www.jamescoyle.net/knowledge/951-the-difference-between-a-tmpfs-and-ramfs-ram-disk
+    - [o] Make Debian ARM package
+    - [o] Make OPKG package for OpenWRT
+        - https://github.com/openwrt/packages
+        - http://www.jumpnowtek.com/yocto/Managing-a-private-opkg-repository.html
+        - http://www.jumpnowtek.com/yocto/Using-your-build-workstation-as-a-remote-package-repository.html
 
 - [o] Create table panel?
       http://docs.grafana.org/guides/whats-new-in-v2-6/#table-panel
 
+2016-01-28 B
+------------
+- [o] Improve error message if MQTT daemon isn't listening - currently::
+
+    2016-01-28T21:52:13+0100 [mqtt.client.factory.MQTTFactory  ] INFO: Starting factory <mqtt.client.factory.MQTTFactory instance at 0x7f5105e157a0>
+    2016-01-28T21:52:13+0100 [mqtt.client.factory.MQTTFactory  ] INFO: Stopping factory <mqtt.client.factory.MQTTFactory instance at 0x7f5105e157a0>
+
+
+2016-01-29
+----------
+- [o] Switch to PAHO
+    - https://pypi.python.org/pypi/paho-mqtt/
+    - https://www.eclipse.org/paho/clients/python/
+    - https://git.eclipse.org/c/paho/org.eclipse.paho.mqtt.python.git/tree/src/paho/mqtt/client.py
 
 
 2015
