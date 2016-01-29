@@ -38,8 +38,9 @@ fpm-options := \
 # get branch and commit identifiers
 branch   := $(shell git symbolic-ref HEAD | sed -e 's/refs\/heads\///')
 commit   := $(shell git rev-parse --short HEAD)
+version  := $(shell python setup.py --version)
 
-deb-full: prepare-production-build
+deb: prepare-production-build
 
 	# start super clean, even clear the pip cache
 	#rm -rf build dist
@@ -74,7 +75,8 @@ deb-full: prepare-production-build
 
 	# update the python interpreter in the shebang of installed scripts
 	# in order to relocate the virtualenv
-	./build/virt/bin/pip install virtualenv-tools==1.0
+	# must force reinstall because virtualenv-tools will harm itself
+	./build/virt/bin/pip install virtualenv-tools==1.0 --upgrade --force-reinstall
 	./build/virt/bin/virtualenv-tools --update-path=/opt/kotori ./build/virt
 
 	#rm -f ./build/virt/{.Python,pip-selfcheck.json}
@@ -89,6 +91,7 @@ deb-full: prepare-production-build
 		--deb-default ./packaging/etc/default \
 		--before-install ./packaging/scripts/before-install \
 		--after-install ./packaging/scripts/after-install \
+		--before-remove ./packaging/scripts/before-remove \
 		--verbose \
 		--force \
 		./build/virt/=/opt/kotori \
@@ -153,7 +156,7 @@ deb-pure: prepare-production-build
 #      files = attributes[:deb_meta_file]
 
 
-deb:
+deb-fab:
 	fab deb_build_and_release:gitrepo=$(gitrepo),gitref=$(version),tenant=$(tenant),kind=$(kind),flavor=fpm
 
 release-deb:
@@ -232,4 +235,4 @@ upload:
 #release: virtualenv bumpversion push sdist upload
 
 # sdist plus debian
-release: virtualenv bumpversion push deb-full upload
+release: virtualenv bumpversion push deb upload

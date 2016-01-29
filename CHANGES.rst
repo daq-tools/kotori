@@ -15,8 +15,14 @@ develop
 - hiveeyes: tune the default Grafana dashboard and panel
 - documentation updates
 - lst: add project "proptest"
+
+packaging
+---------
 - modularize python dependencies into extra features
-- Debian packaging with FPM
+- build deb packages with fpm
+- read designated package version from setup.py
+- fix woes with virtualenv-tools
+- add stopping and disabling the systemd service to “before-remove” hook
 
 
 2015-11-26 0.5.1
