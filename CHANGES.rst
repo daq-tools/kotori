@@ -1,9 +1,9 @@
-==============
+**************
 Kotori CHANGES
-==============
+**************
 
 develop
--------
+=======
 - lst: resolve collision on parsed C header files when using identical filenames for different channels
 - hiveeyes: improve configuration file “hiveeyes.ini” and logging
 - hiveeyes: fix Grafana panel creation
@@ -20,14 +20,14 @@ develop
 
 
 2015-11-26 0.5.1
-----------------
+================
 - overhaul configuration files, activate “hydro2motion” channel with vendor “lst”
 - fix hydro2motion re. database authentication
 - lst: improve documentation
 
 
 2015-11-26 0.5.0
-----------------
+================
 - lst: add sattracker application
 - lst: fix WAMP serialization error when publishing binary data (e.g. "char 0x9c") by using MsgPack serialization
 - lst: augment c source file before compilation re. ``#include "mbed.h"`` vs. ``#include "stdint.h"``
@@ -52,24 +52,28 @@ develop
 .. _v0.4.0:
 
 2015-11-20 0.4.0
-----------------
-proof-of-concept for vendor :ref:`vendor-lst`
+================
 
+proof-of-concept for vendor :ref:`vendor-lst`
+---------------------------------------------
+
+- add struct definitions of h2m project
+- add basic udp message sender in c++ based on h2m struct definitions
+- add infrastructure for parsing schema mappings from c/c++ header files based on pyclibrary
+- instantiate structs from compiled c/c++ header files/libraries
+- introduce struct registry for bookkeeping and runtime dispatching
+- decouple lst/h2m specific struct registry behavior based on ID attribute
+- add initial docs about lst/h2m spikes
+- properly tweak "h2m_structs.h" to be grokked by patched pyclibrary
+- make message receiving actually work in dry-dock, improve pretty-printing
+- add command line entrypoint “h2m-message” with “decode” and “info” actions
+- implement “h2m-message send”
+- lst main application component: receive, decode and store binary messages
+- automatic Grafana dashboard- and panel creation
+
+general improvements
+--------------------
 - add release and documentation infrastructure through Makefile targets
-- add vendor “lst”
-    - add struct definitions of h2m project
-    - add basic udp message sender in c++ based on h2m struct definitions
-    - add infrastructure for parsing schema mappings from c/c++ header files based on pyclibrary
-    - instantiate structs from compiled c/c++ header files/libraries
-    - introduce struct registry for bookkeeping and runtime dispatching
-    - decouple lst/h2m specific struct registry behavior based on ID attribute
-    - add initial docs about lst/h2m spikes
-    - properly tweak "h2m_structs.h" to be grokked by patched pyclibrary
-    - make message receiving actually work in dry-dock, improve pretty-printing
-    - add command line entrypoint “h2m-message” with “decode” and “info” actions
-    - implement “h2m-message send”
-    - lst main application component: receive, decode and store binary messages
-    - automatic Grafana dashboard- and panel creation
 - fix panel generation for vendor hiveeyes
 - use nanosecond time precision with InfluxDB
 - lst: honour struct field order in Grafana
@@ -79,8 +83,10 @@ proof-of-concept for vendor :ref:`vendor-lst`
 
 
 2015-11-06 0.3.2
-----------------
+================
+
 proof-of-concept for vendor :ref:`vendor-hiveeyes`
+--------------------------------------------------
 
 - upgrade foundation libraries: Twisted, Autobahn, Crossbar
 - add frontend foundation based on Pyramid web framework
@@ -105,12 +111,12 @@ proof-of-concept for vendor :ref:`vendor-hiveeyes`
 
 
 2015-05-21 0.2.2
-----------------
+================
 - hydro2motion: production improvements from May 2015 in Rotterdam
 
 
 2015-05-01 0.2.1
-----------------
+================
 - hydro2motion: ui: set map position to Munich
 - hydro2motion: ui: add lat long conversion
 - hydro2motion: backend: use InfluxDB on localhost
@@ -118,8 +124,10 @@ proof-of-concept for vendor :ref:`vendor-hiveeyes`
 
 
 2015-04-24 0.2.0
-----------------
+================
+
 proof-of-concept for vendor :ref:`vendor-hydro2motion`
+------------------------------------------------------
 
 - ui: add d3 and rickshaw
 - ui: add timeseries prototype
@@ -142,7 +150,7 @@ proof-of-concept for vendor :ref:`vendor-hydro2motion`
 
 
 2015-03-18 0.1.1
-----------------
+================
 - ui/backend: add persistent configuration store
 - ui: add bootstrap-editable css
 - namespace refactoring from ilaundry.node to kotori.node
@@ -152,7 +160,7 @@ proof-of-concept for vendor :ref:`vendor-hydro2motion`
 
 
 2014-01-21 0.1.0
-----------------
+================
 - node: reactivate heartbeat
 - node: mplayer user-agent hack for correctly spelling umlauts
 - ui: indicate motion activity from node
@@ -164,26 +172,28 @@ proof-of-concept for vendor :ref:`vendor-hydro2motion`
 
 
 2014-01-13 0.0.4
-----------------
+================
 - ui: introduce Bootstrap, jQuery, underscore, etc.
 - ui: reflect multinode capabilities
 
 
 2014-01-13 0.0.3
-----------------
+================
 - modularized into three components: master, node, web
 - single-daemon mode
 - first feature set on top of Adafruit_BBIO.GPIO
 
 
 2014-01-05 0.0.2
-----------------
+================
 - Multiple nodes for real [NodeRegistry]
 
 
 2014-01-05 0.0.1
-----------------
+================
+
 proof-of-concept for vendor :ref:`vendor-ilaundry`
+--------------------------------------------------
 
 - Two daemons: master service and node service
 - Communication infrastructure on top of Autobahn using PubSub

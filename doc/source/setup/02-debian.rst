@@ -119,7 +119,7 @@ Manual setup
 
 General
 -------
-Let's add a user to the system::
+Let's add a user to the system and proceed as non-root::
 
     useradd --create-home --shell /bin/bash kotori
     su - kotori
