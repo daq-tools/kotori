@@ -35,23 +35,48 @@ fpm-options := \
 	--url "http://isarengineering.de/docs/kotori/"
 
 
+# get branch and commit identifiers
 branch   := $(shell git symbolic-ref HEAD | sed -e 's/refs\/heads\///')
 commit   := $(shell git rev-parse --short HEAD)
 
 deb-full: prepare-production-build
 
-	mkdir -p ./dist
+	# start super clean, even clear the pip cache
+	#rm -rf build dist
 
-	virtualenv --always-copy ./build/virt
+	# start clean
+	#rm -rf build/virt dist
 
-	# install kotori in development mode, enable extra feature "daq"
+	# prepare
+	mkdir -p build dist
+
+	# use "--always copy" to satisfy fpm
+	# use "--python=python" to satisfy virtualenv-tools (doesn't grok "python2" when searching for shebangs to replace)
+	virtualenv --always-copy --python=python ./build/virt
+
+	# install package in development mode, enable extra feature "daq"
 	#./build/virt/bin/python setup.py install
-	./build/virt/bin/pip install -e .[daq]
+
+        # use different directory for temp files, because /tmp usually has noexec attributes
+        # otherwise: _cffi_backend.so: failed to map segment from shared object: Operation not permitted
+	# TMPDIR=/var/tmp
+
+	# build from egg on package server
+	# https://pip.pypa.io/en/stable/reference/pip_wheel/#cmdoption--extra-index-url
+	#TMPDIR=/var/tmp ./build/virt/bin/pip install kotori[daq]==$(version) --extra-index-url=https://packages.elmyra.de/isarengineering/python/eggs/
+
+	# build sdist egg locally
+	./build/virt/bin/python setup.py sdist
+
+	# install from local sdist egg
+	# TODO: maybe use "--editable" for installing development mode
+	# https://pip.pypa.io/en/stable/reference/pip_wheel/#cmdoption-f
+	TMPDIR=/var/tmp ./build/virt/bin/pip install kotori[daq]==$(version) --download-cache=./build/pip-cache --find-links=./dist
 
 	# update the python interpreter in the shebang of installed scripts
 	# in order to relocate the virtualenv
 	./build/virt/bin/pip install virtualenv-tools==1.0
-	cd ./build/virt; ./bin/virtualenv-tools --update-path=/opt/kotori
+	./build/virt/bin/virtualenv-tools --update-path=/opt/kotori ./build/virt
 
 	#rm -f ./build/virt/{.Python,pip-selfcheck.json}
 
@@ -116,8 +141,6 @@ deb-pure: prepare-production-build
 # Add custom fields to DEBIAN/control file
 #		--deb-field 'Branch: master Commit: deadbeef' \
 
-# TODO: use --before-install for creating the "kotori" user
-# TODO: use --after-install for installing and enabling running as a systemd service
 
 
 # ------------------
@@ -201,6 +224,18 @@ sdist:
 	python setup.py sdist
 
 upload:
+
+	# Python Eggs
+	rsync -auv ./dist/kotori-*.tar.gz hiveeyes@packages.elmyra.de:/srv/packages/organizations/hiveeyes/python/eggs/kotori/
 	rsync -auv ./dist/kotori-*.tar.gz isareng@packages.elmyra.de:/srv/packages/organizations/isarengineering/python/eggs/kotori/
 
-release: virtualenv bumpversion push sdist upload
+	# Debian packages
+	rsync -auv ./dist/kotori_*.deb hiveeyes@packages.elmyra.de:/srv/packages/organizations/hiveeyes/debian/
+	rsync -auv ./dist/kotori_*.deb isareng@packages.elmyra.de:/srv/packages/organizations/isarengineering/debian/
+
+
+# sdist-only
+#release: virtualenv bumpversion push sdist upload
+
+# sdist plus debian package
+release: virtualenv bumpversion push deb-full upload

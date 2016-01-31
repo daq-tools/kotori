@@ -9,11 +9,6 @@ from kotori.logger import startLogging
 from kotori.io.master.server import boot_master
 from kotori.io.node.nodeservice import boot_node
 from kotori.frontend.server import boot_frontend
-from kotori.vendor.hydro2motion.database.influx import h2m_boot_influx_database
-from kotori.vendor.hydro2motion.network.udp import h2m_boot_udp_adapter
-from kotori.vendor.hydro2motion.web.server import boot_web
-from kotori.vendor.hiveeyes.application import hiveeyes_boot
-from kotori.vendor.lst.application import lst_boot
 from kotori.util import slm
 from .version import __VERSION__
 
@@ -90,6 +85,11 @@ def run():
 
         # hydro2motion
         if config.has_section('hydro2motion'):
+
+            from kotori.vendor.hydro2motion.database.influx import h2m_boot_influx_database
+            from kotori.vendor.hydro2motion.network.udp import h2m_boot_udp_adapter
+            from kotori.vendor.hydro2motion.web.server import boot_web
+
             http_port_v1 = int(config.get('hydro2motion', 'http_port'))
 
             boot_web(http_port_v1, websocket_uri, debug=debug)
@@ -98,9 +98,11 @@ def run():
 
         # hiveeyes
         if config.has_section('hiveeyes'):
+            from kotori.vendor.hiveeyes.application import hiveeyes_boot
             hiveeyes_boot(config, debug=debug)
 
         if config.has_section('lst-h2m'):
+            from kotori.vendor.lst.application import lst_boot
             lst_boot(config)
 
         # generic daq
