@@ -111,7 +111,8 @@ deb-build: prepare-production-build
 	# build sdist egg locally
 	./build/virt/bin/python setup.py sdist
 
-	# build from local sdist egg
+	# install from local sdist egg
+	# TODO: maybe use "--editable" for installing development mode
 	# https://pip.pypa.io/en/stable/reference/pip_wheel/#cmdoption-f
 	TMPDIR=/var/tmp ./build/virt/bin/pip install kotori[daq]==$(version) --download-cache=./build/pip-cache --find-links=./dist
 
@@ -202,6 +203,13 @@ deb-publish:
 	rsync -auv --progress ./dist/kotori_*.deb isareng@packages.elmyra.de:/srv/packages/organizations/isarengineering/debian/
 
 
+# patch against deb.rb of fpm fame::
+#
+#   def write_meta_files
+#      #files = attributes[:meta_files]
+#      files = attributes[:deb_meta_file]
+
+
 
 deb-fab:
 	fab deb_build_and_release:gitrepo=$(gitrepo),gitref=$(version),tenant=$(tenant),kind=$(kind),flavor=fpm
@@ -244,3 +252,41 @@ docs-html: virtualenv
 virtualenv:
 	@test -e .venv27/bin/python || `command -v virtualenv` --python=`command -v python` --no-site-packages .venv27
 	@.venv27/bin/pip --quiet install --requirement requirements-dev.txt
+
+
+# ------------------------------------------
+#                 releasing
+# ------------------------------------------
+#
+# Release targets for convenient release cutting.
+#
+# Synopsis::
+#
+#    make release bump={patch,minor,major}
+#
+
+bumpversion:
+	bumpversion $(bump)
+
+push:
+	git push && git push --tags
+
+sdist:
+	python setup.py sdist
+
+upload:
+
+	# Python Eggs
+	rsync -auv ./dist/kotori-*.tar.gz hiveeyes@packages.elmyra.de:/srv/packages/organizations/hiveeyes/python/eggs/kotori/
+	rsync -auv ./dist/kotori-*.tar.gz isareng@packages.elmyra.de:/srv/packages/organizations/isarengineering/python/eggs/kotori/
+
+	# Debian packages
+	rsync -auv ./dist/kotori_*.deb hiveeyes@packages.elmyra.de:/srv/packages/organizations/hiveeyes/debian/
+	rsync -auv ./dist/kotori_*.deb isareng@packages.elmyra.de:/srv/packages/organizations/isarengineering/debian/
+
+
+# sdist-only
+#release: virtualenv bumpversion push sdist upload
+
+# sdist plus debian package
+release: virtualenv bumpversion push deb-full upload

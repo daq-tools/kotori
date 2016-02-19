@@ -110,7 +110,7 @@ Kotori
 
 Kotori Debian package
 =====================
-We don't have a solid Debian repository as of 2016-01-29 yet, but at least we have any packages::
+We don't have a solid Debian repository yet (as of 2016-01-29), but at least we have any packages::
 
     wget https://packages.elmyra.de/hiveeyes/debian/kotori_0.6.0-1_amd64.deb
     dpkg --install kotori_0.6.0-1_amd64.deb

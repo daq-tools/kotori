@@ -29,6 +29,7 @@ packaging
 - read designated package version from setup.py
 - fix woes with virtualenv-tools
 - add stopping and disabling the systemd service to “before-remove” hook
+- Debian packaging with fpm
 
 misc
 ----
@@ -73,8 +74,8 @@ vendor :ref:`vendor-lst`
 2015-11-20 0.4.0
 ================
 
-vendor :ref:`vendor-lst` » proof-of-concept
--------------------------------------------
+proof-of-concept for vendor :ref:`vendor-lst`
+---------------------------------------------
 - add struct definitions of h2m project
 - add basic udp message sender in c++ based on h2m struct definitions
 - add infrastructure for parsing schema mappings from c/c++ header files based on pyclibrary
@@ -103,8 +104,8 @@ general improvements
 2015-11-06 0.3.2
 ================
 
-vendor :ref:`vendor-hiveeyes` » proof-of-concept
-------------------------------------------------
+proof-of-concept for vendor :ref:`vendor-hiveeyes`
+--------------------------------------------------
 - upgrade foundation libraries: Twisted, Autobahn, Crossbar
 - add frontend foundation based on Pyramid web framework
 - ui: add jQuery, Bootstrap, Fontawesome, html5shiv and respond.js
@@ -134,19 +135,26 @@ vendor :ref:`vendor-hiveeyes` » proof-of-concept
 
 2015-05-01 0.2.1
 ================
+<<<<<<< HEAD
 vendor :ref:`vendor-hydro2motion`
 ---------------------------------
 - ui: set map position to Munich
 - ui: add lat long conversion
 - backend: use InfluxDB on localhost
 - backend: process complete Fuelcell telemetry data package
+=======
+- hydro2motion: ui: set map position to Munich
+- hydro2motion: ui: add lat long conversion
+- hydro2motion: backend: use InfluxDB on localhost
+- hydro2motion: backend: process complete Fuelcell telemetry data package
+>>>>>>> a024a4cb0bcd3aad535b1411532e35dfd990e60a
 
 
 2015-04-24 0.2.0
 ================
 
-vendor :ref:`vendor-hydro2motion` » proof-of-concept
-----------------------------------------------------
+proof-of-concept for vendor :ref:`vendor-hydro2motion`
+------------------------------------------------------
 - ui: add d3 and rickshaw
 - ui: add timeseries prototype
 - ui: add cbuffer.js
@@ -210,8 +218,8 @@ vendor :ref:`vendor-hydro2motion` » proof-of-concept
 2014-01-05 0.0.1
 ================
 
-vendor :ref:`vendor-ilaundry` » proof-of-concept
-------------------------------------------------
+proof-of-concept for vendor :ref:`vendor-ilaundry`
+--------------------------------------------------
 - Two daemons: master service and node service
 - Communication infrastructure on top of Autobahn using PubSub
 - Text-to-speech on top of Google Translate TTS
