@@ -1,5 +1,43 @@
+# -*- coding: utf-8 -*-
+# (c) 2014-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+
+
 # ==========================================
-#             Debian packages
+#                 releasing
+# ==========================================
+#
+# Release targets for convenient release cutting.
+# Uses the fine ``bumpversion`` utility.
+#
+# Status: Stable
+#
+# Synopsis::
+#
+#    make release bump={patch,minor,major}
+#
+
+bumpversion:
+	bumpversion $(bump)
+
+push:
+	git push && git push --tags
+
+sdist:
+	python setup.py sdist
+
+# publish Python Eggs to eggserver
+# TODO: use localshop or one of its sisters
+sdist-publish:
+	rsync -auv --progress ./dist/kotori-*.tar.gz hiveeyes@packages.elmyra.de:/srv/packages/organizations/hiveeyes/python/eggs/kotori/
+	rsync -auv --progress ./dist/kotori-*.tar.gz isareng@packages.elmyra.de:/srv/packages/organizations/isarengineering/python/eggs/kotori/
+
+# one-shot
+release: virtualenv bumpversion push sdist sdist-publish
+
+
+
+# ==========================================
+#                packaging
 # ==========================================
 #
 # Makefile-based poor man's version of:
@@ -11,10 +49,12 @@
 #
 # Synopsis::
 #
-#   make fpm-full version=0.6.0
+#   make deb-build
+#   make deb-build version=0.6.0
 #   dpkg-deb --contents kotori_0.6.0-1_amd64.deb
 #
 
+deb: deb-build deb-publish
 
 fpm-options := \
 	--name kotori \
@@ -25,6 +65,8 @@ fpm-options := \
 	--no-python-obey-requirements-txt \
 	--no-python-dependencies \
 	--depends "python" \
+	--provides "kotori" \
+	--provides "kotori-daq" \
 	--deb-suggests "influxdb, mosquitto, mosquitto-clients, grafana" \
 	--maintainer "andreas.motl@elmyra.de" \
 	--vendor "Elmyra UG" \
@@ -40,7 +82,7 @@ branch   := $(shell git symbolic-ref HEAD | sed -e 's/refs\/heads\///')
 commit   := $(shell git rev-parse --short HEAD)
 version  := $(shell python setup.py --version)
 
-deb: prepare-production-build
+deb-build: prepare-production-build
 
 	# start super clean, even clear the pip cache
 	#rm -rf build dist
@@ -143,17 +185,22 @@ deb-pure: prepare-production-build
 # Add custom fields to DEBIAN/control file
 #		--deb-field 'Branch: master Commit: deadbeef' \
 
+# patch against deb.rb of fpm fame::
+#
+#   def write_meta_files
+#      #files = attributes[:meta_files]
+#      files = attributes[:deb_meta_file]
 
 
 # ------------------
 #   upload package
 # ------------------
 
-# patch against deb.rb of fpm fame::
-#
-#   def write_meta_files
-#      #files = attributes[:meta_files]
-#      files = attributes[:deb_meta_file]
+deb-publish:
+	# publish Debian packages
+	rsync -auv --progress ./dist/kotori_*.deb hiveeyes@packages.elmyra.de:/srv/packages/organizations/hiveeyes/debian/
+	rsync -auv --progress ./dist/kotori_*.deb isareng@packages.elmyra.de:/srv/packages/organizations/isarengineering/debian/
+
 
 
 deb-fab:
@@ -171,13 +218,11 @@ prepare-production-build:
 egg:
 	fab egg_build_and_release:setup_py=setup.py
 
-# ==========================================
-#                 utilities
-# ==========================================
 
-# ------------------------------------------
+
+# ==========================================
 #                   misc
-# ------------------------------------------
+# ==========================================
 #
 # Miscellaneous tools:
 # Software tests, Documentation builder, Virtual environment builder
@@ -199,40 +244,3 @@ docs-html: virtualenv
 virtualenv:
 	@test -e .venv27/bin/python || `command -v virtualenv` --python=`command -v python` --no-site-packages .venv27
 	@.venv27/bin/pip --quiet install --requirement requirements-dev.txt
-
-
-# ------------------------------------------
-#                 releasing
-# ------------------------------------------
-#
-# Release targets for convenient release cutting.
-#
-# Synopsis::
-#
-#    make release bump={patch,minor,major}
-#
-
-bumpversion:
-	bumpversion $(bump)
-
-push:
-	git push && git push --tags
-
-sdist:
-	python setup.py sdist
-
-upload:
-	# Python Eggs
-	rsync -auv ./dist/kotori-*.tar.gz hiveeyes@packages.elmyra.de:/srv/packages/organizations/hiveeyes/python/eggs/kotori/
-	rsync -auv ./dist/kotori-*.tar.gz isareng@packages.elmyra.de:/srv/packages/organizations/isarengineering/python/eggs/kotori/
-
-	# Debian packages
-	rsync -auv ./dist/kotori_*.deb hiveeyes@packages.elmyra.de:/srv/packages/organizations/hiveeyes/debian/
-	rsync -auv ./dist/kotori_*.deb isareng@packages.elmyra.de:/srv/packages/organizations/isarengineering/debian/
-
-
-# sdist-only
-#release: virtualenv bumpversion push sdist upload
-
-# sdist plus debian
-release: virtualenv bumpversion push deb upload

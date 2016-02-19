@@ -1,9 +1,6 @@
-################
-Data Transcoders
-################
-
-Adapters
-========
+#############
+Data adapters
+#############
 
 Binary decoding
 ---------------

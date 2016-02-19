@@ -1,6 +1,6 @@
-========
-Research
-========
+=======
+Notepad
+=======
 
 .. toctree::
     :maxdepth: 1

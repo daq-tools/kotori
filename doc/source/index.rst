@@ -5,14 +5,17 @@
 
 .. include:: _resources.rst
 
+.. _kotori:
+
 Welcome to Kotori!
 ==================
 
-*Kotori* is a multi-channel, multi-protocol data acquisition and graphing toolkit based on
-InfluxDB_, Grafana_, Mosquitto_, Twisted_ and Autobahn_.
+    *Kotori* is a multi-channel, multi-protocol data acquisition and graphing toolkit
+    based on InfluxDB_, Grafana_, Mosquitto_ and Twisted_.
 
-It is a convenient component for building telemetry solutions and test benches addressing different
-aspects of collecting and storing sensor data from a multitude of data sources and devices.
+    It is a convenient component for building flexible telemetry solutions and test benches
+    by addressing different aspects of collecting and storing sensor data from a
+    multitude of data sources and devices.
 
 
 About
@@ -22,16 +25,17 @@ About
     :maxdepth: 1
 
     README
+    changes
 
 
 Applications
 ------------
 
 .. toctree::
-    :maxdepth: 1
+    :maxdepth: 2
     :glob:
 
-    applications/*
+    applications/index
 
 
 Setup
@@ -41,7 +45,8 @@ Setup
     :maxdepth: 1
     :glob:
 
-    setup/*
+    setup/debian-amd64
+    setup/index
 
 
 Handbooks
@@ -54,25 +59,17 @@ Handbooks
     handbook/*
 
 
-Development
------------
-
-.. toctree::
-    :maxdepth: 1
-    :glob:
-
-    development/index
-    changes
-
-
-Research
---------
+Research & Development
+----------------------
 
 .. toctree::
     :maxdepth: 1
     :glob:
 
     research/index
+    notepad/index
+    development/index
+
 
 
 Indices and tables

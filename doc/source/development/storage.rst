@@ -5,6 +5,11 @@ Kotori storage adapters
 Kotori currently lacks configuration files for its database adapters.
 Please configure database access in the corresponding python files.
 
+.. attention::
+
+    This document is just a stub. Read the source, luke.
+
+
 SQL
 ===
 

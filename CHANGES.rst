@@ -4,17 +4,23 @@ Kotori CHANGES
 
 develop
 =======
-- lst: resolve collision on parsed C header files when using identical filenames for different channels
-- hiveeyes: improve configuration file “hiveeyes.ini” and logging
-- hiveeyes: fix Grafana panel creation
-- hiveeyes: fix Grafana panel creation re. InfluxDB select expression
-- hiveeyes: Grafana 2.6.0 compatibility, Grafana 2.1.3 still works though
-- hiveeyes: don’t put global realm “hiveeyes” into Grafana dashboard name
-- hiveeyes: improve Grafana panel automation
-- hiveeyes: accept single values on mqtt topic
-- hiveeyes: tune the default Grafana dashboard and panel
+
+vendor :ref:`vendor-lst`
+------------------------
+- resolve collision on parsed C header files when using identical filenames for different channels
+- add project "proptest"
+
+vendor :ref:`vendor-hiveeyes`
+-----------------------------
+- improve configuration file “hiveeyes.ini” and logging
+- fix Grafana panel creation
+- fix Grafana panel creation re. InfluxDB select expression
+- Grafana 2.6.0 compatibility, Grafana 2.1.3 still works though
+- don’t put global realm “hiveeyes” into Grafana dashboard name
+- improve Grafana panel automation
+- accept single values on mqtt topic
+- tune the default Grafana dashboard and panel
 - documentation updates
-- lst: add project "proptest"
 
 packaging
 ---------
@@ -23,6 +29,10 @@ packaging
 - read designated package version from setup.py
 - fix woes with virtualenv-tools
 - add stopping and disabling the systemd service to “before-remove” hook
+
+misc
+----
+- refactor documentation
 
 
 2015-11-26 0.5.1
@@ -34,24 +44,27 @@ packaging
 
 2015-11-26 0.5.0
 ================
-- lst: add sattracker application
-- lst: fix WAMP serialization error when publishing binary data (e.g. "char 0x9c") by using MsgPack serialization
-- lst: augment c source file before compilation re. ``#include "mbed.h"`` vs. ``#include "stdint.h"``
-- lst: parse transformation rules from source code annotation
-- lst: apply transformation rules before publishing to software bus
+
+vendor :ref:`vendor-lst`
+------------------------
+- add sattracker application
+- fix WAMP serialization error when publishing binary data (e.g. "char 0x9c") by using MsgPack serialization
+- augment c source file before compilation re. ``#include "mbed.h"`` vs. ``#include "stdint.h"``
+- parse transformation rules from source code annotation
+- apply transformation rules before publishing to software bus
 - fix grafana dashboard update when having no panels
-- lst: nasty hack to get proper struct initializer data from CParser results
+- nasty hack to get proper struct initializer data from CParser results
 - show “average” column in Grafana
-- lst: flexible compiler detection re. Linux vs. Mac OSX (MacPorts)
+- flexible compiler detection re. Linux vs. Mac OSX (MacPorts)
 - improve error handling when using interactive commands
 - explicitly convert values to float when evaluating SymPy expressions
 - influxdb: prevent float<->integer casting errors by converting all numerical values to float
 - upgrade to python influxdb-2.10.0
-- lst: rename ``etc/lst-h2m.ini`` to ``etc/lst.ini``
-- lst: generalize h2m-message and sattracker-message into lst-message
+- rename ``etc/lst-h2m.ini`` to ``etc/lst.ini``
+- generalize h2m-message and sattracker-message into lst-message
 - specify configuration file via KOTORI_CONFIG environment variable
-- lst: add “lst-message list-channels” command
-- lst: wording: change “application” to “channel”
+- add “lst-message list-channels” command
+- wording: change “application” to “channel”
 - refactor configuration mechanics
 
 
@@ -60,9 +73,8 @@ packaging
 2015-11-20 0.4.0
 ================
 
-proof-of-concept for vendor :ref:`vendor-lst`
----------------------------------------------
-
+vendor :ref:`vendor-lst` » proof-of-concept
+-------------------------------------------
 - add struct definitions of h2m project
 - add basic udp message sender in c++ based on h2m struct definitions
 - add infrastructure for parsing schema mappings from c/c++ header files based on pyclibrary
@@ -91,9 +103,8 @@ general improvements
 2015-11-06 0.3.2
 ================
 
-proof-of-concept for vendor :ref:`vendor-hiveeyes`
---------------------------------------------------
-
+vendor :ref:`vendor-hiveeyes` » proof-of-concept
+------------------------------------------------
 - upgrade foundation libraries: Twisted, Autobahn, Crossbar
 - add frontend foundation based on Pyramid web framework
 - ui: add jQuery, Bootstrap, Fontawesome, html5shiv and respond.js
@@ -123,18 +134,19 @@ proof-of-concept for vendor :ref:`vendor-hiveeyes`
 
 2015-05-01 0.2.1
 ================
-- hydro2motion: ui: set map position to Munich
-- hydro2motion: ui: add lat long conversion
-- hydro2motion: backend: use InfluxDB on localhost
-- hydro2motion: backend: process complete Fuelcell telemetry data package
+vendor :ref:`vendor-hydro2motion`
+---------------------------------
+- ui: set map position to Munich
+- ui: add lat long conversion
+- backend: use InfluxDB on localhost
+- backend: process complete Fuelcell telemetry data package
 
 
 2015-04-24 0.2.0
 ================
 
-proof-of-concept for vendor :ref:`vendor-hydro2motion`
-------------------------------------------------------
-
+vendor :ref:`vendor-hydro2motion` » proof-of-concept
+----------------------------------------------------
 - ui: add d3 and rickshaw
 - ui: add timeseries prototype
 - ui: add cbuffer.js
@@ -198,9 +210,8 @@ proof-of-concept for vendor :ref:`vendor-hydro2motion`
 2014-01-05 0.0.1
 ================
 
-proof-of-concept for vendor :ref:`vendor-ilaundry`
---------------------------------------------------
-
+vendor :ref:`vendor-ilaundry` » proof-of-concept
+------------------------------------------------
 - Two daemons: master service and node service
 - Communication infrastructure on top of Autobahn using PubSub
 - Text-to-speech on top of Google Translate TTS

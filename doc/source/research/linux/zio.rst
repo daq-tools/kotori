@@ -62,7 +62,7 @@ Operation
 
 Without access to appropriate hardware, let's use channels from the *zero* device.
 
-zio-manual::
+zio-manual:
 
     The zero device is a software-driven input and output device,
     it is used for demonstration and stress-testing. It behaves

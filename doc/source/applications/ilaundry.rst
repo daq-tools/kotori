@@ -4,6 +4,10 @@
 iLaundry
 ########
 
+.. attention::
+
+    This document is just a stub. Read the source, luke.
+
 Embedded use
 ============
 

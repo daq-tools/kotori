@@ -1,13 +1,19 @@
+.. _kotori-tasks:
+
 ############
 Kotori Tasks
 ############
 
+****
 2016
-####
+****
+
+All
+===
 
 2016-01-25
 ----------
-When sending::
+- [x] When sending::
 
     mosquitto_pub -h swarm.hiveeyes.org -t hiveeyes/testdrive/999/1/message-json -m '{"temperature": 42.84}'
 
@@ -90,8 +96,9 @@ No new panel gets created::
     - https://git.eclipse.org/c/paho/org.eclipse.paho.mqtt.python.git/tree/src/paho/mqtt/client.py
 
 
+****
 2015
-####
+****
 
 LST
 ===
@@ -377,7 +384,9 @@ Prio 3
     - livefft: https://github.com/ricklupton/livefft
 
 
------------
+Milestones
+==========
+
 Milestone 1
 -----------
 - dynamic receiver channels
@@ -386,7 +395,6 @@ Milestone 1
     - https://github.com/grafana/grafana/issues/1622
     - https://github.com/ricklupton/livefft
 
------------
 Milestone 2
 -----------
 - pdf renderer

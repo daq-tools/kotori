@@ -25,6 +25,7 @@ Zato
 ----
 ESB and app server in Python.
 Open-source ESB, SOA, REST, APIs and Cloud Integrations in Python.
+
 - https://zato.io/
 - https://zato.io/docs/
 - https://github.com/zatosource/zato

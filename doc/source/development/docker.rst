@@ -1,8 +1,10 @@
-.. _docker-infrastructure::
+.. include:: ../_resources.rst
 
-===============================
-Development sandbox with Docker
-===============================
+.. _docker-infrastructure:
+
+=============================
+Docker infrastructure sandbox
+=============================
 
 Global python packages
 ----------------------

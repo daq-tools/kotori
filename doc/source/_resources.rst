@@ -1,3 +1,5 @@
+.. Links to external resources
+
 :orphan:
 
 .. _InfluxDB: https://influxdb.com/
@@ -14,3 +16,11 @@
 .. _mbed: https://mbed.org/
 .. _Hydro2Motion: http://hydro2motion.de/
 .. _Shell Eco-marathon: http://www.shell.com/global/environment-society/ecomarathon.html
+.. _Semantic Versioning: http://semver.org/
+.. _PyCharm: https://www.jetbrains.com/pycharm/
+.. _boot2docker: http://boot2docker.io/
+
+.. _BERadio: https://hiveeyes.org/docs/beradio/
+.. _Hiveeyes platform: https://swarm.hiveeyes.org/
+.. _Hiveeyes project: https://hiveeyes.org/
+.. _hivemonitor-vagrant: https://github.com/dazz/hivemonitor/tree/master/dev-vm

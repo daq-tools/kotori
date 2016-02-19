@@ -1,6 +1,21 @@
-=================
+#################
 Configure Grafana
-=================
+#################
+
+
+******************
+Auto configuration
+******************
+Kotori automatically creates default dashboards in Grafana, on which you can build upon.
+This is sweet.
+
+.. tip:: For more information, please read the source. YMMV.
+
+
+********************
+Manual configuration
+********************
+
 
 Howtos
 ======
@@ -37,7 +52,7 @@ http://docs.grafana.org/datasources/influxdb/
 - InfluxDB Details
     - Database: kotori
     - User: root
-    - Password: root
+    - Password: ROOT
 
 
 Add Kotori dashboard
@@ -45,30 +60,16 @@ Add Kotori dashboard
 
 Either manually:
 
-- Go to http://192.168.59.103:3000/dashboard/new
-- Add Panel » Graph
-- Add metric fields
+    - Go to http://192.168.59.103:3000/dashboard/new
+    - Add Panel » Graph
+    - Add metric fields
 
 Or by importing:
 
-- http://192.168.59.103:3000/dashboard/import
-- doc/grafana-kotori-dashboard.json
+    - http://192.168.59.103:3000/dashboard/import
+    - doc/grafana-kotori-dashboard.json
 
 
 View Dashboard:
 
-- http://192.168.59.103:3000/dashboard/db/kotori
-
-
-Auto configuration
-==================
-
-Kotori automatically creates dashboards. Read the source, YMMV.
-This is a notepad re. interesting information.
-
-Grafana 2.6.0 added some attributes on the "target" level, where fields and query expressions are defined::
-
-    "dsType": "influxdb",
-    "resultFormat": "time_series",
-    "refId": "A",
-
+    - http://192.168.59.103:3000/dashboard/db/kotori

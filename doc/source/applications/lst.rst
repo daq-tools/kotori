@@ -191,7 +191,7 @@ Operating Kotori LST
 ====================
 
 Little bit of linux howto
----------------
+-------------------------
 
 WinSCP connect basti@raider.isarengineering.de
 
@@ -204,7 +204,7 @@ using the User Basti the command  "tmux att -t kotori" attaches to the console w
 never close tmux sessions, just detache, them using Strg-B and then d.
 
 Tools
----------------
+-----
 
 For using the channel operations, the user basti should navigate to /home/basti/kotori and then start "source .venv27/bin/activate". The Channel Operations should be available 
 

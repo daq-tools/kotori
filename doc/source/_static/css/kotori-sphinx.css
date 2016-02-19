@@ -4,8 +4,16 @@ body, div.body {
 }
 */
 
+.wy-nav-content {
+    max-width: 80%;
+}
+
 .wy-side-nav-search > a img.logo {
     display: inline-block;
     margin: inherit;
     vertical-align: middle;
+}
+
+.wy-side-nav-search {
+    /* background-color: #add8e6; */
 }
