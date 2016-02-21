@@ -112,7 +112,7 @@ deb-build: prepare-production-build
 	./build/virt/bin/python setup.py sdist
 
 	# install from local sdist egg
-	# TODO: maybe use "--editable" for installing development mode
+	# TODO: maybe use "--editable" for installing in development mode
 	# https://pip.pypa.io/en/stable/reference/pip_wheel/#cmdoption-f
 	TMPDIR=/var/tmp ./build/virt/bin/pip install kotori[daq]==$(version) --download-cache=./build/pip-cache --find-links=./dist
 
@@ -138,7 +138,7 @@ deb-build: prepare-production-build
 		--verbose \
 		--force \
 		./build/virt/=/opt/kotori \
-		./etc/hiveeyes.ini=/etc/kotori/kotori.ini \
+		./etc/kotori.ini=/etc/kotori/kotori.ini \
 		./packaging/systemd/kotori.service=/usr/lib/systemd/system/kotori.service
 
 #		--debug \

@@ -2,20 +2,37 @@
 
 .. _vendor-lst:
 
-############################
-LST: Labor für Systemtechnik
-############################
+###
+LST
+###
 
 .. contents:: Table of Contents
    :local:
-   :depth: 3
+   :depth: 1
 
 .. highlight:: bash
 
+*****
+About
+*****
+LST is the `Labor für Systemtechnik`_ at the `Munich University of Applied Sciences`_.
+They are into `aviation <LST-aviation>`_ and conceive a number of `fine projects <LST-projects>`_.
+Also see some `pictures of the laboratory <LST-pictures>`_.
 
-=====
+
+************
+Introduction
+************
+Let's have a look at the environment:
+
+- mbed_ is a popular embedded computing platform used intensively inside the laboratory.
+- A common way of communicating telemetry data and control commands is UDP over Ethernet or WiFi.
+- Data payloads are usually in binary format defined in *C/C++* header files.
+
+
+*****
 Goals
-=====
+*****
 - Receive telemetry messages over UDP in binary format.
 - Decode and enrich them by using information from structs of real *C/C++* header files.
 - Store measurements to database, with attribute names matching the header file struct declarations.
@@ -39,18 +56,19 @@ Goals
         uint8_t  clamped         : 1;   //  3.2
 
 
-===========
 Integration
 ===========
 For making a micro controller send UDP messages the *LST* way, please consider using the fine
 `H2M Telemetry library <https://developer.mbed.org/users/HMFK03LST1/code/Telemetrie_eth_h2m/>`_
-for mbed_ by Sebastian Donner. This was conceived when working on the Hydro2Motion_ project.
+for mbed_ by Sebastian Donner.
+
+This library was conceived when working on the telemetry communication layer of the Hydro2Motion_ project.
 
 
 
-========
+********
 Handbook
-========
+********
 
 Channel configuration
 =====================
@@ -187,11 +205,13 @@ expressions, see also `SymPy Features`_.
 There's a commandline tool for applying transformation rules to payloads, see :ref:`lst-message-transform`.
 
 
-Operating Kotori LST
-====================
+*********
+Operating
+*********
 
-Little bit of linux howto
--------------------------
+
+A little bit of linux howto
+===========================
 
 WinSCP connect basti@raider.isarengineering.de
 
@@ -204,9 +224,14 @@ using the User Basti the command  "tmux att -t kotori" attaches to the console w
 never close tmux sessions, just detache, them using Strg-B and then d.
 
 Tools
------
+=====
 
-For using the channel operations, the user basti should navigate to /home/basti/kotori and then start "source .venv27/bin/activate". The Channel Operations should be available 
+For using the channel operations, the user basti should navigate to /home/basti/kotori and then start "source .venv27/bin/activate".
+From this environment, the commandline-based channel operations should be available.
+
+
+The ``lst-message`` command
+---------------------------
 
 .. highlight:: bash
 
@@ -453,9 +478,9 @@ Query timeseries::
     }
 
 
-===========
+***********
 Development
-===========
+***********
 
 .. seealso:: :ref:`lst-development`
 

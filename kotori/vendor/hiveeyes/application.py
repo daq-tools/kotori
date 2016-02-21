@@ -94,9 +94,11 @@ class HiveeyesApplication(BERadioNetworkApplication):
     def topology_to_database(self, topology):
         """
         Encode topology segment identifiers to database address.
-        A database server usually has the concept of multiple databases, each with multiple tables.
-        With other databases than RDBMS, they might be named differently, but the concept usually
-        doesn't differ much.
+
+        A database server usually has the concept of multiple databases,
+        each with multiple tables. With other databases than RDBMS,
+        they might be named differently, but the concept in general
+        is the same.
 
         When mapping the topology quadruple (realm, network, gateway, node) in the form of:
 
@@ -104,7 +106,9 @@ class HiveeyesApplication(BERadioNetworkApplication):
             - gateway + node  = table name
 
         We have a perfect fit for computing the slot where to store the measurements.
+
         """
+        # TODO: investigate using tags additionally to / instead of database.series
         sanitize = self.sanitize_db_identifier
         database = Bunch({
             'database': '{}_{}'.format(sanitize(topology.realm), sanitize(topology.network)),
@@ -116,8 +120,10 @@ class HiveeyesApplication(BERadioNetworkApplication):
     @staticmethod
     def sanitize_db_identifier(value):
         """
-        Better safe than sorry, databases accept different
+        Different databases accept different special
         characters as database- or table names.
+
+        Better safe than sorry, let's strip them all.
         """
         value = value.replace('/', '_').replace('.', '_').replace('-', '_')
         return value

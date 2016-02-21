@@ -24,16 +24,16 @@ vendor :ref:`vendor-hiveeyes`
 
 packaging
 ---------
-- modularize python dependencies into extra features
-- build deb packages with fpm
-- read designated package version from setup.py
-- fix woes with virtualenv-tools
-- add stopping and disabling the systemd service to “before-remove” hook
-- Debian packaging with fpm
+- Modularize python dependencies into extra features
+- Debian packaging using FPM
 
-misc
-----
-- refactor documentation
+    - Read designated package version from setup.py
+    - Use virtualenv-tools for relocating virtualenvs
+    - Add systemd service configuration file
+
+miscellaneous
+-------------
+- Documentation refactoring and improvements
 
 
 2015-11-26 0.5.1
@@ -135,19 +135,13 @@ proof-of-concept for vendor :ref:`vendor-hiveeyes`
 
 2015-05-01 0.2.1
 ================
-<<<<<<< HEAD
+
 vendor :ref:`vendor-hydro2motion`
 ---------------------------------
 - ui: set map position to Munich
 - ui: add lat long conversion
 - backend: use InfluxDB on localhost
 - backend: process complete Fuelcell telemetry data package
-=======
-- hydro2motion: ui: set map position to Munich
-- hydro2motion: ui: add lat long conversion
-- hydro2motion: backend: use InfluxDB on localhost
-- hydro2motion: backend: process complete Fuelcell telemetry data package
->>>>>>> a024a4cb0bcd3aad535b1411532e35dfd990e60a
 
 
 2015-04-24 0.2.0

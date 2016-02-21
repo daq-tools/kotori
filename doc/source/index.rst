@@ -56,7 +56,8 @@ Handbooks
     :maxdepth: 1
     :glob:
 
-    handbook/*
+    handbook/running
+    handbook/influxdb
 
 
 Research & Development

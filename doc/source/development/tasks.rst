@@ -96,6 +96,56 @@ No new panel gets created::
     - https://git.eclipse.org/c/paho/org.eclipse.paho.mqtt.python.git/tree/src/paho/mqtt/client.py
 
 
+Hiveeyes
+========
+
+Milestone 1 - Kotori 0.6.0
+--------------------------
+- Arbeit an der Dokumentation, siehe commits von gestern
+- Vorbereitung des Release 0.6.0 im aktuellen Zustand mit den Doku Updates (die 0.5.1 ist vom 26. November)
+- Release eines einigermaßen sauberen bzw. benutzbaren Debian Pakets
+
+
+Milestone 2 - Kotori 0.7.0
+--------------------------
+- Reguläres refactoring
+- MQTT Topic
+
+    - Implementierung der "Content Type" Signalisierung über pseudo-Dateiendungen wie geplant
+      (Inspired by Nick O’Leary and Jan-Piet Mens; Acked by Clemens and Richard)::
+
+            hiveeyes/testdrive/area42/hive3/temperature vs. hiveeyes/testdrive/area42/hive3.json
+
+    - Weitere Diskussion und Implementierung der "Direction" Signalisierung (Inspired by computourist, Pushed by Richard)
+      Proposal: ``.../node3/{direction}/{sensor}.foo``
+
+- Generalisierung der BERadioNetworkApplication / HiveeyesApplication vendor Architektur
+- Verbesserung der service-in-service Infrastruktur mit nativen Twisted service containern
+- Flexiblere Anwendungsfälle ähnlich dem von Hiveeyes ermöglichen: mqtt topic first-level segment "hiveeyes/" (the "realm") per Konfigurationsdatei bestimmen (Wunsch von Dazz)
+- Einführung von Softwaretests
+
+
+Research
+--------
+Mit ein paar Dingen müssen wir uns noch stärker beschäftigen:
+
+- InfluxDB
+
+    - Wie geht man am besten mit InfluxDB-nativen Tags in unserem Kontext um?
+    - Bemerkung: Vielleicht war die Trennung auf Datenbank/Tableebene die falsche
+      Strategie bzw. es gibt noch weitere, die orthogonal davon zusätzlich oder alternativ sinnvoll sind.
+
+- Grafana
+
+    - Wie kann man hier die Tags aus InfluxDB am besten verarbeiten und in den Dashboards praktisch nutzen?
+    - Wie funktionieren Annotations mit InfluxDB?
+
+- Notifications
+
+    - Ausblick: mqttwarn besser mit Kotori integrieren (via API) und
+      als universeller Nachrichtenvermittler auf swarm.hiveeyes.org betreiben.
+
+
 ****
 2015
 ****

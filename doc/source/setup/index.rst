@@ -8,6 +8,7 @@ Setup overview
 
     debian-amd64
     debian-arm
+    python-package
     influxdb
     grafana
     security

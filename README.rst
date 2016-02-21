@@ -14,9 +14,9 @@ Kotori README
 By acting as a mediator between components, it does:
 
     - receive data from various types of channels: MQTT, UDP, HTTP
-    - forward data to different kinds of data stores: TSDB, RDBMS, NoSQL
-    - control a connected Grafana instance by automatically creating dashboards
-      based on the arriving data
+    - store data into different kinds of databases: TSDB, RDBMS, NoSQL
+    - automatically create dashboards based on the arriving data
+      in a connected Grafana instance
 
 
 ----

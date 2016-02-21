@@ -2,6 +2,11 @@
 Debian ARM
 ##########
 
+.. attention::
+
+    This page is just a stub. Please help out.
+
+
 Packages
 ========
 - apt-get install mosquitto

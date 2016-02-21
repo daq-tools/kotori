@@ -8,11 +8,31 @@ Hydro2Motion
 
 .. contents:: Table of Contents
    :local:
-   :depth: 2
+   :depth: 1
 
-Introduction
-============
-Kotori was at `Shell Eco-marathon`_ in Rotterdam with Hydro2Motion_.
+
+*****
+About
+*****
+Kotori was running the telemetry platform for the Hydro2Motion_ team
+at the "`Shell Eco-marathon`_ 2015" in Rotterdam.
+This is a fine project out of the `Labor für Systemtechnik`_
+at the `Munich University of Applied Sciences`_.
+
+While this communication layer was based on CSV-over-UDP,
+the next iteration of the communication layer is based
+on Binary-over-UDP. This transport communicates more
+efficiently while still retaining a maximum of convenience.
+See also the :ref:`data acquisition system for vendor "LST" <vendor-lst>`.
+
+
+*******
+Details
+*******
+
+.. attention::
+
+    This section is just a stub. Read the source, luke.
 
 
 Run Kotori
