@@ -95,3 +95,88 @@ systemd service
     2016-01-27T03:17:57+0100 [mqtt.client.base                  ] DEBUG: ==> CONNECT (id=kotori.mqtt keepalive=0 clean=True)
     2016-01-27T03:17:57+0100 [mqtt.client.base                  ] DEBUG: <== CONNACK (code=0 session=False)
 
+
+
+systemd troubleshooting
+=======================
+::
+
+    systemctl enable /opt/kotori/kotori.service
+
+    systemctl is-enabled kotori
+    enabled
+
+    systemctl is-active kotori
+    inactive
+
+::
+
+    systemctl status kotori
+
+    ● kotori.service - Kotori is a multi-channel, multi-protocol data acquisition and graphing toolkit
+       Loaded: loaded (/opt/kotori/kotori.service; enabled)
+       Active: inactive (dead)
+         Docs: http://isarengineering.de/docs/kotori/
+
+::
+
+    systemctl list-unit-files kotori*
+
+    UNIT FILE      STATE
+    kotori.service enabled
+
+::
+
+    systemctl is-active kotori
+    unknown
+
+::
+
+    systemctl is-active kotori
+    active
+
+
+::
+
+    root@elbanco:~# tail -F /var/log/syslog /var/log/kotori/kotori.log
+    ==> /var/log/syslog <==
+    Jan 27 03:17:56 elbanco systemd[1]: Starting Kotori is a multi-channel, multi-protocol data acquisition and graphing toolkit...
+    Jan 27 03:17:56 elbanco systemd[1]: Started Kotori is a multi-channel, multi-protocol data acquisition and graphing toolkit.
+
+
+    ==> /var/log/kotori/kotori.log <==
+
+    2016-01-27T03:17:57+0100 [kotori                           ] INFO: Kotori version 0.5.1
+    2016-01-27T03:17:57+0100 [kotori                           ] INFO: options: {'--config': '/etc/kotori/kotori.ini', '--debug': True, '--help': False, '--version': False}
+    2016-01-27T03:17:57+0100 [kotori                           ] INFO: debug: True
+    2016-01-27T03:17:57+0100 [kotori.vendor.hiveeyes.application] INFO: Starting HiveeyesApplication
+    2016-01-27T03:17:57+0100 [kotori.daq.graphing.grafana      ] INFO: Starting GrafanaManager "HiveeyesGrafanaManager". grafana=localhost:3000
+    2016-01-27T03:17:57+0100 [kotori.daq.intercom.mqtt_adapter ] INFO: Starting MQTTAdapter. broker=localhost:1883
+    2016-01-27T03:17:57+0100 [mqtt.client.factory              ] INFO: MQTT Client library version 0.1.2
+    2016-01-27T03:17:57+0100 [mqtt.client.factory.MQTTFactory  ] INFO: Starting factory <mqtt.client.factory.MQTTFactory instance at 0x7f745c54aa28>
+    2016-01-27T03:17:57+0100 [mqtt.client.base                 ] DEBUG: ==> CONNECT (id=kotori.mqtt keepalive=0 clean=True)
+    2016-01-27T03:17:57+0100 [mqtt.client.base                 ] DEBUG: <== CONNACK (code=0 session=False)
+
+
+
+::
+
+    service --status-all | grep kotori
+
+    systemctl list-units --all kotori*
+
+
+
+::
+
+    systemctl status influxdb mosquitto grafana-server kotori
+
+
+::
+
+    systemctl list-unit-files kotori* influx* grafana* mosquitto*
+
+
+::
+
+    [    4.043574] systemd[1]: Cannot add dependency job for unit kotori.service, ignoring: Unit kotori.service failed to load: No such file or directory.

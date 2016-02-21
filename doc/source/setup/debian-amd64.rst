@@ -94,10 +94,13 @@ Configure::
     admin_password = XYZ
 
 
-Run::
+Enable system service::
 
-    #/etc/init.d/grafana-server start
     systemctl enable grafana-server
+    systemctl is-enabled grafana-server
+
+Start system service::
+
     systemctl start grafana-server
     tail -F /var/log/grafana/grafana.log
 

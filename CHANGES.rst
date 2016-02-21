@@ -107,25 +107,33 @@ general improvements
 proof-of-concept for vendor :ref:`vendor-hiveeyes`
 --------------------------------------------------
 - upgrade foundation libraries: Twisted, Autobahn, Crossbar
-- add frontend foundation based on Pyramid web framework
-- ui: add jQuery, Bootstrap, Fontawesome, html5shiv and respond.js
-- ui: add material design for bootstrap
-- ui: add prototype html based on SB Admin 2 bootstrap template
-- http: cache really static resources longer than volatile ones
-- refactor hydro2motion code
-- ui: add modernizr and underscore
-- ui: add foundation for page transitions from codrops
-- add vendor "hiveeyes"
-- hiveeyes: receive messages via MQTT and store data points into InfluxDB
-- app: use configuration file instead of hardcoded configuration values
+- receive messages via MQTT and store data points into InfluxDB
 - storage: add support for InfluxDB 0.9
-- ui: add pages with page transitions, about content, etc.
 - storage: minor tweaks to enable influxdb database authentication
-- minor update to BERadio receiving
-- integrate grafana datasource- and dashboard automation
-- improve logging
+- receive telemetry data from BERadio
+- grafana datasource- and dashboard automation
 - Sort "collect_fields" result before passing to grafana manager
+
+vendor :ref:`vendor-hydro2motion`
+---------------------------------
+- refactor hydro2motion code
+
+user interface
+--------------
+- add frontend foundation based on Pyramid web framework
+- add jQuery, Bootstrap, Fontawesome, html5shiv and respond.js
+- add material design for bootstrap
+- add prototype html based on SB Admin 2 bootstrap template
+- add modernizr and underscore
+- add foundation for page transitions from codrops
+- http: cache really static resources longer than volatile ones
+- ui: add pages with page transitions, about content, etc.
+
+general improvements
+--------------------
 - refactor project layout
+- use configuration file instead of hardcoded configuration values
+- improve logging
 
 
 2015-05-21 0.2.2
