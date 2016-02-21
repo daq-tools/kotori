@@ -60,8 +60,18 @@ Handbooks
     handbook/influxdb
 
 
-Research & Development
-----------------------
+Development
+-----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    development/index
+
+
+Research
+--------
 
 .. toctree::
     :maxdepth: 1
@@ -69,8 +79,6 @@ Research & Development
 
     research/index
     notepad/index
-    development/index
-
 
 
 Indices and tables

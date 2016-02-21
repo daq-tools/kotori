@@ -9,7 +9,7 @@ requires = [
     'pyramid==1.5.7',
     'pyramid_jinja2==2.5',
     'cornice==1.0.0',
-    'twisted-mqtt==0.1.2',
+    'twisted-mqtt==0.1.4',
     'pyasn1==0.1.9',        # required by service-identity
     'Bunch==1.0.1',
     'appdirs==1.4.0',

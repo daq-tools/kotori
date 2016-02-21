@@ -1,9 +1,22 @@
 # -*- coding: utf-8 -*-
 # (c) 2014-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 
+# ==========================================
+#               prerequisites
+# ==========================================
+
+# FPM on the build slave has to be patched:
+#
+# patch against deb.rb of fpm fame::
+#
+#   def write_meta_files
+#      #files = attributes[:meta_files]
+#      files = attributes[:deb_meta_file]
+
+
 
 # ==========================================
-#                 releasing
+#             build and release
 # ==========================================
 #
 # Release targets for convenient release cutting.
@@ -14,9 +27,25 @@
 # Synopsis::
 #
 #    make release bump={patch,minor,major}
+#    make python-package
+#    make debian-package flavor=daq
 #
 
-bumpversion:
+release: virtualenv bumpversion push
+
+# build and publish python package (sdist)
+python-package: sdist publish-sdist
+
+# build and publish debian package with flavor
+# Hint: Should be run on an appropriate build slave matching the deployment platform
+debian-package: check-flavor-options sdist deb-build-$(flavor) publish-debian
+#debian-package-test: check-flavor-options deb-build-$(flavor)
+
+# ----------------------
+#       utilities
+# ----------------------
+
+bumpversion: check-bump-options
 	bumpversion $(bump)
 
 push:
@@ -25,15 +54,28 @@ push:
 sdist:
 	python setup.py sdist
 
-# publish Python Eggs to eggserver
-# TODO: use localshop or one of its sisters
-sdist-publish:
+publish-sdist:
+	# publish Python Eggs to eggserver
+	# TODO: use localshop or one of its sisters
 	rsync -auv --progress ./dist/kotori-*.tar.gz hiveeyes@packages.elmyra.de:/srv/packages/organizations/hiveeyes/python/eggs/kotori/
 	rsync -auv --progress ./dist/kotori-*.tar.gz isareng@packages.elmyra.de:/srv/packages/organizations/isarengineering/python/eggs/kotori/
 
-# one-shot
-release: virtualenv bumpversion push sdist sdist-publish
+publish-debian:
+	# publish Debian packages
+	rsync -auv ./dist/kotori_*.deb hiveeyes@packages.elmyra.de:/srv/packages/organizations/hiveeyes/debian/
+	rsync -auv ./dist/kotori_*.deb isareng@packages.elmyra.de:/srv/packages/organizations/isarengineering/debian/
 
+check-bump-options:
+	@if test "$(bump)" = ""; then \
+		echo "ERROR: 'bump' not set, try 'make release bump={patch,minor,major}'"; \
+		exit 1; \
+	fi
+
+check-flavor-options:
+	@if test "$(flavor)" = ""; then \
+		echo "ERROR: 'flavor' not set, try 'make debian-package flavor=daq' or 'make debian-package flavor=daq-binary'"; \
+		exit 1; \
+	fi
 
 
 # ==========================================
@@ -49,12 +91,17 @@ release: virtualenv bumpversion push sdist sdist-publish
 #
 # Synopsis::
 #
-#   make deb-build
-#   make deb-build version=0.6.0
-#   dpkg-deb --contents kotori_0.6.0-1_amd64.deb
+#   make deb-build-daq
+#   make deb-build-daq-binary
 #
-
-deb: deb-build deb-publish
+# Build package from designated version::
+#
+#   make deb-build-daq version=0.6.0
+#
+# List content of package::
+#
+#   dpkg-deb --contents dist/kotori_0.6.0-1_amd64.deb
+#
 
 fpm-options := \
 	--name kotori \
@@ -82,23 +129,34 @@ branch   := $(shell git symbolic-ref HEAD | sed -e 's/refs\/heads\///')
 commit   := $(shell git rev-parse --short HEAD)
 version  := $(shell python setup.py --version)
 
-deb-build: prepare-production-build
+
+deb-build-daq:
+	$(MAKE) deb-build name=kotori-daq features=daq
+
+deb-build-daq-binary:
+	$(MAKE) deb-build name=kotori-daq-binary features=daq,daq_binary
+
+deb-build: check-build-options
+
+	$(eval buildpath := "./build/$(name)")
 
 	# start super clean, even clear the pip cache
 	#rm -rf build dist
 
 	# start clean
-	#rm -rf build/virt dist
+	# take care: enable only with caution
+	# TODO: sanity check whether buildpath is not empty
+	#rm -r $(buildpath) dist
 
 	# prepare
 	mkdir -p build dist
 
 	# use "--always copy" to satisfy fpm
 	# use "--python=python" to satisfy virtualenv-tools (doesn't grok "python2" when searching for shebangs to replace)
-	virtualenv --always-copy --python=python ./build/virt
+	virtualenv --always-copy --python=python $(buildpath)
 
 	# install package in development mode, enable extra feature "daq"
-	#./build/virt/bin/python setup.py install
+	#$(buildpath)/bin/python setup.py install
 
 	# use different directory for temp files, because /tmp usually has noexec attributes
 	# otherwise: _cffi_backend.so: failed to map segment from shared object: Operation not permitted
@@ -106,27 +164,27 @@ deb-build: prepare-production-build
 
 	# build from egg on package server
 	# https://pip.pypa.io/en/stable/reference/pip_wheel/#cmdoption--extra-index-url
-	#TMPDIR=/var/tmp ./build/virt/bin/pip install kotori[daq]==$(version) --extra-index-url=https://packages.elmyra.de/isarengineering/python/eggs/
+	#TMPDIR=/var/tmp $(buildpath)/bin/pip install kotori[$(features)]==$(version) --extra-index-url=https://packages.elmyra.de/isarengineering/python/eggs/
 
 	# build sdist egg locally
-	./build/virt/bin/python setup.py sdist
+	TMPDIR=/var/tmp $(buildpath)/bin/python setup.py sdist
 
 	# install from local sdist egg
 	# TODO: maybe use "--editable" for installing in development mode
 	# https://pip.pypa.io/en/stable/reference/pip_wheel/#cmdoption-f
-	TMPDIR=/var/tmp ./build/virt/bin/pip install kotori[daq]==$(version) --download-cache=./build/pip-cache --find-links=./dist
+	TMPDIR=/var/tmp $(buildpath)/bin/pip install kotori[$(features)]==$(version) --download-cache=./build/pip-cache --find-links=./dist
 
-	# update the python interpreter in the shebang of installed scripts
-	# in order to relocate the virtualenv
-	# must force reinstall because virtualenv-tools will harm itself
-	./build/virt/bin/pip install virtualenv-tools==1.0 --upgrade --force-reinstall
-	./build/virt/bin/virtualenv-tools --update-path=/opt/kotori ./build/virt
+	# Relocate the virtualenv by updating the python interpreter in the shebang of installed scripts.
+	# Currently must force reinstall because virtualenv-tools will harm itself (2016-02-21).
+	$(buildpath)/bin/pip install virtualenv-tools==1.0 --upgrade --force-reinstall
+	$(buildpath)/bin/virtualenv-tools --update-path=/opt/kotori $(buildpath)
 
-	#rm -f ./build/virt/{.Python,pip-selfcheck.json}
+	#rm -f $(buildpath)/{.Python,pip-selfcheck.json}
 
 	fpm \
 		-s dir -t deb \
 		$(fpm-options) \
+		--name $(name) \
 		--version $(version) \
 		--deb-field 'Branch: $(branch) Commit: $(commit)' \
 		--package ./dist/ \
@@ -137,14 +195,14 @@ deb-build: prepare-production-build
 		--before-remove ./packaging/scripts/before-remove \
 		--verbose \
 		--force \
-		./build/virt/=/opt/kotori \
+		$(buildpath)/=/opt/kotori \
 		./etc/kotori.ini=/etc/kotori/kotori.ini \
 		./packaging/systemd/kotori.service=/usr/lib/systemd/system/kotori.service
 
 #		--debug \
 
 
-deb-pure: prepare-production-build
+deb-pure: check-build-options
 	fpm \
 		-s python -t deb \
 		$(fpm-options) \
@@ -186,50 +244,39 @@ deb-pure: prepare-production-build
 # Add custom fields to DEBIAN/control file
 #		--deb-field 'Branch: master Commit: deadbeef' \
 
-# patch against deb.rb of fpm fame::
-#
-#   def write_meta_files
-#      #files = attributes[:meta_files]
-#      files = attributes[:deb_meta_file]
 
-
-# ------------------
-#   upload package
-# ------------------
-
-deb-publish:
-	# publish Debian packages
-	rsync -auv --progress ./dist/kotori_*.deb hiveeyes@packages.elmyra.de:/srv/packages/organizations/hiveeyes/debian/
-	rsync -auv --progress ./dist/kotori_*.deb isareng@packages.elmyra.de:/srv/packages/organizations/isarengineering/debian/
-
-
-# patch against deb.rb of fpm fame::
-#
-#   def write_meta_files
-#      #files = attributes[:meta_files]
-#      files = attributes[:deb_meta_file]
-
-
-
-deb-fab:
-	fab deb_build_and_release:gitrepo=$(gitrepo),gitref=$(version),tenant=$(tenant),kind=$(kind),flavor=fpm
-
-release-deb:
-	$(MAKE) deb gitrepo=ssh://git@git.elmyra.de/isar-engineering/kotori-daq.git gitref=master tenant=elmyra/kotori kind=staging version=$(version)
-
-prepare-production-build:
+check-build-options:
 	@if test "$(version)" = ""; then \
 		echo "ERROR: 'version' not set"; \
 		exit 1; \
 	fi
+	@if test "$(name)" = ""; then \
+		echo "ERROR: 'name' not set"; \
+		exit 1; \
+	fi
+	@if test "$(features)" = ""; then \
+		echo "ERROR: 'features' not set"; \
+		exit 1; \
+	fi
 
-egg:
-	fab egg_build_and_release:setup_py=setup.py
+
+# --------------------------------------
+#  Fabric based multi-tenant releasing
+# --------------------------------------
+
+#deb-fab:
+#	fab deb_build_and_release:gitrepo=$(gitrepo),gitref=$(version),tenant=$(tenant),kind=$(kind),flavor=fpm
+
+#release-deb:
+#	$(MAKE) deb gitrepo=ssh://git@git.elmyra.de/isar-engineering/kotori-daq.git gitref=master tenant=elmyra/kotori kind=staging version=$(version)
+
+#egg:
+#	fab egg_build_and_release:setup_py=setup.py
 
 
 
 # ==========================================
-#                   misc
+#                 environment
 # ==========================================
 #
 # Miscellaneous tools:
@@ -253,40 +300,3 @@ virtualenv:
 	@test -e .venv27/bin/python || `command -v virtualenv` --python=`command -v python` --no-site-packages .venv27
 	@.venv27/bin/pip --quiet install --requirement requirements-dev.txt
 
-
-# ------------------------------------------
-#                 releasing
-# ------------------------------------------
-#
-# Release targets for convenient release cutting.
-#
-# Synopsis::
-#
-#    make release bump={patch,minor,major}
-#
-
-bumpversion:
-	bumpversion $(bump)
-
-push:
-	git push && git push --tags
-
-sdist:
-	python setup.py sdist
-
-upload:
-
-	# Python Eggs
-	rsync -auv ./dist/kotori-*.tar.gz hiveeyes@packages.elmyra.de:/srv/packages/organizations/hiveeyes/python/eggs/kotori/
-	rsync -auv ./dist/kotori-*.tar.gz isareng@packages.elmyra.de:/srv/packages/organizations/isarengineering/python/eggs/kotori/
-
-	# Debian packages
-	rsync -auv ./dist/kotori_*.deb hiveeyes@packages.elmyra.de:/srv/packages/organizations/hiveeyes/debian/
-	rsync -auv ./dist/kotori_*.deb isareng@packages.elmyra.de:/srv/packages/organizations/isarengineering/debian/
-
-
-# sdist-only
-#release: virtualenv bumpversion push sdist upload
-
-# sdist plus debian package
-release: virtualenv bumpversion push deb-full upload
