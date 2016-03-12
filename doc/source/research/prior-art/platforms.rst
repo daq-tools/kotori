@@ -1,7 +1,28 @@
-#############
-IoT platforms
-#############
+###################
+3rd party platforms
+###################
 
+***
+DAQ
+***
+
+- https://labjack.com/support/software/3rd-party-applications
+- https://www.interfaceinnovations.org/cupidcontrols.html
+- https://www.interfaceinnovations.org/ccsoftware.html
+- http://www.azeotech.com/
+
+*******
+Gateway
+*******
+
+LoRa
+====
+- http://www.nemeus.fr/en/mg003-l-eu-gateway-2/
+
+
+*****
+Cloud
+*****
 
 Free
 ====
@@ -23,6 +44,9 @@ Free
 
 Commercial
 ==========
+
+- | ThingSpeak
+  | https://thingspeak.com/
 
 - | Pachube
   | Acquired by Xively
@@ -56,6 +80,10 @@ Commercial
 
 - | wot.io
   | http://www.wot.io
+
+- | ARM Mbed IoT Device Platform (mbed.com)
+  | https://www.mbed.com/en/
+  | https://news.ycombinator.com/item?id=11142062
 
 
 Keen IO

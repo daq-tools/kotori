@@ -101,6 +101,8 @@ general improvements
 - generalize c library adapter, multi-project capabilities for vendor lst
 
 
+.. _Kotori 0.3.2:
+
 2015-11-06 0.3.2
 ================
 

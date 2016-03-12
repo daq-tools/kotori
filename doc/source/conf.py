@@ -29,7 +29,10 @@ import shlex
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = []
+extensions = [
+    'sphinx.ext.todo',
+    'sphinx.ext.intersphinx',
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -291,3 +294,9 @@ def setup(app):
     # https://github.com/snide/sphinx_rtd_theme/issues/117#issuecomment-41571653
     #app.add_javascript("custom.js")
     app.add_stylesheet("css/kotori-sphinx.css")
+
+# Link with BERadio and Hiveeyes projects
+intersphinx_mapping = {
+    'beradio':  ('https://hiveeyes.org/docs/beradio/', None),
+    'hiveeyes': ('https://swarm.hiveeyes.org/docs/', None),
+}

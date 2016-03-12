@@ -1,3 +1,5 @@
+.. _weather-information-publishing:
+
 ==============================
 Weather information publishing
 ==============================

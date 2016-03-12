@@ -1,7 +1,9 @@
+.. include:: ../_resources.rst
+
 .. _kotori-tasks:
 
 ############
-Kotori Tasks
+Kotori tasks
 ############
 
 ****
@@ -10,6 +12,35 @@ Kotori Tasks
 
 All
 ===
+
+
+2016-03-08
+----------
+- [o] Make Kotori handle Gigabytes of data
+- [o] Universal radio-based sensor node with appropriate housing and battery power supply, per :ref:`vendor-hiveeyes`
+- [o] GPS beacon node visualizing movement on a realtime map, per prototype of :ref:`vendor-hydro2motion`,
+  maybe as panel for Grafana. Maybe run mapserver on box for offline maps.
+- [o] Hook "Kotori Box" into DNS using VPN tunnel, for convenient remote access. Also think about remote-hands maintenance.
+
+
+2016-03-07
+----------
+- [o] Use NodeUSB_ as Lua development platform and sensor network gateway adapter for WiFi devices
+- [o] Integrate with the OpenXC_ platform using `OpenXC for Python`_
+- [o] Integrate with other cloud IoT platforms as up- or downstream unit
+- [o] Use the `Funky v3`_ as canonical sensor node?
+
+
+2016-03-06
+----------
+- [o] "Kotori Box" demo setup on Raspberry Pi 3
+- [o] Improve docs
+
+    - redesign page for ilaundry applications
+    - short history sections for all applications
+    - content policy / ownership
+
+
 
 2016-01-25
 ----------

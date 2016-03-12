@@ -5,7 +5,7 @@ body, div.body {
 */
 
 .wy-nav-content {
-    max-width: 80%;
+    max-width: 90%;
 }
 
 .wy-side-nav-search > a img.logo {
@@ -16,4 +16,14 @@ body, div.body {
 
 .wy-side-nav-search {
     /* background-color: #add8e6; */
+}
+
+/* alignment classes */
+.align-right {
+    text-align: right;
+}
+
+/* clearfix after aligning left/right  */
+.clearfix {
+    clear: both;
 }

@@ -41,9 +41,30 @@ python-package: sdist publish-sdist
 debian-package: check-flavor-options sdist deb-build-$(flavor) publish-debian
 #debian-package-test: check-flavor-options deb-build-$(flavor)
 
-# ----------------------
-#       utilities
-# ----------------------
+
+# ==========================================
+#                 releasing
+# ==========================================
+#
+# Release targets for convenient release cutting.
+#
+# Synopsis::
+#
+#    make release bump={patch,minor,major}
+#
+# Setup:
+#
+#    - Make sure you have e.g. ``bumpversion==0.5.3`` in your ``requirements.txt``
+#    - Add a ``.bumpversion.cfg`` to your project root properly reflecting
+#      the current version and the list of files to bump versions in. Example::
+#
+#        [bumpversion]
+#        current_version = 0.1.0
+#        files = doc/source/conf.py
+#        commit = True
+#        tag = True
+#        tag_name = {new_version}
+#
 
 bumpversion: check-bump-options
 	bumpversion $(bump)
@@ -294,9 +315,39 @@ test-coverage: virtualenv
 		--cover-html --cover-html-dir=coverage/html --cover-xml --cover-xml-file=coverage/coverage.xml
 
 docs-html: virtualenv
+	touch doc/source/index.rst
 	export SPHINXBUILD="`pwd`/.venv27/bin/sphinx-build"; cd doc; make html
 
 virtualenv:
 	@test -e .venv27/bin/python || `command -v virtualenv` --python=`command -v python` --no-site-packages .venv27
 	@.venv27/bin/pip --quiet install --requirement requirements-dev.txt
+
+
+# ==========================================
+#         ptrace.isarengineering.de
+# ==========================================
+
+# Don't commit media assets (screenshots, etc.) to the repository.
+# Instead, upload them to https://ptrace.isarengineering.de/
+ptrace_target := root@ptrace.isarengineering.de:/data/web/basti/ptrace.isarengineering.de/htdocs/
+ptrace_http   := https://ptrace.isarengineering.de/
+ptrace: check-ptrace-options
+	$(eval prefix := $(shell date --iso-8601))
+	$(eval name   := $(shell basename $(source)))
+	$(eval id     := $(prefix)_$(name))
+
+	@# debugging
+	@#echo "name: $(name)"
+	@#echo "id:   $(id)"
+
+	@scp '$(source)' '$(ptrace_target)$(id)'
+
+	$(eval url    := $(ptrace_http)$(id))
+	@echo "Access URL: $(url)"
+
+check-ptrace-options:
+	@if test "$(source)" = ""; then \
+		echo "ERROR: 'source' not set"; \
+		exit 1; \
+	fi
 

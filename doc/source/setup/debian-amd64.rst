@@ -39,17 +39,8 @@ InfluxDB
 ========
 ::
 
-    wget https://s3.amazonaws.com/influxdb/influxdb_0.10.0-0.beta2_amd64.deb
-    dpkg -i influxdb_0.10.0-0.beta2_amd64.deb
-
-
-Alternatives (don't use the 0.8.x releases):
-
-    - https://s3.amazonaws.com/influxdb/influxdb_0.10.0-0.beta2_amd64.deb
-    - https://s3.amazonaws.com/influxdb/influxdb_0.9.6.1_amd64.deb
-    - https://s3.amazonaws.com/influxdb/influxdb_0.9.4.2_amd64.deb
-    - https://s3.amazonaws.com/influxdb/influxdb_0.8.8_amd64.deb
-
+    wget https://s3.amazonaws.com/influxdb/influxdb_0.10.2-1_amd64.deb
+    dpkg --install influxdb_0.10.2-1_amd64.deb
 
 /etc/influxdb/influxdb.conf::
 

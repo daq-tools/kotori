@@ -34,3 +34,7 @@ Misc
 ====
 - http://playground.arduino.cc/Main/LibraryList#Comm
 - OWFS: http://www.cupidcontrols.com/2014/01/owfs-owserver-owhttp-owpython-and-a-little-1wire-pi/
+
+
+- Naming Things with Hashes: https://tools.ietf.org/html/rfc6920
+    - https://news.ycombinator.com/item?id=11142454

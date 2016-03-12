@@ -6,7 +6,7 @@
 LST
 ###
 
-.. contents:: Table of Contents
+.. contents::
    :local:
    :depth: 1
 
@@ -16,13 +16,13 @@ LST
 About
 *****
 LST is the `Labor für Systemtechnik`_ at the `Munich University of Applied Sciences`_.
-They are into `aviation <LST-aviation>`_ and conceive a number of `fine projects <LST-projects>`_.
-Also see some `pictures of the laboratory <LST-pictures>`_.
+They are into `aviation <LST-aviation_>`_ and conceive a number of `fine projects <LST-projects_>`_.
+Also see some `pictures of the laboratory <LST-pictures_>`_.
 
 
-************
-Introduction
-************
+***********
+Environment
+***********
 Let's have a look at the environment:
 
 - mbed_ is a popular embedded computing platform used intensively inside the laboratory.
@@ -35,7 +35,8 @@ Goals
 *****
 - Receive telemetry messages over UDP in binary format.
 - Decode and enrich them by using information from structs of real *C/C++* header files.
-- Store measurements to database, with attribute names matching the header file struct declarations.
+- Store measurements to the database, with attribute names matching the header file struct declarations.
+- Automatically create default Grafana panels for instant telemetry data visualization.
 - While doing all this, it should get out of the way by honoring *LST* best practices:
 
     - Must handle and dispatch to multiple struct definitions per project. Each struct has a unique ID at the second

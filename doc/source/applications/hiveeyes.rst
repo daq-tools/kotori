@@ -15,38 +15,72 @@ Hiveeyes
 *****
 About
 *****
+The `Hiveeyes project`_ conceives a data collection platform for
+bee hive monitoring voluntarily operated by the beekeeper community.
+
 Together with Mosquitto_, InfluxDB_, Grafana_, mqttwarn_ and BERadio_,
-Kotori runs the data collection hub ``swarm.hiveeyes.org`` (the `Hiveeyes platform`_)
-for a Berlin-based beekeeper collective.
+Kotori runs the `Hiveeyes platform`_ ``swarm.hiveeyes.org`` as
+a data collection hub for a Berlin-based beekeeper collective.
 
-For source code, have a look at `Hiveeyes at GitHub`_.
+Feel welcome to join them, just drop an email at "hiveeyes-devs ät ideensyndikat.org".
+They are friendly, we know them.
 
-Feel welcome to join us: hiveeyes-devs ät ideensyndikat.org
+
+
+***********
+Environment
+***********
+Let's have a look at the environment:
+
+- Arduino_ is a popular embedded computing platform used intensively here.
+- Telemetry data is transmitted from sensor nodes over RFM69_ radio links.
+- Telemetry data is forwarded and distributed over
+  a wide area multi-tenancy communication bus based on MQTT_.
+
+.. seealso::
+
+    - For documentation, have a look at :ref:`hiveeyes:hiveeyes`.
+    - For source code, have a look at `Hiveeyes at GitHub`_.
+
+
+*****
+Goals
+*****
+- :ref:`beradio:beradio` handles the radio link communication based on RFM69_.
+  It receives data messages in Bencode_ format over radio, decodes them and
+  forwards them to a serial interface to MQTT encoded with JSON.
+- :ref:`kotori` receives telemetry data from MQTT topic subscriptions.
+  For details about the addressing scheme and topology, see :ref:`hiveeyes-one-topology`.
+- Store measurements to the database.
+- Automatically create default Grafana panels for instant telemetry data visualization.
 
 
 *******
 Details
 *******
 
-URL entrypoints
-===============
+Interfaces
+==========
 Entrypoints to the platform running on ``swarm.hiveeyes.org`` as of 2016-01-29:
 
-- | Mosquitto
-  | mqtt://swarm.hiveeyes.org
-- | Grafana
-  | https://swarm.hiveeyes.org/grafana/
+- Mosquitto::
 
+    uri:      mqtt://swarm.hiveeyes.org
 
-Serial to MQTT forwarding
-=========================
-This has completely moved to the scope of BERadio_. Nothing to see here. :-)
+- Grafana::
+
+    uri:      https://swarm.hiveeyes.org/grafana/
+    username: hiveeyes
+    password: Efocmunk
 
 
 
 *******************
 Platform operations
 *******************
+This section is about running the whole platform on your own hardware.
+Please be aware this is a work in progress. We are happy to receive
+valuable feedback for improving things gradually.
 
 Install the platform
 ====================
@@ -66,12 +100,12 @@ For working directly with the InfluxDB_ API, please have a look at the :ref:`inf
 Platform development
 ********************
 
-Want to see more? Read on my dear.
+Want to dig even deeper? Read on my dear.
 
 Setup
 =====
 When developing on Kotori or for ad-hoc installations, you should follow the
-"instructions for installing Kotori as :ref:`setup-python-package`".
+instructions for :ref:`installing Kotori as Python package <setup-python-package>`.
 
 Run Kotori
 ==========
@@ -86,44 +120,11 @@ For getting your development sandbox up and running,
 please have a look at :ref:`kotori-hacking`.
 
 .. note::
+
     Please contact us by email at "hiveeyes-devs ät ideensyndikat.org"
     for repository access until the source code is on GitHub.
 
 
-********
-Wishlist
-********
-- Aggregate measurements over time ranges (e.g. daily) and republish summary to MQTT
-
-    - Provide reasonable "delta" values in relation to the point of last summary
-    - Proposal for summary topics: hiveeyes/username/summary/foo/daily/bar
-    - Schedule at: Morning, Noon, Evening
-
-- Threshold alerting
-- `Weather data publishing <../development/weather.html>`_
-- "Stockkarte" subsystem
-
-    - marking point in graphs and filling the Stockkarte questioning
-    - https://github.com/Dieterbe/anthracite/
-    - https://twitter.github.io/labella.js/
-
-- Timeseries anomaly detection using machine learning
-
-
-**************
 Under the hood
-**************
-
-The most desirable thing to amend when hacking on Kotori in the context of Hiveeyes might be the routing
-code of how to map inbound MQTT data messages appropriately into InfluxDB databases and time series (tables).
-
-When using the »quadruple hierarchy strategy«, a data message sent to the MQTT topic ``hiveeyes/999/1/99``
-will be stored in a database named ``hiveeyes_999`` and a series named ``1_99``::
-
-    hiveeyes  /  999  /  1  /  99
-    |                 |         |
-    |    database     | series  |
-    |  hiveeyes_999   |  1_99   |
-    |                 |         |
-
-Find the routines implementing this strategy in ``kotori/vendor/hiveeyes/application.py``, lines 44 ff.:
+==============
+Please also have a look at :ref:`hiveeyes-one-topology` and :ref:`hiveeyes-one-wishlist`.

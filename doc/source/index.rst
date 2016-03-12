@@ -7,15 +7,15 @@
 
 .. _kotori:
 
-Welcome to Kotori!
-==================
+Kotori
+======
 
     *Kotori* is a multi-channel, multi-protocol data acquisition and graphing toolkit
     based on InfluxDB_, Grafana_, Mosquitto_ and Twisted_.
 
-    It is a convenient component for building flexible telemetry solutions and test benches
-    by addressing different aspects of collecting and storing sensor data from a
-    multitude of data sources and devices.
+    It is a convenient component for building flexible telemetry solutions, test benches
+    and sensor networks by addressing different aspects of collecting and storing sensor
+    data from a multitude of data sources and devices.
 
 
 About
@@ -46,6 +46,7 @@ Setup
     :glob:
 
     setup/debian-amd64
+    setup/kotoribox-diy
     setup/index
 
 

@@ -2,6 +2,10 @@
 Setup overview
 ##############
 
+********
+Software
+********
+
 .. toctree::
     :maxdepth: 1
     :glob:
@@ -12,3 +16,14 @@ Setup overview
     influxdb
     grafana
     security
+
+
+********
+Hardware
+********
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    kotoribox-diy
