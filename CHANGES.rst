@@ -5,6 +5,10 @@ Kotori CHANGES
 develop
 =======
 
+
+2016-03-27 0.6.0
+================
+
 vendor :ref:`vendor-lst`
 ------------------------
 - resolve collision on parsed C header files when using identical filenames for different channels
@@ -13,9 +17,8 @@ vendor :ref:`vendor-lst`
 vendor :ref:`vendor-hiveeyes`
 -----------------------------
 - improve configuration file “hiveeyes.ini” and logging
-- fix Grafana panel creation
+- fix Grafana panel creation re. Grafana 2.6.0 compatibility, Grafana 2.1.3 still works though
 - fix Grafana panel creation re. InfluxDB select expression
-- Grafana 2.6.0 compatibility, Grafana 2.1.3 still works though
 - don’t put global realm “hiveeyes” into Grafana dashboard name
 - improve Grafana panel automation
 - accept single values on mqtt topic
