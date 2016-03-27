@@ -37,7 +37,7 @@ extras = {
 }
 
 setup(name='kotori',
-      version='0.5.1',
+      version='0.6.0',
       description='Kotori data acquisition and graphing toolkit',
       long_description='Kotori data acquisition and graphing toolkit',
       classifiers=[
