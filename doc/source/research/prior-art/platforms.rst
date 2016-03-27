@@ -41,6 +41,10 @@ Free
   | With shiftr.io you can rapidly interconnect your objects, devices and apps.
   | https://shiftr.io/
 
+- | Smart.js
+  | Get your devices connected to the Internet of Things simply, by coding with JavaScript and C/C++.
+  | https://www.cesanta.com/products/smart-js
+
 
 Commercial
 ==========

@@ -14,6 +14,69 @@ All
 ===
 
 
+2016-03-25
+----------
+- Use the PiDrive
+
+    - http://wdlabs.wd.com/
+    - http://arstechnica.co.uk/gadgets/2016/03/wd-314gb-raspberry-pi-pidrive/
+
+- Blueprint for creating images
+
+    - https://owncloud.org/blog/wd-labs-raspberry-pi-owncloud-and-ubuntu/
+    - https://github.com/owncloud/pi-image/tree/master/image-creation-tools
+
+
+
+2016-03-23
+----------
+- Integrate with Plottico
+| Live plotting that just works.
+| http://plotti.co/
+| https://news.ycombinator.com/item?id=11290122
+
+- Write about EDU_HM_LST_ORC
+
+- | Kotori Box XT
+  | http://www.pollin.de/shop/dt/MTY1OTgxOTk-/Bausaetze_Module/Entwicklerboards/Odroid/ODROID_XU4_Set_mit_8GB_eMMC_Modul_Gehaeuse_und_Netzteil.html
+
+
+2016-03-20
+----------
+- [o] Receive telemetry data via Ice-E: https://zeroc.com/products/ice-e
+
+
+2016-03-17
+----------
+- Integrate with Home Automation Systems
+    - http://www.domoticz.com/DomoticzManual.pdf
+- Integrate with Z-Wave
+    - http://razberry.z-wave.me/
+    - http://razberry.z-wave.me/index.php?id=9
+    - http://razberry.z-wave.me/index.php?id=6
+    - http://razberry.z-wave.me/index.php?id=10
+    - http://razberry.z-wave.me/index.php?id=4
+    - http://www.zwave4u.com/index.php?cat=153&sort=&XTCsid=3a0993c6f56070cb8bf68d4e2e0a900b&filter_id=38
+    - http://www.zwave4u.com/PC-Adapters/-USB-Sticks/USB-Stick-incl-Z-Way-Controller-Software-ZMEEUZBWAY::17762.html
+    - http://ser2net.sourceforge.net/
+
+
+2016-03-15
+----------
+- [o] Integrate with Phywe datalogging system Cobra3/Cobra4
+    - https://www.phywe.com/en/geraetehierarchie/datalogging-system-cobra4/
+    - | Cobra4 - The Universal Measurement System for Scientific Instruction
+      | https://www.youtube.com/watch?v=1rt6wdMbQYA
+    - https://www.phywe.com/en/software-measure-cobra3.html
+    - https://www.phywe.com/en/cobra3-basic-unit-set.html
+    - https://www.phywe.com/en/top/downloads/softwaredownload/
+    - https://www.phywe.com/en/software-cobra4-multi-user-licence.html
+    - http://repository.phywe.de/files/bedanl.pdf/14550.61/e/1455061e.pdf
+    - http://www.phywe-es.com/1054n531/Servicios/Descargas/Software.htm
+    - https://appdb.winehq.org/objectManager.php?sClass=application&iId=11332
+    - https://appdb.winehq.org/appimage.php?iId=29368
+
+
 2016-03-08
 ----------
 - [o] Make Kotori handle Gigabytes of data

@@ -83,11 +83,12 @@ Overview
 --------
 
 A channel is made of ...
-    - an UDP port for receiving messages
-    - a WAMP topic for publishing received messages to the software bus
-    - a filesystem path to the directory of C/C++ header files
-    - the names of the header files containing struct declarations describing the messages received on a channel,
-      see :ref:`lst-header-file-anatomy`
+
+- an UDP port for receiving messages
+- a WAMP topic for publishing received messages to the software bus
+- a filesystem path to the directory of C/C++ header files
+- the names of the header files containing struct declarations describing the messages received on a channel,
+  see :ref:`lst-header-file-anatomy`
 
 Example::
 
