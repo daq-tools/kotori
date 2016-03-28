@@ -43,7 +43,7 @@
     "seriesOverrides": [],
     "span": 12,
     "stack": false,
-    "steppedLine": true,
+    "steppedLine": false,
     "targets": [
         {{ targets }}
     ],

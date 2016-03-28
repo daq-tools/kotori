@@ -8,6 +8,8 @@ develop
 - Improve internal settings handling and application bootstrapping
 - Integrate subsystems from vendor Hiveeyes/BERadio into Kotori core
 - Document how to run on PyPy
+- Make default Grafana panel not use ``steppedLines: true``.
+  Smooth lines are more beautiful when displaying sine curves.
 
 
 2016-03-27 0.6.0
