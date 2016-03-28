@@ -24,6 +24,7 @@ About
 .. toctree::
     :maxdepth: 1
 
+    about
     README
     changes
 
