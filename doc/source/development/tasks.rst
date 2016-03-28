@@ -44,7 +44,7 @@ Kotori tasks
 - [o] Use ThreadPool for storage operations
 - [o] Deprecate InfluxDB 0.8 compatibility
 - [o] MQTT broker connection resiliency
-- [o] Start mqttkit-python
+- [o] Start mqttkit, then mention in README.rst at "For developers"
 - [o] Improve application bootstrapping by refactoring into a Twisted plugin
 - [o] REST API
 - [o] Throttle metrics output to one per minute after 90 seconds
@@ -53,7 +53,14 @@ Kotori tasks
 - [o] LST: Headerfile upload API and browser drop target
 - [o] GUI: Interactively create data sinks, add decoding- and mapping-rules and ...
 - [o] Start dogfeeding by collecting data from Kotori's builtin metrics subsystem
+- [o] README: Add foreword about contemporary space ship design and afterword about
+      testing, feedback, contributions and more use cases
+- [o] Documentation content license: Creative commons share-alike attribution non-commercial
+- [o] Documentation content attributions
 
+    - Kotori Logo: Google Material Design Icons
+    - Hexagon Buttons: https://github.com/shariarbd/CSS3-Hexagon-Buttons
+    - Entypo Font: http://www.entypo.com/ (Entypo pictograms by Daniel Bruce — http://entypo.com/)
 
 
 2016-03-25
@@ -72,10 +79,10 @@ Kotori tasks
 
 2016-03-23
 ==========
-- Integrate with Plottico
-| Live plotting that just works.
-| http://plotti.co/
-| https://news.ycombinator.com/item?id=11290122
+- | Integrate with Plottico
+  | Live plotting that just works.
+  | http://plotti.co/
+  | https://news.ycombinator.com/item?id=11290122
 
 - Write about EDU_HM_LST_ORC
 
@@ -584,6 +591,7 @@ Milestone 1
 ==========-
 - dynamic receiver channels
 - realtime scope views: embed grafana Graphs or render directly e.g. using Rickshaw.js?
+
     - http://docs.grafana.org/v2.0/reference/sharing/
     - https://github.com/grafana/grafana/issues/1622
     - https://github.com/ricklupton/livefft

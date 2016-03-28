@@ -21,6 +21,7 @@ bee hive monitoring voluntarily operated by the beekeeper community.
 Together with Mosquitto_, InfluxDB_, Grafana_, mqttwarn_ and BERadio_,
 Kotori runs the `Hiveeyes platform`_ ``swarm.hiveeyes.org`` as
 a data collection hub for a Berlin-based beekeeper collective.
+For documentation and pictures, have a look at :ref:`hiveeyes:hiveeyes`.
 
 Feel welcome to join them, just drop an email at "hiveeyes-devs ät ideensyndikat.org".
 They are friendly, we know them.
@@ -36,11 +37,6 @@ Let's have a look at the environment:
 - Telemetry data is transmitted from sensor nodes over RFM69_ radio links.
 - Telemetry data is forwarded and distributed over
   a wide area multi-tenancy communication bus based on MQTT_.
-
-.. seealso::
-
-    - For documentation, have a look at :ref:`hiveeyes:hiveeyes`.
-    - For source code, have a look at `Hiveeyes at GitHub`_.
 
 
 *****
@@ -121,8 +117,9 @@ please have a look at :ref:`kotori-hacking`.
 
 .. note::
 
-    Please contact us by email at "hiveeyes-devs ät ideensyndikat.org"
-    for repository access until the source code is on GitHub.
+    We are working on bringing the source code to `Hiveeyes at GitHub`_.
+    Please don't hesitate to contact us by email at "hiveeyes-devs ät ideensyndikat.org"
+    for source code access in the meanwhile.
 
 
 Under the hood

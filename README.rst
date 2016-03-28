@@ -11,15 +11,66 @@ Kotori README
     and sensor networks by addressing different aspects of collecting and storing sensor
     data from a multitude of data sources and devices.
 
-**********
-In a hurry
-**********
-While :ref:`kotori` acts as a mediator between software and hardware components, the whole system does:
+***********
+At a glance
+***********
+The big picture of the data acquisition integration framework is a system aiming to:
 
-- receive data from various types of ingress data channels: MQTT, UDP, HTTP
-- store collected data into different kinds of databases: TSDB, RDBMS, NoSQL
-- convert and transcode data from/to different payload formats: CSV, JSON, XML, etc.
-- display measurement data in rich database dashboards
+.. container:: pull-left basic-hero align-center
+
+    Deliver an instant-on experience by providing built-in sensor adapters,
+    flexible configuration capabilities, durable database storage and
+    unattended graph visualization out of the box.
+
+.. container:: pull-right
+
+    .. raw:: html
+
+        <a href="#">
+            <span class="hb hb-md hb-google-plus">
+                <i class="fa fa-plug"></i>
+            </span>
+        </a>
+        <a href="#">
+            <span class="hb hb-md hb-linkedin">
+                <i class="fa fa-signal"></i>
+            </span>
+        </a>
+
+|clearfix|
+
+
+.. container:: pull-left
+
+    .. raw:: html
+
+        <a href="#">
+            <span class="hb hb-md hb-xing">
+                <i class="fa fa-gears"></i>
+            </span>
+        </a>
+        <a href="#">
+            <span class="hb hb-md hb-tencent-weibo">
+                <i class="entypo flow-tree"></i>
+            </span>
+        </a>
+
+.. container:: pull-right basic-hero align-center
+
+    Integrate well with and extend your currently employed
+    measurement data acquisition workflow through flexible
+    adapter interfaces to commodity or proprietary software
+    and hardware components.
+
+
+|clearfix|
+
+
+.. container:: align-center basic-hero
+
+
+.. raw:: html
+
 
 
 ***************
@@ -28,19 +79,26 @@ Goals of Kotori
 
 The design of Kotori has different audiences in mind.
 
-For users
-=========
-:ref:`Kotori` takes the burden of manually carrying measurement data around off your shoulders.
+For all users
+=============
+:ref:`Kotori` takes the burden of manually recording and carrying
+measurement and telemetry data around off your shoulders.
 A quick overview should get you an idea:
 
 - Ingest data using open or proprietary industry protocols and standards.
-- Deliver an instant-on experience by providing durable storage, realtimeness,
-  flexibility and conveniency out of the box.
 - Collect measurement data from wired or wireless sensors.
 - Persist measurement data into contemporary databases and storage systems.
 - Instantly display measurement values on arrival using default database dashboards.
 - Optionally, build advanced dashboards interactively.
 
+----
+
+- receive data from various types of ingress data channels: MQTT, UDP, HTTP
+- store collected data into different kinds of databases: TSDB, RDBMS, NoSQL
+- convert and transcode data from/to different payload formats: CSV, JSON, XML, etc.
+- rewrite and redistribute data through a variety of egress data channels
+- display measurement data in rich database dashboards
+- notify subscribed users or devices of events like above-/below-threshold
 
 
 
@@ -79,7 +137,7 @@ For developers
 Its goals are making it convenient for developers to ingest, emit
 and distribute data between different data sources and data sinks,
 and to transcode payloads between different formats.
-It ships with builtin adapters to different popular software bus-
+It ships with built-in adapters to different popular software bus-
 and storage-systems. Batteries included.
 
 We are standing on the shoulders of giants:
