@@ -18,7 +18,12 @@ general improvements
 - Introduce service-in-service infrastructure
 - Make default Grafana panel not use ``steppedLines: true``,
   smooth lines are more beautiful when displaying sine curves
+
+documentation
+-------------
 - Document how to run on PyPy
+- Improve README.rst
+- Add CSS3 Hexagon Buttons 1.0.1 and more static assets
 
 
 2016-03-27 0.6.0

@@ -1,0 +1,1010 @@
+/* ---------------------------------------------------------------------- 
+* Product Name: CSS3 Hexagon Buttons
+* Product URI: http://shariarbd.com/demo/css3-hexagon-buttons/
+* Author: Shariar
+* Author URI: http://shariarbd.com/
+* Description: CSS3 Hexagon Buttons created with pure css3 by Shariar
+* Version: 1.0.1
+* License: The MIT License (MIT)
+* Tags: CSS3 Hexagon Buttons, social buttons, buttons
+* ---------------------------------------------------------------------- */
+
+
+
+
+/*---------------------------------------------------------------------- /
+Table of Contents 
+------------------------------------------------------------------------ /
+* 1.0 - Class Description 
+* 2.0 - Button style
+* 	2.1 - Default Button style
+*	2.2 - Large Button style 
+*	2.3 - Medium Button style 
+*	2.4 - Small Button style 
+*	2.5 - Extra Small Button style 
+* 3.0 - Margin of hexagon
+* 4.0 - Buttons Effects
+* 5.0 - Buttons Color
+* 	5.1 - Default Colors
+*	5.2 - Default hover colors
+*	5.3 - Custom Button colors
+* 	5.4 - Custom Button hover colors
+* 6.0 - Specific Button colors 
+*	6.1 - Facebook
+*	6.2 - Twitter
+*	6.3 - Google Plus
+*	6.4 - Youtube
+*	6.5 - Linkedin
+*	6.6 - Tumblr
+*	6.7 - RSS
+*	6.8 - Pinterest
+*	6.9 - Vimeo
+* 	6.10 - Github
+*	6.11 - Flickr
+*	6.12 - Dropbox
+*	6.13 - Xing
+*	6.14 - Skype
+*	6.15 - dribbble
+*	6.16 - tencent-weibo
+
+------------------------------------------------------------------------ /
+Table of Contents End
+------------------------------------------------------------------------*/
+
+
+
+
+/* 1.0 - Class Description 
+------------------------------------------------------------------------ 
+
+hb    		= Hexagon Buttons
+hb-custom 	= Custom Hexagon Buttons
+hb-lg 		= Large Hexagon        = width : 256px
+hb-md 		= Medium Hexagon       = width : 128px
+hb-sm 		= Small Hexagon        = width : 64px
+hb-xs 		= Extra Small Hexagon  = width : 32px
+spin		= Spin hole button on hover
+spin-icon	= Spin icon on hover
+inv 		= Inverse Behaver of buttons 
+
+* 1.0 -Class Description End
+------------------------------------------------------------------------*/
+
+
+
+
+/* 2.0 - Button style
+------------------------------------------------------------------------*/
+
+/* 2.1 - Default Button style
+-------------------------------------------------*/
+.hb {
+	display: inline-block;
+	position:relative;
+	text-align: center; /*  Default text align center */
+	z-index: 0;
+}
+
+.hb:before,
+.hb:after {
+	position: absolute;
+	content: "";  
+	left: -1px;
+	top: 0;
+	z-index: -1;
+}
+
+.hb:before {
+	-webkit-transform: rotate(60deg);
+	-moz-transform: rotate(60deg);
+	-ms-transform: rotate(60deg);
+	-o-transform: rotate(60deg);
+	transform: rotate(60deg);
+}
+
+.hb:after {
+	-webkit-transform: rotate(-60deg);
+	-moz-transform: rotate(-60deg);
+	-ms-transform: rotate(-60deg);
+	-o-transform: rotate(-60deg);
+	transform: rotate(-60deg);
+}
+
+.hb i {
+	z-index: 9;
+	-webkit-transition: all .25s ease;
+	   -moz-transition: all .25s ease;
+	    -ms-transition: all .25s ease;
+	     -o-transition: all .25s ease;
+	        transition: all .25s ease;
+}
+
+
+.hb,
+.hb:before,
+.hb:after { 
+	 box-sizing: border-box;
+
+	 /* default transition time is set .25s = 250 millisecond  
+	 Uncomment following if you want to set transition on hexagon color change */ 
+
+	 -webkit-transition: all .25s ease;
+	   -moz-transition: all .25s ease;
+	    -ms-transition: all .25s ease;
+	     -o-transition: all .25s ease;
+	        transition: all .25s ease;
+}
+
+
+/* 2.1 - Default Button style End
+-------------------------------------------------*/
+
+
+
+/* 2.2 - Large Button style 
+-------------------------------------------------*/
+
+.hb-lg {
+	line-height: 150px;
+	font-size: 150px;
+	margin: 74px 0px; /* Original output, margin 0 of the button */ 
+	/*margin: 89px 15px;*/ /* New output, margin 15px of the button,  74 + 15 = 89 */  
+}
+.hb-lg ,
+.hb-lg:before,
+.hb-lg:after { 
+	height: 148px;
+	width: 256px; 
+} 
+
+/* 2.2 - Large Button style  End
+-------------------------------------------------*/
+
+
+
+/* 2.3 - Medium Button style 
+-------------------------------------------------*/
+
+.hb-md {
+	line-height: 74px;
+	font-size: 74px;
+	margin: 37px 0px; /* Original output, margin 0 of the button */ 
+	/*margin: 52px 15px;*/ /* New output, margin 15px of the button,  37 + 15 = 52 */ 
+}
+.hb-md ,
+.hb-md:before ,
+.hb-md:after {
+	height: 74px;
+	width: 128px; 
+} 
+
+/* 2.3 - Medium Button style End
+-------------------------------------------------*/
+
+
+
+/* 2.4 - Small Button style 
+-------------------------------------------------*/
+
+.hb-sm {
+	line-height: 37px;
+	font-size: 37px;
+	margin: 18.5px 0px; /* Original output, margin 0 of the button */ 
+	/*margin: 33.5px 15px;*/ /* New output, margin 15px of the button,  18.5 + 15 = 33.5 */ 
+	
+}
+.hb-sm ,
+.hb-sm:before ,
+.hb-sm:after {
+	height: 37px;
+	width: 64px; 
+} 
+
+/* 2.4 - Small Button style  End
+-------------------------------------------------*/
+
+
+
+/* 2.5 - Extra Small Button style 
+-------------------------------------------------*/
+.hb-xs {
+	line-height: 18.5px;
+	font-size: 18.5px;
+	margin: 9.5px 0px; /* Original output, margin 0 of the button */ 
+	/*margin: 33.5px 15px;*/ /* New output, margin 15px of the button,  9.5 + 15 = 24.5 */ 
+}
+.hb-xs ,
+.hb-xs:before ,
+.hb-xs:after {
+	height:18.5px;
+	width:32px; 
+}
+
+/* 2.5 - Extra Small Button style  End
+-------------------------------------------------*/
+
+
+
+/* 2.0 - Button style End
+------------------------------------------------------------------------*/
+
+
+
+/* 3.0 - Margin of hexagon
+------------------------------------------------------------------------*/
+.hb-lg-margin {
+	margin: 15px;
+}
+.hb-md-margin {
+	margin: 15px;
+}
+.hb-sm-margin {
+	margin: 15px;
+}
+.hb-xs-margin {
+	margin: 15px;
+}
+.hb-lg-margin,
+.hb-md-margin,
+.hb-sm-margin,
+.hb-xs-margin {
+	display: inline-block;
+	overflow: hidden;
+}
+.hb-lg-margin {
+	height: 296px;
+	width: 256px;
+}
+.hb-md-margin {
+	height: 148px;
+	width: 128px;
+}
+.hb-sm-margin {
+	height: 74px;
+	width: 64px;
+}
+.hb-xs-margin {
+	height: 38px;
+	width: 32px;
+}
+
+/* 3.0 - Margin of hexagon End
+------------------------------------------------------------------------*/
+
+
+
+/* 4.0 - Buttons Effects
+------------------------------------------------------------------------*/
+.spin,
+.spin-icon i {
+	-webkit-transition: -webkid-transform .25s  ease;
+	   -moz-transition: -moz-transform .25s  ease;
+	    -ms-transition: -ms-transform .25s  ease;
+	     -o-transition: -o-transform .25s  ease;
+	        transition: transform .25s  ease;
+}
+
+.spin-icon:hover i,
+.spin:hover {
+	-webkit-transform:rotate(360deg);
+	   -moz-transform:rotate(360deg);
+	    -ms-transform:rotate(360deg);
+	     -o-transform:rotate(360deg);
+			transform:rotate(360deg);	
+}
+/*4.0 - Buttons Effects
+------------------------------------------------------------------------*/
+
+
+
+
+/* 5.0 - Buttons Color
+------------------------------------------------------------------------*/
+/* 5.1 - Default Colors
+-------------------------------------------------*/
+.hb,
+.hb:before,
+.hb:after {
+	background-color: #2c3e50;  /*  Default background color  */ 
+	border-left:1px solid #2c3e50;
+	border-right:1px solid #2c3e50;
+	color: #2ecc71; /* Default font color */
+}
+/* 5.1 - Default Colors End
+-------------------------------------------------*/
+
+
+/* 5.2 - Default hover colors
+-------------------------------------------------*/
+.hb:hover,
+.hb:hover:before,
+.hb:hover:after {
+	background: transparent;  
+	border-left:1px solid #2ecc71;
+	border-right:1px solid #2ecc71;  
+	color: #2ecc71; /* Default hover font color */
+}
+/* 5.2 - Default hover colors end
+-------------------------------------------------*/
+
+
+
+/* 5.3 - Custom Button colors
+-------------------------------------------------*/
+.hb-custom,
+.hb-custom:before,
+.hb-custom:after {
+	background: #f39c12 !important;  /*  Custom background color  */
+	color: white!important; /* Custom font color */
+	/*font-size:20px;*/ /* Custom font size */
+	border-left:1px solid #f39c12 !important;;
+	border-right:1px solid #f39c12 !important;; 
+}
+/* 5.3 - Custom Button colors End
+-------------------------------------------------*/
+
+
+
+/* 5.4 - Custom Button hover colors
+-------------------------------------------------*/
+.hb-custom:hover,
+.hb-custom:hover:before,
+.hb-custom:hover:after {
+	background: #f1c40f !important;  
+	border-left:1px solid #f1c40f !important;;
+	border-right:1px solid #f1c40f !important;; 
+	color: black!important; /* Custom hover font color */
+}
+/* 5.4 - Custom Button hover colors End
+-------------------------------------------------*/
+/* 5.0 - Buttons Color End
+------------------------------------------------------------------------*/
+
+
+
+
+/* 6.0 - Specific Button colors 
+------------------------------------------------------------------------*/
+/* 6.1 - Facebook
+-------------------------------------------------*/
+.hb-facebook,
+.hb-facebook:before,
+.hb-facebook:after {
+	background: #3B5998;
+	border-color: #3B5998;
+	color: #ffffff;
+}
+.hb-facebook:hover,
+.hb-facebook:hover:before,
+.hb-facebook:hover:after {
+	background: transparent;
+	border-color: #3B5998;
+	color: #3B5998;
+}
+
+/* Facebook inverts */
+.hb-facebook-inv,
+.hb-facebook-inv:after,
+.hb-facebook-inv:before {
+	color: #3B5998;   
+	border-color: #3B5998;
+	background: transparent;
+}
+.hb-facebook-inv:hover,
+.hb-facebook-inv:hover:after,
+.hb-facebook-inv:hover:before {
+	background: #3B5998; 
+	border-color: #3B5998;
+	color: #ffffff;  
+}
+/* 6.1 - Facebook End
+-------------------------------------------------*/
+
+
+/* 6.2 - Twitter
+-------------------------------------------------*/
+.hb-twitter,
+.hb-twitter:before,
+.hb-twitter:after  {
+	background: #55ACEE;
+	border-color: #55ACEE;
+	color: #ffffff;
+}
+
+.hb-twitter:hover,
+.hb-twitter:hover:before,
+.hb-twitter:hover:after   {
+	background: transparent;
+	border-color: #55ACEE;
+	color: #55ACEE;
+}
+
+/* Twitter inverts */
+.hb-twitter-inv,
+.hb-twitter-inv:after,
+.hb-twitter-inv:before {
+	background: transparent;
+	border-color: #55ACEE;
+	color: #55ACEE;
+}
+.hb-twitter-inv:hover,
+.hb-twitter-inv:hover:after,
+.hb-twitter-inv:hover:before {
+	background: #55ACEE;
+	border-color: #55ACEE;
+	color: #ffffff;
+}
+/* 6.2 - Twitter End
+-------------------------------------------------*/
+
+
+
+/* 6.3 - Google Plus
+-------------------------------------------------*/
+.hb-google-plus,
+.hb-google-plus:before,
+.hb-google-plus:after {
+	background: #db514f;
+	border-color: #db514f;
+	color: #ffffff;
+}
+.hb-google-plus:hover,
+.hb-google-plus:hover:before,
+.hb-google-plus:hover:after {
+	background:transparent;
+	border-color: #db514f;
+	color: #db514f;
+}
+ 
+/* google-plus inverts */
+.hb-google-plus-inv,
+.hb-google-plus-inv:after,
+.hb-google-plus-inv:before {
+	background:transparent;
+	border-color: #db514f;
+	color: #db514f;
+}
+.hb-google-plus-inv:hover,
+.hb-google-plus-inv:hover:after,
+.hb-google-plus-inv:hover:before {
+	background: #db514f;
+	border-color: #db514f;
+	color: #ffffff;
+}
+/* 6.3 - Google Plus End
+-------------------------------------------------*/
+
+
+/* 6.4 - Youtube
+-------------------------------------------------*/
+.hb-youtube,
+.hb-youtube:before,
+.hb-youtube:after {
+	background: #cc181e;
+	border-color: #cc181e;
+	color: #ffffff;
+}
+.hb-youtube:hover,
+.hb-youtube:hover:before ,
+.hb-youtube:hover:after {
+	background:transparent;
+	border-color: #cc181e;
+	color: #cc181e;
+}
+
+/* youtube inverts */
+.hb-youtube-inv, 
+.hb-youtube-inv:after,
+.hb-youtube-inv:before {
+	background:transparent;
+	border-color: #cc181e;
+	color: #cc181e;
+}
+.hb-youtube-inv:hover,
+.hb-youtube-inv:hover:after,
+.hb-youtube-inv:hover:before {
+	background: #cc181e;
+	border-color: #cc181e;
+	color: #ffffff;
+}
+/* 6.4 - Youtube End
+-------------------------------------------------*/
+
+/* 6.5 - Linkedin
+-------------------------------------------------*/
+.hb-linkedin,
+.hb-linkedin:before,
+.hb-linkedin:after  {
+	background: #0077b5;
+	border-color: #0077b5;
+	color: #ffffff;
+}
+.hb-linkedin:hover,
+.hb-linkedin:hover:before,
+.hb-linkedin:hover:after {
+	background:transparent;
+	border-color: #0077b5;
+	color: #0077b5;
+}
+
+/* linkedin inverts */
+.hb-linkedin-inv,
+.hb-linkedin-inv:after,
+.hb-linkedin-inv:before{
+	background:transparent;
+	border-color: #0077b5;
+	color: #0077b5;
+}
+.hb-linkedin-inv:hover,
+.hb-linkedin-inv:hover:after,
+.hb-linkedin-inv:hover:before {
+	background: #0077b5;
+	border-color: #0077b5;
+	color: #ffffff;
+}
+
+/* 6.5 - Linkedin End
+-------------------------------------------------*/
+
+
+
+/* 6.6 - Tumblr
+-------------------------------------------------*/
+.hb-tumblr,
+.hb-tumblr:before,
+.hb-tumblr:after {
+	background: #2c4762;
+	border-color: #2c4762;
+	color: #ffffff;
+}
+
+.hb-tumblr:hover,
+.hb-tumblr:hover:before,
+.hb-tumblr:hover:after {
+	background:transparent;
+	border-color: #2c4762;
+	color: #2c4762;
+}
+
+/* Tumblr inverts */
+.hb-tumblr-inv,
+.hb-tumblr-inv:after,
+.hb-tumblr-inv:before  {
+	background:transparent;
+	border-color: #2c4762;
+	color: #2c4762;
+}
+.hb-tumblr-inv:hover,
+.hb-tumblr-inv:hover:after,
+.hb-tumblr-inv:hover:before {
+	background: #2c4762;
+	border-color: #2c4762;
+	color: #ffffff;
+}
+
+/* 6.6 - Tumblr End
+-------------------------------------------------*/
+
+
+/* 6.7 - RSS
+-------------------------------------------------*/
+.hb-rss,
+.hb-rss:before,
+.hb-rss:after {
+	background: #da5700;
+	border-color: #da5700;
+	color: #ffffff;
+} 
+
+.hb-rss:hover,
+.hb-rss:hover:before,
+.hb-rss:hover:after {
+	background:transparent;
+	border-color: #da5700;
+	color: #da5700;
+}
+
+/* rss inverts */
+.hb-rss-inv,
+.hb-rss-inv:after,
+.hb-rss-inv:before {
+	background:transparent;
+	border-color: #da5700;
+	color: #da5700;
+}
+
+.hb-rss-inv:hover,
+.hb-rss-inv:hover:after,
+.hb-rss-inv:hover:before {
+	background: #da5700;
+	border-color: #da5700;
+	color: #ffffff;
+}
+
+/* 6.7 - RSS End
+-------------------------------------------------*/
+
+
+
+/* 6.8 - Pinterest
+-------------------------------------------------*/
+.hb-pinterest,
+.hb-pinterest:before ,
+.hb-pinterest:after  {
+	background: #da232a;
+	border-color: #da232a;
+	color: #ffffff;
+}
+
+.hb-pinterest:hover,
+.hb-pinterest:hover:before ,
+.hb-pinterest:hover:after {
+	background:transparent;
+	border-color: #da232a;
+	color: #da232a;
+}
+
+/* Pinterest inverts */
+.hb-pinterest-inv,
+.hb-pinterest-inv:after,
+.hb-pinterest-inv:before {
+	background:transparent;
+	border-color: #da232a;
+	color: #da232a;
+}
+
+.hb-pinterest-inv:hover,
+.hb-pinterest-inv:hover:after,
+.hb-pinterest-inv:hover:before {
+	background: #da232a;
+	border-color: #da232a;
+	color: #ffffff;
+}
+
+/* 6.8 - Pinterest End
+-------------------------------------------------*/
+
+
+
+/* 6.9 - Vimeo
+-------------------------------------------------*/
+.hb-vimeo,
+.hb-vimeo:before,
+.hb-vimeo:after {
+	background: #20b9eb;
+	border-color: #20b9eb;
+	color: #ffffff;
+}
+.hb-vimeo:hover,
+.hb-vimeo:hover:before,
+.hb-vimeo:hover:after { 
+	background: transparent; 
+	border-color: #20b9eb;
+	color: #20b9eb;
+}
+
+/* vimeo inverts */
+.hb-vimeo-inv,
+.hb-vimeo-inv:after,
+.hb-vimeo-inv:before {
+	background: transparent; 
+	border-color: #20b9eb;
+	color: #20b9eb;
+}
+
+.hb-vimeo-inv:hover,
+.hb-vimeo-inv:hover:after,
+.hb-vimeo-inv:hover:before {
+	background: #20b9eb;
+	border-color: #20b9eb;
+	color: #ffffff;
+}
+ 
+/* 6.9 - Vimeo End
+-------------------------------------------------*/
+
+
+/* 6.10 - Github
+-------------------------------------------------*/
+.hb-github,
+.hb-github:before ,
+.hb-github:after {
+	background: #373a3c;
+	border-color: #373a3c;
+	color: #ffffff;
+}
+ 
+.hb-github:hover,
+.hb-github:hover:before ,
+.hb-github:hover:after {
+	background:transparent;
+	border-color: #373a3c;
+	color: #373a3c;
+}
+ 
+/* github inverts */
+.hb-github-inv,
+.hb-github-inv:after ,
+.hb-github-inv:before {
+	background:transparent;
+	border-color: #373a3c;
+	color: #373a3c;
+}
+.hb-github-inv:hover,
+.hb-github-inv:hover:after ,
+.hb-github-inv:hover:before {
+	background: #373a3c;
+	border-color: #373a3c;
+	color: #ffffff;
+}
+ 
+/* 6.10 - Github End
+-------------------------------------------------*/
+
+
+/* 6.11 - Flickr
+-------------------------------------------------*/
+.hb-flickr,
+.hb-flickr:before,
+.hb-flickr:after {
+	background: #ff1981;
+	border-color: #ff1981;
+	color: #ffffff;
+}
+  
+.hb-flickr:hover,
+.hb-flickr:hover:before ,
+.hb-flickr:hover:after {
+	background:transparent;
+	border-color: #ff1981;
+	color: #ff1981;
+}
+ 
+/* flickr inverts */
+.hb-flickr-inv,
+.hb-flickr-inv:after,
+.hb-flickr-inv:before {
+	background:transparent;
+	border-color: #ff1981;
+	color: #ff1981;
+}
+.hb-flickr-inv:hover,
+.hb-flickr-inv:hover:after,
+.hb-flickr-inv:hover:before {
+	background: #ff1981;
+	border-color: #ff1981;
+	color: #ffffff;
+}
+
+/* 6.11 - Flickr End
+-------------------------------------------------*/
+
+
+/* 6.12 - Dropbox
+-------------------------------------------------*/
+.hb-dropbox,
+.hb-dropbox:before ,
+.hb-dropbox:after {
+	background: #007ee5;
+	border-color: #007ee5;
+	color: #ffffff;
+}
+
+.hb-dropbox:hover,
+.hb-dropbox:hover:before ,
+.hb-dropbox:hover:after {
+	background:transparent;
+	border-color: #007ee5;
+	color: #007ee5;
+}
+ 
+/* dropbox inverts */
+.hb-dropbox-inv,
+.hb-dropbox-inv:after,
+.hb-dropbox-inv:before {
+	background:transparent;
+	border-color: #007ee5;
+	color: #007ee5;
+}
+.hb-dropbox-inv:hover,
+.hb-dropbox-inv:hover:after,
+.hb-dropbox-inv:hover:before {
+	background: #007ee5;
+	border-color: #007ee5;
+	color: #ffffff;
+}
+
+/* 6.12 - Dropbox End
+-------------------------------------------------*/
+
+
+/* 6.13 -  Xing
+-------------------------------------------------*/
+.hb-xing,
+.hb-xing:before,
+.hb-xing:after {
+	background: #006467;
+	border-color: #006467;
+	color: #ffffff;
+}
+
+.hb-xing:hover,
+.hb-xing:hover:before,
+.hb-xing:hover:after {
+	background:transparent;
+	border-color: #006467;
+	color: #006467;
+}
+
+/* xing inverts */
+.hb-xing-inv,
+.hb-xing-inv:after,
+.hb-xing-inv:before  {
+	background:transparent;
+	border-color: #006467;
+	color: #006467;
+}
+.hb-xing-inv:hover,
+.hb-xing-inv:hover:after,
+.hb-xing-inv:hover:before {
+	background: #006467;
+	border-color: #006467;
+	color: #ffffff;
+}
+
+/* 6.13 -  Xing End
+-------------------------------------------------*/
+
+/* 6.14 - Skype
+-------------------------------------------------*/
+.hb-skype,
+.hb-skype:before , 
+.hb-skype:after {
+	background: #00aceb;
+	border-color: #00aceb;
+	color: #ffffff;
+}
+ 
+.hb-skype:hover,
+.hb-skype:hover:before, 
+.hb-skype:hover:after {
+	background:transparent;
+	border-color: #00aceb;
+	color: #00aceb;
+}
+ 
+/* skype inverts */
+.hb-skype-inv, 
+.hb-skype-inv:after, 
+.hb-skype-inv:before {
+	background:transparent;
+	border-color: #00aceb;
+	color: #00aceb;
+}
+.hb-skype-inv:hover,
+.hb-skype-inv:hover:after, 
+.hb-skype-inv:hover:before {
+	background: #00aceb;
+	border-color: #00aceb;
+	color: #ffffff;
+}
+  
+/* 6.14 - Skype End
+-------------------------------------------------*/
+
+
+/* 6.15 - dribbble
+-------------------------------------------------*/
+.hb-dribbble,
+.hb-dribbble:before,
+.hb-dribbble:after {
+	background: #ea4c89;
+	border-color: #ea4c89;
+	color: #ffffff;
+}
+ 
+.hb-dribbble:hover,
+.hb-dribbble:hover:before, 
+.hb-dribbble:hover:after {
+	background:transparent;
+	border-color: #ea4c89;
+	color: #ea4c89;
+}
+
+/* dribbble inverts */
+.hb-dribbble-inv, 
+.hb-dribbble-inv:after,
+.hb-dribbble-inv:before {
+	background:transparent;
+	border-color: #ea4c89;
+	color: #ea4c89;
+}
+.hb-dribbble-inv:hover,
+.hb-dribbble-inv:hover:after,
+.hb-dribbble-inv:hover:before {
+	background: #ea4c89;
+	border-color: #ea4c89;
+	color: #ffffff;
+}
+ 
+/* 6.15 - dribbble End
+-------------------------------------------------*/
+
+
+/* 6.16 - tencent-weibo
+-------------------------------------------------*/
+.hb-tencent-weibo,
+.hb-tencent-weibo:before,
+.hb-tencent-weibo:after {
+	background: #20B8E5;
+	border-color: #20B8E5;
+	color: #ffffff;
+}
+ 
+.hb-tencent-weibo:hover,
+.hb-tencent-weibo:hover:before, 
+.hb-tencent-weibo:hover:after {
+	background:transparent;
+	border-color: #20B8E5;
+	color: #20B8E5;
+}
+  
+
+/* tencent-weibo inverts */
+.hb-tencent-weibo-inv,
+.hb-tencent-weibo-inv:after, 
+.hb-tencent-weibo-inv:before {
+	background:transparent;
+	border-color: #20B8E5;
+	color: #20B8E5;
+}
+.hb-tencent-weibo-inv:hover,
+.hb-tencent-weibo-inv:hover:after, 
+.hb-tencent-weibo-inv:hover:before {
+	background: #20B8E5;
+	border-color: #20B8E5;
+	color: #ffffff;
+}
+ 
+/* 6.16 - tencent-weibo End
+-------------------------------------------------*/
+
+
+
+/* 6.16 - tencent-weibo
+-------------------------------------------------*/
+.hb-instragram,
+.hb-instragram:before,
+.hb-instragram:after {
+	background: #125688;
+	border-color: #125688;
+	color: #ffffff;
+}
+ 
+.hb-instragram:hover,
+.hb-instragram:hover:before, 
+.hb-instragram:hover:after {
+	background:transparent;
+	border-color: #125688;
+	color: #125688;
+}
+  
+
+/* tencent-weibo inverts */
+.hb-instragram-inv,
+.hb-instragram-inv:after, 
+.hb-instragram-inv:before {
+	background:transparent;
+	border-color: #125688;
+	color: #125688;
+}
+.hb-instragram-inv:hover,
+.hb-instragram-inv:hover:after, 
+.hb-instragram-inv:hover:before {
+	background: #125688;
+	border-color: #125688;
+	color: #ffffff;
+}
+ 
+/* 6.16 - tencent-weibo End
+-------------------------------------------------*/
