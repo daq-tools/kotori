@@ -11,34 +11,35 @@ Kotori README
     and sensor networks by addressing different aspects of collecting and storing sensor
     data from a multitude of data sources and devices.
 
-By acting as a mediator between components, it does:
+**********
+In a hurry
+**********
+While :ref:`kotori` acts as a mediator between software and hardware components, the whole system does:
 
-    - receive data from various types of channels: MQTT, UDP, HTTP
-    - store data into different kinds of databases: TSDB, RDBMS, NoSQL
-    - automatically create dashboards based on the arriving data
-      in a connected Grafana_ instance
+- receive data from various types of ingress data channels: MQTT, UDP, HTTP
+- store collected data into different kinds of databases: TSDB, RDBMS, NoSQL
+- convert and transcode data from/to different payload formats: CSV, JSON, XML, etc.
+- display measurement data in rich database dashboards
 
-
-----
-
-The design of Kotori has different audiences in mind.
 
 ***************
 Goals of Kotori
 ***************
+
+The design of Kotori has different audiences in mind.
 
 For users
 =========
 :ref:`Kotori` takes the burden of manually carrying measurement data around off your shoulders.
 A quick overview should get you an idea:
 
-- Ingest data using open and proprietary industry protocols and standards.
+- Ingest data using open or proprietary industry protocols and standards.
 - Deliver an instant-on experience by providing durable storage, realtimeness,
   flexibility and conveniency out of the box.
 - Collect measurement data from wired or wireless sensors.
 - Persist measurement data into contemporary databases and storage systems.
-- Plug & play visualization of measurement data.
-- Interactively build appealing dashboards to visualize measurement data.
+- Instantly display measurement values on arrival using default database dashboards.
+- Optionally, build advanced dashboards interactively.
 
 
 
@@ -63,6 +64,13 @@ For integrators
   laboratory or test bench using established customer-specific
   communication protocols.
   See also :ref:`vendor-lst`.
+
+
+.. container:: align-center basic-hero
+
+    To get an idea about the diversity of use cases, have a look at
+    the different areas and scopes of integration scenarios
+    collected at :ref:`Kotori Applications <kotori-applications>`.
 
 
 For developers
@@ -90,8 +98,9 @@ We are standing on the shoulders of giants:
 - Accept new protocols, write adapters, decoders and handlers for specific devices, data formats
   and databases.
 
-.. seealso::
 
-    To get an idea about what is possible, have a look at
-    different areas and scopes of integration scenarios
-    we collect at :ref:`Kotori Applications <kotori-applications>`.
+.. container:: align-center basic-hero
+
+    The search is over: :ref:`Kotori` is the lightweight and hackable
+    SCADA_ system based on contemporary technologies and a large foundation of
+    open source software components you have always been waiting for.

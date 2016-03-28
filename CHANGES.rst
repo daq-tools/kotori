@@ -8,14 +8,14 @@ develop
 vendor :ref:`vendor-hiveeyes`
 -----------------------------
 - Integrate communication style and subsystems of :ref:`vendor-hiveeyes`/:ref:`beradio` into core
-- Refactor towards the generic Twisted service *MqttInfluxGrafanaService*,
-  then implement the :ref:`vendor-hiveeyes` application on top of it
+- Refactor into generic Twisted service *MqttInfluxGrafanaService*,
+  then implement the :ref:`vendor-hiveeyes` vendor application on top of it
 
 general improvements
 --------------------
 - Improve configuration, logging, debugging and documentation
 - Improve internal settings handling and application bootstrapping
-- Introduce service-in-service infrastructure.
+- Introduce service-in-service infrastructure
 - Make default Grafana panel not use ``steppedLines: true``,
   smooth lines are more beautiful when displaying sine curves
 - Document how to run on PyPy

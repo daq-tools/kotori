@@ -33,6 +33,8 @@
 .. _UMTS: https://en.wikipedia.org/wiki/Universal_Mobile_Telecommunications_System
 .. _LTE: https://en.wikipedia.org/wiki/LTE_(telecommunication)
 .. _M2M: https://en.wikipedia.org/wiki/Machine_to_machine
+.. _SCADA: https://en.wikipedia.org/wiki/SCADA
+
 
 
 .. iLaundry

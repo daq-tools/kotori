@@ -19,6 +19,9 @@ body, div.body {
 }
 
 /* alignment classes */
+.align-center {
+    text-align: center;
+}
 .align-right {
     text-align: right;
 }
@@ -26,4 +29,15 @@ body, div.body {
 /* clearfix after aligning left/right  */
 .clearfix {
     clear: both;
+}
+
+/* boxes */
+.basic-hero {
+    display: block;
+    font-size: larger;
+    line-height: 1.75em;
+    width: 66%;
+    margin: auto;
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
