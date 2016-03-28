@@ -292,6 +292,18 @@ texinfo_documents = [
 html_logo = '_static/img/kotori-logo.png'
 def setup(app):
     # https://github.com/snide/sphinx_rtd_theme/issues/117#issuecomment-41571653
+
+    # foundation
+    # Bootstrap conflicts with Sphinx
+    #app.add_stylesheet("assets/css/bootstrap.min.css")
+    app.add_stylesheet("assets/css/font-awesome.min.css")
+    app.add_stylesheet("assets/css/font-entypo.css")
+    app.add_stylesheet("assets/css/hexagons.min.css")
+    # jQuery 2.1.0 conflicts with jQuery 1.11.1 from Sphinx
+    #app.add_javascript("assets/js/jquery-2.1.0.min.js")
+    app.add_javascript("assets/js/hexagons.min.js")
+
+    # application
     #app.add_javascript("custom.js")
     app.add_stylesheet("css/kotori-sphinx.css")
 

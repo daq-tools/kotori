@@ -24,6 +24,7 @@ documentation
 - Document how to run on PyPy
 - Improve README.rst
 - Add CSS3 Hexagon Buttons 1.0.1 and more static assets
+- Add Entypo pictograms by Daniel Bruce
 
 
 2016-03-27 0.6.0
