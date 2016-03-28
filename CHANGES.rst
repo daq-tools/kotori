@@ -4,12 +4,21 @@ Kotori CHANGES
 
 develop
 =======
-- Improve configuration file, logging, debugging and documentation
+
+vendor :ref:`vendor-hiveeyes`
+-----------------------------
+- Integrate communication style and subsystems of :ref:`vendor-hiveeyes`/:ref:`beradio` into core
+- Refactor towards the generic Twisted service *MqttInfluxGrafanaService*,
+  then implement the :ref:`vendor-hiveeyes` application on top of it
+
+general improvements
+--------------------
+- Improve configuration, logging, debugging and documentation
 - Improve internal settings handling and application bootstrapping
-- Integrate subsystems from vendor Hiveeyes/BERadio into Kotori core
+- Introduce service-in-service infrastructure.
+- Make default Grafana panel not use ``steppedLines: true``,
+  smooth lines are more beautiful when displaying sine curves
 - Document how to run on PyPy
-- Make default Grafana panel not use ``steppedLines: true``.
-  Smooth lines are more beautiful when displaying sine curves.
 
 
 2016-03-27 0.6.0

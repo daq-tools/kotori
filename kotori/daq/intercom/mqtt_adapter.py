@@ -34,9 +34,11 @@ class MqttAdapter(Service):
 
     def subscribe(self, *args):
         #d = self.protocol.subscribe("foo/bar/baz", 0)
-        logger.info("Subscribing to topics '{}'".format(self.subscriptions))
+        logger.info(u"Subscribing to topics {subscriptions}", subscriptions=self.subscriptions)
         for topic in self.subscriptions:
-            e = self.protocol.subscribe(topic, 0)
+            logger.info(u"Subscribing to topic '{topic}'", topic=topic)
+            # Topic name **must not** be unicode, so casting to string
+            e = self.protocol.subscribe(str(topic), 0)
         self.protocol.setPublishHandler(self.callback)
 
     def onPublish(self, topic, payload, qos, dup, retain, msgId):

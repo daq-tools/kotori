@@ -1,49 +1,58 @@
 # -*- coding: utf-8 -*-
 # (c) 2015-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
-import json
-from pprint import pprint
 import time
+import json
 from bunch import Bunch
 from twisted.internet import reactor
 from twisted.internet.task import LoopingCall
+from twisted.application.service import Service
 from twisted.logger import Logger
 from kotori.daq.intercom.mqtt_adapter import MqttAdapter
 from kotori.daq.storage.influx import InfluxDBAdapter
+from kotori.configuration import read_list
 
 log = Logger()
 
-class MqttInfluxApplication(object):
+class MqttInfluxGrafanaService(Service):
 
-    def __init__(self, config):
-        self.config = config
+    name = u'MqttInfluxGrafanaService'
 
-        self.realm = None
-        self.subscriptions = []
+    def __init__(self, settings, channel=None, graphing=None, store_strategy=None):
+
+        self.settings = settings
+        self.channel = channel or Bunch(realm=None, subscriptions=[])
+        self.graphing = graphing
+        self.store_strategy = store_strategy
+
+        log.info('Initializing MqttInfluxGrafanaService. channel={channel}', channel=dict(self.channel))
+
+        # MQTT setting defaults
+        self.settings.mqtt.setdefault('host', u'localhost')
+        self.settings.mqtt.setdefault('port', u'1883')
+        self.settings.mqtt.setdefault('debug', u'false')
 
         # Configure metrics to be collected each X seconds
         self.metrics = Bunch(tx_count=0, starttime=time.time(), interval=2)
 
-        # MQTT setting defaults
-        config.mqtt.setdefault('host', u'localhost')
-        config.mqtt.setdefault('port', u'1883')
-        config.mqtt.setdefault('debug', u'false')
+    def startService(self):
+        log.info('Starting MqttInfluxGrafanaService')
+        self.running = 1
 
-    def setup(self):
+        self.metrics_twingo = LoopingCall(self.process_metrics)
+        self.metrics_twingo.start(self.metrics.interval, now=False)
 
-        metrics_twingo = LoopingCall(self.process_metrics)
-        metrics_twingo.start(self.metrics.interval, now=True)
-
+        subscriptions = read_list(self.channel.mqtt_topics)
         self.mqtt = MqttAdapter(
-            broker_host   = self.config.mqtt.host,
-            broker_port   = int(self.config.mqtt.port),
+            broker_host   = self.settings.mqtt.host,
+            broker_port   = int(self.settings.mqtt.port),
             callback      = self.mqtt_receive,
-            subscriptions = self.subscriptions)
+            subscriptions = subscriptions)
 
     def topic_to_topology(self, topic):
-        raise NotImplementedError()
+        return self.store_strategy.topic_to_topology(topic)
 
     def topology_to_database(self, topology):
-        raise NotImplementedError()
+        return self.store_strategy.topology_to_database(topology)
 
     def mqtt_receive(self, topic, payload, *args):
         try:
@@ -57,8 +66,8 @@ class MqttInfluxApplication(object):
 
         log.debug('Received message on topic "{topic}" with payload "{payload}"', topic=topic, payload=payload)
 
-        if self.realm and not topic.startswith(self.realm):
-            log.info('Ignoring message to topic {topic}', topic=topic)
+        if self.channel.realm and not topic.startswith(self.channel.realm):
+            log.info('Ignoring message to topic {topic}, realm={realm}', topic=topic, realm=self.channel.realm)
             return
 
         message_valid = False
@@ -105,7 +114,7 @@ class MqttInfluxApplication(object):
 
     def store_message(self, database, series, data):
         influx = InfluxDBAdapter(
-            settings = self.config.influxdb,
+            settings = self.settings.influxdb,
             database = database)
 
         influx.write(series, data)

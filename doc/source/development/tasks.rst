@@ -44,6 +44,16 @@ Kotori tasks
 - [o] Use ThreadPool for storage operations
 - [o] Deprecate InfluxDB 0.8 compatibility
 - [o] MQTT broker connection resiliency
+- [o] Start mqttkit-python
+- [o] Improve application bootstrapping by refactoring into a Twisted plugin
+- [o] REST API
+- [o] Throttle metrics output to one per minute after 90 seconds
+- [o] Assure communication between Kotori and InfluxDB is efficient (UDP, anyone?)
+- [o] Mechanisms for resetting database and dashboard
+- [o] LST: Headerfile upload API and browser drop target
+- [o] GUI: Interactively create data sinks, add decoding- and mapping-rules and ...
+- [o] Start dogfeeding by collecting data from Kotori's builtin metrics subsystem
+
 
 
 2016-03-25
@@ -145,27 +155,28 @@ Kotori tasks
 
 Milestone 1 - Kotori 0.6.0
 --------------------------
-- [o] Arbeit an der Dokumentation, siehe commits von gestern
-- [o] Vorbereitung des Release 0.6.0 im aktuellen Zustand mit den Doku Updates (die 0.5.1 ist vom 26. November)
+- [x] Arbeit an der Dokumentation, siehe commits von gestern
+- [x] Vorbereitung des Release 0.6.0 im aktuellen Zustand mit den Doku Updates (die 0.5.1 ist vom 26. November)
 - [o] Release eines einigermaßen sauberen bzw. benutzbaren Debian Pakets
 
 
 Milestone 2 - Kotori 0.7.0
 --------------------------
-- [o] Reguläres refactoring
+- [x] Reguläres refactoring
 - [o] MQTT Topic
 
-    - Implementierung der "Content Type" Signalisierung über pseudo-Dateiendungen wie geplant
+    - [o] Implementierung der "Content Type" Signalisierung über pseudo-Dateiendungen wie geplant
       (Inspired by Nick O’Leary and Jan-Piet Mens; Acked by Clemens and Richard)::
 
             hiveeyes/testdrive/area42/hive3/temperature vs. hiveeyes/testdrive/area42/hive3.json
 
-    - Weitere Diskussion und Implementierung der "Direction" Signalisierung (Inspired by computourist, Pushed by Richard)
+    - [o] Weitere Diskussion und Implementierung der "Direction" Signalisierung (Inspired by computourist, Pushed by Richard)
       Proposal: ``.../node3/{direction}/{sensor}.foo``
 
-- [o] Generalisierung der BERadioNetworkApplication / HiveeyesApplication vendor Architektur
+- [x] Generalisierung der BERadioNetworkApplication / HiveeyesApplication vendor Architektur
 - [o] Verbesserung der service-in-service Infrastruktur mit nativen Twisted service containern
-- [o] Flexiblere Anwendungsfälle ähnlich dem von Hiveeyes ermöglichen: mqtt topic first-level segment "hiveeyes/" (the "realm") per Konfigurationsdatei bestimmen (Wunsch von Dazz)
+- [o] Flexiblere Anwendungsfälle ähnlich dem von Hiveeyes ermöglichen: mqtt topic first-level segment "hiveeyes/"
+      (the "realm") per Konfigurationsdatei bestimmen (Wunsch von Dazz)
 - [o] Einführung von Softwaretests
 
 
@@ -233,7 +244,7 @@ No new panel gets created::
 
 2016-01-28 A
 ============
-- [o] Get rid of the [vendor] configuration settings, use instead::
+- [x] Get rid of the [vendor] configuration settings, use instead::
 
     [kotori]
     vendors = hiveeyes

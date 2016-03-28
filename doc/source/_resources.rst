@@ -28,6 +28,13 @@
 .. _Node-RED flows: http://flows.nodered.org/
 
 
+.. Akronyms for standards, etc.
+.. _GPRS: https://en.wikipedia.org/wiki/General_Packet_Radio_Service
+.. _UMTS: https://en.wikipedia.org/wiki/Universal_Mobile_Telecommunications_System
+.. _LTE: https://en.wikipedia.org/wiki/LTE_(telecommunication)
+.. _M2M: https://en.wikipedia.org/wiki/Machine_to_machine
+
+
 .. iLaundry
 .. _BeagleBone Black: http://beagleboard.org/BLACK
 .. _Using the Adafruit_BBIO Library: https://learn.adafruit.com/setting-up-io-python-library-on-beaglebone-black/using-the-bbio-library
@@ -59,10 +66,6 @@
 .. _Kotori Telemetry Dashboard for Hydro2Motion: http://h2mdata.cicer.de/
 
 .. _mbed: https://mbed.org/
-
-.. _GPRS: https://en.wikipedia.org/wiki/General_Packet_Radio_Service
-.. _UMTS: https://en.wikipedia.org/wiki/Universal_Mobile_Telecommunications_System
-.. _LTE: https://en.wikipedia.org/wiki/LTE_(telecommunication)
 
 
 .. LST

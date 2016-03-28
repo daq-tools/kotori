@@ -3,7 +3,7 @@
 import re
 from bunch import Bunch
 
-class WanNetworkStrategy(object):
+class WanBusStrategy(object):
 
     def topic_to_topology(self, topic):
         """

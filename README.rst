@@ -1,8 +1,8 @@
 .. include:: _resources.rst
 
-=============
+#############
 Kotori README
-=============
+#############
 
     *Kotori* is a multi-channel, multi-protocol data acquisition and graphing toolkit
     based on InfluxDB_, Grafana_, Mosquitto_ and Twisted_.
@@ -16,35 +16,82 @@ By acting as a mediator between components, it does:
     - receive data from various types of channels: MQTT, UDP, HTTP
     - store data into different kinds of databases: TSDB, RDBMS, NoSQL
     - automatically create dashboards based on the arriving data
-      in a connected Grafana instance
+      in a connected Grafana_ instance
 
 
 ----
 
-The design of Kotori has two audiences in mind.
+The design of Kotori has different audiences in mind.
 
+***************
+Goals of Kotori
+***************
 
 For users
----------
-Interactively build appealing dashboards to visualize time series data with Grafana_,
-an open source, feature rich metrics dashboard and graph editor.
+=========
+:ref:`Kotori` takes the burden of manually carrying measurement data around off your shoulders.
+A quick overview should get you an idea:
 
-.. Interactively create data sinks, add decoding- and mapping-rules and
+- Ingest data using open and proprietary industry protocols and standards.
+- Deliver an instant-on experience by providing durable storage, realtimeness,
+  flexibility and conveniency out of the box.
+- Collect measurement data from wired or wireless sensors.
+- Persist measurement data into contemporary databases and storage systems.
+- Plug & play visualization of measurement data.
+- Interactively build appealing dashboards to visualize measurement data.
+
+
+
+
+For integrators
+===============
+:ref:`Kotori` supports you in
+
+- building field solutions like receiving telemetry data transmitted
+  from vehicles and moving objects as done in the pilot project with the
+  University of Applied Sciences in Munich.
+  This was about collecting and visualizing telemetry data and
+  position information from a fuel-cell powered vehicle when racing
+  at the Shell Ecomarathon 2015 in Rotterdam.
+  See also :ref:`vendor-hydro2motion`.
+
+- building distributed data collector platforms like the
+  sensor data network for a Berlin-based beekeeper collective.
+  See also :ref:`vendor-hiveeyes`.
+
+- setting up maintenance-free measurement data collectors at your
+  laboratory or test bench using established customer-specific
+  communication protocols.
+  See also :ref:`vendor-lst`.
+
 
 For developers
---------------
-Ingest and distribute data between multiple publishers and subscribers across
-different devices using the underpinning software bus systems based on
+==============
+:ref:`Kotori` is built upon a powerful service composition framework.
+Its goals are making it convenient for developers to ingest, emit
+and distribute data between different data sources and data sinks,
+and to transcode payloads between different formats.
+It ships with builtin adapters to different popular software bus-
+and storage-systems. Batteries included.
 
-    - MQTT_, the *MQ Telemetry Transport* connectivity protocol.
-    - WAMP_, the *Web Application Messaging Protocol*, in turn based on WebSockets_.
+We are standing on the shoulders of giants:
 
 - Leverage the open infrastructure based on Twisted_ - an event-driven networking engine -
   to implement custom software components.
+- Listen and talk M2M_ using the *MQ Telemetry Transport* connectivity protocol (MQTT_).
 - Store data points into InfluxDB_, a leading open source time series database suitable
   for realtime analytics and sensor data storage.
-- Precisely control which kind of dashboards are automatically created in Grafana when data arrives.
-- Listen and talk to a huge amount of IoT devices speaking MQTT_.
-- Talk to thousands of Browsers in a bidirectional way using the WAMP_ software bus.
+- Automate dashboard management in the context of data arriving on different data channels
+  using Grafana_, an open source, feature rich metrics dashboard and graph editor.
+- Make Browser clients first-class citizens of the underpinning software bus framework
+  delivering bidirectional communication with publish/subscribe or rpc semantics
+  using the *Web Application Messaging Protocol* (WAMP_), in turn based on WebSockets_.
+- Integration with mqttwarn_ for emitting and broadcasting data to a multitude of targets and receivers.
 - Accept new protocols, write adapters, decoders and handlers for specific devices, data formats
   and databases.
+
+.. seealso::
+
+    To get an idea about what is possible, have a look at
+    different areas and scopes of integration scenarios
+    we collect at :ref:`Kotori Applications <kotori-applications>`.

@@ -1,3 +1,5 @@
+.. _kotori-applications:
+
 ############
 Applications
 ############

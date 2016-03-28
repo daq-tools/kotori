@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 # (c) 2014-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
-from pprint import pprint
 import sys
 from bunch import Bunch
 from docopt import docopt
 from pkgutil import extend_path
-from setuptools.command.setopt import config_file
 from twisted.internet import reactor
 from twisted.logger import Logger, LogLevel
 from kotori.configuration import get_configuration, get_configuration_file, read_list
@@ -43,7 +41,6 @@ def run():
     # TODO: Do it the Twisted way
     options = docopt(__doc__, version=APP_NAME)
     debug = options.get('--debug', False)
-    pprint(options)
 
     # Read settings from configuration file
     configfile = get_configuration_file(options['--config'])

@@ -1,30 +1,13 @@
 # -*- coding: utf-8 -*-
 # (c) 2015-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+from bunch import Bunch
 from twisted.logger import Logger
-from kotori.daq.application.mqtt_influx import MqttInfluxApplication
-from kotori.daq.intercom.strategies import WanNetworkStrategy
+from kotori.daq.services import RootService
+from kotori.daq.services.mig import MqttInfluxGrafanaService
+from kotori.daq.intercom.strategies import WanBusStrategy
 from kotori.daq.graphing.grafana import GrafanaManager
 
 log = Logger()
-
-class HiveeyesApplication(WanNetworkStrategy, MqttInfluxApplication):
-
-    def __init__(self, config):
-
-        log.info('Starting HiveeyesApplication')
-
-        MqttInfluxApplication.__init__(self, config)
-
-        # mqtt configuration
-        self.realm = 'hiveeyes'
-        self.subscriptions = [self.realm + '/#']
-
-        # grafana setup
-        self.graphing = HiveeyesGrafanaManager(self.config)
-
-        # generic setup
-        self.setup()
-
 
 class HiveeyesGrafanaManager(GrafanaManager):
 
@@ -86,5 +69,17 @@ class HiveeyesGrafanaManager(GrafanaManager):
 
 
 
-def hiveeyes_boot(config, debug=False):
-    ha = HiveeyesApplication(config)
+def hiveeyes_boot(settings, debug=False):
+
+    # Service container root
+    rootService = RootService(settings=settings)
+
+    # TODO: read from config
+    service = MqttInfluxGrafanaService(
+        settings,
+        channel         = Bunch(**settings.hiveeyes),
+        graphing        = HiveeyesGrafanaManager(settings),
+        store_strategy  = WanBusStrategy())
+
+    rootService.registerService(service)
+    rootService.startService()
