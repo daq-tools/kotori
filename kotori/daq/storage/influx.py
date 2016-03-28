@@ -4,22 +4,25 @@ import types
 import requests
 from collections import OrderedDict
 from twisted.logger import Logger
-from kotori.util import slm
-from kotori.errors import last_error_and_traceback
 
-logger = Logger()
+log = Logger()
 
 class InfluxDBAdapter(object):
 
-    def __init__(self, host='localhost', port=8086, version='0.9', username='root', password='root', database='kotori_dev'):
-        self.host = host
-        self.port = port
-        self.version = version
-        self.username = username
-        self.password = password
-        self.database = database
-        self.influx = None
+    def __init__(self, settings=None, database='kotori_develop'):
 
+        settings = settings or {}
+        settings.setdefault('host', u'localhost')
+        settings.setdefault('port', u'8086')
+        settings.setdefault('version', u'0.9')
+        settings.setdefault('username', u'root')
+        settings.setdefault('password', u'root')
+        settings['port'] = int(settings['port'])
+
+        self.__dict__.update(**settings)
+        self.database = database
+
+        self.influx = None
         self.connected = False
         self.connect()
 
@@ -37,18 +40,19 @@ class InfluxDBAdapter(object):
         else:
             raise ValueError('Unknown InfluxDB protocol version "{}"'.format(self.version))
 
-        logger.info('Storage target:   influxdb={}:{}'.format(self.host, self.port))
+        log.debug(u'Storage target is influxdb://{host}:{port}', **self.__dict__)
         self.influx = InfluxDBClient(
             host=self.host, port=self.port,
             username=self.username, password=self.password,
             database=self.database)
 
+        # TODO: Run "CREATE DATABASE only once"
         try:
             self.influx.create_database(self.database)
 
         except requests.exceptions.ConnectionError as ex:
             self.connected = False
-            logger.error('InfluxDB network error: {}'.format(slm(ex)))
+            log.failure(u'InfluxDB network error')
             return False
 
         except InfluxDBClientError as ex:
@@ -58,7 +62,7 @@ class InfluxDBAdapter(object):
                 pass
             else:
                 self.connected = False
-                logger.error('InfluxDBClientError: {}'.format(slm(ex)))
+                log.failure(u'InfluxDBClientError')
                 return False
 
         self.connected = True
@@ -117,13 +121,13 @@ class InfluxDBAdapter(object):
 
             success = self.influx.write_points([chunk], time_precision='n')
             if success:
-                logger.info("Storing measurement succeeded: {}".format(slm(chunk)))
+                log.debug(u"Storage success: {chunk}", chunk=chunk)
             else:
-                logger.error("Storing measurement failed: {}".format(slm(chunk)))
+                log.error(u"Storage failed:  {chunk}", chunk=chunk)
             return success
 
-        except requests.exceptions.ConnectionError as ex:
-            logger.error('InfluxDB network error: {}'.format(slm(ex)))
+        except requests.exceptions.ConnectionError:
+            log.failure(u'InfluxDB network error')
 
 
     def v08_to_09(self, chunk08):
@@ -136,7 +140,7 @@ class InfluxDBAdapter(object):
             #"time": "2009-11-10T23:00:00Z",  # TODO: use timestamp from downstream chunk
             "fields": dict(zip(chunk08["columns"], chunk08["points"][0])),
         }
-        logger.debug('chunk09: {}'.format(slm(chunk09)))
+        #log.debug('chunk09: {chunk09}', chunk09=chunk09)
         return chunk09
 
     def chunk_to_float(self, chunk):
@@ -189,13 +193,12 @@ class BusInfluxForwarder(object):
     def bus_receive(self, payload):
         try:
             return self.process_message(self.topic, payload)
-        except Exception as ex:
-            logger.error('Processing Bus message failed: {}\n{}'.format(ex, slm(last_error_and_traceback())))
+        except Exception:
+            log.failure(u'Processing bus message failed')
 
     def process_message(self, topic, payload, *args):
 
-        msg = 'Bus receive: topic={}, payload={}'.format(topic, payload)
-        logger.info(slm(msg))
+        log.info('Bus receive: topic={topic}, payload={payload}', topic=topic, payload=payload)
 
         # TODO: filter by realm/topic
 
@@ -209,7 +212,7 @@ class BusInfluxForwarder(object):
 
         # compute storage location from topic and message
         storage_location = self.storage_location(message)
-        logger.info('Storage location:  {}'.format(slm(dict(storage_location))))
+        log.info('Storage location:  {storage_location}', storage_location=storage_location)
 
         # store data
         self.store_message(storage_location.database, storage_location.series, message)

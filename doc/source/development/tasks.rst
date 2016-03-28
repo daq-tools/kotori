@@ -6,16 +6,48 @@
 Kotori tasks
 ############
 
+.. contents::
+   :local:
+   :depth: 1
+
+----
+
 ****
 2016
 ****
 
-All
-===
+
+2016-03-28
+==========
+- [o] Document some performance data:
+
+    - MQTT and InfluxDB
+
+        - Python 2.7
+
+            - measurements: 1000-1300 Hz
+            - transactions: 50-70 tps   (30-40 tps when debugging)
+
+        - PyPy 5.0
+
+            - | measurements: 2000-3000 Hz
+            - | transactions: 50-70 tps when ramping up, then does down to 5-15 tps
+              | Q: What's the reason?
+              | A: Probably because we don't have a thread pool on the storage adapter side yet
+              |    and the number of parallel requests leads to contention on the Twisted side.
+
+- [o] MqttWampBridge
+- [o] InfluxDB, MQTT- and Grafana connection and operation robustness/resiliency
+- [o] Run "CREATE DATABASE only once"
+- [o] Proper debug level control
+- [o] Use StorageAdapter from vendor "lst" also at "hiveeyes"
+- [o] Use ThreadPool for storage operations
+- [o] Deprecate InfluxDB 0.8 compatibility
+- [o] MQTT broker connection resiliency
 
 
 2016-03-25
-----------
+==========
 - Use the PiDrive
 
     - http://wdlabs.wd.com/
@@ -29,7 +61,7 @@ All
 
 
 2016-03-23
-----------
+==========
 - Integrate with Plottico
 | Live plotting that just works.
 | http://plotti.co/
@@ -42,15 +74,18 @@ All
 
 
 2016-03-20
-----------
+==========
 - [o] Receive telemetry data via Ice-E: https://zeroc.com/products/ice-e
 
 
 2016-03-17
-----------
-- Integrate with Home Automation Systems
+==========
+- Integrate with other Home Automation Systems
+
     - http://www.domoticz.com/DomoticzManual.pdf
+
 - Integrate with Z-Wave
+
     - http://razberry.z-wave.me/
     - http://razberry.z-wave.me/index.php?id=9
     - http://razberry.z-wave.me/index.php?id=6
@@ -62,8 +97,9 @@ All
 
 
 2016-03-15
-----------
-- [o] Integrate with Phywe datalogging system Cobra3/Cobra4
+==========
+- [o] Integrate with *Phywe* datalogging system *Cobra3*/*Cobra4*
+
     - https://www.phywe.com/en/geraetehierarchie/datalogging-system-cobra4/
     - | Cobra4 - The Universal Measurement System for Scientific Instruction
       | https://www.youtube.com/watch?v=1rt6wdMbQYA
@@ -78,7 +114,7 @@ All
 
 
 2016-03-08
-----------
+==========
 - [o] Make Kotori handle Gigabytes of data
 - [o] Universal radio-based sensor node with appropriate housing and battery power supply, per :ref:`vendor-hiveeyes`
 - [o] GPS beacon node visualizing movement on a realtime map, per prototype of :ref:`vendor-hydro2motion`,
@@ -87,7 +123,7 @@ All
 
 
 2016-03-07
-----------
+==========
 - [o] Use NodeUSB_ as Lua development platform and sensor network gateway adapter for WiFi devices
 - [o] Integrate with the OpenXC_ platform using `OpenXC for Python`_
 - [o] Integrate with other cloud IoT platforms as up- or downstream unit
@@ -95,7 +131,7 @@ All
 
 
 2016-03-06
-----------
+==========
 - [o] "Kotori Box" demo setup on Raspberry Pi 3
 - [o] Improve docs
 
@@ -104,9 +140,58 @@ All
     - content policy / ownership
 
 
+2016-02-20
+==========
+
+Milestone 1 - Kotori 0.6.0
+--------------------------
+- [o] Arbeit an der Dokumentation, siehe commits von gestern
+- [o] Vorbereitung des Release 0.6.0 im aktuellen Zustand mit den Doku Updates (die 0.5.1 ist vom 26. November)
+- [o] Release eines einigermaßen sauberen bzw. benutzbaren Debian Pakets
+
+
+Milestone 2 - Kotori 0.7.0
+--------------------------
+- [o] Reguläres refactoring
+- [o] MQTT Topic
+
+    - Implementierung der "Content Type" Signalisierung über pseudo-Dateiendungen wie geplant
+      (Inspired by Nick O’Leary and Jan-Piet Mens; Acked by Clemens and Richard)::
+
+            hiveeyes/testdrive/area42/hive3/temperature vs. hiveeyes/testdrive/area42/hive3.json
+
+    - Weitere Diskussion und Implementierung der "Direction" Signalisierung (Inspired by computourist, Pushed by Richard)
+      Proposal: ``.../node3/{direction}/{sensor}.foo``
+
+- [o] Generalisierung der BERadioNetworkApplication / HiveeyesApplication vendor Architektur
+- [o] Verbesserung der service-in-service Infrastruktur mit nativen Twisted service containern
+- [o] Flexiblere Anwendungsfälle ähnlich dem von Hiveeyes ermöglichen: mqtt topic first-level segment "hiveeyes/" (the "realm") per Konfigurationsdatei bestimmen (Wunsch von Dazz)
+- [o] Einführung von Softwaretests
+
+
+Hiveeyes Research
+-----------------
+Mit ein paar Dingen müssen wir uns noch stärker beschäftigen:
+
+- InfluxDB
+
+    - Wie geht man am besten mit InfluxDB-nativen Tags in unserem Kontext um?
+    - Bemerkung: Vielleicht war die Trennung auf Datenbank/Tableebene die falsche
+      Strategie bzw. es gibt noch weitere, die orthogonal davon zusätzlich oder alternativ sinnvoll sind.
+
+- Grafana
+
+    - Wie kann man hier die Tags aus InfluxDB am besten verarbeiten und in den Dashboards praktisch nutzen?
+    - Wie funktionieren Annotations mit InfluxDB?
+
+- Notifications
+
+    - Ausblick: mqttwarn besser mit Kotori integrieren (via API) und
+      als universeller Nachrichtenvermittler auf swarm.hiveeyes.org betreiben.
+
 
 2016-01-25
-----------
+==========
 - [x] When sending::
 
     mosquitto_pub -h swarm.hiveeyes.org -t hiveeyes/testdrive/999/1/message-json -m '{"temperature": 42.84}'
@@ -126,7 +211,7 @@ No new panel gets created::
 
 
 2016-01-26
-----------
+==========
 - [o] Grafana Manager: Create dashboard row per gateway in same network
 - [o] MQTT signals on thresholds
 - [o] Add email alerts on tresholds
@@ -135,19 +220,19 @@ No new panel gets created::
 
 
 2016-01-27 A
-------------
+============
 - [x] systemd init script
 - [o] Send measurements by HTTP POST and UDP, republish to MQTT
 - [o] Mechanism / button to reset the "testdrive" database (or any other?).
       This is required when changing scalar types (e.g. str -> float64, etc.)
 
 2016-01-27 B
-------------
+============
 - [o] Numbers and gauges about message throughput
 - [o] systemd init script for crossbar
 
 2016-01-28 A
-------------
+============
 - [o] Get rid of the [vendor] configuration settings, use instead::
 
     [kotori]
@@ -175,7 +260,7 @@ No new panel gets created::
       http://docs.grafana.org/guides/whats-new-in-v2-6/#table-panel
 
 2016-01-28 B
-------------
+============
 - [o] Improve error message if MQTT daemon isn't listening - currently::
 
     2016-01-28T21:52:13+0100 [mqtt.client.factory.MQTTFactory  ] INFO: Starting factory <mqtt.client.factory.MQTTFactory instance at 0x7f5105e157a0>
@@ -183,61 +268,14 @@ No new panel gets created::
 
 
 2016-01-29
-----------
+==========
 - [o] Switch to PAHO
     - https://pypi.python.org/pypi/paho-mqtt/
     - https://www.eclipse.org/paho/clients/python/
     - https://git.eclipse.org/c/paho/org.eclipse.paho.mqtt.python.git/tree/src/paho/mqtt/client.py
 
 
-Hiveeyes
-========
-
-Milestone 1 - Kotori 0.6.0
---------------------------
-- Arbeit an der Dokumentation, siehe commits von gestern
-- Vorbereitung des Release 0.6.0 im aktuellen Zustand mit den Doku Updates (die 0.5.1 ist vom 26. November)
-- Release eines einigermaßen sauberen bzw. benutzbaren Debian Pakets
-
-
-Milestone 2 - Kotori 0.7.0
---------------------------
-- Reguläres refactoring
-- MQTT Topic
-
-    - Implementierung der "Content Type" Signalisierung über pseudo-Dateiendungen wie geplant
-      (Inspired by Nick O’Leary and Jan-Piet Mens; Acked by Clemens and Richard)::
-
-            hiveeyes/testdrive/area42/hive3/temperature vs. hiveeyes/testdrive/area42/hive3.json
-
-    - Weitere Diskussion und Implementierung der "Direction" Signalisierung (Inspired by computourist, Pushed by Richard)
-      Proposal: ``.../node3/{direction}/{sensor}.foo``
-
-- Generalisierung der BERadioNetworkApplication / HiveeyesApplication vendor Architektur
-- Verbesserung der service-in-service Infrastruktur mit nativen Twisted service containern
-- Flexiblere Anwendungsfälle ähnlich dem von Hiveeyes ermöglichen: mqtt topic first-level segment "hiveeyes/" (the "realm") per Konfigurationsdatei bestimmen (Wunsch von Dazz)
-- Einführung von Softwaretests
-
-
-Research
---------
-Mit ein paar Dingen müssen wir uns noch stärker beschäftigen:
-
-- InfluxDB
-
-    - Wie geht man am besten mit InfluxDB-nativen Tags in unserem Kontext um?
-    - Bemerkung: Vielleicht war die Trennung auf Datenbank/Tableebene die falsche
-      Strategie bzw. es gibt noch weitere, die orthogonal davon zusätzlich oder alternativ sinnvoll sind.
-
-- Grafana
-
-    - Wie kann man hier die Tags aus InfluxDB am besten verarbeiten und in den Dashboards praktisch nutzen?
-    - Wie funktionieren Annotations mit InfluxDB?
-
-- Notifications
-
-    - Ausblick: mqttwarn besser mit Kotori integrieren (via API) und
-      als universeller Nachrichtenvermittler auf swarm.hiveeyes.org betreiben.
+----
 
 
 ****
@@ -248,7 +286,7 @@ LST
 ===
 
 Prio 1 - Showstoppers
----------------------
+====================-
 
 Besides making it work in approx. 30 min. on the first hand (cheers!), there are some remaining issues making the wash&go usage
 of Kotori somehow inconvenient in day-to-day business. Let's fix them.
@@ -257,7 +295,7 @@ of Kotori somehow inconvenient in day-to-day business. Let's fix them.
 
 
 Prio 1.5 - Important
---------------------
+====================
 - [o] improve: lst-message sattracker send 0x090100000000000000 --target=udp://localhost:8889
       take --target from configuration, matching channel "sattracker"
 - [o] lst-message sattracker list-structs
@@ -390,7 +428,7 @@ Done
 
     2015-11-20T16:56:57+0100 [kotori.daq.storage.influx        ] INFO: Storage location:  {'series': '01_position', 'database': u'edu_hm_lst_sattracker'}
     2015-11-20T16:56:57+0100 [kotori.daq.storage.influx        ] ERROR: InfluxDBClientError: 401: {"error":"user not found"}
-    2015-11-20T16:56:57+0100 [kotori.daq.storage.influx        ] ERROR: Unable to format event {'log_namespace': 'kotori.daq.storage.influx', 'log_level': <LogLevel=error>, 'log_logger': <Logger 'kotori.daq.storage.influx'>, 'log_time': 1448035017.722721, 'log_source': None, 'log_format': 'Processing Bus message failed: 401: {"error":"user not found"}\nERROR: InfluxDBClientError: 401: {{"error":"user not found"}}\n\n------------------------------------------------------------\nEntry point:\nFilename:    /home/basti/kotori/kotori/daq/storage/influx.py\nLine number: 171\nFunction:    bus_receive\nCode:        return self.process_message(self.topic, payload)\n------------------------------------------------------------\nSource of exception:\nFilename:    /home/basti/kotori/.venv27/local/lib/python2.7/site-packages/influxdb-2.9.2-py2.7.egg/influxdb/client.py\nLine number: 247\nFunction:    request\nCode:        raise InfluxDBClientError(response.content, response.status_code)\n\nTraceback (most recent call last):\n  File "/home/basti/kotori/kotori/daq/storage/influx.py", line 171, in bus_receive\n    return self.process_message(self.topic, payload)\n  File "/home/basti/kotori/kotori/daq/storage/influx.py", line 195, in process_message\n    self.store_mes
+    2015-11-20T16:56:57+0100 [kotori.daq.storage.influx        ] ERROR: Unable to format event {'log_namespace': 'kotori.daq.storage.influx', 'log_level': <LogLevel=error>, 'log_logger': <Logger 'kotori.daq.storage.influx'>, 'log_time': 1448035017.722721, 'log_source': None, 'log_format': 'Processing Bus message failed: 401: {"error":"user not found"}\nERROR: InfluxDBClientError: 401: {{"error":"user not found"}}\n\n============================================================\nEntry point:\nFilename:    /home/basti/kotori/kotori/daq/storage/influx.py\nLine number: 171\nFunction:    bus_receive\nCode:        return self.process_message(self.topic, payload)\n============================================================\nSource of exception:\nFilename:    /home/basti/kotori/.venv27/local/lib/python2.7/site-packages/influxdb-2.9.2-py2.7.egg/influxdb/client.py\nLine number: 247\nFunction:    request\nCode:        raise InfluxDBClientError(response.content, response.status_code)\n\nTraceback (most recent call last):\n  File "/home/basti/kotori/kotori/daq/storage/influx.py", line 171, in bus_receive\n    return self.process_message(self.topic, payload)\n  File "/home/basti/kotori/kotori/daq/storage/influx.py", line 195, in process_message\n    self.store_mes
 
 - [x] non-ascii "char" value can't be published to WAMP Bus
 
@@ -532,7 +570,7 @@ Milestones
 ==========
 
 Milestone 1
------------
+==========-
 - dynamic receiver channels
 - realtime scope views: embed grafana Graphs or render directly e.g. using Rickshaw.js?
     - http://docs.grafana.org/v2.0/reference/sharing/
@@ -540,6 +578,6 @@ Milestone 1
     - https://github.com/ricklupton/livefft
 
 Milestone 2
------------
+==========-
 - pdf renderer
 - derivation and integration

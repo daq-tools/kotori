@@ -127,8 +127,8 @@ class GrafanaDashboard(object):
 
         self.dashboard = dashboard
 
-        # bookkeeping which panel id to use when adding new panels
-        # use the maximum id currently used
+        # bookkeeping: which panel id to use when adding new panels
+        # if a dashboard already exists, use the maximum id currently exists as new index
         self.panel_id = 0
         if dashboard:
             # TODO: this is hardcoded on row=0
@@ -320,12 +320,17 @@ class GrafanaManager(object):
                 if not found:
                     panels_missing_titles.append(new_title)
 
-            logger.info('panels_exists_titles: {}'.format(panels_exists_titles))
-            logger.info('panels_new_titles:    {}'.format(panels_new_titles))
+            logger.info(u'existing titles: {panels_exists_titles}, '
+                        u'new panels: {panels_new}, '
+                        u'new panels titles: {panels_new_titles}',
+                panels_exists_titles=panels_exists_titles,
+                panels_new=panels_new,
+                panels_new_titles=panels_new_titles,
+            )
 
             if panels_missing_titles:
 
-                logger.info('Adding missing panels {}'.format(panels_missing_titles))
+                logger.info(u'Adding missing panels {panels_missing_titles}', panels_missing_titles=panels_missing_titles)
 
                 # establish new panels
                 for panel in panels_new:

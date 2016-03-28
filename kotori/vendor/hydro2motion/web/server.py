@@ -37,7 +37,10 @@ class WebDashboardIndex(Resource):
         })
         return response.encode('utf-8')
 
-def boot_web(http_port, websocket_uri, debug=False):
+def boot_web(config, debug=False):
+
+    http_port = int(config.get('hydro2motion', 'http_port'))
+    websocket_uri = unicode(config.get('wamp', 'listen'))
 
     dashboard = Resource()
     dashboard.putChild('', WebDashboardIndex(websocket_uri=websocket_uri))

@@ -14,7 +14,6 @@ def slm(message):
     """sanitize log message"""
     return unicode(message).replace('{', '{{').replace('}', '}}')
 
-
 class Singleton(object):
     """
     Singleton class by Duncan Booth.

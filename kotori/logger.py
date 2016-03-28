@@ -1,15 +1,26 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 
-# from mqtt.logger
 from twisted.logger   import (
     LogLevel, globalLogBeginner,
     FileLogObserver, FilteringLogObserver, LogLevelFilterPredicate,
     formatTime, timeFormatRFC3339, formatEvent)
 
-def startLogging(fileobj, level=LogLevel.debug):
-    fileObserver = logObserver(fileobj)
+# from mqtt.logger
+
+def startLogging(settings, stream=None, level=LogLevel.debug):
+    fileObserver = logObserver(stream)
     predicate    = LogLevelFilterPredicate(defaultLogLevel=level)
+
+    if settings.options.debug_mqtt_driver:
+        predicate.setLogLevelForNamespace('mqtt', LogLevel.debug)
+
+    if settings.options.debug_mqtt:
+        predicate.setLogLevelForNamespace('kotori.daq.application.mqtt_influx', LogLevel.debug)
+
+    if settings.options.debug_influx:
+        predicate.setLogLevelForNamespace('kotori.daq.storage.influx', LogLevel.debug)
+
     observers    = [ FilteringLogObserver(observer=fileObserver, predicates=[predicate]) ]
     globalLogBeginner.beginLoggingTo(observers)
 
@@ -53,7 +64,7 @@ def formatLogEvent(event, formatTime=formatTime):
 
     return u"{timeStamp} [{system}] {level}: {event}\n".format(
         timeStamp=timeStamp,
-        system=system.ljust(33),
+        system=system.ljust(35),
         level=levelName.upper(),
         event=eventText,
     )

@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
-# (c) 2014-2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2014-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+from pprint import pprint
 import sys
+from bunch import Bunch
+from docopt import docopt
 from pkgutil import extend_path
+from setuptools.command.setopt import config_file
 from twisted.internet import reactor
 from twisted.logger import Logger, LogLevel
-from kotori.configuration import get_configuration, get_configuration_file
+from kotori.configuration import get_configuration, get_configuration_file, read_list
 from kotori.logger import startLogging
-from kotori.io.master.server import boot_master
-from kotori.io.node.nodeservice import boot_node
 from kotori.frontend.server import boot_frontend
-from kotori.util import slm
 from .version import __VERSION__
 
 __path__ = extend_path(__path__, __name__)
@@ -18,100 +19,75 @@ APP_NAME = 'Kotori version ' + __VERSION__
 __doc__ = APP_NAME + """
 
 Usage:
-  kotori [--config etc/development.ini] [--debug]
+  kotori [--config etc/development.ini] [--debug-mqtt] [--debug-mqtt-driver] [--debug-influx]
   kotori --version
   kotori (-h | --help)
 
 Options:
   --config etc/kotori.ini   Start Kotori with configuration file
   --version                 Show version information
-  --debug                   Enable debug messages
+  --debug-mqtt              Enable debug messages for MQTT
+  --debug-influx            Enable debug messages for InfluxDB
+  --debug-mqtt-driver       Enable debug messages for MQTT driver
   -h --help                 Show this screen
 
 """
-"""
-deprecated:
-  #kotori master [--debug]
-  #kotori node --master=<> [--debug]
-"""
-from docopt import docopt
 
-logger = Logger()
+log = Logger()
 
 def run():
 
-    logger.info(APP_NAME)
+    log.info(APP_NAME)
 
+    # Read commandline options
+    # TODO: Do it the Twisted way
     options = docopt(__doc__, version=APP_NAME)
-    logger.info('options: {}'.format(slm(dict(options))))
     debug = options.get('--debug', False)
-    logger.info("debug: {}".format(debug))
+    pprint(options)
 
-    log_level = 'debug' if debug else 'info'
-    startLogging(sys.stderr, level=LogLevel.levelWithName(log_level))
+    # Read settings from configuration file
+    configfile = get_configuration_file(options['--config'])
+    log.info("Using configuration file {configfile}", configfile=configfile)
+    settings = get_configuration(configfile)
 
-    config_file = get_configuration_file(options['--config'])
-    config = get_configuration(config_file)
+    # Merge command line options into settings
+    settings.setdefault('options', Bunch())
+    for key, value in options.iteritems():
+        key = key.lstrip(u'--')
+        key = key.replace(u'-', u'_')
+        settings.options[key] = value
 
-    # defaults
-    if config.has_section('wamp'):
-        websocket_uri = unicode(config.get('wamp', 'listen'))
+    # Setup the logging subsystem
+    #log_level = 'debug' if debug else 'info'
+    log_level = 'info'
+    #log_level = 'debug'
+    startLogging(settings, stream=sys.stderr, level=LogLevel.levelWithName(log_level))
 
-    # run master and web gui
-    if 'master' in options:
-        boot_master(websocket_uri, debug)
-        #boot_web(35000, '', debug)
-        #boot_udp_adapter(udp_port, debug)
+    # Boot all enabled vendors
+    vendors = read_list(settings.vendors.enable)
+    log.info('Enabling vendors {vendors}', vendors=vendors)
 
-    # run node and web gui only, using a remote master
-    if 'node' in options:
-        websocket_uri = options['--master']
-        #boot_web(35000, websocket_uri, debug)
-        boot_node(websocket_uri, debug)
-        #boot_udp_adapter(udp_port, debug)
+    if 'hydro2motion' in vendors:
+        from kotori.vendor.hydro2motion.database.influx import h2m_boot_influx_database
+        from kotori.vendor.hydro2motion.network.udp import h2m_boot_udp_adapter
+        from kotori.vendor.hydro2motion.web.server import boot_web
+        boot_web(settings, debug=debug)
+        h2m_boot_udp_adapter(settings, debug=debug)
+        h2m_boot_influx_database(settings)
 
-    # run master, node and web gui
-    else:
-        """
-        boot_master(websocket_uri, debug=debug)
-        boot_web(http_port, websocket_uri, debug=debug)
-        boot_frontend(frontend_port, websocket_uri, debug=debug)
-        boot_node(websocket_uri, debug=debug)
-        boot_udp_adapter(udp_port, debug=debug)
-        boot_sql_database(websocket_uri)
-        boot_mongo_database(websocket_uri)
-        boot_influx_database(websocket_uri)
-        """
+    if 'hiveeyes' in vendors:
+        from kotori.vendor.hiveeyes.application import hiveeyes_boot
+        hiveeyes_boot(settings, debug=debug)
 
-        # hydro2motion
-        if config.has_section('hydro2motion'):
+    if 'lst' in vendors:
+        from kotori.vendor.lst.application import lst_boot
+        lst_boot(settings)
 
-            from kotori.vendor.hydro2motion.database.influx import h2m_boot_influx_database
-            from kotori.vendor.hydro2motion.network.udp import h2m_boot_udp_adapter
-            from kotori.vendor.hydro2motion.web.server import boot_web
+    # Boot web configuration GUI
+    if 'config-web' in settings:
+        boot_frontend(settings, debug=debug)
 
-            http_port_v1 = int(config.get('hydro2motion', 'http_port'))
-
-            boot_web(http_port_v1, websocket_uri, debug=debug)
-            h2m_boot_udp_adapter(config, debug=debug)
-            h2m_boot_influx_database(config)
-
-        # hiveeyes
-        if config.has_section('hiveeyes'):
-            from kotori.vendor.hiveeyes.application import hiveeyes_boot
-            hiveeyes_boot(config, debug=debug)
-
-        if config.has_section('lst-h2m'):
-            from kotori.vendor.lst.application import lst_boot
-            lst_boot(config)
-
-        # generic daq
-        if config.has_section('kotori-daq'):
-            http_port_v2 = int(config.get('kotori-daq', 'http_port'))
-            boot_frontend(http_port_v2, websocket_uri, debug=debug)
-
-
-    # now enter the Twisted reactor loop
+    # Enter Twisted reactor loop
     reactor.run()
 
 

@@ -1,5 +1,5 @@
 /.idea
-/.venv27*
+/.venv*
 *.egg-info
 *.pyc
 *.pyo

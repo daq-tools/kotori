@@ -43,7 +43,29 @@ Get the source code
 
 Setup virtualenv
 ================
+::
+
+    make virtualenv
+    source .venv27/bin/activate
+    python setup.py develop
+
+    # install extras
+    pip install -e .[daq]
+
+
 Please follow :ref:`setup-python-virtualenv`.
+
+
+Run on PyPy
+===========
+::
+
+    sudo port install pypy
+    virtualenv --python=pypy .venvpypy5
+    source .venvpypy5/bin/activate
+    python setup.py develop
+    pip install -e .[daq]
+
 
 Run ad hoc
 ==========

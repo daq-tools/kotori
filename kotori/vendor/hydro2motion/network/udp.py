@@ -23,14 +23,14 @@ class UdpPublisher(ApplicationSession):
     """
 
     def onJoin(self, details):
-        logger.info("session attached")
+        logger.info("WAMP joined")
 
         global app_session
         app_session = self
 
 
     def onDisconnect(self):
-        logger.info("disconnected")
+        logger.info("WAMP disconnected")
         #reactor.stop()
 
 
