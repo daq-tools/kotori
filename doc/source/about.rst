@@ -1,26 +1,116 @@
 .. include:: _resources.rst
 
+.. _kotori-about:
+
 ############
 About Kotori
 ############
 
+.. container:: basic-hero align-center
+
     *Kotori* is a multi-channel, multi-protocol data acquisition and graphing toolkit
     based on InfluxDB_, Grafana_, Mosquitto_ and Twisted_.
 
-    It is a convenient component for building flexible telemetry solutions, test benches
-    and sensor networks by addressing different aspects of collecting and storing sensor
-    data from a multitude of data sources and devices.
+.. container:: pull-left
 
-***********
-At a glance
-***********
-The big picture of the data acquisition integration framework is a system aiming to:
+    .. raw:: html
 
-.. container:: pull-left basic-hero align-center
+        <a href="#">
+            <span class="hb hb-md hb-kotori">
+                <img src="_static/img/kotori-logo.png" style="width: 75px; margin-top: -15px"/>
+            </span>
+        </a>
+        <a href="#">
+            <span class="hb hb-md hb-kotori">
+                <i class="fa fa-rss"></i>
+            </span>
+        </a>
 
-    Deliver an instant-on experience by providing built-in sensor adapters,
-    flexible configuration capabilities, durable database storage and
-    unattended graph visualization out of the box.
+.. container:: pull-right basic-hero
+
+    .. container:: align-center legroom-md
+
+        Use convenient software and hardware components for building
+        powerful telemetry solutions, test benches and sensor networks.
+        Build upon a flexible data acquisition integration framework.
+        Address all aspects of collecting and storing
+        sensor data from a multitude of data sources and devices.
+
+|clearfix|
+
+
+.. container:: pull-left basic-hero
+
+    .. container:: align-center legroom-md
+
+        Deliver an instant-on experience by providing built-in sensor adapters,
+        flexible configuration capabilities, durable database storage and
+        unattended graph visualization out of the box.
+
+    .. container:: pull-left margin-right-md
+
+        .. figure:: _static/img/logo/arm-mbed-logo.svg
+            :target: mbed_
+            :alt: ARM® mbed™
+            :width: 200px
+
+            ARM® mbed™
+
+        .. figure:: _static/img/logo/arduino-community-logo.svg
+            :target: Arduino_
+            :alt: Arduino
+            :width: 200px
+
+            Arduino
+
+    .. container:: pull-left margin-right-md
+
+        .. figure:: _static/img/logo/mosquitto-logo.png
+            :target: Mosquitto_
+            :alt: Mosquitto
+            :width: 75px
+
+            Mosquitto
+
+        .. figure:: _static/img/logo/influxdb-logo.svg
+            :target: InfluxDB_
+            :alt: InfluxDB
+            :width: 75px
+
+            InfluxDB
+
+        .. figure:: _static/img/logo/grafana-icon.png
+            :target: Grafana_
+            :alt: Grafana
+            :width: 75px
+
+            Grafana
+
+
+
+    .. container:: pull-left
+
+        .. figure:: _static/img/logo/twistedmatrix-logo.jpg
+            :target: Twisted_
+            :alt: Twisted
+            :width: 100px
+
+            Twisted
+
+        .. figure:: _static/img/logo/crossbar-logo.svg
+            :target: `Crossbar.io`_
+            :alt: Crossbar.io
+            :width: 150px
+
+            Crossbar.io
+
+        .. figure:: _static/img/logo/autobahn-logo.svg
+            :target: Autobahn_
+            :alt: Autobahn
+            :width: 100px
+
+            Autobahn
+
 
 .. container:: pull-right
 
@@ -29,6 +119,19 @@ The big picture of the data acquisition integration framework is a system aiming
         <a href="#">
             <span class="hb hb-md hb-google-plus">
                 <i class="fa fa-plug"></i>
+            </span>
+        </a>
+        <a href="#">
+            <span class="hb hb-md hb-custom">
+                <i class="fa fa-refresh"></i>
+            </span>
+        </a>
+
+        <br/>
+
+        <a href="#">
+            <span class="hb hb-md hb-tumblr">
+                <i class="fa fa-database"></i>
             </span>
         </a>
         <a href="#">
@@ -55,73 +158,92 @@ The big picture of the data acquisition integration framework is a system aiming
             </span>
         </a>
 
-.. container:: pull-right basic-hero align-center
 
-    Integrate well with and extend your currently employed
-    measurement data acquisition workflow through flexible
-    adapter interfaces to commodity or proprietary software
-    and hardware components.
+.. container:: pull-right basic-hero
+
+    .. container:: align-center legroom-md
+
+        Integrate with and extend your currently employed
+        measurement data acquisition workflow through flexible
+        adapter interfaces to commodity or proprietary software
+        and hardware components or protocols.
+
+
+    .. container:: pull-left margin-right-md
+
+        .. figure:: _static/img/logo/mqttorg-logo.svg
+            :target: MQTT_
+            :alt: MQTT
+            :width: 200px
+
+            MQTT
+
+    .. container:: pull-right margin-right-md
+
+        .. figure:: _static/img/logo/wamp-logo.svg
+            :target: WAMP_
+            :alt: WAMP
+            :width: 200px
+
+            WAMP
 
 
 |clearfix|
 
 
-.. container:: align-center basic-hero
 
-
-.. raw:: html
-
-
+.. _kotori-goals:
 
 ***************
 Goals of Kotori
 ***************
 
-The design of Kotori has different audiences in mind.
+The design of Kotori follows requirements from different audiences and use cases.
 
 For all users
 =============
-:ref:`Kotori` takes the burden of manually recording and carrying
-measurement and telemetry data around off your shoulders.
+:ref:`Kotori` streamlines the process of collecting, storing,
+visualizing and postprocessing measurement and telemetry data.
+Forget about ad-hoc setups for recording data followed up by
+custom postprocessing steps often involving tedious manual
+transport-, conversion- and import-tasks.
+
 A quick overview should get you an idea:
 
-- Ingest data using open or proprietary industry protocols and standards.
-- Collect measurement data from wired or wireless sensors.
-- Persist measurement data into contemporary databases and storage systems.
+- Receive and ingest measurement data using open or proprietary
+  industry protocols and standards such as MQTT_, UDP or HTTP.
+- Collect measurement data from wired or wireless sensors and interfaces.
+- Convert and transcode measurement data from/to different payload formats
+  such as CSV, JSON, XML, etc.
+- Persist measurement data into contemporary databases and storage systems
+  such as TSDB, RDBMS or NoSQL.
+- Rewrite and redistribute data through a variety of egress data channels.
 - Instantly display measurement values on arrival using default database dashboards.
 - Optionally, build advanced dashboards interactively.
-
-----
-
-- receive data from various types of ingress data channels: MQTT, UDP, HTTP
-- store collected data into different kinds of databases: TSDB, RDBMS, NoSQL
-- convert and transcode data from/to different payload formats: CSV, JSON, XML, etc.
-- rewrite and redistribute data through a variety of egress data channels
-- display measurement data in rich database dashboards
-- notify subscribed users or devices of events like above-/below-threshold
-
+- Notify subscribed users or devices of events like above-/below-threshold or data-loss.
 
 
 For integrators
 ===============
-:ref:`Kotori` supports you in
+:ref:`Kotori` is a toolbox for creating vendor solutions in different areas:
 
-- building field solutions like receiving telemetry data transmitted
-  from vehicles and moving objects as done in the pilot project with the
-  University of Applied Sciences in Munich.
+- Build field systems receiving telemetry data transmitted from vehicles
+  and moving objects like in the pilot project :ref:`vendor-hydro2motion`,
+  carried out with the University of Applied Sciences in Munich.
   This was about collecting and visualizing telemetry data and
-  position information from a fuel-cell powered vehicle when racing
-  at the Shell Ecomarathon 2015 in Rotterdam.
-  See also :ref:`vendor-hydro2motion`.
+  position information from a fuel-cell powered vehicle while
+  being on-track at the Shell Ecomarathon 2015 in Rotterdam.
 
-- building distributed data collector platforms like the
-  sensor data network for a Berlin-based beekeeper collective.
-  See also :ref:`vendor-hiveeyes`.
+- Create distributed data collector platforms like :ref:`vendor-hiveeyes`,
+  the sensor data collection network for a Berlin-based beekeeper collective.
 
-- setting up maintenance-free measurement data collectors at your
-  laboratory or test bench using established customer-specific
-  communication protocols.
-  See also :ref:`vendor-lst`.
+- Integrate a maintenance-free measurement data collector into
+  the toolbox at your laboratory or test bench setup.
+  Adapts seamlessly to your local environment by reusing or
+  interfacing with established on-site or customer-specific
+  communication protocols and hardware.
+  :ref:`vendor-lst` uses Kotori for collecting and decoding
+  binary payloads of their in-house telemetry system.
 
 
 .. container:: align-center basic-hero
@@ -144,14 +266,15 @@ We are standing on the shoulders of giants:
 
 - Leverage the open infrastructure based on Twisted_ - an event-driven networking engine -
   to implement custom software components.
-- Listen and talk M2M_ using the *MQ Telemetry Transport* connectivity protocol (MQTT_).
+- Listen and talk M2M_ using the *MQ Telemetry Transport* connectivity protocol and software bus (MQTT_).
 - Store data points into InfluxDB_, a leading open source time series database suitable
   for realtime analytics and sensor data storage.
 - Automate dashboard management in the context of data arriving on different data channels
   using Grafana_, an open source, feature rich metrics dashboard and graph editor.
 - Make Browser clients first-class citizens of the underpinning software bus framework
   delivering bidirectional communication with publish/subscribe or rpc semantics
-  using the *Web Application Messaging Protocol* (WAMP_), in turn based on WebSockets_.
+  using the Autobahn_ implementation of the *Web Application Messaging Protocol* (WAMP_),
+  which in turn is based on WebSockets_.
 - Integration with mqttwarn_ for emitting and broadcasting data to a multitude of targets and receivers.
 - Accept new protocols, write adapters, decoders and handlers for specific devices, data formats
   and databases.
@@ -160,5 +283,26 @@ We are standing on the shoulders of giants:
 .. container:: align-center basic-hero
 
     The search is over: :ref:`Kotori` is the lightweight and hackable
-    SCADA_ system based on contemporary technologies and a large foundation of
-    open source software components you have always been waiting for.
+    SCADA_ system based on contemporary technologies and a solid foundation
+    of open source software components you always have been looking for.
+
+
+----
+
+
+********
+Appendix
+********
+
+Legal
+=====
+
+Arduino
+-------
+The Arduino brand and Arduino logo are copyright of Arduino LLC.
+
+ARM® mbed™
+----------
+ARM is a registered trademark of ARM Limited (or its subsidiaries) in the EU and/or elsewhere.
+mbed is a trademark of ARM Limited (or its subsidiaries) in the EU and/or elsewhere.
+All rights reserved.

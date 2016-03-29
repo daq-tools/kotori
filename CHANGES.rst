@@ -21,8 +21,8 @@ general improvements
 
 documentation
 -------------
-- Document how to run on PyPy
-- Improve README.rst
+- Document how to :ref:`run-on-pypy`
+- Improve documentation at :ref:`kotori-about` and :ref:`kotori-readme`
 - Add CSS3 Hexagon Buttons 1.0.1 and more static assets
 - Add Entypo pictograms by Daniel Bruce
 

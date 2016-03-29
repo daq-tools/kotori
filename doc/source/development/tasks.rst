@@ -16,6 +16,22 @@ Kotori tasks
 2016
 ****
 
+2016-03-29
+==========
+- [o] Documentation: Redesign root index.rst to use panels/boxes for displaying the different documentation sections
+- [o] Get in touch with upstream projects
+
+    - http://wamp-proto.org/
+
+- [o] More logos for "About Kotori"
+- [o] Coin the "MIG" stack
+- [o] Refactor "Kotori goals" out of "About Kotori"
+- [o] Documentation about Kotori clients
+
+    - beradio-python, -lua, -cpp
+    - mqttkit-python, -lua
+    - mbed library
+
 
 2016-03-28
 ==========
@@ -61,6 +77,8 @@ Kotori tasks
     - Kotori Logo: Google Material Design Icons
     - Hexagon Buttons: https://github.com/shariarbd/CSS3-Hexagon-Buttons
     - Entypo Font: http://www.entypo.com/ (Entypo pictograms by Daniel Bruce — http://entypo.com/)
+    - https://github.com/mqtt/mqttorg-graphics
+    - InfluxDB logo: http://svgporn.com/
 
 
 2016-03-25

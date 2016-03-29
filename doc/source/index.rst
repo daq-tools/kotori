@@ -10,12 +10,37 @@
 Kotori
 ======
 
+.. container:: basic-hero align-center
+
     *Kotori* is a multi-channel, multi-protocol data acquisition and graphing toolkit
     based on InfluxDB_, Grafana_, Mosquitto_ and Twisted_.
 
-    It is a convenient component for building flexible telemetry solutions, test benches
-    and sensor networks by addressing different aspects of collecting and storing sensor
-    data from a multitude of data sources and devices.
+.. container:: pull-left
+
+    .. raw:: html
+
+        <a href="#">
+            <span class="hb hb-md hb-kotori">
+                <img src="_static/img/kotori-logo.png" style="width: 75px; margin-top: -15px"/>
+            </span>
+        </a>
+        <a href="#">
+            <span class="hb hb-md hb-kotori">
+                <i class="fa fa-rss"></i>
+            </span>
+        </a>
+
+.. container:: pull-right basic-hero
+
+    .. container:: align-center legroom-md
+
+        Use convenient software and hardware components for building
+        powerful telemetry solutions, test benches and sensor networks.
+        Build upon a flexible data acquisition integration framework.
+        Address all aspects of collecting and storing
+        sensor data from a multitude of data sources and devices.
+
+|clearfix|
 
 
 About
@@ -26,7 +51,6 @@ About
 
     about
     README
-    changes
 
 
 Applications
@@ -69,6 +93,7 @@ Development
     :maxdepth: 1
     :glob:
 
+    changes
     development/index
 
 

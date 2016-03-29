@@ -26,6 +26,16 @@ body, div.body {
     text-align: right;
 }
 
+/* display classes */
+.display-inline {
+    display: inline !important;
+}
+
+
+.margin-right-md {
+    margin-right: 3em;
+}
+
 /* clearfix after aligning left/right  */
 .clearfix {
     clear: both;
@@ -33,11 +43,49 @@ body, div.body {
 
 /* boxes */
 .basic-hero {
-    display: block;
     font-size: larger;
     line-height: 1.75em;
     width: 60%;
-    margin: auto;
-    padding-top: 1.5em;
-    padding-bottom: 1em;
+    /* margin: auto; */
+    margin-top: 2em !important;
+    margin-bottom: 4em !important;
+}
+
+.legroom-md {
+    margin-bottom: 2em !important;
+}
+
+
+/* More colors for CSS3 Hexagon Buttons */
+
+/* Kotori Hexagon */
+.hb-kotori,
+.hb-kotori:before ,
+.hb-kotori:after {
+    background: #2980B9;
+    border-color: #2980B9;
+    color: #ffffff;
+}
+
+.hb-kotori:hover,
+.hb-kotori:hover:before ,
+.hb-kotori:hover:after {
+    background:transparent;
+    border-color: #2980B9;
+    color: #2980B9;
+}
+/* inverts */
+.hb-kotori-inv,
+.hb-kotori-inv:after,
+.hb-kotori-inv:before {
+    background:transparent;
+    border-color: #2980B9;
+    color: #2980B9;
+}
+.hb-kotori-inv:hover,
+.hb-kotori-inv:hover:after,
+.hb-kotori-inv:hover:before {
+    background: #2980B9;
+    border-color: #2980B9;
+    color: #ffffff;
 }

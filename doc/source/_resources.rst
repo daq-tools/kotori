@@ -20,7 +20,7 @@
 .. _Grafana: http://grafana.org/
 .. _Twisted: https://en.wikipedia.org/wiki/Twisted_(software)
 .. _Twisted Matrix Labs: https://twistedmatrix.com/
-.. _WebSockets: https://tools.ietf.org/html/rfc6455
+.. _Crossbar.io: http://crossbar.io/
 .. _WAMP: http://wamp.ws/
 .. _MQTT: http://mqtt.org/
 .. _Mosquitto: http://mosquitto.org/
@@ -28,12 +28,13 @@
 .. _Node-RED flows: http://flows.nodered.org/
 
 
-.. Akronyms for standards, etc.
+.. Akronyms, Standards, etc.
 .. _GPRS: https://en.wikipedia.org/wiki/General_Packet_Radio_Service
 .. _UMTS: https://en.wikipedia.org/wiki/Universal_Mobile_Telecommunications_System
 .. _LTE: https://en.wikipedia.org/wiki/LTE_(telecommunication)
 .. _M2M: https://en.wikipedia.org/wiki/Machine_to_machine
 .. _SCADA: https://en.wikipedia.org/wiki/SCADA
+.. _WebSockets: https://tools.ietf.org/html/rfc6455
 
 
 

@@ -55,6 +55,7 @@ Setup virtualenv
 
 Please follow :ref:`setup-python-virtualenv`.
 
+.. _run-on-pypy:
 
 Run on PyPy
 ===========
