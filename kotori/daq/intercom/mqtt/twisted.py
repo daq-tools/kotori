@@ -2,44 +2,35 @@
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 # https://pypi.python.org/pypi/twisted-mqtt
 # https://github.com/astrorafael/twisted-mqtt/
+from __future__ import absolute_import
 from twisted.logger import Logger
-from twisted.internet import reactor, task
+from twisted.internet import reactor
 from twisted.application.service import Service
 from twisted.internet.endpoints import TCP4ClientEndpoint
+from kotori.daq.intercom.mqtt.base import BaseMqttAdapter
 from mqtt.client.factory import MQTTFactory
 
 log = Logger()
 
-class TwistedMqttAdapter(Service):
-
-    def __init__(self, name, broker_host=u'localhost', broker_port=1883, debug=False, callback=None, subscriptions=None):
-        self.name = name
-        self.broker_host = broker_host
-        self.broker_port = broker_port
-        self.callback = callback or self.onPublish
-        self.subscriptions = subscriptions or []
-
-    def startService(self):
-        log.info('Starting {class_name} {name}@{repr}. broker={broker_host}',
-            class_name=self.__class__.__name__, name=self.name, repr=repr(self),
-            broker_host=self.broker_host, broker_port=self.broker_port)
-        self.running = 1
-        self.connect()
-        #reactor.callInThread(self.connect)
+class TwistedMqttAdapter(BaseMqttAdapter, Service):
 
     def connect(self):
-        print "connect"
+        log.info('Connecting')
         factory = MQTTFactory(profile=MQTTFactory.PUBLISHER | MQTTFactory.SUBSCRIBER)
         point   = TCP4ClientEndpoint(reactor, self.broker_host, self.broker_port)
         d = point.connect(factory).addCallback(self.gotProtocol)
-        d.addErrback(self.printError)
+        d.addErrback(self.on_error)
 
     def gotProtocol(self, p):
         log.info('gotProtocol, connecting {name}', name=self.name)
         self.protocol = p
+        #def later():
         d = p.connect(self.name, keepalive=0, cleanStart=True)
         d.addCallback(self.subscribe)
         #d.addCallback(self.prepareToPublish)
+        #reactor.callLater(random.randint(2, 7), later)
+        #reactor.callInThread(later)
+
 
     def subscribe(self, *args):
         #d = self.protocol.subscribe("foo/bar/baz", 0)
@@ -57,19 +48,3 @@ class TwistedMqttAdapter(Service):
             return reactor.callFromThread(self.callback, *args, **kwargs)
         self.protocol.setPublishHandler(cb)
         """
-
-    def onPublish(self, topic, payload, qos, dup, retain, msgId):
-        log.debug("topic={topic}, msg={payload} qos={qos}, dup={dup} retain={retain}, msgId={id}", topic=topic, payload=payload,
-            qos=qos, dup=dup, retain=retain, id=msgId)
-
-    def prepareToPublish(self, *args):
-        self.task = task.LoopingCall(self.publish)
-        self.task.start(5.0)
-
-    def publish(self):
-        d = self.protocol.publish(topic="foo/bar/baz", message="hello friends")
-        d.addErrback(self.printError)
-
-    def printError(self, *args):
-        log.error("ERROR: args={args!s}", args=args)
-        #reactor.stop()

@@ -30,9 +30,13 @@ Kotori tasks
     2016-04-03T04:47:09+0200 [kotori.daq.services.mig            ] INFO: [hiveeyes] measurements: 0.00 Hz, transactions: 0.00 tps
     2016-04-03T04:47:09+0200 [kotori.daq.services.mig            ] INFO: [mqttkit] transactions: 0.00 tps
 
-- [o] Fix threading when having multiple MQTT subscribers::
+- [o] Fix threading bug when having multiple MQTT subscribers::
 
     2016-04-03T04:50:13+0200 [mqtt                               ] ERROR: Unexpected CONNACK packet received in None
+
+  | Also, the TwistedMqttAdapter "mqtt-mqttkit" somehow seems to take over the **existing**
+  | MQTT session of TwistedMqttAdapter "mqtt-hiveeyes" and receives all its messages. WTF!
+  | => Try to migrate to *paho-mqtt*, in a multithreaded setup on top of ``client.loop_forever()`` for convenience.
 
 
 2016-03-30

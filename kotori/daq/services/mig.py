@@ -7,7 +7,7 @@ from twisted.internet import reactor
 from twisted.internet.task import LoopingCall
 from twisted.application.service import Service, MultiService
 from twisted.logger import Logger
-from kotori.daq.intercom import MqttAdapter
+from kotori.daq.intercom.mqtt import MqttAdapter
 from kotori.daq.storage.influx import InfluxDBAdapter
 from kotori.configuration import read_list
 
