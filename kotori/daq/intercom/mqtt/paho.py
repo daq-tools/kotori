@@ -13,39 +13,23 @@ log = Logger()
 
 class PahoMqttAdapter(BaseMqttAdapter, Service):
 
-    __clients__ = []
-
     def connect(self):
 
         self.client = mqtt.Client(client_id=self.name, clean_session=True, userdata={'foo': 'bar'})
-        PahoMqttAdapter.__clients__.append(self.client)
 
         self.client.on_connect = lambda *args: reactor.callFromThread(self.on_connect, *args)
         self.client.on_message = lambda *args: reactor.callFromThread(self.on_message, *args)
         self.client.on_log     = lambda *args: reactor.callFromThread(self.on_log, *args)
         self.client.connect(self.broker_host, port=self.broker_port, keepalive=60)
 
-        # Blocking call that processes network traffic, dispatches callbacks and
-        # handles reconnecting.
-        # Other loop*() functions are available that give a threaded interface and a
-        # manual interface.
-
-        # v1: synchronous
-        #self.client.loop_forever()
-
-        # v2: asynchronous
-        def startup():
-            self.client.loop_forever()
-        deferToThread(startup)
-
-    @classmethod
-    def shutdown(cls):
-        for client in cls.__clients__:
-            client.disconnect()
-            #deferToThread(client.disconnect)
-            #reactor.callFromThread(client.disconnect)
-            #reactor.callInThread(client.disconnect)
-        cls.__clients__ = []
+        """
+        This is part of the threaded client interface. Call this once to
+        start a new thread to process network traffic. This provides an
+        alternative to repeatedly calling loop() yourself.
+        """
+        # TODO: Check whether reconnect works with this interface.
+        self.client.loop_start()
+        reactor.addSystemEventTrigger('before', 'shutdown', self.client.loop_stop, True)
 
     # The callback for when the client receives a CONNACK response from the server.
     def on_connect(self, client, userdata, flags, rc):
@@ -110,7 +94,6 @@ class PahoMqttAdapter(BaseMqttAdapter, Service):
             # Topic name **must not** be unicode, so casting to string
             e = self.client.subscribe(str(topic), qos=0)
 
-
     def on_log(self, client, userdata, level, buf):
         """
         on_log(client, userdata, level, buf): called when the client has log information. Define
@@ -119,6 +102,3 @@ class PahoMqttAdapter(BaseMqttAdapter, Service):
           MQTT_LOG_ERR, and MQTT_LOG_DEBUG. The message itself is in buf.
         """
         log.debug(u'{message}. level={level_mqtt}, userdata={userdata}', message=buf, level_mqtt=level, userdata=userdata)
-
-
-reactor.addSystemEventTrigger('before', 'shutdown', PahoMqttAdapter.shutdown)
