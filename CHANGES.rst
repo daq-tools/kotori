@@ -18,9 +18,9 @@ general improvements
 - Introduce service-in-service infrastructure
 - Make default Grafana panel not use ``steppedLines: true``,
   smooth lines are more beautiful when displaying sine curves
-- Introduce ``MqttKitApplication``, a generic application modeled after
+- Introduce *MqttKitApplication*, a generic application modeled after
   and using the :ref:`vendor-hiveeyes` vendor infrastructure
-- Introduce *PahoMqttAdapter*: Migrate from *twisted-mqtt* to the
+- Introduce *PahoMqttAdapter*: Migrate from ``twisted-mqtt`` to the
   *Eclipse Paho MQTT Python client library* to enable running more than one MQTT adapter instance
 
 documentation

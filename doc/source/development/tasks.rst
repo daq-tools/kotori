@@ -38,6 +38,12 @@ Kotori tasks
   | MQTT session of TwistedMqttAdapter "mqtt-hiveeyes" and receives all its messages. WTF!
   | => Try to migrate to *paho-mqtt*, in a multithreaded setup on top of ``client.loop_forever()`` for convenience.
 
+- [o] Use TLS for MQTT connections
+- [o] Improve log format: Put Python module namespace at the end of the line
+- [o] Use timestamp from Paho if not supplied via data message
+- [o] Add measurement count to INFO: [hiveeyes  ] measurements: 4.96 Hz, transactions: 5.00 tps
+- [o] Start dogfeeding by subscribing to ``$SYS/#``
+
 
 2016-03-30
 ==========
@@ -147,7 +153,7 @@ maybe go to:
         - PyPy 5.0
 
             - | measurements: 2000-3000 Hz
-            - | transactions: 50-70 tps when ramping up, then does down to 5-15 tps
+            - | transactions: 50-70 tps when ramping up, then goes down to 5-15 tps :-(
               | Q: What's the reason?
               | A: Probably because we don't have a thread pool on the storage adapter side yet
               |    and the number of parallel requests leads to contention on the Twisted side.
