@@ -17,9 +17,7 @@ class BaseMqttAdapter(object):
         self.subscriptions = subscriptions or []
 
     def startService(self):
-        log.info('Starting {class_name} {name}@{repr}. broker={broker_host}',
-            class_name=self.__class__.__name__, name=self.name, repr=repr(self),
-            broker_host=self.broker_host, broker_port=self.broker_port)
+        self.log(log.info, u'Starting')
         self.running = 1
         self.connect()
         #reactor.callInThread(self.connect)
@@ -30,11 +28,19 @@ class BaseMqttAdapter(object):
     def subscribe(self, *args):
         raise NotImplementedError('Please implement the "subscribe" method in derived class')
 
-    def on_message(self, topic, payload, qos, dup, retain, msgId):
+    def on_message(self, topic=None, payload=None, **kwargs):
+        # former def on_message(self, topic, payload, qos, dup, retain, msgId):
+        # kwargs: qos, dup, retain, msgId
         raise NotImplementedError('Please implement the "on_message" method in derived class or pass a callable using the "callback" constructor argument')
 
     def on_error(self, *args):
         log.error("ERROR: args={args!s}", args=args)
+
+    def log(self, callable, prefix):
+        callable(u'{prefix} {class_name}. name={name}, broker={broker_host}:{broker_port}, object={repr}',
+            prefix=prefix, class_name=self.__class__.__name__,
+            name=self.name, repr=repr(self),
+            broker_host=self.broker_host, broker_port=self.broker_port)
 
     """
     def _todo_publish(self):

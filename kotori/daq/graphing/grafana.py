@@ -320,9 +320,10 @@ class GrafanaManager(object):
                 if not found:
                     panels_missing_titles.append(new_title)
 
-            logger.info(u'existing titles: {panels_exists_titles}, '
-                        u'new panels: {panels_new}, '
-                        u'new panels titles: {panels_new_titles}',
+            logger.info(u'\n' + \
+                        u'Actual titles: {panels_exists_titles},\n' + \
+                        u'Target panels: {panels_new},\n' + \
+                        u'Target titles: {panels_new_titles}',
                 panels_exists_titles=panels_exists_titles,
                 panels_new=panels_new,
                 panels_new_titles=panels_new_titles,

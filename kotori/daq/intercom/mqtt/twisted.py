@@ -41,10 +41,17 @@ class TwistedMqttAdapter(BaseMqttAdapter, Service):
             e = self.protocol.subscribe(str(topic), 0)
 
         log.info(u"Setting callback handler: {callback}", callback=self.callback)
-        self.protocol.setPublishHandler(self.callback)
+        self.protocol.setPublishHandler(self.on_message_twisted)
         """
         def cb(*args, **kwargs):
             log.info('publishHandler got called: name={name}, args={args}, kwargs={kwargs}', name=self.name, args=args, kwargs=kwargs)
             return reactor.callFromThread(self.callback, *args, **kwargs)
         self.protocol.setPublishHandler(cb)
         """
+
+
+    def on_message_twisted(self, topic, payload, *args):
+        # former def on_message(self, topic, payload, qos, dup, retain, msgId):
+        kwargs = dict(zip(['qos', 'dup', 'retain', 'msgId'], args))
+        log.debug('on_message: name={name}, topic={topic}, payload={payload}, kwargs={kwargs}', name=self.name, topic=topic, payload=payload, kwargs=kwargs)
+        return self.callback(topic=topic, payload=payload, **kwargs)

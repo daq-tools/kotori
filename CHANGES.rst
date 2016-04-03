@@ -10,7 +10,6 @@ vendor :ref:`vendor-hiveeyes`
 - Integrate communication style and subsystems of :ref:`vendor-hiveeyes`/:ref:`beradio` into core
 - Refactor into generic Twisted service *MqttInfluxGrafanaService*,
   then implement the :ref:`vendor-hiveeyes` vendor application on top of it
-- Introduce “mqttkit”, a generic application modeled after and using the :ref:`vendor-hiveeyes` vendor infrastructure
 
 general improvements
 --------------------
@@ -19,6 +18,10 @@ general improvements
 - Introduce service-in-service infrastructure
 - Make default Grafana panel not use ``steppedLines: true``,
   smooth lines are more beautiful when displaying sine curves
+- Introduce ``MqttKitApplication``, a generic application modeled after
+  and using the :ref:`vendor-hiveeyes` vendor infrastructure
+- Introduce *PahoMqttAdapter*: Migrate from *twisted-mqtt* to the
+  *Eclipse Paho MQTT Python client library* to enable running more than one MQTT adapter instance
 
 documentation
 -------------

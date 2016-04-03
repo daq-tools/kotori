@@ -65,14 +65,13 @@ class MqttInfluxGrafanaService(MultiService):
     def topology_to_database(self, topology):
         return self.store_strategy.topology_to_database(topology)
 
-    def mqtt_receive(self, topic, payload, *args):
-        log.debug('mqtt_receive: name={name}, topic={topic}, payload={payload}, args={args}', name=self.name, topic=topic, payload=payload, args=args)
+    def mqtt_receive(self, topic=None, payload=None, **kwargs):
         try:
-            return self.process_message(topic, payload, *args)
+            return self.process_message(topic, payload, **kwargs)
         except Exception:
-            log.failure(u'Processing MQTT message failed')
+            log.failure(u'Processing MQTT message failed. topic={topic}, payload={payload}', topic=topic, payload=payload)
 
-    def process_message(self, topic, payload, *args):
+    def process_message(self, topic, payload, **kwargs):
 
         payload = payload.decode('utf-8')
 
@@ -177,4 +176,4 @@ class MqttInfluxGrafanaService(MultiService):
 
         metrics_info = ', '.join(metrics)
 
-        log.info('[{realm}] {metrics_info}', realm=self.channel.realm, metrics_info=metrics_info)
+        log.info('[{realm:12s}] {metrics_info}', realm=self.channel.realm, metrics_info=metrics_info)
