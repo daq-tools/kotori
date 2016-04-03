@@ -75,10 +75,16 @@ def run():
     if 'hiveeyes' in vendors:
         from kotori.vendor.hiveeyes.application import hiveeyes_boot
         hiveeyes_boot(settings, debug=debug)
+        #reactor.callLater(1, hiveeyes_boot, settings, debug=debug)
+        #reactor.callInThread(hiveeyes_boot, settings)
 
     if 'lst' in vendors:
         from kotori.vendor.lst.application import lst_boot
         lst_boot(settings)
+
+    if 'mqttkit' in vendors:
+        from kotori.daq.application.mqttkit import boot_mqttkit_application
+        boot_mqttkit_application(settings)
 
     # Boot web configuration GUI
     if 'config-web' in settings:

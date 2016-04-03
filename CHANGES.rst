@@ -10,6 +10,7 @@ vendor :ref:`vendor-hiveeyes`
 - Integrate communication style and subsystems of :ref:`vendor-hiveeyes`/:ref:`beradio` into core
 - Refactor into generic Twisted service *MqttInfluxGrafanaService*,
   then implement the :ref:`vendor-hiveeyes` vendor application on top of it
+- Introduce “mqttkit”, a generic application modeled after and using the :ref:`vendor-hiveeyes` vendor infrastructure
 
 general improvements
 --------------------

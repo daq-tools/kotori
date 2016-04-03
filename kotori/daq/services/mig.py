@@ -5,48 +5,59 @@ import json
 from bunch import Bunch
 from twisted.internet import reactor
 from twisted.internet.task import LoopingCall
-from twisted.application.service import Service
+from twisted.application.service import Service, MultiService
 from twisted.logger import Logger
-from kotori.daq.intercom.mqtt_adapter import MqttAdapter
+from kotori.daq.intercom import MqttAdapter
 from kotori.daq.storage.influx import InfluxDBAdapter
 from kotori.configuration import read_list
 
 log = Logger()
 
-class MqttInfluxGrafanaService(Service):
+class MqttInfluxGrafanaService(MultiService):
 
-    name = u'MqttInfluxGrafanaService'
+    # Can have multiple instances
+    #name = u'MqttInfluxGrafanaService'
 
     def __init__(self, settings, channel=None, graphing=None, store_strategy=None):
+
+        MultiService.__init__(self)
 
         self.settings = settings
         self.channel = channel or Bunch(realm=None, subscriptions=[])
         self.graphing = graphing
         self.store_strategy = store_strategy
 
-        log.info('Initializing MqttInfluxGrafanaService. channel={channel}', channel=dict(self.channel))
+        self.name = u'mig-' + self.channel.get('realm', unicode(id(self)))
+
+        log.info('Starting MqttInfluxGrafanaService. name={name}, channel={channel}', name=self.name, channel=dict(self.channel))
 
         # MQTT setting defaults
         self.settings.mqtt.setdefault('host', u'localhost')
         self.settings.mqtt.setdefault('port', u'1883')
         self.settings.mqtt.setdefault('debug', u'false')
 
-        # Configure metrics to be collected each X seconds
-        self.metrics = Bunch(tx_count=0, starttime=time.time(), interval=2)
+        self.setup()
 
-    def startService(self):
-        log.info('Starting MqttInfluxGrafanaService')
-        self.running = 1
-
-        self.metrics_twingo = LoopingCall(self.process_metrics)
-        self.metrics_twingo.start(self.metrics.interval, now=False)
-
+    def setup(self):
         subscriptions = read_list(self.channel.mqtt_topics)
-        self.mqtt = MqttAdapter(
+        self.mqtt_service = MqttAdapter(
+            name          = u'mqtt-' + self.channel.realm,
             broker_host   = self.settings.mqtt.host,
             broker_port   = int(self.settings.mqtt.port),
             callback      = self.mqtt_receive,
             subscriptions = subscriptions)
+
+        self.addService(self.mqtt_service)
+        #self.mqtt_service.setServiceParent(self)
+
+        # Configure metrics to be collected each X seconds
+        self.metrics = Bunch(tx_count=0, starttime=time.time(), interval=2)
+
+    def startService(self):
+        MultiService.startService(self)
+        self.metrics_twingo = LoopingCall(self.process_metrics)
+        self.metrics_twingo.start(self.metrics.interval, now=False)
+
 
     def topic_to_topology(self, topic):
         return self.store_strategy.topic_to_topology(topic)
@@ -55,6 +66,7 @@ class MqttInfluxGrafanaService(Service):
         return self.store_strategy.topology_to_database(topology)
 
     def mqtt_receive(self, topic, payload, *args):
+        log.debug('mqtt_receive: name={name}, topic={topic}, payload={payload}, args={args}', name=self.name, topic=topic, payload=payload, args=args)
         try:
             return self.process_message(topic, payload, *args)
         except Exception:
@@ -67,8 +79,8 @@ class MqttInfluxGrafanaService(Service):
         log.debug('Received message on topic "{topic}" with payload "{payload}"', topic=topic, payload=payload)
 
         if self.channel.realm and not topic.startswith(self.channel.realm):
-            log.info('Ignoring message to topic {topic}, realm={realm}', topic=topic, realm=self.channel.realm)
-            return
+            #log.info('Ignoring message to topic {topic}, realm={realm}', topic=topic, realm=self.channel.realm)
+            return False
 
         message_valid = False
 
@@ -110,6 +122,8 @@ class MqttInfluxGrafanaService(Service):
 
         # provision graphing subsystem
         self.graphing.provision(storage.database, storage.series, message, topology=topology)
+
+        return True
 
 
     def store_message(self, database, series, data):
@@ -163,4 +177,4 @@ class MqttInfluxGrafanaService(Service):
 
         metrics_info = ', '.join(metrics)
 
-        log.info(metrics_info)
+        log.info('[{realm}] {metrics_info}', realm=self.channel.realm, metrics_info=metrics_info)

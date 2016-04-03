@@ -81,5 +81,6 @@ def hiveeyes_boot(settings, debug=False):
         graphing        = HiveeyesGrafanaManager(settings),
         store_strategy  = WanBusStrategy())
 
-    rootService.registerService(service)
+    rootService.addService(service)
+    #rootService.registerService(service)
     rootService.startService()
