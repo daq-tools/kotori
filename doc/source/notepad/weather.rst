@@ -25,3 +25,5 @@ Publish weather information to MQTT topics like weather/berlin, weather/berlin/t
         - | https://pypi.python.org/pypi/openweathermapy/0.6.6
           | https://github.com/crazycapivara/openweathermapy
         - | https://pypi.python.org/pypi/openweather/0.11
+        - | Publish Australian weather observations to MQTT
+          | https://gist.github.com/claws/5482174

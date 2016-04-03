@@ -16,6 +16,84 @@ Kotori tasks
 2016
 ****
 
+
+2016-04-03
+==========
+- [o] Introduce ``kosh``, the Kotori Shell
+
+    - kosh show channels
+    - kosh show subchannels
+    - kosh show services
+
+- [o] Make interval of periodic rate display configurable::
+
+    2016-04-03T04:47:09+0200 [kotori.daq.services.mig            ] INFO: [hiveeyes] measurements: 0.00 Hz, transactions: 0.00 tps
+    2016-04-03T04:47:09+0200 [kotori.daq.services.mig            ] INFO: [mqttkit] transactions: 0.00 tps
+
+- [o] Fix threading when having multiple MQTT subscribers::
+
+    2016-04-03T04:50:13+0200 [mqtt                               ] ERROR: Unexpected CONNACK packet received in None
+
+
+2016-03-30
+==========
+- [o] Blocking issue with twisted-mqtt
+
+    - https://pypi.python.org/pypi/twisted-mqtt
+
+maybe go to:
+
+    - HBMQTT (MQTT client/broker using Python asynchronous I/O): https://github.com/beerfactory/hbmqtt
+    - https://stackoverflow.com/questions/31899679/handling-async-in-python
+    - https://twisted.readthedocs.org/en/latest/core/howto/threading.html
+    - https://github.com/astrorafael/twisted-mqtt
+
+- [o] Integrate with Belkin WeMo devices, see also
+
+    - https://ouimeaux.readthedocs.org/
+    - https://github.com/iancmcc/ouimeaux
+    - https://www.domoticz.com/wiki/Wemo
+    - http://concisionandconcinnity.blogspot.de/2013/02/ouimeaux-command-line-and-python-api.html
+
+- [o] Papers
+
+    - | BearLoc: A Composable Distributed Framework for Indoor Localization Systems
+      | http://www.cs.berkeley.edu/~kaifei/data/iot-sys_15.pdf
+    - | Developing Real Time Communication (RTC) Platform for IoT Using PubNub
+      | https://dzone.com/articles/developing-real-time-communication-rtc-platform-fo-1
+    - | Coupling Real Time Elements in the IoT: A Requirement to Reach Industry 4.0
+      | https://www.digikey.com/en/articles/techzone/2015/jul/coupling-real-time-elements-in-the-iot-a-requirement-to-reach-industry-4-0
+
+- [o] txThings: simple library for CoAP protocol
+
+    - https://twistedmatrix.com/pipermail/twisted-python/2013-September/027453.html
+    - https://github.com/mwasilak/txThings
+    - http://www.sixpinetrees.pl/2013/09/txthings-good-enough-is-good-enough.html
+
+- [o] Replace Kotori with mqttcollect: http://jpmens.net/2015/05/15/an-exec-plugin-for-collectd-mqttcollect/
+
+- [o] Watch TESS
+
+    - https://testpypi.python.org/pypi/tessdb
+    - https://github.com/astrorafael/tessdb/
+    - http://www.observatorioremoto.com/TESS.pdf
+    - http://www.observatorioremoto.com/
+
+- [o] Misc resources
+
+    - http://iot-document.phodal.com/
+    - https://phodal.github.io/awesome-iot/
+    - https://github.com/phodal/iot-document
+    - https://github.com/phodal/awesome-iot
+    - https://github.com/mqtt/mqtt.github.io/wiki/libraries
+    - http://dave.thehorners.com/tech-talk/random-tech/499-messaging-messagequeue-pubsub-stomp-amqp-mqtt
+    - https://matrix.org/blog/wp-content/uploads/2015/02/2015-02-01-Matrix-IoT-FOSDEM.pdf
+    - https://www.reddit.com/r/Python/comments/1a7lqg/suggestions_for_building_a_real_time_web_app/
+    - https://matrix.org/
+
+
+
+
 2016-03-29
 ==========
 - [o] Documentation: Redesign root index.rst to use panels/boxes for displaying the different documentation sections
@@ -31,6 +109,24 @@ Kotori tasks
     - beradio-python, -lua, -cpp
     - mqttkit-python, -lua
     - mbed library
+
+- [o] Alternative names for Kotori client:
+
+    - m2mkit, m2mclient, m2mrequests
+    - pargura, corello, semper, vimere, terkin, catrin, bangaro, camper, patron
+
+- [o] Integrate with TESS
+
+    - https://testpypi.python.org/pypi/tessdb
+    - https://github.com/astrorafael/tessdb/
+    - http://www.observatorioremoto.com/TESS.pdf
+
+- [o] Coupling Real Time Elements in the IoT: A Requirement to Reach Industry 4.0 (2015-07-16)
+
+    - https://www.digikey.com/en/articles/techzone/2015/jul/coupling-real-time-elements-in-the-iot-a-requirement-to-reach-industry-4-0
+
+- [o] https://github.com/phodal/iot-document/blob/master/protocol/MQTT.lib.md
+- [o] https://phodal.github.io/awesome-iot/
 
 
 2016-03-28
