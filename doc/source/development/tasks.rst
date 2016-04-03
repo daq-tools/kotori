@@ -43,6 +43,12 @@ Kotori tasks
 - [o] Use timestamp from Paho if not supplied via data message
 - [o] Add measurement count to INFO: [hiveeyes  ] measurements: 4.96 Hz, transactions: 5.00 tps
 - [o] Start dogfeeding by subscribing to ``$SYS/#``
+- [o] The realm does not get incorporated into the name of the Grafana dashboard::
+
+    2016-04-03T22:26:09+0200 [kotori.daq.graphing.grafana        ] INFO: Provisioning Grafana for database "hiveeyes_3733a169_70d2_450b_b717_6f002a13716b" and series "tug22_999". dashboard=3733a169-70d2-450b-b717-6f002a13716b
+    2016-04-03T22:26:09+0200 [kotori.daq.graphing.grafana        ] INFO: Creating datasource "hiveeyes_3733a169_70d2_450b_b717_6f002a13716b"
+    2016-04-03T22:26:09+0200 [kotori.daq.graphing.grafana        ] INFO: Getting dashboard "3733a169-70d2-450b-b717-6f002a13716b"
+    2016-04-03T22:26:09+0200 [kotori.daq.graphing.grafana        ] INFO: No missing panels to add
 
 
 2016-03-30

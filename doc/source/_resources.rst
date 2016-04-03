@@ -1,7 +1,6 @@
-.. Links to external resources
-
 :orphan:
 
+.. Links to external resources
 
 .. Kotori service
 .. _SymPy: http://www.sympy.org/
@@ -26,6 +25,10 @@
 .. _Mosquitto: http://mosquitto.org/
 .. _Node-RED: http://nodered.org/
 .. _Node-RED flows: http://flows.nodered.org/
+
+.. Foundation libraries
+.. _twisted-mqtt: https://pypi.python.org/pypi/twisted-mqtt
+.. _paho-mqtt: https://pypi.python.org/pypi/paho-mqtt
 
 
 .. Akronyms, Standards, etc.

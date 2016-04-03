@@ -1,4 +1,4 @@
-:tocdepth: 2
+.. include:: _resources.rst
 
 .. default-role:: any
 

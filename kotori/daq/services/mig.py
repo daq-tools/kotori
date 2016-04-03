@@ -27,7 +27,7 @@ class MqttInfluxGrafanaService(MultiService):
         self.graphing = graphing
         self.store_strategy = store_strategy
 
-        self.name = u'mig-' + self.channel.get('realm', unicode(id(self)))
+        self.name = u'service-mig-' + self.channel.get('realm', unicode(id(self)))
 
         log.info('Starting MqttInfluxGrafanaService. name={name}, channel={channel}', name=self.name, channel=dict(self.channel))
 
