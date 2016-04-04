@@ -15,25 +15,25 @@ requires = [
     'appdirs==1.4.0',
     'json-store==2.1',
     'docopt==0.6.2',
-    'setuptools>=18.3.1',   # setuptools>=18.3.1 is required by set(['crossbar'])
+    'setuptools>=18.3.1',   # 20.6.7; setuptools>=18.3.1 is required by set(['crossbar'])
     'pyasn1==0.1.9',        # required by service-identity
     'cryptography>=0.7',
 ]
 
 extras = {
-    'storage': [
-        'alchimia==0.4',    # 0.6.1
-        'txmongo==0.6',     # 15.2.2
-    ],
     'daq': [
         'influxdb==2.12.0',
         'grafana_api_client==0.1.4',
-        #'grafana-dashboard-builder==0.1.0a7',
+        #'grafana-dashboard-builder==0.1.0a7',      # tested, but not suitable
     ],
     'daq_binary': [
-        'pyclibrary==0.1.2',        # 0.1.3
+        'pyclibrary==0.1.3',
         'tabulate==0.7.5',
         'sympy==0.7.6.1',           # 1.0
+    ],
+    'storage_plus': [
+        'alchimia==0.4',    # 0.6.1
+        'txmongo==0.6',     # 16.0.1
     ],
 }
 
