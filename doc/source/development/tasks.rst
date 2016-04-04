@@ -20,6 +20,7 @@ Kotori tasks
 2016-04-04
 ==========
 - [o] MqttInfluxGrafanaService: Configure metrics to be collected each X seconds: Get from configuration with fallback to default of 60 seconds
+- [o] Check fact if any errors occurred when booting and display periodically in log output
 
 
 2016-04-03

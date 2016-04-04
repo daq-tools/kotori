@@ -2,11 +2,14 @@
 # (c) 2014 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 from string import Template
 from pkg_resources import resource_filename
+from twisted.logger import Logger
 from twisted.internet import reactor
 from twisted.web.resource import Resource
 from twisted.web.server import Site
 from twisted.web.static import File
 from kotori.util import NodeId, get_hostname
+
+log = Logger()
 
 
 class CustomTemplate(Template):
@@ -23,12 +26,13 @@ class WebDashboard(Resource):
 
 class WebDashboardIndex(Resource):
 
-    def __init__(self, websocket_uri):
+    def __init__(self, websocket_uri, filename):
         Resource.__init__(self)
         self.websocket_uri = websocket_uri
+        self.filename = filename
 
     def render_GET(self, request):
-        index = resource_filename('kotori.vendor.hydro2motion.web', 'index.html')
+        index = resource_filename('kotori.vendor.hydro2motion.web', self.filename)
         tpl = CustomTemplate(file(index).read())
         response = tpl.substitute({
             'websocket_uri': self.websocket_uri,
@@ -37,17 +41,17 @@ class WebDashboardIndex(Resource):
         })
         return response.encode('utf-8')
 
-def boot_web(config, debug=False):
+def boot_web(settings, debug=False):
 
-    http_port = int(config.get('hydro2motion', 'http_port'))
-    websocket_uri = unicode(config.get('wamp', 'listen'))
+    http_port = int(settings.hydro2motion.http_port)
+    websocket_uri = unicode(settings.wamp.uri)
 
     dashboard = Resource()
-    dashboard.putChild('', WebDashboardIndex(websocket_uri=websocket_uri))
+    dashboard.putChild('', WebDashboardIndex(websocket_uri=websocket_uri, filename='index.html'))
+    dashboard.putChild('fs.html', WebDashboardIndex(websocket_uri=websocket_uri, filename='fs.html'))
+    dashboard.putChild('poly.html', WebDashboardIndex(websocket_uri=websocket_uri, filename='poly.html'))
     dashboard.putChild('static', File(resource_filename('kotori.vendor.hydro2motion.web', 'static')))
 
-    print 'INFO: Starting HTTP service on port', http_port
+    log.info('Starting HTTP service on port {http_port}', http_port=http_port)
     factory = Site(dashboard)
     reactor.listenTCP(http_port, factory)
-
-

@@ -4,11 +4,11 @@ from twisted.logger import Logger
 from twisted.internet import reactor
 from twisted.internet.defer import inlineCallbacks
 from twisted.internet.protocol import DatagramProtocol
-from autobahn.twisted.wamp import ApplicationRunner, ApplicationSession
+from autobahn.twisted.wamp import ApplicationSession
+from kotori.bus.wamp import WampBus
 from kotori.vendor.hydro2motion.util.geo import turn_xyz_into_llh
 
-logger = Logger()
-
+log = Logger()
 
 app_session = None
 
@@ -23,15 +23,14 @@ class UdpPublisher(ApplicationSession):
     """
 
     def onJoin(self, details):
-        logger.info("WAMP joined")
+        log.info("UdpPublisher joined WAMP bus")
 
         global app_session
         app_session = self
 
 
     def onDisconnect(self):
-        logger.info("WAMP disconnected")
-        #reactor.stop()
+        log.info("UdpPublisher disconnected from WAMP bus")
 
 
 
@@ -40,7 +39,7 @@ class UdpAdapter(DatagramProtocol):
 
     @inlineCallbacks
     def datagramReceived(self, data, (host, port)):
-        logger.info("Received via UDP from %s:%d: %r " % (host, port, data))
+        log.info("Received via UDP from %s:%d: %r " % (host, port, data))
 
         try:
             payload = data.split(';')
@@ -62,7 +61,7 @@ class UdpAdapter(DatagramProtocol):
             jdata = ";".join(seq)
 
         except ValueError:
-            logger.warn('Could not decode data: {}'.format(data))
+            log.warn('Could not decode data: {}'.format(data))
 
         # ECHO
         #self.transport.write(data, (host, port))
@@ -71,32 +70,16 @@ class UdpAdapter(DatagramProtocol):
         yield app_session.publish(u'de.elmyra.kotori.telemetry.data', jdata)
 
 
-def connect_wamp(wsuri):
-
-    # connect to crossbar router/broker
-    runner = ApplicationRunner(wsuri, u'kotori-realm')
-    #runner = ApplicationRunner("ws://master.example.com:9000/ws", "kotori-realm")
-
-    d = runner.run(UdpPublisher, start_reactor=False)
-
-    def croak(ex, *args):
-        logger.error('Problem in UdpAdapter, please also check if "crossbar" WAMP broker is running at {wsuri}'.format(wsuri=wsuri))
-        logger.error("{ex}, args={args!s}", ex=ex.getTraceback(), args=args)
-        reactor.stop()
-        raise ex
-    d.addErrback(croak)
-
-
 def listen_udp(udp_port):
-    logger.info('Starting udp adapter on port "{}"'.format(udp_port))
+    log.info('Starting udp adapter on port "{}"'.format(udp_port))
     reactor.listenUDP(udp_port, UdpAdapter())
 
 
-def h2m_boot_udp_adapter(config, debug=False):
+def h2m_boot_udp_adapter(settings, debug=False):
 
-    websocket_uri = unicode(config.get('wamp', 'listen'))
-    udp_port = int(config.get('hydro2motion', 'udp_port'))
+    websocket_uri = unicode(settings.wamp.uri)
+    udp_port = int(settings.hydro2motion.udp_port)
 
-    connect_wamp(websocket_uri)
+    wamp_bus = WampBus(uri=websocket_uri, session_factory=UdpPublisher)
+    wamp_bus.connect()
     listen_udp(udp_port)
-

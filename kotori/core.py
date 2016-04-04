@@ -19,9 +19,14 @@ class KotoriBootloader(object):
         """
         Boot all enabled applications
         """
-        applications = read_list(self.settings.applications.enable)
-        log.info('Enabling applications {applications}', applications=applications)
-    
+        try:
+            applications = read_list(self.settings.applications.enable)
+        except AttributeError as ex:
+            log.warn(u'Skip enabling applications: {class_name}: "{ex}" does not exist',
+                class_name=ex.__class__.__name__, ex=ex)
+            return
+
+        log.info(u'Enabling applications {applications}', applications=applications)
         for name in applications:
             self.boot_application(name)
 

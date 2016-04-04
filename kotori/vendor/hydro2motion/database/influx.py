@@ -1,44 +1,44 @@
 # -*- coding: utf-8 -*-
-# (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2015-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 from twisted.logger import Logger
-from twisted.internet import reactor
 from autobahn.twisted.wamp import ApplicationRunner, ApplicationSession
+from kotori.bus.wamp import WampSessionMixin, WampBus
 from kotori.daq.storage.influx import InfluxDBAdapter
 
-logger = Logger()
+log = Logger()
 
-class InfluxDatabaseService(ApplicationSession):
+class InfluxDatabaseService(WampSessionMixin, ApplicationSession):
     """An application component for logging telemetry data to InfluxDB databases"""
 
     def onJoin(self, details):
-        logger.info("Realm joined (WAMP session started).")
+        log.info("Realm joined (WAMP session started).")
 
         # subscribe to telemetry data channel
         self.subscribe(self.receive, u'de.elmyra.kotori.telemetry.data')
 
-        self.startDatabase()
+        try:
+            self.startDatabase()
+        except:
+            log.failure(u'Problem starting InfluxDB database adapter')
 
         #self.leave()
 
     def startDatabase(self):
 
-        logger.info('InfluxDB host={host}, version={version}'.format(
+        log.info('InfluxDB host={host}, version={version}'.format(
             host=self.config.extra['influxdb']['host'],
             version=self.config.extra['influxdb']['version']))
 
         self.influx = InfluxDBAdapter(
-            version  = self.config.extra['influxdb']['version'],
-            host     = self.config.extra['influxdb']['host'],
-            username = self.config.extra['influxdb']['username'],
-            password = self.config.extra['influxdb']['password'],
+            settings = self.config.extra['influxdb'],
             database = self.config.extra['hydro2motion']['database'])
 
     def onLeave(self, details):
-        logger.info("Realm left (WAMP session ended).")
+        log.info("Realm left (WAMP session ended).")
         ApplicationSession.onLeave(self, details)
 
     def onDisconnect(self):
-        logger.info("Transport disconnected.")
+        log.info("Transport disconnected.")
         #reactor.stop()
 
 
@@ -94,30 +94,24 @@ class InfluxDatabaseService(ApplicationSession):
                    ["MSG_ID", "V_FC", "V_CAP", "A_ENG", "A_CAP", "T_O2_In", "T_O2_Out", "T_FC_H2O_Out", "Water_In", "Water_Out", "Master_SW", "CAP_Down_SW", "Drive_SW", "FC_state", "Mosfet_state", "Safety_state", "Air_Pump_load", "Mosfet_load", "Water_Pump_load", "Fan_load", "Acc_X", "Acc_Y", "Acc_Z", "H2_flow", "GPS_X", "GPS_Y", "GPS_Z", "GPS_Speed", "V_Safety", "H2_Level", "O2_calc", "lat", "lng", "P_In", "P_Out"],
                    [MSG_ID, V_FC, V_CAP, A_ENG, A_CAP, T_O2_In, T_O2_Out, T_FC_H2O_Out, Water_In, Water_Out, Master_SW, CAP_Down_SW, Drive_SW, FC_state, Mosfet_state, Safety_state, Air_Pump_load, Mosfet_load, Water_Pump_load, Fan_load, Acc_X, Acc_Y, Acc_Z, H2_flow, GPS_X, GPS_Y, GPS_Z, GPS_Speed, V_Safety, H2_Level, O2_calc, lat, lng, P_In, P_Out]
                 )
-                logger.info("Saved event to InfluxDB: %s" % success)
+                log.info("Saved event to InfluxDB: %s" % success)
 
 
         except ValueError:
-            logger.warn('Could not decode data: {}'.format(data))
+            log.warn('Could not decode data: {}'.format(data))
 
 
-def h2m_boot_influx_database(config, debug=False, trace=False):
+def h2m_boot_influx_database(settings, debug=False, trace=False):
 
-    websocket_uri = unicode(config.get('wamp', 'listen'))
+    websocket_uri = unicode(settings.wamp.uri)
 
-    logger.info('Starting InfluxDB database service, connecting to WAMP broker "{}"'.format(websocket_uri))
+    log.info(u'Starting InfluxDB database service, connecting to WAMP broker "{}"'.format(websocket_uri))
 
-    runner = ApplicationRunner(
-        websocket_uri, u'kotori-realm',
-        extra={'influxdb': dict(config.items('influxdb')), 'hydro2motion': dict(config.items('hydro2motion'))},
-        debug=trace, debug_wamp=debug, debug_app=debug)
+    def application_factory():
+        return ApplicationRunner(
+            websocket_uri, u'kotori-realm',
+            extra={'influxdb': dict(settings.influxdb), 'hydro2motion': dict(settings.hydro2motion)},
+            debug=trace, debug_wamp=debug, debug_app=debug)
 
-    d = runner.run(InfluxDatabaseService, start_reactor=False)
-
-    def croak(ex, *args):
-        logger.error('Problem in InfluxDBAdapter, please also check if "crossbar" WAMP broker is running at {websocket_uri}'.format(websocket_uri=websocket_uri))
-        logger.error("{ex}, args={args!s}", ex=ex.getTraceback(), args=args)
-        reactor.stop()
-        raise ex
-    #d.addErrback(croak)
-
+    wamp_bus = WampBus(uri=websocket_uri, application_factory=application_factory, session_factory=InfluxDatabaseService)
+    wamp_bus.connect()

@@ -189,7 +189,8 @@ window.onload = function() {
 
 
     // websocket url defaults
-    wsuri = "ws://lablab.cicer.de:9000/ws";
+    //wsuri = "ws://lablab.cicer.de:9000/ws";
+    var wsuri = "ws://" + window.location.hostname + ":9000/ws";
     /*
     if (!wsuri) {
         if (window.location.protocol === "file:") {
