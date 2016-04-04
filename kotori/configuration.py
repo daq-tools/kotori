@@ -42,12 +42,6 @@ def configparser_to_dict(config):
         return config
 
 
-def augment_configuration(config_dict):
-    # augment configuration
-    config_dict['lst']['channels'] = map(str.strip, config_dict['lst']['channels'].split(','))
-    return config_dict
-
-
 def read_list(string, separator=u','):
     return map(unicode.strip, string.split(separator))
 
@@ -56,17 +50,15 @@ def read_config(configfiles, kind=None):
     configfiles = to_list(configfiles)
     config = ConfigParser()
     config.read(configfiles)
-    if kind is not None:
-        settings = convert_config(config, kind=kind)
-    else:
-        settings = convert_config(config)
-
+    settings = convert_config(config, kind=kind)
     return settings
 
-
-def convert_config(config, kind=dict):
-    # serialize section-based ConfigParser contents into
-    # nested dict or other dict-like thing
+def convert_config(config, kind=None):
+    """
+    Serialize section-based ConfigParser contents
+    into nested dict or other dict-like thing.
+    """
+    kind = kind or dict
     if isinstance(config, ConfigParser):
         config_dict = kind()
         for section in config.sections():

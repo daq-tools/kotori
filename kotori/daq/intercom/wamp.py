@@ -46,9 +46,6 @@ class WampApplication(object):
         self.session_class = session_class
         self.config = config
 
-        # serialize section-based ConfigParser contents into nested dict
-        self.config = configparser_to_dict(self.config)
-
     def make(self):
 
         # connect to crossbar router/broker

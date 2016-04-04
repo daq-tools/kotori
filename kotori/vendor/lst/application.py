@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2015-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import os
 from bunch import Bunch
 from binascii import hexlify
@@ -7,7 +7,7 @@ from copy import deepcopy
 from pkg_resources import resource_filename
 from twisted.logger import Logger
 from twisted.internet import reactor
-from kotori.configuration import configparser_to_dict, augment_configuration
+from kotori.configuration import configparser_to_dict, read_list
 from kotori.util import slm
 from kotori.errors import traceback_get_exception, last_error_and_traceback
 from kotori.daq.intercom.c import LibraryAdapter, StructRegistryByID
@@ -177,12 +177,8 @@ def lst_boot(config, debug=False):
 
     wamp_uri = unicode(config.get('wamp', 'listen'))
 
-    # serialize section-based ConfigParser contents into nested dict
-    config = configparser_to_dict(config)
-    augment_configuration(config)
-
     # activate/mount multiple "lst" applications
-    for channel_name in config['lst']['channels']:
+    for channel_name in read_list(config['lst']['channels']):
         logger.info('Starting "lst" channel "{}"'.format(channel_name))
         channel = config[channel_name]
 

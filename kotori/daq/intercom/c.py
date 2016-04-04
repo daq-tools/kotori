@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2015-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import os
 import re
 from collections import OrderedDict
@@ -504,14 +504,14 @@ class StructRegistry(object):
             pprint(payload_data, indent=4, width=42)
 
         elif format == 'tabulate-plain':
-            seperator = ('----', '')
+            separator = ('----', '')
             output = [
-                seperator,
+                separator,
                 ('name', name),
-                seperator,
+                separator,
             ]
             output += StructAdapter.binary_reprs(payload)
-            output += [seperator]
+            output += [separator]
             output += payload_data
             print tabulate(output, tablefmt='plain')
 
@@ -546,3 +546,16 @@ class StructRegistryByID(StructRegistry):
         else:
             logger.debug('Struct "{}" mapped to ID "{}"'.format(name, struct_id))
             self.structs_by_id[struct_id] = adapter
+
+    def get_metadata(self):
+        metadata = []
+        for index in sorted(self.structs_by_id.keys()):
+            struct = self.structs_by_id[index]
+            members = struct.ast_members_repr()
+            fieldnames = [member[0] for member in members]
+            entry = OrderedDict()
+            entry['id'] = index
+            entry['name'] = struct.name
+            entry['# structs'] = len(fieldnames)
+            metadata.append(entry)
+        return metadata

@@ -11,6 +11,12 @@ vendor :ref:`vendor-hiveeyes`
 - Refactor into generic Twisted service *MqttInfluxGrafanaService*,
   then implement the :ref:`vendor-hiveeyes` vendor application on top of it
 
+vendor :ref:`vendor-lst`
+------------------------
+- Improve command line tooling per ``lst-message <channel> info``:
+  Display common information about a data channel like the
+  configuration object and the names of all structs.
+
 general
 -------
 - Improve configuration, logging, debugging and documentation
@@ -26,7 +32,7 @@ general
 - Introduce concept of "applications", which are native Twisted services
   and can be bootstrapped by defining them in the configuration file
 - Add composite application completely declared by configuration settings
-- Adapt :ref:`vendor-hydro2motion` to infrastructure changes
+- Adapt :ref:`vendor-hydro2motion` and :ref:`vendor-lst` to infrastructure changes
 - Upgrade libraries Twisted, autobahn, crossbar, msgpack and influxdb
 
 documentation
