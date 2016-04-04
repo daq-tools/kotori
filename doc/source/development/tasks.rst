@@ -21,6 +21,8 @@ Kotori tasks
 ==========
 - [o] MqttInfluxGrafanaService: Configure metrics to be collected each X seconds: Get from configuration with fallback to default of 60 seconds
 - [o] Check fact if any errors occurred when booting and display periodically in log output
+- [o] Use data sources of Crossbar.io, e.g. http://crossbar.io/iotcookbook/Arduino-Yun-Accelerometer/
+- [o] Check out http://crossbar.io/iotcookbook/Arduino-Yun-Create-Image/
 
 
 2016-04-03

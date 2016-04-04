@@ -110,8 +110,7 @@ def h2m_boot_influx_database(settings, debug=False, trace=False):
     def application_factory():
         return ApplicationRunner(
             websocket_uri, u'kotori-realm',
-            extra={'influxdb': dict(settings.influxdb), 'hydro2motion': dict(settings.hydro2motion)},
-            debug=trace, debug_wamp=debug, debug_app=debug)
+            extra={'influxdb': dict(settings.influxdb), 'hydro2motion': dict(settings.hydro2motion)})
 
     wamp_bus = WampBus(uri=websocket_uri, application_factory=application_factory, session_factory=InfluxDatabaseService)
     wamp_bus.connect()

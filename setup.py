@@ -1,22 +1,23 @@
 from setuptools import setup, find_packages
 
 requires = [
-    'Twisted==15.4.0',
-    'cryptography>=0.7',
-    'autobahn==0.10.9',
-    'crossbar==0.11.1',
+    'Twisted==16.0.0',
+    'autobahn[twisted]==0.13.0',
+    'crossbar==0.13.0',
+    'msgpack-python==0.4.7',
     'Jinja2==2.8',
     'pyramid==1.5.7',
     'pyramid_jinja2==2.5',
     'cornice==1.0.0',
     'twisted-mqtt==0.1.4',
     'paho-mqtt==1.1',
-    'pyasn1==0.1.9',        # required by service-identity
     'Bunch==1.0.1',
     'appdirs==1.4.0',
     'json-store==2.1',
     'docopt==0.6.2',
     'setuptools>=18.3.1',   # setuptools>=18.3.1 is required by set(['crossbar'])
+    'pyasn1==0.1.9',        # required by service-identity
+    'cryptography>=0.7',
 ]
 
 extras = {
@@ -25,15 +26,14 @@ extras = {
         'txmongo==0.6',     # 15.2.2
     ],
     'daq': [
-        'influxdb==2.10.0',
+        'influxdb==2.12.0',
         'grafana_api_client==0.1.4',
         #'grafana-dashboard-builder==0.1.0a7',
     ],
     'daq_binary': [
-        'pyclibrary==0.1.2',
+        'pyclibrary==0.1.2',        # 0.1.3
         'tabulate==0.7.5',
-        'sympy==0.7.6.1',
-        'msgpack-python==0.4.6',
+        'sympy==0.7.6.1',           # 1.0
     ],
 }
 
