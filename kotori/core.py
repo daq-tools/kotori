@@ -14,7 +14,7 @@ class KotoriBootloader(object):
 
     def __init__(self, settings=None):
         self.settings = settings
-    
+
     def boot_applications(self):
         """
         Boot all enabled applications
@@ -31,22 +31,51 @@ class KotoriBootloader(object):
         """
         log.info(u'Starting application "{name}"', name=name)
 
+        # Initialize application and run as Twisted service
+        factory = self.get_application_factory(name)
+        if factory:
+            application_settings = self.settings[name]
+            application = factory(name=name, application_settings=application_settings, global_settings=self.settings)
+            application.startService()
+
+    def get_application_factory(self, name):
+
         # Get application information from configuration object
         try:
             application_settings = self.settings[name]
             app_factory = application_settings.app_factory
-        except KeyError:
-            log.failure(u'Application configuration object "{name}" not available', name=name)
+        except:
+            log.failure('Application configuration object "{name}" not found', name=name)
             return
 
-        # Resolve entrypoint
-        entrypoint_source = u'app-entrypoint-{name} = {app_factory}'.format(name=name, app_factory=app_factory)
-        entrypoint = EntryPoint.parse(entrypoint_source)
-        factory_callable = entrypoint.load(require=False)
+        try:
+            factory_callable = self.load_entrypoint(app_factory)
+        except:
+            log.failure('Application entrypoint "{app_factory}" for "{name}" not loaded', name=name, app_factory=app_factory)
+            return
 
-        # Initialize application and run as Twisted service
-        application = factory_callable(name=name, application_settings=application_settings, global_settings=self.settings)
-        application.startService()
+        return factory_callable
+
+    @classmethod
+    def load_entrypoint(cls, reference):
+
+        # Resolve entrypoint
+        expression = u'_ = {reference}'.format(reference=reference)
+        try:
+            entrypoint = EntryPoint.parse(expression)
+        except:
+            log.failure('Error parsing entrypoint "{reference}" from expression "{expression}"',
+                reference=reference, expression=expression)
+            raise
+
+        # Load entrypoint
+        try:
+            thing = entrypoint.load(require=False)
+        except:
+            log.failure('Error loading entrypoint "{reference}"', reference=reference)
+            raise
+
+        return thing
 
     def boot_vendors(self):
         """

@@ -275,7 +275,7 @@ We are standing on the shoulders of giants:
   delivering bidirectional communication with publish/subscribe or rpc semantics
   using the Autobahn_ implementation of the *Web Application Messaging Protocol* (WAMP_),
   which in turn is based on WebSockets_.
-- Integration with mqttwarn_ for emitting and broadcasting data to a multitude of targets and receivers.
+- Integrate with mqttwarn_ for emitting and broadcasting data to a multitude of targets and receivers.
 - Accept new protocols, write adapters, decoders and handlers for specific devices, data formats
   and databases.
 
@@ -297,12 +297,12 @@ Appendix
 Legal
 =====
 
-Arduino
--------
-The Arduino brand and Arduino logo are copyright of Arduino LLC.
-
 ARM® mbed™
 ----------
 ARM is a registered trademark of ARM Limited (or its subsidiaries) in the EU and/or elsewhere.
 mbed is a trademark of ARM Limited (or its subsidiaries) in the EU and/or elsewhere.
 All rights reserved.
+
+Arduino
+-------
+The Arduino brand and Arduino logo are copyright of Arduino LLC.

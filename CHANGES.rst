@@ -25,6 +25,8 @@ general
   to enable running more than one MQTT adapter instance
 - Introduce concept of "applications", which are native Twisted services
   and can be bootstrapped by defining them in the configuration file
+- Add composite application completely declared by configuration settings
+
 
 documentation
 -------------

@@ -219,8 +219,8 @@ class GrafanaDashboard(object):
 
 class GrafanaManager(object):
 
-    def __init__(self, config):
-        self.config = config
+    def __init__(self, settings=None):
+        self.config = settings
         if not 'port' in self.config['grafana']:
             self.config['grafana']['port'] = '3000'
 

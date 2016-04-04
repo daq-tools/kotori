@@ -17,6 +17,11 @@ Kotori tasks
 ****
 
 
+2016-04-04
+==========
+- [o] MqttInfluxGrafanaService: Configure metrics to be collected each X seconds: Get from configuration with fallback to default of 60 seconds
+
+
 2016-04-03
 ==========
 - [o] Introduce ``kosh``, the Kotori Shell

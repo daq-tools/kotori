@@ -23,15 +23,13 @@ class MqttKitApplication(RootService):
         # Make channel object from application settings configuration object
         self.channel = Bunch(**application_settings)
 
-        # Boot main application service
+        # Main application service
         service = MqttInfluxGrafanaService(
-            global_settings,
-            channel         = self.channel,
-            graphing        = GrafanaManager(global_settings),
-            store_strategy  = WanBusStrategy())
+            channel  = self.channel,
+            graphing = GrafanaManager(global_settings),
+            strategy = WanBusStrategy())
 
-        self.addService(service)
-        #self.registerService(service)
+        self.registerService(service)
 
 
 def mqttkit_application(name=None, **kwargs):

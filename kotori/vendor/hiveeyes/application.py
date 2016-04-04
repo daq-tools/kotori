@@ -74,13 +74,11 @@ def hiveeyes_boot(settings, debug=False):
     # Service container root
     rootService = RootService(settings=settings)
 
-    # TODO: read from config
+    # Main application service
     service = MqttInfluxGrafanaService(
-        settings,
-        channel         = Bunch(**settings.hiveeyes),
-        graphing        = HiveeyesGrafanaManager(settings),
-        store_strategy  = WanBusStrategy())
+        channel  = Bunch(**settings.hiveeyes),
+        graphing = HiveeyesGrafanaManager(settings),
+        strategy = WanBusStrategy())
 
-    rootService.addService(service)
-    #rootService.registerService(service)
+    rootService.registerService(service)
     rootService.startService()

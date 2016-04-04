@@ -3,9 +3,10 @@
 import time
 import json
 from bunch import Bunch
+from kotori.daq.services import MultiServiceMixin
 from twisted.internet import reactor
 from twisted.internet.task import LoopingCall
-from twisted.application.service import Service, MultiService
+from twisted.application.service import MultiService
 from twisted.logger import Logger
 from kotori.daq.intercom.mqtt import MqttAdapter
 from kotori.daq.storage.influx import InfluxDBAdapter
@@ -13,32 +14,30 @@ from kotori.configuration import read_list
 
 log = Logger()
 
-class MqttInfluxGrafanaService(MultiService):
+class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
-    # Can have multiple instances
-    #name = u'MqttInfluxGrafanaService'
-
-    def __init__(self, settings, channel=None, graphing=None, store_strategy=None):
+    def __init__(self, channel=None, graphing=None, strategy=None):
 
         MultiService.__init__(self)
 
-        self.settings = settings
         self.channel = channel or Bunch(realm=None, subscriptions=[])
         self.graphing = graphing
-        self.store_strategy = store_strategy
+        self.strategy = strategy
 
         self.name = u'service-mig-' + self.channel.get('realm', unicode(id(self)))
 
-        log.info('Starting MqttInfluxGrafanaService. name={name}, channel={channel}', name=self.name, channel=dict(self.channel))
+    def setupService(self):
+        #self.log(log.info, u'Setting up')
+        self.settings = self.parent.settings
+
+        # Configure metrics to be collected each X seconds
+        self.metrics = Bunch(tx_count=0, starttime=time.time(), interval=2)
 
         # MQTT setting defaults
         self.settings.mqtt.setdefault('host', u'localhost')
         self.settings.mqtt.setdefault('port', u'1883')
         self.settings.mqtt.setdefault('debug', u'false')
 
-        self.setup()
-
-    def setup(self):
         subscriptions = read_list(self.channel.mqtt_topics)
         self.mqtt_service = MqttAdapter(
             name          = u'mqtt-' + self.channel.realm,
@@ -47,23 +46,24 @@ class MqttInfluxGrafanaService(MultiService):
             callback      = self.mqtt_receive,
             subscriptions = subscriptions)
 
-        self.addService(self.mqtt_service)
-        #self.mqtt_service.setServiceParent(self)
-
-        # Configure metrics to be collected each X seconds
-        self.metrics = Bunch(tx_count=0, starttime=time.time(), interval=2)
+        self.registerService(self.mqtt_service)
 
     def startService(self):
+        self.setupService()
+        self.log(log.info, u'Starting')
         MultiService.startService(self)
         self.metrics_twingo = LoopingCall(self.process_metrics)
         self.metrics_twingo.start(self.metrics.interval, now=False)
 
+    def log(self, level, prefix):
+        level('{prefix} {class_name}. name={name}, channel={channel}',
+            prefix=prefix, class_name=self.__class__.__name__, name=self.name, channel=dict(self.channel))
 
     def topic_to_topology(self, topic):
-        return self.store_strategy.topic_to_topology(topic)
+        return self.strategy.topic_to_topology(topic)
 
     def topology_to_database(self, topology):
-        return self.store_strategy.topology_to_database(topology)
+        return self.strategy.topology_to_database(topology)
 
     def mqtt_receive(self, topic=None, payload=None, **kwargs):
         try:

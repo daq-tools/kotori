@@ -5,6 +5,9 @@ from bunch import Bunch
 
 class WanBusStrategy(object):
 
+    def __init__(self, *args, **kwargs):
+        pass
+
     def topic_to_topology(self, topic):
         """
         Decode MQTT topic segments implementing the »quadruple hierarchy strategy«.
