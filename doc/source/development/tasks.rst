@@ -17,13 +17,22 @@ Kotori tasks
 ****
 
 
+2016-04-05
+==========
+- [o] LST:
+    - Refactor components
+        - UDPReceiver and UdpBusForwarder => UdpBusForwarder and UdpBusPublisher
+        - WampApplication => WampBus
+    - Automatically publish messages to the MQTT bus using composition of generic components
+
+
 2016-04-04
 ==========
 - [o] MqttInfluxGrafanaService: Configure metrics to be collected each X seconds: Get from configuration with fallback to default of 60 seconds
 - [o] Check fact if any errors occurred when booting and display periodically in log output
 - [o] Use data sources of Crossbar.io, e.g. http://crossbar.io/iotcookbook/Arduino-Yun-Accelerometer/
 - [o] Check out http://crossbar.io/iotcookbook/Arduino-Yun-Create-Image/
-
+- [o] Check out http://robomq.io/
 
 2016-04-03
 ==========

@@ -49,8 +49,18 @@ Setup virtualenv
     source .venv27/bin/activate
     python setup.py develop
 
-    # install extras
+
+    # install extra features
+
+    # data acquisition base
     pip install -e .[daq]
+
+    # data acquisition with data sink for binary payloads
+    pip install -e .[daq_binary]
+
+    # data storage for RDBMS databases and MongoDB
+    pip install -e .[storage_plus]
+
 
 
 Please follow :ref:`setup-python-virtualenv`.

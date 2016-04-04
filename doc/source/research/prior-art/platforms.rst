@@ -49,6 +49,10 @@ Free
 Commercial
 ==========
 
+- | RoboMQ
+  | RoboMQ connects devices, systems, clouds and things to create smart and context-aware applications
+  | http://robomq.io/
+
 - | ThingSpeak
   | https://thingspeak.com/
 
