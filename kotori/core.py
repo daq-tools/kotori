@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # (c) 2014-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 from pkg_resources import EntryPoint
-from twisted.logger import Logger
+from twisted.logger import Logger, LogLevel
+from kotori.logger import changeLogLevel
 from kotori.configuration import read_list
 from kotori.version import __VERSION__
 
@@ -105,4 +106,6 @@ class KotoriBootloader(object):
 
         if 'lst' in vendors:
             from kotori.vendor.lst.application import lst_boot
+            if self.settings.options.debug_vendor and 'lst' in read_list(self.settings.options.debug_vendor):
+                changeLogLevel('kotori.vendor.lst', LogLevel.debug)
             lst_boot(self.settings)

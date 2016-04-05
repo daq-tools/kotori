@@ -17,7 +17,7 @@ from kotori.daq.storage.influx import BusInfluxForwarder
 from kotori.daq.graphing.grafana import GrafanaManager
 from kotori.vendor.lst.message import BinaryMessageAdapter
 
-logger = Logger()
+log = Logger()
 
 class UDPReceiver(object):
     """
@@ -35,7 +35,7 @@ class UDPReceiver(object):
         self.config = config
 
         udp_port = int(self.config['_active_']['udp_port'])
-        logger.info('Starting UDPReceiver on port {}'.format(udp_port))
+        log.info('Starting UDPReceiver on port {}'.format(udp_port))
 
         # create decoder adapter
         self.messenger = setup_binary_message_adapter(self.config)
@@ -49,13 +49,14 @@ class UDPReceiver(object):
         udp_port = int(self.config['_active_']['udp_port'])
         topic = unicode(self.config['_active_']['wamp_topic'])
 
-        logger.info('Starting udp adapter on port "{}", publishing to topic "{}"'.format(udp_port, topic))
+        log.info('Starting udp adapter on port "{}", publishing to topic "{}"'.format(udp_port, topic))
         reactor.listenUDP(
             udp_port,
             UdpBusForwarder(
                 bus=self.bus,
                 topic=topic,
-                transform=[self.binary_decode, self.bus_encode]))
+                transform=[self.binary_decode, self.bus_encode],
+                logger=log))
 
     def binary_decode(self, payload):
         """
@@ -97,8 +98,7 @@ class InfluxStorage(BusInfluxForwarder):
         try:
             self.graphing = GrafanaManager(self.config)
         except Exception as ex:
-            logger.error(slm("{ex}, args={args!s}\n{details}\n{traceback}".format(
-                ex=ex, args=args, details=traceback_get_exception(), traceback=last_error_and_traceback())))
+            log.failure('Error starting GrafanaManager')
 
     def storage_location(self, data):
         """
@@ -126,7 +126,10 @@ class InfluxStorage(BusInfluxForwarder):
 
     def on_store(self, database, series, data):
         # provision graphing subsystem
-        self.graphing.provision(database, series, data)
+        try:
+            self.graphing.provision(database, series, data)
+        except Exception:
+            log.failure(u'Failed provisioning Grafana')
 
 
 class StorageAdapter(object):
@@ -137,7 +140,7 @@ class StorageAdapter(object):
     def __init__(self, bus, config):
         self.bus = bus
         self.config = config
-        logger.info('Starting InfluxStorage')
+        log.info('Starting InfluxStorage')
         topic = unicode(self.config['_active_']['wamp_topic'])
         InfluxStorage(bus=self.bus, topic=topic, config=self.config)
 
@@ -179,7 +182,7 @@ def lst_boot(config, debug=False):
 
     # activate/mount multiple "lst" applications
     for channel_name in read_list(config['lst']['channels']):
-        logger.info('Starting "lst" channel "{}"'.format(channel_name))
+        log.info('Starting "lst" channel "{}"'.format(channel_name))
         channel = config[channel_name]
 
         config = deepcopy(config)

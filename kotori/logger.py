@@ -8,7 +8,10 @@ from twisted.logger   import (
 
 # from mqtt.logger
 
+predicate = None
 def startLogging(settings, stream=None, level=LogLevel.debug):
+    global predicate
+
     fileObserver = logObserver(stream)
     predicate    = LogLevelFilterPredicate(defaultLogLevel=level)
 
@@ -26,6 +29,9 @@ def startLogging(settings, stream=None, level=LogLevel.debug):
 
     observers    = [ FilteringLogObserver(observer=fileObserver, predicates=[predicate]) ]
     globalLogBeginner.beginLoggingTo(observers)
+
+def changeLogLevel(namespace, loglevel=LogLevel.info):
+    predicate.setLogLevelForNamespace(namespace, loglevel)
 
 
 # overwritten from twisted.logger

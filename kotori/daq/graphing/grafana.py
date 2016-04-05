@@ -2,14 +2,14 @@
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import os
 import json
-from pprint import pprint
+from bunch import Bunch
 from jinja2 import Template
 from pkg_resources import resource_filename
-from twisted.logger import Logger
 from grafana_api_client import GrafanaClient, GrafanaServerError, GrafanaPreconditionFailedError, GrafanaClientError
-from kotori.util import slm
+from twisted.logger import Logger
+from pyramid.settings import asbool
 
-logger = Logger()
+log = Logger()
 
 class GrafanaApi(object):
 
@@ -47,9 +47,9 @@ class GrafanaApi(object):
         """
 
         try:
-            logger.info('Creating datasource "{}"'.format(name))
+            log.info('Creating datasource "{}"'.format(name))
             response = self.grafana.datasources.create(**data)
-            logger.info(slm(response))
+            log.info('response: {response}', response=response)
         except GrafanaServerError as ex:
             if 'Failed to add datasource' in ex.message:
                 pass
@@ -66,47 +66,47 @@ class GrafanaApi(object):
 
         if delete:
             try:
-                logger.info('Deleting dashboard "{}"'.format(name))
+                log.info('Deleting dashboard "{}"'.format(name))
                 response = self.grafana.dashboards.db[name].delete()
-                logger.info(slm(response))
+                log.info('response: {response}', response=response)
 
             except GrafanaClientError as ex:
                 if '404' in ex.message or 'Dashboard not found' in ex.message:
-                    logger.warn(slm(ex.message))
+                    log.warn(ex.message)
                 else:
                     raise
 
         try:
-            logger.info('Creating/updating dashboard "{}"'.format(name))
+            log.info('Creating/updating dashboard "{}"'.format(name))
             #print 'dashboard:'
             #pprint(dashboard.dashboard)
             response = self.grafana.dashboards.db.create(**dashboard.wrap_api())
-            logger.info(slm(response))
+            log.info('response: {response}', response=response)
 
         except GrafanaPreconditionFailedError as ex:
             if 'name-exists' in ex.message or 'A dashboard with the same name already exists' in ex.message:
-                logger.warn(slm(ex.message))
+                log.warn(ex.message)
             else:
                 raise
 
         try:
-            logger.info('Checking dashboard "{}"'.format(name))
+            log.info('Checking dashboard "{}"'.format(name))
             dashboard = self.grafana.dashboards.db[name].get()
             #pprint(dashboard)
         except GrafanaClientError as ex:
             if '404' in ex.message or 'Dashboard not found' in ex.message:
-                logger.warn(slm(ex.message))
+                log.warn(ex.message)
             else:
                 raise
 
     def get_dashboard(self, name):
         try:
-            logger.info('Getting dashboard "{}"'.format(name))
+            log.info('Getting dashboard "{}"'.format(name))
             dashboard = self.grafana.dashboards.db[name].get()
             return dashboard['dashboard']
         except GrafanaClientError as ex:
             if '404' in ex.message or 'Dashboard not found' in ex.message:
-                logger.warn(slm(ex.message))
+                log.warn(ex.message)
             else:
                 raise
 
@@ -225,7 +225,7 @@ class GrafanaManager(object):
             self.config['grafana']['port'] = '3000'
 
         name = self.__class__.__name__
-        logger.info('Starting GrafanaManager "{}". grafana={}:{}'.format(
+        log.info('Starting GrafanaManager "{}". grafana={}:{}'.format(
             name,
             self.config['grafana']['host'],
             self.config['grafana']['port']))
@@ -252,7 +252,7 @@ class GrafanaManager(object):
         if self._skip_creation(database, series, data):
             return
 
-        logger.info('Provisioning Grafana for database "{}" and series "{}". dashboard={}'.format(database, series, dashboard_name))
+        log.info('Provisioning Grafana for database "{}" and series "{}". dashboard={}'.format(database, series, dashboard_name))
 
         grafana = GrafanaApi(
             host = self.config['grafana']['host'],
@@ -320,7 +320,7 @@ class GrafanaManager(object):
                 if not found:
                     panels_missing_titles.append(new_title)
 
-            logger.debug(u'\n' + \
+            log.debug(u'\n' + \
                         u'Actual titles: {panels_exists_titles},\n' + \
                         u'Target panels: {panels_new},\n' + \
                         u'Target titles: {panels_new_titles}',
@@ -331,7 +331,7 @@ class GrafanaManager(object):
 
             if panels_missing_titles:
 
-                logger.info(u'Adding missing panels {panels_missing_titles}', panels_missing_titles=panels_missing_titles)
+                log.info(u'Adding missing panels {panels_missing_titles}', panels_missing_titles=panels_missing_titles)
 
                 # establish new panels
                 for panel in panels_new:
@@ -343,7 +343,7 @@ class GrafanaManager(object):
                 grafana.create_dashboard(dashboard, name=dashboard_name)
 
             else:
-                logger.info('No missing panels to add')
+                log.info('No missing panels to add')
 
 
         # remember dashboard/panel creation for this kind of data inflow

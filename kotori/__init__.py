@@ -16,7 +16,7 @@ __path__ = extend_path(__path__, __name__)
 __doc__ = APP_NAME + """
 
 Usage:
-  kotori [--config etc/development.ini] [--debug-mqtt] [--debug-mqtt-driver] [--debug-influx] [--debug]
+  kotori [--config etc/development.ini] [--debug-mqtt] [--debug-mqtt-driver] [--debug-influx] [--debug] [--debug-vendor vendor42,vendor-xyz]
   kotori --version
   kotori (-h | --help)
 
@@ -27,6 +27,7 @@ Options:
   --debug-influx            Enable debug messages for InfluxDB
   --debug-mqtt-driver       Enable debug messages for MQTT driver
   --debug                   Generic debug flag passed down to other subsystems
+  --debug-vendor vendor42   Debug flag passed down to given vendor subsystems
   -h --help                 Show this screen
 
 """

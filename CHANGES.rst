@@ -16,6 +16,7 @@ vendor :ref:`vendor-lst`
 - Improve command line tooling per ``lst-message <channel> info``:
   Display common information about a data channel like the
   configuration object and the names of all structs.
+- Improve logging and debugging
 
 general
 -------
