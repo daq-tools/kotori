@@ -17,6 +17,7 @@ vendor :ref:`vendor-lst`
   Display common information about a data channel like the
   configuration object and the names of all structs.
 - Improve logging and debugging
+- Optionally put legend on the right hand side of the graph
 
 general
 -------

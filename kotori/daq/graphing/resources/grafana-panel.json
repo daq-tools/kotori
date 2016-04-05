@@ -27,7 +27,7 @@
         "hideEmpty": false,
         "max": true,
         "min": true,
-        "rightSide": false,
+        "rightSide": {{ legend_right_side }},
         "show": true,
         "total": false,
         "values": true

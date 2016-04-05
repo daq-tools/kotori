@@ -120,8 +120,8 @@ class GrafanaApi(object):
 
 class GrafanaDashboard(object):
 
-    def __init__(self, datasource='default', title='default', dashboard=None):
-
+    def __init__(self, channel=None, datasource='default', title='default', dashboard=None):
+        self.channel = channel or Bunch()
         self.datasource = datasource
         self.dashboard_title = title
 
@@ -174,6 +174,11 @@ class GrafanaDashboard(object):
         if title_suffix:
             panel_title += ' @ ' + title_suffix
 
+        try:
+            legend_right_side = asbool(self.channel.settings.graphing_legend_right_side)
+        except AttributeError:
+            legend_right_side = False
+
         data_panel = {
             'id': self.panel_id,
             'datasource': self.datasource,
@@ -181,6 +186,7 @@ class GrafanaDashboard(object):
             'left_log_base': panel.get('scale', 1),
             'label_y': panel.get('label', ''),
             'format_y': panel.get('format', 'none'),
+            'legend_right_side': json.dumps(legend_right_side),
         }
 
         # build targets list from fieldnames
@@ -219,8 +225,9 @@ class GrafanaDashboard(object):
 
 class GrafanaManager(object):
 
-    def __init__(self, settings=None):
+    def __init__(self, settings=None, channel=None):
         self.config = settings
+        self.channel = channel
         if not 'port' in self.config['grafana']:
             self.config['grafana']['port'] = '3000'
 
@@ -277,7 +284,7 @@ class GrafanaManager(object):
         dashboard_data = grafana.get_dashboard(name=dashboard_name)
 
         # wrap into convenience object
-        dashboard = GrafanaDashboard(datasource=database, title=dashboard_name, dashboard=dashboard_data)
+        dashboard = GrafanaDashboard(channel=self.channel, datasource=database, title=dashboard_name, dashboard=dashboard_data)
 
         # generate panels
         panels_new = self.panel_generator(database=database, series=series, data=data, topology=topology)
