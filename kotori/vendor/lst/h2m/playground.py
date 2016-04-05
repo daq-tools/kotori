@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
-from tabulate import tabulate
-from kotori.vendor.lst.commands import setup_logging
-from kotori.vendor.lst.h2m.util import setup_h2m_structs
 import os
 import sys
 import logging
 from pprint import pprint
 from binascii import unhexlify, hexlify
+from tabulate import tabulate
+from kotori.util import setup_logging
+from kotori.vendor.lst.h2m.util import setup_h2m_structs
 from kotori.daq.intercom.c import LibraryAdapter, StructRegistry, StructRegistryByID
 
 logger = logging.getLogger(__name__)

@@ -6,6 +6,7 @@ from docopt import docopt
 from pkgutil import extend_path
 from twisted.internet import reactor
 from twisted.logger import Logger, LogLevel
+from kotori.util import setup_logging
 from kotori.core import APP_NAME, KotoriBootloader
 from kotori.logger import startLogging
 from kotori.configuration import get_configuration, get_configuration_file
@@ -36,6 +37,7 @@ log = Logger()
 
 def run():
 
+    setup_logging()
     log.info(u'Starting ' + APP_NAME)
 
     # Read commandline options

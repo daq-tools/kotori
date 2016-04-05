@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 # (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import sys
-from kotori.configuration import configparser_to_dict
-from kotori.errors import traceback_get_exception, last_error_and_traceback
-from kotori.logger import startLogging
-from twisted.logger import Logger
+from twisted.logger import Logger, LogLevel
 from twisted.internet import reactor
 from autobahn.twisted.wamp import ApplicationRunner, ApplicationSession
-from twisted.logger._levels import LogLevel
+from kotori.logger import startLogging
 
-logger = Logger()
+log = Logger()
 
 class WampSession(ApplicationSession):
     """
@@ -24,15 +21,15 @@ class WampSession(ApplicationSession):
     component = None
 
     def onJoin(self, details):
-        logger.info("WAMP session joined: {}".format(details))
+        log.info("WAMP session joined: {}".format(details))
         try:
             if self.component:
                 self.component(bus=self, config=self.config.extra)
-        except Exception as ex:
-            logger.error(last_error_and_traceback())
+        except Exception:
+            log.failure('Could not create downstream component after joining WAMP bus')
 
     def onDisconnect(self):
-        logger.info("WAMP session disconnected")
+        log.info("WAMP session disconnected")
 
 
 class WampApplication(object):
@@ -55,9 +52,9 @@ class WampApplication(object):
         self.deferred = self.runner.run(self.session_class, start_reactor=False)
 
         def croak(ex, *args):
-            logger.error('Problem in {name}, please check if "crossbar" WAMP broker is running. args={args}'.format(
+            log.error('Problem in {name}, please check if "crossbar" WAMP broker is running. args={args}'.format(
                 name=self.__class__.__name__, args=args))
-            logger.error("{ex}, args={args!s}", ex=ex.getTraceback(), args=args)
+            log.error("{ex}, args={args!s}", ex=ex.getTraceback(), args=args)
             reactor.stop()
             raise ex
 

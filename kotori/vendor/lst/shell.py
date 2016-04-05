@@ -4,10 +4,11 @@ import sys
 import logging
 from bunch import Bunch
 from docopt import docopt
-from kotori.configuration import get_configuration, get_configuration_file, configparser_to_dict
-from kotori.vendor.lst.application import setup_binary_message_adapter
-from kotori.vendor.lst.commands import lst_channels, lst_message, setup_logging, sanitize_channel_label, compute_channel_label
 from kotori.version import __VERSION__
+from kotori.util import setup_logging
+from kotori.configuration import get_configuration, get_configuration_file
+from kotori.vendor.lst.application import setup_binary_message_adapter
+from kotori.vendor.lst.commands import lst_channels, lst_message, sanitize_channel_label, compute_channel_label
 
 logger = logging.getLogger(__name__)
 

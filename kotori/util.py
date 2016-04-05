@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2014,2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import os
+import sys
 import logging
 import shelve
 import socket
@@ -101,3 +102,13 @@ class NodeId(Singleton):
 def get_hostname():
     return socket.gethostname()
 
+def setup_logging(level=logging.INFO):
+    log_format = '%(asctime)-15s [%(name)-25s] %(levelname)-7s: %(message)s'
+    logging.basicConfig(
+        format=log_format,
+        stream=sys.stderr,
+        level=level)
+
+    # TODO: Control debug logging of HTTP requests through yet another commandline option "--debug-http" or "--debug-requests"
+    requests_logger = logging.getLogger('requests')
+    requests_logger.setLevel(logging.WARN)
