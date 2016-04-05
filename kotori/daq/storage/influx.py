@@ -174,10 +174,12 @@ class BusInfluxForwarder(object):
     TODO: Generalize and refactor
     """
 
-    def __init__(self, bus, topic, config):
+    # TODO: Improve parameter passing
+    def __init__(self, bus, topic, config, channel):
         self.bus = bus
         self.topic = topic
         self.config = config
+        self.channel = channel
 
         self.bus.subscribe(self.bus_receive, self.topic)
 
@@ -198,7 +200,7 @@ class BusInfluxForwarder(object):
 
     def process_message(self, topic, payload, *args):
 
-        log.info('Bus receive: topic={topic}, payload={payload}', topic=topic, payload=payload)
+        log.debug('Bus receive: topic={topic}, payload={payload}', topic=topic, payload=payload)
 
         # TODO: filter by realm/topic
 
@@ -212,7 +214,7 @@ class BusInfluxForwarder(object):
 
         # compute storage location from topic and message
         storage_location = self.storage_location(message)
-        log.info('Storage location:  {storage_location}', storage_location=storage_location)
+        log.debug('Storage location: {storage_location}', storage_location=dict(storage_location))
 
         # store data
         self.store_message(storage_location.database, storage_location.series, message)
@@ -229,14 +231,11 @@ class BusInfluxForwarder(object):
         data = self.store_encode(data)
 
         influx = InfluxDBAdapter(
-            version  = self.config['influxdb']['version'],
-            host     = self.config['influxdb']['host'],
-            port     = int(self.config['influxdb'].get('port', '8086')),
-            username = self.config['influxdb']['username'],
-            password = self.config['influxdb']['password'],
+            settings = self.config['influxdb'],
             database = database)
 
-        influx.write(series, data)
+        outcome = influx.write(series, data)
+        log.debug('Store outcome: {outcome}', outcome=outcome)
 
         self.on_store(database, series, data)
 

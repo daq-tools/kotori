@@ -24,6 +24,8 @@ Kotori tasks
         - UDPReceiver and UdpBusForwarder => UdpBusForwarder and UdpBusPublisher
         - WampApplication => WampBus
     - Automatically publish messages to the MQTT bus using composition of generic components
+- [o] Refactor MqttInfluxGrafanaService and BusInfluxForwarder into
+      new generic component and reuse at Hiveeyes/mqttkit and LST
 
 
 2016-04-04

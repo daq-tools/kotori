@@ -49,7 +49,7 @@ class WampApplication(object):
     def make(self):
 
         # connect to crossbar router/broker
-        self.runner = ApplicationRunner(self.url, self.realm, extra=self.config)
+        self.runner = ApplicationRunner(self.url, self.realm, extra=dict(self.config))
 
         # run application session
         self.deferred = self.runner.run(self.session_class, start_reactor=False)

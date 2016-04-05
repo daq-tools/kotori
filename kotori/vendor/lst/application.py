@@ -7,9 +7,7 @@ from copy import deepcopy
 from pkg_resources import resource_filename
 from twisted.logger import Logger
 from twisted.internet import reactor
-from kotori.configuration import configparser_to_dict, read_list
-from kotori.util import slm
-from kotori.errors import traceback_get_exception, last_error_and_traceback
+from kotori.configuration import read_list
 from kotori.daq.intercom.c import LibraryAdapter, StructRegistryByID
 from kotori.daq.intercom.wamp import WampApplication, WampSession
 from kotori.daq.intercom.udp import UdpBusForwarder
@@ -91,12 +89,13 @@ class InfluxStorage(BusInfluxForwarder):
     Receive messages from software bus and store them into InfluxDB timeseries database
     """
 
+    # TODO: Improve parameter passing
     def __init__(self, *args, **kwargs):
         BusInfluxForwarder.__init__(self, *args, **kwargs)
 
         # grafana setup
         try:
-            self.graphing = GrafanaManager(self.config)
+            self.graphing = GrafanaManager(settings=self.config, channel=self.channel)
         except Exception as ex:
             log.failure('Error starting GrafanaManager')
 
@@ -141,8 +140,13 @@ class StorageAdapter(object):
         self.bus = bus
         self.config = config
         log.info('Starting InfluxStorage')
+        # TODO: Refactor the _active_ mechanics
         topic = unicode(self.config['_active_']['wamp_topic'])
-        InfluxStorage(bus=self.bus, topic=topic, config=self.config)
+        channel = Bunch(
+            settings = self.config['_active_']
+        )
+        # TODO: Improve parameter passing
+        InfluxStorage(bus=self.bus, topic=topic, config=self.config, channel=channel)
 
 
 class UdpSession(WampSession):
@@ -178,7 +182,7 @@ def setup_binary_message_adapter(config):
 def lst_boot(config, debug=False):
     # TODO: refactor towards OO; e.g. BinaryMessageApplicationFactory
 
-    wamp_uri = unicode(config.get('wamp', 'listen'))
+    wamp_uri = unicode(config.wamp.uri)
 
     # activate/mount multiple "lst" applications
     for channel_name in read_list(config['lst']['channels']):
