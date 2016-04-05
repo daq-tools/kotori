@@ -36,6 +36,7 @@ general
 - Add composite application completely declared by configuration settings
 - Adapt :ref:`vendor-hydro2motion` and :ref:`vendor-lst` to infrastructure changes
 - Upgrade libraries Twisted, autobahn, crossbar, msgpack and influxdb
+- Improve Grafana gracefulness when finding a corrupt panel
 
 documentation
 -------------

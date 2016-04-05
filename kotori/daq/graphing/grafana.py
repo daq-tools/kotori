@@ -131,7 +131,11 @@ class GrafanaDashboard(object):
         # if a dashboard already exists, use the maximum id currently exists as new index
         self.panel_id = 0
         if dashboard:
-            # TODO: this is hardcoded on row=0
+
+            # FIXME: This is hardcoded on row=0
+            if dashboard['rows'][0]['panels'] == [None]:
+                del dashboard['rows'][0]['panels'][0]
+
             panels = dashboard['rows'][0]['panels']
             panel_ids = [panel['id'] for panel in panels]
             if panel_ids:
@@ -190,7 +194,7 @@ class GrafanaDashboard(object):
         }
 
         # build targets list from fieldnames
-        targets_json = []
+        targets_list = []
         for fieldname in panel['fieldnames']:
             data_target = {
                 'name': fieldname,
@@ -198,10 +202,16 @@ class GrafanaDashboard(object):
                 'measurement': measurement,
             }
             target_json = self.tpl_target.render(data_target)
-            targets_json.append(target_json)
+            targets_list.append(target_json)
 
-        panel_json = self.tpl_panel.render(data_panel, targets=',\n'.join(targets_json))
-        return json.loads(panel_json)
+        targets_json = ',\n'.join(targets_list)
+        panel_json = self.tpl_panel.render(data_panel, targets=targets_json)
+        try:
+            return json.loads(panel_json)
+        except Exception:
+            log.failure(u'Failed building valid JSON for Grafana panel. data={data}, json={json}',
+                data=data_panel, json=panel_json)
+
 
     def get_title(self):
         return self.dashboard.get('title')
