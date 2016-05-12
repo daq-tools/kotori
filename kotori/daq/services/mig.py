@@ -138,7 +138,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         metrics = []
 
         # Compute frequency of measurements
-        if 'packet_time' in self.metrics:
+        if 'packet_time' in self.metrics and self.metrics['packet_time'] is not None:
 
             self.metrics.setdefault('packet_starttime', self.metrics.packet_time)
 
