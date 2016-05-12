@@ -12,3 +12,5 @@ Applications
     hydro2motion
     hiveeyes
     lst
+    mqttkit
+
