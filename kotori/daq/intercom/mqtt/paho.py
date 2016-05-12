@@ -2,25 +2,45 @@
 # (c) 2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 # https://pypi.python.org/pypi/paho-mqtt/
 from __future__ import absolute_import
-from twisted.internet import reactor
-from twisted.internet.threads import deferToThread
+import paho.mqtt.client as mqtt
 from twisted.logger import Logger
+from twisted.internet import reactor
+from twisted.internet.task import LoopingCall
 from twisted.application.service import Service
 from kotori.daq.intercom.mqtt.base import BaseMqttAdapter
-import paho.mqtt.client as mqtt
 
 log = Logger()
 
 class PahoMqttAdapter(BaseMqttAdapter, Service):
 
-    def connect(self):
+    # If connection fails at first, retry connecting each X seconds
+    retry_interval = 5
 
+    def connect(self):
+        """
+        Connect to MQTT broker.
+        """
+        # TODO: This is currently done synchronous which could have issues in timeout situations
+        #       because it would block other subsystems.
+        #       => Check if we can do asynchronous connection establishment.
         self.client = mqtt.Client(client_id=self.name, clean_session=True, userdata={'foo': 'bar'})
 
         self.client.on_connect = lambda *args: reactor.callFromThread(self.on_connect, *args)
         self.client.on_message = lambda *args: reactor.callFromThread(self.on_message, *args)
         self.client.on_log     = lambda *args: reactor.callFromThread(self.on_log, *args)
-        self.client.connect(self.broker_host, port=self.broker_port, keepalive=60)
+
+        # Connect with retry
+        self.connect_loop = LoopingCall(self.connect_with_retry)
+        self.connect_loop.start(self.retry_interval, now=True)
+
+    def connect_with_retry(self):
+        try:
+            self.client.connect(self.broker_host, port=self.broker_port, keepalive=60)
+            self.connect_loop.stop()
+        except:
+            log.failure(u'Error connecting to MQTT broker but retrying each {retry_interval} seconds',
+                retry_interval=self.retry_interval)
+            return
 
         """
         This is part of the threaded client interface. Call this once to

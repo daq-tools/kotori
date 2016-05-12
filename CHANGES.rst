@@ -38,6 +38,7 @@ general
 - Upgrade libraries Twisted, autobahn, crossbar, msgpack and influxdb
 - Improve Grafana gracefulness when finding a corrupt panel
 - Overhaul configuration subsystem
+- Try to reconnect to MQTT broker in interval if initial connection fails
 
 documentation
 -------------
