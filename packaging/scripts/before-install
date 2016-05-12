@@ -1,5 +1,12 @@
 #!/bin/sh
 
+# Add user
 useradd --create-home --home-dir /opt/kotori --shell /bin/bash kotori
+
+# Establish configuration subdirectories
+mkdir -p /etc/kotori/{conf.d,apps-available,apps-enabled}
+chown -R kotori:kotori /etc/kotori
+
+# Establish logfile directory
 mkdir -p /var/log/kotori
 chown -R kotori:kotori /var/log/kotori

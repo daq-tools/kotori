@@ -210,7 +210,7 @@ deb-build: check-build-options
 		--version $(version) \
 		--deb-field 'Branch: $(branch) Commit: $(commit)' \
 		--package ./dist/ \
-		--config-files "/etc/kotori/kotori.ini" \
+		--config-files "/etc/kotori" \
 		--deb-default ./packaging/etc/default \
 		--before-install ./packaging/scripts/before-install \
 		--after-install ./packaging/scripts/after-install \
@@ -218,7 +218,8 @@ deb-build: check-build-options
 		--verbose \
 		--force \
 		$(buildpath)/=/opt/kotori \
-		./etc/kotori.ini=/etc/kotori/kotori.ini \
+		./etc/production.ini=/etc/kotori/kotori.ini \
+		./etc/examples/=/etc/kotori/examples \
 		./packaging/systemd/kotori.service=/usr/lib/systemd/system/kotori.service
 
 #		--debug \
