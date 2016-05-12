@@ -27,7 +27,7 @@ class InfluxDatabaseService(WampSessionMixin, ApplicationSession):
 
         log.info('InfluxDB host={host}, version={version}'.format(
             host=self.config.extra['influxdb']['host'],
-            version=self.config.extra['influxdb']['version']))
+            version=self.config.extra['influxdb'].get('version', '0.9')))
 
         self.influx = InfluxDBAdapter(
             settings = self.config.extra['influxdb'],

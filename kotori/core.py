@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2014-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 from pkg_resources import EntryPoint
+from pyramid.settings import asbool
 from twisted.logger import Logger, LogLevel
 from kotori.logger import changeLogLevel
 from kotori.configuration import read_list
@@ -20,13 +21,7 @@ class KotoriBootloader(object):
         """
         Boot all enabled applications
         """
-        try:
-            applications = read_list(self.settings.applications.enable)
-        except AttributeError as ex:
-            log.warn(u'Skip enabling applications: {class_name}: "{ex}" does not exist',
-                class_name=ex.__class__.__name__, ex=ex)
-            return
-
+        applications = list(self.get_applications())
         log.info(u'Enabling applications {applications}', applications=applications)
         for name in applications:
             self.boot_application(name)
@@ -83,16 +78,29 @@ class KotoriBootloader(object):
 
         return thing
 
+    def get_vendors(self):
+        for name, config_object in self.settings.iteritems():
+            if 'type' in config_object and config_object.type == 'vendor':
+                if 'enable' not in config_object or asbool(config_object['enable']):
+                    yield name
+
+    def get_applications(self):
+        for name, config_object in self.settings.iteritems():
+            if 'type' in config_object and config_object.type == 'application':
+                if 'enable' not in config_object or asbool(config_object['enable']):
+                    yield name
+
     def boot_vendors(self):
         """
         Boot all enabled vendors
         """
-        vendors = read_list(self.settings.vendors.enable)
+        vendors = list(self.get_vendors())
         log.info('Enabling vendors {vendors}', vendors=vendors)
     
         debug = self.settings.options.debug
     
         if 'hydro2motion' in vendors:
+            #log.info(u'Starting vendor "{name}"', name=name)
             from kotori.vendor.hydro2motion.database.influx import h2m_boot_influx_database
             from kotori.vendor.hydro2motion.network.udp import h2m_boot_udp_adapter
             from kotori.vendor.hydro2motion.web.server import boot_web

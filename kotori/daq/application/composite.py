@@ -22,21 +22,30 @@ class CompositeApplication(RootService):
         # Make channel object from application settings configuration object
         self.channel = Bunch(**application_settings)
 
-        # Main application services
+        # Main application components
         for service_reference in read_list(application_settings.services):
-            service_factory = KotoriBootloader.load_entrypoint(service_reference)
-            graphing_factory = KotoriBootloader.load_entrypoint(application_settings.graphing)
-            strategy_factory = KotoriBootloader.load_entrypoint(application_settings.strategy)
 
+            # Load service component
+            service_factory = KotoriBootloader.load_entrypoint(service_reference)
+
+            # Load processing strategy and graphing components
+            # TODO: Review whether this should be per-service or not
+            strategy_factory = KotoriBootloader.load_entrypoint(application_settings.strategy)
+            graphing_factory = KotoriBootloader.load_entrypoint(application_settings.graphing)
+
+            # Create service object composed with subsystem components
             # TODO: Bundle all arguments into yet another wrapper object for an universal object factory
             service = service_factory(
                 channel  = self.channel,
-                graphing = graphing_factory(settings=global_settings),
-                strategy = strategy_factory(settings=global_settings))
+                strategy = strategy_factory(settings=global_settings),
+                graphing = graphing_factory(settings=global_settings)
+                )
 
+            # Register service component with its container
             self.registerService(service)
 
 
 def boot(name=None, **kwargs):
+    # Bootstrap application composed of components defined by configuration settings
     app = CompositeApplication(name=name, **kwargs)
     return app

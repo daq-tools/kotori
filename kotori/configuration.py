@@ -2,56 +2,54 @@
 # (c) 2014-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import os
 import logging
+from glob import glob
 from bunch import Bunch
 from cornice.util import to_list
 from ConfigParser import ConfigParser
 
 log = logging.getLogger()
 
-def get_configuration(configfile):
-    configfiles = [configfile, os.path.expanduser('~/.kotori.ini')]
-    config = read_config(configfiles, kind=Bunch)
-    if config:
-        return config
-    else:
-        msg = u'Could not read settings from configuration files: {}'.format(configfiles)
-        log.critical(msg)
-        raise ValueError(msg)
-
-def get_configuration_file(direct=None):
-
+def get_configuration_file(configfile=None):
     # compute configuration file
-    configfile = direct
     if not configfile:
         configfile = os.environ.get('KOTORI_CONFIG')
-    log.info('configfile: {}'.format(configfile))
+
     if not configfile:
         raise ValueError('No configuration file, either use --config=/path/to/kotori.ini or set KOTORI_CONFIG environment variable')
 
+    log.info('Root configuration file is {}'.format(configfile))
     return configfile
 
-
-def configparser_to_dict(config):
-    # serialize section-based ConfigParser contents into nested dict
-    if isinstance(config, ConfigParser):
-        config_dict = {}
-        for section in config.sections():
-            config_dict[section] = dict(config.items(section))
-        return config_dict
-    else:
+def get_configuration(*args):
+    config_files = []
+    # TODO: Only use when logged in interactively?
+    config_files += [os.path.expanduser('~/.kotori.ini')]
+    config_files += list(args)
+    log.info('Requested configuration files: {}'.format(make_list(config_files)))
+    config, used = read_config(config_files, kind=Bunch)
+    if config:
+        if 'main' in config and 'include' in config.main:
+            includes = read_list(config.main.include)
+            for include in includes:
+                if '*' in include or '?' in include:
+                    config_files += glob(include)
+                else:
+                    config_files.append(include)
+            log.info('Expanded configuration files:  {}'.format(make_list(config_files)))
+            config, used = read_config(config_files, kind=Bunch)
+        log.info('Used configuration files:      {}'.format(make_list(used)))
         return config
-
-
-def read_list(string, separator=u','):
-    return map(unicode.strip, string.split(separator))
-
+    else:
+        msg = u'Could not read settings from configuration files: {}'.format(config_files)
+        log.critical(msg)
+        raise ValueError(msg)
 
 def read_config(configfiles, kind=None):
-    configfiles = to_list(configfiles)
+    configfiles_requested = to_list(configfiles)
     config = ConfigParser()
-    config.read(configfiles)
+    configfiles_used = config.read(configfiles_requested)
     settings = convert_config(config, kind=kind)
-    return settings
+    return settings, configfiles_used
 
 def convert_config(config, kind=None):
     """
@@ -66,3 +64,9 @@ def convert_config(config, kind=None):
         return config_dict
     else:
         return config
+
+def read_list(string, separator=u','):
+    return map(unicode.strip, string.split(separator))
+
+def make_list(items, separator=u', '):
+    return separator.join(items)
