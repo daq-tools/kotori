@@ -144,6 +144,11 @@ See also example below and :ref:`lst-transformation-rules`.
 
     We are working on the *brace-or-equal-initializer* style.
 
+    .. seealso::
+
+        - http://www.stroustrup.com/C++11FAQ.html#init-list
+        - http://www.stroustrup.com/C++11FAQ.html#uniform-init
+
 .. highlight:: c++
 
 Example::

@@ -17,7 +17,7 @@ Publish weather information to MQTT topics like weather/berlin, weather/berlin/t
         - https://github.com/csparpa/pyowm/wiki/Usage-examples
         - https://pyowm.readthedocs.org/
 
-    - Others
+    - Misc
         - | https://pypi.python.org/pypi/OpenWeatherForecast/0.2.3
           | https://github.com/enanablancaynumeros/OpenWeatherForecast
         - | https://pypi.python.org/pypi/openweathermap_requests/0.0.5
@@ -27,3 +27,11 @@ Publish weather information to MQTT topics like weather/berlin, weather/berlin/t
         - | https://pypi.python.org/pypi/openweather/0.11
         - | Publish Australian weather observations to MQTT
           | https://gist.github.com/claws/5482174
+        - http://openweathermap.org/examples#raspberry
+        - http://www.myweather2.com/developer/
+        - http://www.programmableweb.com/news/top-10-weather-apis/analysis/2014/11/13
+        - http://www.programmableweb.com/api/accuweather
+        - | http://forecast.io/
+          | https://developer.forecast.io/docs/v2
+          | http://www.programmableweb.com/api/forecast
+        - https://developer.forecast.io/

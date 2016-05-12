@@ -24,6 +24,19 @@ This was made in 2014, today you might want to have a look at things like `Node-
 which might be able to achieve similar things but also sports a rich ecosystem of addons
 called `Node-RED flows`_ and a visual editor for connecting these components to each other.
 
+ScratchX_ might offer the same infrastructure through `ScratchX Wiki`_/`Scratch Extensions`_, let's check:
+
+    [...] make it possible to connect Scratch projects with external hardware (such as LEGO WeDo or PicoBoard)
+    or sources of information on the web. They add a collection of command and reporter blocks that can be used
+    to interact with a particular device or data source. When an extension is enabled, its blocks appear in
+    the "More Blocks" palette.
+
+`Snap!`_ is also supported by the `Scratch 2 Offline Editor Hardware Extension for Arduino`_.
+
+Also take a look at Xideco_, a network-enabled software backplane in form of a cross-platform
+interconnect fabric between the popular Arduino, Raspberry and BeagleBone Black platforms.
+Read their `Intro to Xideco`_.
+
 .. seealso::
     For an introduction to BBB GPIO programming using Python,
     have a look at the tutorial `Using the Adafruit_BBIO Library`_.

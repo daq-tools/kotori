@@ -24,8 +24,22 @@ LoRa
 Cloud
 *****
 
-Free
+Open
 ====
+
+- | phant.io
+  | Phant is a modular node.js based data logging tool for collecting data from the Internet of Things.
+  | It is the open source software that powers data.sparkfun.com, and is actively maintained by SparkFun Electronics.
+  | http://phant.io/
+  | https://github.com/sparkfun/phant
+  | https://data.sparkfun.com/
+  | https://data.sparkfun.com/streams/
+  | https://github.com/sparkfun/phant/blob/master/package.json
+
+- | analog.io - A full stack IoT platform
+  | A full stack project dedicated to easily collecting, analyzing and sharing IoT sensor data.
+  | https://analog.io/
+  | https://hackaday.io/project/4648-analogio-a-full-stack-iot-platform
 
 - | Nimbits
   |
@@ -46,12 +60,16 @@ Free
   | https://www.cesanta.com/products/smart-js
 
 
-Commercial
-==========
+Proprietary
+===========
 
 - | RoboMQ
   | RoboMQ connects devices, systems, clouds and things to create smart and context-aware applications
   | http://robomq.io/
+  | https://robomq.readthedocs.org/
+  | https://robomq.readthedocs.org/en/latest/connectors/
+  | https://robomq.readthedocs.org/en/latest/MQTT/
+  | http://robomq.blogspot.de/2015/05/unlocking-modbus-networks-to-internet.html
 
 - | ThingSpeak
   | https://thingspeak.com/
@@ -92,6 +110,10 @@ Commercial
 - | ARM Mbed IoT Device Platform (mbed.com)
   | https://www.mbed.com/en/
   | https://news.ycombinator.com/item?id=11142062
+
+- | Polestar
+  | https://polestar.io/
+  | http://www.1060research.com/products/
 
 
 Keen IO

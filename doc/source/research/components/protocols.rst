@@ -30,6 +30,21 @@ CAN
 ===
 - https://developer.mbed.org/questions/60979/CAN-library-example-code-fails-to-compil/
 
+OSC
+===
+- http://opensoundcontrol.org/
+- http://liblo.sourceforge.net/
+
+Firmata
+=======
+- https://github.com/MrYsLab/PyMata
+- https://github.com/MrYsLab/pymata-aio
+
+SPUL
+====
+- SPUL - Sensor Protocol Ultra Light: https://kukua.github.io/concava-connector-spul/latest/introduction/
+
+
 Misc
 ====
 - http://playground.arduino.cc/Main/LibraryList#Comm

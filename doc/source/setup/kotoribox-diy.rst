@@ -91,6 +91,14 @@ Access 6LoWPAN and ZigBee
 - USB, CC2531 based: http://de.aliexpress.com/wholesale?catId=0&initiative_id=&SearchText=CC2531+USB
 - http://openlabs.co/OSHW/Raspberry-Pi-802.15.4-radio
 - http://openlabs.co/store/Raspberry-Pi-802.15.4-radio
+- http://busware.de/tiki-index.php?page=RF212USB
+- http://www.atmel.com/devices/AT86RF212B-ZigBit-Wireless-Module.aspx
+- http://www.atmel.com/images/doc8168.pdf
+
+ZWave
+-----
+- http://shop.busware.de/product_info.php/products_id/29
+- http://shop.busware.de/product_info.php/products_id/44
 
 LoRa
 ----

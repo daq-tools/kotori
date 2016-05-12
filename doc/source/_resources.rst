@@ -14,7 +14,7 @@
 .. _boot2docker: http://boot2docker.io/
 
 
-.. Foundation
+.. Foundation DAQ
 .. _InfluxDB: https://influxdb.com/
 .. _Grafana: http://grafana.org/
 .. _Twisted: https://en.wikipedia.org/wiki/Twisted_(software)
@@ -23,8 +23,17 @@
 .. _WAMP: http://wamp.ws/
 .. _MQTT: http://mqtt.org/
 .. _Mosquitto: http://mosquitto.org/
+
+.. Foundation SC
 .. _Node-RED: http://nodered.org/
 .. _Node-RED flows: http://flows.nodered.org/
+.. _ScratchX: http://scratchx.org/
+.. _ScratchX Wiki: http://wiki.scratch.mit.edu/wiki/ScratchX
+.. _Scratch Extensions: http://wiki.scratch.mit.edu/wiki/Scratch_Extensions
+.. _Snap!: http://snap.berkeley.edu/
+.. _Scratch 2 Offline Editor Hardware Extension for Arduino: https://github.com/MrYsLab/s2aio
+.. _Xideco: https://github.com/MrYsLab/xideco
+.. _Intro to Xideco: http://mryslab.blogspot.de/search/label/IntroXideco
 
 .. Foundation libraries
 .. _twisted-mqtt: https://pypi.python.org/pypi/twisted-mqtt

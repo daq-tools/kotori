@@ -17,6 +17,125 @@ Kotori tasks
 ****
 
 
+2016-05-04
+==========
+- [o] Issues after installing Kotori-0.5.0 from Debian package
+
+    - | tabulate,pyclibrary,sympy muß noch via pip in venv.
+      | => pip install kotori[daq_binary]
+    - | die dateien fehlen: /opt/kotori/lib/python2.7/site-packages/kotori/daq/graphing/resources/grafana-dashboard.json ...
+      | ERROR: IOError: [Errno 2] No such file or directory: '/opt/kotori/lib/python2.7/site-packages/kotori/frontend/development.ini'
+    - | [04.05.16 00:23:33] Janosch: ahh ja nochwas. irgendwie hat er die rechte nicht richtig gesetzt auf /opt/kotori.
+      | er hat 1000 genommen obwohl er 1001 ist.
+      | evtl aber auch erst nachdem ich ein dpkg -p kotori und nochmal ein dpkg -i ....
+      | [04.05.16 00:23:54] Janosch: muß man auch nochmal überprüfen
+    - | Disable Grafana completely or reduce error logging: In a situation where the credentials do not match,
+      | this would otherwise (currently) cause an exception storm of Grafana communication failures.
+
+- [o] InfluxDB 0.12.0 requires Grafana 3: https://github.com/influxdata/influxdb/issues/6220
+
+- [o] Docs about how to
+
+    - send telemetry data to generic MQTTKit application (mosquitto_pub, Python)
+    - store InfluxDB payloads to database
+
+- [o] Configuration setting to disable Grafana completely
+
+- [o] Vendor "LST"
+
+    - Add metrics
+    - Don't use the WAMP bus for achieving higher performance (disable optionally)
+
+- [o] Put files from etc/apps-available to etc/examples?
+
+
+2016-04-22
+==========
+- [o] Integrate with AllSeen/AllJoyn: https://allseenalliance.org/framework/documentation/develop/building/linux
+
+
+2016-04-18
+==========
+- [o] Revamp and improve the Hydro2Motion setup and infrastructure for a new round of `Shell Eco-marathon europe`_ 2016.
+
+
+2016-04-17
+==========
+- Let's use the squirrel as a mascot for Terkin. Does the Skype emoticon ``(heidy)`` has a representation in Unicode?
+
+    - http://users.skynet.be/sky77548/squirrel3.gif
+    - https://thenounproject.com/term/squirrel/1326/
+    - Favourites:
+
+        - https://thenounproject.com/term/squirrel/83208/
+        - https://thenounproject.com/term/squirrel/316333/
+
+
+2016-04-13
+==========
+- RF69, RF95, RF212
+
+
+2016-04-12
+==========
+- [o] Implement Terkin - the Kotori client - based on Click
+
+    - http://click.pocoo.org/
+
+- [o] Add more pictures (Hiveeyes, LST)
+
+- [o] Add references to documentation
+
+    - https://en.wikipedia.org/wiki/Bus_analyzer
+    - https://en.wikipedia.org/wiki/Data_logger
+    - https://en.wikipedia.org/wiki/Chart_recorder
+    - https://de.wikipedia.org/wiki/Messschreiber
+
+- [o] Integrate with http://www.byteparadigm.com/products/log-storm/
+- [o] Integrate with taloLogger
+
+    - http://olammi.iki.fi/sw/taloLogger/
+    - http://olammi.iki.fi/sw/taloLoggerPi/
+    - http://olammi.iki.fi/sw/taloLoggerGraph/
+
+- [o] Make an OpenEmbedded layer for Kotori for integrating with Yocto
+
+    - https://yoctoproject.org/
+    - http://openembedded.org/
+    - https://buildroot.org/
+    - http://layers.openembedded.org/layerindex/branch/master/layers/
+    - http://layers.openembedded.org/layerindex/branch/master/layer/meta-python/
+    - http://layers.openembedded.org/layerindex/branch/master/layer/meta-web-kiosk/
+    - http://layers.openembedded.org/layerindex/branch/master/layer/meta-talologger/
+    - https://github.com/hlounent/meta-talologger
+
+
+2016-04-11
+==========
+- [o] Integrate with http://dangerousprototypes.com/docs/Bus_Pirate
+- [o] Altitude sensor http://dangerousprototypes.com/2016/04/11/using-bmp180-for-temperature-pressure-and-altitude-measurements/
+
+
+2016-04-10
+==========
+- [o] Proper TLS/GPG key management for transports like HTTP, MQTT, etc.
+- [o] Compatibility/integration with phant.io and analog.io
+- [o] Add section about similar projects to the documentation
+- [o] Signal processing with http://non.tuxfamily.org/ ?
+- [o] The fine dashboard for Hydro2Motion: https://mryslab.github.io/rbDashBoard/
+- [o] Integrate with Xideco_, see also
+
+    - https://github.com/MrYsLab/xideco/tree/master/xideco/xidekit/xidekit_examples
+    - http://mryslab.blogspot.de/
+    - :ref:`vendor-ilaundry`
+
+
+2016-04-06
+==========
+- [o] Get rid of "CREATE DATABASE" calls for each and every measurement
+- [o] Improve InfluxDB connection resiliency if database is down on initial connect
+
+
 2016-04-05
 ==========
 - [o] LST:
@@ -26,6 +145,12 @@ Kotori tasks
     - Automatically publish messages to the MQTT bus using composition of generic components
 - [o] Refactor MqttInfluxGrafanaService and BusInfluxForwarder into
       new generic component and reuse at Hiveeyes/mqttkit and LST
+- [o] Throughput metrics for vendor LST
+- [o] Configuration and packaging for 0.7.0
+- [o] Pyramid should go to kotori.web with frontend on port 4000
+- [o] Introduce boot_frontend as kotori.web.mount(app=app, port=4000),
+      where "app" might be "kotori.frontend:file://development.ini:main"
+- [o] Inject kotori settings into options (to be used as global_conf)
 
 
 2016-04-04
@@ -105,7 +230,8 @@ maybe go to:
     - https://github.com/mwasilak/txThings
     - http://www.sixpinetrees.pl/2013/09/txthings-good-enough-is-good-enough.html
 
-- [o] Replace Kotori with mqttcollect: http://jpmens.net/2015/05/15/an-exec-plugin-for-collectd-mqttcollect/
+- [o] Replace Kotori with mqttcollect? :-)
+  http://jpmens.net/2015/05/15/an-exec-plugin-for-collectd-mqttcollect/
 
 - [o] Watch TESS
 
@@ -113,19 +239,6 @@ maybe go to:
     - https://github.com/astrorafael/tessdb/
     - http://www.observatorioremoto.com/TESS.pdf
     - http://www.observatorioremoto.com/
-
-- [o] Misc resources
-
-    - http://iot-document.phodal.com/
-    - https://phodal.github.io/awesome-iot/
-    - https://github.com/phodal/iot-document
-    - https://github.com/phodal/awesome-iot
-    - https://github.com/mqtt/mqtt.github.io/wiki/libraries
-    - http://dave.thehorners.com/tech-talk/random-tech/499-messaging-messagequeue-pubsub-stomp-amqp-mqtt
-    - https://matrix.org/blog/wp-content/uploads/2015/02/2015-02-01-Matrix-IoT-FOSDEM.pdf
-    - https://www.reddit.com/r/Python/comments/1a7lqg/suggestions_for_building_a_real_time_web_app/
-    - https://matrix.org/
-
 
 
 
@@ -284,7 +397,10 @@ maybe go to:
 - [o] Make Kotori handle Gigabytes of data
 - [o] Universal radio-based sensor node with appropriate housing and battery power supply, per :ref:`vendor-hiveeyes`
 - [o] GPS beacon node visualizing movement on a realtime map, per prototype of :ref:`vendor-hydro2motion`,
-  maybe as panel for Grafana. Maybe run mapserver on box for offline maps.
+      maybe as panel for Grafana. Maybe run mapserver on box for offline maps.
+
+    - http://www.dfrobot.com/index.php?route=product/product&product_id=481&search=dfrduino+gps&am
+
 - [o] Hook "Kotori Box" into DNS using VPN tunnel, for convenient remote access. Also think about remote-hands maintenance.
 
 
