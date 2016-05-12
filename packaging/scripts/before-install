@@ -4,7 +4,7 @@
 useradd --create-home --home-dir /opt/kotori --shell /bin/bash kotori
 
 # Establish configuration subdirectories
-mkdir -p /etc/kotori/{conf.d,apps-available,apps-enabled}
+mkdir -p /etc/kotori/conf.d /etc/kotori/apps-available /etc/kotori/apps-enabled
 chown -R kotori:kotori /etc/kotori
 
 # Establish logfile directory
