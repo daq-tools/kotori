@@ -17,6 +17,16 @@ Kotori tasks
 ****
 
 
+2016-05-13
+==========
+- [o] Improve MQTTKit documentation
+
+
+2016-05-12
+==========
+- [o] Integrate with MAVLINK
+
+
 2016-05-04
 ==========
 - [o] Issues after installing Kotori-0.5.0 from Debian package
