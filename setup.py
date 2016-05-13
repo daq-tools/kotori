@@ -71,6 +71,11 @@ setup(name='kotori',
       keywords='daq mqtt wamp http rest sql web twisted pyramid autobahn influxdb mosquitto grafana mongodb',
       packages=find_packages(),
       include_package_data=True,
+      package_data={
+        'kotori': [
+          'daq/graphing/resources/*.*',
+        ],
+      },
       zip_safe=False,
       test_suite='kotori.test',
       install_requires=requires,
