@@ -38,7 +38,7 @@ extras = {
 }
 
 setup(name='kotori',
-      version='0.6.0',
+      version='0.7.0',
       description='Kotori data acquisition and graphing toolkit',
       long_description='Kotori data acquisition and graphing toolkit',
       license="AGPL 3, EUPL 1.2",
