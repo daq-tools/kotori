@@ -1,6 +1,6 @@
 [Unit]
 Description=Kotori data acquisition and graphing toolkit
-Documentation=http://isarengineering.de/docs/kotori/
+Documentation=https://getkotori.org/docs/
 After=network.target
 
 [Service]

@@ -79,13 +79,12 @@ sdist:
 publish-sdist:
 	# publish Python Eggs to eggserver
 	# TODO: use localshop or one of its sisters
-	rsync -auv --progress ./dist/kotori-*.tar.gz hiveeyes@packages.elmyra.de:/srv/packages/organizations/hiveeyes/python/eggs/kotori/
+	@#rsync -auv --progress ./dist/kotori-*.tar.gz hiveeyes@packages.elmyra.de:/srv/packages/organizations/hiveeyes/python/eggs/kotori/
 	rsync -auv --progress ./dist/kotori-*.tar.gz isareng@packages.elmyra.de:/srv/packages/organizations/isarengineering/python/eggs/kotori/
 
 publish-debian:
 	# publish Debian packages
-	@#rsync -auv ./dist/kotori*.deb hiveeyes@packages.elmyra.de:/srv/packages/organizations/hiveeyes/debian/
-	rsync -auv ./dist/kotori*.deb isareng@packages.elmyra.de:/srv/packages/organizations/isarengineering/debian/
+	rsync -auv ./dist/kotori*.deb workbench@packages.elmyra.de:/srv/packages/organizations/elmyra/foss/aptly/public/incoming/
 
 check-bump-options:
 	@if test "$(bump)" = ""; then \
@@ -138,12 +137,12 @@ fpm-options := \
 	--provides "kotori-daq" \
 	--deb-suggests "influxdb, mosquitto, mosquitto-clients, grafana" \
 	--maintainer "andreas.motl@elmyra.de" \
-	--vendor "Elmyra UG" \
-	--license "Other/Proprietary" \
+	--vendor "IsarEngineering GmbH, Elmyra UG" \
+	--license "AGPL 3, EUPL 1.2" \
 	--deb-changelog CHANGES.rst \
 	--deb-meta-file README.rst \
 	--description "Kotori data acquisition and graphing toolkit" \
-	--url "http://isarengineering.de/docs/kotori/"
+	--url "https://getkotori.org/docs/"
 
 
 # get branch and commit identifiers
@@ -153,7 +152,7 @@ version  := $(shell python setup.py --version)
 
 
 deb-build-daq:
-	$(MAKE) deb-build name=kotori-daq features=daq
+	$(MAKE) deb-build name=kotori features=daq
 
 deb-build-daq-binary:
 	$(MAKE) deb-build name=kotori-daq-binary features=daq,daq_binary

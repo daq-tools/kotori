@@ -74,7 +74,7 @@ systemd service
     ● kotori.service - Kotori data acquisition and graphing toolkit
        Loaded: loaded (/usr/lib/systemd/system/kotori.service; enabled)
        Active: active (running) since Wed 2016-01-27 03:47:05 CET; 1h 4min ago
-         Docs: http://isarengineering.de/docs/kotori/
+         Docs: https://getkotori.org/docs/
      Main PID: 345 (sh)
        CGroup: /system.slice/kotori.service
                ├─345 /bin/sh -c /usr/local/sbin/kotori --config /etc/kotori/kotori.ini --debug >>/var/log/kotori/kotori.log 2>>/var/log/kotor...
@@ -116,7 +116,7 @@ systemd troubleshooting
     ● kotori.service - Kotori is a multi-channel, multi-protocol data acquisition and graphing toolkit
        Loaded: loaded (/opt/kotori/kotori.service; enabled)
        Active: inactive (dead)
-         Docs: http://isarengineering.de/docs/kotori/
+         Docs: https://getkotori.org/docs/
 
 ::
 

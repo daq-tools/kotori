@@ -23,6 +23,8 @@ Kotori tasks
 - [o] Publish current InfluxDB and Grafana packages along with Kotori. Streamline :ref:`setup-debian`.
 - [o] Add /etc/default/kotori to Debian package
 - [o] Build and add ARM packages to Debian repository
+- [o] Add README.rst, CHANGES.rst, LICENSE*.txt and agpl-3.0.txt to Debian package
+- [o] Check https://programmers.stackexchange.com/questions/234511/what-is-the-best-practice-for-arranging-third-party-library-licenses-paperwork/234526#234526
 
 
 2016-05-21
