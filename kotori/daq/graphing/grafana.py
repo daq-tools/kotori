@@ -47,7 +47,7 @@ class GrafanaApi(object):
         """
 
         try:
-            log.info('Creating datasource "{}"'.format(name))
+            log.info('Checking/Creating datasource "{}"'.format(name))
             response = self.grafana.datasources.create(**data)
             log.info('response: {response}', response=response)
         except GrafanaServerError as ex:
@@ -72,7 +72,7 @@ class GrafanaApi(object):
 
             except GrafanaClientError as ex:
                 if '404' in ex.message or 'Dashboard not found' in ex.message:
-                    log.warn(ex.message)
+                    log.warn('{message}', message=ex.message)
                 else:
                     raise
 
@@ -85,7 +85,7 @@ class GrafanaApi(object):
 
         except GrafanaPreconditionFailedError as ex:
             if 'name-exists' in ex.message or 'A dashboard with the same name already exists' in ex.message:
-                log.warn(ex.message)
+                log.warn('{message}', message=ex.message)
             else:
                 raise
 
@@ -95,7 +95,7 @@ class GrafanaApi(object):
             #pprint(dashboard)
         except GrafanaClientError as ex:
             if '404' in ex.message or 'Dashboard not found' in ex.message:
-                log.warn(ex.message)
+                log.warn('{message}', message=ex.message)
             else:
                 raise
 
@@ -106,7 +106,7 @@ class GrafanaApi(object):
             return dashboard['dashboard']
         except GrafanaClientError as ex:
             if '404' in ex.message or 'Dashboard not found' in ex.message:
-                log.warn(ex.message)
+                log.info('{message}', message=ex.message)
             else:
                 raise
 
