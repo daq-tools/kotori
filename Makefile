@@ -31,8 +31,7 @@
 #    make debian-package flavor=daq
 #
 
-release: virtualenv bumpversion
-#release: virtualenv bumpversion push
+release: virtualenv bumpversion push
 
 # build and publish python package (sdist)
 python-package: sdist publish-sdist
