@@ -40,9 +40,14 @@ Publish package to Debian repository
 ::
 
     ssh workbench@pulp.cicer.de
-    cd /srv/packages/organizations/elmyra/foss/aptly
-    aptly repo add -config=aptly.conf testing public/incoming/kotori_0.7.0-1_amd64.deb
-    aptly publish update -config=aptly.conf -gpg-key=2543A838 -passphrase=esp testing
+
+    export APTLY_CONFIG=/srv/packages/organizations/elmyra/foss/aptly/aptly.conf
+    export APTLY_REPOSITORY=main
+    export APTLY_DISTRIBUTION=testing
+    export PACKAGES_INCOMING=/srv/packages/organizations/elmyra/foss/aptly/public/incoming
+
+    aptly repo add -config=$APTLY_CONFIG $APTLY_REPOSITORY $PACKAGES_INCOMING/kotori_*.deb
+    aptly publish update -config=$APTLY_CONFIG -gpg-key=2543A838 -passphrase=esp $APTLY_DISTRIBUTION
 
 .. note:: How to setup the :ref:`kotori-setup`.
 
