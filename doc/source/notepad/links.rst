@@ -3,6 +3,57 @@ Links
 #####
 
 
+2016-05-21
+==========
+- https://relayr.io/
+- https://relayr.io/wunderbar/
+- https://play.google.com/store/apps/details?id=io.relayr.iotsmartphone
+-
+
+2016-05-20
+==========
+- [o] MQTT code for mbed: https://developer.mbed.org/teams/ESP8266/code/ESP8266_MQTT_HelloWorld/file/76d0899bc3ce/main.cpp
+
+SDR and RF
+----------
+- https://www.crowdsupply.com/lime-micro/limesdr
+- https://news.ycombinator.com/item?id=11610521
+- https://myriadrf.org/
+
+BLE through SDR
+---------------
+- http://www.rs-online.com/designspark/electronics/eng/blog/an-intel-powered-wireless-multi-tool-for-the-iot-part-2
+- https://github.com/DesignSparkrs/sdr-ble-demo/
+
+Environmental monitoring
+------------------------
+- Kathy Steppe
+- http://www.plantecology.ugent.be/research.shtml
+- http://www.plantecology.ugent.be/people.shtml
+- https://twitter.com/jochensteiner
+
+Smart farming
+-------------
+- http://www.deutschlandfunk.de/smart-farming-sensoren-und-apps-erobern-den-spargel-acker.676.de.html?dram:article_id=353969
+
+IFTTT and more
+--------------
+* | Create automated workflows between your favorite apps and services to get notifications, synchronize files, collect data, and more.
+  | https://flow.microsoft.com/
+  | https://news.ycombinator.com/item?id=11600739
+
+Misc
+----
+* | http://basho.com/posts/technical/time-series-the-new-shiny/
+  | via: https://news.ycombinator.com/item?id=11665907
+
+
+2016-05-18
+==========
+- | SparkFun RFM69 Breakout (915MHz)
+  | https://www.sparkfun.com/products/12775
+
+
 2016-05-04
 ==========
 - Integrate with Snap! A powerful open telemetry framework

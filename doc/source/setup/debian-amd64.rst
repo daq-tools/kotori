@@ -1,13 +1,12 @@
 .. include:: ../_resources.rst
 
-.. _setup-debian:
 .. _setup-debian-amd64:
 
 ############
 Debian AMD64
 ############
 
-.. contents:: Table of Contents
+.. contents::
    :local:
    :depth: 2
 
@@ -16,12 +15,12 @@ Debian AMD64
 *****
 Intro
 *****
-Install the whole stack on a Debian-based system. It is currently made of:
+Install the whole stack on a Debian-based system. It is currently made of these free and open source software components:
 
-- Mosquitto_, an open source MQTT message broker
-- InfluxDB_, an open source time-series database
+- Mosquitto_, a MQTT message broker
+- InfluxDB_, a time-series database
 - Grafana_, a graph and dashboard builder for visualizing time series metrics
-- Kotori_, a data acquisition and graphing toolkit acting as a mediator
+- :ref:`Kotori`, a data acquisition, graphing and telemetry toolkit
 
 
 **************
@@ -39,7 +38,7 @@ InfluxDB
 ========
 ::
 
-    wget https://s3.amazonaws.com/influxdb/influxdb_0.12.1-1_amd64.deb
+    wget https://s3.amazonaws.com/influxdb/influxdb_0.12.2-1_amd64.deb
     dpkg --install influxdb_0.10.2-1_amd64.deb
 
 /etc/influxdb/influxdb.conf::
@@ -96,23 +95,52 @@ Start system service::
     tail -F /var/log/grafana/grafana.log
 
 
-
 ******
 Kotori
 ******
 
+.. _kotori-setup:
 
-Kotori Debian package
-=====================
-We don't have a solid Debian repository yet (as of 2016-01-29), but at least we have any packages::
+Kotori package
+==============
 
-    wget https://packages.elmyra.de/hiveeyes/debian/kotori_0.6.0-1_amd64.deb
-    dpkg --install kotori_0.6.0-1_amd64.deb
-    tail -F /var/log/kotori/*.log
+Prerequisites
+-------------
 
-When adjusting the configuration in ``/etc/kotori/kotori.ini``, please restart the service::
+Add GPG key for checking package signatures::
+
+    wget -qO - https://packages.elmyra.de/elmyra/foss/debian/pubkey.txt | apt-key add -
+
+Add https addon for apt::
+
+    aptitude install apt-transport-https
+
+
+Register with package repository
+--------------------------------
+
+Add source for "testing" distribution (e.g. append to /etc/apt/sources.list)::
+
+    deb https://packages.elmyra.de/elmyra/foss/debian/ testing main
+
+Reindex package database::
+
+    aptitude update
+
+
+Install package
+---------------
+::
+
+    aptitude install kotori
+
+
+.. seealso:: https://packages.elmyra.de/elmyra/foss/debian/README.txt
+
+When adjusting the configuration in ``/etc/kotori``, please restart the service::
 
     systemctl restart kotori
+    tail -F /var/log/kotori/*.log
 
 For information beyond the package level, please visit :ref:`kotori-hacking`.
 

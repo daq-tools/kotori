@@ -70,7 +70,7 @@ Setup
     :maxdepth: 1
     :glob:
 
-    setup/debian-amd64
+    setup/debian-quickstart
     setup/kotoribox-diy
     setup/index
 
@@ -95,6 +95,7 @@ Development
 
     changes
     development/index
+    packaging/index
 
 
 Research

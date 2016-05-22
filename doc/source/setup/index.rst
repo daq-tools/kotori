@@ -10,6 +10,7 @@ Software
     :maxdepth: 1
     :glob:
 
+    debian-quickstart
     debian-amd64
     debian-arm
     python-package

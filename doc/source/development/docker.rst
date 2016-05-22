@@ -100,6 +100,15 @@ Running
     docker start grafana
 
 
+Upgrading
+---------
+::
+
+    docker_remote_tags grafana/grafana
+    docker pull grafana/grafana
+
+.. seealso:: https://bitbucket.org/denilsonsa/small_scripts/src/default/docker_remote_tags.sh
+
 
 Mosquitto
 =========

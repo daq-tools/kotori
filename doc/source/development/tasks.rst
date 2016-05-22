@@ -17,14 +17,56 @@ Kotori tasks
 ****
 
 
+2016-05-22
+==========
+- [o] Adapt python source egg publishing location, upload to PyPI
+- [o] Publish current InfluxDB and Grafana packages along with Kotori. Streamline :ref:`setup-debian`.
+- [o] Add /etc/default/kotori to Debian package
+- [o] Build and add ARM packages to Debian repository
+
+
+2016-05-21
+==========
+- [o] Add Grafana graphs to applications/hiveeyes.rst
+
+
+2016-05-20
+==========
+- [o] Grafana: Is dashboard-solo compatible with snapshot?
+
+    - https://swarm.hiveeyes.org/grafana/dashboard-solo/db/1-prototype-wip-amo?panelId=5&fullscreen&from=1461075009660&to=1463667009660
+    - https://swarm.hiveeyes.org/grafana/dashboard/snapshot/EW2H9JIaYl5v3glhcPn2F1gf30uMEF17?panelId=5&fullscreen&from=1461075009660&to=1463667009660
+
+- [o] Integrate with https://collectd.org/documentation/manpages/collectd.conf.5.shtml#plugin_barometer
+- [o] HiveeyesDaily summary report
+- [o] MqttWampBridge for LST-MAVLINK
+- [o] Pyramid refactoring
+- [o] Minimal dashboard plugin system
+- [o] Compile individual firmwares directly from git repository
+- [o] Improve package building and releasing
+- [o] Upgrade Python dependencies to recent versions
+
+
+2016-05-18
+==========
+- [o] Integrate with AWS IoT Button
+    - https://aws.amazon.com/iot/button/
+    - https://news.ycombinator.com/item?id=11687463
+- [o] Package as "SNAP": https://wiki.ubuntu.com/XenialXerus/ReleaseNotes#Snap_application_format
+
+
 2016-05-13
 ==========
 - [o] Improve MQTTKit documentation
+- [o] ==> /var/log/kotori/kotori.log <==
+      2016-05-13T18:50:51+0200 [kotori.daq.graphing.grafana        ] WARN: Unable to format event {'log_namespace': 'kotori.daq.graphing.grafana', 'log_level': <LogLevel=warn>, 'log_logger': <Logger 'kotori.daq.graphing.grafana'>, 'log_time': 1463158251.727876, 'log_source': None, 'log_format': u'Client Error 404: {"message":"Dashboard not found"}'}: u'"message"'
+- [o] kwargs={'userdata': {'foo': 'bar'}
+- [o] Convenience alias for "utc"
 
 
 2016-05-12
 ==========
-- [o] Integrate with MAVLINK
+- [o] Integrate with MAVLINK: https://pixhawk.ethz.ch/mavlink/
 
 
 2016-05-04

@@ -7,9 +7,8 @@ Development
     :glob:
 
     hack
-    release
-    package
     tasks
     docker
     systemd
     **
+
