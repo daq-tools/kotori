@@ -13,7 +13,7 @@ log = Logger()
 
 class GrafanaApi(object):
 
-    def __init__(self, host='locahost', port=3000, username='admin', password='secret'):
+    def __init__(self, host='locahost', port=3000, username='admin', password='admin'):
         self.host = host
         self.port = port
         self.username = username
@@ -405,7 +405,7 @@ class GrafanaManager(object):
 
 if __name__ == '__main__':
 
-    grafana = GrafanaApi(host='192.168.59.103', username='admin', password='secret')
+    grafana = GrafanaApi(host='192.168.59.103', username='admin', password='admin')
     grafana.create_datasource('hiveeyes_test', {
         "type":     "influxdb",
         "url":      "http://192.168.59.103:8086/",

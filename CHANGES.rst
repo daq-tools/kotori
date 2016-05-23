@@ -7,6 +7,8 @@ develop
 - Improve documentation: Software releasing, package building and publishing. Both amd64 and armhf.
 - Improve documentation: Getting started, Hiveeyes application, Arch Linux setup
 - Add license EUPL 1.2
+- Update default credentials for Grafana 3.x in Kotori code (admin/admin)
+
 
 2016-05-22 0.7.1
 ================
