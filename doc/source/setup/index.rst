@@ -11,20 +11,21 @@ Software
     :glob:
 
     debian-quickstart
-    debian-amd64
-    debian-arm
+    arch-linux
     python-package
-    influxdb
-    grafana
     security
 
 
-********
-Hardware
-********
+----
+
+Deprecated
 
 .. toctree::
     :maxdepth: 1
     :glob:
 
-    kotoribox-diy
+    debian-amd64
+    debian-arm
+    grafana
+    influxdb
+

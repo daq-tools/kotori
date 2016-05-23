@@ -6,10 +6,22 @@
 About Kotori
 ############
 
-.. container:: basic-hero align-center
+.. container:: pull-left basic-hero
 
-    *Kotori* is a multi-channel, multi-protocol data acquisition and graphing toolkit
-    based on InfluxDB_, Grafana_, Mosquitto_ and Twisted_.
+    .. container:: align-center legroom-md
+
+        Kotori is a multi-channel, multi-protocol data acquisition and graphing toolkit
+        based on Grafana_, InfluxDB_, Mosquitto_ and Twisted_. It is written in Python.
+
+.. container:: pull-right
+
+    .. figure:: https://ptrace.isarengineering.de/2016-05-23_chart-recorder.png
+        :alt: Chart recorder
+        :width: 300px
+        :align: left
+
+|clearfix|
+
 
 .. container:: pull-left
 

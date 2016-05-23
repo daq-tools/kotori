@@ -4,9 +4,9 @@ Kotori CHANGES
 
 develop
 =======
-- Update docs re. releasing, package building and publishing. Both amd64 and armhf.
+- Improve documentation: Software releasing, package building and publishing. Both amd64 and armhf.
+- Improve documentation: Getting started, Hiveeyes application, Arch Linux setup
 - Add license EUPL 1.2
-
 
 2016-05-22 0.7.1
 ================

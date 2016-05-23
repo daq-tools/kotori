@@ -1,0 +1,58 @@
+.. include:: ../_resources.rst
+
+.. _setup-arch-linux:
+
+###################
+Setup on Arch Linux
+###################
+
+.. contents::
+   :local:
+   :depth: 2
+
+----
+
+*****
+Intro
+*****
+Install the whole stack on an Arch Linux-based system.
+The package repository supports architectures amd64 and armhf as of 2016-05-23.
+
+It is currently made of these free and open source software components:
+
+- Grafana_, a graph and dashboard builder for visualizing time series metrics
+- InfluxDB_, a time-series database
+- Mosquitto_, a MQTT message broker
+- :ref:`Kotori`, a data acquisition, graphing and telemetry toolkit
+
+
+
+***********
+Setup steps
+***********
+
+Prerequisites
+=============
+::
+
+    # TODO: Check the package names
+    yaourt mosquitto mosquitto-clients influxdb grafana
+
+::
+
+    yaourt dpkg
+    wget https://packages.elmyra.de/elmyra/foss/debian/pool/main/k/kotori/kotori_0.7.1-1_amd64.deb
+    dpkg -i kotori_0.7.1-1_amd64.deb
+
+
+.. note::
+
+    Check for recent versions at https://packages.elmyra.de/elmyra/foss/debian/pool/main/k/kotori/,
+    we also have packages for other architectures (e.g. armhf for RaspberryPi).
+
+
+
+***************
+Getting started
+***************
+Follow along at :ref:`getting-started` to configure and use your first Kotori application.

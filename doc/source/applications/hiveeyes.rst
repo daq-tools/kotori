@@ -27,7 +27,6 @@ Feel welcome to join them, just drop an email at "hiveeyes-devs ät ideensyndika
 They are friendly, we know them.
 
 
-
 ***********
 Environment
 ***********
@@ -49,6 +48,78 @@ Goals
   For details about the addressing scheme and topology, see :ref:`hiveeyes-one-topology`.
 - Store measurements to the database.
 - Automatically create default Grafana panels for instant telemetry data visualization.
+- Detect events and anomalies on the telemetry data, emit signals
+- Hiveeyes Daily, Schwarmalarm and Elektronische Stockkarte
+
+
+*******
+Results
+*******
+
+Intro
+=====
+Data currently is measured at intervals of about 15 minutes.
+
+In the following graphs the weight of the hive is shown with the light blue line.
+The temperature sensor inside the hive is shown in dark blue and
+the sensor at the air hole, which is in the sun most times, is yellow.
+
+Spring 2016
+===========
+
+.. raw:: html
+
+    <iframe src="https://swarm.hiveeyes.org/grafana/dashboard-solo/db/1-prototype-wip-amo?panelId=5&fullscreen&from=1461013134375&to=1463588387784" width="800" height="400" frameborder="0"></iframe>
+
+.. container:: width-800
+
+    Let's look at the data. During the cold period at the end of April the beehive loses absolute weight
+    because the bees have to live on their reserves. In contrast, the following two weeks were amazingly warm in May,
+    so the worker bees are getting extremely busy.
+
+    From April 29 until May 13, the weight has increased by almost 14 Kg.
+    On some days the beehive gained 2 Kg weigth due to pollen and nectar collecting.
+
+    It was the time of the fruit blossoms, so the cherry, pear and apple trees were in bloom in the nearby allotments.
+
+
+----
+
+.. raw:: html
+
+    <iframe src="https://swarm.hiveeyes.org/grafana/dashboard-solo/db/1-prototype-wip-amo?panelId=5&fullscreen&from=1462023385549&to=1462248704801" width="800" height="400" frameborder="0"></iframe>
+
+.. container:: width-800
+
+    The beehive gained a lot of weight on the 2nd of May. After six o'clock in the morning
+    the temperature begins to rise, at 7:15 the first sun rays shine on the entrance hole.
+    The first scouts leave the beehive at 7:45 and at 8:15 everyone is in the air.
+    The beehive suddenly loses 120g since about 1200 bees are leaving to harvest.
+
+    At 9:20, the ratio between the arriving and departing bees reverses and the weight increases rapidly.
+
+    Throughout the day, bees are flying in and out, collecting nectar and pollen, explore and report.
+    Even as the beehive is in the shadow from 16:00 and the temperature starts sinking,
+    the bee colony continues to collect until 20:00.
+
+    1800g have then carried home. It was a good warm and important day, after the long period of winter
+    and the cold snap end of April.
+
+|clearfix|
+
+
+Schwarmalarm May 2016
+=====================
+
+.. raw:: html
+
+    <iframe src="https://swarm.hiveeyes.org/grafana/dashboard-solo/db/1-prototype-wip-amo?panelId=5&fullscreen&from=1463633560600&to=1463680184231" width="800" height="400" frameborder="0"></iframe>
+    <div style="width: 800px">
+        Bam.
+    </div>
+
+
+|clearfix|
 
 
 *******

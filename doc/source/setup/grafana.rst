@@ -32,7 +32,8 @@ Go to Grafana's web frontend:
 
 - url:  http://192.168.59.103:3000/
 - user: admin
-- pass: secret
+- pass: admin       # Grafana 3.x
+- pass: secret      # Grafana 2.x
 
 
 

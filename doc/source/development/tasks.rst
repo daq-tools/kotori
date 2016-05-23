@@ -17,6 +17,14 @@ Kotori tasks
 ****
 
 
+2016-05-23
+==========
+- [o] Build packages for other distributions. e.g. CentOS, SuSE, Arch Linux using ``alien``.
+- [o] Improve :ref:`application-mqttkit`
+
+    - How to use apps-available vs. apps-enabled
+
+
 2016-05-22
 ==========
 - [o] Adapt python source egg publishing location, upload to PyPI

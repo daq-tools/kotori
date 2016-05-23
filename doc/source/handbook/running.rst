@@ -29,9 +29,11 @@ A blueprint is:
 .. literalinclude:: ../_static/content/kotori.ini
     :language: ini
 
+.. todo:: Add blueprint for application :ref:`application-mqttkit`.
+
 A blueprint for vendor :ref:`vendor-lst` is:
 
-.. literalinclude:: ../_static/content/lst.ini
+.. literalinclude:: ../_static/content/vendor-lst.ini
     :language: ini
 
 

@@ -42,12 +42,28 @@ Enable authentication
 
 InfluxDB
 --------
+Purpose: Enable auth-only access to InfluxDB.
 
-https://influxdb.com/docs/v0.9/administration/authentication_and_authorization.html#set-up-authentication
+.. highlight:: bash
 
-create admin user::
+#. Create admin user::
 
-     $ curl --silent --get 'http://swarm.hiveeyes.org:8086/query?pretty=true' --user root:root --data-urlencode 'q=CREATE USER admin WITH PASSWORD 'Armoojwi' WITH ALL PRIVILEGES'
+    $ curl --silent --get 'http://kotori.example.org:8086/query?pretty=true' --user root:root --data-urlencode 'q=CREATE USER admin WITH PASSWORD 'admin' WITH ALL PRIVILEGES'
+
+.. highlight:: ini
+
+#. Enable authentication by setting the ``auth-enabled`` option to true in the ``[http]`` section of the configuration file::
+
+    [http]
+    # ...
+    auth-enabled = true
+    # ...
+
+.. seealso::
+
+    - `InfluxDB docs: Set up authentication <https://influxdb.com/docs/v0.9/administration/authentication_and_authorization.html#set-up-authentication>`_
+    - :ref:`influxdb-handbook`
+
 
 
 Nginx
