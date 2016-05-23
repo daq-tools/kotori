@@ -5,6 +5,9 @@ Kotori CHANGES
 develop
 =======
 - Update docs re. releasing, package building and publishing. Both amd64 and armhf.
+- Add license EUPL 1.2
+
+
 2016-05-22 0.7.1
 ================
 - Update default credentials for Grafana 3.x in Kotori configuration (admin/admin)
