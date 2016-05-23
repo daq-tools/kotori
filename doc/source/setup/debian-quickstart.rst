@@ -16,12 +16,16 @@ Debian Quickstart
 *****
 Intro
 *****
-Install the whole stack on a Debian-based system. It is currently made of these free and open source software components:
+Install the whole stack on a Debian-based system.
+The package repository supports architectures amd64 and armhf as of 2016-05-23.
+
+It is currently made of these free and open source software components:
 
 - Mosquitto_, a MQTT message broker
 - InfluxDB_, a time-series database
 - Grafana_, a graph and dashboard builder for visualizing time series metrics
 - :ref:`Kotori`, a data acquisition, graphing and telemetry toolkit
+
 
 
 ***********

@@ -2,52 +2,21 @@
 
 .. _kotori-release:
 
-****************
-Releasing Kotori
-****************
-
-The designated public Debian repository host is ``pulp.cicer.de``. It is currently running Debian Jessie (8.4).
+##############
+Release Kotori
+##############
 
 Cut release
 ===========
-Bump version number in various files, commit them, add tag reflecting the version number and finally push the repository to its origin::
+Bump version number in various files, commit them, add tag reflecting
+the version number and finally push the repository to its origin::
 
     make release bump=minor
 
 .. note:: We try to adhere to `Semantic Versioning`_.
 
 
-Build and upload packages
-=========================
-Build Python sdist egg and publish to egg server::
-
-    make python-package
-
-Build Debian package and upload to the package server ``/incoming`` directory, the package version is taken from ``setup.py``::
-
-    # build debian package for regular daq flavor (28 MB)
-    make debian-package flavor=daq
-
-    # build debian package for advanced daq flavor
-    # capable of decoding binary messages (38 MB)
-    make debian-package flavor=daq-binary
-
-After doing so, the package should appear at https://packages.elmyra.de/elmyra/foss/debian/incoming/.
-
-
-Publish package to Debian repository
-====================================
-::
-
-    ssh workbench@pulp.cicer.de
-
-    export APTLY_CONFIG=/srv/packages/organizations/elmyra/foss/aptly/aptly.conf
-    export APTLY_REPOSITORY=main
-    export APTLY_DISTRIBUTION=testing
-    export PACKAGES_INCOMING=/srv/packages/organizations/elmyra/foss/aptly/public/incoming
-
-    aptly repo add -config=$APTLY_CONFIG -remove-files=true $APTLY_REPOSITORY $PACKAGES_INCOMING/kotori_*.deb
-    aptly publish update -config=$APTLY_CONFIG -gpg-key=2543A838 -passphrase=esp $APTLY_DISTRIBUTION
-
-.. note:: How to setup the :ref:`kotori-setup`.
+Build and publish packages
+==========================
+After cutting a release, we're ready to proceed to :ref:`kotori-build`.
 

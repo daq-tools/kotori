@@ -4,6 +4,14 @@ Kotori CHANGES
 
 develop
 =======
+- Update docs re. releasing, package building and publishing. Both amd64 and armhf.
+2016-05-22 0.7.1
+================
+- Update default credentials for Grafana 3.x in Kotori configuration (admin/admin)
+
+
+2016-05-22 0.7.0
+================
 
 vendor :ref:`vendor-hiveeyes`
 -----------------------------
@@ -39,6 +47,7 @@ general
 - Improve Grafana gracefulness when finding a corrupt panel
 - Overhaul configuration subsystem
 - Try to reconnect to MQTT broker in interval if initial connection fails
+- Add license, improve packaging and package publishing
 
 documentation
 -------------

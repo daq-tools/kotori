@@ -136,3 +136,62 @@ Housing
 - | ABS-76Z Hermetisches Universalgehäuse ABS 120x70x40 verschraubbar
   | http://rf-store.com/index.php?view=2&pv=showart&prod_id=ABS-76Z
 
+
+********
+Software
+********
+
+Raspbian
+========
+
+Command line installer
+----------------------
+
+https://www.raspberrypi.org/downloads/raspbian/
+::
+
+    wget https://downloads.raspberrypi.org/raspbian_lite_latest
+    unzip 2016-05-10-raspbian-jessie-lite.zip
+
+https://www.raspberrypi.org/documentation/installation/installing-images/README.md
+
+- Identify the SD card disk::
+
+    diskutil list
+
+- Unmount your SD card by using the disk identifier, to prepare for copying data to it::
+
+    diskutil unmountDisk /dev/disk1
+
+- Copy the data to your SD card::
+
+    sudo dd bs=1M if=~/Downloads/2016-05-10-raspbian-jessie-lite.img of=/dev/rdisk1
+
+- Eject the card::
+
+    sudo diskutil unmountDisk /dev/disk1
+    sudo diskutil eject /dev/rdisk1
+
+
+User interface installers
+-------------------------
+See also https://www.raspbian.org/RaspbianInstaller
+
+
+Boot RaspberryPi
+================
+- Insert SD Card into slot, connect with Ethernet and power up the system
+- Login::
+
+    # The default password for user "pi" is "raspberry"
+    ssh pi@raspberrypi
+
+    sudo su -
+
+.. note:: You should change your default password, see https://www.raspberrypi.org/documentation/linux/usage/users.md
+
+
+Kotori
+======
+See :ref:`setup-debian`.
+

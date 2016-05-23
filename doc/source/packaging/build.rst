@@ -2,39 +2,75 @@
 
 .. _kotori-build:
 
-###############
-Kotori building
-###############
+############
+Build Kotori
+############
 
-The designated Debian buildslave is ``oasis.cicer.de``. It is currently running Debian Jessie (8.4).
-Please find guidelines for setting up the buildslave at :ref:`kotori-buildslave`.
 
 *****
-Steps
+Intro
 *****
+This documentation section describes how to build Kotori Debian packages.
+Please find guidelines for setting up the buildhost at :ref:`kotori-buildhost`.
 
-Build package
-=============
+
+*************
+Release steps
+*************
+
+Get the source
+==============
 
 Get hold of the repository
 --------------------------
 Initially::
 
-    ssh workbench@oasis.cicer.de
-    mkdir -p isarengineering
-    git clone git@git.elmyra.de:isarengineering/kotori.git ~/isarengineering/kotori
-    cd isarengineering/kotori
+    ssh workbench@buildhost.example.org
+    mkdir -p develop
+    git clone git@git.elmyra.de:isarengineering/kotori.git ~/develop/kotori
+    cd develop/kotori
 
-Then::
+Update the repository
+---------------------
+::
 
-    ssh workbench@oasis.cicer.de
-    cd isarengineering/kotori
+    ssh workbench@buildhost.example.org
+    cd develop/kotori
     git pull
 
 
-Cut release, build and publish package
---------------------------------------
-See :ref:`kotori-release`.
+Build package
+=============
+Build Debian package and upload to the package server ``/incoming`` directory, the package version is taken from ``setup.py``::
+
+    # build debian package for regular daq flavor (28 MB)
+    make debian-package flavor=daq
+
+    # build debian package for advanced daq flavor
+    # capable of decoding binary messages (38 MB)
+    make debian-package flavor=daq-binary
+
+After doing so, the package should appear at https://packages.elmyra.de/elmyra/foss/debian/incoming/.
+
+Build Python sdist egg and publish to egg server::
+
+    make python-package
+
+
+Publish package
+===============
+::
+
+    ssh workbench@packages.example.org
+
+    export APTLY_CONFIG=/srv/packages/organizations/elmyra/foss/aptly/aptly.conf
+    export APTLY_REPOSITORY=main
+    export APTLY_DISTRIBUTION=testing
+    export PACKAGES_INCOMING=/srv/packages/organizations/elmyra/foss/aptly/public/incoming
+
+    aptly repo add -config=$APTLY_CONFIG -remove-files=true $APTLY_REPOSITORY $PACKAGES_INCOMING/kotori_*.deb
+    aptly publish update -config=$APTLY_CONFIG -gpg-key=2543A838 -passphrase=esp $APTLY_DISTRIBUTION
+
 
 
 Use the package
@@ -46,33 +82,63 @@ How to setup the :ref:`kotori-setup`.
 Appendix
 ********
 
-.. _kotori-buildslave:
+.. _kotori-buildhost:
 
-Prepare buildslave
-==================
+Prepare buildhost
+=================
 Install packages::
 
     apt-get install aptitude
     aptitude update && aptitude upgrade
 
     # system
-    aptitude install fail2ban
+    aptitude install -y fail2ban
 
     # development
-    aptitude install git
+    aptitude install -y git
 
-    # header files
-    aptitude install build-essential python-dev ruby-dev libssl-dev libffi-dev libyaml-dev
+    # build foundation and header files
+    aptitude install -y build-essential python-dev libssl-dev libffi-dev libyaml-dev python-virtualenv
 
     # build infrastructure
-    aptitude install python-virtualenv rubygems
+    aptitude install -y python-setuptools
+
+Install Ruby and RubyGems::
+
+    aptitude install -y ruby2.1 ruby2.1-dev
+    ln -s /usr/bin/ruby2.1 /usr/bin/ruby
+
+    ruby --version
+    # ruby 2.1.5p273 (2014-11-13) [x86_64-linux-gnu]
+    # ruby 2.1.5p273 (2014-11-13) [arm-linux-gnueabihf]
+
+    mkdir install; cd install
+    wget https://rubygems.org/rubygems/rubygems-2.6.4.tgz
+    tar -xzf rubygems-2.6.4.tgz
+    ruby setup.rb
+
+    ln -s /usr/bin/gem2.1 /usr/bin/gem
+
+    gem --version
+    2.6.4
+
+Install fpm::
+
     gem install fpm
 
     fpm --version
-    1.4.0
+    1.5.0
+
 
 Add workbench user::
 
     useradd --create-home --shell /bin/bash workbench
     su - workbench
+
+
+Current infrastructure
+======================
+- The designated Debian buildhost is ``oasis.cicer.de``.
+- The designated public Debian repository host is ``pulp.cicer.de``.
+- Both are running a recent stable Debian distribution, currently Debian Jessie (8.4).
 
