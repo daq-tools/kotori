@@ -13,7 +13,7 @@ log = Logger()
 
 class GrafanaApi(object):
 
-    def __init__(self, host='locahost', port=3000, username='admin', password='admin'):
+    def __init__(self, host='localhost', port=3000, username='admin', password='admin'):
         self.host = host
         self.port = port
         self.username = username
