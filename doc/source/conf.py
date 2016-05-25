@@ -310,5 +310,5 @@ def setup(app):
 # Link with BERadio and Hiveeyes projects
 intersphinx_mapping = {
     'beradio':  ('https://hiveeyes.org/docs/beradio/', None),
-    'hiveeyes': ('https://swarm.hiveeyes.org/docs/', None),
+    'hiveeyes': ('https://hiveeyes.org/docs/system/', None),
 }

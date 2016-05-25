@@ -3,12 +3,36 @@ Links
 #####
 
 
+2016-05-24
+==========
+- | Debug hardware like the pros with the logic analyzer you'll love.
+  | https://www.saleae.com/
+
+- http://www.usbee.com/
+
+    - http://www.usbee.com/protocol-decoder.html
+    - | CWAV, Inc. has been closed and no longer sells the USBee Test Pods
+      | http://www.usbee.com/company.htm
+
+- https://grafana.net/plugins/bosun-datasource
+- https://grafana.net/plugins/grafana-worldmap-panel
+
+- | Minoca OS
+  | A new operating system for the world of connected devices.
+  | http://www.minocacorp.com/
+  | https://news.ycombinator.com/item?id=11662057
+
+
+2016-05-23
+==========
+- https://github.com/owntracks/recorder
+
 2016-05-21
 ==========
 - https://relayr.io/
 - https://relayr.io/wunderbar/
 - https://play.google.com/store/apps/details?id=io.relayr.iotsmartphone
--
+
 
 2016-05-20
 ==========
@@ -52,17 +76,28 @@ Misc
 ==========
 - | SparkFun RFM69 Breakout (915MHz)
   | https://www.sparkfun.com/products/12775
+- IBM Bluemix
+
+    - https://console.ng.bluemix.net/
+    - https://www.ibm.com/cloud-computing/bluemix/open-source/
+    - OpenWhisk: OpenWhisk is a cloud-first distributed event-based programming service.
+      It provides a programming model to upload event handlers to a cloud service, and register the handlers to respond to various events.
+
+        - https://www.ibm.com/cloud-computing/bluemix/openwhisk/
+        - https://github.com/openwhisk/openwhisk
+        - https://developer.ibm.com/openwhisk/
+        - https://new-console.ng.bluemix.net/openwhisk/
+        - https://github.com/openwhisk/openwhisk/tree/master/docs
+        - https://github.com/openwhisk/openwhisk/blob/master/docs/about.md
+        - https://github.com/openwhisk/openwhisk/blob/master/docs/actions.md
+
+    - https://www.ibm.com/cloud-computing/bluemix/internet-of-things/
+    - https://console.ng.bluemix.net/catalog/
+    - https://console.ng.bluemix.net/catalog/starters/internet-of-things-platform-starter/
 
 
 2016-05-04
 ==========
-- Integrate with Snap! A powerful open telemetry framework
-
-    - https://intelsdi-x.github.io/snap/
-    - https://github.com/intelsdi-x/snap
-    - https://medium.com/intel-sdi/snap-first-gui-is-grafana-40bb92df2660
-    - https://twitter.com/tiffanyfayj/status/672101278651035648
-
 - More
 
     - http://sodaq.com/lora
@@ -75,6 +110,27 @@ Misc
     - https://kukua.github.io/concava/
     - https://kukua.github.io/dashboard/
     - SPUL - Sensor Protocol Ultra Light: https://kukua.github.io/concava-connector-spul/latest/introduction/
+
+
+2016-04-27
+==========
+- | http://www.bbc.com/future/story/20160426-the-invisible-language-of-trains-boats-and-planes
+  | via: https://news.ycombinator.com/item?id=11579710
+- http://www.familiars.org/
+
+    FAMILIARS
+    Lighthouse Arts, Brighton. 7th-20th September 2015, 11am-5pm.
+
+    FAMILIARS is an immersive installation that materialises the presence, function,
+    and fragility of the unseen logistical infrastructures which underpin the modern
+    world, yet are often coded as separate to society.
+
+    Exploiting Brighton's presence and location in this infrastructure, the piece
+    creates a mappable representation by directly intercepting logistical signals
+    broadcast locally by air, sea, and train cargo transport and transmuting the
+    raw data into ambisonics and projected visualisations. These facets invite
+    exploration by the audience, creating intimacy and familiarity with a system
+    that is designed to be invisible, and only noticed when it malfunctions or fails.
 
 
 2016-04-25

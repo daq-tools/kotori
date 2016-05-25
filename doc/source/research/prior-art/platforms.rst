@@ -115,6 +115,11 @@ Proprietary
   | https://polestar.io/
   | http://www.1060research.com/products/
 
+- https://grovestreams.com/
+- http://sensorcloud.com/
+- https://freeboard.io/
+- https://thingspeak.com/
+
 
 Keen IO
 -------

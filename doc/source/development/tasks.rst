@@ -16,6 +16,17 @@ Kotori tasks
 2016
 ****
 
+2016-05-25
+==========
+- [o] Hiveeyes needs a different activity indicator in log file due its low transmission rate. Introduce total packet counter.
+- [o] Slogan: Data acquisition without friction.
+
+2016-05-24
+==========
+- [o] Upload InfluxDB 0.13.0 from https://influxdata.com/downloads/#influxdb to package repository
+- [o] Create meta package "kotori-bundle"
+- [o] For querying InfluxDB, use PyInfluxQL: https://github.com/jjmalina/pyinfluxql
+
 
 2016-05-23
 ==========
@@ -24,6 +35,11 @@ Kotori tasks
 
     - How to use apps-available vs. apps-enabled
 
+- [o] Improve ``applications/index.rst``: Add more pictures
+- [o] Redirect https://hiveeyes.org/docs/kotori/ to https://getkotori.org/docs/
+- [o] Grafana: Multi-panel dashboard-solo
+- [o] Publish CHANGES.rst to debian/changelog
+
 
 2016-05-22
 ==========
@@ -31,8 +47,11 @@ Kotori tasks
 - [o] Publish current InfluxDB and Grafana packages along with Kotori. Streamline :ref:`setup-debian`.
 - [o] Add /etc/default/kotori to Debian package
 - [o] Build and add ARM packages to Debian repository
-- [o] Add README.rst, CHANGES.rst, LICENSE*.txt and agpl-3.0.txt to Debian package
-- [o] Check https://programmers.stackexchange.com/questions/234511/what-is-the-best-practice-for-arranging-third-party-library-licenses-paperwork/234526#234526
+- [o] Add README.rst, CHANGES.rst, LICENSE*.txt and agpl-3.0.txt to Python- and Debian packages, check
+
+    - https://stackoverflow.com/questions/9977889/how-to-include-license-file-in-setup-py-script
+    - https://programmers.stackexchange.com/questions/234511/what-is-the-best-practice-for-arranging-third-party-library-licenses-paperwork/234526#234526
+
 - [o] Prevent "useradd: user 'kotori' already exists" when upgrading package
 - [o] Activate email address "support@getkotori.org"
 - [o] Add contributors and credits to documentation
@@ -52,11 +71,6 @@ Kotori tasks
 
 2016-05-20
 ==========
-- [o] Grafana: Is dashboard-solo compatible with snapshot?
-
-    - https://swarm.hiveeyes.org/grafana/dashboard-solo/db/1-prototype-wip-amo?panelId=5&fullscreen&from=1461075009660&to=1463667009660
-    - https://swarm.hiveeyes.org/grafana/dashboard/snapshot/EW2H9JIaYl5v3glhcPn2F1gf30uMEF17?panelId=5&fullscreen&from=1461075009660&to=1463667009660
-
 - [o] Integrate with https://collectd.org/documentation/manpages/collectd.conf.5.shtml#plugin_barometer
 - [o] HiveeyesDaily summary report
 - [o] MqttWampBridge for LST-MAVLINK
@@ -82,11 +96,6 @@ Kotori tasks
       2016-05-13T18:50:51+0200 [kotori.daq.graphing.grafana        ] WARN: Unable to format event {'log_namespace': 'kotori.daq.graphing.grafana', 'log_level': <LogLevel=warn>, 'log_logger': <Logger 'kotori.daq.graphing.grafana'>, 'log_time': 1463158251.727876, 'log_source': None, 'log_format': u'Client Error 404: {"message":"Dashboard not found"}'}: u'"message"'
 - [o] kwargs={'userdata': {'foo': 'bar'}
 - [o] Convenience alias for "utc"
-
-
-2016-05-12
-==========
-- [o] Integrate with MAVLINK: https://pixhawk.ethz.ch/mavlink/
 
 
 2016-05-04

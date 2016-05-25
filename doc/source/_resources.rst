@@ -38,6 +38,11 @@
 .. Foundation libraries
 .. _twisted-mqtt: https://pypi.python.org/pypi/twisted-mqtt
 .. _paho-mqtt: https://pypi.python.org/pypi/paho-mqtt
+.. _Eclipse Paho: https://eclipse.org/paho/
+.. _Arduino Client for MQTT: http://pubsubclient.knolleary.net/
+.. _ARMmbed ESP8266 MQTT example: https://developer.mbed.org/teams/ESP8266/code/ESP8266_MQTT_HelloWorld/
+.. _Adafruit MQTT Library: https://github.com/adafruit/Adafruit_MQTT_Library
+.. _Arduino JSON library: https://github.com/bblanchon/ArduinoJson
 
 
 .. Akronyms, Standards, etc.
@@ -47,6 +52,7 @@
 .. _M2M: https://en.wikipedia.org/wiki/Machine_to_machine
 .. _SCADA: https://en.wikipedia.org/wiki/SCADA
 .. _WebSockets: https://tools.ietf.org/html/rfc6455
+.. _CEST: https://www.timeanddate.com/time/zones/cest
 
 
 

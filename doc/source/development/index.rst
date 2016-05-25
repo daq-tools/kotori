@@ -8,6 +8,7 @@ Development
 
     hack
     tasks
+    ideas
     docker
     systemd
     **

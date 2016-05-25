@@ -8,6 +8,7 @@ develop
 - Improve documentation: Getting started, Hiveeyes application, Arch Linux setup
 - Add license EUPL 1.2
 - Update default credentials for Grafana 3.x in Kotori code (admin/admin)
+- Update documentation, start handbooks for Grafana and Kotori with appropriate clients
 
 
 2016-05-22 0.7.1

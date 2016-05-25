@@ -69,11 +69,11 @@ Spring 2016
 
 .. raw:: html
 
-    <iframe src="https://swarm.hiveeyes.org/grafana/dashboard-solo/db/1-prototype-wip-amo?panelId=5&fullscreen&from=1461013134375&to=1463588387784" width="800" height="400" frameborder="0"></iframe>
+    <iframe src="https://swarm.hiveeyes.org/grafana/dashboard-solo/db/hiveeyes-labs-wedding?panelId=5&from=20160418T200000&to=20160518T160000" width="800" height="425" frameborder="0"></iframe>
 
 .. container:: width-800
 
-    Let's look at the data. During the cold period at the end of April the beehive loses absolute weight
+    Let's have a look at the data. During the cold period at the end of April the beehive loses absolute weight
     because the bees have to live on their reserves. In contrast, the following two weeks were amazingly warm in May,
     so the worker bees are getting extremely busy.
 
@@ -87,7 +87,7 @@ Spring 2016
 
 .. raw:: html
 
-    <iframe src="https://swarm.hiveeyes.org/grafana/dashboard-solo/db/1-prototype-wip-amo?panelId=5&fullscreen&from=1462023385549&to=1462248704801" width="800" height="400" frameborder="0"></iframe>
+    <iframe src="https://swarm.hiveeyes.org/grafana/dashboard-solo/db/hiveeyes-labs-wedding?panelId=5&from=20160430T130000&to=20160503T040000" width="800" height="425" frameborder="0"></iframe>
 
 .. container:: width-800
 
@@ -113,11 +113,14 @@ Schwarmalarm May 2016
 
 .. raw:: html
 
-    <iframe src="https://swarm.hiveeyes.org/grafana/dashboard-solo/db/1-prototype-wip-amo?panelId=5&fullscreen&from=1463633560600&to=1463680184231" width="800" height="400" frameborder="0"></iframe>
-    <div style="width: 800px">
-        Bam.
-    </div>
+    <iframe src="https://swarm.hiveeyes.org/grafana/dashboard-solo/db/hiveeyes-labs-wedding?panelId=5&from=20160519T040000&to=20160519T170000" width="800" height="425" frameborder="0"></iframe>
 
+.. container:: width-800
+
+    This is a weight-loss event from :ref:`hiveeyes-scale-beutenkarl`
+    recorded on 2016-05-20 between 10:11 and 10:26 hours CEST after a
+    bee colony started swarming at the Hiveeyes Labs Beehive in Berlin Wedding,
+    see also :ref:`hiveeyes-schwarmalarm-2016-05-20`.
 
 |clearfix|
 

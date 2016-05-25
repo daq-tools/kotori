@@ -95,8 +95,10 @@ Handbooks
     :maxdepth: 1
     :glob:
 
-    handbook/running
+    handbook/client
+    handbook/grafana
     handbook/influxdb
+    handbook/kotori
     handbook/kotoribox-diy
 
 
