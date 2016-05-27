@@ -17,6 +17,53 @@ Kotori ideas
 ****
 
 
+2016-05-27
+==========
+- [o] Integrate with CKAN and Stack4Things
+
+    - http://ckan.org/
+    - http://smartme.unime.it/
+    - http://smartme.unime.it/technologies.php
+    - http://stack4things.unime.it/
+    - http://stack4things.unime.it/stack4things-on-github/
+    - https://github.com/MDSLab/s4t-iotronic-standalone
+    - http://smartme-data.unime.it/dataset/37968a32-de3b-9fc4-7eeb-ca76ba14b44b/resource/515c4bda-fe18-4a41-b050-ebd457464546
+    - http://docs.ckan.org/en/latest/maintaining/datastore.html
+    - http://docs.ckan.org/projects/datapusher/en/latest/
+
+- [o] Use HTSQL
+
+    - http://htsql.org/
+    - https://bitbucket.org/prometheus/htsql/
+    - https://github.com/okfn/ckanext-htsql
+
+- [o] Get into splash screen of http://wamp-proto.org/
+- [o] Vehicle dashboard
+
+    - http://www.solarimpulse.com/widget-aircraft
+    - http://www.solarimpulse.com/js/telemetries.js
+    - http://www.solarimpulse.com/js/interface.js
+    - http://www.solarimpulse.com/js/realweb.js
+    - http://www.solarimpulse.com/widgets/embed
+
+        - http://www.solarimpulse.com/widget-flight_profile
+        - http://www.solarimpulse.com/widget-flight_wrapup
+
+- [o] Integrate with Telcos like
+
+    - http://www.ndsatcom.com/
+    - http://www.satcomglobal.com/
+    - https://www.satcomdirect.com/
+
+        - https://www.satcomdirect.com/products-and-services/flightlogs/
+        - https://www.satcomdirect.com/products-and-services/sdpro/
+        - http://www.satcomstore.com/
+        - http://www.satcomstore.com/solutions/
+        - http://www.satcomstore.com/M2m-communication-solutions
+        - http://www.satcomstore.com/satcom-spotlight/
+        - http://www.satcomstore.com/iridium-go/
+
+
 2016-05-24
 ==========
 - [o] Add docs/why-kotori

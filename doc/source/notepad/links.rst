@@ -3,6 +3,16 @@ Links
 #####
 
 
+2016-05-27
+==========
+- http://www.sixpinetrees.pl/2013/10/makers-how-to-win-iot-standards-battle.html
+- http://coap.technology/
+- https://github.com/mwasilak/txThings
+- https://github.com/Tanganelli/CoAPthon
+- https://github.com/joaopedrotaveira/linux-rpl
+- http://www.openwsn.org/
+
+
 2016-05-24
 ==========
 - | Debug hardware like the pros with the logic analyzer you'll love.

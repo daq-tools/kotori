@@ -104,6 +104,9 @@
 .. _NodeUSB: http://www.nodeusb.com/
 
 
+.. Human beings
+.. _Jan-Piet Mens: https://github.com/jpmens
+
 
 .. Clearfix in reStructuredText
 .. https://stackoverflow.com/questions/23498174/clearfix-paragraph-in-restructured-text

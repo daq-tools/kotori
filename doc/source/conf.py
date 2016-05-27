@@ -312,3 +312,8 @@ intersphinx_mapping = {
     'beradio':  ('https://hiveeyes.org/docs/beradio/', None),
     'hiveeyes': ('https://hiveeyes.org/docs/system/', None),
 }
+
+# Disable caching remote inventories completely
+# http://www.sphinx-doc.org/en/stable/ext/intersphinx.html#confval-intersphinx_cache_limit
+intersphinx_cache_limit = 0
+

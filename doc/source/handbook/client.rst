@@ -56,18 +56,44 @@ Arduino
 ****
 MQTT
 ****
-- Python
 
-    - `paho-mqtt`_, `Eclipse Paho`_ MQTT Python client library
+Command line
+============
+- See :ref:`sawtooth-signal` about how to generate dynamic, slowly
+  oscillating signals and publish them to MQTT from the command line.
 
-- Arduino
+.. todo::
 
-    - `Arduino Client for MQTT`_ (recommended)
-    - `Adafruit MQTT Library`_ (confirmed to work)
+    - Add example from Hiveeyes, link here.
+    - Also add link from handbook/kotori and setup/getting-started to here.
 
-- ESP8266/mbed
 
-    - `ARMmbed ESP8266 MQTT example`_
+Python
+======
+- `paho-mqtt`_, `Eclipse Paho`_ MQTT Python client library
+
+Arduino
+=======
+- `Arduino Client for MQTT`_ (recommended)
+- `Adafruit MQTT Library`_ (confirmed to work)
+
+ESP8266/mbed
+============
+- `ARMmbed ESP8266 MQTT example`_
+
+
+***
+PHP
+***
+
+Command line
+============
+.. todo::
+
+    - Build and document "kotori-client.php"
+    - How to publish telemetry data from command line
+    - Link here from appropriate section in Hiveeyes system docs
+    - Also add link from handbook/kotori and setup/getting-started to here
 
 
 ******

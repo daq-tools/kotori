@@ -16,6 +16,39 @@ Kotori tasks
 2016
 ****
 
+
+2016-05-27
+==========
+- [o] Notify jpmens about handbook/acquisition/sawtooth.html#multiple-sawtooth-signals
+
+- [o] Connect from an ESP8266::
+
+    [10] https://harizanov.com/2015/11/rfm69-to-mqtt-gateway-using-esp8266/
+    [11] https://github.com/someburner/esp-rfm69
+    [12] https://github.com/someburner/esp-rfm69/wiki/MQTT
+    [13] http://tuanpm.net/native-mqtt-client-library-for-esp8266/
+    [14] https://github.com/tuanpmt/esp_mqtt
+    [15] https://hiveeyes.org/docs/beradio/research/mqtt.html#c
+
+- [o] Also have a look at::
+
+    [4] http://www.esp8266.nu/index.php/ESPEasy
+    [5] https://github.com/ESP8266nu/ESPEasy
+    [6] http://www.esp8266.nu/index.php/EasyProtocols
+    [7] http://www.esp8266.nu/index.php/EasyOTA
+    [8] https://github.com/ESP8266nu/ESPEasySlaves
+    [9] https://github.com/ESP8266nu/ESPEasySlaves/blob/master/MiniProExtender/MiniProExtender.ino
+
+- [o] Build and document Kotori CoAP interface based on txThings
+
+
+2016-05-26
+==========
+- [o] Add proper content attributions to media elements from 3rd-party authors
+- [o] Display license in documentation
+- [o] By default (mqttkit), prefix dashboard names with realm, to avoid collisions like with hiveeyes.
+- [o] Default zoom level for new Grafana dashboards should be "Last 5 minutes" or even shorter
+
 2016-05-25
 ==========
 - [o] Hiveeyes needs a different activity indicator in log file due its low transmission rate. Introduce total packet counter.

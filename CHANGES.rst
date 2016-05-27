@@ -10,6 +10,14 @@ develop
 - Update default credentials for Grafana 3.x in Kotori code (admin/admin)
 - Update documentation, start handbooks for Grafana and Kotori with appropriate clients
 
+documentation
+-------------
+- Improve :ref:`application-mqttkit`
+- Add :ref:`sawtooth-signal`
+- Add :ref:`mosquitto-on-osx`
+
+
+.. _kotori-0.7.1:
 
 2016-05-22 0.7.1
 ================

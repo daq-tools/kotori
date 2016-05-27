@@ -17,7 +17,7 @@ Setup on Debian
 Intro
 *****
 Install the whole stack on a Debian-based system.
-The package repository supports architectures amd64 and armhf as of 2016-05-23.
+The package repository supports architectures amd64 and armhf as of May 23, 2016.
 
 It is currently made of these free and open source software components:
 
@@ -60,8 +60,14 @@ Setup the whole software stack
 ==============================
 ::
 
-    aptitude install chrony mosquitto mosquitto-clients influxdb grafana kotori
+    aptitude install mosquitto mosquitto-clients influxdb grafana kotori
     systemctl start influxdb
+
+.. tip::
+
+    Better install ``chrony`` or use other means to keep your system times sound::
+
+        aptitude install chrony
 
 
 ***************

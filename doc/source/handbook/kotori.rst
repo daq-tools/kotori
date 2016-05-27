@@ -1,5 +1,7 @@
 .. include:: ../_resources.rst
 
+.. _kotori-handbook:
+
 .. _running-kotori:
 
 ##############
@@ -11,6 +13,11 @@ Running Kotori
    :depth: 1
 
 ----
+
+.. todo::
+
+    - Swap content from here with "setup/kotori.rst"
+    - Add content from "Getting started" section of :ref:`Hiveeyes Handbook <hiveeyes:handbook>`
 
 *****
 Intro

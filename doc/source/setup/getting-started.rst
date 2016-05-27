@@ -5,6 +5,7 @@
 ###############
 Getting started
 ###############
+.. highlight:: bash
 
 .. contents::
    :local:
@@ -12,10 +13,17 @@ Getting started
 
 ----
 
+.. todo::
+
+    - Swap content from here with :ref:`kotori-handbook`
+    - Rename this file to "setup/kotori.rst".
+    - How to bring :ref:`application-mqttkit` into the mix?
+
+
 *****
 Intro
 *****
-Configure an example application with Kotori based on the MQTTKit communication style.
+Configure an example application with Kotori based on the :ref:`application-mqttkit` communication style.
 
 
 ***************
@@ -72,12 +80,15 @@ Troubleshooting
 
 No data in Grafana I
 ====================
-
 - Q: I don't see any data
-
 - A: Most probably, your system time is wrong or deviates from the time of the system accessing Grafana from.
   For example, you won't see any data if the server time is in the future.
-  Suggestion: Better install ``chrony`` or use other means to keep your system times sound.
+
+    .. tip::
+
+        Better install ``chrony`` or use other means to keep your system times sound::
+
+            aptitude install chrony
 
 
 No data in Grafana II
