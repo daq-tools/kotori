@@ -13,4 +13,5 @@ Applications
     hiveeyes
     lst
     mqttkit
+    forwarders/index
 

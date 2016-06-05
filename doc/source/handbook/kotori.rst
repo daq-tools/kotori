@@ -4,9 +4,9 @@
 
 .. _running-kotori:
 
-##############
-Running Kotori
-##############
+###############
+Kotori Handbook
+###############
 
 .. contents:: Table of Contents
    :local:

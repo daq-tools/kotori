@@ -106,6 +106,10 @@ class PahoMqttAdapter(BaseMqttAdapter, Service):
 
         return self.callback(topic=topic, payload=payload, **metadata)
 
+    def publish(self, topic, payload):
+        log.info(u'Publishing to topic={topic}, payload={payload}', topic=topic, payload=payload)
+        return self.client.publish(topic, payload)
+
     def subscribe(self, *args):
         #d = self.protocol.subscribe("foo/bar/baz", 0)
         log.info(u"Subscribing to topics {subscriptions}. client={client}", subscriptions=self.subscriptions, client=self.client)
