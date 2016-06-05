@@ -44,6 +44,10 @@
 .. _Adafruit MQTT Library: https://github.com/adafruit/Adafruit_MQTT_Library
 .. _Arduino JSON library: https://github.com/bblanchon/ArduinoJson
 
+.. Clients
+.. _Requests: http://docs.python-requests.org/
+.. _HTTPie: http://httpie.org
+.. _async-mqtt-client: https://github.com/marvinroger/async-mqtt-client
 
 .. Akronyms, Standards, etc.
 .. _GPRS: https://en.wikipedia.org/wiki/General_Packet_Radio_Service
@@ -104,8 +108,13 @@
 .. _NodeUSB: http://www.nodeusb.com/
 
 
-.. Human beings
+.. Companies
+.. _Adafruit: https://www.adafruit.com/
+
+.. People
 .. _Jan-Piet Mens: https://github.com/jpmens
+.. _Nick O'Leary: http://knolleary.net/
+.. _Marvin Roger: https://www.marvinroger.fr/
 
 
 .. Clearfix in reStructuredText

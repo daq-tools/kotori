@@ -21,6 +21,10 @@ Get into it
 - http://www.deepdarc.com/2013/01/29/introducing-smcp/
 - https://github.com/darconeous/smcp
 - https://github.com/mwasilak/txThings
+- https://github.com/mwasilak/txThings/blob/master/examples/clientPUT.py
+- https://github.com/Tanganelli/CoAPthon
+- https://github.com/Tanganelli/CoAPthon/compare/twisted
+- https://github.com/openwsn-berkeley/coap
 - http://www.sixpinetrees.pl/2014/03/aneska-simple-coap-browser-for-android.html
 - https://people.inf.ethz.ch/mkovatsc/copper.php
 - https://github.com/cfullelove/PhpCoap
@@ -35,6 +39,7 @@ Get into it
 - https://twistedmatrix.com/pipermail/twisted-python/2013-September/027453.html
 - https://github.com/mwasilak/txThings/wiki/Developer-Journal
 - https://tools.ietf.org/html/rfc6690
+- http://coapy.sourceforge.net/
 
 DTLS
 ====

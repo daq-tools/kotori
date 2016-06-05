@@ -317,3 +317,15 @@ intersphinx_mapping = {
 # http://www.sphinx-doc.org/en/stable/ext/intersphinx.html#confval-intersphinx_cache_limit
 intersphinx_cache_limit = 0
 
+
+# Enable proper highlighting for inline PHP by tuning Pygments' PHP lexer.
+# See also http://mbless.de/blog/2015/03/02/php-syntax-highlighting-in-sphinx.html
+
+# Load PhpLexer
+from sphinx.highlighting import lexers
+from pygments.lexers.web import PhpLexer
+
+# Enable highlighting for PHP code not between <?php ... ?> by default
+lexers['php'] = PhpLexer(startinline=True)
+lexers['php-annotations'] = PhpLexer(startinline=True)
+

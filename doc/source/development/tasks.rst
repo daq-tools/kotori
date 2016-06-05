@@ -17,9 +17,62 @@ Kotori tasks
 ****
 
 
+2016-06-05
+==========
+- [o] Check whether "Export" functionality could be built on top of a Grafana data source
+
+
+2016-06-04
+==========
+
+Forwarders
+----------
+- Protocol adapters
+
+    - http-to-mqtt
+    - mqtt-to-wamp
+    - udp-to-mqtt
+
+- Data querying and export
+
+    - influx-to-http
+
+- Clients (library and examples: demo, sawtooth)
+
+    - Bash
+    - Python
+    - PHP
+
+- Uniform example program interfaces::
+
+    kotori-client.(sh|py|php) transmit demo
+    kotori-client.(sh|py|php) transmit sawtooth
+    kotori-client.(sh|py|php) fetch demo
+
+- Documentation!
+
+- Clients (universal CLI) => Terkin?
+
+; Todo:     Add predicate for verifying the payload actually is in JSON format, e.g.::
+;
+;               source_predicate = body.format:json
+;
+;           Or by directly defining Python code as validator, e.g.::
+;
+;               source_predicate = json.loads(body)
+;
+
+
+Misc
+----
+- [o] Recursively read configuration files
+- [o] Generalize metrics subsystem and add to different applications
+
+
 2016-05-27
 ==========
-- [o] Notify jpmens about handbook/acquisition/sawtooth.html#multiple-sawtooth-signals
+- [o] Notify jpmens about handbook/acquisition/sawtooth.html#multiple-sawtooth-signals,
+  also write something about "jo" at https://blog.simeonov.com/2014/01/21/manipulating-json-jsonlines-command-line/
 
 - [o] Connect from an ESP8266::
 
@@ -40,6 +93,12 @@ Kotori tasks
     [9] https://github.com/ESP8266nu/ESPEasySlaves/blob/master/MiniProExtender/MiniProExtender.ino
 
 - [o] Build and document Kotori CoAP interface based on txThings
+- [o] Q: ``Uncaught SecurityError: Failed to read the 'localStorage' property from 'Window': Access is denied for this document.``
+
+    - Detect whether Grafana from foreign domain could not be included, check
+      https://www.chromium.org/for-testers/bug-reporting-guidelines/uncaught-securityerror-failed-to-read-the-localstorage-property-from-window-access-is-denied-for-this-document
+
+- [o] Disable Grafana refreshing for static graphs w/o live data on pages like :ref:`sawtooth-signal`.
 
 
 2016-05-26

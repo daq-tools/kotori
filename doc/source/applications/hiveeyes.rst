@@ -19,9 +19,9 @@ The `Hiveeyes project`_ conceives a data collection platform for
 bee hive monitoring voluntarily operated by the beekeeper community.
 
 Together with Mosquitto_, InfluxDB_, Grafana_, mqttwarn_ and BERadio_,
-Kotori runs the `Hiveeyes platform`_ ``swarm.hiveeyes.org`` as
-a data collection hub for a Berlin-based beekeeper collective.
-For documentation and pictures, have a look at :ref:`hiveeyes:hiveeyes`.
+Kotori powers the :ref:`Hiveeyes system <hiveeyes:hiveeyes-system>`
+on ``swarm.hiveeyes.org`` as a data collection hub for a Berlin-based
+beekeeper collective.
 
 Feel welcome to join them, just drop an email at "hiveeyes-devs ät ideensyndikat.org".
 They are friendly, we know them.
@@ -69,9 +69,9 @@ Spring 2016
 
 .. raw:: html
 
-    <iframe src="https://swarm.hiveeyes.org/grafana/dashboard-solo/db/hiveeyes-labs-wedding?panelId=5&from=20160418T200000&to=20160518T160000" width="800" height="425" frameborder="0"></iframe>
+    <iframe src="https://swarm.hiveeyes.org/grafana/dashboard-solo/db/hiveeyes-labs-wedding?panelId=5&from=20160418T200000&to=20160518T160000" width="100%" height="425" frameborder="0"></iframe>
 
-.. container:: width-800
+.. container::
 
     Let's have a look at the data. During the cold period at the end of April the beehive loses absolute weight
     because the bees have to live on their reserves. In contrast, the following two weeks were amazingly warm in May,
@@ -87,9 +87,9 @@ Spring 2016
 
 .. raw:: html
 
-    <iframe src="https://swarm.hiveeyes.org/grafana/dashboard-solo/db/hiveeyes-labs-wedding?panelId=5&from=20160430T130000&to=20160503T040000" width="800" height="425" frameborder="0"></iframe>
+    <iframe src="https://swarm.hiveeyes.org/grafana/dashboard-solo/db/hiveeyes-labs-wedding?panelId=5&from=20160430T130000&to=20160503T040000" width="100%" height="425" frameborder="0"></iframe>
 
-.. container:: width-800
+.. container::
 
     The beehive gained a lot of weight on the 2nd of May. After six o'clock in the morning
     the temperature begins to rise, at 7:15 the first sun rays shine on the entrance hole.
@@ -102,8 +102,8 @@ Spring 2016
     Even as the beehive is in the shadow from 16:00 and the temperature starts sinking,
     the bee colony continues to collect until 20:00.
 
-    1800g have then carried home. It was a good warm and important day, after the long period of winter
-    and the cold snap end of April.
+    1800g have been carried home. It was a good warm and important day,
+    after the long period of winter and the cold snap at the end of April.
 
 |clearfix|
 
@@ -113,9 +113,9 @@ Schwarmalarm May 2016
 
 .. raw:: html
 
-    <iframe src="https://swarm.hiveeyes.org/grafana/dashboard-solo/db/hiveeyes-labs-wedding?panelId=5&from=20160519T040000&to=20160519T170000" width="800" height="425" frameborder="0"></iframe>
+    <iframe src="https://swarm.hiveeyes.org/grafana/dashboard-solo/db/hiveeyes-labs-wedding?panelId=5&from=20160519T040000&to=20160519T170000" width="100%" height="425" frameborder="0"></iframe>
 
-.. container:: width-800
+.. container::
 
     This is a weight-loss event from :ref:`hiveeyes-scale-beutenkarl`
     recorded on 2016-05-20 between 10:11 and 10:26 hours CEST after a

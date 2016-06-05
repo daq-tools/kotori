@@ -2,8 +2,11 @@
 Kotori CHANGES
 **************
 
-develop
-=======
+in progress
+===========
+
+general
+-------
 - Improve documentation: Software releasing, package building and publishing. Both amd64 and armhf.
 - Improve documentation: Getting started, Hiveeyes application, Arch Linux setup
 - Add license EUPL 1.2
@@ -15,6 +18,7 @@ documentation
 - Improve :ref:`application-mqttkit`
 - Add :ref:`sawtooth-signal`
 - Add :ref:`mosquitto-on-osx`
+- Improvements across the board
 
 
 .. _kotori-0.7.1:

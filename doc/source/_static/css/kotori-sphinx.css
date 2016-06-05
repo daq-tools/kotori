@@ -22,6 +22,35 @@ body, div.body {
     /* background-color: #add8e6; */
 }
 
+
+/* table addons */
+
+.wy-table-responsive table td, .wy-table-responsive table th {
+    white-space: normal;
+}
+
+.wy-table-responsive .table-generous {
+    height: 3em;
+    font-size: larger;
+}
+
+.wy-table-responsive .table-generous td {
+    padding: 1.5em !important;
+    line-height: 1.5em;
+}
+
+.wy-table-responsive .table-generous td p {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+
+/* smaller admonition boxes */
+.admonition-smaller {
+    font-size: smaller;
+}
+
+
 /* alignment classes */
 .align-center {
     text-align: center;

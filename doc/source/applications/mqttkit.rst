@@ -25,55 +25,83 @@ About
     | MQTTKit specifically addresses data collection in multi-node, multi-sensor
     | environments as its design is directly derived from vendor :ref:`vendor-hiveeyes`.
 
+.. todo::
+
+    Write some words about the mqtt bus topic topology (``mqttkit-1/testdrive/area-42/node-1``) used here.
+    In the meanwhile, please have a look at the :ref:`hiveeyes:hiveeyes-one-topology`.
+
 
 *************
 Configuration
 *************
 .. highlight:: ini
 
-Take a look at ``etc/examples/mqttkit.ini`` as a configuration blueprint::
+Take a look at :download:`etc/examples/mqttkit.ini <../_static/content/etc/examples/mqttkit.ini>`
+as a configuration blueprint.
 
-    [amazonas]
-    type        = application
-    realm       = mqttkit-1
-    mqtt_topics = mqttkit-1/#
-    app_factory = kotori.daq.application.mqttkit:mqttkit_application
+.. literalinclude:: ../_static/content/etc/examples/mqttkit.ini
+    :language: ini
+    :linenos:
+    :lines: 1-16
+    :emphasize-lines: 11-16
 
 .. todo:: Describe how to activate configuration a) in package mode and b) in development mode.
+
+
+**************
+Receiving data
+**************
+.. highlight:: bash
+
+::
+
+    # Receive telemetry data by subscribing to MQTT topic
+    mosquitto_sub -t mqttkit-1/#
 
 
 ****************
 Data acquisition
 ****************
-It is really easy to send data to :ref:`Kotori`
-through the MQTT bus from the command line.
-
+It is really easy to transmit telemetry data to
+:ref:`Kotori` in different ways over the MQTT bus.
 
 Basic
 =====
-.. highlight:: bash
+#. Send measurement values / telemetry data to the "testdrive" channel from the command line::
 
-#. Send measurement values / telemetry data to the "testdrive" channel
-   by publishing it to the MQTT_ bus as JSON message::
-
-    # Get hold of a MQTT client of your choice
+    # Setup "mosquitto_pub"
     aptitude install mosquitto-clients
 
-    # Where to publish measurements
+    # Where to send data to
     export MQTT_BROKER=kotori.example.org
-    export DEVICE_TOPIC=mqttkit-1/testdrive/area-42/node-1
+    export MQTT_TOPIC=mqttkit-1/testdrive/area-42/node-1
 
-    # Publish single measurement with multiple values
-    mosquitto_pub -h $MQTT_BROKER -t $DEVICE_TOPIC/message-json -m '{"temperature": 42.84, "humidity": 83}'
+    # Define an example sensor emitting a single sample of a sawtooth signal in JSON format
+    sensor() { echo "{\"sawtooth\": $(date +%-S)}"; }
+
+    # Define the transmission command to send telemetry data to the "testdrive" network
+    transmitter() { mosquitto_pub -h $MQTT_BROKER -t $MQTT_TOPIC/message-json -l; }
+
+    # Acquire and transmit a single sensor reading
+    sensor | transmitter
 
 #. Navigate to the automatically populated Grafana `testdrive dashboard <http://kotori.example.org:3000/dashboard/db/testdrive>`_
    to watch measurement values floating in.
 
+.. tip::
+
+    Please follow up at :ref:`daq-mqtt` for transmitting telemetry data
+    over MQTT from other environments (Python, Arduino, mbed).
+
 
 Advanced
 ========
-For sending periodic data to Kotori from the command line,
-please have a look at the :ref:`sawtooth-signal` page.
+- For sending a simple oscillating signal to Kotori from the command line,
+  please have a look at the :ref:`sawtooth-signal` page.
+
+- Also have a look at :ref:`forward-http-to-mqtt` about how to configure
+  a HTTP endpoint for your :ref:`application-mqttkit` application and see
+  :ref:`daq-http` for transmitting telemetry data over HTTP.
 
 
 **********

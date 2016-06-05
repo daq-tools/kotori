@@ -78,6 +78,11 @@ Use the package
 How to setup the :ref:`kotori-setup`.
 
 
+
+----
+
+
+
 ********
 Appendix
 ********

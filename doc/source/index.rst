@@ -8,8 +8,9 @@
 
 .. _kotori:
 
+######
 Kotori
-======
+######
 
 .. container:: pull-left basic-hero
 
@@ -62,8 +63,8 @@ About
 .. toctree::
     :maxdepth: 1
 
-    about
     README
+    about
 
 
 Applications
@@ -76,18 +77,6 @@ Applications
     applications/index
 
 
-Setup
------
-
-.. toctree::
-    :maxdepth: 1
-    :glob:
-
-    setup/debian-quickstart
-    setup/arch-linux
-    setup/getting-started
-
-
 Handbooks
 ---------
 
@@ -95,11 +84,18 @@ Handbooks
     :maxdepth: 1
     :glob:
 
-    handbook/client
-    handbook/grafana
-    handbook/influxdb
-    handbook/kotori
-    handbook/kotoribox-diy
+    handbook/index
+
+
+Setup
+-----
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    setup/index
+    setup/getting-started
 
 
 Development
@@ -123,12 +119,4 @@ Research
 
     research/index
     notepad/index
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 

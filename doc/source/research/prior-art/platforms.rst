@@ -60,6 +60,14 @@ Open
   | https://www.cesanta.com/products/smart-js
 
 
+Corporate
+=========
+- | IBM
+  | IBM Watson IoT Platform
+  | https://internetofthings.ibmcloud.com/
+  | https://twitter.com/ibmiotf
+
+
 Proprietary
 ===========
 

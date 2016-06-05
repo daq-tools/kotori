@@ -38,3 +38,7 @@ Acquisition Hardware
 - https://www.interfaceinnovations.org/cupidcontrolsproducts.html
 
     - http://shop.interfaceinnovations.org/index.php?route=product/category&path=33
+
+- | Einzel 433Mhz TTL 3DRobotics 3DR Radio-Telemetrie-Kit für APM2 / 2.5 / 2.6 HOT
+  | http://www.ebay.de/itm/like/252405264286
+

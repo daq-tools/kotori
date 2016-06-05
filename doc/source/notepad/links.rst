@@ -3,6 +3,11 @@ Links
 #####
 
 
+2016-06-05
+==========
+- https://developer.ibm.com/recipes/tutorials/connecting-a-sense-hat-to-watson-iot-using-node-red/
+
+
 2016-05-27
 ==========
 - http://www.sixpinetrees.pl/2013/10/makers-how-to-win-iot-standards-battle.html
