@@ -85,6 +85,7 @@ Handbooks
     :glob:
 
     handbook/index
+    handbook/acquisition/index
 
 
 Setup

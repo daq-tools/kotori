@@ -23,7 +23,10 @@ documentation
 - Improve :ref:`application-mqttkit`
 - Add :ref:`sawtooth-signal`
 - Add :ref:`mosquitto-on-osx`
-- Improvements across the board
+- Various improvements across the board
+- Add a whole section about :ref:`data-acquisition` to the handbook providing
+  a tour around the different ways to transmit telemetry data.
+  This is Terkin in the belly of Kotori.
 
 
 .. _kotori-0.7.1:
