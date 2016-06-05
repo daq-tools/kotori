@@ -28,12 +28,12 @@ class CompositeApplication(RootService):
             # Load service component
             service_factory = KotoriBootloader.load_entrypoint(service_reference)
 
-            # Load processing strategy and graphing components
+            # Load data processing strategy and graphing components
             # TODO: Review whether this should be per-service or not
             strategy_factory = KotoriBootloader.load_entrypoint(application_settings.strategy)
             graphing_factory = KotoriBootloader.load_entrypoint(application_settings.graphing)
 
-            # Create service object composed with subsystem components
+            # Create application service object composed of subsystem components
             # TODO: Bundle all arguments into yet another wrapper object for an universal object factory
             service = service_factory(
                 channel  = self.channel,

@@ -23,12 +23,15 @@ class MqttKitApplication(RootService):
         # Make channel object from application settings configuration object
         self.channel = Bunch(**application_settings)
 
-        # Main application service
+        # Create application service object composed of subsystem components
         service = MqttInfluxGrafanaService(
             channel  = self.channel,
-            graphing = GrafanaManager(global_settings),
-            strategy = WanBusStrategy())
+            # Data processing strategy and graphing components
+            strategy = WanBusStrategy(),
+            graphing = GrafanaManager(global_settings)
+            )
 
+        # Register service component with its container
         self.registerService(service)
 
 

@@ -44,7 +44,10 @@ class KotoriBootloader(object):
         # Get application information from configuration object
         try:
             application_settings = self.settings[name]
-            app_factory = application_settings.app_factory
+            app_factory = \
+                'app_factory' in application_settings and \
+                application_settings.app_factory or \
+                application_settings.application
         except:
             log.failure('Application configuration object "{name}" not found', name=name)
             return
