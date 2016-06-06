@@ -14,6 +14,7 @@ general
 bugfixes
 --------
 - Update default credentials for Grafana 3.x compatibility (admin/admin)
+- Start HTTP server service only once, even when having multiple HTTP-to-X forwarders defined
 
 documentation
 -------------

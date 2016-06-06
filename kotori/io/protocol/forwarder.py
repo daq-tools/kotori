@@ -59,12 +59,11 @@ class ProtocolForwarderService(MultiService, MultiServiceMixin):
 
     def setupSource(self):
         # Configure data source
-        try:
-            self.source_service = self.getServiceNamed('http-server-default')
-        except KeyError:
-            self.source_service = HttpServerService()
-            self.registerService(self.source_service)
 
+        # There should be just a single instance of a HTTP server service object
+        self.source_service = HttpServerService.create(self.settings)
+
+        # Register URI route representing source channel
         self.source_uri = bunchify(urlparse(self.channel.source)._asdict())
         self.source_service.registerEndpoint(path=self.source_uri.path, callback=self.forward)
 

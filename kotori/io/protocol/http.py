@@ -3,29 +3,61 @@
 import json
 from urlparse import urlparse
 from bunch import bunchify, Bunch
-from kotori.io.router.path import PathRoutingEngine
 from twisted.application.service import Service
 from twisted.internet import reactor
 from twisted.logger import Logger
 from twisted.web.resource import Resource
 from twisted.web.server import Site
+from kotori.io.router.path import PathRoutingEngine
 
 log = Logger()
 
 class HttpServerService(Service):
 
-    def __init__(self):
+    _instance = None
+
+    def __init__(self, settings):
+
+        # Propagate global settings
+        self.settings = settings
+
+        # Unique name of this service
         self.name = 'http-server-default'
+
+        # Root resource object representing a channel
+        # Contains routing machinery
         self.root = HttpChannelContainer()
+
+        # Forward route registration method to channel object
         self.registerEndpoint = self.root.registerEndpoint
 
     def startService(self):
-        http_listen = self.parent.settings.kotori.http_listen
-        http_port   = int(self.parent.settings.kotori.http_port)
+
+        # Don't start service twice
+        if self.running == 1:
+            return
+
+        self.running = 1
+
+        # Prepare startup
+        http_listen = self.settings.kotori.http_listen
+        http_port   = int(self.settings.kotori.http_port)
         log.info('Starting HTTP service on {http_listen}:{http_port}', http_listen=http_listen, http_port=http_port)
 
+        # Configure root Site object and start listening to requests.
+        # This must take place only once - can't bind to the same port multiple times!
         factory = Site(self.root)
         reactor.listenTCP(http_port, factory, interface=http_listen)
+
+    @classmethod
+    def create(cls, settings):
+        """
+        Singleton factory
+        """
+        if not cls._instance:
+            cls._instance = HttpServerService(settings)
+            cls._instance.startService()
+        return cls._instance
 
 
 class HttpChannelContainer(Resource):
