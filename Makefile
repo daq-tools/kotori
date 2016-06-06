@@ -158,7 +158,11 @@ deb-build-daq-binary:
 
 deb-build: check-build-options
 
-	$(eval buildpath := "./build/$(name)")
+	# Relative path to build directory
+	#$(eval buildpath := "./build/$(name)")
+
+	# Absolute path to build directory
+	$(eval buildpath := $(shell readlink -f ./build/$(name)))
 
 	# start super clean, even clear the pip cache
 	#rm -rf build dist
@@ -189,15 +193,31 @@ deb-build: check-build-options
 	# build sdist egg locally
 	TMPDIR=/var/tmp $(buildpath)/bin/python setup.py sdist
 
-	# install from local sdist egg
+
+	# 1. Relocate virtualenv to $(buildpath)
+	# Relocate the virtualenv by updating the python interpreter in the shebang of installed scripts.
+	# Currently must force reinstall because virtualenv-tools will harm itself (2016-02-21).
+	$(buildpath)/bin/pip install virtualenv-tools==1.0 --upgrade --force-reinstall
+
+	# Counter "ValueError: bad marshal data (unknown type code)"
+	find $(buildpath) -name '*.pyc' -delete
+
+	# Run relocation
+	$(buildpath)/bin/virtualenv-tools --update-path=$(buildpath) $(buildpath)
+
+
+	# 2. Install from local sdist egg
 	# TODO: maybe use "--editable" for installing in development mode
 	# https://pip.pypa.io/en/stable/reference/pip_wheel/#cmdoption-f
-	TMPDIR=/var/tmp $(buildpath)/bin/pip install kotori[$(features)]==$(version) --download-cache=./build/pip-cache --find-links=./dist
+	TMPDIR=/var/tmp $(buildpath)/bin/pip install kotori[$(features)]==$(version) --upgrade --download-cache=./build/pip-cache --find-links=./dist
 
+
+	# 3. Relocate virtualenv to /opt/kotori
 	# Relocate the virtualenv by updating the python interpreter in the shebang of installed scripts.
 	# Currently must force reinstall because virtualenv-tools will harm itself (2016-02-21).
 	$(buildpath)/bin/pip install virtualenv-tools==1.0 --upgrade --force-reinstall
 	$(buildpath)/bin/virtualenv-tools --update-path=/opt/kotori $(buildpath)
+
 
 	#rm -f $(buildpath)/{.Python,pip-selfcheck.json}
 
