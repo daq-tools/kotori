@@ -12,7 +12,7 @@ https://getkotori.org/docs/handbook/acquisition/runtime/php.html#demo
 
 Synopsis
 --------
-Run demonstration programs from the command line::
+Run demonstration program from the command line::
 
     # Send fixed measurements "temperature" => 42.84, "humidity" => 83 for demonstration purposes
     php -f clients/runtime/php/terkin-demo.php run demo

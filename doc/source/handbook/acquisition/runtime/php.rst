@@ -60,7 +60,7 @@ The demo program in detail
 .. literalinclude:: ../../../_static/content/clients/runtime/php/terkin-demo.php
     :language: php
     :linenos:
-    :emphasize-lines: 27-31,37-45,55-57,62-66
+    :emphasize-lines: 27-31,37-45,55-57,61-66
 
 
 ****

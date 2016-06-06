@@ -17,9 +17,44 @@ Kotori tasks
 ****
 
 
+2016-06-06
+==========
+- [o] Add Javascript and Arduino clients (using HTTP+JSON)
+
+
 2016-06-05
 ==========
 - [o] Check whether "Export" functionality could be built on top of a Grafana data source
+
+    - https://docs.influxdata.com/influxdb/v0.13/query_language/data_exploration/#relative-time
+
+    - https://swarm.hiveeyes.org/grafana/api/datasources/proxy/10/query?db=hiveeyes_25a0e5df_9517_405b_ab14_cb5b514ac9e8&q=%3BSELECT%20%22temp3%22%20FROM%20%223756782252718325761_1%22%20WHERE%20time%20%3E%201463630400s%20and%20time%20%3C%201463677200s&epoch=ms
+
+    - | time > '2016-05-19 04:00:00'  and time < '2016-05-19 17:00:00'
+      | time > '2016-05-19T04:00:00Z' and time < '2016-05-19T17:00:00Z'
+      | https://swarm.hiveeyes.org/grafana/api/datasources/proxy/10/query?db=hiveeyes_25a0e5df_9517_405b_ab14_cb5b514ac9e8&q=%3BSELECT%20%22temp3%22%20FROM%20%223756782252718325761_1%22%20WHERE%20time%20%3E%20%272016-05-19%2004:00:00%27%20and%20time%20%3C%20%272016-05-19%2017:00:00%27&epoch=ms
+
+    - | now() - 30d
+      | https://swarm.hiveeyes.org/grafana/api/datasources/proxy/10/query?db=hiveeyes_25a0e5df_9517_405b_ab14_cb5b514ac9e8&q=%3BSELECT%20%22temp3%22%20FROM%20%223756782252718325761_1%22%20WHERE%20time%20%3E%20now()%20-%2030d&epoch=ms
+
+
+    - | now() - 30d
+      | https://swarm.hiveeyes.org/grafana/api/datasources/proxy/10/query?db=hiveeyes_25a0e5df_9517_405b_ab14_cb5b514ac9e8&q=SELECT * FROM /.*/ LIMIT 1&epoch=ms
+
+
+    - ::
+
+        The other options for specifying time durations with now() are listed below.
+        u microseconds
+        ms milliseconds
+        s seconds
+        m minutes
+        h hours
+        d days
+        w weeks
+
+
+- [o] Add :ref:`HTTPie <daq-httpie>` example directly into ``http-to-mqtt.ini`` (:ref:`forward-http-to-mqtt`)
 
 
 2016-06-04
