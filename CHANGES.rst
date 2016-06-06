@@ -5,6 +5,12 @@ Kotori CHANGES
 in progress
 ===========
 
+
+.. _kotori-0.8.0:
+
+2016-06-06 0.8.0
+================
+
 general
 -------
 - Add HTTP-to-MQTT protocol forwarder component, see :ref:`forward-http-to-mqtt`
