@@ -9,6 +9,7 @@ general
 -------
 - Add HTTP-to-MQTT protocol forwarder component, see :ref:`forward-http-to-mqtt`
 - Add Terkin PHP, a HTTP API library for :ref:`daq-php`
+- Relocate configuration blueprints in etc/examples
 
 bugfixes
 --------

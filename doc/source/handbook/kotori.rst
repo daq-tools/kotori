@@ -40,7 +40,7 @@ A blueprint is:
 
 A blueprint for vendor :ref:`vendor-lst` is:
 
-.. literalinclude:: ../_static/content/vendor-lst.ini
+.. literalinclude:: ../_static/content/etc/examples/vendors/lst.ini
     :language: ini
 
 
