@@ -20,6 +20,7 @@ Kotori tasks
 2016-06-06
 ==========
 - [o] Add Javascript and Arduino clients (using HTTP+JSON)
+- [o] Package building: /COPYRIGHT and /LICENSE get introduced from crossbar
 
 
 2016-06-05
@@ -70,7 +71,7 @@ Forwarders
 
 - Data querying and export
 
-    - influx-to-http
+    - http-to-influxdb
 
 - Clients (library and examples: demo, sawtooth)
 
@@ -150,7 +151,7 @@ Misc
 
 2016-05-24
 ==========
-- [o] Upload InfluxDB 0.13.0 from https://influxdata.com/downloads/#influxdb to package repository
+- [x] Upload InfluxDB 0.13.0 from https://influxdata.com/downloads/#influxdb to package repository
 - [o] Create meta package "kotori-bundle"
 - [o] For querying InfluxDB, use PyInfluxQL: https://github.com/jjmalina/pyinfluxql
 

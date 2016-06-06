@@ -15,9 +15,9 @@ requires = [
     'appdirs==1.4.0',
     'json-store==2.1',
     'docopt==0.6.2',
-    'setuptools>=18.3.1',   # 20.6.7; setuptools>=18.3.1 is required by set(['crossbar'])
+    'setuptools==22.0.5',   # 20.6.7; setuptools>=18.3.1 is required by set(['crossbar'])
     'pyasn1==0.1.9',        # required by service-identity
-    'cryptography>=0.7',
+    'cryptography==1.4',
 ]
 
 extras = {
