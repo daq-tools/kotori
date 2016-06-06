@@ -13,6 +13,10 @@ Library
 *******
 There is a convenient PHP library for interacting with Kotori over HTTP ready for download, see
 :download:`terkin-http.php <../../../_static/content/clients/runtime/php/terkin-http.php>`.
+If you're stuck with PHP4, see
+:download:`terkin-http.php4 <../../../_static/content/clients/runtime/php/terkin-http.php4>`
+for a version based on the PHP CURL binding and without namespaces.
+
 
 Node API (highlevel)
 ====================

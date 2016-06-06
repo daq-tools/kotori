@@ -2,9 +2,9 @@
 // -*- coding: utf-8 -*-
 // (c) 2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 /*
-===============================
-Kotori telemetry client for PHP
-===============================
+================================
+Kotori telemetry client for PHP5
+================================
 
 Documentation
 -------------

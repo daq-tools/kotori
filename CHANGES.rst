@@ -14,7 +14,7 @@ in progress
 general
 -------
 - Add HTTP-to-MQTT protocol forwarder component, see :ref:`forward-http-to-mqtt`
-- Add Terkin PHP, a HTTP API library for :ref:`daq-php`
+- Add Terkin PHP, a HTTP API library for :ref:`daq-php`, supports PHP5 and PHP4
 - Relocate configuration blueprints in etc/examples
 
 bugfixes
