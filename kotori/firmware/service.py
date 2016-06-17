@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 # (c) 2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+import threading
 from copy import deepcopy
 from urlparse import urlparse
 from bunch import Bunch, bunchify
-from twisted.web import http
+from collections import defaultdict
+from twisted.internet import threads
+from twisted.web import http, server
 from twisted.logger import Logger
 from twisted.application.service import MultiService
 from kotori.configuration import read_list
@@ -55,6 +58,10 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
 
         self.name = u'service-fb-' + self.channel.get('realm', unicode(id(self)))
 
+        # A bunch of locks for constraining concurrent
+        # make processes on the same directory.
+        self.locks = defaultdict(threading.RLock)
+
     def setupService(self):
         #self.log(log.info, u'Setting up')
         self.settings = self.parent.settings
@@ -102,10 +109,20 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
 
 
         # 3. Build firmware, capturing error output, if any
-        #print 'bucket:'; pprint(bucket)
-        return self.build_firmware(bucket, bunchify(options), bunchify(data))
+        # Run this process in a separate thread in order not to block
+        # the whole main process and return its result asynchronous.
+        d = threads.deferToThread(self.build_firmware_safe, bucket=bucket, options=bunchify(options), data=bunchify(data))
+        d.addBoth(bucket.request.write)
+        d.addBoth(lambda _: bucket.request.finish())
+        return server.NOT_DONE_YET
 
-    def build_firmware(self, bucket, options, data):
+    def build_firmware_safe(self, options=None, **kwargs):
+        # As a very rough guideline, we take a lock on the parameter obtained as working dir
+        # to have exclusively one compiler / make process running in the very same directory.
+        with self.locks[options.path]:
+            return self.build_firmware(options=options, **kwargs)
+
+    def build_firmware(self, bucket=None, options=None, data=None):
 
         # Sanity checks
         # TODO: Check "options.suffix" for being "hex" or "elf" only

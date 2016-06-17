@@ -5,7 +5,7 @@ Kotori CHANGES
 
 in progress
 ===========
-- Add basics for Firmware Builder
+- Add :ref:`firmware-builder`
 
 
 .. _kotori-0.8.0:

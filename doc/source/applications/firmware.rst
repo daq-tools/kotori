@@ -1,3 +1,5 @@
+.. _firmware-builder:
+
 ################
 Firmware builder
 ################
