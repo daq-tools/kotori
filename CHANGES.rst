@@ -5,7 +5,14 @@ Kotori CHANGES
 
 in progress
 ===========
-- Add :ref:`firmware-builder`
+
+
+.. _kotori-0.9.0:
+
+2016-06-17 0.9.0
+================
+- Add :ref:`firmware-builder` for automated builds
+  of Arduino projects for :ref:`vendor-hiveeyes`.
 
 
 .. _kotori-0.8.0:
