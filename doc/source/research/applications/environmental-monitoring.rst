@@ -37,3 +37,10 @@ Earthship
 - | Früherkennung von Naturgefahren in Deutschland
   | http://www.fona.de/de/19916
 
+
+**************
+Other projects
+**************
+- http://flood.network/
+- http://www.photosynq.org/
+

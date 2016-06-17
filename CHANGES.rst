@@ -27,7 +27,7 @@ documentation
 - Improve: Software releasing, package building and publishing. Both amd64 and armhf.
   See :ref:`kotori-release`, :ref:`kotori-build` and :ref:`setup-debian`.
 - Improve: :ref:`getting-started`, :ref:`vendor-hiveeyes` and :ref:`setup-arch-linux`
-- Add license EUPL 1.2
+- Add licenses AGPL 3.0 and EUPL 1.2
 - Start :ref:`grafana-handbook` and :ref:`kotori-handbook` with appropriate clients
 - Improve :ref:`application-mqttkit`
 - Add :ref:`sawtooth-signal`

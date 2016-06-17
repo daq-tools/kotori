@@ -27,6 +27,9 @@ Cloud
 Open
 ====
 
+- | We are on a mission to build a global open crowdsourced Internet of Things data network.
+  | https://thethingsnetwork.org/
+
 - | phant.io
   | Phant is a modular node.js based data logging tool for collecting data from the Internet of Things.
   | It is the open source software that powers data.sparkfun.com, and is actively maintained by SparkFun Electronics.
@@ -127,6 +130,14 @@ Proprietary
 - http://sensorcloud.com/
 - https://freeboard.io/
 - https://thingspeak.com/
+- http://ubidots.com/
+
+    - http://ubidots.com/docs/devices/gprsbee.html#gprsbee
+
+- http://dweet.io/
+- https://yaler.net/
+- http://devicepilot.com/
+
 
 
 Keen IO
