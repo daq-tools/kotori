@@ -102,7 +102,7 @@ class ProtocolForwarderService(MultiService, MultiServiceMixin):
 
         # 3. Adapt, serialize and emit appropriately
         topic   = target_uri
-        payload = bucket.payload
+        payload = bucket.json
         self.target_service.publish(topic, payload)
 
     def startService(self):

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import json
+from pprint import pprint
 from urlparse import urlparse
 from bunch import bunchify, Bunch
 from twisted.application.service import Service
@@ -96,6 +97,7 @@ class HttpChannelContainer(Resource):
         # router v2
         result = self.router.match(uri.path)
         if result:
+            #print 'result:'; pprint(result)
             route_name = result['route'].name
             callback = self.callbacks[route_name]
             endpoint = bunchify({'path': route_name, 'callback': callback, 'match': result['match']})
@@ -117,28 +119,36 @@ class HttpChannelEndpoint(Resource):
 
         # Read and decode request
         content_type = request.getHeader('Content-Type')
-        log.info('Received measurements via HTTP on uri {uri}, '
+        log.info('Received HTTP request on uri {uri}, '
                  'content type is "{content_type}"', uri=request.path, content_type=content_type)
 
         body = request.content.read()
-        if content_type.startswith('application/json'):
-            payload = json.dumps(json.loads(body))
+        if body:
+            #print 'body:', body
+            if content_type.startswith('application/json'):
+                data = json.loads(body)
 
-        elif content_type.startswith('application/x-www-form-urlencoded'):
-            # TODO: Honor charset when receiving "application/x-www-form-urlencoded; charset=utf-8"
-            data = tw_flatten_request_args(request.args)
-            convert_floats(data)
-            payload = json.dumps(data)
+            elif content_type.startswith('application/x-www-form-urlencoded'):
+                # TODO: Honor charset when receiving "application/x-www-form-urlencoded; charset=utf-8"
+                data = tw_flatten_request_args(request.args)
+                convert_floats(data)
+
+            else:
+                log.warn('Unknown HTTP Content-Type {content_type}', content_type=content_type)
+                return self.get_response(request.path, success=False)
 
         else:
-            log.warn('Unknown HTTP Content-Type {content_type}', content_type=content_type)
-            return self.get_response(request.path, success=False)
+            data = None
+
+        payload_json = json.dumps(data)
 
         # Run forwarding callback
-        outbound = Bunch(path=request.path, payload=payload, match=self.options['match'])
-        self.options.callback(outbound)
-
-        return self.get_response(request.path)
+        outbound = Bunch(path=request.path, data=data, body=body, json=payload_json, match=self.options['match'], request=request)
+        response = self.options.callback(outbound)
+        if response:
+            return response
+        else:
+            return self.get_response(request.path)
 
     def get_response(self, uri, success=True):
         if success:

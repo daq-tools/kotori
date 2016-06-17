@@ -35,6 +35,10 @@ extras = {
         'alchimia==0.4',    # 0.6.1
         'txmongo==0.6',     # 16.0.1
     ],
+    'firmware': [
+        'GitPython==2.0.5',
+        'plumbum==1.6.1.post0',
+    ],
 }
 
 setup(name='kotori',

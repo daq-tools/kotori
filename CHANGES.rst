@@ -2,8 +2,10 @@
 Kotori CHANGES
 **************
 
+
 in progress
 ===========
+- Add basics for Firmware Builder
 
 
 .. _kotori-0.8.0:
