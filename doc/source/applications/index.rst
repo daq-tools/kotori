@@ -14,4 +14,5 @@ Applications
     lst
     mqttkit
     forwarders/index
+    firmware
 

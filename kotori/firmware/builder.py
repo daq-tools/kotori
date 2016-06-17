@@ -402,7 +402,9 @@ def example_recipe(fb):
     return artefact
 
 def firmware_builder():
-    return FirmwareBuilder(repo_url='git@git.elmyra.de:hiveeyes/arduino.git', repo_branch='master', workingdir='node-gprs-any')
+    #repo_url = 'git@git.elmyra.de:hiveeyes/arduino.git'
+    repo_url = 'https://github.com/hiveeyes/arduino'
+    return FirmwareBuilder(repo_url=repo_url, repo_branch='master', workingdir='node-gprs-any')
 
 def run_example():
     fb = firmware_builder()

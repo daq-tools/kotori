@@ -57,7 +57,7 @@
 .. _SCADA: https://en.wikipedia.org/wiki/SCADA
 .. _WebSockets: https://tools.ietf.org/html/rfc6455
 .. _CEST: https://www.timeanddate.com/time/zones/cest
-
+.. _ELF: https://en.wikipedia.org/wiki/Executable_and_Linkable_Format
 
 
 .. iLaundry
@@ -69,6 +69,7 @@
 .. _Hiveeyes platform: https://swarm.hiveeyes.org/
 .. _Hiveeyes project: https://hiveeyes.org/
 .. _Hiveeyes at GitHub: https://github.com/hiveeyes
+.. _Hiveeyes Arduino repository: https://github.com/hiveeyes/arduino/
 .. _hivemonitor-vagrant: https://github.com/dazz/hivemonitor/tree/master/dev-vm
 
 .. _BERadio: https://hiveeyes.org/docs/beradio/
