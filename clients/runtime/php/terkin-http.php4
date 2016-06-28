@@ -67,11 +67,19 @@ class TelemetryClient {
                 'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
                 'method'  => 'POST',
                 'content' => $payload
-            )
+            ),
+            'ssl' => array(
+                'allow_self_signed' => true,
+
+                // TODO: Let's check whether we should not _always_ disable certificate verification.
+                'verify_peer' => false,
+            ),
         );
+
         $result = http_get_contents($this->uri, $options);
+
         if ($result === FALSE) {
-            error_log("Could not submit telemetry data to '$uri', payload='$payload'");
+            trigger_error("Could not submit telemetry data to '$this->uri', payload='$payload'", E_USER_ERROR);
         }
 
         return $result;
@@ -94,7 +102,7 @@ class TelemetryNode {
         $this->node    = $options['node'];
 
         $this->channel_uri = "{$this->api_uri}/{$this->realm}/{$this->network}/{$this->gateway}/{$this->node}";
-        echo 'Channel URI: ' . $this->channel_uri . "\n";
+        //print 'Channel URI: ' . $this->channel_uri . "\n";
 
         $this->client = new TelemetryClient("{$this->channel_uri}/data");
     }
@@ -110,6 +118,11 @@ function http_get_contents($url, $stream_options) {
     $ch = curl_init($url);
 
     $options = $stream_options['http'];
+    $ssl_options = $stream_options['ssl'];
+
+    if (isset($ssl_options['verify_peer'])) {
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $ssl_options['verify_peer']);
+    }
     if ($options['header']) {
         curl_setopt($ch, CURLOPT_HTTPHEADER, split("\r\n", $options['header']));
     }
@@ -122,6 +135,13 @@ function http_get_contents($url, $stream_options) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
     $response = curl_exec($ch);
+
+    // Check and output error message, if any
+    $error_message = curl_error($ch);
+    if ($error_message) {
+        trigger_error($error_message, E_USER_WARNING);
+    }
+
     curl_close($ch);
 
     return $response;
