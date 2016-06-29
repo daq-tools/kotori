@@ -58,6 +58,7 @@ class WanBusStrategy(object):
         return address
 
 
+    @classmethod
     def topology_to_database(self, topology):
         """
         Encode topology segment identifiers to database address.

@@ -70,3 +70,12 @@ def read_list(string, separator=u','):
 
 def make_list(items, separator=u', '):
     return separator.join(items)
+
+
+def apply_default_settings(settings):
+
+    # MQTT setting defaults
+    settings.mqtt.setdefault('host', u'localhost')
+    settings.mqtt.setdefault('port', u'1883')
+    settings.mqtt.setdefault('debug', u'false')
+

@@ -33,11 +33,6 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         # Configure metrics to be collected each X seconds
         self.metrics = Bunch(tx_count=0, starttime=time.time(), interval=2)
 
-        # MQTT setting defaults
-        self.settings.mqtt.setdefault('host', u'localhost')
-        self.settings.mqtt.setdefault('port', u'1883')
-        self.settings.mqtt.setdefault('debug', u'false')
-
         subscriptions = read_list(self.channel.mqtt_topics)
         self.mqtt_service = MqttAdapter(
             name          = u'mqtt-' + self.channel.realm,

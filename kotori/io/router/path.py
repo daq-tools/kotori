@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-# (c) 2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2016 Andreas Motl <andreas.motl@elmyra.de>
+from pyramid.config.predicates import RequestMethodPredicate
 from pyramid.urldispatch import RoutesMapper
 from pyramid.threadlocal import get_current_registry
 
@@ -12,30 +13,38 @@ class PathRoutingEngine(object):
     def __init__(self):
         self.mapper = RoutesMapper()
 
-    def add_route(self, name, pattern):
-        self.mapper.connect(name, pattern)
+    def add_route(self, name, pattern, methods=[]):
+        predicates = []
+        for method in methods:
+            predicate = RequestMethodPredicate(method.upper(), None)
+            predicates.append(predicate)
+        self.mapper.connect(name, pattern, predicates=predicates)
 
-    def match(self, path):
+    def match(self, method, path):
         #print 'PathRoutingEngine attempt to match path:', path
-        request = self._getRequest(PATH_INFO=path)
+        request = self._getRequest(attributes={'method': method}, environ={'PATH_INFO': path})
         result = self.mapper(request)
         if result['route']:
             #print 'PathRoutingEngine matched result:       ', result
             return result
 
-    def _getRequest(self, **kw):
+    def _getRequest(self, attributes, environ):
         # from pyramid.tests.test_urldispatch
-        environ = {'SERVER_NAME':'localhost',
-                   'wsgi.url_scheme':'http'}
-        environ.update(kw)
-        request = DummyRequest(environ)
+        environ_default = {'SERVER_NAME':'localhost',
+                           'wsgi.url_scheme':'http'}
+        environ.update(environ_default)
+
+        request = DummyRequest(attributes, environ)
         reg = get_current_registry()
         request.registry = reg
         return request
 
 class DummyRequest(object):
-    def __init__(self, environ):
+    def __init__(self, attributes, environ):
+        self.method  = None
         self.environ = environ
+        for name, value in attributes.iteritems():
+            setattr(self, name, value)
 
 
 if __name__ == '__main__':

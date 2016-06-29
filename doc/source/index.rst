@@ -84,8 +84,9 @@ Handbooks
     :maxdepth: 1
     :glob:
 
-    handbook/index
     handbook/acquisition/index
+    handbook/export/index
+    handbook/index
 
 
 Setup

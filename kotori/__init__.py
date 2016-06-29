@@ -9,7 +9,7 @@ from twisted.logger import Logger, LogLevel
 from kotori.util import setup_logging
 from kotori.core import APP_NAME, KotoriBootloader
 from kotori.logger import startLogging
-from kotori.configuration import get_configuration, get_configuration_file
+from kotori.configuration import get_configuration, get_configuration_file, apply_default_settings
 from kotori.frontend.server import boot_frontend
 
 __path__ = extend_path(__path__, __name__)
@@ -48,6 +48,9 @@ def run():
     configfile = get_configuration_file(options['--config'])
     log.info("Using configuration file {configfile}", configfile=configfile)
     settings = get_configuration(configfile)
+
+    # Apply default settings
+    apply_default_settings(settings)
 
     # Merge command line options into settings
     settings.setdefault('options', Bunch())

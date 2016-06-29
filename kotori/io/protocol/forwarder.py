@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 # (c) 2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+import re
 from copy import deepcopy
 from urlparse import urlparse
 from bunch import Bunch, bunchify
-from twisted.application.service import MultiService
 from twisted.logger import Logger
+from twisted.application.service import MultiService
+from kotori.configuration import read_list
+from kotori.core import KotoriBootloader
 from kotori.daq.services import RootService, MultiServiceMixin
 from kotori.io.protocol.http import HttpServerService
-from kotori.daq.intercom.mqtt import MqttAdapter
+from kotori.io.protocol.target import ForwarderTargetService
 
 log = Logger()
 
@@ -36,18 +39,28 @@ class ProtocolForwarderApplication(RootService):
         self.registerService(service)
 
 
-class ProtocolForwarderService(MultiService, MultiServiceMixin):
+class ProtocolForwarderService(MultiServiceMixin, MultiService):
+    """
+    Container service for source and target services.
+
+    Both services are connected unidirectionally via ``forward`` callback.
+
+    As of June 2016, the only source service is a singleton
+    instance of a ``HttpServerService``. This might be
+    improved by adding more handlers.
+
+    Also, there are currently two target services
+    for emitting data, MQTT and InfluxDB.
+    """
 
     def __init__(self, channel=None):
-
-        MultiService.__init__(self)
-
         self.channel = channel or Bunch(realm=None, subscriptions=[])
-
-        self.name = u'service-pf-' + self.channel.get('realm', unicode(id(self)))
+        MultiServiceMixin.__init__(self, name=self.channel.name + '-forwarder')
 
     def setupService(self):
         #self.log(log.info, u'Setting up')
+        log.info(u'Starting {name}'.format(name=self.logname))
+
         self.settings = self.parent.settings
 
         # Configure metrics to be collected each X seconds
@@ -58,63 +71,131 @@ class ProtocolForwarderService(MultiService, MultiServiceMixin):
         self.setupTarget()
 
     def setupSource(self):
-        # Configure data source
+        """
+        Configure data source by registering a HTTP endpoint
+        using the source address derived from channel settings.
+        """
 
         # There should be just a single instance of a HTTP server service object
         self.source_service = HttpServerService.create(self.settings)
 
+        # Wrap source channel settings into address object
+        self.source_address = ForwarderAddress(self.channel.source)
+
         # Register URI route representing source channel
-        self.source_uri = bunchify(urlparse(self.channel.source)._asdict())
-        self.source_service.registerEndpoint(path=self.source_uri.path, callback=self.forward)
+        self.source_service.registerEndpoint(
+            methods     = self.source_address.predicates,
+            path        = self.source_address.uri.path,
+            callback    = self.forward)
 
     def setupTarget(self):
-        # Configure data target
-        self.settings.mqtt.setdefault('host', u'localhost')
-        self.settings.mqtt.setdefault('port', u'1883')
-        self.settings.mqtt.setdefault('debug', u'false')
+        """
+        Configure data target by registering a service object
+        using the target address derived from channel settings.
+        """
 
-        self.target_uri = bunchify(urlparse(self.channel.target)._asdict())
+        # Wrap target channel into address object
+        self.target_address = ForwarderAddress(self.channel.target)
+        self.target_uri = self.target_address.uri
 
-        target_service_name = u'mqtt-{realm}-{channel_name}'.format(
+        # Compute name for service object, should be unique.
+        target_service_name = u'{realm}-{channel_name}'.format(
             realm=self.channel.realm, channel_name=self.channel.name)
+
+        # Register service representing target channel.
+        # Each service should just run once, so they are named to be found again.
+        # TODO: Add sanity checks for collisions here.
         try:
             self.target_service = self.getServiceNamed(target_service_name)
         except KeyError:
-            self.target_service = MqttAdapter(
-                name          = target_service_name,
-                broker_host   = self.settings.mqtt.host,
-                broker_port   = int(self.settings.mqtt.port))
+            self.target_service = ForwarderTargetService(name=target_service_name, address=self.target_address)
             self.registerService(self.target_service)
 
     def forward(self, bucket):
+        """
+        Receive data bucket from source, run through
+        transformation machinery and emit to target.
+        """
 
         # 1. Map/transform topology address information
+        if 'transform' in self.channel:
+            for entrypoint in read_list(self.channel.transform):
+                try:
+                    transformer = KotoriBootloader.load_entrypoint(entrypoint)
+                    bucket.tdata.update(transformer(bucket.tdata))
+                except ImportError as ex:
+                    log.error('ImportError "{message}" when loading entrypoint "{entrypoint}"',
+                        entrypoint=entrypoint, message=ex)
 
         # MQTT doesn't prefer leading forward slashes with topic names, let's get rid of them
         target_uri_tpl = self.target_uri.path.lstrip('/')
 
         # Compute target bus topic from url matches
-        target_uri = target_uri_tpl.format(**bucket.match)
+        target_uri = target_uri_tpl.format(**bucket.tdata)
+
+        # Enrich bucket by putting source and target addresses into it
+        bucket.address = Bunch(source=self.source_address, target=self.target_address)
 
         # 2. Reporting
         log.info('Forwarding bucket to {target} with bucket={bucket}. Effective target uri is {target_uri}',
             target=self.channel.target, target_uri=target_uri, bucket=dict(bucket))
 
         # 3. Adapt, serialize and emit appropriately
-        topic   = target_uri
-        payload = bucket.json
-        self.target_service.publish(topic, payload)
-
-    def startService(self):
-        self.setupService()
-        self.log(log.info, u'Starting')
-        MultiService.startService(self)
-        #self.metrics_twingo = LoopingCall(self.process_metrics)
-        #self.metrics_twingo.start(self.metrics.interval, now=False)
+        return self.target_service.emit(target_uri, bucket)
 
     def log(self, level, prefix):
         level('{prefix} {class_name}. name={name}, channel={channel}',
             prefix=prefix, class_name=self.__class__.__name__, name=self.name, channel=dict(self.channel))
+
+
+class ForwarderAddress(object):
+    """
+    Addresses are made of uris and predicates, e.g.::
+
+        http:/api/bus/mqtt/mqttkit-1/{address:.*}/data [POST]
+        ^                                               ^
+        |                                               |
+        ----- uri                            predicate --
+
+    Synopsis:
+
+    >>> address = ForwarderAddress(u'http:/api/bus/mqtt/mqttkit-1/{address:.*}/data [POST]')
+
+    >>> address.uri.scheme
+    u'http'
+
+    >>> address.uri.path
+    u'/api/bus/mqtt/mqttkit-1/{address:.*}/data'
+
+    >>> address.predicates
+    [u'POST']
+    """
+
+    address_pattern = re.compile('^(?P<uri>.*?)(?: \[(?P<predicates>.+)\])?$')
+
+    def __init__(self, address):
+        self.raw_uri = None
+        self.raw_predicates = None
+        self.parsed_uri = None
+        self.uri = None
+        self.predicates = []
+        self.parse(address)
+
+    def parse(self, address):
+        m = self.address_pattern.match(address)
+
+        match = m.groupdict()
+        if match:
+            self.raw_uri = match['uri']
+            self.raw_predicates = match['predicates']
+
+            self.parsed_uri = urlparse(self.raw_uri)
+            self.uri = bunchify(self.parsed_uri._asdict())
+            if self.raw_predicates:
+                self.predicates = read_list(self.raw_predicates)
+
+    def __repr__(self):
+        return u'{uri} {predicates}'.format(uri=self.parsed_uri.geturl(), predicates=self.predicates)
 
 
 def boot(name=None, **kwargs):

@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
-# (c) 2014,2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2014-2016 Andreas Motl <andreas.motl@elmyra.de>
+import re
 import os
 import sys
-import logging
 import shelve
 import socket
+import logging
+import json_store
 from uuid import uuid4
 from appdirs import user_data_dir
-import json_store
+from datetime import timedelta
 
 logger = logging.getLogger()
 
@@ -112,3 +114,14 @@ def setup_logging(level=logging.INFO):
     # TODO: Control debug logging of HTTP requests through yet another commandline option "--debug-http" or "--debug-requests"
     requests_logger = logging.getLogger('requests')
     requests_logger.setLevel(logging.WARN)
+
+
+def tdelta(input):
+    # https://blog.posativ.org/2011/parsing-human-readable-timedeltas-in-python/
+    keys = ["weeks", "days", "hours", "minutes", "seconds"]
+    regex = "".join(["((?P<%s>\d+)%s ?)?" % (k, k[0]) for k in keys])
+    kwargs = {}
+    for k,v in re.match(regex, input).groupdict(default="0").items():
+        kwargs[k] = int(v)
+    return timedelta(**kwargs)
+

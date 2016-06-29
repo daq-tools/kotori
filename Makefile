@@ -140,7 +140,7 @@ fpm-options := \
 	--license "AGPL 3, EUPL 1.2" \
 	--deb-changelog CHANGES.rst \
 	--deb-meta-file README.rst \
-	--description "Kotori data acquisition and graphing toolkit" \
+	--description "Kotori data acquisition, routing and graphing toolkit" \
 	--url "https://getkotori.org/docs/"
 
 
@@ -151,7 +151,7 @@ version  := $(shell python setup.py --version)
 
 
 deb-build-daq:
-	$(MAKE) deb-build name=kotori features=daq,firmware
+	$(MAKE) deb-build name=kotori features=daq,export,plotting,firmware,scientific
 
 deb-build-daq-binary:
 	$(MAKE) deb-build name=kotori-daq-binary features=daq,daq_binary
@@ -188,7 +188,7 @@ deb-build: check-build-options
 
 	# build from egg on package server
 	# https://pip.pypa.io/en/stable/reference/pip_wheel/#cmdoption--extra-index-url
-	#TMPDIR=/var/tmp $(buildpath)/bin/pip install kotori[$(features)]==$(version) --extra-index-url=https://packages.elmyra.de/isarengineering/python/eggs/
+	#TMPDIR=/var/tmp $(buildpath)/bin/pip install kotori[$(features)]==$(version) --process-dependency-links --extra-index-url=https://packages.elmyra.de/isarengineering/python/eggs/
 
 	# build sdist egg locally
 	TMPDIR=/var/tmp $(buildpath)/bin/python setup.py sdist
@@ -209,7 +209,7 @@ deb-build: check-build-options
 	# 2. Install from local sdist egg
 	# TODO: maybe use "--editable" for installing in development mode
 	# https://pip.pypa.io/en/stable/reference/pip_wheel/#cmdoption-f
-	TMPDIR=/var/tmp $(buildpath)/bin/pip install kotori[$(features)]==$(version) --upgrade --download-cache=./build/pip-cache --find-links=./dist
+	TMPDIR=/var/tmp $(buildpath)/bin/pip install kotori[$(features)]==$(version) --upgrade --download-cache=./build/pip-cache --find-links=./dist --process-dependency-links
 
 
 	# 3. Relocate virtualenv to /opt/kotori
@@ -326,7 +326,9 @@ check-build-options:
 test: virtualenv
 	@# https://nose.readthedocs.org/en/latest/plugins/doctests.html
 	@# https://nose.readthedocs.org/en/latest/plugins/cover.html
-	nosetests --with-doctest --doctest-tests --doctest-extension=rst
+	@#export NOSE_IGNORE_FILES="c\.py";
+	nosetests --with-doctest --doctest-tests --doctest-extension=rst --verbose \
+		kotori/*.py kotori/daq/{application,graphing,services,storage} kotori/daq/intercom/{mqtt/paho.py,strategies.py,udp.py,wamp.py} kotori/firmware kotori/io kotori/vendor/hiveeyes
 
 test-coverage: virtualenv
 	nosetests \

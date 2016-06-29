@@ -59,6 +59,10 @@ body, div.body {
     text-align: right;
 }
 
+.padding-right-regular {
+    padding-right: 6em;
+}
+
 /* display classes */
 .display-inline {
     display: inline !important;

@@ -66,7 +66,7 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
         #self.log(log.info, u'Setting up')
         self.settings = self.parent.settings
 
-        log.info('Providing firmware for {target} at {source}', **self.channel)
+        log.info('Providing firmware for {repository} at {source}', source=self.channel.source, repository=self.channel.repository)
         self.setupSource()
 
     def setupSource(self):
@@ -87,7 +87,7 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
         data = {}
 
         # Update transformation dict with information from url capturing
-        data.update(bucket.match.copy())
+        data.update(bucket.tdata.copy())
 
         # Update transformation dict with information from request (body/params)
         data.update(bucket.data)

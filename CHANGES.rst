@@ -5,6 +5,8 @@ Kotori CHANGES
 
 in progress
 ===========
+- Flexible InfluxDB data export and plotting machinery through HTTP,
+  see :ref:`data-export` and :ref:`forward-http-to-influx`.
 - Some words about the background and configuration of the firmware builder.
 
 

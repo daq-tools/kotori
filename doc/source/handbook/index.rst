@@ -11,6 +11,7 @@ Handbook
     :glob:
 
     acquisition/index
+    export/index
     grafana
     influxdb
     kotori

@@ -44,6 +44,20 @@
 .. _Adafruit MQTT Library: https://github.com/adafruit/Adafruit_MQTT_Library
 .. _Arduino JSON library: https://github.com/bblanchon/ArduinoJson
 
+.. Foundation Export
+.. _pandas: http://pandas.pydata.org/
+.. _DataFrame: http://pandas.pydata.org/pandas-docs/stable/dsintro.html#dataframe
+.. _DataTables: https://datatables.net/
+.. _matplotlib: http://matplotlib.org/
+.. _ggplot: https://yhat.github.io/ggplot/
+.. _dygraphs: http://dygraphs.com/
+.. _Bokeh: http://bokeh.pydata.org/
+.. _Vega: https://vega.github.io/vega/
+.. _Vincent: https://github.com/wrobstory/vincent
+.. _HDFView: https://www.hdfgroup.org/products/java/
+.. _Panoply: http://www.giss.nasa.gov/tools/panoply/
+.. _Pytables: http://www.pytables.org/
+
 .. Clients
 .. _Requests: http://docs.python-requests.org/
 .. _HTTPie: http://httpie.org
@@ -58,7 +72,13 @@
 .. _WebSockets: https://tools.ietf.org/html/rfc6455
 .. _CEST: https://www.timeanddate.com/time/zones/cest
 .. _ELF: https://en.wikipedia.org/wiki/Executable_and_Linkable_Format
-
+.. _DWIM: https://en.wikipedia.org/wiki/DWIM
+.. _CSV: https://en.wikipedia.org/wiki/Comma-separated_values
+.. _JSON: http://json.org/
+.. _HTML: https://en.wikipedia.org/wiki/HTML
+.. _XLSX: https://en.wikipedia.org/wiki/Office_Open_XML
+.. _HDF5: https://en.wikipedia.org/wiki/Hierarchical_Data_Format
+.. _NetCDF: https://en.wikipedia.org/wiki/NetCDF
 
 .. iLaundry
 .. _BeagleBone Black: http://beagleboard.org/BLACK
