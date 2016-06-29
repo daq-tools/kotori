@@ -5,6 +5,12 @@ Kotori CHANGES
 
 in progress
 ===========
+
+
+.. _kotori-0.10.0:
+
+2016-06-29 0.10.0
+=================
 - Flexible InfluxDB data export and plotting machinery through HTTP,
   see :ref:`data-export` and :ref:`forward-http-to-influx`.
 - Some words about the background and configuration of the firmware builder.
