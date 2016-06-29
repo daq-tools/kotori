@@ -5,18 +5,25 @@
 #######################
 Forwarding HTTP to MQTT
 #######################
+
+*****
+Intro
+*****
 For enabling data acquisition via HTTP, just forward
-payloads of POST or PUT requests to the MQTT bus
-and let the downstream infrastructure :ref:`application-mqttkit`
+payloads of POST or PUT requests to the MQTT bus and
+let the downstream infrastructure :ref:`application-mqttkit`
 handle all the rest.
 
+*****
+Setup
+*****
 This can be achieved by configuring a generic HTTP-to-MQTT
-forwarder application configured for your purpose:
+forwarder application:
 
 .. literalinclude:: ../../_static/content/etc/examples/forwarders/http-to-mqtt.ini
     :language: ini
     :linenos:
-    :emphasize-lines: 33-41
+    :emphasize-lines: 34-42
 
 
 .. tip::

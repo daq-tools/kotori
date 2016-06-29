@@ -6,12 +6,6 @@
 Data acquisition over HTTP
 ##########################
 
-.. tip::
-
-    For making Kotori listen to HTTP requests for telemetry data acquisition,
-    please have a look at :ref:`forward-http-to-mqtt` about how to configure
-    a HTTP endpoint for your :ref:`application-mqttkit` application.
-
 ************
 HTTP clients
 ************
@@ -35,4 +29,15 @@ HTTP clients
 
    * - PHP
      - Visit :ref:`daq-php` for a library and and an example how to transmit telemetry data from PHP.
+
+
+*****
+Setup
+*****
+
+.. tip::
+
+    To make Kotori listen to HTTP requests for telemetry data acquisition,
+    please have a look at :ref:`forward-http-to-mqtt` about how to configure
+    a HTTP endpoint as an addon to a :ref:`application-mqttkit` application.
 

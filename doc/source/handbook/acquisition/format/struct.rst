@@ -1,8 +1,8 @@
 .. include:: ../../../_resources.rst
 
-#######################################################
-Data serialization using binary payload representations
-#######################################################
+##################################
+Data serialization using C structs
+##################################
 .. highlight:: cpp
 
 .. seealso::

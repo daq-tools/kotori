@@ -70,6 +70,18 @@ SPUL
 - SPUL - Sensor Protocol Ultra Light: https://kukua.github.io/concava-connector-spul/latest/introduction/
 
 
+OMA LightweightM2M
+==================
+- http://technical.openmobilealliance.org/Technical/technical-information/release-program/current-releases/oma-lightweightm2m-v1-0
+- https://github.com/dmoranj/lwm2mArduino
+- https://github.com/ARMmbed/mbed-client-quickstart
+- https://connector.mbed.com/
+- https://www.mbed.com/en/development/software/mbed-client/
+- https://docs.mbed.com/docs/mbed-device-connector-web-interfaces/en/latest/
+- https://www.mbed.com/en/development/cloud/mbed-device-connector-service/
+- https://docs.mbed.com/docs/mbed-client-guide/en/latest/Introduction/#how-to-use-the-api
+- https://docs.mbed.com/docs/mbed-device-connector-web-interfaces/en/latest/#the-mbed-device-connector-data-model
+
 Misc
 ====
 - http://playground.arduino.cc/Main/LibraryList#Comm

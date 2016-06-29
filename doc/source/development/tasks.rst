@@ -17,6 +17,40 @@ Kotori tasks
 ****
 
 
+2016-06-25
+==========
+- [o] Data export
+    - [x] Run export machinery in seperate thread
+    - [x] Care for runtime exceptions in export machinery
+    - [x] Properly format "data.csv" download name
+    - [x] Integrate Bokeh renderer
+    - [x] Refactor dygraphs, Bokeh and Vincent renderers to UniversalPlotter
+    - [o] Replace bus/mqtt with other HTTP handlers
+    - [o] Index page for GET ../data displaying all available formats
+    - [o] Properly handle units in graphs
+    - [o] Load Bokeh data via json
+    - [o] Suppress spontaneous Twisted-rendered stacktraces
+    - [o] Self-host static assets like dygraphs, jquery, etc. (from UniversalPlotter)
+    - [o] Convert more formats using Odo
+      http://odo.pydata.org/en/latest/json.html
+    - [o] More tabular renderings e.g. using https://pypi.python.org/pypi/PrettyTable and https://github.com/6pac/SlickGrid
+      See also:
+        - http://clusterize.js.org/
+        - https://stackoverflow.com/questions/2402953/javascript-data-grid-for-millions-of-rows/8831087#8831087
+
+    - [o] More visualizations, see also: https://tomaugspurger.github.io/modern-6-visualization.html
+    - [o] More scientific data formats, see also:
+
+        - http://docs.scipy.org/doc/scipy/reference/io.html
+        - http://stackoverflow.com/questions/19134317/find-all-differences-between-mat-files
+
+    - [o] Mixed data types in HDF5: https://github.com/pydata/pandas/issues/3032
+    - [o] Branding for HTML-based output (e.g. for Hiveeyes / Open Hive)
+    - [o] Insert user block into HDF5 file using appropriate API methods like h5jam/h5unjam
+
+- [o] Data routing: Flexible MQTT topic republishing
+
+
 2016-06-06
 ==========
 - [o] Add Javascript and Arduino clients (using HTTP+JSON)

@@ -11,7 +11,7 @@ The characteristics of sawtooth signals (dynamic, slowly oscillating)
 are convenient to generate and publish measurement or telemetry data
 values without having any hardware in place.
 
-There are different means of transmitting the sawtooth signal to Kotori:
+There are different means of transmitting a sawtooth signal to Kotori:
 
 .. contents::
    :local:
