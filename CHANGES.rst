@@ -6,6 +6,12 @@ Kotori CHANGES
 in progress
 ===========
 
+
+.. _kotori-0.10.1:
+
+2016-07-01 0.10.1
+=================
+
 General
 -------
 - Fix Debian runtime dependencies

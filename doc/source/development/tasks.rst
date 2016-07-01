@@ -35,11 +35,11 @@ Kotori tasks
 - [x] Add quotes to series name when querying InfluxDB series starting with numeric value, e.g. 3756782252718325761_1
 - [x] Add "exclude" parameter for mitigating scaling/outlier issue with "wght1", e.g.
   https://swarm.hiveeyes.org/api/hiveeyes/25a0e5df-9517-405b-ab14-cb5b514ac9e8/3756782252718325761/1/data.png?renderer=ggplot&from=20160519T040000&to=20160519T170000
+- [x] Fix exceptions.Exception: Excel worksheet name '25a0e5df_9517_405b_ab14_cb5b514ac9e8_3756782252718325761_1' must be <= 31 chars.
+- [x] Check if build dependencies can be announced to fpm
 - [o] Investigate void rendering with:
   https://swarm.hiveeyes.org/api/hiveeyes/25a0e5df-9517-405b-ab14-cb5b514ac9e8/3756782252718325761/1/data.png?from=20160519T040000&to=20160519T170000
-- [o] Fix exceptions.Exception: Excel worksheet name '25a0e5df_9517_405b_ab14_cb5b514ac9e8_3756782252718325761_1' must be <= 31 chars.
 - [o] Build packages for armhf
-- [o] Check if build dependencies can be announced to fpm
 - [o] cairo: no  [cairocffi or pycairo not found]
 - [o] PyTables: Could not find blosc headers and library; using internal sources.
 
