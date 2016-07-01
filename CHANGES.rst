@@ -5,7 +5,13 @@ Kotori CHANGES
 
 in progress
 ===========
+
+General
+-------
 - Fix Debian runtime dependencies
+
+Data export
+-----------
 - Always emit lowercase values from ``WanBusStrategy.sanitize_db_identifier()``
 - When querying InfluxDB, quote table name (series/measurement) if identifier starts with a numeric value
 
@@ -32,18 +38,18 @@ in progress
 2016-06-06 0.8.0
 ================
 
-general
+General
 -------
 - Add HTTP-to-MQTT protocol forwarder component, see :ref:`forward-http-to-mqtt`
 - Add Terkin PHP, a HTTP API library for :ref:`daq-php`, supports PHP5 and PHP4
 - Relocate configuration blueprints in etc/examples
 
-bugfixes
+Bugfixes
 --------
 - Update default credentials for Grafana 3.x compatibility (admin/admin)
 - Start HTTP server service only once, even when having multiple HTTP-to-X forwarders defined
 
-documentation
+Documentation
 -------------
 - Improve: Software releasing, package building and publishing. Both amd64 and armhf.
   See :ref:`kotori-release`, :ref:`kotori-build` and :ref:`setup-debian`.
@@ -69,13 +75,13 @@ documentation
 2016-05-22 0.7.0
 ================
 
-vendor :ref:`vendor-hiveeyes`
+Vendor :ref:`vendor-hiveeyes`
 -----------------------------
 - Integrate and absorb communication style and subsystems of :ref:`vendor-hiveeyes`/:ref:`beradio` into core
 - Refactor into generic Twisted service *MqttInfluxGrafanaService*,
   then implement the :ref:`vendor-hiveeyes` vendor application on top of it
 
-vendor :ref:`vendor-lst`
+Vendor :ref:`vendor-lst`
 ------------------------
 - Improve command line tooling per ``lst-message <channel> info``:
   Display common information about a data channel like the
@@ -83,7 +89,7 @@ vendor :ref:`vendor-lst`
 - Improve logging and debugging
 - Optionally put legend on the right hand side of the graph
 
-general
+General
 -------
 - Improve configuration, logging, debugging and documentation
 - Improve internal settings handling and application bootstrapping
@@ -105,7 +111,7 @@ general
 - Try to reconnect to MQTT broker in interval if initial connection fails
 - Add license, improve packaging and package publishing
 
-documentation
+Documentation
 -------------
 - Document how to :ref:`run-on-pypy`
 - Improve documentation at :ref:`kotori-about` and :ref:`kotori-readme`
@@ -116,12 +122,12 @@ documentation
 2016-03-27 0.6.0
 ================
 
-vendor :ref:`vendor-lst`
+Vendor :ref:`vendor-lst`
 ------------------------
 - resolve collision on parsed C header files when using identical filenames for different channels
 - add project "proptest"
 
-vendor :ref:`vendor-hiveeyes`
+Vendor :ref:`vendor-hiveeyes`
 -----------------------------
 - improve configuration file “hiveeyes.ini” and logging
 - fix Grafana panel creation re. Grafana 2.6.0 compatibility, Grafana 2.1.3 still works though
@@ -132,7 +138,7 @@ vendor :ref:`vendor-hiveeyes`
 - tune the default Grafana dashboard and panel
 - documentation updates
 
-packaging
+Packaging
 ---------
 - Modularize python dependencies into extra features
 - Debian packaging using FPM
@@ -141,7 +147,7 @@ packaging
     - Use virtualenv-tools for relocating virtualenvs
     - Add systemd service configuration file
 
-miscellaneous
+Miscellaneous
 -------------
 - Documentation refactoring and improvements
 
@@ -156,7 +162,7 @@ miscellaneous
 2015-11-26 0.5.0
 ================
 
-vendor :ref:`vendor-lst`
+Vendor :ref:`vendor-lst`
 ------------------------
 - add sattracker application
 - fix WAMP serialization error when publishing binary data (e.g. "char 0x9c") by using MsgPack serialization
@@ -184,7 +190,7 @@ vendor :ref:`vendor-lst`
 2015-11-20 0.4.0
 ================
 
-proof-of-concept for vendor :ref:`vendor-lst`
+Proof-of-concept for vendor :ref:`vendor-lst`
 ---------------------------------------------
 - add struct definitions of h2m project
 - add basic udp message sender in c++ based on h2m struct definitions
@@ -200,7 +206,7 @@ proof-of-concept for vendor :ref:`vendor-lst`
 - lst main application component: receive, decode and store binary messages
 - automatic Grafana dashboard- and panel creation
 
-general improvements
+General improvements
 --------------------
 - add release and documentation infrastructure through Makefile targets
 - fix panel generation for vendor hiveeyes
@@ -216,7 +222,7 @@ general improvements
 2015-11-06 0.3.2
 ================
 
-proof-of-concept for vendor :ref:`vendor-hiveeyes`
+Proof-of-concept for vendor :ref:`vendor-hiveeyes`
 --------------------------------------------------
 - upgrade foundation libraries: Twisted, Autobahn, Crossbar
 - receive messages via MQTT and store data points into InfluxDB
@@ -226,11 +232,11 @@ proof-of-concept for vendor :ref:`vendor-hiveeyes`
 - grafana datasource- and dashboard automation
 - Sort "collect_fields" result before passing to grafana manager
 
-vendor :ref:`vendor-hydro2motion`
+Vendor :ref:`vendor-hydro2motion`
 ---------------------------------
 - refactor hydro2motion code
 
-user interface
+User interface
 --------------
 - add frontend foundation based on Pyramid web framework
 - add jQuery, Bootstrap, Fontawesome, html5shiv and respond.js
@@ -241,7 +247,7 @@ user interface
 - http: cache really static resources longer than volatile ones
 - ui: add pages with page transitions, about content, etc.
 
-general improvements
+General improvements
 --------------------
 - refactor project layout
 - use configuration file instead of hardcoded configuration values
@@ -256,7 +262,7 @@ general improvements
 2015-05-01 0.2.1
 ================
 
-vendor :ref:`vendor-hydro2motion`
+Vendor :ref:`vendor-hydro2motion`
 ---------------------------------
 - ui: set map position to Munich
 - ui: add lat long conversion
@@ -267,7 +273,7 @@ vendor :ref:`vendor-hydro2motion`
 2015-04-24 0.2.0
 ================
 
-proof-of-concept for vendor :ref:`vendor-hydro2motion`
+Proof-of-concept for vendor :ref:`vendor-hydro2motion`
 ------------------------------------------------------
 - ui: add d3 and rickshaw
 - ui: add timeseries prototype
@@ -332,9 +338,10 @@ proof-of-concept for vendor :ref:`vendor-hydro2motion`
 2014-01-05 0.0.1
 ================
 
-proof-of-concept for vendor :ref:`vendor-ilaundry`
+Proof-of-concept for vendor :ref:`vendor-ilaundry`
 --------------------------------------------------
 - Two daemons: master service and node service
 - Communication infrastructure on top of Autobahn using PubSub
 - Text-to-speech on top of Google Translate TTS
 - Basic HTML Dashboard GUI for sending text messages
+

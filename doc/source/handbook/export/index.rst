@@ -75,6 +75,13 @@ List of output formats
 Possible suffixes are (.csv, .txt), .json, .html, .xlsx, (.hdf, .hdf5, .h5), (.nc, .cdf),
 (.dy, .dygraphs), (.dt, .datatables), (.bk, .bokeh), (.vega, .vega.json), .png
 
+.. todo:: Make table which maps extension to description/web link, maybe combine with table from Introduction
+
+.. todo:: Add gallery of exports.
+
+.. todo:: Mention .png?renderer=ggplot&theme=... and .png?style=...
+
+
 Download
 ========
 Download data using HTTPie_::
@@ -84,6 +91,7 @@ Download data using HTTPie_::
 
     http GET $HTTP_URI/api/$MQTT_TOPIC/data.csv  --download
     http GET $HTTP_URI/api/$MQTT_TOPIC/data.xlsx --download
+
 
 Date ranges
 ===========

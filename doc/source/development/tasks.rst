@@ -17,6 +17,33 @@ Kotori tasks
 ****
 
 
+2016-07-01
+==========
+- [x] Fix numpy runtime dependency on atlas, PyTables runtime dependency on HDF5 and more::
+
+    exceptions.ImportError: Missing required dependencies ['numpy']
+    ImportError: libf77blas.so.3: cannot open shared object file: No such file or directory
+
+    [...]
+
+    ImportError: HDFStore requires PyTables, "libhdf5_serial.so.8: cannot open shared object file: No such file or directory" problem importing
+
+  aptitude install -y libatlas-base-dev libopenblas-base liblapack3 libhdf5-8 libnetcdfc7 liblzo2-2 libbz2-1.0
+  aptitude install -y libpng12-0 libfreetype6 python-cairocffi
+
+- [x] Add .lower() conversion to WanBusStrategy.sanitize_db_identifier
+- [x] Add quotes to series name when querying InfluxDB series starting with numeric value, e.g. 3756782252718325761_1
+- [x] Add "exclude" parameter for mitigating scaling/outlier issue with "wght1", e.g.
+  https://swarm.hiveeyes.org/api/hiveeyes/25a0e5df-9517-405b-ab14-cb5b514ac9e8/3756782252718325761/1/data.png?renderer=ggplot&from=20160519T040000&to=20160519T170000
+- [o] Investigate void rendering with:
+  https://swarm.hiveeyes.org/api/hiveeyes/25a0e5df-9517-405b-ab14-cb5b514ac9e8/3756782252718325761/1/data.png?from=20160519T040000&to=20160519T170000
+- [o] Fix exceptions.Exception: Excel worksheet name '25a0e5df_9517_405b_ab14_cb5b514ac9e8_3756782252718325761_1' must be <= 31 chars.
+- [o] Build packages for armhf
+- [o] Check if build dependencies can be announced to fpm
+- [o] cairo: no  [cairocffi or pycairo not found]
+- [o] PyTables: Could not find blosc headers and library; using internal sources.
+
+
 2016-06-25
 ==========
 - [o] Data export
