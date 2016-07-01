@@ -4,6 +4,7 @@ from twisted.internet import threads
 from twisted.web import http, server
 from twisted.logger import Logger
 from twisted.application.service import MultiService
+from kotori.configuration import read_list
 from kotori.daq.services import MultiServiceMixin
 from kotori.daq.intercom.mqtt import MqttAdapter
 from kotori.io.protocol.http import HttpDataFrameResponse
@@ -88,6 +89,15 @@ class ForwarderTargetService(MultiServiceMixin, MultiService):
             # Database result is empty, send appropriate response
             if df is None or df.empty:
                 return self.response_no_results(bucket)
+
+            # Drop some fields from DataFrame as requested
+            if 'exclude' in bucket.tdata and bucket.tdata.exclude:
+                drop_fields = read_list(bucket.tdata.exclude)
+                try:
+                    df.drop(drop_fields, axis=1, inplace=True)
+                except ValueError as ex:
+                    error_message = u'Error: {message}'.format(message=ex)
+                    return bucket.request.error_response(bucket, error_message=error_message)
 
             # Compute http response from DataFrame, taking designated output format into account
             response = HttpDataFrameResponse(bucket, dataframe=df)

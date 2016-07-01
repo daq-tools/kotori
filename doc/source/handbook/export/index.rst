@@ -137,6 +137,27 @@ Examples using HTTPie_::
     http GET $HTTP_URI/api/$MQTT_TOPIC/data.csv from=20160626T124259Z to=20160628T124259Z
 
 
+Exclude fields
+==============
+Excluding fields is a handy option for outlier mitigation when plotting data and more.
+Let's have look at this feature by an example.
+
+Measure some values of different units::
+
+    http POST $HTTP_URI/api/$MQTT_TOPIC/data temperature:=48.48 humidity:=64.64 weight:=10000
+
+As this would not be plotted well due to different scaling on the y-axis,
+let's drop the "weight" field when exporting data::
+
+    http GET $HTTP_URI/api/$MQTT_TOPIC/data.csv exclude=weight
+
+This would yield the result with "weight" field omitted::
+
+    time,humidity,temperature
+    2016-07-01 16:58:34.788767764,64.64,48.48
+    2016-07-01 16:58:37.645754806,64.64,48.48
+
+
 Hierarchical data
 =================
 Kotori supports exporting data in HDF5_ and NetCDF_ formats.

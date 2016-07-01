@@ -14,6 +14,7 @@ Data export
 -----------
 - Always emit lowercase values from ``WanBusStrategy.sanitize_db_identifier()``
 - When querying InfluxDB, quote table name (series/measurement) if identifier starts with a numeric value
+- Add "exclude" parameter to HTTP API for mitigating scaling/outlier problems when plotting
 
 
 .. _kotori-0.10.0:
