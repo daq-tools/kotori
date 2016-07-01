@@ -6,6 +6,7 @@ Kotori CHANGES
 in progress
 ===========
 - Fix Debian runtime dependencies
+- Always emit lowercase values from ``WanBusStrategy.sanitize_db_identifier()``
 
 
 .. _kotori-0.10.0:

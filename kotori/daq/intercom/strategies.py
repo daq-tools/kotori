@@ -93,5 +93,5 @@ class WanBusStrategy(object):
 
         Better safe than sorry, let's strip them all.
         """
-        value = value.replace('/', '_').replace('.', '_').replace('-', '_')
+        value = value.replace('/', '_').replace('.', '_').replace('-', '_').lower()
         return value
