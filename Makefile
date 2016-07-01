@@ -131,10 +131,14 @@ fpm-options := \
 	--no-deb-use-file-permissions \
 	--no-python-obey-requirements-txt \
 	--no-python-dependencies \
-	--depends "python" \
+	--deb-build-depends "pkg-config gfortran libatlas-dev libopenblas-dev liblapack-dev libhdf5-dev libnetcdf-dev liblzo2-dev libbz2-dev libpng12-dev libfreetype6-dev python-cairocffi" \
+	--depends python \
+	--depends libatlas3-base --depends libopenblas-base --depends liblapack3 \
+	--depends libhdf5-8 --depends libnetcdfc7 --depends liblzo2-2 --depends libbz2-1.0 \
+	--depends libpng12-0 --depends libfreetype6 --depends python-cairocffi \
+	--deb-suggests "influxdb, mosquitto, mosquitto-clients, grafana" \
 	--provides "kotori" \
 	--provides "kotori-daq" \
-	--deb-suggests "influxdb, mosquitto, mosquitto-clients, grafana" \
 	--maintainer "andreas.motl@elmyra.de" \
 	--vendor "IsarEngineering GmbH, Elmyra UG" \
 	--license "AGPL 3, EUPL 1.2" \

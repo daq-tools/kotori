@@ -5,6 +5,7 @@ Kotori CHANGES
 
 in progress
 ===========
+- Fix Debian runtime dependencies
 
 
 .. _kotori-0.10.0:
