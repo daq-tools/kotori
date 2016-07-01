@@ -327,6 +327,7 @@ class HttpDataFrameResponse(object):
 
         # Compute some names and titles and pluck into ``bucket``
         bucket.title = Bunch(
+            compact = u'{gateway}_{node}'.format(**dict(tdata)).replace('-', '_'),
             short = u'{network}_{gateway}_{node}'.format(**dict(tdata)).replace('-', '_'),
             full  = u'{network}_{gateway}_{node}_{time_begin}-{time_end}'.format(**dict(tdata)).replace('-', '_'),
             human = u'Address: {network} » {gateway} » {node}'.format(**dict(tdata)),

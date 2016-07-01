@@ -39,7 +39,7 @@ class UniversalTabularExporter(object):
             # https://stackoverflow.com/questions/28058563/write-to-stringio-object-using-pandas-excelwriter
             with pandas.ExcelWriter('temp.xlsx', engine='xlsxwriter') as excel_writer:
                 excel_writer.book.filename = buffer
-                df.to_excel(excel_writer, sheet_name=bucket.title.short, index=False)
+                df.to_excel(excel_writer, sheet_name=bucket.title.compact[:31], index=False)
 
         elif format in ['hdf', 'hdf5', 'h5']:
 
