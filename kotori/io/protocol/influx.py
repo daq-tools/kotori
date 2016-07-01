@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 # (c) 2016 Andreas Motl <andreas.motl@elmyra.de>
-from arrow.parser import DateTimeParser
 import types
 import arrow
 import pandas
 import collections
 from pprint import pprint
+from arrow.parser import DateTimeParser
 from datetime import datetime, timedelta
 from pyinfluxql import Query
 from pyinfluxql.functions import Mean
 from twisted.logger import Logger
 from kotori.daq.storage.influx import InfluxDBAdapter
+from kotori.io.protocol.util import is_number
 from kotori.util import tdelta
 
 log = Logger()
@@ -37,7 +38,14 @@ class QueryTransformer(object):
         #expression = Query('*').from_(series).where(time__gt=datetime.utcnow() - timedelta(hours=1))
         #expression = Query(Mean('*')).from_(series).where(time__gt=datetime.now() - timedelta(1)).group_by(time=timedelta(hours=1))
 
+        # Fix up "series" if starting with numeric value
+        # TODO: Fix should go to pyinfluxql
+        if is_number(series[0]):
+            series = '"{series}"'.format(series=series)
+
         time_begin, time_end = compute_daterange(data.get('from'), data.get('to'))
+
+        # TODO: Use ".date_range" API method
         expression = Query('*').from_(series).where(time__gte=time_begin, time__lte=time_end)
 
         result = {

@@ -7,6 +7,7 @@ in progress
 ===========
 - Fix Debian runtime dependencies
 - Always emit lowercase values from ``WanBusStrategy.sanitize_db_identifier()``
+- When querying InfluxDB, quote table name (series/measurement) if identifier starts with a numeric value
 
 
 .. _kotori-0.10.0:
