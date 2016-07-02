@@ -12,13 +12,47 @@ def get_data_uri(bucket, sibling=None):
     Compute uri to data source as sibling to the current path.
     Add "from" and "to" query parameters from bucket.
     """
+
+    request = bucket.request
+
+    # Honor X-Forwarded-Proto request header if behind SSL-terminating HTTP proxy
+    twisted_honor_reverse_proxy(request)
+
     url = URL()
     if 'from' in bucket.tdata:
         url = url.add(u'from', unicode(bucket.tdata['from']))
     if 'to' in bucket.tdata:
         url = url.add(u'to', unicode(bucket.tdata['to']))
-    data_uri = str(bucket.request.URLPath().sibling(sibling).click(url.asText()))
+    data_uri = str(request.URLPath().sibling(sibling).click(url.asText()))
     return data_uri
+
+def twisted_honor_reverse_proxy(request):
+    # Honor X-Forwarded-Proto request header if behind SSL-terminating HTTP proxy
+    # See also: https://twistedmatrix.com/trac/ticket/5807
+    hostname, port = twisted_hostname_port(request)
+    is_ssl = twisted_is_secure(request)
+    request.setHost(hostname, port, is_ssl)
+
+def twisted_hostname_port(request):
+    """
+    Conveniently get (host, port) tuple of current request,
+    either from "Host" header or from the request object itself.
+    """
+    host_header = request.getHeader(b'Host')
+    if host_header:
+        if ':' in host_header:
+            hostname, port = host_header.split(b':')
+        else:
+            is_ssl = twisted_is_secure(request)
+            hostname, port = host_header, is_ssl and 443 or 80
+    else:
+        address = request.getHost()
+        hostname, port = address.host, address.port
+
+    return hostname, int(port)
+
+def twisted_is_secure(request):
+    return request.isSecure() or request.getHeader('X-Forwarded-Proto') == 'https'
 
 def twisted_flatten_request_args(request):
     """

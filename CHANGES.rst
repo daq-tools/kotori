@@ -22,7 +22,7 @@ Data export
 - When querying InfluxDB, quote table name (series/measurement) if identifier starts with a numeric value
 - Add "exclude" parameter to HTTP API for mitigating scaling/outlier problems when plotting
 - Fix "Excel worksheet name must be <= 31 chars." by introducing "compact" title
-
+- Honor https scheme in reverse proxy setups
 
 .. _kotori-0.10.0:
 
