@@ -42,6 +42,10 @@ Kotori tasks
 - [o] Build packages for armhf
 - [o] cairo: no  [cairocffi or pycairo not found]
 - [o] PyTables: Could not find blosc headers and library; using internal sources.
+- [o] Add logrotate configuration
+- [o] Dependency Links processing has been deprecated with an accelerated time schedule and will be removed in pip 1.6
+- [o] matplotlib has 50MB on its own, can't we just depend on python-matplotlib? (and python-numpy, and python-pandas?)
+- [o] make -j4 when building package
 
 
 2016-06-25
@@ -52,7 +56,7 @@ Kotori tasks
     - [x] Properly format "data.csv" download name
     - [x] Integrate Bokeh renderer
     - [x] Refactor dygraphs, Bokeh and Vincent renderers to UniversalPlotter
-    - [o] Replace bus/mqtt with other HTTP handlers
+    - [o] Get rid of "bus/mqtt" in documentation of other HTTP handlers
     - [o] Index page for GET ../data displaying all available formats
     - [o] Properly handle units in graphs
     - [o] Load Bokeh data via json

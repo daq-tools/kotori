@@ -7,13 +7,22 @@ in progress
 ===========
 
 
+.. _kotori-0.10.2:
+
+2016-07-02 0.10.2
+=================
+- Honor https scheme in reverse proxy setups
+- Packaging: Remove Python dependency on crossbar, can be installed through ``pip install crossbar==0.13.0``
+- Packaging: Depend on more distribution packages to reduce package size
+
+
 .. _kotori-0.10.1:
 
 2016-07-01 0.10.1
 =================
 
-General
--------
+Packaging
+---------
 - Fix Debian runtime dependencies
 
 Data export
@@ -22,11 +31,6 @@ Data export
 - When querying InfluxDB, quote table name (series/measurement) if identifier starts with a numeric value
 - Add "exclude" parameter to HTTP API for mitigating scaling/outlier problems when plotting
 - Fix "Excel worksheet name must be <= 31 chars." by introducing "compact" title
-- Honor https scheme in reverse proxy setups
-
-Packaging
----------
-- Remove Python dependency on crossbar, can be installed through ``pip install crossbar==0.13.0``
 
 
 .. _kotori-0.10.0:
