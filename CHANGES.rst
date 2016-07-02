@@ -24,6 +24,11 @@ Data export
 - Fix "Excel worksheet name must be <= 31 chars." by introducing "compact" title
 - Honor https scheme in reverse proxy setups
 
+Packaging
+---------
+- Remove Python dependency on crossbar, can be installed through ``pip install crossbar==0.13.0``
+
+
 .. _kotori-0.10.0:
 
 2016-06-29 0.10.0

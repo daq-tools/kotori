@@ -18,15 +18,11 @@ requires = [
     #'twisted-mqtt==0.1.4',         # 0.2.1
     'paho-mqtt==1.1',
     'autobahn[twisted]==0.13.0',    # 0.14.1
-    'crossbar==0.13.0',             # 0.14.0
     'msgpack-python==0.4.7',
 
     # Misc
     'setuptools==22.0.5',           # 20.6.7; setuptools>=18.3.1 is required by set(['crossbar'])
     'docopt==0.6.2',
-    'pyasn1==0.1.9',                # required by service-identity
-    'cryptography==1.4',
-    'Pygments==2.0.2',
 ]
 
 extras = {
