@@ -1,4 +1,6 @@
 #!/bin/sh
 
+chown -R kotori:kotori /opt/kotori
+
 systemctl reenable kotori
 systemctl restart kotori
