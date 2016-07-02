@@ -61,6 +61,15 @@ class UniversalPlotter(object):
 
         bucket = self.bucket
 
+        import matplotlib.font_manager
+        matplotlib.font_manager.findSystemFonts(fontpaths=None, fontext='ttf')
+
+        import matplotlib
+        try:
+            matplotlib.use('agg')
+        except:
+            pass
+
         import matplotlib.pyplot as plt
 
         df = self.dataframe
@@ -85,13 +94,14 @@ class UniversalPlotter(object):
             # http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.plot.html
             # https://markthegraph.blogspot.de/2015/05/plotting-time-series-dataframes-in.html
 
-            style_name = bucket.tdata.get('style', 'classic')
-            try:
-                plt.style.use(style_name)
-            except Exception:
-                error_message = u'# Unknown style "{style_name}"'.format(style_name=style_name)
-                log.error(error_message)
-                return self.request.error_response(bucket, error_message)
+            if 'style' in bucket.tdata and bucket.tdata.style:
+                try:
+                    plt.style.use(bucket.tdata.style)
+                except Exception:
+                    error_message = u'# Unknown style "{style_name}", available styles: {available}'.format(
+                        style_name=bucket.tdata.style, available=plt.style.available)
+                    log.error(error_message)
+                    return self.request.error_response(bucket, error_message)
 
 
             # Basic plotting
@@ -174,7 +184,7 @@ class UniversalPlotter(object):
             plot = ggplot(df, aes(x='time', y='value', color='variable'))\
                    + geom_line()\
                    + scale_x_date(limits=(datetime_min, datetime_max), breaks=locator, labels=formatter)\
-            + ggtitle(bucket.title.human)
+                   + ggtitle(bucket.title.human)
 
             # Axis labels
             plot.xlab = 'Time'
@@ -186,6 +196,7 @@ class UniversalPlotter(object):
             #+ scale_x_date(limits=(xmin, xmax), breaks=date_breaks('1 hour'), labels=date_format('%Y-%m-%d\n%H:%M'))
 
             theme_name = bucket.tdata.get('theme')
+            # TODO: Switching themes will leak some matplotlib/pyplot properties, postpone to future versions
             if theme_name:
                 if type(theme_name) is types.FloatType:
                     theme_name = str(int(theme_name))
@@ -197,8 +208,23 @@ class UniversalPlotter(object):
                     log.error(error_message)
                     return self.request.error_response(bucket, error_message)
 
-            plot.make()
-            plt.savefig(buffer)
+            plot.save(buffer)
+
+            # Attempt to reset global matplotlib parameters to get rid of xkcd theme style
+            """
+            import matplotlib as mpl
+            #mpl.rcParams = mpl.rc_params()
+            #del mpl.rcParams['path.sketch']
+            #del mpl.rcParams['path.effects']
+            #mpl.rcParams = mpl.defaultParams.copy()
+            #mpl.rcParams.clear()
+            #mpl.rcdefaults()
+            #mpl.rcParams = mpl.rcParamsOrig
+            if 'axes.prop_cycle' in mpl.rcParams:
+                del mpl.rcParams['axes.prop_cycle']
+            mpl.rcParams.update({'path.sketch': None, 'path.effects': []})
+            mpl.rcParams.update(mpl.rc_params())
+            """
 
         elif renderer == 'seaborn':
 

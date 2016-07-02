@@ -5,6 +5,8 @@ Kotori CHANGES
 
 in progress
 ===========
+- Use matplotlib “agg” backend.
+- Improve ggplot rendering context, add font for rendering xkcd theme.
 
 
 .. _kotori-0.10.2:

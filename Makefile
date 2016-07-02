@@ -134,7 +134,7 @@ fpm-options := \
 	--deb-build-depends "pkg-config, gfortran, libatlas-dev, libopenblas-dev, liblapack-dev, libhdf5-dev, libnetcdf-dev, liblzo2-dev, libbz2-dev, libpng12-dev, libfreetype6-dev, python-cairocffi" \
 	--depends python \
 	--deb-recommends "influxdb, mosquitto, mosquitto-clients, grafana" \
-	--deb-suggests "python-scipy, python-pandas, python-numpy, python-matplotlib" \
+	--deb-suggests "python-scipy, python-pandas, python-numpy, python-matplotlib, fonts-humor-sans" \
 	--deb-suggests "python-tables, libatlas3-base, libopenblas-base, liblapack3, libhdf5-8, libnetcdfc7, liblzo2-2, libbz2-1.0" \
 	--provides "kotori" \
 	--provides "kotori-daq" \
