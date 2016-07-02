@@ -17,6 +17,25 @@ Kotori tasks
 ****
 
 
+2016-07-02
+==========
+When building for the first time::
+
+    B /home/workbench/isarengineering/kotori/build/kotori/lib/python2.7/site-packages/cornice/scaffolds/__init__.pyc
+    Traceback (most recent call last):
+      File "/home/workbench/isarengineering/kotori/build/kotori/bin/virtualenv-tools", line 9, in <module>
+        load_entry_point('virtualenv-tools==1.0', 'console_scripts', 'virtualenv-tools')()
+      File "/home/workbench/isarengineering/kotori/build/kotori/lib/python2.7/site-packages/virtualenv_tools.py", line 258, in main
+        if not update_paths(path, options.update_path):
+      File "/home/workbench/isarengineering/kotori/build/kotori/lib/python2.7/site-packages/virtualenv_tools.py", line 187, in update_paths
+        update_pycs(lib_dir, new_path, lib_name)
+      File "/home/workbench/isarengineering/kotori/build/kotori/lib/python2.7/site-packages/virtualenv_tools.py", line 140, in update_pycs
+        update_pyc(filename, local_path)
+      File "/home/workbench/isarengineering/kotori/build/kotori/lib/python2.7/site-packages/virtualenv_tools.py", line 96, in update_pyc
+        code = marshal.load(f)
+    ValueError: bad marshal data (unknown type code)
+
+
 2016-07-01
 ==========
 - [x] Fix numpy runtime dependency on atlas, PyTables runtime dependency on HDF5 and more::

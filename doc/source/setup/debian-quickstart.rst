@@ -41,7 +41,7 @@ Add GPG key for checking package signatures::
 
 Add https addon for apt::
 
-    aptitude install apt-transport-https
+    apt-get install apt-transport-https
 
 
 Register with package repository
@@ -53,16 +53,14 @@ Add source for "testing" distribution (e.g. append to /etc/apt/sources.list)::
 
 Reindex package database::
 
-    aptitude update
+    apt-get update
 
 
 Setup the whole software stack
 ==============================
 ::
 
-    aptitude install mosquitto mosquitto-clients influxdb grafana kotori
-    apt-get --install-recommends --install-suggests install kotori      # maybe
-
+    apt-get --install-recommends --install-suggests install kotori
     systemctl start influxdb
 
 .. tip::
