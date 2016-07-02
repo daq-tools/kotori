@@ -131,7 +131,7 @@ fpm-options := \
 	--no-deb-use-file-permissions \
 	--no-python-obey-requirements-txt \
 	--no-python-dependencies \
-	--deb-build-depends "pkg-config, gfortran, libatlas-dev, libopenblas-dev, liblapack-dev, libhdf5-dev, libnetcdf-dev, liblzo2-dev, libbz2-dev, libpng12-dev, libfreetype6-dev, python-cairocffi" \
+	--deb-build-depends "pkg-config, gfortran, libatlas-dev, libopenblas-dev, liblapack-dev, libhdf5-dev, libnetcdf-dev, liblzo2-dev, libbz2-dev, libpng12-dev, libfreetype6-dev" \
 	--depends python \
 	--deb-recommends "influxdb, mosquitto, mosquitto-clients, grafana" \
 	--deb-suggests "python-scipy, python-pandas, python-numpy, python-matplotlib, fonts-humor-sans" \

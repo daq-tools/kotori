@@ -115,7 +115,7 @@ Install packages::
 
     # scipy, numpy, matplotlib and PyTables
     aptitude install -y pkg-config gfortran libatlas-dev libopenblas-dev liblapack-dev libhdf5-dev libnetcdf-dev liblzo2-dev libbz2-dev
-    aptitude install -y libpng12-dev libfreetype6-dev python-cairocffi
+    aptitude install -y libpng12-dev libfreetype6-dev
 
 
 Install Ruby and RubyGems::

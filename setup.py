@@ -55,6 +55,7 @@ extras = {
 
         # sudo port install py27-matplotlib
         'matplotlib>=1.4.2',
+        #'cairocffi>=0.5.4',
         'bokeh==0.11.1',
         'vincent==0.4.4',
     ],
