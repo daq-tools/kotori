@@ -45,8 +45,8 @@ extras = {
     # Data export: Basic formats
     'export': [
         'pyinfluxql==0.0.1',
-        'pandas==0.18.1',
-        'numpy==1.11.0',
+        'pandas>=0.14.1',
+        'numpy>=1.8.2',
         'XlsxWriter==0.9.2',
     ],
 
@@ -54,7 +54,7 @@ extras = {
         #'dyplot==0.8.8',
 
         # sudo port install py27-matplotlib
-        'matplotlib>=1.5.1',
+        'matplotlib>=1.4.2',
         'bokeh==0.11.1',
         'vincent==0.4.4',
     ],
@@ -66,7 +66,7 @@ extras = {
         # ----
         # HDF5
         # "PyTables" requires HDF5 libraries
-        'tables==3.2.2',        # sudo port install hdf5
+        'tables>=3.1.1',        # sudo port install hdf5
 
         # NetCDF (Network Common Data Form)
         'xarray==0.7.2',
@@ -76,8 +76,8 @@ extras = {
         # Algorithms
         # ----------
         # sudo port install py27-scipy
-        'scipy>=0.17.0',
-        'ggplot==0.9.4',
+        'scipy>=0.14.0',
+        'ggplot==0.9.7',
 
         # gfortran
         # aptitude install libatlas-base-dev lapack-dev gfortran or

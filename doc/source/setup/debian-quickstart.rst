@@ -61,6 +61,8 @@ Setup the whole software stack
 ::
 
     aptitude install mosquitto mosquitto-clients influxdb grafana kotori
+    apt-get --install-recommends --install-suggests install kotori      # maybe
+
     systemctl start influxdb
 
 .. tip::

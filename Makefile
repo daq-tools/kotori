@@ -131,12 +131,11 @@ fpm-options := \
 	--no-deb-use-file-permissions \
 	--no-python-obey-requirements-txt \
 	--no-python-dependencies \
-	--deb-build-depends "pkg-config gfortran libatlas-dev libopenblas-dev liblapack-dev libhdf5-dev libnetcdf-dev liblzo2-dev libbz2-dev libpng12-dev libfreetype6-dev python-cairocffi" \
+	--deb-build-depends "pkg-config, gfortran, libatlas-dev, libopenblas-dev, liblapack-dev, libhdf5-dev, libnetcdf-dev, liblzo2-dev, libbz2-dev, libpng12-dev, libfreetype6-dev, python-cairocffi" \
 	--depends python \
-	--depends libatlas3-base --depends libopenblas-base --depends liblapack3 \
-	--depends libhdf5-8 --depends libnetcdfc7 --depends liblzo2-2 --depends libbz2-1.0 \
-	--depends libpng12-0 --depends libfreetype6 --depends python-cairocffi \
-	--deb-suggests "influxdb, mosquitto, mosquitto-clients, grafana" \
+	--deb-recommends "influxdb, mosquitto, mosquitto-clients, grafana" \
+	--deb-suggests "python-scipy, python-pandas, python-numpy, python-matplotlib" \
+	--deb-suggests "python-tables, libatlas3-base, libopenblas-base, liblapack3, libhdf5-8, libnetcdfc7, liblzo2-2, libbz2-1.0" \
 	--provides "kotori" \
 	--provides "kotori-daq" \
 	--maintainer "andreas.motl@elmyra.de" \
@@ -181,7 +180,7 @@ deb-build: check-build-options
 
 	# use "--always copy" to satisfy fpm
 	# use "--python=python" to satisfy virtualenv-tools (doesn't grok "python2" when searching for shebangs to replace)
-	virtualenv --always-copy --python=python $(buildpath)
+	virtualenv --system-site-packages --always-copy --python=python $(buildpath)
 
 	# install package in development mode, enable extra feature "daq"
 	#$(buildpath)/bin/python setup.py install
@@ -213,7 +212,7 @@ deb-build: check-build-options
 	# 2. Install from local sdist egg
 	# TODO: maybe use "--editable" for installing in development mode
 	# https://pip.pypa.io/en/stable/reference/pip_wheel/#cmdoption-f
-	TMPDIR=/var/tmp $(buildpath)/bin/pip install kotori[$(features)]==$(version) --upgrade --download-cache=./build/pip-cache --find-links=./dist --process-dependency-links
+	TMPDIR=/var/tmp $(buildpath)/bin/pip install kotori[$(features)]==$(version) --download-cache=./build/pip-cache --find-links=./dist --process-dependency-links
 
 
 	# 3. Relocate virtualenv to /opt/kotori
