@@ -7,7 +7,13 @@ in progress
 ===========
 
 
-.. _kotori-0.10.4:
+.. _kotori-0.10.5:
+
+
+2016-07-05 0.10.5
+=================
+- Attempt to fix huge dependency chain when installing with --install-recommends --install-suggests
+
 
 2016-07-05 0.10.4
 =================

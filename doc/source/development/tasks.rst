@@ -16,6 +16,18 @@ Kotori tasks
 2016
 ****
 
+2016-07-05
+==========
+- [o] When doing ``make debian-package flavor=daq``, if Kotori is not installed in /opt/kotori::
+
+      make[1]: /home/workbench/isarengineering/kotori/build/kotori/bin/pip: Command not found
+
+  Reason::
+
+      #!/opt/kotori/bin/python
+
+
+
 2016-07-04
 ==========
 - [o] Allow deployment using Docker, see
