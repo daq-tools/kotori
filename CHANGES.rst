@@ -5,12 +5,21 @@ Kotori CHANGES
 
 in progress
 ===========
+
+
+.. _kotori-0.10.4:
+
+2016-07-05 0.10.4
+=================
+- Fix missing runtime dependency "simplejson" (required by cornice)
+
+
+2016-07-02 0.10.3
+=================
 - Use matplotlib “agg” backend
 - Improve ggplot rendering context, add font for rendering xkcd theme
 - Upgrade to pandas 0.18.1
 
-
-.. _kotori-0.10.2:
 
 2016-07-02 0.10.2
 =================
@@ -18,8 +27,6 @@ in progress
 - Packaging: Remove Python dependency on crossbar, can be installed through ``pip install crossbar==0.13.0``
 - Packaging: Depend on more distribution packages to reduce package size
 
-
-.. _kotori-0.10.1:
 
 2016-07-01 0.10.1
 =================

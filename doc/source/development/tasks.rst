@@ -16,9 +16,16 @@ Kotori tasks
 2016
 ****
 
+2016-07-04
+==========
+- [o] Allow deployment using Docker, see
+  https://community.openenergymonitor.org/t/emoncms-docker-run-emoncms-on-your-machine-in-4-commands/823
+
 
 2016-07-02
 ==========
+- [x] Problem with simplejson after installing
+
 When building for the first time::
 
     B /home/workbench/isarengineering/kotori/build/kotori/lib/python2.7/site-packages/cornice/scaffolds/__init__.pyc

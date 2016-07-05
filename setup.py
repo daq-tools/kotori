@@ -8,6 +8,7 @@ requires = [
     'pyramid==1.5.7',
     'pyramid_jinja2==2.5',
     'cornice==1.0.0',               # 1.2.1
+    'simplejson==3.8.2',
     'Jinja2==2.8',
     'Bunch==1.0.1',
     'appdirs==1.4.0',
