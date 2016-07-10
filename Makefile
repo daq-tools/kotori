@@ -186,9 +186,6 @@ deb-build: check-build-options
 	# otherwise: _cffi_backend.so: failed to map segment from shared object: Operation not permitted
 	# TMPDIR=/var/tmp
 
-	# Make sure "virtualenv-tools" is installed into virtualenv
-	$(buildpath)/bin/pip install virtualenv-tools==1.0  # --upgrade --force-reinstall
-
 
 	# Clean up from previous build
 
@@ -198,10 +195,13 @@ deb-build: check-build-options
 	# 1. Fix shebangs to point back to Python interpreter in virtualenv $(buildpath)/bin/python
 
 	# 1.1 virtualenv/bin/pip
-	sed -i -e '1c#!'$buildpath'/bin/python' $buildpath/bin/pip
+	sed -i -e '1c#!'$(buildpath)'/bin/python' $(buildpath)/bin/pip
 
 	# 1.2 virtualenv/bin/virtualenv-tools
-	sed -i -e '1c#!'$buildpath'/bin/python' $buildpath/bin/virtualenv-tools
+	sed -i -e '1c#!'$(buildpath)'/bin/python' $(buildpath)/bin/virtualenv-tools
+
+	# Make sure "virtualenv-tools" is installed into virtualenv
+	$(buildpath)/bin/pip install virtualenv-tools==1.0  # --upgrade --force-reinstall
 
 	# 1.3. Fix all other Python entrypoint scripts
 	$(buildpath)/bin/virtualenv-tools --update-path=$(buildpath) $(buildpath)
