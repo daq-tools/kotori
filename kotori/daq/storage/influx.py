@@ -146,13 +146,20 @@ class InfluxDBAdapter(object):
     def chunk_to_float(self, chunk):
         fields = chunk['fields']
         for key, value in fields.iteritems():
+
+            # Sanity checks
             if type(value) in types.StringTypes:
                 continue
+
+            if value is None:
+                fields[key] = None
+                continue
+
+            # Convert to float
             try:
                 fields[key] = float(value)
-            except ValueError:
-                pass
-
+            except (TypeError, ValueError) as ex:
+                log.warn(u'Measurement "{key}: {value}" float conversion failed: {ex}', key=key, value=value, ex=ex)
 
     def write(self, name, data):
         columns = data.keys()

@@ -11,12 +11,13 @@ from twisted.application.service import Service
 from twisted.internet import reactor
 from twisted.logger import Logger
 from twisted.web import http
+from twisted.web.http import parse_qs
 from twisted.web.resource import Resource
 from twisted.web.server import Site
 from kotori.io.router.path import PathRoutingEngine
 from kotori.io.export.tabular import UniversalTabularExporter
 from kotori.io.export.plot import UniversalPlotter
-from kotori.io.protocol.util import twisted_flatten_request_args, convert_floats, slugify_datettime
+from kotori.io.protocol.util import convert_floats, slugify_datettime, flatten_request_args
 from kotori.errors import last_error_and_traceback
 
 log = Logger()
@@ -204,23 +205,20 @@ class HttpChannelEndpoint(Resource):
 
             elif content_type.startswith('application/x-www-form-urlencoded'):
                 # TODO: Honor charset when receiving "application/x-www-form-urlencoded; charset=utf-8"
-                pass
+                data = parse_qs(body, 1)
 
             else:
                 log.warn('Unknown HTTP Content-Type {content_type}', content_type=content_type)
                 return self.get_response(request.path, success=False)
 
+            # Apply this to telemetry values only!
+            convert_floats(data)
 
         # Main transformation data container
         tdata = Bunch()
 
-        # Read and decode request query parameters
-        data_args = twisted_flatten_request_args(request)
-        convert_floats(data_args)
-        data.update(data_args)
-
-        # Merge query parameters and url matches, in this order
-        tdata.update(deepcopy(data))
+        # Merge request parameters (GET and POST) and url matches, in this order
+        tdata.update(flatten_request_args(request.args))
         tdata.update(self.options.match)
 
         # Serialize as json for convenience

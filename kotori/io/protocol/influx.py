@@ -166,7 +166,7 @@ def compute_daterange(raw_begin, raw_end):
     return time_begin, time_end
 
 def grok_datetime(dstring):
-    more_formats = ['YYYYMMDDTHHmmss', 'YYYYMMDDTHHmmssZ']
+    more_formats = ['YYYYMMDDTHHmmss', 'YYYYMMDDTHHmmssZ', 'YYYYMMDD']
     parser = DateTimeParser()
     parser.SEPARATORS += ['']
 
