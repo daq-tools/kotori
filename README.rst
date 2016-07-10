@@ -31,3 +31,13 @@ The big picture of the data acquisition integration framework is a system aiming
 
 For further information please visit :ref:`kotori-about` or read
 about system design requirements and possible applications at :ref:`kotori-goals`.
+
+***********
+Source code
+***********
+The source code is currently hosted on GitHub at https://github.com/zerotired/kotori.
+We are happy to receive contributions and any other feedback,
+please use the issue tracker on GitHub.
+
+Have fun!
+

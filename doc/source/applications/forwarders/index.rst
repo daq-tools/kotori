@@ -24,4 +24,5 @@ telemetry data to the WAMP bus.
 
     - mqtt-to-wamp
     - udp-to-mqtt
+    - beradio-tcp-to-mqtt
 
