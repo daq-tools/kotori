@@ -99,6 +99,15 @@ class ForwarderTargetService(MultiServiceMixin, MultiService):
                     error_message = u'Error: {message}'.format(message=ex)
                     return bucket.request.error_response(bucket, error_message=error_message)
 
+            # Propagate non-null values forward or backward.
+            # With time series data, using pad/ffill is extremely common so that the “last known value” is available at every time point.
+            # http://pandas.pydata.org/pandas-docs/stable/missing_data.html#filling-missing-values-fillna
+            if 'pad' in bucket.tdata and bucket.tdata.pad:
+                df.fillna(method='pad', inplace=True)
+
+            if 'backfill' in bucket.tdata and bucket.tdata.backfill:
+                df.fillna(method='backfill', inplace=True)
+
             # Compute http response from DataFrame, taking designated output format into account
             response = HttpDataFrameResponse(bucket, dataframe=df)
 

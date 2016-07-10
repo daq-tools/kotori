@@ -5,10 +5,10 @@ Kotori CHANGES
 
 in progress
 ===========
+- Fix timeseries plotting by using “pad” and “backfill” appropriately
 
 
 .. _kotori-0.10.5:
-
 
 2016-07-05 0.10.5
 =================

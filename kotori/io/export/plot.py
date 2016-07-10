@@ -88,6 +88,12 @@ class UniversalPlotter(object):
             # Bring DataFrame into appropriate format
             df = dataframe_index_and_sort(df, 'time')
 
+            # Propagate non-null values forward or backward, otherwise
+            # matplotlib would not plot the sparse data frame properly.
+            # With time series data, using pad/ffill is extremely common so that the “last known value” is available at every time point.
+            # http://pandas.pydata.org/pandas-docs/stable/missing_data.html#filling-missing-values-fillna
+            df.fillna(method='pad', inplace=True)
+
             # Make plots of DataFrame using matplotlib / pylab.
             # http://matplotlib.org/
             # http://pandas.pydata.org/pandas-docs/version/0.13.1/visualization.html
@@ -114,8 +120,8 @@ class UniversalPlotter(object):
             fig = ax.get_figure()
 
             # Figure heading
-            fig.suptitle(bucket.title.human, fontsize=12)
-            fig.tight_layout(pad=1.5)
+            title = fig.suptitle(bucket.title.human, fontsize=12)
+            #fig.tight_layout(pad=1.5)
 
             # Axis and tick labels
             ax.set_xlabel('Time')
@@ -126,7 +132,14 @@ class UniversalPlotter(object):
             # http://matplotlib.org/users/legend_guide.html
             # http://matplotlib.org/examples/pylab_examples/legend_demo3.html
             ax.grid(True)
-            ax.legend(loc='upper right', prop={'size': 'smaller'}, shadow=True, fancybox=True) # title='Origin'
+
+            legend_params = dict(ncol=1, loc='center left', bbox_to_anchor=(1, 0.5), fontsize='small', shadow=True, fancybox=True)
+            legend = ax.legend(**legend_params) # title='Origin'
+            #ax.legend(**legend_params) # title='Origin'
+
+            # Sort list of legend labels
+            # http://stackoverflow.com/questions/22263807/how-is-order-of-items-in-matplotlib-legend-determined/27512450#27512450
+
 
             # Axis formatting
             #ax.xaxis_date()
@@ -142,8 +155,8 @@ class UniversalPlotter(object):
             # Figure formatting
             fig.autofmt_xdate()
 
-            fig.savefig(buffer)
-
+            # http://stackoverflow.com/questions/10101700/moving-matplotlib-legend-outside-of-the-axis-makes-it-cutoff-by-the-figure-box/10154763#10154763
+            fig.savefig(buffer, bbox_extra_artists=(title, legend), bbox_inches='tight')
 
             # TODO: Add annotations
             """
@@ -261,7 +274,7 @@ class UniversalPlotter(object):
             # http://dygraphs.com/
 
             # Compute data_uri, forward "from" and "to" parameters
-            data_uri = get_data_uri(bucket, 'data.csv')
+            data_uri = get_data_uri(bucket, 'data.csv', {'pad': 'true'})
 
             # Render HTML snippet containing dygraphs widget
             page = DygraphsPage(data_uri=data_uri, bucket=bucket)
@@ -274,6 +287,12 @@ class UniversalPlotter(object):
             from bokeh.io import save
             from bokeh.charts import TimeSeries, vplot
 
+            # Propagate non-null values forward or backward, otherwise
+            # Bokeh would not plot the sparse data frame properly.
+            # With time series data, using pad/ffill is extremely common so that the “last known value” is available at every time point.
+            # http://pandas.pydata.org/pandas-docs/stable/missing_data.html#filling-missing-values-fillna
+            df.fillna(method='pad', inplace=True)
+
             # Plot using matplotlib
             # http://bokeh.pydata.org/en/latest/docs/user_guide/compat.html#userguide-compat
             # https://github.com/bokeh/bokeh/tree/master/examples/compat/
@@ -285,7 +304,7 @@ class UniversalPlotter(object):
             # Plot using Bokeh TimeSeries
             # http://bokeh.pydata.org/en/latest/docs/reference/charts.html#timeseries
             # http://bokeh.pydata.org/en/0.11.1/docs/user_guide/styling.html#location
-            linegraph = TimeSeries(df, x='time', title=bucket.title.human, legend="top_right", width=800)
+            linegraph = TimeSeries(df, x='time', title=bucket.title.human, legend="top_left", width=800)
 
             # Plot TimeSeries object
             what = vplot(linegraph)
@@ -302,7 +321,7 @@ class UniversalPlotter(object):
             # https://github.com/wrobstory/vincent
 
             # Compute data_uri, forward "from" and "to" parameters
-            data_uri = get_data_uri(bucket, 'data.vega.json')
+            data_uri = get_data_uri(bucket, 'data.vega.json', {'pad': 'true', 'backfill': 'true'})
 
             template = Template(str(resource_string('vincent', 'vega_template.html')))
             bucket.request.setHeader('Content-Type', 'text/html; charset=utf-8')
