@@ -198,10 +198,10 @@ deb-build: check-build-options
 	# 1. Fix shebangs to point back to Python interpreter in virtualenv $(buildpath)/bin/python
 
 	# 1.1 virtualenv/bin/pip
-	sed -i -e '1c#!'$buildpath'/bin/python' $buildpath/bin/pip
+	sed -i -e '1c#!'$(buildpath)'/bin/python' $(buildpath)/bin/pip
 
 	# 1.2 virtualenv/bin/virtualenv-tools
-	sed -i -e '1c#!'$buildpath'/bin/python' $buildpath/bin/virtualenv-tools
+	sed -i -e '1c#!'$(buildpath)'/bin/python' $(buildpath)/bin/virtualenv-tools
 
 	# 1.3. Fix all other Python entrypoint scripts
 	$(buildpath)/bin/virtualenv-tools --update-path=$(buildpath) $(buildpath)
