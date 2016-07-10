@@ -5,8 +5,16 @@ Kotori CHANGES
 
 in progress
 ===========
+
+
+2016-07-10 0.10.6
+=================
 - Fix timeseries plotting by using “pad” and “backfill” appropriately
 - Add export parameters "exclude", "include", "interpolate" and "sorted"
+- Fix data routing and processing
+- Add license to documentation
+- Quick hack for making firmware builder endpoint no convert numeric values to floats
+- Packaging fixes
 
 
 .. _kotori-0.10.5:
