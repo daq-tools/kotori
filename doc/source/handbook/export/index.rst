@@ -9,6 +9,7 @@
 Data export
 ###########
 
+
 ********
 Synopsis
 ********
@@ -19,6 +20,8 @@ Exporting data to CSV_, HTML_ or XLSX_ (Excel) is just a matter of accessing the
     http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/data.xlsx
 
 .. note:: The suffix (``.txt``, ``.html``, ``.xlsx``) controls the output format.
+
+.. seealso:: :ref:`data-export-gallery`
 
 
 ************

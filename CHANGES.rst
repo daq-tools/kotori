@@ -7,6 +7,14 @@ in progress
 ===========
 
 
+.. _kotori-0.10.7:
+
+2016-07-10 0.10.7
+=================
+- Update documentation
+- Rebuild without having "ggplot" installed on the build host
+
+
 2016-07-10 0.10.6
 =================
 - Fix timeseries plotting by using “pad” and “backfill” appropriately

@@ -61,8 +61,8 @@ Setup the whole software stack
 Install Kotori as well as recommended and suggested packages::
 
     PACKAGES=kotori
-    SUGGESTS=$(LANG=c apt-cache depends $PACKAGES|grep -i suggests|cut -d' ' -f4|xargs)
-    apt-get install $PACKAGES $SUGGESTS
+    DEPENDENCIES=$(LANG=c apt-cache depends $PACKAGES | egrep -i 'suggests|recommends' | cut -d' ' -f4 | xargs)
+    apt-get install $PACKAGES $DEPENDENCIES
     systemctl start influxdb
 
 .. tip::
