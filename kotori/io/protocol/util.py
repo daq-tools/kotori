@@ -7,11 +7,15 @@ from twisted.python.url import URL
 
 log = Logger()
 
-def get_data_uri(bucket, sibling=None):
+def get_data_uri(bucket, sibling=None, more_params=None):
     """
     Compute uri to data source as sibling to the current path.
     Add "from" and "to" query parameters from bucket.
     """
+
+    more_params = more_params or {}
+
+    forward_parameters = [u'from', u'to', u'exclude', u'include', u'pad', u'backfill', u'interpolate']
 
     request = bucket.request
 
@@ -19,10 +23,13 @@ def get_data_uri(bucket, sibling=None):
     twisted_honor_reverse_proxy(request)
 
     url = URL()
-    if 'from' in bucket.tdata:
-        url = url.add(u'from', unicode(bucket.tdata['from']))
-    if 'to' in bucket.tdata:
-        url = url.add(u'to', unicode(bucket.tdata['to']))
+    for param in forward_parameters:
+        if param in bucket.tdata:
+            url = url.add(unicode(param), unicode(bucket.tdata[param]))
+
+    for param, value in more_params.iteritems():
+        url = url.add(unicode(param), unicode(value))
+
     data_uri = str(request.URLPath().sibling(sibling).click(url.asText()))
     return data_uri
 
@@ -54,12 +61,12 @@ def twisted_hostname_port(request):
 def twisted_is_secure(request):
     return request.isSecure() or request.getHeader('X-Forwarded-Proto') == 'https'
 
-def twisted_flatten_request_args(request):
+def flatten_request_args(args):
     """
     Flatten Twisted request query parameters.
     """
     result = {}
-    for key, value in request.args.iteritems():
+    for key, value in args.iteritems():
         result[key] = ','.join(value)
     return result
 

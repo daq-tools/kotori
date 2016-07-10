@@ -10,6 +10,7 @@ from kotori.daq.intercom.mqtt import MqttAdapter
 from kotori.io.protocol.http import HttpDataFrameResponse
 from kotori.io.protocol.influx import DataFrameQuery
 from kotori.io.protocol.util import handleFailure
+from kotori.errors import last_error_and_traceback
 
 log = Logger()
 
@@ -90,13 +91,28 @@ class ForwarderTargetService(MultiServiceMixin, MultiService):
             if df is None or df.empty:
                 return self.response_no_results(bucket)
 
+
+            # DataFrame manipulation
+
             # Drop some fields from DataFrame as requested
             if 'exclude' in bucket.tdata and bucket.tdata.exclude:
-                drop_fields = read_list(bucket.tdata.exclude)
+                drop_fields = read_list(bucket.tdata.exclude, empty_elements=False)
                 try:
                     df.drop(drop_fields, axis=1, inplace=True)
                 except ValueError as ex:
-                    error_message = u'Error: {message}'.format(message=ex)
+                    log.error(last_error_and_traceback())
+                    error_message = u'Error: {type} {message}'.format(type=type(ex), message=ex)
+                    return bucket.request.error_response(bucket, error_message=error_message)
+
+            # Use only specified fields from DataFrame as requested
+            if 'include' in bucket.tdata and bucket.tdata.include:
+                use_fields = read_list(bucket.tdata.include, empty_elements=False)
+                use_fields.insert(0, 'time')
+                try:
+                    df = df.filter(use_fields, axis=1)
+                except ValueError as ex:
+                    log.error(last_error_and_traceback())
+                    error_message = u'Error: {type} {message}'.format(type=type(ex), message=ex)
                     return bucket.request.error_response(bucket, error_message=error_message)
 
             # Propagate non-null values forward or backward.
@@ -107,6 +123,17 @@ class ForwarderTargetService(MultiServiceMixin, MultiService):
 
             if 'backfill' in bucket.tdata and bucket.tdata.backfill:
                 df.fillna(method='backfill', inplace=True)
+
+            if 'interpolate' in bucket.tdata and bucket.tdata.interpolate:
+                # Performs linear interpolation at missing datapoints,
+                # otherwise matplotlib would not plot the sparse data frame.
+                # http://pandas.pydata.org/pandas-docs/stable/missing_data.html#interpolation
+                df.interpolate(inplace=True)
+
+            if 'sorted' in bucket.tdata and bucket.tdata.sorted:
+                # http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.sort.html
+                df.sort(axis='columns', inplace=True)
+
 
             # Compute http response from DataFrame, taking designated output format into account
             response = HttpDataFrameResponse(bucket, dataframe=df)

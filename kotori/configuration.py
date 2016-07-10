@@ -65,8 +65,11 @@ def convert_config(config, kind=None):
     else:
         return config
 
-def read_list(string, separator=u','):
-    return map(unicode.strip, string.split(separator))
+def read_list(string, separator=u',', empty_elements=True):
+    data = map(unicode.strip, string.split(separator))
+    if empty_elements == False:
+        data = filter(lambda x: bool(x), data)
+    return data
 
 def make_list(items, separator=u', '):
     return separator.join(items)

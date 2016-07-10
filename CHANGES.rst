@@ -6,6 +6,7 @@ Kotori CHANGES
 in progress
 ===========
 - Fix timeseries plotting by using “pad” and “backfill” appropriately
+- Add export parameters "exclude", "include", "interpolate" and "sorted"
 
 
 .. _kotori-0.10.5:
