@@ -16,9 +16,23 @@ Kotori tasks
 2016
 ****
 
+
+2016-07-10
+==========
+- [o] Document export parameters "exclude", "include", "interpolate" and "sorted"
+
+
+2016-07-06
+==========
+- [o] http://www.rocketscream.com/blog/2016/03/10/radio-range-test-with-rfm69hcw/
+- [o] Export data to http://orange.biolab.si/
+
+
 2016-07-05
 ==========
-- [o] When doing ``make debian-package flavor=daq``, if Kotori is not installed in /opt/kotori::
+- [x] Float is not iterable when querying with "&from=20160101"
+- [x] Also provide ?include=temp1,temp2,... parameter to data export interface doing the reverse of ?exclude=wght2
+- [o] Packaging: When doing ``make debian-package flavor=daq``, if Kotori is not installed in /opt/kotori::
 
       make[1]: /home/workbench/isarengineering/kotori/build/kotori/bin/pip: Command not found
 
@@ -26,6 +40,11 @@ Kotori tasks
 
       #!/opt/kotori/bin/python
 
+- [o] Packaging: Do ``rm dist/*.deb`` after uploading successfully
+- [o] Annotations, finally: http://lkhill.com/using-influxdb-grafana-to-display-network-statistics/
+- [o] Use Holt-Winters to predict data: https://docs.influxdata.com/influxdb/v1.0/query_language/functions/#holt-winters
+- [o] Javascript wrapper for HTTP API on top of https://github.com/jpillora/jquery.rest
+- [o] Optionally use "from pyinfluxql.functions import Mean" in protocol/influx.py
 
 
 2016-07-04

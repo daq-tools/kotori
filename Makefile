@@ -134,7 +134,7 @@ fpm-options := \
 	--deb-build-depends "pkg-config, gfortran, libatlas-dev, libopenblas-dev, liblapack-dev, libhdf5-dev, libnetcdf-dev, liblzo2-dev, libbz2-dev, libpng12-dev, libfreetype6-dev" \
 	--depends python \
 	--deb-recommends "influxdb, mosquitto, mosquitto-clients, grafana" \
-	--deb-suggests "python-scipy, python-pandas, python-numpy, python-matplotlib" \
+	--deb-suggests "python-scipy, python-numpy, python-matplotlib, fonts-humor-sans" \
 	--deb-suggests "python-tables, libatlas3-base, libopenblas-base, liblapack3, libhdf5-8, libnetcdfc7, liblzo2-2, libbz2-1.0" \
 	--provides "kotori" \
 	--provides "kotori-daq" \
@@ -182,48 +182,58 @@ deb-build: check-build-options
 	# use "--python=python" to satisfy virtualenv-tools (doesn't grok "python2" when searching for shebangs to replace)
 	virtualenv --system-site-packages --always-copy --python=python $(buildpath)
 
-	# install package in development mode, enable extra feature "daq"
-	#$(buildpath)/bin/python setup.py install
-
 	# use different directory for temp files, because /tmp usually has noexec attributes
 	# otherwise: _cffi_backend.so: failed to map segment from shared object: Operation not permitted
 	# TMPDIR=/var/tmp
 
-	# build from egg on package server
-	# https://pip.pypa.io/en/stable/reference/pip_wheel/#cmdoption--extra-index-url
-	#TMPDIR=/var/tmp $(buildpath)/bin/pip install kotori[$(features)]==$(version) --process-dependency-links --extra-index-url=https://packages.elmyra.de/isarengineering/python/eggs/
-
-	# build sdist egg locally
-	TMPDIR=/var/tmp $(buildpath)/bin/python setup.py sdist
+	# Make sure "virtualenv-tools" is installed into virtualenv
+	$(buildpath)/bin/pip install virtualenv-tools==1.0  # --upgrade --force-reinstall
 
 
-	# 1. Relocate virtualenv to $(buildpath)
-	# Relocate the virtualenv by updating the python interpreter in the shebang of installed scripts.
-	# Currently must force reinstall because virtualenv-tools will harm itself (2016-02-21).
-	$(buildpath)/bin/pip install virtualenv-tools==1.0 --upgrade --force-reinstall
+	# Clean up from previous build
 
 	# Counter "ValueError: bad marshal data (unknown type code)"
 	find $(buildpath) -name '*.pyc' -delete
 
-	# Run relocation
+	# 1. Fix shebangs to point back to Python interpreter in virtualenv $(buildpath)/bin/python
+
+	# 1.1 virtualenv/bin/pip
+	sed -i -e '1c#!'$buildpath'/bin/python' $buildpath/bin/pip
+
+	# 1.2 virtualenv/bin/virtualenv-tools
+	sed -i -e '1c#!'$buildpath'/bin/python' $buildpath/bin/virtualenv-tools
+
+	# 1.3. Fix all other Python entrypoint scripts
 	$(buildpath)/bin/virtualenv-tools --update-path=$(buildpath) $(buildpath)
 
 
-	# 2. Install from local sdist egg
-	# TODO: maybe use "--editable" for installing in development mode
-	# https://pip.pypa.io/en/stable/reference/pip_wheel/#cmdoption-f
+	# 2. Build sdist egg locally
+	TMPDIR=/var/tmp $(buildpath)/bin/python setup.py sdist
+
+	# Install package in development mode
+	#$(buildpath)/bin/python setup.py install
+
+
+	# 3. Install from local sdist egg, enabling extra features
+	# TODO: Maybe use "--editable" for installing in development mode
+	# TODO: Build Wheels: https://pip.pypa.io/en/stable/reference/pip_wheel/
 	TMPDIR=/var/tmp $(buildpath)/bin/pip install kotori[$(features)]==$(version) --download-cache=./build/pip-cache --find-links=./dist --process-dependency-links
 
+	# Install from egg on package server
+	# https://pip.pypa.io/en/stable/reference/pip_wheel/#cmdoption--extra-index-url
+	#TMPDIR=/var/tmp $(buildpath)/bin/pip install kotori[$(features)]==$(version) --process-dependency-links --extra-index-url=https://packages.elmyra.de/isarengineering/python/eggs/
 
-	# 3. Relocate virtualenv to /opt/kotori
+
+	# 4. Relocate virtualenv to /opt/kotori
 	# Relocate the virtualenv by updating the python interpreter in the shebang of installed scripts.
 	# Currently must force reinstall because virtualenv-tools will harm itself (2016-02-21).
-	$(buildpath)/bin/pip install virtualenv-tools==1.0 --upgrade --force-reinstall
+	#$(buildpath)/bin/pip install virtualenv-tools==1.0 --upgrade --force-reinstall
 	$(buildpath)/bin/virtualenv-tools --update-path=/opt/kotori $(buildpath)
 
 
 	#rm -f $(buildpath)/{.Python,pip-selfcheck.json}
 
+	# 5. Build Debian package
 	fpm \
 		-s dir -t deb \
 		$(fpm-options) \

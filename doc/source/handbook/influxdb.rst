@@ -58,3 +58,35 @@ Querying from Python
     client.query('select * from telemetry;')
 
 .. seealso:: https://pypi.python.org/pypi/influxdb
+
+
+Backup and Restore
+------------------
+Backup example::
+
+    influxd backup -database hiveeyes_25a0e5df_9517_405b_ab14_cb5b514ac9e8 -host swarm.hiveeyes.org:8088 hiveeyes_25a0e5df_9517_405b_ab14_cb5b514ac9e8
+
+Restore example::
+
+    influxd restore -datadir /var/lib/influxdb/data -database hiveeyes_25a0e5df_9517_405b_ab14_cb5b514ac9e8 hiveeyes_25a0e5df_9517_405b_ab14_cb5b514ac9e8
+
+
+.. seealso:: https://docs.influxdata.com/influxdb/v0.13/administration/backup_and_restore/
+
+
+Export and Import
+-----------------
+CSV-based import and export using https://github.com/jpillora/csv-to-influxdb.
+
+Export::
+
+    http GET https://swarm.hiveeyes.org/api/hiveeyes/25a0e5df-9517-405b-ab14-cb5b514ac9e8/3756782252718325761/1/data.csv from=2016-01-01 --download
+
+Import::
+
+    export GOPATH=`pwd`
+    go get -v github.com/jpillora/csv-to-influxdb
+
+    ./bin/csv-to-influxdb --batch-size=1 --timestamp-column=time --timestamp-format="2006-01-02 15:04:05.000000000" --server=http://localhost:8086 --database=hiveeyes_25a0e5df_9517_405b_ab14_cb5b514ac9e8 --measurement=3756782252718325761_1 ../../data/25a0e5df_9517_405b_ab14_cb5b514ac9e8_3756782252718325761_1_20160101T000000_20160705T195237.csv
+    2016/07/05 21:55:15 Done (wrote 34304 points)
+

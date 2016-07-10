@@ -58,9 +58,11 @@ Reindex package database::
 
 Setup the whole software stack
 ==============================
-::
+Install Kotori as well as recommended and suggested packages::
 
-    apt-get --install-recommends --install-suggests install kotori
+    PACKAGES=kotori
+    SUGGESTS=$(LANG=c apt-cache depends $PACKAGES|grep -i suggests|cut -d' ' -f4|xargs)
+    apt-get install $PACKAGES $SUGGESTS
     systemctl start influxdb
 
 .. tip::
@@ -74,3 +76,4 @@ Setup the whole software stack
 Getting started
 ***************
 Follow along at :ref:`getting-started` to configure and use your first Kotori application.
+

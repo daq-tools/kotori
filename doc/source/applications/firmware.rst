@@ -28,6 +28,8 @@ For getting an idea about the variable replacements with an example sketch suita
 automatic building using the variables described above, please have a look at
 `node-gprs-any.ino, line 81 ff. <https://github.com/hiveeyes/arduino/blob/master/node-gprs-any/node-gprs-any.ino#L81#>`_
 
+See :ref:`hiveeyes-arduino:open-hive-firmware` about how this is used in production.
+
 
 ******
 Server
@@ -41,7 +43,7 @@ Configure the firmware builder application similar to the Hiveeyes example bluep
 .. literalinclude:: ../_static/content/etc/examples/firmware.ini
     :language: ini
     :linenos:
-    :emphasize-lines: 23-32
+    :emphasize-lines: 21-30
 
 
 

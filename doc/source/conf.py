@@ -311,7 +311,8 @@ def setup(app):
 intersphinx_mapping = {
     'beradio':  ('https://hiveeyes.org/docs/beradio/', None),
     'hiveeyes': ('https://hiveeyes.org/docs/system/', None),
-}
+    'hiveeyes-arduino': ('https://hiveeyes.org/docs/arduino/', None),
+    }
 
 # Disable caching remote inventories completely
 # http://www.sphinx-doc.org/en/stable/ext/intersphinx.html#confval-intersphinx_cache_limit
