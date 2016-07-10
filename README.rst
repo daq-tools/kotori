@@ -2,6 +2,11 @@
 
 .. _kotori-readme:
 
+.. tip::
+
+    You might want to `read this document on our documentation space <https://getkotori.org/docs/README.html>`_,
+    all inline links will be working there.
+
 #############
 Kotori README
 #############
@@ -35,7 +40,7 @@ about system design requirements and possible applications at :ref:`kotori-goals
 ***********
 Source code
 ***********
-The source code is currently hosted on GitHub at https://github.com/zerotired/kotori.
+The source code is hosted on GitHub at https://github.com/zerotired/kotori.
 We are happy to receive contributions and any other feedback,
 please use the issue tracker on GitHub.
 

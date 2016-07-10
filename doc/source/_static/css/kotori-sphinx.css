@@ -92,6 +92,17 @@ body, div.body {
     margin-bottom: 2em !important;
 }
 
+/* limit caption text width */
+.caption-narrow .caption {
+    width: 320px;
+}
+.caption-regular .caption {
+    width: 400px;
+}
+.caption-large .caption {
+    width: 640px;
+}
+
 
 /* More colors for CSS3 Hexagon Buttons */
 
