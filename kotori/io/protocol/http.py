@@ -211,8 +211,10 @@ class HttpChannelEndpoint(Resource):
                 log.warn('Unknown HTTP Content-Type {content_type}', content_type=content_type)
                 return self.get_response(request.path, success=False)
 
-            # Apply this to telemetry values only!
-            convert_floats(data)
+            # TODO: Apply this to telemetry values only!
+            # FIXME: This is a hack
+            if 'firmware' not in self.options.path:
+                convert_floats(data)
 
         # Main transformation data container
         tdata = Bunch()
