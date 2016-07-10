@@ -110,6 +110,7 @@ Development
     changes
     development/index
     packaging/index
+    LICENSE
 
 
 Research
