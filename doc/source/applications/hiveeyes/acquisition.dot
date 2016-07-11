@@ -10,6 +10,9 @@ digraph hiveeyes_wan_mqtt {
     node [pin=true, shape="box", fontname="Verdana"];
     edge [fontname="Verdana"];
 
+
+    /* MQTT */
+
     // Graph nodes represent system components
     "soc"           [label="SoC machine"];
     "mosquitto"     [label="Mosquitto"];
@@ -26,5 +29,16 @@ digraph hiveeyes_wan_mqtt {
     "kotori"        -> "grafana";
     "kotori"        -> "mqttwarn";
     "influxdb"      -> "grafana";
+
+
+    /* HTTP */
+
+    // Graph nodes represent system components
+    "avr"           [label="AVR MCU"];
+    "gprsbee"       [label="GPRSbee"];
+
+    // Graph edges represent communication paths
+    "avr"           -> "gprsbee"        [label="UART"];
+    "gprsbee"       -> "kotori"         [label="HTTP"];
 
 }

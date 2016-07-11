@@ -1,0 +1,35 @@
+// Hydro2Motion system overview
+digraph hydro2motion {
+
+    // Options
+    rankdir=LR;
+    ranksep=0.5;
+
+    // Style
+    //graph [splines=ortho];
+    node [pin=true, shape="box", fontname="Verdana"];
+    edge [fontname="Verdana"];
+
+
+    // Graph nodes represent system components
+    "mbed"          [label="mbed MCU"];
+    "gprs"          [label="GPRS"];
+    "kotori"        [label="Kotori"];
+    {rank=same; "influxdb"; "grafana" };
+    "influxdb"      [label="InfluxDB"];
+    "grafana"       [label="Grafana"];
+    "browser"       [label="Browser"];
+    "rickshaw"      [label="Rickshaw"];
+    "leaflet"       [label="Leaflet"];
+
+    // Graph edges represent communication paths
+    "mbed"          -> "gprs";
+    "gprs"          -> "kotori"         [label="UDP/CSV"];
+    "kotori"        -> "influxdb";
+    "kotori"        -> "grafana";
+    "influxdb"      -> "grafana";
+    "kotori"        -> "browser"        [label="WAMP"];
+    "browser"       -> "rickshaw";
+    "browser"       -> "leaflet";
+
+}

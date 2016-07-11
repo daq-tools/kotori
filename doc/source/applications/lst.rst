@@ -30,9 +30,12 @@ Let's have a look at the environment:
 - Data payloads are usually in binary format defined in *C/C++* header files.
 
 
-*****
-Goals
-*****
+***************
+System overview
+***************
+
+.. graphviz:: lst.dot
+
 - Receive telemetry messages over UDP in binary format.
 - Decode and enrich them by using information from structs of real *C/C++* header files.
 - Store measurements to the database, with attribute names matching the header file struct declarations.

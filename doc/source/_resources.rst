@@ -113,6 +113,8 @@
 .. _Kotori Telemetry Dashboard for Hydro2Motion: http://h2mdata.cicer.de/
 
 .. _mbed: https://mbed.org/
+.. _Rickshaw: http://code.shutterstock.com/rickshaw/
+.. _Leaflet: http://leafletjs.com/
 
 
 .. LST

@@ -157,10 +157,12 @@ Let's have a look at the environment:
     24000;15718;75813;1756;15253;229;220;204;811;1769;0;0;0;0;0;1;0;12;0;0;0;-18;0;4011;417633984;85402624;472851424;0;12242;43;42;0;0
 
 
+***************
+System overview
+***************
 
-*****
-Goals
-*****
+.. graphviz:: hydro2motion.dot
+
 - Receive telemetry messages over UDP in CSV format.
 - Manually decode messages in a Python callback handler.
 - Convert, munge and enrich data by using imperative code, no DSL in sight.
@@ -187,8 +189,8 @@ Goals
 
         Live telemetry with GPS position on map (`article in german <Live Telemetrie at Hydro2Motion_>`_)
 
-        - GPS map: Draw a pin on a map widget at the GPS position of the vehicle.
-        - Oscilloscope: Display received data points in an "osci-style" widget.
+        - GPS map: Draw a pin on a map widget at the GPS position of the vehicle using Leaflet_.
+        - Oscilloscope: Display received data points in an "osci-style" widget, based on Rickshaw_.
 
 |clearfix|
 

@@ -1,0 +1,31 @@
+// LST system overview
+digraph lst {
+
+    // Options
+    rankdir=LR;
+    ranksep=0.5;
+
+    // Style
+    //graph [splines=ortho];
+    node [pin=true, shape="box", fontname="Verdana"];
+    edge [fontname="Verdana"];
+
+
+    // Graph nodes represent system components
+    "mbed"          [label="mbed MCU"];
+    "kotori"        [label="Kotori"];
+    {rank=same; "influxdb"; "grafana" };
+    "influxdb"      [label="InfluxDB"];
+    "grafana"       [label="Grafana"];
+    "browser"       [label="Browser"];
+    "rickshaw"      [label="Rickshaw"];
+
+    // Graph edges represent communication paths
+    "mbed"          -> "kotori"         [label="UDP/Binary"];
+    "kotori"        -> "influxdb";
+    "kotori"        -> "grafana";
+    "influxdb"      -> "grafana";
+    "kotori"        -> "browser"        [label="WAMP"];
+    "browser"       -> "rickshaw";
+
+}

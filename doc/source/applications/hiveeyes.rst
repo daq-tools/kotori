@@ -49,22 +49,16 @@ forwards them to a serial interface to MQTT encoded with JSON.
 .. graphviz:: hiveeyes/radio.dot
 
 
-MQTT-based WAN, data acquisition, storage and visualization
-===========================================================
+MQTT- and HTTP-based data acquisition, storage and visualization
+================================================================
 - :ref:`kotori` receives telemetry data from MQTT topic subscriptions.
   For details about the addressing scheme and topology, see :ref:`hiveeyes-one-topology`.
+- The :ref:`Open Hive Box <openhive-box>` uses a GPRSbee modem to do :ref:`daq-http`.
 - Store measurements to the timeseries database.
 - Automatically create default Grafana panels for instant telemetry data visualization.
 - Detect events and anomalies on the telemetry data and emit appropriate signals.
 
 .. graphviz:: hiveeyes/acquisition.dot
-
-
-HTTP-based data acquisition
-===========================
-The :ref:`Open Hive Box <openhive-box>` uses a GPRSbee modem to do :ref:`daq-http`.
-
-.. graphviz:: hiveeyes/gprs.dot
 
 
 Data export
