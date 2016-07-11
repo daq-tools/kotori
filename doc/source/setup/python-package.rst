@@ -31,6 +31,8 @@ Python Eggs can be installed into virtualenvs and into the system, both in edita
 Details
 *******
 
+.. warning:: This section is currently not up to date.
+
 Install using PIP
 =================
 
@@ -47,7 +49,7 @@ Install from Python source egg
 ::
 
     # install latest Kotori release with feature "daq"
-    pip install kotori[daq] --extra-index-url=https://packages.elmyra.de/hiveeyes/python/eggs/ --upgrade
+    pip install kotori[daq] --extra-index-url=https://packages.elmyra.de/elmyra/foss/python/ --upgrade
 
 .. tip::
 
@@ -98,7 +100,8 @@ Q: What is this? Give me the Egg!
 
 A: Here you are::
 
-    wget https://packages.elmyra.de/hiveeyes/python/eggs/kotori/kotori-0.6.0.tar.gz
+    wget https://packages.elmyra.de/elmyra/foss/python/kotori/kotori-0.10.8.tar.gz
     tar -xzf kotori-0.6.0.tar.gz
     cd kotori-0.6.0
     python setup.py install
+

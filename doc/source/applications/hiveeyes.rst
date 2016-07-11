@@ -23,9 +23,6 @@ Kotori powers the :ref:`Hiveeyes system <hiveeyes:hiveeyes-system>`
 on ``swarm.hiveeyes.org`` as a data collection hub for a Berlin-based
 beekeeper collective.
 
-Feel welcome to join them, just drop an email at "hiveeyes-devs ät ideensyndikat.org".
-They are friendly, we know them.
-
 
 ***********
 Environment
@@ -33,23 +30,64 @@ Environment
 Let's have a look at the environment:
 
 - Arduino_ is a popular embedded computing platform used intensively here.
-- Telemetry data is transmitted from sensor nodes over RFM69_ radio links.
+- Telemetry data is transmitted from sensor nodes over RFM69_/RFM95_ radio links.
 - Telemetry data is forwarded and distributed over
   a wide area multi-tenancy communication bus based on MQTT_.
 
 
-*****
-Goals
-*****
-- :ref:`beradio:beradio` handles the radio link communication based on RFM69_.
-  It receives data messages in Bencode_ format over radio, decodes them and
-  forwards them to a serial interface to MQTT encoded with JSON.
+***************
+System overview
+***************
+
+
+Radio link
+==========
+:ref:`beradio:beradio` handles the radio link communication based on RFM69_ and RFM95_.
+It receives data messages in Bencode_ format over radio, decodes them and
+forwards them to a serial interface to MQTT encoded with JSON.
+
+.. graphviz:: hiveeyes/radio.dot
+
+
+MQTT-based WAN, data acquisition, storage and visualization
+===========================================================
 - :ref:`kotori` receives telemetry data from MQTT topic subscriptions.
   For details about the addressing scheme and topology, see :ref:`hiveeyes-one-topology`.
-- Store measurements to the database.
+- Store measurements to the timeseries database.
 - Automatically create default Grafana panels for instant telemetry data visualization.
-- Detect events and anomalies on the telemetry data, emit signals
-- Hiveeyes Daily, Schwarmalarm and Elektronische Stockkarte
+- Detect events and anomalies on the telemetry data and emit appropriate signals.
+
+.. graphviz:: hiveeyes/acquisition.dot
+
+
+HTTP-based data acquisition
+===========================
+The :ref:`Open Hive Box <openhive-box>` uses a GPRSbee modem to do :ref:`daq-http`.
+
+.. graphviz:: hiveeyes/gprs.dot
+
+
+Data export
+===========
+There are different ways to get data out of Kotori, see :ref:`data-export`.
+
+.. graphviz:: hiveeyes/export.dot
+
+
+Firmware builder
+================
+Using the :ref:`firmware-builder`, beekeepers can upload customized firmwares to
+their sensor and telemetry nodes derived from a "golden master" :ref:`generic-firmware`.
+Firmware images can be easily downloaded using HTTP.
+
+.. graphviz:: hiveeyes/firmware.dot
+
+
+Domain-specific features
+========================
+- Hiveeyes Daily
+- Schwarmalarm
+- Elektronische Stockkarte
 
 
 *******
@@ -199,3 +237,4 @@ please have a look at :ref:`kotori-hacking`.
 Under the hood
 ==============
 Please also have a look at :ref:`hiveeyes-one-topology` and :ref:`hiveeyes-one-wishlist`.
+

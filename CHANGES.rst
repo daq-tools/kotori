@@ -5,6 +5,7 @@ Kotori CHANGES
 
 in progress
 ===========
+- Documentation updates, add system diagrams to vendor :ref:`vendor-hiveeyes`.
 
 
 .. _kotori-0.10.7:

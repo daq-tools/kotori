@@ -75,11 +75,10 @@ push:
 sdist:
 	python setup.py sdist
 
-publish-sdist:
+publish-sdist: sdist
 	# publish Python Eggs to eggserver
 	# TODO: use localshop or one of its sisters
-	@#rsync -auv --progress ./dist/kotori-*.tar.gz hiveeyes@packages.elmyra.de:/srv/packages/organizations/hiveeyes/python/eggs/kotori/
-	rsync -auv --progress ./dist/kotori-*.tar.gz isareng@packages.elmyra.de:/srv/packages/organizations/isarengineering/python/eggs/kotori/
+	rsync -auv --progress ./dist/kotori-*.tar.gz workbench@packages.elmyra.de:/srv/packages/organizations/elmyra/foss/htdocs/python/
 
 publish-debian:
 	# publish Debian packages
@@ -139,7 +138,6 @@ fpm-options := \
 	--provides "kotori" \
 	--provides "kotori-daq" \
 	--maintainer "andreas.motl@elmyra.de" \
-	--vendor "IsarEngineering GmbH, Elmyra UG" \
 	--license "AGPL 3, EUPL 1.2" \
 	--deb-changelog CHANGES.rst \
 	--deb-meta-file README.rst \
@@ -312,20 +310,6 @@ check-build-options:
 		echo "ERROR: 'features' not set"; \
 		exit 1; \
 	fi
-
-
-# --------------------------------------
-#  Fabric based multi-tenant releasing
-# --------------------------------------
-
-#deb-fab:
-#	fab deb_build_and_release:gitrepo=$(gitrepo),gitref=$(version),tenant=$(tenant),kind=$(kind),flavor=fpm
-
-#release-deb:
-#	$(MAKE) deb gitrepo=ssh://git@git.elmyra.de/isar-engineering/kotori-daq.git gitref=master tenant=elmyra/kotori kind=staging version=$(version)
-
-#egg:
-#	fab egg_build_and_release:setup_py=setup.py
 
 
 

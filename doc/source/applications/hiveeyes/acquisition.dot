@@ -1,0 +1,30 @@
+// Hiveeyes WAN and backend
+digraph hiveeyes_wan_mqtt {
+
+    // Options
+    rankdir=LR;
+    ranksep=0.5;
+
+    // Style
+    //graph [splines=ortho];
+    node [pin=true, shape="box", fontname="Verdana"];
+    edge [fontname="Verdana"];
+
+    // Graph nodes represent system components
+    "soc"           [label="SoC machine"];
+    "mosquitto"     [label="Mosquitto"];
+    "kotori"        [label="Kotori"];
+    {rank=same; "influxdb"; "grafana"; "mqttwarn" };
+    "influxdb"      [label="InfluxDB"];
+    "grafana"       [label="Grafana"];
+    "mqttwarn"      [label="mqttwarn", style=dashed];
+
+    // Graph edges represent communication paths
+    "soc"           -> "mosquitto"      [label="MQTT"];
+    "mosquitto"     -> "kotori"         [label="MQTT"];
+    "kotori"        -> "influxdb";
+    "kotori"        -> "grafana";
+    "kotori"        -> "mqttwarn";
+    "influxdb"      -> "grafana";
+
+}

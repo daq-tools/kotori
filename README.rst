@@ -1,48 +1,49 @@
-.. include:: _resources.rst
-
 .. _kotori-readme:
 
-.. tip::
+######
+Kotori
+######
 
-    You might want to `read this document on our documentation space <https://getkotori.org/docs/README.html>`_,
-    all inline links will be working there.
 
-#############
-Kotori README
-#############
+*****
+About
+*****
+Kotori is a multi-channel, multi-protocol data acquisition and graphing toolkit
+based on `InfluxDB <https://influxdb.com/>`_, `Grafana <http://grafana.org/>`_,
+`Mosquitto <https://mosquitto.org/>`_ and `Twisted <https://en.wikipedia.org/wiki/Twisted_(software)>`_.
 
-    *Kotori* is a multi-channel, multi-protocol data acquisition and graphing toolkit
-    based on InfluxDB_, Grafana_, Mosquitto_ and Twisted_.
+- It is used for building telemetry solutions, test benches and sensor networks.
+- It offers built-in sensor adapters, flexible configuration capabilities,
+  durable database storage and unattended graph visualization out of the box.
+- It integrates well with established hardware-, software- and data acquisition
+  workflows through flexible adapter interfaces.
 
-        - Use convenient software and hardware components for building
-          powerful telemetry solutions, test benches and sensor networks.
-        - Build upon a flexible data acquisition integration framework.
-        - Address all aspects of collecting and storing
-          sensor data from a multitude of data sources and devices.
 
-************
-Introduction
-************
-The big picture of the data acquisition integration framework is a system aiming to:
+*******
+Explore
+*******
+- Get a rough idea at `About Kotori <https://getkotori.org/docs/about.html>`_.
+- Have a look at some `Applications <https://getkotori.org/docs/applications/>`_ where Kotori has been used.
+- Handbooks about `data acquisition <https://getkotori.org/docs/handbook/acquisition/>`_ and
+  `data export <https://getkotori.org/docs/handbook/export/>`_.
 
--   Deliver an instant-on experience by providing built-in sensor adapters,
-    flexible configuration capabilities, durable database storage and
-    unattended graph visualization out of the box.
 
--   Integrate well with and extend your currently employed
-    measurement data acquisition workflow through flexible
-    adapter interfaces to commodity or proprietary software
-    and hardware components.
+*****
+Setup
+*****
+We are offering `packages for Debian-based distributions <https://getkotori.org/docs/setup/debian-quickstart.html>`_
+and `Python source packages <https://getkotori.org/docs/setup/python-package.html>`_.
 
-For further information please visit :ref:`kotori-about` or read
-about system design requirements and possible applications at :ref:`kotori-goals`.
 
 ***********
 Source code
 ***********
-The source code is hosted on GitHub at https://github.com/zerotired/kotori.
-We are happy to receive contributions and any other feedback,
-please use the issue tracker on GitHub.
+Please find the source code of `Kotori on GitHub <https://github.com/zerotired/kotori>`_.
+We are happy to receive contributions and any other feedback, please use the issue tracker on GitHub.
 
 Have fun!
+
+----
+
+.. tip:: You might want to `continue reading on our documentation space <https://getkotori.org/docs/>`_.
 

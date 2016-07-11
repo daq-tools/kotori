@@ -25,9 +25,6 @@ This relies on boot2docker_ and makes us happy when used on Mac OSX.
 When running Linux, you might just want to install the infrastructure
 on your local workstation natively like :ref:`setup-debian`.
 
-We are also working on a Vagrant setup to support developers on
-different operating systems. See `hivemonitor-vagrant`_.
-
 
 ***************
 Getting started

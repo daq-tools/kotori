@@ -1,0 +1,30 @@
+// Hiveeyes data export interface
+digraph hiveeyes_export {
+
+    // Options
+    //rankdir=LR;
+    ranksep=0.5;
+
+    // Style
+    //graph [splines=ortho];
+    node [pin=true, shape="plaintext", fontname="Verdana"];
+    edge [fontname="Verdana"];
+
+    // Graph nodes represent system components
+    "kotori"        [label="Kotori", shape="box"];
+    "csv"           [label="CSV"];
+    "json"          [label="JSON"];
+    "xlsx"          [label="Excel XLSX"];
+    "matplotlib"    [label="matplotlib"];
+    "ggplot"        [label="ggplot"];
+    "dygraphs"      [label="dygraphs"];
+
+    // Graph edges represent communication paths
+    "kotori"        -> "csv";
+    "kotori"        -> "json";
+    "kotori"        -> "xlsx";
+    "kotori"        -> "matplotlib";
+    "kotori"        -> "ggplot";
+    "kotori"        -> "dygraphs";
+
+}

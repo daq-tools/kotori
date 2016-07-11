@@ -1,0 +1,22 @@
+// Hiveeyes Firmware Builder
+digraph hiveeyes_firmware {
+
+    // Options
+    rankdir=LR;
+    ranksep=0.5;
+
+    // Style
+    //graph [splines=ortho];
+    node [pin=true, shape="box", fontname="Verdana"];
+    edge [fontname="Verdana"];
+
+    // Graph nodes represent system components
+    "kotori"        [label="Kotori"];
+    "firmware"      [label="Firmware HEX"];
+    "avr"           [label="AVR MCU\nATmega328p"];
+
+    // Graph edges represent communication paths
+    "kotori"        -> "firmware"       [label="HTTP"];
+    "firmware"      -> "avr"            [label="avrdude"];
+
+}

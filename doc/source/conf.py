@@ -30,8 +30,10 @@ import shlex
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.todo',
     'sphinx.ext.intersphinx',
+    'sphinx.ext.todo',
+    'sphinx.ext.ifconfig',
+    'sphinx.ext.graphviz',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -50,8 +52,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Kotori'
-copyright = u'2013-2016, Andreas Motl'
-author = u'Andreas Motl'
+copyright = u'2013-2016, The Kotori Developers'
+author = u'The Kotori Developers'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

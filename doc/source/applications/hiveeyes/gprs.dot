@@ -1,0 +1,22 @@
+// Hiveeyes GPRS/HTTP data acquisition path
+digraph hiveeyes_gprs_http {
+
+    // Options
+    rankdir=LR;
+    ranksep=0.5;
+
+    // Style
+    //graph [splines=ortho];
+    node [pin=true, shape="box", fontname="Verdana"];
+    edge [fontname="Verdana"];
+
+    // Graph nodes represent system components
+    "avr"           [label="AVR MCU"];
+    "gprsbee"       [label="GPRSbee"];
+    "kotori"        [label="Kotori"];
+
+    // Graph edges represent communication paths
+    "avr"           -> "gprsbee"        [label="UART"];
+    "gprsbee"       -> "kotori"         [label="HTTP"];
+
+}

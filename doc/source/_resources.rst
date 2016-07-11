@@ -22,7 +22,7 @@
 .. _Crossbar.io: http://crossbar.io/
 .. _WAMP: http://wamp.ws/
 .. _MQTT: http://mqtt.org/
-.. _Mosquitto: http://mosquitto.org/
+.. _Mosquitto: https://mosquitto.org/
 
 .. Foundation SC
 .. _Node-RED: http://nodered.org/
@@ -95,7 +95,8 @@
 .. _BERadio: https://hiveeyes.org/docs/beradio/
 
 .. _Arduino: https://www.arduino.cc/
-.. _RFM69: https://github.com/LowPowerLab/RFM69
+.. _RFM69: http://www.hoperf.com/rf_transceiver/modules/RFM69W.html
+.. _RFM95: http://www.hoperf.com/rf_transceiver/lora/RFM95W.html
 .. _Bencode: https://en.wikipedia.org/wiki/Bencode
 .. _mqttwarn: https://github.com/jpmens/mqttwarn
 .. _Introducing to mqttwarn, a pluggable MQTT notifier: http://jpmens.net/2014/02/17/introducing-mqttwarn-a-pluggable-mqtt-notifier/

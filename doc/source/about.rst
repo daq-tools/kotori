@@ -43,7 +43,7 @@ About Kotori
     .. container:: align-center legroom-md
 
         Use convenient software and hardware components for building
-        powerful telemetry solutions, test benches and sensor networks.
+        telemetry solutions, test benches and sensor networks.
         Build upon a flexible data acquisition integration framework.
         Address all aspects of collecting and storing
         sensor data from a multitude of data sources and devices.
@@ -175,7 +175,7 @@ About Kotori
 
     .. container:: align-center legroom-md
 
-        Integrate with and extend your currently employed
+        Integrate with and extend your currently established
         measurement data acquisition workflow through flexible
         adapter interfaces to commodity or proprietary software
         and hardware components or protocols.

@@ -1,0 +1,34 @@
+// Hiveeyes radio link data acquisition
+digraph hiveeyes_radio_link {
+
+    // Options
+    rankdir=LR;
+    ranksep=0.5;
+
+    // Style
+    //graph [splines=ortho];
+    node [pin=true, shape="box", fontname="Verdana"];
+    edge [fontname="Verdana"];
+
+    // Graph nodes represent hardware node units
+    "sensor-1"      [label="Sensor node 1"];
+    "sensor-2"      [label="Sensor node 2"];
+    "sensor-N"      [label="Sensor node N"];
+    "transceiver"   [label="Protocol transceiver node"];
+    "gateway"       [label="Gateway node"];
+    "soc"           [label="SoC machine", style=dashed];
+
+    // Graph edges represent radio families and
+    // protocols spoken between node units.
+    "sensor-1"      -> "transceiver"    [label="RFM69"];
+    "sensor-2"      -> "transceiver";
+    "sensor-N"      -> "transceiver";
+    "transceiver"   -> "gateway"        [label="RFM95\n(LoRa)"];
+    "gateway"       -> "soc"            [label="UART", style=dashed];
+
+    // Draw a dotted line between sensor-2
+    // and sensor-N, but retain node positions.
+    "sensor-2"      -> "sensor-N"       [dir=none, style=dotted];
+    {rank=same; "sensor-1"; "sensor-2"; "sensor-N" };
+
+}
