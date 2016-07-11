@@ -346,11 +346,11 @@ class HttpDataFrameResponse(object):
 
         if suffix in ['csv', 'txt']:
             # http://pandas.pydata.org/pandas-docs/stable/io.html#io-store-in-csv
-            df.to_csv(buffer, index=False)
+            df.to_csv(buffer, header=True, index=False, date_format='%Y-%m-%dT%H:%M:%S.%fZ')
 
         elif suffix == 'json':
             # http://pandas.pydata.org/pandas-docs/stable/io.html#io-json-writer
-            df.to_json(buffer, orient='records')
+            df.to_json(buffer, orient='records', date_format='iso')
 
         elif suffix == 'html':
             # http://pandas.pydata.org/pandas-docs/stable/io.html#io-html

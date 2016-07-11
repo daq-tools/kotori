@@ -6,6 +6,7 @@ Kotori CHANGES
 in progress
 ===========
 - Documentation updates, add system diagrams to vendor :ref:`vendor-hiveeyes`.
+- Export csv and json data with ISO format timestamps to satisfy dygraphs rendering in Firefox.
 
 
 .. _kotori-0.10.7:
