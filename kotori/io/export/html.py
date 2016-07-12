@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2016 Andreas Motl <andreas.motl@elmyra.de>
-from twisted.web.template import XMLString, Element, renderer, tags
+from twisted.web.template import XMLString, Element, renderer, tags, CDATA
 #from dyplot.dygraphs import Dygraphs
 
 class GenericPage(Element):
@@ -10,7 +10,13 @@ class GenericPage(Element):
 
     @renderer
     def fill_slots(self, request, tag):
-        tag.fillSlots(**self.__dict__)
+
+        slotdata = self.__dict__.copy()
+
+        # Pass data to template verbatim without applying htmlentity conversion
+        slotdata['data_uri'] = CDATA(slotdata['data_uri'])
+
+        tag.fillSlots(**slotdata)
         return tag
 
     @renderer
@@ -85,7 +91,8 @@ class DygraphsPage(GenericPage):
                 <div id="linegraph" class="linegraph"/>
                 <script type="text/javascript">
                     var element = document.getElementById('linegraph');
-                    new Dygraph(element, '<t:slot name="data_uri" />', {
+                    var data_uri = '<t:slot name="data_uri" />'.replace('<![CDATA[', '').replace(']]>', '');
+                    new Dygraph(element, data_uri, {
                       legend: 'always',
                     });
                 </script>
@@ -141,8 +148,8 @@ class DatatablesPage(GenericPage):
                 </table>
                 <script type="text/javascript">
                     $(document).ready(function(){
-
-                        $('#dataframe').load('<t:slot name="data_uri" />', function() {
+                        var data_uri = '<t:slot name="data_uri" />'.replace('<![CDATA[', '').replace(']]>', '');
+                        $('#dataframe').load(data_uri, function() {
                             var table = $('.dataframe');
                             table.attr('border', '0');
                             table.DataTable({
@@ -167,3 +174,4 @@ class DatatablesPage(GenericPage):
     def __init__(self, data_uri=None, bucket=None):
         self.data_uri = data_uri
         self.bucket = bucket
+

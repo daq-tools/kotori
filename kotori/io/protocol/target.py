@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2016 Andreas Motl <andreas.motl@elmyra.de>
+from pyramid.settings import asbool
 from twisted.internet import threads
 from twisted.web import http, server
 from twisted.logger import Logger
@@ -118,19 +119,19 @@ class ForwarderTargetService(MultiServiceMixin, MultiService):
             # Propagate non-null values forward or backward.
             # With time series data, using pad/ffill is extremely common so that the “last known value” is available at every time point.
             # http://pandas.pydata.org/pandas-docs/stable/missing_data.html#filling-missing-values-fillna
-            if 'pad' in bucket.tdata and bucket.tdata.pad:
+            if 'pad' in bucket.tdata and asbool(bucket.tdata.pad):
                 df.fillna(method='pad', inplace=True)
 
-            if 'backfill' in bucket.tdata and bucket.tdata.backfill:
+            if 'backfill' in bucket.tdata and asbool(bucket.tdata.backfill):
                 df.fillna(method='backfill', inplace=True)
 
-            if 'interpolate' in bucket.tdata and bucket.tdata.interpolate:
+            if 'interpolate' in bucket.tdata and asbool(bucket.tdata.interpolate):
                 # Performs linear interpolation at missing datapoints,
                 # otherwise matplotlib would not plot the sparse data frame.
                 # http://pandas.pydata.org/pandas-docs/stable/missing_data.html#interpolation
                 df.interpolate(inplace=True)
 
-            if 'sorted' in bucket.tdata and bucket.tdata.sorted:
+            if 'sorted' in bucket.tdata and asbool(bucket.tdata.sorted):
                 # http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.sort.html
                 df.sort(axis='columns', inplace=True)
 
