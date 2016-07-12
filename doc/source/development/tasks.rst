@@ -17,6 +17,26 @@ Kotori tasks
 ****
 
 
+2016-07-12
+==========
+- [x] Add export format ".tsv"
+- [o] Improve resiliency when InfluxDB or Grafana is down
+- [o] Disable request.site.displayTracebacks on production
+- [o] Vendor Hiveeyes: Integrate wq.io for Stockkarte
+
+
+2016-07-11
+==========
+- [x] Plotting does not work for:
+
+    - https://swarm.hiveeyes.org/api/hiveeyes/25a0e5df-9517-405b-ab14-cb5b514ac9e8/3756782252718325761/1/data.dy?exclude=wght1&from=20160519T040000&to=20160519T170000
+      => Does not work in Firefox due to errors like "Couldn't parse 2016-05-19 04:04:29.390000128 as a date dygraph-combined.js:4:3438"
+    - https://swarm.hiveeyes.org/api/hiveeyes/25a0e5df-9517-405b-ab14-cb5b514ac9e8/3756782252718325761/1/data.dy?exclude=wght1&from=20160519T040000&to=20160519T170000&interpolate=true
+      => Don't add "pad=true" or "backfill=true" when "interpolate=true" or other parameters were obtained from URL
+    - https://swarm.hiveeyes.org/api/hiveeyes/25a0e5df-9517-405b-ab14-cb5b514ac9e8/3756782252718325761/1/data.vega?exclude=wght1&from=20160519T040000&to=20160519T170000
+      => [...] was loaded over HTTPS, but requested an insecure script 'http://d3js.org/d3.v3.min.js'
+
+
 2016-07-10
 ==========
 - [o] Document export parameters "exclude", "include", "interpolate" and "sorted"
