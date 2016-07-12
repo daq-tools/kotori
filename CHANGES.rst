@@ -7,9 +7,9 @@ in progress
 ===========
 
 
-.. _kotori-0.10.8:
+.. _kotori-0.10.9:
 
-2016-07-12 0.10.8
+2016-07-12 0.10.9
 =================
 - Documentation updates, add system diagrams to vendor :ref:`vendor-hiveeyes`.
 - Export csv and json data with ISO format timestamps to satisfy dygraphs rendering in Firefox.
