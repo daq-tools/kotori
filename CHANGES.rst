@@ -5,6 +5,12 @@ Kotori CHANGES
 
 in progress
 ===========
+
+
+.. _kotori-0.10.8:
+
+2016-07-12 0.10.8
+=================
 - Documentation updates, add system diagrams to vendor :ref:`vendor-hiveeyes`.
 - Export csv and json data with ISO format timestamps to satisfy dygraphs rendering in Firefox.
 - Don't add "pad=true" or "backfill=true" when "interpolate=true" parameter was obtained from URL.
@@ -12,8 +18,6 @@ in progress
 - Improve Vega asset loading: Use https resources, better safe than sorry.
 - Add export format ".tsv" (text/tab-separated-values).
 
-
-.. _kotori-0.10.7:
 
 2016-07-10 0.10.7
 =================
