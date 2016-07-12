@@ -7,6 +7,7 @@ in progress
 ===========
 - Documentation updates, add system diagrams to vendor :ref:`vendor-hiveeyes`.
 - Export csv and json data with ISO format timestamps to satisfy dygraphs rendering in Firefox.
+- Don't add "pad=true" or "backfill=true" when "interpolate=true" parameter was obtained from URL.
 
 
 .. _kotori-0.10.7:

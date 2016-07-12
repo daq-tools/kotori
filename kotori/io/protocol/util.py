@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2016 Andreas Motl <andreas.motl@elmyra.de>
 import arrow
+from pyramid.settings import asbool
 from twisted.web import http
 from twisted.logger import Logger
 from twisted.python.url import URL
@@ -28,6 +29,12 @@ def get_data_uri(bucket, sibling=None, more_params=None):
             url = url.add(unicode(param), unicode(bucket.tdata[param]))
 
     for param, value in more_params.iteritems():
+
+        # Special rule: Don't add any of "pad" or "backfill", if "interpolate" is true
+        do_interpolate = 'interpolate' in bucket.tdata and asbool(bucket.tdata.interpolate)
+        if do_interpolate and param in ['pad', 'backfill']:
+            continue
+
         url = url.add(unicode(param), unicode(value))
 
     data_uri = str(request.URLPath().sibling(sibling).click(url.asText()))
