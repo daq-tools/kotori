@@ -1,0 +1,20 @@
+<html>
+<head>
+    <title>$title (Vega plot)</title>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="https://d3js.org/topojson.v1.min.js"></script>
+    <script src="https://d3js.org/d3.geo.projection.v0.min.js" charset="utf-8"></script>
+    <script src="https://trifacta.github.io/vega/vega.js"></script>
+</head>
+<body style="font-family: Arial, sans-serif">
+    <h3>$title</h3>
+    <div id="vis"></div>
+</body>
+<script type="text/javascript">
+    // parse a spec and create a visualization view
+    function parse(spec) {
+        vg.parse.spec(spec, function(chart) { chart({el:"#vis"}).update(); });
+    }
+    parse("$path");
+</script>
+</html>

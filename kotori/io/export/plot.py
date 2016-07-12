@@ -323,11 +323,9 @@ class UniversalPlotter(object):
             # Compute data_uri, forward "from" and "to" parameters
             data_uri = get_data_uri(bucket, 'data.vega.json', {'pad': 'true', 'backfill': 'true'})
 
-            template = Template(str(resource_string('vincent', 'vega_template.html')))
+            template = Template(str(resource_string('kotori.io.export', 'vega_template.html')))
             bucket.request.setHeader('Content-Type', 'text/html; charset=utf-8')
-            response = template.substitute(path=data_uri)
-            response = response.replace(u'<title>Vega Scaffold</title>', u'<title>{title}</title>'.format(title=bucket.title.human))
-            response = response.replace(u'<body>', u'<body style="font-family: Arial, sans-serif"><h3>{title}</h3>'.format(title=bucket.title.human))
+            response = template.substitute(path=data_uri, title=bucket.title.human)
             return response.encode('utf-8')
 
     def render_json(self, kind):

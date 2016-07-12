@@ -9,6 +9,7 @@ in progress
 - Export csv and json data with ISO format timestamps to satisfy dygraphs rendering in Firefox.
 - Don't add "pad=true" or "backfill=true" when "interpolate=true" parameter was obtained from URL.
 - Improve robustness of http api parameter evaluation and passing.
+- Improve Vega asset loading: Use https resources, better safe than sorry.
 
 
 .. _kotori-0.10.7:
