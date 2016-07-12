@@ -76,8 +76,8 @@ Periodic transmitter
 --------------------
 "hands-free", periodic dry-dock measurements::
 
-    sample() { sensor | transmitter; }
-    loop() { while true; do sample; echo -n .; sleep 1; done; }
+    measure() { sensor | transmitter; }
+    loop() { while true; do measure; echo -n .; sleep 1; done; }
 
 Start publishing::
 
