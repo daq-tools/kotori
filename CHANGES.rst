@@ -10,6 +10,7 @@ in progress
 - Don't add "pad=true" or "backfill=true" when "interpolate=true" parameter was obtained from URL.
 - Improve robustness of http api parameter evaluation and passing.
 - Improve Vega asset loading: Use https resources, better safe than sorry.
+- Add export format ".tsv" (text/tab-separated-values).
 
 
 .. _kotori-0.10.7:

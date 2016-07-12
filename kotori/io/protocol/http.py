@@ -348,6 +348,9 @@ class HttpDataFrameResponse(object):
             # http://pandas.pydata.org/pandas-docs/stable/io.html#io-store-in-csv
             df.to_csv(buffer, header=True, index=False, date_format='%Y-%m-%dT%H:%M:%S.%fZ')
 
+        elif suffix == 'tsv':
+            df.to_csv(buffer, header=True, index=False, date_format='%Y-%m-%dT%H:%M:%S.%fZ', sep='\t')
+
         elif suffix == 'json':
             # http://pandas.pydata.org/pandas-docs/stable/io.html#io-json-writer
             df.to_json(buffer, orient='records', date_format='iso')
