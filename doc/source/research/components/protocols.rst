@@ -90,3 +90,66 @@ Misc
 
 - Naming Things with Hashes: https://tools.ietf.org/html/rfc6920
     - https://news.ycombinator.com/item?id=11142454
+
+
+OPC UA
+======
+OPC-DA is OPC Data Access, aka. IEC 61131-3-PLC, the original specification around since 1999.
+OPC-UA is the OPC Unified Architecture, aka. IEC 62541, around since 2008.
+
+The OPC HDA specification defines query methods and analytics that may be applied to historical, time-stamped data.
+
+OPC is a worldwide standard of application interface in industrial automation software and the
+enterprise systems that support industry. OPC standards are provided in form of various specifications.
+The OPC standard documents are available to members of OPC Foundation only, but the OPC technology
+itself can be used by anybody without any royalty charges to OPC Foundation.
+
+- https://opcfoundation.org/about/what-is-opc/
+- https://opcfoundation.org/about/opc-technologies/opc-classic/
+- https://opcfoundation.org/developer-tools/specifications-classic/historical-data-access/
+
+- http://openopc.sourceforge.net/
+- https://pypi.python.org/pypi/OpenOPC/
+- http://pyopc.sourceforge.net/
+- http://www.controlconsulting.com/products/data-historian/
+- http://www.spinellicreations.com/spark/projects.php
+- https://freeopcua.github.io/
+- https://github.com/FreeOpcUa/python-opcua
+- https://github.com/FreeOpcUa/python-opcua/blob/master/examples/client-minimal.py
+- https://github.com/FreeOpcUa/python-opcua/blob/master/examples/server-minimal.py
+- https://python-opcua.readthedocs.io/
+- http://www.opclabs.com/products/quickopc
+- http://www.opclabs.com/products/quickopc/opc-specifications/data-access
+- http://www.opclabs.com/products/quickopc/opc-specifications/unified-architecture
+- http://www.opclabs.com/products/quickopc/languages-and-tools/python
+- http://www.opcconnect.com/tooltech.php
+- http://www.opcconnect.com/freecli.php
+- http://www.automation.com/automation-news/article/opc-ua-enables-industrial-information-revolution
+- http://www.computer-automation.de/steuerungsebene/steuern-regeln/artikel/117636/
+- http://www.infoplc.net/files/documentacion/industria4/infoPLC_net_2_Industrial-Revolution-2014-StefanHoppe.pdf
+
+
+Building An Open Source Process Historian
+-----------------------------------------
+- https://coussej.github.io/2016/04/18/Building-An-Open-Source-Process-Historian/
+- https://en.wikipedia.org/wiki/Operational_historian
+- https://node-opcua.github.io/
+- https://github.com/node-opcua/node-opcua
+- https://node-opcua.github.io/tutorial/2015/07/05/weather-station.html
+- https://github.com/coussej/node-opcua-logger
+- http://www.opclabs.com/resources/product-information/articles/1094-public-demo-opc-xml-da-server-2
+
+
+MTConnect
+=========
+- http://www.mtconnect.org/
+- http://mtcup.org/
+- https://github.com/mtconnect
+- http://mc2conference.com/
+- http://www.mtconnectforum.com/
+- https://www.mazakusa.com/machines/technology/digital-solutions/mtconnect/
+- http://www.systeminsights.com/vimana-connect
+- https://www.challenge.gov/files/2016/03/Rasberry-Pi-for-Data-Visualization.pdf
+- https://www.imts.com/show/newsletter/insider/article-details.cfm?articleid=219
+- http://web.ncdmm.org/cn/ackdg/Mtconnect
+- http://www.todaysmotorvehicles.com/article/mtconnect-student-challenge-amt-041116/
