@@ -142,7 +142,7 @@ fpm-options := \
 	--deb-changelog CHANGES.rst \
 	--deb-meta-file README.rst \
 	--description "Kotori data acquisition, routing and graphing toolkit" \
-	--url "https://getkotori.org/docs/"
+	--url "https://getkotori.org/"
 
 
 # get branch and commit identifiers
@@ -180,6 +180,13 @@ deb-build: check-build-options
 	# use "--python=python" to satisfy virtualenv-tools (doesn't grok "python2" when searching for shebangs to replace)
 	virtualenv --system-site-packages --always-copy --python=python $(buildpath)
 
+	# Remove superfluous "local" folder inside virtualenv
+	# See also:
+	# - http://stackoverflow.com/questions/8227120/strange-local-folder-inside-virtualenv-folder
+	# - https://github.com/pypa/virtualenv/pull/166
+	# - https://github.com/pypa/virtualenv/commit/5cb7cd652953441a6696c15bdac3c4f9746dfaa1
+	rm -rf $(buildpath)/local
+
 	# use different directory for temp files, because /tmp usually has noexec attributes
 	# otherwise: _cffi_backend.so: failed to map segment from shared object: Operation not permitted
 	# TMPDIR=/var/tmp
@@ -196,7 +203,7 @@ deb-build: check-build-options
 	sed -i -e '1c#!'$(buildpath)'/bin/python' $(buildpath)/bin/pip
 
 	# 1.2 virtualenv/bin/virtualenv-tools
-	sed -i -e '1c#!'$(buildpath)'/bin/python' $(buildpath)/bin/virtualenv-tools
+	sed -i -e '1c#!'$(buildpath)'/bin/python' $(buildpath)/bin/virtualenv-tools || true
 
 	# Make sure "virtualenv-tools" is installed into virtualenv
 	$(buildpath)/bin/pip install virtualenv-tools==1.0  # --upgrade --force-reinstall

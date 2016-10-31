@@ -7,6 +7,13 @@ in progress
 ===========
 
 
+.. _kotori-0.10.10:
+
+2016-10-31 0.10.10
+==================
+- Fix Debian package re. superfluous “local” folder containing a redundant Python virtualenv. Thanks Smilie!
+
+
 .. _kotori-0.10.9:
 
 2016-07-12 0.10.9
