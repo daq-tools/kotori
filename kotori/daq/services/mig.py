@@ -78,6 +78,13 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
         message_valid = False
 
+        # Compute storage address from topic
+        topology = self.topic_to_topology(topic)
+        log.debug(u'Topology address: {topology}', topology=dict(topology))
+
+        storage = self.topology_to_database(topology)
+        log.debug(u'Storage address: {storage}', storage=dict(storage))
+
         # entry point for multiple measurements in json object
         if topic.endswith('message-json'):
             # decode message from json format
@@ -87,8 +94,8 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         # entry point for single measurement as plain value; assume float
         if 'measure/' in topic:
 
-            # compute storage message from single scalar value
-            name  = topology.kind.replace('measure/', '')
+            # Amend topic and compute storage message from single scalar value
+            name = topology.kind.replace('measure/', '')
             value = float(payload)
             message = {name: value}
 
@@ -103,13 +110,6 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             self.metrics.packet_time = message['time']
         else:
             self.metrics.packet_time = None
-
-        # compute storage address from topic
-        topology = self.topic_to_topology(topic)
-        log.debug(u'Topology address: {topology}', topology=dict(topology))
-
-        storage = self.topology_to_database(topology)
-        log.debug(u'Storage address: {storage}', storage=dict(storage))
 
         # store data
         self.store_message(storage.database, storage.series, message)

@@ -12,6 +12,7 @@ in progress
 2016-10-31 0.10.10
 ==================
 - Fix Debian package re. superfluous “local” folder containing a redundant Python virtualenv. Thanks Smilie!
+- Fix receiving discrete measurements via MQTT. Thanks Karsten and Clemens!
 
 
 .. _kotori-0.10.9:
