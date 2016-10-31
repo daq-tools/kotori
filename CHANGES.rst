@@ -13,6 +13,7 @@ in progress
 ==================
 - Fix Debian package re. superfluous “local” folder containing a redundant Python virtualenv. Thanks Smilie!
 - Fix receiving discrete measurements via MQTT. Thanks Karsten and Clemens!
+- Update Git repository url for hacking on Kotori
 
 
 .. _kotori-0.10.9:

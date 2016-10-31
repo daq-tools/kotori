@@ -34,9 +34,9 @@ Get the source code
 ===================
 ::
 
-    mkdir -p develop
-    git clone git@git.elmyra.de:isarengineering/kotori.git develop/kotori
-    cd develop/kotori
+    mkdir -p develop; cd !$
+    git clone https://github.com/zerotired/kotori.git
+    cd kotori
 
 Setup virtualenv
 ================
@@ -95,3 +95,4 @@ as system service even while being in development mode,
 have a look at :ref:`systemd-development-mode`.
 We actively use this scenario for integration
 scenarios, testing and debugging.
+
