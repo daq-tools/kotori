@@ -223,9 +223,7 @@ please have a look at :ref:`kotori-hacking`.
 
 .. note::
 
-    We are working on bringing the source code to `Hiveeyes at GitHub`_.
-    Please don't hesitate to contact us by email at "hiveeyes-devs ät ideensyndikat.org"
-    for source code access in the meanwhile.
+    The source code of the Hiveeyes project is available at `Hiveeyes at GitHub`_.
 
 
 Under the hood

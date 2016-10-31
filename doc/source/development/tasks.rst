@@ -17,6 +17,117 @@ Kotori tasks
 ****
 
 
+2016-10-30
+==========
+- Add Kotori to https://github.com/hobbyquaker/awesome-mqtt
+
+
+2016-10-27
+==========
+- Introduce ZeroMQ data acquisition
+
+
+2016-10-08
+==========
+- Call out to IFTTT, e.g. https://github.com/ubirch/ubirch-board-examples/blob/master/src/gsm_console/call.txt
+- https://github.com/jpmens/mqttwarn/issues/78
+
+
+2016-10-06
+==========
+- https://www.movebank.org/node/5788
+- https://www.movebank.org/node/34
+- https://www.movebank.org/node/15294
+
+
+2016-10-05
+==========
+- Trigger IFTTT event, e.g. http://maker.ifttt.com/trigger/hum_alarm/with/key/nh6E
+- Annotations, finally! http://maxchadwick.xyz/blog/grafana-influxdb-annotations
+
+    - curl -X POST "http://localhost:8086/write?db=mydb&precision=s" --data-binary 'events title="Deployed v10.2.0",text="<a href='https://github.com'>Release notes</a>",tags="these are the tags" 1470661200'
+    - SELECT title, tags, text FROM events WHERE $timeFilter
+
+
+2016-10-03
+==========
+
+MongoDB on ARM
+--------------
+- https://jira.mongodb.org/browse/SERVER-1811
+- https://github.com/Barryrowe/mongo-arm
+- http://raspberrypi.stackexchange.com/questions/22404/official-mongodb-repo-for-arm-processor-for-debian-base
+- http://www.clarenceho.net/2015/12/building-mongodb-30x-for-arm-armv7l.html
+- http://andyfelong.com/2016/01/mongodb-3-0-9-binaries-for-raspberry-pi-2-jessie/
+- http://andyfelong.com/2016/05/mongodb-3-2-6-running-under-arch-linux-arm-64-bit/
+- http://downloads.mongodb.org/linux/mongodb-linux-arm64-ubuntu1604-3.3.15.tgz
+
+
+2016-09-30
+==========
+BMBF „Open Photonik“
+
+- http://maker-faire.de/berlin/auftaktveranstaltung-open-photonik/
+- http://www.photonikforschung.de/innovationsunterstuetzung/
+- http://www.photonikforschung.de/forschungsfelder/open-innovation/open-photonik/
+- https://sensebox.de/
+
+
+2016-09-21
+==========
+- Have a look at Metabase:
+
+    - http://www.metabase.com/
+    - https://github.com/metabase/metabase
+
+
+2016-09-14
+==========
+- Docs: Add "contact" page
+- Docs: Add "How to configure (and secure) Nginx" or how to bind HTTP port to *:24642.
+
+
+2016-09-09
+==========
+- | https://github.com/mwasilak/txThings
+  | https://github.com/chrysn/aiocoap
+  | https://twistedmatrix.com/pipermail/twisted-python/2013-September/027453.html
+  | http://www.sixpinetrees.pl/
+- | http://riot-os.org/
+  | https://github.com/RIOT-OS/RIOT
+  | https://github.com/crossbario/autobahn-c/issues/8
+- https://github.com/nikipore/stompest
+- WebIOPi
+    - http://webiopi.trouch.com/
+    - http://trouch.com/about/
+    - https://twitter.com/eptak
+    - https://www.linkedin.com/in/eric-ptak-91204816
+    - http://trouch.com/
+    - http://webiopi.trouch.com/
+    - http://www.cayenne-mydevices.com/landing/create-raspberry-pi-projects-with-cayenne/
+    - http://www.cayenne-mydevices.com/Supported-Hardware/
+    - http://blog.mydevices.com/
+    - https://developer.weaved.com/portal/
+    - https://www.weaved.com/raspberry-pi-remote-connection/
+
+
+
+2016-09-05
+==========
+- http://www.gantner-instruments.com/
+- https://home-assistant.io/
+- New Logo for Mosquitto
+
+    - http://mosquitto.org/stickers/
+    - https://en.99designs.fr/logo-design/share/34547/6f0be6
+    - http://mosquitto.org/2016/05/stickers/
+
+
+2016-07-14
+==========
+- [o] Earthship monitoring: https://github.com/ma-tri-x/ESpy
+
+
 2016-07-12
 ==========
 - [x] Add export format ".tsv"

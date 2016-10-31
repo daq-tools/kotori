@@ -14,7 +14,10 @@ MQTT
 - `paho-mqtt`_, the MQTT Python client library from the `Eclipse Paho`_ project
 - .. todo::
 
-    Add complete MQTT example with Python. In the meanwhile, see :ref:`beradio-python <beradio-python>`.
+    Add complete MQTT example with Python. In the meanwhile, see :ref:`beradio-python <beradio-python>` and
+
+    - https://github.com/Hiverize/Sensorbeuten/pull/1
+    - https://github.com/hiveeyes/Hiverize-Sensorbeuten/blob/hiveeyes-backend/backend.rst
 
 
 ****

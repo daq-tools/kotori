@@ -84,8 +84,19 @@ body, div.body {
     line-height: 1.75em;
     width: 60%;
     /* margin: auto; */
-    margin-top: 2em !important;
+    margin-top2: 2em !important;
     margin-bottom: 4em !important;
+}
+
+
+.text-larger {
+    font-size: larger;
+    line-height: 1.75em;
+}
+
+.text-xx-large {
+    font-size: xx-large;
+    line-height: 1.75em;
 }
 
 .legroom-md {
@@ -103,6 +114,14 @@ body, div.body {
     width: 640px;
 }
 
+/*
+.pull-left {
+    float: left;
+}
+.pull-right {
+    float: right;
+}
+*/
 
 /* More colors for CSS3 Hexagon Buttons */
 

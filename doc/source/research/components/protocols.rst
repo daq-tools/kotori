@@ -4,6 +4,9 @@ Protocols
 
 CoAP
 ====
+
+About
+-----
 - https://en.wikipedia.org/wiki/Constrained_Application_Protocol
 - http://coap.technology/
 - http://cbor.io/
@@ -16,8 +19,8 @@ CoAP
 - https://github.com/exosite-garage/CoAPExample/blob/master/coap.py
 - https://github.com/exosite-garage/PicoCoAP/blob/master/tests/coap_test.c
 
-Get into it
------------
+More info
+---------
 - http://www.deepdarc.com/2013/01/29/introducing-smcp/
 - https://github.com/darconeous/smcp
 - https://github.com/mwasilak/txThings
@@ -82,6 +85,13 @@ OMA LightweightM2M
 - https://docs.mbed.com/docs/mbed-client-guide/en/latest/Introduction/#how-to-use-the-api
 - https://docs.mbed.com/docs/mbed-device-connector-web-interfaces/en/latest/#the-mbed-device-connector-data-model
 
+Modbus
+======
+- https://github.com/owagner/modbus2mqtt
+- https://github.com/ljean/modbus-tk/
+- https://twitter.com/luc_apidev
+- https://github.com/emdem/ModbusSim
+
 Misc
 ====
 - http://playground.arduino.cc/Main/LibraryList#Comm
@@ -91,6 +101,9 @@ Misc
 - Naming Things with Hashes: https://tools.ietf.org/html/rfc6920
     - https://news.ycombinator.com/item?id=11142454
 
+Mavlink
+=======
+- https://github.com/4refr0nt/er9x-frsky-mavlink
 
 OPC UA
 ======
@@ -128,6 +141,8 @@ itself can be used by anybody without any royalty charges to OPC Foundation.
 - http://www.computer-automation.de/steuerungsebene/steuern-regeln/artikel/117636/
 - http://www.infoplc.net/files/documentacion/industria4/infoPLC_net_2_Industrial-Revolution-2014-StefanHoppe.pdf
 
+- https://github.com/nzfarmer1/mqtt2opcua
+
 
 Building An Open Source Process Historian
 -----------------------------------------
@@ -153,3 +168,22 @@ MTConnect
 - https://www.imts.com/show/newsletter/insider/article-details.cfm?articleid=219
 - http://web.ncdmm.org/cn/ackdg/Mtconnect
 - http://www.todaysmotorvehicles.com/article/mtconnect-student-challenge-amt-041116/
+
+
+MBus
+====
+
+- http://www.schleicher.berlin/en/chargeart/
+- https://en.wikipedia.org/wiki/Schleicher_Electronic
+
+
+DLMS
+====
+Used for energy metering.
+
+aka. DLMS, IEC-62056-21, COSEM, IEC-61107, IEC-1107
+
+- https://mknx.github.io/smarthome/plugins/dlms.html
+- https://github.com/bsdphk/PyDLMS
+- http://www.icube.ch/
+

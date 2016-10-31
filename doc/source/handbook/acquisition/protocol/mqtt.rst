@@ -34,7 +34,11 @@ MQTT clients
 
            Add complete example program. In the meanwhile, have a look at
            the serial-to-mqtt forwarder :ref:`beradio-python <beradio-python>`
-           of the :ref:`Hiveeyes project <hiveeyes>`.
+           of the :ref:`Hiveeyes project <hiveeyes>` and
+
+            - https://github.com/Hiverize/Sensorbeuten/pull/1
+            - https://github.com/hiveeyes/Hiverize-Sensorbeuten/blob/hiveeyes-backend/backend.rst
+
 
    * - Arduino
      - Libraries

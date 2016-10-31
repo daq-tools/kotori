@@ -2,6 +2,7 @@
 Kotori Box DIY
 ##############
 
+
 *********
 Main unit
 *********
@@ -194,4 +195,7 @@ Boot RaspberryPi
 Kotori
 ======
 See :ref:`setup-debian`.
+
+
+.. seealso:: http://www.segor.de/INFO/entwicklungstools/raspberry-pi.shtml
 
