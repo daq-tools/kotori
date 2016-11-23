@@ -58,7 +58,7 @@ MQTT clients
    * - ARMmbed
      - `ARMmbed ESP8266 MQTT example`_
 
-.. _node-wifi-mqtt.ino: https://github.com/hiveeyes/arduino/blob/master/node-wifi-mqtt/src/node-wifi-mqtt.ino
+.. _node-wifi-mqtt.ino: https://github.com/hiveeyes/arduino/blob/master/node-wifi-mqtt/node-wifi-mqtt.ino
 
 
 .. _daq-mqtt-bash:

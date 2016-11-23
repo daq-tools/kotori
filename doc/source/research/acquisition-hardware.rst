@@ -42,3 +42,8 @@ Acquisition Hardware
 - | Einzel 433Mhz TTL 3DRobotics 3DR Radio-Telemetrie-Kit für APM2 / 2.5 / 2.6 HOT
   | http://www.ebay.de/itm/like/252405264286
 
+- Bosch Connected Devices and Solutions
+
+    - http://www.bosch-connectivity.com/
+    - https://www.facebook.com/boschbcds
+

@@ -62,17 +62,83 @@ Open
   | Get your devices connected to the Internet of Things simply, by coding with JavaScript and C/C++.
   | https://www.cesanta.com/products/smart-js
 
+- | Mainflux
+  | http://mainflux.com/
+  | https://github.com/Mainflux/mainflux
+  | https://twitter.com/Mainflux
 
-Corporate
+- | Freeboard
+  | https://freeboard.io/
+  | https://github.com/Freeboard/freeboard
+
+- | SiteWhere
+  | http://www.sitewhere.org/
+  | https://github.com/sitewhere/sitewhere
+
+Eclipse IoT
+-----------
+- https://github.com/eclipse/hawkbit
+- https://github.com/eclipse/kapua
+- https://github.com/kartben/m2m.eclipse.org
+- https://iot.eclipse.org/
+- https://www.youtube.com/watch?v=1IsM1sfas-w
+- https://iot.eclipse.org/resources/white-papers/Eclipse%20IoT%20White%20Paper%20-%20The%20Three%20Software%20Stacks%20Required%20for%20IoT%20Architectures.pdf
+- https://www.iotivity.org/
+- https://wiki.iotivity.org/
+- https://wiki.iotivity.org/iotivity_tool_guide
+
+
+Half-open
 =========
+- | Relayr
+  | http://relayr.io/
+  | http://docs.relayr.io/
+  | https://developer.relayr.io/
+  | https://github.com/relayr
+  | https://github.com/relayr/ESP8266_Lua
+  | https://github.com/relayr/ESP8266_Arduino
+  | https://github.com/relayr/SensorDefinitionAPI
+  | https://github.com/relayr/python-sdk
+  | http://docs.relayr.io/Python/
+  | https://forum.relayr.io/latest
+
+- | Synapse
+  | http://readwrite.com/2016/11/02/another-iot-platform/
+  | https://github.com/synapse-wireless
+  | http://info.synapse-wireless.com/iot-development-connect-things-marketecture
+  | http://www.synapse-wireless.com/iot-development/hardware-products/rf-modules
+  | http://www.synapse-wireless.com/iot-development/hardware-products/iot-gateways
+  | https://developer.synapse-wireless.com/software/snapcore/index.html
+  | https://developer.synapse-wireless.com/software/snapcore/language/index.html
+  | https://developer.synapse-wireless.com/software/snapcore/network/index.html
+  | https://developer.synapse-wireless.com/software/snapcore/snappy/event-driven.html
+  | https://developer.synapse-wireless.com/software/snapcore/snappy/switchboard.html
+  | https://developer.synapse-wireless.com/modules/atmega/index.html
+  | http://www.synapse-wireless.com/iot-development/software-products/snapconnect-2
+  | https://developer.synapse-wireless.com/software/snapconnect-futures/examples.html
+  | http://www.synapse-wireless.com/iot-development/software-products/portal-2/
+  | https://developer.synapse-wireless.com/software/portal/index.html
+  | https://developer.synapse-wireless.com/software/snaptoolbelt/install.html
+  | http://info.synapse-wireless.com/ek2100-220
+  | http://www.synapse-wireless.com/iot-development/software-products/snaptoolbelt-and-snapbuild-2/
+  | https://developer.synapse-wireless.com/software/snapconnect/examples.html
+  | https://developer.synapse-wireless.com/software/thing-services/examples.html
+  | http://www.synapse-wireless.com/about-us/company-history/
+  | http://info.synapse-wireless.com/iot-development-get-started
+  | https://github.com/synapse-wireless/snappy-script-examples/tree/master/examples
+  | https://github.com/synapse-wireless/basic-data-collector-example/blob/master/sensor.py
+  | https://github.com/synapse-wireless/snappy-atmega
+  | https://github.com/synapse-wireless/exosite-data-collector-client-example/
+  | https://update.synapse-wireless.com/pypi/
+
+
+Closed
+======
+
 - | IBM
   | IBM Watson IoT Platform
   | https://internetofthings.ibmcloud.com/
   | https://twitter.com/ibmiotf
-
-
-Proprietary
-===========
 
 - | RoboMQ
   | RoboMQ connects devices, systems, clouds and things to create smart and context-aware applications
@@ -110,6 +176,12 @@ Proprietary
   | https://github.com/exosite-garage
   | http://playground.arduino.cc/Code/Exosite
   | https://github.com/exosite-garage/arduino_exosite_library
+  | http://docs.exosite.com/websocket/
+  | https://github.com/exosite-labs
+  | https://exosite-labs.github.io/
+  | https://pyonep.readthedocs.org/
+  | https://github.com/exosite-labs/pyonep
+  | https://github.com/exosite-labs/pyonep/blob/master/examples/read_write_direct.py
 
 - | Yaler
   | https://yaler.net/
@@ -137,6 +209,11 @@ Proprietary
 - http://dweet.io/
 - https://yaler.net/
 - http://devicepilot.com/
+- https://evrythng.com/
+
+- | Infiswift: The most powerful IoT infrastructure
+  | https://infiswift.com/
+
 
 
 

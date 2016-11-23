@@ -17,6 +17,102 @@ Kotori tasks
 ****
 
 
+2016-11-17
+==========
+- Geodata and timestamping
+- CSV Telemetry
+- FTP Upload
+- Timeslider-based replay of recorded information (esp. geo)
+- Scheduled aggregation report notifications with mqttwarn.
+  See http://tinkerman.cat/mqtt-topic-naming-convention/
+- Jan-Piet Mens tweeted about Kotori, thanks!
+
+    - https://twitter.com/jpmens/status/798888207110770689
+    - Some people liked it:
+
+        - https://twitter.com/Diorf
+        - https://twitter.com/roundtripdelay
+
+
+2016-11-13
+==========
+- Integrate with re:dash?
+
+    - https://redash.io/
+    - https://github.com/getredash/redash
+
+- Integrate with open source IFTTT clone?
+
+    - Trigger Happy: https://trigger-happy.eu/
+    - Huginn: https://github.com/cantino/huginn
+
+
+2016-11-12
+==========
+- Review emails re. requirements from environmental monitoring project of Freifunk Berlin
+- Use Grafana Worldmap panel
+
+    - https://github.com/grafana/worldmap-panel/issues/9
+    - https://github.com/grafana/worldmap-panel/issues/30
+
+- Add ~/dev/dosyit/rotor-timeseries
+
+
+Docs
+----
+- Web search for "open source data historian"
+
+    - http://www.minaandrawos.com/2015/11/20/thoughts-on-process-historians/
+    - https://coussej.github.io/2016/04/18/Building-An-Open-Source-Process-Historian/
+    - https://github.com/coussej/node-opcua-logger
+
+- More "open source data historian"
+
+    - https://openhistorian.codeplex.com/
+    - https://github.com/GridProtectionAlliance/openHistorian
+    - http://discussions.gridprotectionalliance.org/t/openpdc-to-mysql-database/70
+    - https://github.com/GridProtectionAlliance/PQDashboard
+    - http://openscada.org/
+    - https://eclipse.org/eclipsescada/
+    - https://eclipse.org/eclipsescada/news.html
+    - http://openscada.org/projects/atlantis
+    - http://openopc.sourceforge.net/
+    - http://www.controlconsulting.com/products/data-historian/
+    - https://github.com/volkszaehler/
+    - https://github.com/volkszaehler/vzlogger
+    - http://wiki.volkszaehler.org/software/controller/vzlogger
+    - http://blog.canarylabs.com/2016/06/a-guide-to-best-data-historian-software.html
+
+- Format case studies like on http://rundeck.org/
+- http://www.hivemq.com/mqtt-essentials/
+- https://blog.hypertrack.io/2016/11/10/how-we-ditched-http-and-transitioned-to-mqtt/
+
+
+2016-11-11
+==========
+- | MQTT Node-RED flow
+  | https://www.domoticz.com/forum/viewtopic.php?t=838&start=120
+- https://vrm.victronenergy.com
+- | Bidirectional traffic between CCGX D-Bus and MQTT broker
+  | https://github.com/wiebeytec/dbus-mqtt
+- https://www.pubnub.com/
+- https://github.com/flukso/lua-mosquitto
+
+
+2016-11-04
+==========
+- Grafana dashboard creation: NODE=HUZZAH,GW=DACH,NET=KH.
+  Improve when sending from a different node: node=feather,gw=wormcompost.
+- http://www.mqtt-dashboard.com/
+
+
+2016-11-01
+==========
+- Improve situation of the Python/MQTT client. Describe how to add timestamp
+  and geohash to provide temporal and spatial information from sensor nodes.
+- First experiments with https://tsfresh.readthedocs.io/
+
+
 2016-10-30
 ==========
 - Add Kotori to https://github.com/hobbyquaker/awesome-mqtt
@@ -97,7 +193,7 @@ BMBF „Open Photonik“
   | https://github.com/RIOT-OS/RIOT
   | https://github.com/crossbario/autobahn-c/issues/8
 - https://github.com/nikipore/stompest
-- WebIOPi
+- WebIOPi (coap)
     - http://webiopi.trouch.com/
     - http://trouch.com/about/
     - https://twitter.com/eptak

@@ -43,6 +43,11 @@ More info
 - https://github.com/mwasilak/txThings/wiki/Developer-Journal
 - https://tools.ietf.org/html/rfc6690
 - http://coapy.sourceforge.net/
+- Copper
+
+    - http://people.inf.ethz.ch/mkovatsc/copper.php
+    - https://github.com/mkovatsc/Copper
+    - https://addons.mozilla.org/en-US/firefox/addon/copper-270430/
 
 DTLS
 ====

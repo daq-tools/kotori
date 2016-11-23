@@ -1,4 +1,3 @@
-
 ########################
 Environmental monitoring
 ########################
@@ -36,6 +35,17 @@ Earthship
 - http://www.fona.de/de/foerdermassnahmen
 - | Früherkennung von Naturgefahren in Deutschland
   | http://www.fona.de/de/19916
+
+
+****
+DFKI
+****
+- http://robotik.dfki-bremen.de/
+
+    - http://robotik.dfki-bremen.de/de/forschung/projekte/prospectiveharvest.html
+    - http://robotik.dfki-bremen.de/de/forschung/projekte/odil.html
+    - http://robotik.dfki-bremen.de/de/forschung/softwaretools/mmlf.html
+    - http://robotik.dfki-bremen.de/de/forschung/softwaretools/respace.html
 
 
 **************
