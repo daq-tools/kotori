@@ -340,7 +340,7 @@ When building for the first time::
     - [x] Properly format "data.csv" download name
     - [x] Integrate Bokeh renderer
     - [x] Refactor dygraphs, Bokeh and Vincent renderers to UniversalPlotter
-    - [o] Get rid of "bus/mqtt" in documentation of other HTTP handlers
+    - [x] Get rid of "bus/mqtt" in documentation of other HTTP handlers
     - [o] Index page for GET ../data displaying all available formats
     - [o] Properly handle units in graphs
     - [o] Load Bokeh data via json

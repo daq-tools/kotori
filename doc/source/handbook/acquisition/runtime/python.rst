@@ -56,10 +56,10 @@ Transmit
     data = {"temperature": 42.84, "humidity": 83}
 
     # Post as application/json
-    requests.post("http://localhost:24642/api/bus/mqtt/mqttkit-1/testdrive/area-42/node-1/data", json=data).content
+    requests.post("http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/data", json=data).content
 
     # Post as application/x-www-form-urlencoded
-    requests.post("http://localhost:24642/api/bus/mqtt/mqttkit-1/testdrive/area-42/node-1/data", data=data).content
+    requests.post("http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/data", data=data).content
 
 
 HTTPie
@@ -92,10 +92,10 @@ Transmit
 ::
 
     # Post as application/json
-    http POST http://localhost:24642/api/bus/mqtt/mqttkit-1/testdrive/area-42/node-1/data temperature:=42.84 humidity:=83
+    http POST http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/data temperature:=42.84 humidity:=83
 
     # Post as application/x-www-form-urlencoded
-    http --form POST http://localhost:24642/api/bus/mqtt/mqttkit-1/testdrive/area-42/node-1/data temperature:=42.84 humidity:=83
+    http --form POST http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/data temperature:=42.84 humidity:=83
 
 ***
 UDP

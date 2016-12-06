@@ -187,7 +187,7 @@ Get real and publish sensor values to the MQTT bus::
     export HTTP_URI=http://kotori.example.org
 
     # Redefine transmitter to use HTTP instead of MQTT
-    transmitter() { curl --request POST --header 'Content-Type: application/json' --data @- $HTTP_URI/api/bus/mqtt/$MQTT_TOPIC/data; echo; }
+    transmitter() { curl --request POST --header 'Content-Type: application/json' --data @- $HTTP_URI/api/$MQTT_TOPIC/data; echo; }
 
 Restart transmitting::
 
@@ -199,7 +199,7 @@ HTTPie transmitter
 When using HTTPie_, the transmitter command is even more compact::
 
     # Redefine transmitter to use HTTPie instead of curl
-    transmitter() { http POST $HTTP_URI/api/bus/mqtt/$MQTT_TOPIC/data; }
+    transmitter() { http POST $HTTP_URI/api/$MQTT_TOPIC/data; }
 
 Restart transmitting::
 

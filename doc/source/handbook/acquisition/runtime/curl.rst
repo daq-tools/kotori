@@ -17,10 +17,10 @@ Data acquisition with curl
     export DEVICE_TOPIC="testdrive/area-42/node-1"
 
     # Send JSON data
-    echo '{"temperature": 42.84, "humidity": 83}' | curl --request POST --header 'Content-Type: application/json' --data @- http://$HTTP_HOST/api/bus/mqtt/$DEVICE_REALM/$DEVICE_TOPIC/data
+    echo '{"temperature": 42.84, "humidity": 83}' | curl --request POST --header 'Content-Type: application/json' --data @- http://$HTTP_HOST/api/$DEVICE_REALM/$DEVICE_TOPIC/data
 
     # Send urlencoded data
-    echo 'temperature=42.84&humidity=83' | curl --request POST --header 'Content-Type: application/x-www-form-urlencoded' --data @- http://$HTTP_HOST/api/bus/mqtt/$DEVICE_REALM/$DEVICE_TOPIC/data
+    echo 'temperature=42.84&humidity=83' | curl --request POST --header 'Content-Type: application/x-www-form-urlencoded' --data @- http://$HTTP_HOST/api/$DEVICE_REALM/$DEVICE_TOPIC/data
 
 
 .. seealso:: :ref:`Transmit a periodic sawtooth signal over HTTP <sawtooth-http>`

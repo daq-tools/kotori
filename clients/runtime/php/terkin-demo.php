@@ -35,7 +35,7 @@ namespace DemoProgram {
     if (php_sapi_name() == "cli") {
 
         $telemetry = new TelemetryNode(
-            "http://localhost:24642/api/bus/mqtt",
+            "http://localhost:24642/api",
             array(
                 "realm"     => "mqttkit-1",
                 "network"   => "testdrive",

@@ -23,7 +23,7 @@ Transmit telemetry data from PHP::
 
     // Create a "Node API" telemetry client object
     $telemetry = new TelemetryNode(
-        "http://kotori.example.org/api/bus/mqtt",
+        "http://kotori.example.org/api",
         array(
             "realm"     => "mqttkit-1",
             "network"   => "testdrive",
@@ -42,7 +42,7 @@ Basic API
 
     // Create a "Basic API" telemetry client object
     use Terkin\TelemetryClient;
-    $telemetry = new TelemetryClient("http://kotori.example.org/api/bus/mqtt/mqttkit-1/testdrive/area-42/node-1/data");
+    $telemetry = new TelemetryClient("http://kotori.example.org/api/mqttkit-1/testdrive/area-42/node-1/data");
 
 */
 

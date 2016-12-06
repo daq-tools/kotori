@@ -152,20 +152,20 @@ class ForwarderAddress(object):
     """
     Addresses are made of uris and predicates, e.g.::
 
-        http:/api/bus/mqtt/mqttkit-1/{address:.*}/data [POST]
-        ^                                               ^
-        |                                               |
-        ----- uri                            predicate --
+        http:/api/mqttkit-1/{address:.*}/data [POST]
+        ^                                      ^
+        |                                      |
+        ----- uri                   predicate --
 
     Synopsis:
 
-    >>> address = ForwarderAddress(u'http:/api/bus/mqtt/mqttkit-1/{address:.*}/data [POST]')
+    >>> address = ForwarderAddress(u'http:/api/mqttkit-1/{address:.*}/data [POST]')
 
     >>> address.uri.scheme
     u'http'
 
     >>> address.uri.path
-    u'/api/bus/mqtt/mqttkit-1/{address:.*}/data'
+    u'/api/mqttkit-1/{address:.*}/data'
 
     >>> address.predicates
     [u'POST']
