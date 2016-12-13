@@ -3,14 +3,14 @@
 import time
 import json
 from bunch import Bunch
-from kotori.daq.services import MultiServiceMixin
-from twisted.internet import reactor
+from twisted.logger import Logger
+from twisted.internet import reactor, threads
 from twisted.internet.task import LoopingCall
 from twisted.application.service import MultiService
-from twisted.logger import Logger
+from kotori.configuration import read_list
+from kotori.daq.services import MultiServiceMixin
 from kotori.daq.intercom.mqtt import MqttAdapter
 from kotori.daq.storage.influx import InfluxDBAdapter
-from kotori.configuration import read_list
 
 log = Logger()
 
@@ -62,7 +62,12 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
     def mqtt_receive(self, topic=None, payload=None, **kwargs):
         try:
-            return self.process_message(topic, payload, **kwargs)
+            # Synchronous message processing
+            #return self.process_message(topic, payload, **kwargs)
+
+            # Asynchronous message processing
+            return threads.deferToThread(self.process_message, topic, payload, **kwargs)
+
         except Exception:
             log.failure(u'Processing MQTT message failed. topic={topic}, payload={payload}', topic=topic, payload=payload)
 
@@ -106,10 +111,15 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
         # count transaction
         self.metrics.tx_count += 1
+
+        # TODO: Re-enable for measuring packet ingress frequency.
+        # Currently turned off since sending timestamps from data acquisition.
+        """
         if 'time' in message:
             self.metrics.packet_time = message['time']
         else:
             self.metrics.packet_time = None
+        """
 
         # store data
         self.store_message(storage.database, storage.series, message)
