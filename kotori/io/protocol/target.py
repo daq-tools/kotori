@@ -144,7 +144,7 @@ class ForwarderTargetService(MultiServiceMixin, MultiService):
 
             # Asynchronous: Perform computation in separate thread
             d = threads.deferToThread(response.render)
-            d.addErrback(handleFailure, bucket)
+            d.addErrback(handleFailure, bucket.request)
             d.addBoth(bucket.request.write)
             d.addBoth(lambda _: bucket.request.finish())
             return server.NOT_DONE_YET

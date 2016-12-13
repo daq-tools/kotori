@@ -32,6 +32,7 @@ extras = {
         'grafana_api_client==0.1.4',
         'requests==2.10.0',
         #'grafana-dashboard-builder==0.1.0a7',      # evaluated, but not suitable
+        'txmongo==16.3.0',
     ],
     'daq_binary': [
         'pyclibrary==0.1.3',
@@ -40,7 +41,6 @@ extras = {
     ],
     'storage_plus': [
         'alchimia==0.4',    # 0.6.1
-        'txmongo==0.6',     # 16.0.1
     ],
 
     # Data export: Basic formats

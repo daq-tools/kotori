@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2016 Andreas Motl <andreas.motl@elmyra.de>
 import arrow
+import types
 from six import text_type
 from dateutil.tz import gettz
 from dateutil.parser import parse
@@ -8,6 +9,8 @@ from pyramid.settings import asbool
 from twisted.web import http
 from twisted.logger import Logger
 from twisted.python.url import URL
+from twisted.python.failure import Failure
+from twisted.web.error import Error
 
 log = Logger()
 
@@ -80,14 +83,18 @@ def flatten_request_args(args):
         result[key] = ','.join(value)
     return result
 
-def convert_floats(data):
+def convert_floats(data, integers=None):
     """
     Convert all numeric values in dictionary to float type.
     """
+    integers = integers or []
     for key, value in data.iteritems():
         if is_number(value):
-            value = float(value)
-            data[key] = value
+            if key in integers:
+                data[key] = int(value)
+            else:
+                data[key] = float(value)
+    return data
 
 def is_number(s):
     """
@@ -109,20 +116,40 @@ def is_number(s):
 
     return False
 
-def handleFailure(f, bucket=None):
+def handleFailure(f, request=None):
     """
     Handle failure in callback chain, log and respond with traceback.
 
     See also:
     https://twistedmatrix.com/documents/16.0.0/core/howto/defer.html#errbacks
     """
-    traceback = f.getTraceback()
-    log.error(traceback)
-    #f.trap(RuntimeError)
-    if bucket:
-        bucket.request.setResponseCode(http.INTERNAL_SERVER_ERROR)
-        bucket.request.setHeader('Content-Type', 'text/plain; charset=utf-8')
-    return traceback
+    if f.type is Error:
+        if request:
+            request.setResponseCode(int(f.value.status))
+
+        if hasattr(f.value, 'with_traceback'):
+            f.with_traceback = f.value.with_traceback
+
+        msg = None
+        if isinstance(f.value.response, Failure):
+            msg = f.value.response.getErrorMessage()
+        elif type(f.value.response) in types.StringTypes:
+            msg = f.value.response
+        request.messages.append({'type': 'error', 'message': msg})
+
+    else:
+        if request:
+            request.setResponseCode(http.INTERNAL_SERVER_ERROR)
+            request.setHeader('Content-Type', 'text/plain; charset=utf-8')
+        f.with_traceback = True
+
+    if hasattr(f, 'with_traceback') and f.with_traceback:
+
+        traceback = f.getTraceback()
+        log.error(traceback)
+        #f.trap(RuntimeError)
+        request.write(traceback.encode('utf-8'))
+
 
 def slugify_datettime(dstring):
     return arrow.get(dstring).to('utc').format('YYYYMMDDTHHmmss')

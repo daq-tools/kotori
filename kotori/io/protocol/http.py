@@ -3,22 +3,25 @@
 import json
 import types
 import mimetypes
+import txmongo
 from six import BytesIO
 from copy import deepcopy
 from urlparse import urlparse
 from bunch import bunchify, Bunch
+from collections import OrderedDict
 from twisted.application.service import Service
-from twisted.internet import reactor
+from twisted.internet import reactor, defer
 from twisted.logger import Logger
-from twisted.web import http
+from twisted.web import http, server
 from twisted.web.http import parse_qs
 from twisted.web.resource import Resource
 from twisted.web.server import Site
+from twisted.web.error import Error
 from twisted.python.compat import nativeString
 from kotori.io.router.path import PathRoutingEngine
 from kotori.io.export.tabular import UniversalTabularExporter
 from kotori.io.export.plot import UniversalPlotter
-from kotori.io.protocol.util import convert_floats, slugify_datettime, flatten_request_args
+from kotori.io.protocol.util import convert_floats, slugify_datettime, flatten_request_args, handleFailure
 from kotori.errors import last_error_and_traceback
 
 log = Logger()
@@ -107,8 +110,22 @@ class HttpChannelContainer(Resource):
 
         log.info('HttpChannelContainer init')
 
+        self.database_connect()
+
         self.router    = PathRoutingEngine()
         self.callbacks = {}
+
+    @defer.inlineCallbacks
+    def database_connect(self):
+        """
+        Connect to Metadata storage
+        """
+        log.info('Connecting to Metadata storage database (MongoDB)')
+        mongodb_uri = "mongodb://localhost:27017"
+
+        # TODO: Make MongoDB address configurable
+        #self.metastore = yield txmongo.MongoConnection(mongodb_uri)
+        self.metastore = yield txmongo.MongoConnection(host='localhost', port=27017)
 
     def registerEndpoint(self, methods=None, path=None, callback=None):
         """
@@ -161,7 +178,7 @@ class HttpChannelContainer(Resource):
             endpoint = bunchify({'path': route_name, 'callback': callback, 'match': result['match'], 'request': request})
 
             # Create leaf resource instance
-            return HttpChannelEndpoint(options=endpoint)
+            return HttpChannelEndpoint(options=endpoint, metastore=self.metastore)
 
         # If nothing matched, continue traversal
         return self
@@ -177,8 +194,9 @@ class HttpChannelEndpoint(Resource):
 
     isLeaf = True
 
-    def __init__(self, options):
+    def __init__(self, options, metastore=None):
         self.options = options
+        self.metastore = metastore
         Resource.__init__(self)
 
     def render(self, request):
@@ -190,10 +208,40 @@ class HttpChannelEndpoint(Resource):
         # Pluck ``error_response`` method to request object
         request.error_response = self.error_response
 
-        # Dispatch request to target service
-        return self.dispatch(request)
+        # Pluck ``channel_identifier`` attribute to request object
+        request.channel_identifier = request.path.replace('/api', '').replace('/data', '')
 
-    def dispatch(self, request):
+        # Pluck response messages object to request object
+        request.messages = []
+
+        # Add informational headers
+        request.setHeader('Channel-Id', request.channel_identifier)
+
+        # Main bucket data container object serving the whole downstream processing chain
+        bucket = Bunch(path=request.path, request=request)
+
+        # Dispatch request
+        deferred = defer.Deferred()
+        self.dispatch(bucket, deferred)
+
+        # Establish callback processing chain
+        deferred.addCallback(self.propagate_data, bucket)
+        deferred.addErrback(handleFailure, request)
+        deferred.addBoth(self.render_messages, request)
+        deferred.addBoth(request.write)
+        deferred.addBoth(lambda _: request.finish())
+
+        return server.NOT_DONE_YET
+
+    def render_messages(self, passthrough, request):
+        if request.messages:
+            request.setHeader('Content-Type', 'application/json')
+            return json.dumps(request.messages, indent=4)
+        else:
+            request.setHeader('Content-Type', 'text/plain; charset=utf-8')
+            return passthrough
+
+    def dispatch(self, bucket, deferred):
         """
         Forward inbound requests to the routing target by performing these steps:
 
@@ -212,68 +260,152 @@ class HttpChannelEndpoint(Resource):
 
         """
 
+        request = bucket.request
+
         content_type = request.getHeader('Content-Type')
         log.debug('Received HTTP request on uri {uri}, '
                   'content type is "{content_type}"', uri=request.path, content_type=content_type)
 
         # Read and decode request body
-        data = Bunch()
         body = request.content.read()
+        bucket.body = body
+
+        # Decode data from request body
         if body:
             if content_type.startswith('application/json'):
-                data = json.loads(body)
+                deferred.callback(json.loads(body))
 
             elif content_type.startswith('application/x-www-form-urlencoded'):
                 # TODO: Honor charset when receiving "application/x-www-form-urlencoded; charset=utf-8"
-                data = parse_qs(body, 1)
+                payload = parse_qs(body, 1)
+                # TODO: Decapsulate multiple values of same reading into "{name}-{N}", where N=1...
+                for key, value in payload.iteritems():
+                    if type(value) is types.ListType:
+                        payload[key] = value[0]
+                deferred.callback(payload)
+
+            elif content_type.startswith('text/csv'):
+
+                if not self.metastore:
+                    log.error('Generic decoding of CSV format requires metastore')
+
+                # Prepare alias for metastore table
+                csv_header_store = self.metastore.kotori['channel-csv-headers']
+
+                # 1. Decode CSV header like '## weight,temperature, humidity' and remember for upcoming data readings
+                def get_header_fields(channel_data, data_lines):
+
+                    first_line = data_lines[0]
+                    header_line = None
+                    if first_line.startswith('## '):
+                        header_line = first_line[3:].strip()
+                        data_lines = data_lines[1:]
+                    elif first_line.startswith('Date/Time') or first_line.startswith('Datum/Zeit'):
+                        header_line = first_line
+                        data_lines = data_lines[1:]
+
+                    header_fields = None
+                    if header_line:
+                        header_line = header_line.replace('Date/Time', 'time').replace('Datum/Zeit', 'time')
+                        header_fields = map(str.strip, header_line.split(','))
+                        msg = u'CSV Header: fields={fields}, key={key}'.format(fields=header_fields, key=request.channel_identifier)
+                        log.info(msg)
+                        deferred = csv_header_store.update(
+                                {"channel": request.channel_identifier},
+                                {"$set": {"header_fields": header_fields}}, upsert=True, safe=True)
+
+                        message = u'Received header fields {}'.format(header_fields)
+                        request.messages.append({'type': 'info', 'message': message})
+
+                    elif channel_data:
+                        header_fields = channel_data['header_fields']
+
+                    #print 'header_fields, data_lines:', header_fields, data_lines
+                    return header_fields, data_lines
+
+                class MissingFieldnames(Exception): pass
+
+                # 2. Assume data, map to full-qualified payload
+                def parse_data(channel_data):
+                    data_raw = body.strip()
+                    data_lines = map(str.strip, data_raw.split('\n'))
+                    header_fields, data_lines = get_header_fields(channel_data, data_lines)
+                    if not header_fields:
+                        raise MissingFieldnames('Could not process data, please supply field names before sending readings')
+                    data_list = []
+                    for data_line in data_lines:
+                        data_fields = map(str.strip, data_line.split(','))
+                        #print 'header_fields, data_fields:', header_fields, data_fields
+                        data = OrderedDict(zip(header_fields, data_fields))
+                        data_list.append(data)
+                    deferred.callback(data_list)
+
+                def data_error(ex):
+                    # Re-raise regular/non-custom exceptions 1:1
+                    if ex.type not in (MissingFieldnames,):
+                        deferred.errback(ex)
+                        return
+                    # Signal other exceptions as bad request
+                    deferred.errback(Error(http.BAD_REQUEST, response=ex))
+
+                d2 = csv_header_store.find_one(filter={"channel": request.channel_identifier})
+                d2.addCallback(parse_data)
+                d2.addErrback(data_error)
 
             else:
-                log.warn('Unknown HTTP Content-Type {content_type}', content_type=content_type)
-                return self.get_response(request.path, success=False)
+                msg = u"Unable to handle Content-Type '{content_type}'".format(content_type=content_type)
+                log.warn(msg)
+                deferred.errback(Error(http.UNSUPPORTED_MEDIA_TYPE, response=msg))
 
+        else:
+            msg = u'Empty request body'
+            log.warn(msg)
+            deferred.errback(Error(http.BAD_REQUEST, response=msg))
+
+    def propagate_data(self, data, bucket):
+
+        # Main transformation data container
+        bucket.tdata = Bunch()
+
+        # Merge request parameters (GET and POST) and url matches, in this order
+        bucket.tdata.update(flatten_request_args(bucket.request.args))
+        bucket.tdata.update(self.options.match)
+
+        #print 'propagate_data:', data
+        if type(data) is not types.ListType:
+            data = [data]
+
+        response = None
+        for item in data:
             # TODO: Apply this to telemetry values only!
             # FIXME: This is a hack
             if 'firmware' not in self.options.path:
-                convert_floats(data)
+                convert_floats(item, integers=['time'])
+            response = self.propagate_single(item, bucket)
 
-        # Main transformation data container
-        tdata = Bunch()
+        message = 'Received #{number} readings'.format(number=len(data))
+        bucket.request.messages.append({'type': 'info', 'message': message})
 
-        # Merge request parameters (GET and POST) and url matches, in this order
-        tdata.update(flatten_request_args(request.args))
-        tdata.update(self.options.match)
-
-        # Serialize as json for convenience
-        # TODO: Really?
-        data_json = json.dumps(data)
-
-        # Main bucket data container object serving the whole downstream processing chain
-        bucket = Bunch(path=request.path, data=data, json=data_json, tdata=tdata, request=request, body=body)
-
-        # Run forwarding callback
-        response = self.options.callback(bucket)
-
-        # FIXME: This is nasty
+        # FIXME: This is nasty, but it's how Twisted works
         # NOT_DONE_YET = 1 (types.IntType)
         if isinstance(response, (bytes, types.IntType)):
             return response
-        else:
-            return self.get_response(request.path)
 
-    def get_response(self, uri, success=True):
-        """
-        Default HTTP response method. Currently used for acknowledging inbound telemetry data.
-        """
-        # TODO: Improve this, only use in the appropriate context.
-        if success:
-            outcome = 'ACK'
-        else:
-            outcome = 'NACK'
-        response = u'{outcome} "kotori-channel:/{uri}"'.format(uri=uri, outcome=outcome).encode('utf-8')
-        return response
+    def propagate_single(self, item, bucket):
+
+        # Serialize as json for convenience
+        # TODO: Really?
+        item_json = json.dumps(item)
+
+        # Update main bucket container
+        bucket.data = item
+        bucket.json = item_json
+
+        # Run forwarding callback
+        return self.options.callback(bucket)
 
     @staticmethod
-    def error_response(bucket, error_message='', with_traceback=False):
+    def error_response(bucket, error_message='', code=http.BAD_REQUEST, with_traceback=False):
         """
         Error handling method logging and returning appropriate stacktrace.
         """
@@ -282,8 +414,8 @@ class HttpChannelEndpoint(Resource):
         if with_traceback:
             error_message += '\n' + last_error_and_traceback()
             log.error(error_message)
-        bucket.request.setResponseCode(http.BAD_REQUEST)
-        bucket.request.setHeader('Content-Type', 'text/plain; charset=utf-8')
+        bucket.request.setResponseCode(code)
+        #bucket.request.setHeader('Content-Type', 'text/plain; charset=utf-8')
         return error_message.encode('utf-8')
 
 
