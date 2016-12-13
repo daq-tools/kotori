@@ -7,6 +7,8 @@ in progress
 ===========
 - Get rid of "/bus/mqtt" in URI for HTTP API
 - Improve logging
+- Delegate MQTT message processing to separate thread
+- Run “CREATE DATABASE” only once to improve performance
 
 
 .. _kotori-0.10.10:

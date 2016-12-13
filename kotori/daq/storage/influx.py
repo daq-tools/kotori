@@ -9,6 +9,8 @@ log = Logger()
 
 class InfluxDBAdapter(object):
 
+    databases_created = []
+
     def __init__(self, settings=None, database='kotori_develop'):
 
         settings = settings or {}
@@ -46,9 +48,15 @@ class InfluxDBAdapter(object):
             username=self.username, password=self.password,
             database=self.database)
 
-        # TODO: Run "CREATE DATABASE only once"
+        self.connected = True
+
+        # Run "CREATE DATABASE" only once
+        if self.database in self.databases_created:
+            return True
+
         try:
             self.influx.create_database(self.database)
+            self.databases_created.append(self.database)
 
         except requests.exceptions.ConnectionError as ex:
             self.connected = False
@@ -65,7 +73,6 @@ class InfluxDBAdapter(object):
                 log.failure(u'InfluxDBClientError')
                 return False
 
-        self.connected = True
         return True
 
 
