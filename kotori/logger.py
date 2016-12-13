@@ -27,6 +27,9 @@ def startLogging(settings, stream=None, level=LogLevel.debug):
     if settings.options.debug_influx:
         predicate.setLogLevelForNamespace('kotori.daq.storage.influx', LogLevel.debug)
 
+    if settings.options.debug_io:
+        predicate.setLogLevelForNamespace('kotori.io', LogLevel.debug)
+
     observers    = [ FilteringLogObserver(observer=fileObserver, predicates=[predicate]) ]
     globalLogBeginner.beginLoggingTo(observers)
 

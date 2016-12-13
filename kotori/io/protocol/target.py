@@ -65,7 +65,7 @@ class ForwarderTargetService(MultiServiceMixin, MultiService):
         Adapt, serialize and emit data bucket to target service.
         """
 
-        log.info('Emitting to target scheme {scheme}', scheme=self.scheme)
+        log.debug('Emitting to target scheme {scheme}', scheme=self.scheme)
 
         if self.scheme == 'mqtt':
 

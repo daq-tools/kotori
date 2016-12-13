@@ -137,8 +137,11 @@ class ProtocolForwarderService(MultiServiceMixin, MultiService):
         bucket.address = Bunch(source=self.source_address, target=self.target_address)
 
         # 2. Reporting
-        log.info('Forwarding bucket to {target} with bucket={bucket}. Effective target uri is {target_uri}',
-            target=self.channel.target, target_uri=target_uri, bucket=dict(bucket))
+        bucket_logging = Bunch(bucket)
+        if len(bucket_logging.body) > 100:
+            bucket_logging.body = bucket_logging.body[:100] + ' [...]'
+        log.debug('Forwarding bucket to {target} with bucket={bucket}. Effective target uri is {target_uri}',
+            target=self.channel.target, target_uri=target_uri, bucket=dict(bucket_logging))
 
         # 3. Adapt, serialize and emit appropriately
         return self.target_service.emit(target_uri, bucket)

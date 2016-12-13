@@ -6,6 +6,7 @@ Kotori CHANGES
 in progress
 ===========
 - Get rid of "/bus/mqtt" in URI for HTTP API
+- Improve logging
 
 
 .. _kotori-0.10.10:

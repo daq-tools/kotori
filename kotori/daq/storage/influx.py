@@ -127,7 +127,7 @@ class InfluxDBAdapter(object):
             return success
 
         except requests.exceptions.ConnectionError:
-            log.failure(u'InfluxDB network error')
+            log.failure(u'InfluxDB connection error')
 
 
     def v08_to_09(self, chunk08):

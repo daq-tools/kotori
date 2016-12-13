@@ -14,6 +14,7 @@ from twisted.web import http
 from twisted.web.http import parse_qs
 from twisted.web.resource import Resource
 from twisted.web.server import Site
+from twisted.python.compat import nativeString
 from kotori.io.router.path import PathRoutingEngine
 from kotori.io.export.tabular import UniversalTabularExporter
 from kotori.io.export.plot import UniversalPlotter
@@ -21,6 +22,22 @@ from kotori.io.protocol.util import convert_floats, slugify_datettime, flatten_r
 from kotori.errors import last_error_and_traceback
 
 log = Logger()
+
+class LocalSite(Site):
+
+    def log(self, request):
+        """
+        Redirect logging of HTTPFactory.
+
+        @param request: The request object about which to log.
+        @type request: L{Request}
+        """
+        line = u'HTTP access: ' + self._logFormatter(self._logDateTime, request)
+        if self._nativeize:
+            line = nativeString(line)
+        else:
+            line = line.encode("utf-8")
+        log.debug(line)
 
 class HttpServerService(Service):
     """
@@ -65,7 +82,7 @@ class HttpServerService(Service):
 
         # Configure root Site object and start listening to requests.
         # This must take place only once - can't bind to the same port multiple times!
-        factory = Site(self.root)
+        factory = LocalSite(self.root)
         reactor.listenTCP(http_port, factory, interface=http_listen)
 
     @classmethod
@@ -87,6 +104,9 @@ class HttpChannelContainer(Resource):
 
     def __init__(self):
         Resource.__init__(self)
+
+        log.info('HttpChannelContainer init')
+
         self.router    = PathRoutingEngine()
         self.callbacks = {}
 
@@ -193,8 +213,8 @@ class HttpChannelEndpoint(Resource):
         """
 
         content_type = request.getHeader('Content-Type')
-        log.info('Received HTTP request on uri {uri}, '
-                 'content type is "{content_type}"', uri=request.path, content_type=content_type)
+        log.debug('Received HTTP request on uri {uri}, '
+                  'content type is "{content_type}"', uri=request.path, content_type=content_type)
 
         # Read and decode request body
         data = Bunch()
