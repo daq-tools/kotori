@@ -40,6 +40,10 @@
 .. _paho-mqtt: https://pypi.python.org/pypi/paho-mqtt
 .. _Eclipse Paho: https://eclipse.org/paho/
 .. _Arduino Client for MQTT: http://pubsubclient.knolleary.net/
+.. _esp_mqtt: https://github.com/tuanpmt/esp_mqtt
+.. _Native MQTT client library for ESP8266: http://tuanpm.net/native-mqtt-client-library-for-esp8266/
+.. _ARMmbed MQTT library: https://developer.mbed.org/teams/mqtt/code/MQTT/
+.. _Eclipse Paho Embedded MQTT C/C++ Client Libraries: http://www.eclipse.org/paho/clients/c/embedded/
 .. _ARMmbed ESP8266 MQTT example: https://developer.mbed.org/teams/ESP8266/code/ESP8266_MQTT_HelloWorld/
 .. _Adafruit MQTT Library: https://github.com/adafruit/Adafruit_MQTT_Library
 .. _Arduino JSON library: https://github.com/bblanchon/ArduinoJson
@@ -101,6 +105,9 @@
 .. _mqttwarn: https://github.com/jpmens/mqttwarn
 .. _Introducing to mqttwarn, a pluggable MQTT notifier: http://jpmens.net/2014/02/17/introducing-mqttwarn-a-pluggable-mqtt-notifier/
 
+.. _node-wifi-mqtt.ino: https://github.com/hiveeyes/arduino/blob/master/node-wifi-mqtt/node-wifi-mqtt.ino
+.. _node-wifi-mqtt-homie.ino: https://github.com/hiveeyes/arduino/blob/master/node-wifi-mqtt-homie/node-wifi-mqtt-homie.ino
+
 
 .. Hydro2Motion
 .. _Hydro2Motion: http://hydro2motion.de/
@@ -140,6 +147,9 @@
 .. _Nick O'Leary: http://knolleary.net/
 .. _Marvin Roger: https://www.marvinroger.fr/
 
+.. Misc
+.. _Unix time: https://en.wikipedia.org/wiki/Unix_time
+.. _ISO 8601: https://en.wikipedia.org/wiki/ISO_8601
 
 .. Clearfix in reStructuredText
 .. https://stackoverflow.com/questions/23498174/clearfix-paragraph-in-restructured-text

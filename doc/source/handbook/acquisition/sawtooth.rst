@@ -11,14 +11,6 @@ The characteristics of sawtooth signals (dynamic, slowly oscillating)
 are convenient to generate and publish measurement or telemetry data
 values without having any hardware in place.
 
-There are different means of transmitting a sawtooth signal to Kotori:
-
-.. contents::
-   :local:
-   :depth: 1
-
-----
-
 .. _sawtooth-mqtt:
 
 .. _sawtooth-bash:
@@ -152,56 +144,4 @@ Result:
 
         - https://launchpad.net/~duggan/+archive/ubuntu/jo/+build/9339941/+files/jo_1.0+1~ubuntu12.04.1_i386.deb
         - https://launchpad.net/~duggan/+archive/ubuntu/jo/+build/9339940/+files/jo_1.0+1~ubuntu12.04.1_amd64.deb
-
-
-.. _sawtooth-http:
-
-.. _sawtooth-curl:
-
-****
-HTTP
-****
-
-.. tip::
-
-    For making Kotori listen to HTTP requests for telemetry data acquisition,
-    please have a look at :ref:`forward-http-to-mqtt` about how to configure
-    a HTTP endpoint for your :ref:`application-mqttkit` application
-    and see :ref:`daq-http` for transmitting telemetry data over HTTP from
-    different environments.
-
-
-Single sawtooth signal
-======================
-
-Sensor
-------
-Let's use one of the sensor definitions from above.
-
-
-curl transmitter
-----------------
-Get real and publish sensor values to the MQTT bus::
-
-    # Where to send data to
-    export HTTP_URI=http://kotori.example.org
-
-    # Redefine transmitter to use HTTP instead of MQTT
-    transmitter() { curl --request POST --header 'Content-Type: application/json' --data @- $HTTP_URI/api/$MQTT_TOPIC/data; echo; }
-
-Restart transmitting::
-
-    loop
-
-
-HTTPie transmitter
-------------------
-When using HTTPie_, the transmitter command is even more compact::
-
-    # Redefine transmitter to use HTTPie instead of curl
-    transmitter() { http POST $HTTP_URI/api/$MQTT_TOPIC/data; }
-
-Restart transmitting::
-
-    loop
 

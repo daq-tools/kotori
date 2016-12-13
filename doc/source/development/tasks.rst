@@ -17,6 +17,49 @@ Kotori tasks
 ****
 
 
+2016-12-13
+==========
+- HTTP: Send timezones per channel
+- HTTP: Get current list of header names
+- HTTP: Announce value units
+- Make MongoDB address configurable
+
+
+2016-12-07
+==========
+- Add reading to panel on a per-field level
+- Improve acquisition documentation
+- CSV Bulk acquisition, re. timestamp
+- FTP CSV acquisition
+- Geohash
+- CSV: What about quotes (")?
+- "influxdb.exceptions.InfluxDBClientError: 400: write failed: field type conflict: input field "time" on measurement "area_42_node_1" is type string, already exists as type float"
+- How to signal errors occurring in the data acquisition chain?
+- Use dateutil.parse immediately on HTTP ingress, so UTC will be republished to MQTT
+- Remember whether InfluxDB database already was created to prevent hammering
+- Hiveeyes / Open Hive CSV:
+    - Spannung auf separatem Panel
+- How to provide the user with access to the log file?
+  e.g. for error messages like ``influxdb.exceptions.InfluxDBClientError: 400: {"error":"unable to parse 'area_42_node_7  1474570699000000000': invalid field format"}``
+- How to run the metrics LoopingCall to actually work when the system is under load?
+
+
+2016-12-02
+==========
+- | Ponte is a multi-transport Internet of Things / Machine to Machine broker.
+  | As the current state it supports MQTT and REST APIs over HTTP and CoAP.
+  | https://github.com/eclipse/ponte
+- http://learninginternetofthings.com/bottlenecks-coap-mqtt/
+- | CoAP observe
+  | https://tools.ietf.org/html/rfc7641
+- | MongoDB on ARM
+  | https://github.com/Barryrowe/mongo-arm
+  | https://raspberrypi.stackexchange.com/questions/22404/official-mongodb-repo-for-arm-processor-for-debian-base
+  | http://andyfelong.com/2016/05/mongodb-3-2-6-running-under-arch-linux-arm-64-bit/
+- | http://www.reder.eu/
+  | http://www.domoticshop.eu/Flyer/BETTY_schreibt_mit.pdf
+
+
 2016-11-17
 ==========
 - Geodata and timestamping

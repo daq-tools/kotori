@@ -19,6 +19,11 @@ About
 - https://github.com/exosite-garage/CoAPExample/blob/master/coap.py
 - https://github.com/exosite-garage/PicoCoAP/blob/master/tests/coap_test.c
 
+Observe
+-------
+- https://tools.ietf.org/html/rfc7641
+- https://tools.ietf.org/html/draft-ietf-core-observe-00
+
 More info
 ---------
 - http://www.deepdarc.com/2013/01/29/introducing-smcp/
@@ -192,3 +197,24 @@ aka. DLMS, IEC-62056-21, COSEM, IEC-61107, IEC-1107
 - https://github.com/bsdphk/PyDLMS
 - http://www.icube.ch/
 
+
+OMS: Open Metering System
+=========================
+- http://oms-group.org/
+- https://en.wikipedia.org/wiki/Open_Metering_System
+- https://de.wikipedia.org/wiki/Open_Metering_System
+- http://oms-group.org/fileadmin/pdf/OMS-Spec_Vol2_AnnexN_A032.pdf
+
+
+KNX
+===
+- https://www.knx.org/
+- https://de.wikipedia.org/wiki/KNX-Standard
+
+
+Wireless M-Bus
+==============
+- http://www.ti.com/tool/wmbus
+- http://www.fhemwiki.de/wiki/WMBUS
+- http://www.elektroniknet.de/elektronik/kommunikation/wireless-m-bus-der-neue-smart-metering-standard-1530.html
+- http://fastforward.ag/downloads/docu/FAST_EnergyCam-Protocol-wirelessMBUS.pdf

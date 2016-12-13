@@ -6,9 +6,74 @@
 Data acquisition over MQTT
 ##########################
 
+.. contents::
+   :local:
+   :depth: 1
+
+
 ************
-MQTT clients
+Introduction
 ************
+Measurement readings can be acquired through MQTT using JSON.
+
+
+*****
+Setup
+*****
+Please have a look at :ref:`application-mqttkit` about how to configure a MQTT application.
+
+
+**************
+Basic examples
+**************
+Setup "mosquitto_pub"::
+
+    aptitude install mosquitto-clients
+
+Define where to send data to::
+
+    export MQTT_BROKER=localhost
+    export MQTT_TOPIC=mqttkit-1/testdrive/area-42/node-1
+
+Single readings
+===============
+Publish sensor reading::
+
+    mosquitto_pub -h $MQTT_BROKER -t $MQTT_TOPIC/message-json -m '{"temperature": 42.84, "humidity": 83}'
+
+
+Readings with timestamp
+=======================
+Publish sensor reading with timestamp in `ISO 8601`_ format::
+
+    mosquitto_pub -h $MQTT_BROKER -t $MQTT_TOPIC/message-json -m '{"time": "2016-12-07T17:30:15Z", "temperature": 42.84, "humidity": 83}'
+
+
+.. _daq-mqtt-csv:
+
+**********
+CSV format
+**********
+.. todo:: Not implemented yet.
+
+
+****************************
+Periodic acquisition example
+****************************
+
+Sawtooth
+========
+The characteristics of sawtooth signals (dynamic, slowly oscillating)
+are convenient to generate measurement sensor readings and publish
+telemetry data without having any hardware in place.
+
+For getting started, please read about how to
+:ref:`generate a dynamic, slowly oscillating sawtooth signal and publish it to MQTT <sawtooth-mqtt>`.
+
+
+*****************
+Language bindings
+*****************
 
 .. list-table:: List of Kotori MQTT clients
    :widths: 5 40
@@ -18,48 +83,56 @@ MQTT clients
    * - Name
      - Description
 
-   * - mosquitto_pub
-     - For getting started with a basic example, read how to
-       :ref:`generate a dynamic, slowly oscillating sawtooth signal and publish it to MQTT <sawtooth-mqtt>`.
-
    * - Python
-     - Libraries
+     - - Libraries
 
-       - `paho-mqtt`_, the MQTT Python client library of the `Eclipse Paho`_ project
+            - `paho-mqtt`_, the MQTT Python client library of the `Eclipse Paho`_ project.
 
-       Examples
+       - Examples
 
-       .. admonition:: Todo
-           :class: admonition-todo admonition-smaller
-
-           Add complete example program. In the meanwhile, have a look at
-           the serial-to-mqtt forwarder :ref:`beradio-python <beradio-python>`
-           of the :ref:`Hiveeyes project <hiveeyes>` and
-
-            - https://github.com/Hiverize/Sensorbeuten/pull/1
-            - https://github.com/hiveeyes/Hiverize-Sensorbeuten/blob/hiveeyes-backend/backend.rst
-
+            - See a :ref:`basic MQTT example in Python <daq-python-mqtt>`.
 
    * - Arduino
-     - Libraries
+     - - Libraries
 
-       - `Arduino Client for MQTT`_ by `Nick O'Leary`_
-       - `async-mqtt-client`_ by `Marvin Roger`_ (for ESP8266)
-       - `Adafruit MQTT Library`_ from Adafruit_
+            - `Arduino Client for MQTT`_ by `Nick O'Leary`_
+            - `Adafruit MQTT Library`_ from Adafruit_
 
-       Examples
+       - Examples
 
-       .. admonition:: Todo
-           :class: admonition-todo admonition-smaller
+            - The :ref:`Hiveeyes <hiveeyes>` ESP8266-based sensor node firmwares `node-wifi-mqtt.ino`_
+              and `node-wifi-mqtt-homie.ino`_.
 
-           Add complete example program. In the meanwhile, have a look at
-           the :ref:`Hiveeyes <hiveeyes>` ESP8266-based sensor node code `node-wifi-mqtt.ino`_.
+   * - Arduino/ESP8266
+     - - Libraries
+
+            - `esp_mqtt`_, the `Native MQTT client library for ESP8266`_ by Tuan PM
+            - `async-mqtt-client`_ by `Marvin Roger`_
 
    * - ARMmbed
-     - `ARMmbed ESP8266 MQTT example`_
+     - - Libraries
 
-.. _node-wifi-mqtt.ino: https://github.com/hiveeyes/arduino/blob/master/node-wifi-mqtt/node-wifi-mqtt.ino
+            - The `ARMmbed MQTT library`_, a port of the `Eclipse Paho Embedded MQTT C/C++ Client Libraries`_.
 
+       - Examples
+
+            - `ARMmbed ESP8266 MQTT example`_
+
+
+***************
+Troubleshooting
+***************
+.. todo:: Add notes about no data appearing in Grafana, etc.
+
+
+----
+
+
+************
+Applications
+************
+
+.. todo:: Refactor to acquisition/examples
 
 .. _daq-mqtt-bash:
 
@@ -69,16 +142,6 @@ Command line
 
     - Add example from Hiveeyes, link here.
     - Also add link from handbook/kotori and setup/getting-started to here.
-
-
-----
-
-
-********
-Examples
-********
-
-.. todo:: Refactor to acquisition/examples
 
 Hiveeyes
 ========

@@ -1,1 +1,23 @@
+# ==================================
+# Default startup options for Kotori
+# ==================================
+
+# --------
+# Examples
+# --------
+
+# IO subsystem debugging
+# KOTORI_OPTS="--debug-io"
+
+# Full-on MQTT debugging
+# KOTORI_OPTS="--debug-mqtt --debug-mqtt-driver"
+
+# InfluxDB debugging
+# KOTORI_OPTS="--debug-influx"
+
+
+# -------
+# Setting
+# -------
+
 KOTORI_OPTS=""

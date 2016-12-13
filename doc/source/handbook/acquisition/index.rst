@@ -35,19 +35,6 @@ Protocols
     protocol/udp
 
 
-*********************
-Serialization formats
-*********************
-
-.. toctree::
-    :maxdepth: 1
-    :glob:
-
-    format/json
-    format/struct
-    format/bencode
-
-
 ***************
 Client runtimes
 ***************
@@ -60,6 +47,18 @@ Client runtimes
     runtime/python
     runtime/php
     runtime/arduino
+
+
+*********************
+Serialization formats
+*********************
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    format/struct
+    format/bencode
 
 
 ********
