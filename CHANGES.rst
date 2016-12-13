@@ -9,6 +9,7 @@ in progress
 - Improve logging
 - Delegate MQTT message processing to separate thread
 - Run “CREATE DATABASE” only once to improve performance
+- Accept timestamp field ``time`` from sensor readings
 
 
 .. _kotori-0.10.10:

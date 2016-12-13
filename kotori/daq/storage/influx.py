@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-# (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2015-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import types
 import requests
 from collections import OrderedDict
 from twisted.logger import Logger
+from kotori.io.protocol.util import parse_timestamp
 
 log = Logger()
 
@@ -117,6 +118,16 @@ class InfluxDBAdapter(object):
 
             else:
                 raise ValueError('Unknown InfluxDB protocol version "{}"'.format(self.version))
+
+            # Extract timestamp from data
+            if 'time' in chunk['fields']:
+                if chunk['fields']['time']:
+                    chunk['time'] = chunk['fields']['time']
+                del chunk['fields']['time']
+
+            # TODO: Maybe do this at data acquisition / transformation time, not here.
+            if 'time' in chunk:
+                chunk['time'] = parse_timestamp(chunk['time'])
 
             """
             Prevent errors like

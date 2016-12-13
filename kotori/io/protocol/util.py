@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 # (c) 2016 Andreas Motl <andreas.motl@elmyra.de>
 import arrow
+from six import text_type
+from dateutil.tz import gettz
+from dateutil.parser import parse
 from pyramid.settings import asbool
 from twisted.web import http
 from twisted.logger import Logger
@@ -124,3 +127,21 @@ def handleFailure(f, bucket=None):
 def slugify_datettime(dstring):
     return arrow.get(dstring).to('utc').format('YYYYMMDDTHHmmss')
 
+
+def parse_timestamp(timestamp):
+
+    if isinstance(timestamp, text_type):
+
+        # HACK: Assume CET (Europe/Berlin) for human readable timestamp w/o timezone offset
+        qualified = any([token in timestamp for token in ['Z', '+', ' CET', ' CEST']])
+        if not qualified:
+            timestamp += ' CET'
+
+        # Parse datetime string
+        # Remark: Maybe use pandas.tseries.tools.parse_time_string?
+        # TODO: Cache results of call to gettz to improve performance
+        berlin = gettz('Europe/Berlin')
+        tzinfos = {'CET': berlin, 'CEST': berlin}
+        timestamp = parse(timestamp, tzinfos=tzinfos)
+
+    return timestamp
