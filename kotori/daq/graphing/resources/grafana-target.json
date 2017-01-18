@@ -21,9 +21,9 @@
             }
         ]
     ],
+    "tags": {{ tags }},
     "groupByTags": [],
     "measurement": "{{ measurement }}",
     "query": "SELECT mean(\"{{ name }}\") FROM \"{{ measurement }}\" WHERE $timeFilter GROUP BY time($interval)",
-    "rawQuery": false,
-    "tags": []
+    "rawQuery": false
 }

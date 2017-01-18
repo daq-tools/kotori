@@ -48,7 +48,7 @@ A basic example for publishing sensor readings to MQTT::
     mqtt_broker = 'localhost'
 
     # MQTT bus topic
-    mqtt_topic = u'{realm}/{network}/{gateway}/{node}/message-json'.format(
+    mqtt_topic = u'{realm}/{network}/{gateway}/{node}/data.json'.format(
         realm   = 'mqttkit-1',
         network = 'ea2a38ce-791e-11e6-b152-7cd1c38000be',
         gateway = 'clar14',

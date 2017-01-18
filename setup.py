@@ -14,6 +14,7 @@ requires = [
     'appdirs==1.4.0',
     'json-store==2.1',
     'arrow==0.8.0',
+    'funcy==1.7.2',
 
     # Bus adapters
     #'twisted-mqtt==0.1.4',         # 0.2.1
@@ -32,7 +33,8 @@ extras = {
         'grafana_api_client==0.1.4',
         'requests==2.10.0',
         #'grafana-dashboard-builder==0.1.0a7',      # evaluated, but not suitable
-        'txmongo==16.3.0',
+        #'txmongo==16.3.0',
+        'pymongo==3.4.0',
     ],
     'daq_binary': [
         'pyclibrary==0.1.3',

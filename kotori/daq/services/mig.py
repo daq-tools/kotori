@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2015-2017 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import time
 import json
 from bunch import Bunch
@@ -57,8 +57,8 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
     def topic_to_topology(self, topic):
         return self.strategy.topic_to_topology(topic)
 
-    def topology_to_database(self, topology):
-        return self.strategy.topology_to_database(topology)
+    def topology_to_storage(self, topology):
+        return self.strategy.topology_to_storage(topology)
 
     def mqtt_receive(self, topic=None, payload=None, **kwargs):
         try:
@@ -87,26 +87,44 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         topology = self.topic_to_topology(topic)
         log.debug(u'Topology address: {topology}', topology=dict(topology))
 
-        storage = self.topology_to_database(topology)
-        log.debug(u'Storage address: {storage}', storage=dict(storage))
+        message_type = None
 
-        # entry point for multiple measurements in json object
-        if topic.endswith('message-json'):
-            # decode message from json format
+        # Multiple measurements in json object
+        if topic.endswith('data.json') or topic.endswith('message-json'):
+
+            # This is sensor data
+            message_type = 'data'
+
+            # Decode message from json format
             message = json.loads(payload)
-            message_valid = True
 
-        # entry point for single measurement as plain value; assume float
-        if 'measure/' in topic:
+        # TODO: Backward compat for single readings - remove!
+        if 'slot' in topology and topology.slot.startswith('measure/'):
+            topology.slot = topology.slot.replace('measure/', 'data/')
+
+        # Single measurement as plain value; assume float
+        if 'slot' in topology and topology.slot.startswith('data/'):
+
+            # This is sensor data
+            message_type = 'data'
 
             # Amend topic and compute storage message from single scalar value
-            name = topology.kind.replace('measure/', '')
+            name = topology.slot.replace('data/', '')
             value = float(payload)
             message = {name: value}
 
-            message_valid = True
 
-        if not message_valid:
+        # Set an event
+        if topic.endswith('event.json'):
+
+            # This is an event
+            message_type = 'event'
+
+            # Decode message from json format
+            message = json.loads(payload)
+
+
+        if not message_type:
             return
 
         # count transaction
@@ -121,21 +139,25 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             self.metrics.packet_time = None
         """
 
+        storage_location = self.topology_to_storage(topology)
+        log.debug(u'Storage location: {storage}', storage=dict(storage_location))
+
         # store data
-        self.store_message(storage.database, storage.series, message)
+        self.store_message(storage_location, message)
 
         # provision graphing subsystem
-        self.graphing.provision(storage.database, storage.series, message, topology=topology)
+        if message_type == 'data':
+            self.graphing.provision(storage_location, message, topology=topology)
 
         return True
 
 
-    def store_message(self, database, series, data):
+    def store_message(self, storage, data):
         influx = InfluxDBAdapter(
             settings = self.settings.influxdb,
-            database = database)
+            database = storage.database)
 
-        influx.write(series, data)
+        influx.write(storage, data)
 
 
     def process_metrics(self):

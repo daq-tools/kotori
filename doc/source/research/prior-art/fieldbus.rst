@@ -2,6 +2,18 @@
 Fieldbus
 ########
 
+Modbus
+======
+- http://pymodbus.readthedocs.io/
+- https://github.com/bashwork/pymodbus
+- http://pythonhosted.org/pymodbus/
+- https://github.com/HynekPetrak
+- https://github.com/patrickfuller
+- https://pypi.python.org/pypi/pymodbus3
+- http://uzumaxy.github.io/pymodbus3/
+- https://github.com/uzumaxy/pymodbus3
+- http://numat-tech.com/
+- https://github.com/numat
 
 M-Bus
 =====

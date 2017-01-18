@@ -58,7 +58,7 @@ Get real and actually transmit sensor values to Kotori by publishing them to the
     export MQTT_TOPIC=mqttkit-1/testdrive/area-42/node-1
 
     # Define the transmission command to send telemetry data to the "testdrive" network
-    transmitter() { mosquitto_pub -h $MQTT_BROKER -t $MQTT_TOPIC/message-json -l; }
+    transmitter() { mosquitto_pub -h $MQTT_BROKER -t $MQTT_TOPIC/data.json -l; }
 
     # Acquire and transmit a single sensor reading
     sensor | transmitter

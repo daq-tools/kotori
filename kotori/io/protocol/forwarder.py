@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2016-2017 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import re
 from copy import deepcopy
 from urlparse import urlparse
@@ -138,7 +138,7 @@ class ProtocolForwarderService(MultiServiceMixin, MultiService):
 
         # 2. Reporting
         bucket_logging = Bunch(bucket)
-        if len(bucket_logging.body) > 100:
+        if 'body' in bucket_logging and len(bucket_logging.body) > 100:
             bucket_logging.body = bucket_logging.body[:100] + ' [...]'
         log.debug('Forwarding bucket to {target} with bucket={bucket}. Effective target uri is {target_uri}',
             target=self.channel.target, target_uri=target_uri, bucket=dict(bucket_logging))

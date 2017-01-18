@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
-# (c) 2014-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2014-2017 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+
+# ==========================================
+#               infrastructure
+# ==========================================
+mongodb-start:
+	mongod --dbpath=./var/lib/mongodb/ --smallfiles
+
 
 # ==========================================
 #               prerequisites
@@ -132,7 +139,7 @@ fpm-options := \
 	--no-python-dependencies \
 	--deb-build-depends "pkg-config, gfortran, libatlas-dev, libopenblas-dev, liblapack-dev, libhdf5-dev, libnetcdf-dev, liblzo2-dev, libbz2-dev, libpng12-dev, libfreetype6-dev" \
 	--depends python \
-	--deb-recommends "influxdb, mosquitto, mosquitto-clients, grafana" \
+	--deb-recommends "influxdb, mosquitto, mosquitto-clients, grafana, mongodb" \
 	--deb-suggests "python-scipy, python-numpy, python-matplotlib, fonts-humor-sans" \
 	--deb-suggests "python-tables, libatlas3-base, libopenblas-base, liblapack3, libhdf5-8, libnetcdfc7, liblzo2-2, libbz2-1.0" \
 	--provides "kotori" \

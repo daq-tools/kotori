@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2015-2017 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 from bunch import Bunch
+from collections import OrderedDict
 from twisted.logger import Logger
 from kotori.daq.services import RootService
 from kotori.daq.services.mig import MqttInfluxGrafanaService
@@ -11,62 +12,75 @@ log = Logger()
 
 class HiveeyesGrafanaManager(GrafanaManager):
 
-    def get_panel_options(self, data, fieldname):
-        knowledge = [
-            {'prefixes': ['temp'],           'format': 'celsius'},
-            {'prefixes': ['hum'],            'format': 'humidity'},
-            {'prefixes': ['wght', 'weight'], 'label':  'kg'},
-            {'prefixes': ['volume'],         'label':  'dB', 'scale': 10},
-        ]
-        for rule in knowledge:
+    knowledge = [
+        {'name': 'temperature', 'prefixes': ['temp', 'Temp'],               'format': 'celsius'},
+        {'name': 'humidity',    'prefixes': ['hum'],                        'format': 'humidity'},
+        {'name': 'weight',      'prefixes': ['wght', 'weight', 'Gewicht'],  'label':  'kg'},
+        {'name': 'volume',      'prefixes': ['volume'],                     'label':  'dB', 'scale': 10},
+    ]
+
+    def get_rule(self, fieldnames):
+        """
+        Filter knowledgebase by prefix.
+        Obtains a list of fieldnames / fieldname prefixes and
+        also matches against a list of fieldname prefixes,
+        hence the nested loops.
+        """
+
+        if not fieldnames:
+            return {}
+
+        for rule in self.knowledge:
             for prefix in rule['prefixes']:
-                if fieldname.startswith(prefix):
-                    return rule
+                for fieldname in fieldnames:
+                    if fieldname.startswith(prefix):
+                        return rule
 
         return {}
 
-    def get_panel_data(self, data, title, fieldname_prefix):
-        panel = {'title': title, 'fieldnames': self.collect_fields(data, fieldname_prefix)}
-        panel.update(self.get_panel_options(data, fieldname_prefix))
-        return panel
+    def get_panel_options(self, data, fieldnames):
+        return self.get_rule(fieldnames)
 
-    def panel_generator(self, database, series, data, topology):
+    def panel_title_prefix(self, fieldnames):
+        return self.get_rule(fieldnames).get('name')
+
+    def get_distinct_panel_field_prefixes(self, data):
         """
-        Generate fine Grafana panels
+        Compute list of fieldname prefixes in order of knowledgebase
+        for providing stable input to the panel generator.
+        """
+
+        prefixes = OrderedDict()
+        fields_given = data.keys()
+        fields_used = []
+        for rule in self.knowledge:
+            for prefix in rule['prefixes']:
+                for fieldname in fields_given:
+                    if fieldname.startswith(prefix):
+                        key = '-'.join(rule['prefixes'])
+                        prefixes[key] = rule['prefixes']
+                        fields_used.append(fieldname)
+
+        # Add unused fields
+        fields_unused = list(set(fields_given) - set(fields_used))
+        prefixes['misc'] = fields_unused
+
+        return prefixes.values()
+
+    def panel_generator(self, storage_location, data, topology):
+        """
+        Generate Hiveeyes-specific Grafana panels, which is:
+        Group multiple temperature or humidity sensors into a single panel (aka. one panel per sensor family),
+        even when transmitted in BERadio-specific shortcut notation like 'temp1', 'temp2', etc.
         """
 
         panels = []
 
-        # multi-field panels v1: naive / BERadio-specific
-        # detect this payload flavor by checking whether field names have
-        # the signature of being sent from a BERadio transmitter
-        if 'temp1' in data or 'hum1' in data or 'wght1' in data:
-            if 'temp1' in data:
-                panels.append(self.get_panel_data(data, 'temperature', 'temp'))
-            if 'hum1' in data:
-                panels.append(self.get_panel_data(data, 'humidity', 'hum'))
-            if 'wght1' in data:
-                panels.append(self.get_panel_data(data, 'weight', 'wght'))
-
-        # regular panels: one panel per field
-        # c-base amendments
-        else:
-            for fieldname in sorted(data.keys()):
-                panels.append(self.get_panel_data(data, fieldname, fieldname))
+        for prefixes in self.get_distinct_panel_field_prefixes(data):
+            panel = self.get_panel_data(storage_location, topology, data, fieldname_prefixes=prefixes)
+            panels.append(panel)
 
         return panels
-
-    def row_title(self, database, series, topology):
-        if 'node' in topology and 'gateway' in topology:
-            row_title = self.panel_title_suffix(database, series, topology)
-            if 'network' in topology:
-                row_title += ',net={network}'.format(**topology)
-            return row_title
-
-    def panel_title_suffix(self, database, series, topology):
-        if 'node' in topology and 'gateway' in topology:
-            return 'node={node},gw={gateway}'.format(**topology)
-
 
 
 def hiveeyes_boot(settings, debug=False):
@@ -74,11 +88,14 @@ def hiveeyes_boot(settings, debug=False):
     # Service container root
     rootService = RootService(settings=settings)
 
+    channel = Bunch(**settings.hiveeyes)
+
     # Main application service
     service = MqttInfluxGrafanaService(
-        channel  = Bunch(**settings.hiveeyes),
-        graphing = HiveeyesGrafanaManager(settings),
+        channel  = channel,
+        graphing = HiveeyesGrafanaManager(settings=settings, channel=channel),
         strategy = WanBusStrategy())
 
     rootService.registerService(service)
     rootService.startService()
+

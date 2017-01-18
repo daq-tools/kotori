@@ -42,7 +42,9 @@ Open
 - | analog.io - A full stack IoT platform
   | A full stack project dedicated to easily collecting, analyzing and sharing IoT sensor data.
   | https://analog.io/
+  | https://github.com/analog-io
   | https://hackaday.io/project/4648-analogio-a-full-stack-iot-platform
+  | https://hackaday.io/project/4648/logs
 
 - | Nimbits
   |
@@ -74,6 +76,10 @@ Open
 - | SiteWhere
   | http://www.sitewhere.org/
   | https://github.com/sitewhere/sitewhere
+
+- | aREST
+  | https://arest.io/
+  | https://github.com/marcoschwartz/aREST
 
 Eclipse IoT
 -----------

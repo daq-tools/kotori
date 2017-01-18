@@ -72,6 +72,7 @@ class ForwarderTargetService(MultiServiceMixin, MultiService):
             # Publish JSON payload to MQTT bus
             topic   = uri
             payload = bucket.json
+            # TODO: Use threads.deferToThread here?
             return self.downstream.publish(topic, payload)
 
         elif self.scheme == 'influxdb':
@@ -139,8 +140,8 @@ class ForwarderTargetService(MultiServiceMixin, MultiService):
             # Compute http response from DataFrame, taking designated output format into account
             response = HttpDataFrameResponse(bucket, dataframe=df)
 
-            # Synchronous
-            #return response.render()
+            # Synchronous, the worker-threading is already on the HTTP layer
+            return response.render()
 
             # Asynchronous: Perform computation in separate thread
             d = threads.deferToThread(response.render)
@@ -148,7 +149,6 @@ class ForwarderTargetService(MultiServiceMixin, MultiService):
             d.addBoth(bucket.request.write)
             d.addBoth(lambda _: bucket.request.finish())
             return server.NOT_DONE_YET
-
 
         else:
             message = 'No target/downstream dispatcher for scheme {scheme}'.format(scheme=self.scheme)

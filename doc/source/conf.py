@@ -52,7 +52,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Kotori'
-copyright = u'2013-2016, The Kotori Developers'
+copyright = u'2013-2017, The Kotori Developers'
 author = u'The Kotori Developers'
 
 # The version info for the project you're documenting, acts as replacement for

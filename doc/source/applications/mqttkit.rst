@@ -80,7 +80,7 @@ Basic
     sensor() { echo "{\"sawtooth\": $(date +%-S)}"; }
 
     # Define the transmission command to send telemetry data to the "testdrive" network
-    transmitter() { mosquitto_pub -h $MQTT_BROKER -t $MQTT_TOPIC/message-json -l; }
+    transmitter() { mosquitto_pub -h $MQTT_BROKER -t $MQTT_TOPIC/data.json -l; }
 
     # Acquire and transmit a single sensor reading
     sensor | transmitter

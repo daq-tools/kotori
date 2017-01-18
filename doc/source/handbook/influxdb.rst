@@ -4,6 +4,8 @@
 InfluxDB Handbook
 =================
 
+- https://docs.influxdata.com/influxdb/v1.1/query_language/spec/
+
 
 Authentication
 --------------
@@ -12,7 +14,7 @@ Enable auth-only access by creating admin user::
 
     $ curl --silent --get 'http://192.168.59.103:8086/query?pretty=true' --user root:root --data-urlencode 'q=CREATE USER admin WITH PASSWORD 'admin' WITH ALL PRIVILEGES'
 
-.. seealso:: https://influxdb.com/docs/v0.9/administration/authentication_and_authorization.html#set-up-authentication
+.. seealso:: https://docs.influxdata.com/influxdb/v1.1/query_language/authentication_and_authorization/
 
 
 
@@ -32,6 +34,11 @@ Drop database::
 
     curl --silent --get 'http://192.168.59.103:8086/query?pretty=true' --user admin:admin --data-urlencode 'q=DROP DATABASE "hiveeyes_100"'
 
+Write data
+----------
+
+.. seealso:: https://docs.influxdata.com/influxdb/v1.1/guides/writing_data/
+
 
 Query operations
 ----------------
@@ -46,7 +53,7 @@ Query database using curl::
     # pretty-print json using jq
     curl --silent --get 'http://192.168.59.103:8086/query?pretty=true' --user admin:admin --data-urlencode 'db=hiveeyes_100' --data-urlencode 'q=select * from "1.99";' | jq '.'
 
-.. seealso:: https://influxdb.com/docs/v0.9/guides/writing_data.html
+.. seealso:: https://docs.influxdata.com/influxdb/v1.1/guides/querying_data/
 
 
 Querying from Python
@@ -71,7 +78,7 @@ Restore example::
     influxd restore -datadir /var/lib/influxdb/data -database hiveeyes_25a0e5df_9517_405b_ab14_cb5b514ac9e8 hiveeyes_25a0e5df_9517_405b_ab14_cb5b514ac9e8
 
 
-.. seealso:: https://docs.influxdata.com/influxdb/v0.13/administration/backup_and_restore/
+.. seealso:: https://docs.influxdata.com/influxdb/v1.1/administration/backup_and_restore/
 
 
 Export and Import

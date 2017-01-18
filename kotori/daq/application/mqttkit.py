@@ -28,7 +28,7 @@ class MqttKitApplication(RootService):
             channel  = self.channel,
             # Data processing strategy and graphing components
             strategy = WanBusStrategy(),
-            graphing = GrafanaManager(global_settings)
+            graphing = GrafanaManager(settings=global_settings, channel=self.channel)
             )
 
         # Register service component with its container

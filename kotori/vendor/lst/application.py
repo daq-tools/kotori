@@ -123,10 +123,10 @@ class InfluxStorage(BusInfluxForwarder):
                 del data[entry]
         return data
 
-    def on_store(self, database, series, data):
+    def on_store(self, location, data):
         # provision graphing subsystem
         try:
-            self.graphing.provision(database, series, data)
+            self.graphing.provision(location, data)
         except Exception:
             log.failure(u'Failed provisioning Grafana')
 

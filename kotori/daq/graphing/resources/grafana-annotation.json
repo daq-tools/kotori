@@ -1,0 +1,10 @@
+{
+    "datasource": "{{ datasource }}",
+    "enable": true,
+    "iconColor": "rgba(255, 96, 96, 1)",
+    "name": "{{ name }}",
+    "query": "SELECT * FROM {{ measurement }} WHERE $timeFilter",
+    "titleColumn": "title",
+    "textColumn": "text",
+    "tagsColumn": "tags"
+}

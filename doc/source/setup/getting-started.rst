@@ -66,7 +66,7 @@ Send sample telemetry packet
 ============================
 ::
 
-    mosquitto_pub -t amazonas/ecuador/cuyabeno/1/message-json -m '{"temperature": 42.84, "humidity": 94}'
+    mosquitto_pub -t amazonas/ecuador/cuyabeno/1/data.json -m '{"temperature": 42.84, "humidity": 94}'
 
 
 Watch telemetry data

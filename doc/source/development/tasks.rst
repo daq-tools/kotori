@@ -13,16 +13,97 @@ Kotori tasks
 ----
 
 ****
+2017
+****
+
+
+2017-01-17
+==========
+- Make default panels 400px high and put the legend on the right side
+- Mitigate race condition on Grafana Dashboard creation when importing CSV file
+- Add documentation about annotations
+- New Grafana issue re. empty tags wrt. annotations
+- Sometimes, single MQTT message are not received/processed. Why?
+
+
+2017-01-16
+==========
+
+Watch Grafana issues
+--------------------
+- https://github.com/grafana/grafana/issues/7267
+- https://github.com/grafana/grafana/issues/7268
+- https://github.com/grafana/grafana/pull/4550#issuecomment-272755664
+- | Add annotation/event from graph panel #1286
+  | https://github.com/grafana/grafana/issues/1286
+- | Annotations on a single panel #717
+  | https://github.com/grafana/grafana/issues/717
+  | https://github.com/grafana/grafana/pull/3976
+
+Look at Grafana features
+------------------------
+- | Trend Box
+  | Box panel showing trends over series
+  | https://grafana.net/plugins/btplc-trend-box-panel
+
+- | Worldmap Panel
+  | https://grafana.net/plugins/grafana-worldmap-panel
+
+- | D3 Gauge
+  | https://grafana.net/plugins/briangann-gauge-panel
+
+
+
+2017-01-13
+==========
+- Add to documentation: https://www.uuidgenerator.net/
+
+
+2017-01-10
+==========
+- Look into deburring: https://hackaday.io/project/4648-analogio-a-full-stack-iot-platform/log/25146-introducing-the-de-burr-filter
+- [o] Bug: node=cfb,gw=hive1 has the wrong order https://swarm.hiveeyes.org/grafana/dashboard/db/kh
+  see: https://swarm.hiveeyes.org/api/hiveeyes/kh/cfb/hive1/data.txt
+- [o] Bug: https://swarm.hiveeyes.org/api/hiveeyes/kh/cfb/hive1/data.vega?from=2017-01-09
+  exceptions.IOError: [Errno 2] No such file or directory: '/opt/kotori/lib/python2.7/site-packages/kotori/io/export/vega_template.html'
+- elbanco is slow: Add more CPU and Memory!
+- [o] Update to Grafana 4.1.0: https://github.com/fg2it/grafana-on-raspberry/releases
+
+
+2017-01-03
+==========
+- Reduce periodic log traffic
+- Write to https://talk2.wisen.com.au/2016/05/24/influxdb-grafana/
+
+
+****
 2016
 ****
 
 
+2016-12-30
+==========
+- Import data from archive.luftdaten.info, use metadata from
+    - https://github.com/opendata-stuttgart/madavi-api/blob/master/graph.php
+    - https://github.com/opendata-stuttgart/feinstaub-api/blob/master/feinstaub/sensors/models.py
+
+
+2016-12-28
+==========
+- Generic registration call to explicitely announce field types, e.g. wrt. CSV format:
+    ## weight(float), temperature(float), humidity(float)
+
+    - How to do this with JSON payloads over MQTT or similar?
+- Provide recent package (with CSV feature) and supply MongoDB from repository
+
+
 2016-12-13
 ==========
-- HTTP: Send timezones per channel
+- HTTP: Let user announce timezone per channel
 - HTTP: Get current list of header names
 - HTTP: Announce value units
 - Make MongoDB address configurable
+- Virtual tara
 
 
 2016-12-07
@@ -184,8 +265,20 @@ Docs
 - Trigger IFTTT event, e.g. http://maker.ifttt.com/trigger/hum_alarm/with/key/nh6E
 - Annotations, finally! http://maxchadwick.xyz/blog/grafana-influxdb-annotations
 
+    - curl -X POST "http://192.168.59.103:8086/write?db=mqttkit_1_testdrive&precision=s" --data-binary 'events title="Deployed v10.2.0",text="<a href='https://github.com'>Release notes</a>",tags="these are the tags",id="482a38ce-791e-11e6-b152-7cd1c55000be" 1470661200'
     - curl -X POST "http://localhost:8086/write?db=mydb&precision=s" --data-binary 'events title="Deployed v10.2.0",text="<a href='https://github.com'>Release notes</a>",tags="these are the tags" 1470661200'
     - SELECT title, tags, text FROM events WHERE $timeFilter
+    - curl -X POST "http://192.168.59.103:8086/delete?db=mqttkit_1_testdrive&precision=s" --data-binary 'events title="Ereignis: Gewichtsabfall",text="Gewichtsabfall auf 31 kg",tags="gewichtsabfall" 1473278400'
+    - echo 'area_33_node_6_events title="Ereignis: Gewichtsabfall",text="Gewichtsabfall auf 31 kg<br/><a href='https://swarm.hiveeyes.org/aaa/bbb/ccc/events?reference=482a38ce-791e-11e6-b152-7cd1c55000be'>see also</a>",tags="gewichtsabfall",reference="482a38ce-791e-11e6-b152-7cd1c55000be" 1484457652' | http POST "http://192.168.59.103:8086/write?db=mqttkit_1_testdrive&precision=s"
+    - echo 'area_33_node_6_events title="Ereignis: Gewichtsabfall",text="Gewichtsabfall auf 31 kg<br/><a href='https://swarm.hiveeyes.org/aaa/bbb/ccc/events?reference=482a38ce-791e-11e6-b152-7cd1c55000be'>see also</a>",tags="gewichtsabfall",reference="482a38ce-791e-11e6-b152-7cd1c55000be" 2017-01-15T050000' | http POST "http://192.168.59.103:8086/write?db=mqttkit_1_testdrive"
+    - http --form POST http://localhost:24642/api/mqttkit-1/testdrive/area-33/node-1/event title='123' text='<a href="https://swarm.hiveeyes.org/aaa/bbb/ccc/events?reference=482a38ce-791e-11e6-b152-7cd1c55000be">see also</a>' tags='one,two,three' reference='482a38ce-791e-11e6-b152-7cd1c55000be'
+
+select * from events;
+name: events
+------------
+time			id					tags			text						title
+1470661200000000000	482a38ce-791e-11e6-b152-7cd1c55000be	these are the tags	<a href=https://github.com>Release notes</a>	Deployed v10.2.0
+
 
 
 2016-10-03

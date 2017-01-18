@@ -153,6 +153,9 @@ itself can be used by anybody without any royalty charges to OPC Foundation.
 
 - https://github.com/nzfarmer1/mqtt2opcua
 
+- | http://open62541.org/
+  | https://github.com/open62541/open62541
+
 
 Building An Open Source Process Historian
 -----------------------------------------
@@ -180,11 +183,20 @@ MTConnect
 - http://www.todaysmotorvehicles.com/article/mtconnect-student-challenge-amt-041116/
 
 
-MBus
-====
+M-Bus
+=====
+- | http://www.schleicher.berlin/en/chargeart/
+  | https://en.wikipedia.org/wiki/Schleicher_Electronic
+- | http://www.rscada.se/libmbus/
+  | https://github.com/rscada/libmbus
 
-- http://www.schleicher.berlin/en/chargeart/
-- https://en.wikipedia.org/wiki/Schleicher_Electronic
+
+Wireless M-Bus
+==============
+- http://www.ti.com/tool/wmbus
+- http://www.fhemwiki.de/wiki/WMBUS
+- http://www.elektroniknet.de/elektronik/kommunikation/wireless-m-bus-der-neue-smart-metering-standard-1530.html
+- http://fastforward.ag/downloads/docu/FAST_EnergyCam-Protocol-wirelessMBUS.pdf
 
 
 DLMS
@@ -211,10 +223,3 @@ KNX
 - https://www.knx.org/
 - https://de.wikipedia.org/wiki/KNX-Standard
 
-
-Wireless M-Bus
-==============
-- http://www.ti.com/tool/wmbus
-- http://www.fhemwiki.de/wiki/WMBUS
-- http://www.elektroniknet.de/elektronik/kommunikation/wireless-m-bus-der-neue-smart-metering-standard-1530.html
-- http://fastforward.ag/downloads/docu/FAST_EnergyCam-Protocol-wirelessMBUS.pdf

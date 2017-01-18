@@ -25,28 +25,31 @@ class QueryTransformer(object):
         Also compute date range from query parameters "from" and "to".
         """
 
-        series = data.series
+        measurement = data.measurement
 
         # Vanilla QL (v1)
-        #expression = 'SELECT * FROM {series}'.format(series=series)
+        #expression = 'SELECT * FROM {measurement}'.format(measurement=measurement)
 
         # PyInfluxQL (v2)
         # https://github.com/jjmalina/pyinfluxql
 
         # Labs
         #time_begin = arrow.utcnow() - arrow.Arrow(hour=1)
-        #expression = Query('*').from_(series).where(time__gt=datetime.utcnow() - timedelta(hours=1))
-        #expression = Query(Mean('*')).from_(series).where(time__gt=datetime.now() - timedelta(1)).group_by(time=timedelta(hours=1))
+        #expression = Query('*').from_(measurement).where(time__gt=datetime.utcnow() - timedelta(hours=1))
+        #expression = Query(Mean('*')).from_(measurement).where(time__gt=datetime.now() - timedelta(1)).group_by(time=timedelta(hours=1))
 
-        # Fix up "series" if starting with numeric value
+        # Fix up "measurement" if starting with numeric value
         # TODO: Fix should go to pyinfluxql
-        if is_number(series[0]):
-            series = '"{series}"'.format(series=series)
-
-        time_begin, time_end = compute_daterange(data.get('from'), data.get('to'))
+        if is_number(measurement[0]):
+            measurement = '"{measurement}"'.format(measurement=measurement)
 
         # TODO: Use ".date_range" API method
-        expression = Query('*').from_(series).where(time__gte=time_begin, time__lte=time_end)
+        time_begin, time_end = compute_daterange(data.get('from'), data.get('to'))
+
+        tags = {}
+        #tags = InfluxDBAdapter.get_tags(data)
+
+        expression = Query('*').from_(measurement).where(time__gte=time_begin, time__lte=time_end, **tags)
 
         result = {
             'expression': str(expression),

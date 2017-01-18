@@ -2,7 +2,7 @@
     "id": {{ id }},
     "title": "{{ title }}",
     "originalTitle": "{{ title }}",
-    "tags": [],
+    "tags": {{ tags }},
     "style": "dark",
     "timezone": "browser",
     "editable": true,

@@ -1,15 +1,40 @@
-**************
-Kotori CHANGES
-**************
+*********
+Changelog
+*********
 
 
 in progress
 ===========
-- Get rid of "/bus/mqtt" in URI for HTTP API
+- Get rid of ``/bus/mqtt`` in URI for HTTP API
 - Delegate MQTT message processing to separate thread
-- Run “CREATE DATABASE” only once to improve performance
+- Run ``CREATE DATABASE`` only once to improve performance
 - Accept timestamp field ``time`` from sensor readings
-- Data acquisition channel using CSV over HTTP. Cheers Clemens!
+- Improve HTTP ingress channel performance, use appropriate worker threading
+- Add data acquisition channel using CSV over HTTP for single and bulk readings
+- Make CSV import format compatible with data from Open Hive and Beelogger. Cheers Clemens and Markus!
+- Grafana Dashboard builder subsystem
+
+    - Improve robustness
+    - Add new fields to existing panels on demand. Thanks, Smilie!
+    - Improve panel generator for :ref:`vendor-hiveeyes`
+
+- Refactor data transformation machinery subsystems
+- Add API endpoints and routing for creating timeseries annotations
+- Start introducing :ref:`MQTT content type signalling <hiveeyes:topology-spec-0.2>`
+- Drop support for InfluxDB 0.8
+- Verify compatibility against InfluxDB 1.1.1, see also:
+
+    - https://docs.influxdata.com/influxdb/v1.1/administration/differences/
+    - https://github.com/influxdata/influxdb/blob/master/CHANGELOG.md#v111-2016-12-06
+
+- Verify compatibility against Grafana 4.1.1, see also:
+
+    - http://docs.grafana.org/guides/whats-new-in-v4/
+    - http://docs.grafana.org/guides/whats-new-in-v4-1/
+    - https://github.com/grafana/grafana/blob/master/CHANGELOG.md#411-2017-01-11
+
+- Add ``mongod`` as Debian package dependency, required for CSV acquisition support
+
 - Improve documentation
 - Improve logging
 
@@ -28,12 +53,12 @@ in progress
 
 2016-07-12 0.10.9
 =================
-- Documentation updates, add system diagrams to vendor :ref:`vendor-hiveeyes`.
-- Export csv and json data with ISO format timestamps to satisfy dygraphs rendering in Firefox.
-- Don't add "pad=true" or "backfill=true" when "interpolate=true" parameter was obtained from URL.
-- Improve robustness of http api parameter evaluation and passing.
-- Improve Vega asset loading: Use https resources, better safe than sorry.
-- Add export format ".tsv" (text/tab-separated-values).
+- Documentation updates, add system diagrams to vendor :ref:`vendor-hiveeyes`
+- Export csv and json data with ISO format timestamps to satisfy dygraphs rendering in Firefox
+- Don't add "pad=true" or "backfill=true" when "interpolate=true" parameter was obtained from URL
+- Improve robustness of http api parameter evaluation and passing
+- Improve Vega asset loading: Use https resources, better safe than sorry
+- Add export format ".tsv" (text/tab-separated-values)
 
 
 2016-07-10 0.10.7

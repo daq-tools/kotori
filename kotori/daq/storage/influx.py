@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2015-2017 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import types
 import requests
+from funcy import project
 from collections import OrderedDict
 from twisted.logger import Logger
+from influxdb.client import InfluxDBClient, InfluxDBClientError
 from kotori.io.protocol.util import parse_timestamp
 
 log = Logger()
@@ -33,15 +35,6 @@ class InfluxDBAdapter(object):
 
         if self.connected:
             return True
-
-        if self.version == '0.8':
-            from influxdb.influxdb08.client import InfluxDBClient, InfluxDBClientError
-
-        elif self.version == '0.9':
-            from influxdb.client import InfluxDBClient, InfluxDBClientError
-
-        else:
-            raise ValueError('Unknown InfluxDB protocol version "{}"'.format(self.version))
 
         log.debug(u'Storage target is influxdb://{host}:{port}', **self.__dict__)
         self.influx = InfluxDBClient(
@@ -77,66 +70,9 @@ class InfluxDBAdapter(object):
         return True
 
 
-    def write_real(self, chunk):
-        """
-        format 0.8::
-
-            [
-                {
-                    "name": "telemetry",
-                    "columns": ["value"],
-                    "points": [
-                        [0.42]
-                    ]
-                }
-            ]
-
-        format 0.9::
-
-            [
-                {
-                    "measurement": "hiveeyes_100",
-                    "tags": {
-                        "host": "server01",
-                        "region": "europe"
-                    },
-                    "time": "2015-10-17T19:30:00Z",
-                    "fields": {
-                        "value": 0.42
-                    }
-                }
-            ]
-
-        """
-
+    def write(self, meta, data):
         try:
-            if self.version == '0.8':
-                pass
-
-            elif self.version == '0.9':
-                chunk = self.v08_to_09(chunk)
-
-            else:
-                raise ValueError('Unknown InfluxDB protocol version "{}"'.format(self.version))
-
-            # Extract timestamp from data
-            if 'time' in chunk['fields']:
-                if chunk['fields']['time']:
-                    chunk['time'] = chunk['fields']['time']
-                del chunk['fields']['time']
-
-            # TODO: Maybe do this at data acquisition / transformation time, not here.
-            if 'time' in chunk:
-                chunk['time'] = parse_timestamp(chunk['time'])
-
-            """
-            Prevent errors like
-            ERROR: InfluxDBClientError: 400:
-                           write failed: field type conflict:
-                           input field "pitch" on measurement "01_position" is type float64, already exists as type integer
-            """
-            self.chunk_to_float(chunk)
-
+            chunk = self.format_chunk(meta, data)
             success = self.influx.write_points([chunk], time_precision='n')
             if success:
                 log.debug(u"Storage success: {chunk}", chunk=chunk)
@@ -147,50 +83,81 @@ class InfluxDBAdapter(object):
         except requests.exceptions.ConnectionError:
             log.failure(u'InfluxDB connection error')
 
+        except ValueError as ex:
+            log.failure(u'Could not format chunk or write data (ex={ex}): data={data}, meta={meta}',
+                ex=ex, meta=dict(meta), data=data)
 
-    def v08_to_09(self, chunk08):
-        chunk09 = {
-            "measurement": chunk08["name"],
-            #"tags": {
-            #    "host": "server01",
-            #    "region": "us-west"
-            #},
-            #"time": "2009-11-10T23:00:00Z",  # TODO: use timestamp from downstream chunk
-            "fields": dict(zip(chunk08["columns"], chunk08["points"][0])),
+    @staticmethod
+    def get_tags(data):
+        return project(data, ['gateway', 'node'])
+
+    def format_chunk(self, meta, data):
+        """
+        Format for InfluxDB >= 0.9::
+        {
+            "measurement": "hiveeyes_100",
+            "tags": {
+                "host": "server01",
+                "region": "europe"
+            },
+            "time": "2015-10-17T19:30:00Z",
+            "fields": {
+                "value": 0.42
+            }
         }
-        #log.debug('chunk09: {chunk09}', chunk09=chunk09)
-        return chunk09
+        """
 
-    def chunk_to_float(self, chunk):
-        fields = chunk['fields']
-        for key, value in fields.iteritems():
+        chunk = {
+            "measurement": meta['measurement'],
+            "tags": {},
+        }
+
+        """
+        if "gateway" in meta:
+            chunk["tags"]["gateway"] = meta["gateway"]
+
+        if "node" in meta:
+            chunk["tags"]["node"]    = meta["node"]
+        """
+
+        # Extract timestamp from data
+        if 'time' in data:
+            if data['time']:
+                chunk['time'] = data['time']
+            del data['time']
+
+        # TODO: Maybe do this at data acquisition / transformation time, not here.
+        if 'time' in chunk:
+            chunk['time'] = parse_timestamp(chunk['time'])
+
+        """
+        Prevent errors like
+        ERROR: InfluxDBClientError: 400:
+                       write failed: field type conflict:
+                       input field "pitch" on measurement "01_position" is type float64, already exists as type integer
+        """
+        self.data_to_float(data)
+
+        chunk["fields"] = data
+
+        return chunk
+
+    def data_to_float(self, data):
+        for key, value in data.iteritems():
 
             # Sanity checks
             if type(value) in types.StringTypes:
                 continue
 
             if value is None:
-                fields[key] = None
+                data[key] = None
                 continue
 
             # Convert to float
             try:
-                fields[key] = float(value)
+                data[key] = float(value)
             except (TypeError, ValueError) as ex:
                 log.warn(u'Measurement "{key}: {value}" float conversion failed: {ex}', key=key, value=value, ex=ex)
-
-    def write(self, name, data):
-        columns = data.keys()
-        points = data.values()
-        return self.write_points(name, columns, points)
-
-    def write_points(self, name, columns, points):
-        chunk = {
-                    "name": name,
-                    "columns": columns,
-                    "points": [points],
-                }
-        return self.write_real(chunk)
 
 
 class BusInfluxForwarder(object):
@@ -242,7 +209,7 @@ class BusInfluxForwarder(object):
         log.debug('Storage location: {storage_location}', storage_location=dict(storage_location))
 
         # store data
-        self.store_message(storage_location.database, storage_location.series, message)
+        self.store_message(storage_location, message)
 
 
     def storage_location(self, data):
@@ -251,19 +218,19 @@ class BusInfluxForwarder(object):
     def store_encode(self, data):
         return data
 
-    def store_message(self, database, series, data):
+    def store_message(self, location, data):
 
         data = self.store_encode(data)
 
         influx = InfluxDBAdapter(
             settings = self.config['influxdb'],
-            database = database)
+            database = location.database)
 
-        outcome = influx.write(series, data)
+        outcome = influx.write(location, data)
         log.debug('Store outcome: {outcome}', outcome=outcome)
 
-        self.on_store(database, series, data)
+        self.on_store(location, data)
 
-    def on_store(self, database, series, data):
+    def on_store(self, location, data):
         pass
 

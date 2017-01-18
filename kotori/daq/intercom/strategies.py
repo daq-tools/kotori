@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2015-2017 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import re
 from bunch import Bunch
 
@@ -45,7 +45,7 @@ class WanBusStrategy(object):
         """
 
         # regular expression pattern for decoding MQTT topic address segments
-        pattern = r'^(?P<realm>.+?)/(?P<network>.+?)/(?P<gateway>.+?)/(?P<node>.+?)(?:/(?P<kind>.+?))?$'
+        pattern = r'^(?P<realm>.+?)/(?P<network>.+?)/(?P<gateway>.+?)/(?P<node>.+?)(?:/(?P<slot>.+?))?$'
 
         # decode the topic
         p = re.compile(pattern)
@@ -59,7 +59,7 @@ class WanBusStrategy(object):
 
 
     @classmethod
-    def topology_to_database(self, topology):
+    def topology_to_storage(self, topology):
         """
         Encode topology segment identifiers to database address.
 
@@ -76,13 +76,26 @@ class WanBusStrategy(object):
         We have a perfect fit for computing the slot where to store the measurements.
 
         """
-        # TODO: investigate using tags additionally to / instead of database.series
+
+        # TODO: Investigate using tags additionally to / instead of database.measurement
         sanitize = self.sanitize_db_identifier
-        database = Bunch({
-            'database': '{}_{}'.format(sanitize(topology.realm), sanitize(topology.network)),
-            'series':   '{}_{}'.format(sanitize(topology.gateway), sanitize(topology.node)),
-            })
-        return database
+
+        storage = Bunch()
+        for key, value in topology.iteritems():
+            storage[key] = sanitize(value)
+
+        if topology.slot.startswith('data'):
+            suffix = 'sensors'
+        elif topology.slot.startswith('event'):
+            suffix = 'events'
+        else:
+            suffix = 'unknown'
+
+        storage.database    = '{}_{}'.format(storage.realm, storage.network)
+        storage.measurement = '{}_{}_{}'.format(storage.gateway, storage.node, suffix)
+        storage.measurement_events = '{}_{}_{}'.format(storage.gateway, storage.node, 'events')
+
+        return storage
 
 
     @staticmethod

@@ -17,6 +17,7 @@
 .. Foundation DAQ
 .. _InfluxDB: https://influxdb.com/
 .. _Grafana: http://grafana.org/
+.. _Grafana Annotations: http://docs.grafana.org/reference/annotations/
 .. _Twisted: https://en.wikipedia.org/wiki/Twisted_(software)
 .. _Twisted Matrix Labs: https://twistedmatrix.com/
 .. _Crossbar.io: http://crossbar.io/

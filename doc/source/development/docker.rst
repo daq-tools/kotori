@@ -14,40 +14,40 @@ Global python packages
     pip install Twisted
 
 
+Boot2Docker
+===========
+... is only required for ancient Mac OSX releases.
 
-InfluxDB
-========
+- http://boot2docker.io/
+- https://github.com/boot2docker
 
-Installation via Docker
------------------------
+Installation
+------------
 - Install boot2docker
     - http://boot2docker.io/
     - see also https://docs.docker.com/installation/
 
-- Build InfluxDB Docker container::
+Start
+-----
+::
 
     boot2docker up
     eval "$(boot2docker shellinit)"
-    docker build --tag=influxdb https://raw.githubusercontent.com/crosbymichael/influxdb-docker/master/Dockerfile
-
-Remark:
-This Dockerfile pulls the "latest" version, which is InfluxDB 0.8.8 (influxdb-0.8.8.amd64.tar.gz) as of 2015-04-24.
-On the other hand, the 0.9 series in the making.
 
 
+InfluxDB
+========
+.. seealso::
+
+    - https://hub.docker.com/_/influxdb/
 
 Setup
 -----
 - Run InfluxDB Docker container::
 
-    boot2docker up
-    eval "$(boot2docker shellinit)"
+    docker pull influxdb:latest
 
-    # 0.8
-    docker run --publish=0.0.0.0:8083:8083 --publish=0.0.0.0:8086:8086 --name=influxdb influxdb:latest
-
-    # 0.9
-    docker run --publish=0.0.0.0:8083:8083 --publish=0.0.0.0:8086:8086 --name=influxdb09 influxdb/influxdb:latest
+    docker run --name=influxdb --detach=true --publish 8083:8083 --publish 8086:8086 influxdb
 
 
 Running
@@ -57,11 +57,7 @@ Running
     boot2docker up
     eval "$(boot2docker shellinit)"
 
-    # 0.8
     docker start influxdb
-
-    # 0.9
-    docker start influxdb09
 
 - Stop and remove Docker container::
 
@@ -71,23 +67,25 @@ Running
 
 Grafana
 =======
-See also: http://docs.grafana.org/installation/docker/
+.. seealso::
+
+    - https://hub.docker.com/r/grafana/grafana/
+    - http://docs.grafana.org/installation/docker/
 
 
 Installation via Docker
 -----------------------
 ::
 
-    boot2docker up
-    eval "$(boot2docker shellinit)"
+    docker pull grafana/grafana
 
     docker run \
-        --name=grafana213 \
-        --detach=false \
+        --name=grafana \
+        --detach=true \
         --publish=3000:3000 \
         --volume=/var/lib/grafana:/var/lib/grafana \
         --env='GF_SECURITY_ADMIN_PASSWORD=secret' \
-        grafana/grafana:latest
+        grafana/grafana
 
         #--volume=/etc/grafana:/etc/grafana \
 
@@ -96,7 +94,6 @@ Running
 -------
 ::
 
-    eval "$(boot2docker shellinit)"
     docker start grafana
 
 

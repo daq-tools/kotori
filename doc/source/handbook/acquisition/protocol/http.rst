@@ -110,7 +110,26 @@ When sending data readings using JSON or x-www-form-urlencoded, a timestamp may 
 Example::
 
     # Send readings with human-readable timestamp in UTC
-    http POST http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/data time=2016-12-07T17:30:15Z temperature:=42.84 humidity:=83
+    http POST http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/data time=2016-12-07T17:30:15.842428Z temperature:=42.84 humidity:=83
+
+See also the whole list of :ref:`daq-timestamp-formats`.
+
+
+.. _daq-http-annotation:
+
+Annotations
+===========
+`Grafana Annotations`_ can be created through the HTTP interface at the ``/event`` endpoint.
+While arbitrary fields can be submitted, Grafana_ evaluates the fields ``title``, ``text`` and ``tags``.
+It is possible to use HTML inside the ``text`` field, for example to link this event to another web application.
+
+The synopsis is::
+
+    http POST http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/event title='Some event' text='<a href="https://somewhere.example.org/events?reference=482a38ce-791e-11e6-b152-7cd1c55000be">see also</a>' tags='event,alert,important' reference='482a38ce-791e-11e6-b152-7cd1c55000be'
+
+Annotations can also be submitted retroactively, just add a ``time`` field::
+
+    http POST http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/event time=2016-12-07T17:30:15.842428Z title='Some event in the past'
 
 See also the whole list of :ref:`daq-timestamp-formats`.
 
@@ -150,19 +169,21 @@ Example::
 Readings with timestamp
 =======================
 When sending data readings using CSV, a timestamp may be supplied.
-Example::
+Examples::
 
     # 1. Send field names
     echo '## time, weight, temperature, humidity' | http POST http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/data Content-Type:text/csv
 
     # 2.a Send readings with human-readable timestamp in UTC
-    echo '2016-12-07T17:00:00Z, 50.42,40.02,82.82' | http POST http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/data Content-Type:text/csv
+    echo '2016-12-07T17:00:00.842428Z, 50.42,40.02,82.82' | http POST http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/data Content-Type:text/csv
 
     # 2.b Send readings with timestamp in nanoseconds since Epoch
     echo '1478021421000000000, 50.42,40.02,82.82' | http POST http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/data Content-Type:text/csv
 
     # 2.c Sending an empty timestamp will use current server time
     echo ', 50.42,40.02,82.82' | http POST http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/data Content-Type:text/csv
+
+See also the whole list of :ref:`daq-timestamp-formats`.
 
 
 Bulk readings
@@ -202,48 +223,6 @@ Example::
 
         - send timestamps using the field name ``time``
         - send timestamps in `ISO 8601`_ format, using UTC
-
-
-.. _daq-timestamp-formats:
-
-*****************
-Timestamp formats
-*****************
-Timestamped readings can be submitted in different formats using the data field ``time``.
-
-.. list-table:: Supported timestamp formats
-    :widths: 30 50
-    :header-rows: 1
-    :class: table-generous
-
-    * - Example
-      - Description
-
-    * - 2016-12-07T17:30:15Z
-      - Human readable timestamp in `ISO 8601`_ format, UTC
-
-    * - 2016-12-07T18:30:15+0100
-      - Human readable timestamp, also `ISO 8601`_, with UTC offset
-
-    * - 2016-12-07T18:30:15 CET
-      - `ISO 8601`_ with custom timezone offset: Central European Time (CET).
-
-    * - 2016-12-07T18:30:15
-      - `ISO 8601`_ without timezone.
-        Assume Europe/Berlin (CET) if no timezone is given.
-        It will also account for daylight saving time (DST),
-        so there's no specific need to use CEST vs. CET during summer.
-
-    * - | 1481131815000000000
-        | 1481131815000000
-        | 1481131815000
-        | 1481131815
-      - `Unix time`_ in nano-, micro- milli-, or whole seconds.
-
-.. note::
-
-    - Use http://www.epochconverter.com/ for converting epoch to human readable date and vice versa.
-    - Have a look at http://www.epochconverter.com/#code for doing the same programmatically.
 
 
 ****************************
