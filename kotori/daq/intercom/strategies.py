@@ -78,11 +78,6 @@ class WanBusStrategy(object):
         """
 
         # TODO: Investigate using tags additionally to / instead of database.measurement
-        sanitize = self.sanitize_db_identifier
-
-        storage = Bunch()
-        for key, value in topology.iteritems():
-            storage[key] = sanitize(value)
 
         if topology.slot.startswith('data'):
             suffix = 'sensors'
@@ -91,9 +86,14 @@ class WanBusStrategy(object):
         else:
             suffix = 'unknown'
 
-        storage.database    = '{}_{}'.format(storage.realm, storage.network)
-        storage.measurement = '{}_{}_{}'.format(storage.gateway, storage.node, suffix)
-        storage.measurement_events = '{}_{}_{}'.format(storage.gateway, storage.node, 'events')
+        # Use topology information as blueprint for storage address
+        storage = Bunch(topology)
+
+        # Format and sanitize all input parameters used for database addressing
+        sanitize = self.sanitize_db_identifier
+        storage.database    = sanitize('{}_{}'.format(storage.realm, storage.network))
+        storage.measurement = sanitize('{}_{}_{}'.format(storage.gateway, storage.node, suffix))
+        storage.measurement_events = sanitize('{}_{}_{}'.format(storage.gateway, storage.node, 'events'))
 
         return storage
 

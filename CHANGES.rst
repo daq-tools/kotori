@@ -5,6 +5,8 @@ Changelog
 
 in progress
 ===========
+- Data export: Fix addressing with relative timestamp, e.g. /data.txt?from=now-30d
+
 
 .. _kotori-0.11.0:
 
