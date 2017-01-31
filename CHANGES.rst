@@ -5,6 +5,11 @@ Changelog
 
 in progress
 ===========
+
+.. _kotori-0.11.0:
+
+2017-01-31 0.11.0
+=================
 - Get rid of ``/bus/mqtt`` in URI for HTTP API
 - Delegate MQTT message processing to separate thread
 - Run ``CREATE DATABASE`` only once to improve performance
