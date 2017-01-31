@@ -67,6 +67,7 @@ SCADA
 CAN
 ===
 - https://developer.mbed.org/questions/60979/CAN-library-example-code-fails-to-compil/
+- https://github.com/plumbum/usb2can
 
 OSC
 ===
@@ -223,3 +224,12 @@ KNX
 - https://www.knx.org/
 - https://de.wikipedia.org/wiki/KNX-Standard
 
+Teleinfo
+========
+- http://hallard.me/
+- https://github.com/hallard/remora_soft/blob/master/LibLibTeleinfo.cpp
+- http://hallard.me/teleinfo/
+- https://hallard.me/libteleinfo/
+- https://github.com/hallard/remora_soft
+- https://community.hallard.me/category/5/remora
+- http://www.enedis.fr/sites/default/files/ERDF-NOI-CPT_02E.pdf

@@ -17,6 +17,24 @@ Kotori tasks
 ****
 
 
+2017-01-25
+==========
+- https://github.com/sbabic/swupdate
+- https://github.com/ilbers/isar
+- https://github.com/ostreedev/ostree
+- https://github.com/cerebrux/uCareSystem
+- Write to Charles Hallard:
+  "Today I did not found any descent (for free) IoT management data, hoping this will change in the
+  next couple of months with IoT growing (but if you know good one, just let me know)."
+  -- https://hallard.me/particle-gateway/
+- Grafana "Organization in URL"
+    - https://github.com/alexzorin/grafana/commit/6f837ad2
+    - https://github.com/grafana/grafana/pull/3800
+    - https://github.com/grafana/grafana/issues/2777
+    - https://github.com/grafana/grafana/commit/1060eeb1
+- Reuse content from https://hiveeyes.org/docs/system/goals.html#no-vendor-lock-in
+
+
 2017-01-17
 ==========
 - Make default panels 400px high and put the legend on the right side
@@ -39,6 +57,7 @@ Watch Grafana issues
 - | Annotations on a single panel #717
   | https://github.com/grafana/grafana/issues/717
   | https://github.com/grafana/grafana/pull/3976
+- https://github.com/grafana/grafana/issues/1613
 
 Look at Grafana features
 ------------------------
@@ -74,6 +93,7 @@ Look at Grafana features
 ==========
 - Reduce periodic log traffic
 - Write to https://talk2.wisen.com.au/2016/05/24/influxdb-grafana/
+  and http://talk2forum.wisen.com.au/
 
 
 ****

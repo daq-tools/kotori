@@ -26,3 +26,6 @@ Links
 - http://www.homematic-inside.de/software/cuxdaemon/tag/HM-RASPBERRYMATIC
 - http://homematic-forum.de/forum/viewtopic.php?f=37&t=15298
 - http://fhem.de/fhem.html
+- | https://www.jeedom.com/
+  | https://github.com/jeedom
+
