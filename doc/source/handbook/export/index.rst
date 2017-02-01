@@ -160,6 +160,13 @@ This would yield the result with "weight" field omitted::
     2016-07-01 16:58:34.788767764,64.64,48.48
     2016-07-01 16:58:37.645754806,64.64,48.48
 
+There's also the url parameter ``include`` which does things the other way round:
+It will only export the named fields::
+
+    http GET $HTTP_URI/api/$MQTT_TOPIC/data.csv include=weight
+
+Both parameters take a comma-separated list of field names.
+
 
 Hierarchical data
 =================
