@@ -5,7 +5,14 @@ Changelog
 
 in progress
 ===========
+
+
+.. _kotori-0.11.1:
+
+2017-02-01 0.11.1
+=================
 - Data export: Fix addressing with relative timestamp, e.g. /data.txt?from=now-30d
+  as well as proper handling of ``include`` and ``exclude`` url parameters
 
 
 .. _kotori-0.11.0:
