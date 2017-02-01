@@ -688,12 +688,7 @@ Misc
 - [o] Prevent "useradd: user 'kotori' already exists" when upgrading package
 - [o] Activate email address "support@getkotori.org"
 - [o] Add contributors and credits to documentation
-- [o] Regularly check for new foundation packages
-
-    - https://s3.amazonaws.com/influxdb/
-    - https://packagecloud.io/grafana/stable
-    - https://github.com/fg2it/grafana-on-raspberry
-
+- [o] Regularly check for new foundation packages, see :ref:`foundation-packages`.
 - [o] Change GPG key passphrase on production package publishing host
 
 

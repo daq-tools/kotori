@@ -8,4 +8,5 @@ Packaging
 
     release
     build
+    foundation
 
