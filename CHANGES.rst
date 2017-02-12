@@ -12,6 +12,7 @@ in progress
 2017-02-12 0.11.4
 =================
 - Don’t always send http responses as text/plain
+- Catch MongoDB database errors, log and respond appropriately
 
 
 .. _kotori-0.11.3:

@@ -124,7 +124,7 @@ class HttpChannelContainer(Resource):
         mongodb_uri = "mongodb://localhost:27017"
 
         # TODO: Make MongoDB address configurable
-        self.metastore = pymongo.MongoClient(host='localhost', port=27017)
+        self.metastore = pymongo.MongoClient(host='localhost', port=27017, socketTimeoutMS=5000, connectTimeoutMS=5000)
 
     def registerEndpoint(self, methods=None, path=None, callback=None):
         """
@@ -382,8 +382,13 @@ class HttpChannelEndpoint(Resource):
 
                     return data_list
 
-                channel_info = csv_header_store.find_one(filter={"channel": request.channel_identifier})
-                return parse_data(channel_info)
+                try:
+                    channel_info = csv_header_store.find_one(filter={"channel": request.channel_identifier})
+                    return parse_data(channel_info)
+                except Exception as ex:
+                    log.failure('Could not process CSV data, database error: {0}'.format(ex))
+                    raise Error(http.INTERNAL_SERVER_ERROR,
+                        response='Could not process CSV data, database error: {0}'.format(ex))
 
             else:
                 msg = u"Unable to handle Content-Type '{content_type}'".format(content_type=content_type)
