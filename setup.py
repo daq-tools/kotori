@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 requires = [
 
     # Core
-    'Twisted==16.0.0',              # 16.2.0
+    'Twisted==17.1.0',              # 16.2.0
     'pyramid==1.5.7',
     'pyramid_jinja2==2.5',
     'cornice==1.0.0',               # 1.2.1
@@ -13,12 +13,12 @@ requires = [
     'Bunch==1.0.1',
     'appdirs==1.4.0',
     'json-store==2.1',
-    'arrow==0.8.0',
+    'arrow==0.10.0',
     'funcy==1.7.2',
 
     # Bus adapters
     #'twisted-mqtt==0.1.4',         # 0.2.1
-    'paho-mqtt==1.1',
+    'paho-mqtt==1.2',
     'autobahn[twisted]==0.13.0',    # 0.14.1
     'msgpack-python==0.4.7',
 
@@ -29,9 +29,9 @@ requires = [
 
 extras = {
     'daq': [
-        'influxdb==2.12.0',
+        'influxdb==4.0.0',
         'grafana_api_client==0.1.4',
-        'requests==2.10.0',
+        'requests==2.13.0',
         #'grafana-dashboard-builder==0.1.0a7',      # evaluated, but not suitable
         #'txmongo==16.3.0',
         'pymongo==3.4.0',
@@ -59,7 +59,7 @@ extras = {
         # sudo port install py27-matplotlib
         'matplotlib>=1.4.2',
         #'cairocffi>=0.5.4',
-        'bokeh==0.11.2',
+        'bokeh==0.12.4',
         'vincent==0.4.4',
     ],
 

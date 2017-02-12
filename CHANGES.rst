@@ -7,6 +7,13 @@ in progress
 ===========
 
 
+.. _kotori-0.11.3:
+
+2017-02-12 0.11.3
+=================
+- Upgrade some Python modules
+
+
 .. _kotori-0.11.2:
 
 2017-02-12 0.11.2
