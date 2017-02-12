@@ -17,6 +17,49 @@ Kotori tasks
 ****
 
 
+2017-02-06
+==========
+- MH: Solve problem re. sending values as strings <=> InfluxDB woes
+  See also https://community.hiveeyes.org/t/fehlersignalisierung-bei-datenakquise-backend/125
+- MH: Why does Grafana sometimes display values as Integers?
+
+
+2017-02-06
+==========
+- When importing a large CSV file (6MB), parallel imports of other resources are not possible. Why is that?
+  Hint: Thread-pool exhaustion at https://github.com/zerotired/kotori/blob/master/kotori/daq/services/mig.py#L63
+- Problem::
+
+    2017-02-06T02:49:04+0100 [kotori.daq.storage.influx          ] CRITICAL: Could not format chunk or write data (ex=Unknown string format): data={u'Gewicht1': u'Gewicht1', u'Gewichtsabw2': u'Gewichtsabw2', u'Gewicht3': u'Gewicht3', u'Gewichtsabw1': u'Gewichtsabw1', u'Gewicht4': u'Gewicht4', u'Gewichtsabw4': u'Gewichtsabw4', u'Gewichtsabw3': u'Gewichtsabw3', u'Gesamtgewicht': u'Gesamtgewicht', u'Temp3': u'Temp3', u'Temp2': u'Temp2', u'Temp1': u'Temp1', u'Gewicht2': u'Gewicht2', u'Gewichtabw': u'Gewichtabw'}, meta={'node': 'node-001', 'slot': 'data.json', 'realm': 'hiveeyes', 'network': 'testdrive-mh', 'database': 'hiveeyes_testdrive_mh', 'measurement_events': 'muenchen_node_001_events', 'measurement': 'muenchen_node_001_sensors', 'gateway': 'muenchen'}
+
+- Problem when using unicode characters like "Niederkrüchten-Overhetfeld" or field names like "'Temperatur außen'"::
+
+    exceptions.UnicodeEncodeError: 'ascii' codec can't encode character u'\xdf' in position 13: ordinal not in range(128)
+
+- https://swarm.hiveeyes.org/api/hiveeyes/testdrive-aw/Niederkr%C3%BCchten-Overhetfeld/node-001/data.txt?from=2016-01-01
+
+
+2017-02-01
+==========
+- Data export: How to sort fields?
+- How to handle CSV import errors like...?::
+
+    influxdb.exceptions.InfluxDBClientError: 400: {"error":"unable to parse 'berlin_node_002_sensors  1474570757000000000': invalid field format"}
+    influxdb.exceptions.InfluxDBClientError: 400: {"error":"unable to parse 'berlin_node_002_sensors  1474570815000000000': invalid field format"}
+    influxdb.exceptions.InfluxDBClientError: 400: {"error":"unable to parse 'berlin_node_002_sensors  1474570873000000000': invalid field format"}
+    influxdb.exceptions.InfluxDBClientError: 400: {"error":"unable to parse 'berlin_node_002_sensors  1474570931000000000': invalid field format"}
+    influxdb.exceptions.InfluxDBClientError: 400: {"error":"unable to parse 'berlin_node_002_sensors  1474570989000000000': invalid field format"}
+
+  See also https://community.hiveeyes.org/t/fehlersignalisierung-bei-datenakquise-backend/125
+
+
+2017-01-31
+==========
+- No appropriate stacktrace when using wrong transformer, e.g.::
+
+    transform       = kotori.daq.intercom.strategies:WanBusStrategy.topology_to_database,
+
+
 2017-01-25
 ==========
 - https://github.com/sbabic/swupdate
@@ -94,6 +137,12 @@ Look at Grafana features
 - Reduce periodic log traffic
 - Write to https://talk2.wisen.com.au/2016/05/24/influxdb-grafana/
   and http://talk2forum.wisen.com.au/
+
+
+2017-01-01
+==========
+For measuring fine dust particulates, the Berlin chapter of Freifunk is considering
+using our infrastructure, see also https://wiki.freifunk.net/Umweltstation.
 
 
 ****

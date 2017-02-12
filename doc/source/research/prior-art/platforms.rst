@@ -27,7 +27,14 @@ Cloud
 Open
 ====
 
-- | We are on a mission to build a global open crowdsourced Internet of Things data network.
+- | thingsboard.io
+  | Open-source IoT Platform
+  | Device management, data collection, processing and visualization for your IoT solution
+  | https://thingsboard.io/
+  | Written in Java. Uses Cassandra as storage.
+
+- | The Things Network
+  | We are on a mission to build a global open crowdsourced Internet of Things data network.
   | https://thethingsnetwork.org/
 
 - | phant.io
@@ -80,6 +87,11 @@ Open
 - | aREST
   | https://arest.io/
   | https://github.com/marcoschwartz/aREST
+
+- | Netbeast
+  | Netbeast is an open source platform that allows to connect IoT devices regardless of brand or technology
+  | https://getyeti.co/
+  | https://github.com/netbeast/dashboard
 
 Eclipse IoT
 -----------
@@ -220,6 +232,8 @@ Closed
 - | Infiswift: The most powerful IoT infrastructure
   | https://infiswift.com/
 
+- | http://gpio.online/
+  | https://twitter.com/gpioOnline
 
 
 
