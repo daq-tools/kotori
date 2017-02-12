@@ -248,7 +248,7 @@ class HttpChannelEndpoint(Resource):
             request.setHeader('Content-Type', 'application/json')
             return json.dumps(request.messages, indent=4)
         else:
-            request.setHeader('Content-Type', 'text/plain; charset=utf-8')
+            #request.setHeader('Content-Type', 'text/plain; charset=utf-8')
             return passthrough
 
     def read_request(self, bucket):
