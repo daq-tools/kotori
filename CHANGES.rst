@@ -7,6 +7,13 @@ in progress
 ===========
 
 
+.. _kotori-0.11.2:
+
+2017-02-12 0.11.2
+=================
+- Fix Grafana dashboard builder for vendor :ref:`vendor-hiveeyes`
+
+
 .. _kotori-0.11.1:
 
 2017-02-01 0.11.1
@@ -30,7 +37,7 @@ in progress
 
     - Improve robustness
     - Add new fields to existing panels on demand. Thanks, Smilie!
-    - Improve panel generator for :ref:`vendor-hiveeyes`
+    - Improve panel generator for vendor :ref:`vendor-hiveeyes`
 
 - Refactor data transformation machinery subsystems
 - Add API endpoints and routing for creating timeseries annotations

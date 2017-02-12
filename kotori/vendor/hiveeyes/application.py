@@ -13,10 +13,10 @@ log = Logger()
 class HiveeyesGrafanaManager(GrafanaManager):
 
     knowledge = [
-        {'name': 'temperature', 'prefixes': ['temp', 'Temp'],               'format': 'celsius'},
-        {'name': 'humidity',    'prefixes': ['hum'],                        'format': 'humidity'},
-        {'name': 'weight',      'prefixes': ['wght', 'weight', 'Gewicht'],  'label':  'kg'},
-        {'name': 'volume',      'prefixes': ['volume'],                     'label':  'dB', 'scale': 10},
+        {'name': 'temperature', 'prefixes': ['temp', 'Temp'],                           'format': 'celsius'},
+        {'name': 'humidity',    'prefixes': ['hum'],                                    'format': 'humidity'},
+        {'name': 'weight',      'prefixes': ['wght', 'weight', 'Gewicht', 'Weight'],    'label':  'kg'},
+        {'name': 'volume',      'prefixes': ['volume'],                                 'label':  'dB', 'scale': 10},
     ]
 
     def get_rule(self, fieldnames):
@@ -63,7 +63,8 @@ class HiveeyesGrafanaManager(GrafanaManager):
 
         # Add unused fields
         fields_unused = list(set(fields_given) - set(fields_used))
-        prefixes['misc'] = fields_unused
+        if fields_unused:
+            prefixes['misc'] = fields_unused
 
         return prefixes.values()
 
