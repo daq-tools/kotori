@@ -108,6 +108,10 @@ Eclipse IoT
 
 Half-open
 =========
+- | Smart Citizen Platform and Kit
+  | https://smartcitizen.me/
+  | https://github.com/fablabbcn/Smart-Citizen-Kit
+
 - | Relayr
   | http://relayr.io/
   | http://docs.relayr.io/

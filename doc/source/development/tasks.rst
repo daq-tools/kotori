@@ -17,6 +17,40 @@ Kotori tasks
 ****
 
 
+2017-02-13
+==========
+- | Use crossbar.io as MQTT -> WAMP bridge (and maybe vice versa)
+  | https://github.com/crossbario/crossbar/tree/master/crossbar/adapter/mqtt
+
+
+2017-02-12
+==========
+- https://swarm.hiveeyes.org/api/hiveeyes/testdrive-sg/dettelbach/node-001/data.bk?from=2016-01-01::
+
+    Uncaught TypeError: Bokeh.safely is not a function
+
+- https://swarm.hiveeyes.org/api/hiveeyes/43A88FD9-9EEA-4102-90DA-7BAC748C742D/MUC-MH-B99/9/data.png?renderer=ggplot&from=2017-02-09::
+
+    exceptions.AttributeError: 'Series' object has no attribute 'find'
+
+- https://swarm.hiveeyes.org/api/hiveeyes/kh/cfb/hive1/data.vega?from=2017-01-09::
+
+    exceptions.IOError: [Errno 2] No such file or directory: '/opt/kotori/lib/python2.7/site-packages/kotori/io/export/vega_template.html'
+
+- http https://swarm.hiveeyes.org/api/hiveeyes/kh/cfb/hive1/data.txt?from=20170130T080000::
+
+    Does not output all data (as of 2017-02-12). Currently just stops at 2017-02-04T08:36:09.015749Z,,,,,3.0,,
+    Hint: It's a limit of 10000!
+    See also:
+    - https://github.com/influxdata/influxdb/issues/61
+    - /etc/influxdb/influxdb.conf
+      # max-row-limit = 10000
+
+    => Raised to 100000.
+
+- Vendor Hiveeyes: Add tabular panel to default dashboard.
+
+
 2017-02-06
 ==========
 - MH: Solve problem re. sending values as strings <=> InfluxDB woes
@@ -124,11 +158,6 @@ Look at Grafana features
 2017-01-10
 ==========
 - Look into deburring: https://hackaday.io/project/4648-analogio-a-full-stack-iot-platform/log/25146-introducing-the-de-burr-filter
-- [o] Bug: node=cfb,gw=hive1 has the wrong order https://swarm.hiveeyes.org/grafana/dashboard/db/kh
-  see: https://swarm.hiveeyes.org/api/hiveeyes/kh/cfb/hive1/data.txt
-- [o] Bug: https://swarm.hiveeyes.org/api/hiveeyes/kh/cfb/hive1/data.vega?from=2017-01-09
-  exceptions.IOError: [Errno 2] No such file or directory: '/opt/kotori/lib/python2.7/site-packages/kotori/io/export/vega_template.html'
-- elbanco is slow: Add more CPU and Memory!
 - [o] Update to Grafana 4.1.0: https://github.com/fg2it/grafana-on-raspberry/releases
 
 

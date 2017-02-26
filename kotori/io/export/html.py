@@ -39,7 +39,7 @@ class GenericPage(Element):
         return tag(tags.p(
             'Powered by ',
             tags.a('Kotori', href='https://getkotori.org/'), ', ',
-            tags.a('InfluxDB', href='https://influxdata.com/time-series-platform/influxdb/'), ', ',
+            tags.a('InfluxDB', href='https://github.com/influxdata/influxdb'), ', ',
             tags.a('dygraphs', href='http://dygraphs.com/'), ' and ',
             tags.a('DataTables', href='https://datatables.net/'), '.'
         ))
