@@ -5,6 +5,10 @@ Changelog
 
 in progress
 ===========
+- Prepare CSV import of http://archive.luftdaten.info/
+
+    - Allow semicolon (``;``) as separator for CSV import
+    - Allow CSV field ``timestamp`` as alias for datetime
 
 
 .. _kotori-0.11.4:

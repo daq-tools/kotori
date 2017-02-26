@@ -341,7 +341,7 @@ class HttpChannelEndpoint(Resource):
                         options['rules'] = [{'type': 'fuse', 'source': ['Datum', 'Uhrzeit'], 'target': 'time', 'join': 'T', 'suffix': 'Z'}]
 
                     if header_line:
-                        header_line = header_line.replace('Date/Time', 'time').replace('Datum/Zeit', 'time')
+                        header_line = header_line.replace(';', ',').replace('Date/Time', 'time').replace('Datum/Zeit', 'time').replace('timestamp', 'time')
                         header_fields = map(str.strip, header_line.split(','))
                         msg = u'CSV Header: fields={fields}, key={key}'.format(fields=header_fields, key=request.channel_identifier)
                         log.info(msg)
@@ -374,7 +374,7 @@ class HttpChannelEndpoint(Resource):
 
                     data_list = []
                     for data_line in data_lines:
-                        data_fields = map(str.strip, data_line.split(','))
+                        data_fields = map(str.strip, data_line.replace(';', ',').split(','))
                         #print 'header_fields, data_fields:', header_fields, data_fields
                         data = OrderedDict(zip(header_fields, data_fields))
                         self.manipulate_data(data, channel_info)
