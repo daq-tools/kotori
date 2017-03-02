@@ -5,10 +5,13 @@ Changelog
 
 in progress
 ===========
-- Prepare CSV import of http://archive.luftdaten.info/
+- Prepare CSV import of http://archive.luftdaten.info/. Thanks, Richard!
 
     - Allow semicolon (``;``) as separator for CSV import
     - Allow CSV field ``timestamp`` as alias for datetime
+
+- Publish Grafana v4.2.0-beta1 debian packages to package repository,
+  see :ref:`foundation-packages` and :ref:`setup-debian`.
 
 
 .. _kotori-0.11.4:
