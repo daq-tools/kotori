@@ -48,6 +48,8 @@
 .. _ARMmbed ESP8266 MQTT example: https://developer.mbed.org/teams/ESP8266/code/ESP8266_MQTT_HelloWorld/
 .. _Adafruit MQTT Library: https://github.com/adafruit/Adafruit_MQTT_Library
 .. _Arduino JSON library: https://github.com/bblanchon/ArduinoJson
+.. _Homie: https://homie-esp8266.readme.io/
+.. _homie-esp8266: https://github.com/marvinroger/homie-esp8266
 
 .. Foundation Export
 .. _pandas: http://pandas.pydata.org/

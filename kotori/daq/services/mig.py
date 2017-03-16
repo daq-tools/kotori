@@ -3,7 +3,7 @@
 import time
 import json
 from bunch import Bunch
-from twisted.logger import Logger
+from twisted.logger import Logger, LogLevel
 from twisted.internet import reactor, threads
 from twisted.internet.task import LoopingCall
 from twisted.application.service import MultiService
@@ -66,10 +66,15 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             #return self.process_message(topic, payload, **kwargs)
 
             # Asynchronous message processing
-            return threads.deferToThread(self.process_message, topic, payload, **kwargs)
+            deferred = threads.deferToThread(self.process_message, topic, payload, **kwargs)
+            deferred.addErrback(self.mqtt_receive_error, topic)
+            return deferred
 
         except Exception:
             log.failure(u'Processing MQTT message failed. topic={topic}, payload={payload}', topic=topic, payload=payload)
+
+    def mqtt_receive_error(self, failure, topic):
+        log.failure('Error processing MQTT message from topic "{topic}": {log_failure}', topic=topic, failure=failure, level=LogLevel.error)
 
     def process_message(self, topic, payload, **kwargs):
 
@@ -81,16 +86,15 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             #log.info('Ignoring message to topic {topic}, realm={realm}', topic=topic, realm=self.channel.realm)
             return False
 
-        message_valid = False
-
         # Compute storage address from topic
         topology = self.topic_to_topology(topic)
         log.debug(u'Topology address: {topology}', topology=dict(topology))
 
         message_type = None
+        message = None
 
-        # Multiple measurements in json object
-        if topic.endswith('data.json') or topic.endswith('message-json'):
+        # a) En bloc: Multiple measurements in JSON object
+        if topic.endswith('data.json') or topic.endswith('data/__json__') or topic.endswith('message-json'):
 
             # This is sensor data
             message_type = 'data'
@@ -98,20 +102,23 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             # Decode message from json format
             message = json.loads(payload)
 
-        # TODO: Backward compat for single readings - remove!
-        if 'slot' in topology and topology.slot.startswith('measure/'):
-            topology.slot = topology.slot.replace('measure/', 'data/')
+        # b) Discrete values
+        else:
 
-        # Single measurement as plain value; assume float
-        if 'slot' in topology and topology.slot.startswith('data/'):
+            # TODO: Backward compat for single readings - remove!
+            if 'slot' in topology and topology.slot.startswith('measure/'):
+                topology.slot = topology.slot.replace('measure/', 'data/')
 
-            # This is sensor data
-            message_type = 'data'
+            # Single measurement as plain value; assume float
+            if 'slot' in topology and topology.slot.startswith('data/'):
 
-            # Amend topic and compute storage message from single scalar value
-            name = topology.slot.replace('data/', '')
-            value = float(payload)
-            message = {name: value}
+                # This is sensor data
+                message_type = 'data'
+
+                # Amend topic and compute storage message from single scalar value
+                name = topology.slot.replace('data/', '')
+                value = float(payload)
+                message = {name: value}
 
 
         # Set an event

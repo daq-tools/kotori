@@ -7,6 +7,14 @@ in progress
 ===========
 
 
+.. _kotori-0.12.0:
+
+2017-03-16 0.12.0
+=================
+- Tap into data transmission from Homie_-based sensor nodes for ESP8266 (e.g. `node-wifi-mqtt-homie.ino`_).
+  See also :ref:`json-homie`. Thanks, Alex!
+
+
 .. _kotori-0.11.5:
 
 2017-03-16 0.11.5
