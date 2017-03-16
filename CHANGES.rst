@@ -5,6 +5,12 @@ Changelog
 
 in progress
 ===========
+
+
+.. _kotori-0.11.5:
+
+2017-03-16 0.11.5
+=================
 - Prepare CSV import of http://archive.luftdaten.info/. Thanks, Richard!
 
     - Allow semicolon (``;``) as separator for CSV import
@@ -12,6 +18,9 @@ in progress
 
 - Publish Grafana v4.2.0-beta1 debian packages to package repository,
   see :ref:`foundation-packages` and :ref:`setup-debian`.
+
+- Fix SSL runtime dependency woes ``AttributeError: 'module' object has no attribute 'OP_NO_TLSv1_1'``
+  with Twisted-17.1.0 vs. python-openssl vs. pyOpenSSL. Thanks, Matthias!
 
 
 .. _kotori-0.11.4:

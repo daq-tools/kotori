@@ -4,7 +4,8 @@ from setuptools import setup, find_packages
 requires = [
 
     # Core
-    'Twisted==17.1.0',              # 16.2.0
+    'Twisted==17.1.0',
+    'pyOpenSSL==16.2.0',
     'pyramid==1.5.7',
     'pyramid_jinja2==2.5',
     'cornice==1.0.0',               # 1.2.1
