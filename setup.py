@@ -4,8 +4,8 @@ from setuptools import setup, find_packages
 requires = [
 
     # Core
-    'Twisted==17.1.0',
-    'pyOpenSSL==16.2.0',
+    'Twisted[tls]==17.1.0',
+    #'pyOpenSSL==16.2.0',           # maybe, please test using the [tls] extra instead!
     'pyramid==1.5.7',
     'pyramid_jinja2==2.5',
     'cornice==1.0.0',               # 1.2.1
@@ -102,7 +102,7 @@ extras = {
 }
 
 setup(name='kotori',
-      version='0.11.5',
+      version='0.12.0',
       description='Kotori data acquisition, routing and graphing toolkit',
       long_description='Kotori data acquisition, routing and graphing toolkit',
       license="AGPL 3, EUPL 1.2",
@@ -158,7 +158,7 @@ setup(name='kotori',
       install_requires=requires,
       extras_require=extras,
       dependency_links=[
-          #'https://github.com/tavendo/AutobahnPython/tarball/cb322f78ffaa2a5#egg=autobahn-0.11.5',
+          #'https://github.com/tavendo/AutobahnPython/tarball/cb322f78ffaa2a5#egg=autobahn-0.12.0',
           'https://github.com/jjmalina/pyinfluxql/tarball/d92db4ab8c#egg=pyinfluxql-0.0.1',
       ],
       entry_points={
