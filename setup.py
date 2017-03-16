@@ -102,7 +102,7 @@ extras = {
 }
 
 setup(name='kotori',
-      version='0.11.4',
+      version='0.11.5',
       description='Kotori data acquisition, routing and graphing toolkit',
       long_description='Kotori data acquisition, routing and graphing toolkit',
       license="AGPL 3, EUPL 1.2",
@@ -124,6 +124,7 @@ setup(name='kotori',
         "Topic :: Communications",
         "Topic :: Database",
         "Topic :: Internet",
+        "Topic :: Internet :: MQTT",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
         "Topic :: Internet :: WWW/HTTP :: WSGI",
@@ -157,7 +158,7 @@ setup(name='kotori',
       install_requires=requires,
       extras_require=extras,
       dependency_links=[
-          #'https://github.com/tavendo/AutobahnPython/tarball/cb322f78ffaa2a5#egg=autobahn-0.11.4',
+          #'https://github.com/tavendo/AutobahnPython/tarball/cb322f78ffaa2a5#egg=autobahn-0.11.5',
           'https://github.com/jjmalina/pyinfluxql/tarball/d92db4ab8c#egg=pyinfluxql-0.0.1',
       ],
       entry_points={
