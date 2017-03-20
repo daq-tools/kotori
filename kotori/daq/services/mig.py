@@ -3,10 +3,12 @@
 import time
 import json
 from bunch import Bunch
+from kotori.thimble import Thimble
 from twisted.logger import Logger, LogLevel
 from twisted.internet import reactor, threads
 from twisted.internet.task import LoopingCall
 from twisted.application.service import MultiService
+from twisted.python.threadpool import ThreadPool
 from kotori.configuration import read_list
 from kotori.daq.services import MultiServiceMixin
 from kotori.daq.intercom.mqtt import MqttAdapter
@@ -43,6 +45,10 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
         self.registerService(self.mqtt_service)
 
+        # Perform MQTT message processing using a different thread pool
+        self.threadpool = ThreadPool()
+        self.thimble = Thimble(reactor, self.threadpool, self, ["process_message"])
+
     def startService(self):
         self.setupService()
         self.log(log.info, u'Starting')
@@ -66,7 +72,11 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             #return self.process_message(topic, payload, **kwargs)
 
             # Asynchronous message processing
-            deferred = threads.deferToThread(self.process_message, topic, payload, **kwargs)
+            #deferred = threads.deferToThread(self.process_message, topic, payload, **kwargs)
+
+            # Asynchronous message processing using different thread pool
+            deferred = self.thimble.process_message(topic, payload, **kwargs)
+
             deferred.addErrback(self.mqtt_receive_error, topic)
             return deferred
 

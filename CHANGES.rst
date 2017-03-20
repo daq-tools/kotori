@@ -7,6 +7,13 @@ in progress
 ===========
 
 
+.. _kotori-0.13.0:
+
+2017-03-20 0.13.0
+=================
+- Concurrency improvements: Don’t use the main reactor thread for MQTT message processing. Use a different thread pool instead.
+
+
 .. _kotori-0.12.3:
 
 2017-03-20 0.12.3
