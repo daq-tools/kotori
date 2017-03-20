@@ -17,6 +17,7 @@ requires = [
     'python-dateutil==2.6.0',
     'arrow==0.10.0',
     'funcy==1.7.2',
+    'pyasn1==0.2.3',
 
     # Bus adapters
     #'twisted-mqtt==0.1.4',         # 0.2.1
@@ -26,6 +27,7 @@ requires = [
 
     # Misc
     'setuptools==22.0.5',           # 20.6.7; setuptools>=18.3.1 is required by set(['crossbar'])
+    'distlib==0.2.4',
     'docopt==0.6.2',
 ]
 
@@ -159,7 +161,6 @@ setup(name='kotori',
       install_requires=requires,
       extras_require=extras,
       dependency_links=[
-          #'https://github.com/tavendo/AutobahnPython/tarball/cb322f78ffaa2a5#egg=autobahn-0.12.1',
           'https://github.com/jjmalina/pyinfluxql/tarball/d92db4ab8c#egg=pyinfluxql-0.0.1',
       ],
       entry_points={
