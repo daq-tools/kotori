@@ -80,7 +80,10 @@ Choose one of these ways to install HTTPie_, depending on your platform::
     # Debian/Ubuntu
     apt install httpie
 
-    # Macports
+    # Mac OSX: Homebrew
+    brew install httpie
+
+    # Mac OSX: Macports
     port install httpie
 
     # Vanilla Python

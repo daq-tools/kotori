@@ -17,6 +17,22 @@ Kotori tasks
 ****
 
 
+2017-03-20
+==========
+- When sending a field like "vcc", the name is not reflected in the panel title appropriately as "vcc @ device=x, site=y"
+
+
+2017-03-08
+==========
+Annotations - "delete event"::
+
+    influx
+    > use hiveeyes_43a88fd9_9eea_4102_90da_7bac748c742d
+    > show measurements
+    > select * from muc_mh_b99_1_events
+    > delete from muc_mh_b99_1_events where time=1488643668000000000
+
+
 2017-02-13
 ==========
 - | Use crossbar.io as MQTT -> WAMP bridge (and maybe vice versa)

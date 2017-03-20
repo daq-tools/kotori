@@ -14,8 +14,8 @@ Foundation packages
 ********
 InfluxDB
 ********
-- https://s3.amazonaws.com/influxdb/
 - https://www.influxdata.com/downloads/#influxdb
+- https://s3.amazonaws.com/influxdb/ (deprecated)
 
 Download package
 ================

@@ -89,7 +89,7 @@ publish-sdist: sdist
 
 publish-debian:
 	# publish Debian packages
-	rsync -auv ./dist/kotori*.deb workbench@packages.elmyra.de:/srv/packages/organizations/elmyra/foss/aptly/public/incoming/
+	rsync -auv --progress ./dist/kotori*.deb workbench@packages.elmyra.de:/srv/packages/organizations/elmyra/foss/aptly/public/incoming/
 
 check-bump-options:
 	@if test "$(bump)" = ""; then \
