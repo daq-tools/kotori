@@ -21,7 +21,7 @@ It is based on:
 
 - `Twisted <https://en.wikipedia.org/wiki/Twisted_(software)>`_
 - `InfluxDB <https://github.com/influxdata/influxdb>`_
-- `MongoDB <https://github.com/mongodb/mongo`_
+- `MongoDB <https://github.com/mongodb/mongo>`_
 - `Mosquitto <https://github.com/eclipse/mosquitto>`_
 - `Grafana <https://github.com/grafana/grafana>`_
 
