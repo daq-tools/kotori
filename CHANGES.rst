@@ -7,6 +7,13 @@ in progress
 ===========
 
 
+.. _kotori-0.12.3:
+
+2017-03-20 0.12.3
+=================
+- Ubuntu 16.04 compatibility: Nail some more Python dependency modules
+
+
 .. _kotori-0.12.2:
 
 2017-03-20 0.12.2

@@ -5,7 +5,6 @@ requires = [
 
     # Core
     'Twisted[tls]==17.1.0',
-    #'pyOpenSSL==16.2.0',           # maybe, please test using the [tls] extra instead!
     'pyramid==1.5.7',
     'pyramid_jinja2==2.5',
     'cornice==1.0.0',               # 1.2.1
@@ -17,7 +16,6 @@ requires = [
     'python-dateutil==2.6.0',
     'arrow==0.10.0',
     'funcy==1.7.2',
-    'pyasn1==0.2.3',
 
     # Bus adapters
     #'twisted-mqtt==0.1.4',         # 0.2.1
@@ -29,6 +27,13 @@ requires = [
     'setuptools==22.0.5',           # 20.6.7; setuptools>=18.3.1 is required by set(['crossbar'])
     'distlib==0.2.4',
     'docopt==0.6.2',
+
+    # More dependencies (required for running on Ubuntu 16.04)
+    'pyOpenSSL==16.2.0',
+    'pyasn1==0.2.3',
+    'pycparser==2.17',
+    'pyparsing==2.2.0',
+
 ]
 
 extras = {
