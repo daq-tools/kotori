@@ -14,6 +14,7 @@ requires = [
     'Bunch==1.0.1',
     'appdirs==1.4.0',
     'json-store==2.1',
+    'python-dateutil==2.6.0',
     'arrow==0.10.0',
     'funcy==1.7.2',
 

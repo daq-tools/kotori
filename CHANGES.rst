@@ -7,6 +7,13 @@ in progress
 ===========
 
 
+.. _kotori-0.12.1:
+
+2017-03-20 0.12.1
+=================
+- Add Python dependency “python-dateutil”
+
+
 .. _kotori-0.12.0:
 
 2017-03-16 0.12.0
