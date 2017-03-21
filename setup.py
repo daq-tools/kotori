@@ -89,7 +89,7 @@ extras = {
         # Algorithms
         # ----------
         # sudo port install py27-scipy
-        'scipy>=0.14.0',
+        'scipy>=0.14.1',
         'ggplot==0.9.7',
 
         # gfortran
@@ -110,7 +110,7 @@ extras = {
 }
 
 setup(name='kotori',
-      version='0.14.0',
+      version='0.14.1',
       description='Kotori data acquisition, routing and graphing toolkit',
       long_description='Kotori data acquisition, routing and graphing toolkit',
       license="AGPL 3, EUPL 1.2",
