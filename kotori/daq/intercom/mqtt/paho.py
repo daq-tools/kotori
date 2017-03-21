@@ -25,6 +25,9 @@ class PahoMqttAdapter(BaseMqttAdapter, Service):
         #       => Check if we can do asynchronous connection establishment.
         self.client = mqtt.Client(client_id=self.name, clean_session=True, userdata={'foo': 'bar'})
 
+        if self.broker_username:
+            self.client.username_pw_set(self.broker_username, self.broker_password)
+
         self.client.on_connect = lambda *args: reactor.callFromThread(self.on_connect, *args)
         self.client.on_message = lambda *args: reactor.callFromThread(self.on_message, *args)
         self.client.on_log     = lambda *args: reactor.callFromThread(self.on_log, *args)

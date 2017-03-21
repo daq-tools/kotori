@@ -9,10 +9,14 @@ log = Logger()
 
 class BaseMqttAdapter(object):
 
-    def __init__(self, name, broker_host=u'localhost', broker_port=1883, debug=False, callback=None, subscriptions=None):
+    def __init__(self, name,
+                 broker_host=u'localhost', broker_port=1883, broker_username=None, broker_password=None,
+                 debug=False, callback=None, subscriptions=None):
         self.name = name
         self.broker_host = broker_host
         self.broker_port = broker_port
+        self.broker_username = broker_username
+        self.broker_password = broker_password
         self.callback = callback or self.on_message
         self.subscriptions = subscriptions or []
 

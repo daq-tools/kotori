@@ -7,11 +7,19 @@ in progress
 ===========
 
 
+.. _kotori-0.14.0:
+
+2017-03-21 0.14.0
+=================
+- Connect to the MQTT broker with authentication (default: kotori/kotori)
+  to be able to apply Mosquitto ACLs to distinct MQTT topics
+
+
 .. _kotori-0.13.0:
 
 2017-03-20 0.13.0
 =================
-- Concurrency improvements: Don’t use the main reactor thread for MQTT message processing. Use a different thread pool instead.
+- Concurrency improvements: Don’t use the main reactor thread for MQTT message processing. Use a different thread pool instead
 
 
 .. _kotori-0.12.3:
