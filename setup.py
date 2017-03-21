@@ -89,7 +89,7 @@ extras = {
         # Algorithms
         # ----------
         # sudo port install py27-scipy
-        'scipy>=0.14.1',
+        'scipy>=0.14.0',
         'ggplot==0.9.7',
 
         # gfortran
