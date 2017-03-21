@@ -20,7 +20,7 @@ requires = [
     # Bus adapters
     #'twisted-mqtt==0.1.4',         # 0.2.1
     'paho-mqtt==1.2',
-    'autobahn[twisted]==0.14.0',    # 0.14.1
+    'autobahn[twisted]==0.13.0',    # 0.14.1
     'msgpack-python==0.4.7',
 
     # Misc
