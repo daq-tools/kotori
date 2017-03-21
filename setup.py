@@ -20,7 +20,7 @@ requires = [
     # Bus adapters
     #'twisted-mqtt==0.1.4',         # 0.2.1
     'paho-mqtt==1.2',
-    'autobahn[twisted]==0.13.0',    # 0.14.1
+    'autobahn[twisted]==0.14.0',    # 0.14.1
     'msgpack-python==0.4.7',
 
     # Misc
@@ -110,7 +110,7 @@ extras = {
 }
 
 setup(name='kotori',
-      version='0.13.0',
+      version='0.14.0',
       description='Kotori data acquisition, routing and graphing toolkit',
       long_description='Kotori data acquisition, routing and graphing toolkit',
       license="AGPL 3, EUPL 1.2",
