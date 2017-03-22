@@ -5,23 +5,23 @@ requires = [
 
     # Core
     'Twisted[tls]==17.1.0',
-    'pyramid==1.5.7',
-    'pyramid_jinja2==2.5',
+    'pyramid==1.5.7',               # 1.8.3
+    'pyramid_jinja2==2.5',          # 2.7
     'cornice==1.0.0',               # 1.2.1
-    'simplejson==3.8.2',
-    'Jinja2==2.8',
+    'simplejson==3.8.2',            # 3.10.0
+    'Jinja2==2.8',                  # 2.9.5
     'Bunch==1.0.1',
-    'appdirs==1.4.0',
+    'appdirs==1.4.0',               # 1.4.3
     'json-store==2.1',
     'python-dateutil==2.6.0',
     'arrow==0.10.0',
-    'funcy==1.7.2',
+    'funcy==1.7.2',                 # 1.7.3
 
     # Bus adapters
     #'twisted-mqtt==0.1.4',         # 0.2.1
     'paho-mqtt==1.2',
-    'autobahn[twisted]==0.13.0',    # 0.14.2
-    'msgpack-python==0.4.7',
+    'autobahn[twisted]==0.13.0',    # 0.17.2
+    'msgpack-python==0.4.7',        # 0.4.8
 
     # Misc
     'setuptools==22.0.5',           # 20.6.7; setuptools>=18.3.1 is required by set(['crossbar'])
