@@ -7,6 +7,13 @@ in progress
 ===========
 
 
+.. _kotori-0.14.3:
+
+2017-03-22 0.14.3
+=================
+- Properly use MQTT authentication also when publishing MQTT messages received via HTTP
+
+
 .. _kotori-0.14.2:
 
 2017-03-22 0.14.2

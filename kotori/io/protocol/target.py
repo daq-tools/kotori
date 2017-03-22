@@ -47,7 +47,9 @@ class ForwarderTargetService(MultiServiceMixin, MultiService):
             self.downstream = MqttAdapter(
                 name          = self.name + '-downstream',
                 broker_host   = self.settings.mqtt.host,
-                broker_port   = int(self.settings.mqtt.port))
+                broker_port   = int(self.settings.mqtt.port),
+                broker_username = self.settings.mqtt.username,
+                broker_password = self.settings.mqtt.password)
 
         elif self.scheme == 'influxdb':
             # InfluxDB has no subsystem service, it's just an adapter
