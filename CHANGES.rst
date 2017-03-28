@@ -7,6 +7,14 @@ in progress
 ===========
 
 
+.. _kotori-0.15.0:
+
+2017-03-29 0.15.0
+=================
+- Add convenience handler for importing data from http://archive.luftdaten.info/
+- Fix CSV import exception handling
+
+
 .. _kotori-0.14.3:
 
 2017-03-22 0.14.3

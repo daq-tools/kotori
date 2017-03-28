@@ -340,7 +340,13 @@ class HttpChannelEndpoint(Resource):
                         data_lines.pop(0)
                         options['rules'] = [{'type': 'fuse', 'source': ['Datum', 'Uhrzeit'], 'target': 'time', 'join': 'T', 'suffix': 'Z'}]
 
+                    # Convenience hack to support import from http://archive.luftdaten.info/
+                    elif first_line.startswith('sensor_id'):
+                        header_line = first_line
+                        data_lines.pop(0)
+
                     if header_line:
+                        # Streamline various differences for even more convenience
                         header_line = header_line.replace(';', ',').replace('Date/Time', 'time').replace('Datum/Zeit', 'time').replace('timestamp', 'time')
                         header_fields = map(str.strip, header_line.split(','))
                         msg = u'CSV Header: fields={fields}, key={key}'.format(fields=header_fields, key=request.channel_identifier)
@@ -384,11 +390,12 @@ class HttpChannelEndpoint(Resource):
 
                 try:
                     channel_info = csv_header_store.find_one(filter={"channel": request.channel_identifier})
-                    return parse_data(channel_info)
                 except Exception as ex:
-                    log.failure('Could not process CSV data, database error: {0}'.format(ex))
+                    log.failure('Could not process CSV data, unknown database error: {0}'.format(ex))
                     raise Error(http.INTERNAL_SERVER_ERROR,
-                        response='Could not process CSV data, database error: {0}'.format(ex))
+                        response='Could not process CSV data, unknown database error: {0}'.format(ex))
+
+                return parse_data(channel_info)
 
             else:
                 msg = u"Unable to handle Content-Type '{content_type}'".format(content_type=content_type)
