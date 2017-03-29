@@ -5,6 +5,8 @@ Changelog
 
 in progress
 ===========
+- Add standalone program to request data from live API of luftdaten.info,
+  enrich geospatial information and publish to MQTT bus
 
 
 .. _kotori-0.15.0:
