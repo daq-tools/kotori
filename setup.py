@@ -160,7 +160,8 @@ setup(name='kotori',
       include_package_data=True,
       package_data={
         'kotori': [
-          'daq/graphing/resources/*.*',
+          'daq/graphing/resources/*.json',
+          'io/export/*.html',
         ],
       },
       zip_safe=False,

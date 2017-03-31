@@ -1,1 +1,1 @@
-recursive-include kotori *.json
+recursive-include kotori *.json *.html
