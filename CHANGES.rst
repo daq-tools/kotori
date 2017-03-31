@@ -7,6 +7,7 @@ in progress
 ===========
 - Add standalone program to request data from live API of luftdaten.info,
   enrich geospatial information and publish to MQTT bus. Thanks, Richard!
+- Add documentation and configuration for vendor “luftdaten.info”. Thanks, Richard!
 
 
 .. _kotori-0.15.0:

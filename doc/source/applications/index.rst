@@ -95,6 +95,24 @@ Hiveeyes
 
 |clearfix|
 
+----
+
+**************
+luftdaten.info
+**************
+
+.. container:: legroom-md
+
+    .. container:: pull-left2 basic-hero align-right2
+
+        An air quality monitoring platform based on open source and open hardware.
+
+    .. container:: text-xx-large
+
+        :ref:`Read all about it... <vendor-luftdaten.info>`
+
+
+|clearfix|
 
 ----
 
