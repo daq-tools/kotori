@@ -112,7 +112,7 @@ Import CSV data (see above).
 
 Phase 2
 =======
-Feed data from https://api.luftdaten.info/static/v1/data.json to MQTT using
+Feed data from live data API https://api.luftdaten.info/static/v1/data.json to MQTT using
 `api_to_mqtt.py <https://github.com/zerotired/kotori/blob/master/kotori/vendor/luftdaten/api_to_mqtt.py>`_.
 
 [29.03.17 16:44:09] Richard Pobering: ping. ich habe das dashboard jetzt inhaltlich nochmal ein bisschen angepasst:

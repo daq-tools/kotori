@@ -30,6 +30,77 @@ Result::
 
 """
 
+"""
+Example for DHT22 sensor::
+
+    {
+        "id": 59625316,
+        "location": {
+            "id": 312,
+            "latitude": "48.647",
+            "longitude": "9.445"
+        },
+        "sampling_rate": null,
+        "sensor": {
+            "id": 660,
+            "pin": "7",
+            "sensor_type": {
+                "id": 9,
+                "manufacturer": "various",
+                "name": "DHT22"
+            }
+        },
+        "sensordatavalues": [
+            {
+                "id": 169745466,
+                "value": "44.30",
+                "value_type": "humidity"
+            },
+            {
+                "id": 169745465,
+                "value": "15.80",
+                "value_type": "temperature"
+            }
+        ],
+        "timestamp": "2017-03-30T19:24:02"
+    }
+
+Example for SDS011 sensor::
+
+    {
+        "id": 59625314,
+        "location": {
+            "id": 220,
+            "latitude": "48.741",
+            "longitude": "9.317"
+        },
+        "sampling_rate": null,
+        "sensor": {
+            "id": 467,
+            "pin": "1",
+            "sensor_type": {
+                "id": 14,
+                "manufacturer": "Nova Fitness",
+                "name": "SDS011"
+            }
+        },
+        "sensordatavalues": [
+            {
+                "id": 169745461,
+                "value": "6.73",
+                "value_type": "P1"
+            },
+            {
+                "id": 169745462,
+                "value": "4.48",
+                "value_type": "P2"
+            }
+        ],
+        "timestamp": "2017-03-30T19:24:02"
+    },
+
+"""
+
 # Configuration
 api_url     = 'https://api.luftdaten.info/static/v1/data.json'
 mqtt_broker = 'luftdaten.getkotori.org'
@@ -49,6 +120,7 @@ def request_and_publish():
         timestamp = item['timestamp']
         location_id = item['location']['id']
         sensor_id = item['sensor']['id']
+        sensor_type = item['sensor']['sensor_type']['name']
         readings = {}
         for sensor in item['sensordatavalues']:
             name = sensor['value_type']
@@ -63,6 +135,7 @@ def request_and_publish():
         readings['time'] = timestamp
         readings['geohash'] = geohash(item['location']['latitude'], item['location']['longitude'])
         readings['location_name'] = reverse_geocode(item['location']['latitude'], item['location']['longitude'])
+        readings['sensor_type'] = sensor_type
         readings.update(address)
 
         publish_mqtt(address, readings)
@@ -100,6 +173,10 @@ def reverse_geocode(latitude, longitude):
         elif 'city_district' in address:
             address['city'] = address['city_district']
 
+        # Stadtstaat FTW!
+        elif 'state' in address:
+            address['city'] = address['state']
+
     # Add more convenience for handling Stadtstaaten
     if 'city' in address and 'state' in address and address['city'] == address['state']:
         if 'suburb' in address:
@@ -107,13 +184,30 @@ def reverse_geocode(latitude, longitude):
         elif 'city_district' in address:
             address['city'] = address['city_district']
 
-    # TODO: Maybe use neighbourhood vs. suburb vs. city_district
-    # TODO: Handle "building"
+    # Stadtteil FTW
+    if 'suburb' not in address:
+        address['suburb'] = address['residential']
+
+    """
+    Get this sorted: https://wiki.openstreetmap.org/wiki/Key:place !!!
+    Get urban vs. rural sorted out
+
+    1. country
+    2. state
+    3. "Überregional": "q-region"
+        - county, state_district, state
+    4. "Regional": "q-hood"
+        - neighbourhood vs. quarter vs. residential vs. suburb vs. city_district vs. city
+
+    How to handle "building", "public_building", "residential", "pedestrian", "kindergarten", "clothes"?
+    """
 
     # Be agnostic against road vs. path
     if 'road' not in address:
         if 'path' in address:
             address['road'] = address['path']
+        elif 'pedestrian' in address:
+            address['road'] = address['pedestrian']
         elif 'cycleway' in address:
             address['road'] = address['cycleway']
 
