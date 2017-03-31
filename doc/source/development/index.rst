@@ -12,7 +12,7 @@ Development
 Environment
 ===========
 How to setup the development environment.
-You will need Grafana_, InfluxDB_ and Mosquitto_.
+You will need InfluxDB_, Grafana_, Mosquitto_ and optionally MongoDB_.
 
 .. toctree::
     :maxdepth: 1

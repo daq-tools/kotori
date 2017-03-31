@@ -7,7 +7,7 @@ requires = [
     'Twisted[tls]==17.1.0',
     'pyramid==1.5.7',               # 1.8.3
     'pyramid_jinja2==2.5',          # 2.7
-    'cornice==1.0.0',               # 1.2.1
+    'cornice==1.0.0',               # 1.2.1, 2.4.0
     'simplejson==3.8.2',            # 3.10.0
     'Jinja2==2.8',                  # 2.9.5
     'Bunch==1.0.1',
@@ -24,7 +24,7 @@ requires = [
     'msgpack-python==0.4.7',        # 0.4.8
 
     # Misc
-    'setuptools==22.0.5',           # 20.6.7; setuptools>=18.3.1 is required by set(['crossbar'])
+    'setuptools==22.0.5',           # 34.3.3; setuptools>=18.3.1 is required by set(['crossbar'])
     'distlib==0.2.4',
     'docopt==0.6.2',
 
@@ -47,26 +47,26 @@ extras = {
     ],
     'daq_binary': [
         'pyclibrary==0.1.3',
-        'tabulate==0.7.5',
+        'tabulate==0.7.5',          # 0.7.7
         'sympy==0.7.6.1',           # 1.0
     ],
     'storage_plus': [
-        'alchimia==0.4',    # 0.6.1
+        'alchimia==0.4',            # 0.7.0
     ],
 
     # Data export: Basic formats
     'export': [
         'pyinfluxql==0.0.1',
-        'pandas==0.18.1',
-        'numpy>=1.8.2',
-        'XlsxWriter==0.9.2',
+        'pandas==0.18.1',           # 0.19.2
+        'numpy>=1.8.2',             # 1.12.1
+        'XlsxWriter==0.9.2',        # 0.9.6
     ],
 
     'plotting': [
         #'dyplot==0.8.8',
 
         # sudo port install py27-matplotlib
-        'matplotlib>=1.4.2',
+        'matplotlib>=1.4.2',        # 2.0.0
         #'cairocffi>=0.5.4',
         'bokeh==0.12.4',
         'vincent==0.4.4',
@@ -79,18 +79,20 @@ extras = {
         # ----
         # HDF5
         # "PyTables" requires HDF5 libraries
-        'tables>=3.1.1',        # sudo port install hdf5
+        # sudo port install hdf5
+        'tables>=3.1.1',            # 3.3.0
 
         # NetCDF (Network Common Data Form)
-        'xarray==0.7.2',
-        'netCDF4==1.2.4',       # sudo port install netcdf
+        'xarray==0.7.2',            # 0.9.1
+        # sudo port install netcdf
+        'netCDF4==1.2.4',           # 1.2.7
         #'h5netcdf==0.2.2',
 
         # Algorithms
         # ----------
         # sudo port install py27-scipy
-        'scipy>=0.14.0',
-        'ggplot==0.9.7',
+        'scipy>=0.14.0',            # 0.19.0
+        'ggplot==0.9.7',            # 0.11.5
 
         # gfortran
         # aptitude install libatlas-base-dev lapack-dev gfortran or
@@ -103,8 +105,8 @@ extras = {
     ],
 
     'firmware': [
-        'GitPython==2.0.5',
-        'plumbum==1.6.1.post0',
+        'GitPython==2.0.5',         # 2.1.3
+        'plumbum==1.6.1.post0',     # 1.6.3
     ],
 
 }

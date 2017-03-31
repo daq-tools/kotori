@@ -21,10 +21,11 @@ The package repository supports architectures amd64 and armhf as of May 23, 2016
 
 It is currently made of these free and open source software components:
 
-- Grafana_, a graph and dashboard builder for visualizing time series metrics
 - InfluxDB_, a time-series database
+- MongoDB_, a document store (optionally)
+- Grafana_, a graph and dashboard builder for visualizing time series metrics
 - Mosquitto_, a MQTT message broker
-- :ref:`Kotori`, a data acquisition, graphing and telemetry toolkit
+- Kotori_, a data acquisition, graphing and telemetry toolkit
 
 
 

@@ -6,7 +6,7 @@ Changelog
 in progress
 ===========
 - Add standalone program to request data from live API of luftdaten.info,
-  enrich geospatial information and publish to MQTT bus
+  enrich geospatial information and publish to MQTT bus. Thanks, Richard!
 
 
 .. _kotori-0.15.0:
@@ -43,21 +43,22 @@ in progress
 2017-03-21 0.14.0
 =================
 - Connect to the MQTT broker with authentication (default: kotori/kotori)
-  to be able to apply Mosquitto ACLs to distinct MQTT topics
+  to be able to apply Mosquitto ACLs to distinct MQTT topics. Thanks, Alex!
 
 
 .. _kotori-0.13.0:
 
 2017-03-20 0.13.0
 =================
-- Concurrency improvements: Don’t use the main reactor thread for MQTT message processing. Use a different thread pool instead
+- Concurrency improvements: Don’t use the main reactor thread for
+  MQTT message processing, use a different thread pool instead.
 
 
 .. _kotori-0.12.3:
 
 2017-03-20 0.12.3
 =================
-- Ubuntu 16.04 compatibility: Nail some more Python dependency modules
+- Ubuntu 16.04 compatibility: Nail some more Python dependency modules. Thanks, Alex!
 
 
 .. _kotori-0.12.2:

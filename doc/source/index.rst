@@ -106,10 +106,12 @@ Development
     :maxdepth: 1
     :glob:
 
+    CONTRIBUTORS
     changes
     development/index
     packaging/index
     LICENSE
+    contact
 
 
 Research

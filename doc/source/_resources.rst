@@ -16,7 +16,8 @@
 
 .. Foundation DAQ
 .. _InfluxDB: https://github.com/influxdata/influxdb
-.. _Grafana: http://grafana.org/
+.. _MongoDB: https://github.com/mongodb/mongo
+.. _Grafana: https://github.com/grafana/grafana
 .. _Grafana Annotations: http://docs.grafana.org/reference/annotations/
 .. _Twisted: https://en.wikipedia.org/wiki/Twisted_(software)
 .. _Twisted Matrix Labs: https://twistedmatrix.com/

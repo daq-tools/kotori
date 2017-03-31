@@ -153,6 +153,8 @@ Half-open
   | https://github.com/synapse-wireless/exosite-data-collector-client-example/
   | https://update.synapse-wireless.com/pypi/
 
+- https://www.opensensors.io/
+
 
 Closed
 ======

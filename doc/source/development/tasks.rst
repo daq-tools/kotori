@@ -19,8 +19,11 @@ Kotori tasks
 
 2017-03-20
 ==========
-- When sending a field like "vcc", the name is not reflected in the panel title appropriately as "vcc @ device=x, site=y"
+- https://getkotori.org/docs/applications/hiveeyes.html
 
+2017-03-20
+==========
+- When sending a field like "vcc", the name is not reflected in the panel title appropriately as "vcc @ device=x, site=y"
 
 2017-03-08
 ==========
@@ -430,7 +433,7 @@ BMBF „Open Photonik“
 2016-09-14
 ==========
 - Docs: Add "contact" page
-- Docs: Add "How to configure (and secure) Nginx" or how to bind HTTP port to *:24642.
+- Docs: Add "How to configure (and secure) Nginx" or how to bind HTTP port to \*:24642.
 
 
 2016-09-09
@@ -600,6 +603,7 @@ When building for the first time::
       http://odo.pydata.org/en/latest/json.html
     - [o] More tabular renderings e.g. using https://pypi.python.org/pypi/PrettyTable and https://github.com/6pac/SlickGrid
       See also:
+
         - http://clusterize.js.org/
         - https://stackoverflow.com/questions/2402953/javascript-data-grid-for-millions-of-rows/8831087#8831087
 
