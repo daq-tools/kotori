@@ -85,7 +85,7 @@ sdist:
 publish-sdist: sdist
 	# publish Python Eggs to eggserver
 	# TODO: use localshop or one of its sisters
-	rsync -auv --progress ./dist/kotori-*.tar.gz workbench@packages.elmyra.de:/srv/packages/organizations/elmyra/foss/htdocs/python/
+	rsync -auv --progress ./dist/kotori-*.tar.gz workbench@packages.elmyra.de:/srv/packages/organizations/elmyra/foss/htdocs/python/kotori/
 
 publish-debian:
 	# publish Debian packages
