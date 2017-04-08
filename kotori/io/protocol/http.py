@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2016-2017 Andreas Motl <andreas.motl@elmyra.de>
+# (c) 2016-2017 Andreas Motl <andreas@getkotori.org>
 import re
 import json
 import types
@@ -439,11 +439,15 @@ class HttpChannelEndpoint(Resource):
         bucket.tdata.update(flatten_request_args(bucket.request.args))
         bucket.tdata.update(self.options.match)
 
-        if data is None:
-
-            # Run forwarding callback
+        # When receiving a firmware request, run forwarding callback immediately
+        is_firmware_request = 'slot' in bucket.tdata and bucket.tdata.slot == 'firmware'
+        if is_firmware_request:
+            bucket.data = data
             return self.options.callback(bucket)
 
+        # Without any data received, run forwarding callback immediately
+        if data is None:
+            return self.options.callback(bucket)
 
         if type(data) is not types.ListType:
             data = [data]

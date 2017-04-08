@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2016-2017 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2016-2017 Andreas Motl <andreas@getkotori.org>
 import re
 from copy import deepcopy
 from urlparse import urlparse

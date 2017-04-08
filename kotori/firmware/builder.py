@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2016 Andreas Motl <andreas@getkotori.org>
 import os
 import re
 import sys
@@ -111,7 +111,7 @@ class FirmwareBuilder(object):
             # http://gitpython.readthedocs.io/en/stable/tutorial.html#handling-remotes
             origin = self.repo.remotes.origin
             origin.fetch(progress=ProgressPrinter())
-            
+
         else:
 
             # Clone repository from a remote
@@ -402,7 +402,6 @@ def example_recipe(fb):
     return artefact
 
 def firmware_builder():
-    #repo_url = 'git@git.elmyra.de:hiveeyes/arduino.git'
     repo_url = 'https://github.com/hiveeyes/arduino'
     return FirmwareBuilder(repo_url=repo_url, repo_branch='master', workingdir='node-gprs-any')
 

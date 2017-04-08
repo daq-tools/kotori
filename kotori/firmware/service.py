@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2016-2017 Andreas Motl <andreas@getkotori.org>
 import threading
 from copy import deepcopy
 from urlparse import urlparse
@@ -11,6 +11,7 @@ from twisted.logger import Logger
 from twisted.application.service import MultiService
 from kotori.configuration import read_list
 from kotori.daq.services import RootService, MultiServiceMixin
+from kotori.io.protocol.forwarder import ForwarderAddress
 from kotori.io.protocol.http import HttpServerService
 from kotori.firmware.builder import FirmwareBuilder
 
@@ -75,9 +76,14 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
         # There should be just a single instance of a HTTP server service object
         self.source_service = HttpServerService.create(self.settings)
 
+        # Wrap source channel settings into address object
+        self.source_address = ForwarderAddress(self.channel.source)
+
         # Register URI route representing source channel
-        self.source_uri = bunchify(urlparse(self.channel.source)._asdict())
-        self.source_service.registerEndpoint(path=self.source_uri.path, callback=self.build)
+        self.source_service.registerEndpoint(
+            methods     = self.source_address.predicates,
+            path        = self.source_address.uri.path,
+            callback    = self.build)
 
     def build(self, bucket):
 
@@ -109,12 +115,12 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
 
 
         # 3. Build firmware, capturing error output, if any
-        # Run this process in a separate thread in order not to block
-        # the whole main process and return its result asynchronous.
-        d = threads.deferToThread(self.build_firmware_safe, bucket=bucket, options=bunchify(options), data=bunchify(data))
-        d.addBoth(bucket.request.write)
-        d.addBoth(lambda _: bucket.request.finish())
-        return server.NOT_DONE_YET
+        payload = self.build_firmware_safe(bucket=bucket, options=bunchify(options), data=bunchify(data))
+
+
+        # 4. TODO: Announce to appropriate channel via MQTT
+
+        return payload
 
     def build_firmware_safe(self, options=None, **kwargs):
         # As a very rough guideline, we take a lock on the parameter obtained as working dir

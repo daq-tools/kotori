@@ -9,6 +9,7 @@ in progress
   to request data from `live data API of luftdaten.info <https://api.luftdaten.info/static/v1/data.json>`_,
   enrich geospatial information and publish to MQTT bus. Thanks, Richard!
 - Add documentation and configuration for vendor :ref:`vendor-luftdaten.info`. Thanks again, Richard!
+- Fix HTTP routing for :ref:`firmware-builder`
 
 
 .. _kotori-0.15.0:
@@ -203,7 +204,7 @@ in progress
 - Add export parameters "exclude", "include", "interpolate" and "sorted"
 - Fix data routing and processing
 - Add license to documentation
-- Quick hack for making firmware builder endpoint no convert numeric values to floats
+- Quick hack for making :ref:`firmware-builder` endpoint no convert numeric values to floats
 - Packaging fixes
 
 
@@ -254,7 +255,7 @@ Data export
 =================
 - Flexible InfluxDB data export and plotting machinery through HTTP,
   see :ref:`data-export` and :ref:`forward-http-to-influx`.
-- Some words about the background and configuration of the firmware builder.
+- Some words about the background and configuration of the :ref:`firmware-builder`.
 
 
 .. _kotori-0.9.0:
