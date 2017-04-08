@@ -10,6 +10,7 @@ in progress
   enrich geospatial information and publish to MQTT bus. Thanks, Richard!
 - Add documentation and configuration for vendor :ref:`vendor-luftdaten.info`. Thanks again, Richard!
 - Fix HTTP routing for :ref:`firmware-builder`
+- Fix python module dependency woes re. OpenSSL on Darwin vs. Linux
 
 
 .. _kotori-0.15.0:

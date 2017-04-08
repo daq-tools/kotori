@@ -1,10 +1,22 @@
 # -*- coding: utf-8 -*-
+import sys
 from setuptools import setup, find_packages
 
-requires = [
+requires_core = [
+    'Twisted[tls]==17.1.0',
+    'pyOpenSSL==16.2.0',
+]
+
+if sys.platform == 'darwin':
+    requires_core = [
+        'Twisted==17.1.0',
+    ]
+
+requires = requires_core + [
 
     # Core
-    'Twisted[tls]==17.1.0',
+    #'Twisted[tls]==17.1.0',
+    #'Twisted==17.1.0',
     'pyramid==1.5.7',               # 1.8.3
     'pyramid_jinja2==2.5',          # 2.7
     'cornice==1.0.0',               # 1.2.1, 2.4.0
@@ -29,7 +41,8 @@ requires = [
     'docopt==0.6.2',
 
     # More dependencies (required for running on Ubuntu 16.04)
-    'pyOpenSSL==16.2.0',
+    #'pyOpenSSL==16.2.0',
+    #'cryptography==1.3.4',
     'pyasn1==0.2.3',
     'pycparser==2.17',
     'pyparsing==2.2.0',
