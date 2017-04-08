@@ -1,15 +1,19 @@
 # -*- coding: utf-8 -*-
 # (c) 2016 Andreas Motl <andreas.motl@elmyra.de>
-from pprint import pprint
-from kotori.io.export.util import dataframe_index_and_sort
-import pandas
 import tempfile
-from twisted.logger import Logger
+from pprint import pprint
+from twisted.logger import Logger, LogLevel
 from twisted.web.template import renderElement
 from kotori.io.export.html import DatatablesPage
 from kotori.io.protocol.util import get_data_uri
+from kotori.io.export.util import dataframe_index_and_sort
 
 log = Logger()
+
+try:
+    import pandas
+except ImportError:
+    log.failure('Tabular export not available, please install "pandas".', level=LogLevel.warn)
 
 class UniversalTabularExporter(object):
     """

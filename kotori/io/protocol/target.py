@@ -1,19 +1,23 @@
 # -*- coding: utf-8 -*-
-# (c) 2016 Andreas Motl <andreas.motl@elmyra.de>
+# (c) 2016-2017 Andreas Motl <andreas@getkotori.org>
 from pyramid.settings import asbool
 from twisted.internet import threads
 from twisted.web import http, server
-from twisted.logger import Logger
+from twisted.logger import Logger, LogLevel
 from twisted.application.service import MultiService
 from kotori.configuration import read_list
 from kotori.daq.services import MultiServiceMixin
 from kotori.daq.intercom.mqtt import MqttAdapter
 from kotori.io.protocol.http import HttpDataFrameResponse
-from kotori.io.protocol.influx import DataFrameQuery
 from kotori.io.protocol.util import handleFailure
 from kotori.errors import last_error_and_traceback
 
 log = Logger()
+
+try:
+    from kotori.io.export.influx import DataFrameQuery
+except ImportError:
+    log.failure('InfluxDB export not available, please install "pandas".', level=LogLevel.warn)
 
 class ForwarderTargetService(MultiServiceMixin, MultiService):
     """

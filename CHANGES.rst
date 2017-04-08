@@ -11,6 +11,7 @@ in progress
 - Add documentation and configuration for vendor :ref:`vendor-luftdaten.info`. Thanks again, Richard!
 - Fix HTTP routing for :ref:`firmware-builder`
 - Fix python module dependency woes re. OpenSSL on Darwin vs. Linux
+- Make Kotori run even without having “pandas” installed (w/o “export” extras)
 
 
 .. _kotori-0.15.0:

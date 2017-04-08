@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
 # (c) 2016 Andreas Motl <andreas.motl@elmyra.de>
-import pandas
-from pandas.tslib import Timedelta
+from twisted.logger import Logger, LogLevel
+log = Logger()
+
+try:
+    import pandas
+    from pandas.tslib import Timedelta
+except ImportError:
+    log.failure('Dataframe functions not available, please install "pandas".', level=LogLevel.warn)
+
 
 def dataframe_index_to_column(df, column):
     """
