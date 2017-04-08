@@ -12,6 +12,7 @@ in progress
 - Fix HTTP routing for :ref:`firmware-builder`
 - Fix python module dependency woes re. OpenSSL on Darwin vs. Linux
 - Make Kotori run even without having “pandas” installed (w/o “export” extras)
+- Improve error logging in bootstrapping phase
 
 
 .. _kotori-0.15.0:

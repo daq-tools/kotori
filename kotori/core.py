@@ -6,6 +6,7 @@ from twisted.logger import Logger, LogLevel
 from kotori.logger import changeLogLevel
 from kotori.configuration import read_list
 from kotori.version import __VERSION__
+from kotori.errors import last_error_and_traceback
 
 log = Logger()
 APP_NAME = u'Kotori version ' + __VERSION__
@@ -49,13 +50,14 @@ class KotoriBootloader(object):
                 application_settings.app_factory or \
                 application_settings.application
         except:
-            log.failure('Application configuration object "{name}" not found', name=name)
+            log.failure('Application configuration object for "{name}" not found, missing setting "app_factory"', name=name)
             return
 
         try:
             factory_callable = self.load_entrypoint(app_factory)
         except:
-            log.failure('Application entrypoint "{app_factory}" for "{name}" not loaded', name=name, app_factory=app_factory)
+            log.failure('Error loading application entrypoint "{app_factory}" for "{name}":\n{ex}',
+                name=name, app_factory=app_factory, ex=last_error_and_traceback())
             return
 
         return factory_callable
@@ -99,9 +101,9 @@ class KotoriBootloader(object):
         """
         vendors = list(self.get_vendors())
         log.info('Enabling vendors {vendors}', vendors=vendors)
-    
+
         debug = self.settings.options.debug
-    
+
         if 'hydro2motion' in vendors:
             #log.info(u'Starting vendor "{name}"', name=name)
             from kotori.vendor.hydro2motion.database.influx import h2m_boot_influx_database
@@ -110,7 +112,7 @@ class KotoriBootloader(object):
             boot_web(self.settings, debug=debug)
             h2m_boot_udp_adapter(self.settings, debug=debug)
             h2m_boot_influx_database(self.settings)
-    
+
         if 'hiveeyes' in vendors:
             from kotori.vendor.hiveeyes.application import hiveeyes_boot
             hiveeyes_boot(self.settings, debug=debug)
