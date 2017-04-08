@@ -24,7 +24,7 @@ It is currently made of these free and open source software components:
 - MongoDB_, a document store (optionally)
 - Grafana_, a graph and dashboard builder for visualizing time series metrics
 - Mosquitto_, a MQTT message broker
-- Kotori_, a data acquisition, graphing and telemetry toolkit
+- :ref:`Kotori`, a data acquisition, graphing and telemetry toolkit
 
 
 

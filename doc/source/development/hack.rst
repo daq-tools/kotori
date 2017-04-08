@@ -47,16 +47,16 @@ Setup virtualenv
     python setup.py develop
 
 
-    # install extra features
+    # Install extra features
 
-    # data acquisition base
-    pip install -e .[daq]
+    # Data acquisition base
+    pip install --editable .[daq] --process-dependency-links --verbose
 
-    # data acquisition with data sink for binary payloads
-    pip install -e .[daq_binary]
+    # Data acquisition with data sink for binary payloads
+    pip install --editable .[daq_binary] --process-dependency-links --verbose
 
-    # data storage for RDBMS databases and MongoDB
-    pip install -e .[storage_plus]
+    # Data storage for RDBMS databases and MongoDB
+    pip install --editable .[storage_plus] --process-dependency-links --verbose
 
 
 

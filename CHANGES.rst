@@ -15,7 +15,7 @@ in progress
 
 2017-03-29 0.15.0
 =================
-- Add convenience handler for importing data from http://archive.luftdaten.info/
+- Add CSV convenience for importing data from http://archive.luftdaten.info/
 - Fix CSV import exception handling
 
 

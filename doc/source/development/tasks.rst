@@ -17,6 +17,47 @@ Kotori tasks
 ****
 
 
+2017-04-06
+==========
+- Improve error message CRITICAL: Error connecting to MQTT broker but retrying each 5 seconds
+- https://github.com/arendst/Sonoff-Tasmota
+
+
+2017-04-04
+==========
+- Update references to repository on github (now at /daq-tools)
+- Fix firmware builder re. HTTP routing
+- Silence stupid interval logging
+- https://github.com/ab77/beastcraft-telemetry
+- https://github.com/ab77/beastcraft-telemetry/tree/master/influxdb-armhf
+
+
+2017-04-03
+==========
+- https://www.pycom.io/pybytes/
+- http://www.openvehicles.com/
+- https://github.com/openvehicles/Open-Vehicle-Monitoring-System
+
+
+2017-04-01
+==========
+- Announce geospatial data acquisition and enrichment at
+
+    - https://community.hiveeyes.org/c/announcements
+    - https://talk2.wisen.com.au/2016/05/24/influxdb-grafana/
+    - https://github.com/opendata-stuttgart/sensors-software/issues/33
+
+- Post comment to https://primalcortex.wordpress.com/2017/02/23/setting-up-a-grafana-dashboard-using-node-red-and-influxdb-part-1-installing/
+
+- Docs: Update Mosquitto Logo
+- Debian armhf package for InfluxDB 1.2.2, see
+
+    - http://www.d0wn.com/influx-db-1-2-0-on-armbian-or-raspberry-pi/
+    - https://groups.google.com/forum/#!topic/influxdb/MnJ9a5DFozg
+
+- Add https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-testdrive-automatic
+
+
 2017-03-20
 ==========
 - https://getkotori.org/docs/applications/hiveeyes.html

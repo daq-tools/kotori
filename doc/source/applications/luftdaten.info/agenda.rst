@@ -151,3 +151,12 @@ Todo
         {tags: {'standort': 'Niederrhein'}}
         {temperatute: 42.42}
 
+- Integrate web-gl globe:
+
+    - https://github.com/dataarts/webgl-globe
+    - https://luftdaten.getkotori.org/api/luftdaten/info/earth/42/data.globe?magnitudes=P1,P25,temperature&from=2017-01-01
+
+- Generische tag => filter umsetzung à la Grafana
+
+    - https://luftdaten.getkotori.org/api/luftdaten/info/earth/42/data.txt?{tagA}={valueA}&{tagB}={valueB}
+

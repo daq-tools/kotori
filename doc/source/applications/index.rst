@@ -105,7 +105,7 @@ luftdaten.info
 
     .. container:: pull-left2 basic-hero align-right2
 
-        An air quality monitoring platform based on open source and open hardware.
+        An air quality monitoring platform based on open source software and open hardware.
 
     .. container:: text-xx-large
 

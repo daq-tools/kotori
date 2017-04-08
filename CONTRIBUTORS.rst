@@ -1,8 +1,8 @@
 .. _kotori-contributors:
 
-###################
-Kotori contributors
-###################
+############
+Contributors
+############
 
 Here is an alphabetically-ordered list
 of the people who contributed to Kotori:
