@@ -17,6 +17,27 @@ Kotori tasks
 ****
 
 
+2017-04-17
+==========
+- Move/copy content from https://hiveeyes.org/docs/system/acquisition/#addressing
+
+- HTML panel
+
+    - [17.04.17 03:13:41] Andreas Motl: http://simmerding.de/webcam-wetter.htm check
+    - [17.04.17 03:15:18] Andreas Motl: da gibts ja tolle exportformate:
+    - http://simmerding.nshare.de/weather/RSS/weewx_rss.xml
+    - http://simmerding.nshare.de/weather/mobile.html
+    - http://simmerding.nshare.de/weather/smartphone/
+    - http://simmerding.nshare.de/weather/exfoliation/
+    - http://simmerding.nshare.de/weather/exfoliation/small.html
+
+
+2017-04-08
+==========
+- Enable CSV data acquisition over MQTT
+- Multistage HTTP output for firmware builder process
+
+
 2017-04-06
 ==========
 - Improve error message CRITICAL: Error connecting to MQTT broker but retrying each 5 seconds
@@ -47,7 +68,11 @@ Kotori tasks
     - https://talk2.wisen.com.au/2016/05/24/influxdb-grafana/
     - https://github.com/opendata-stuttgart/sensors-software/issues/33
 
-- Post comment to https://primalcortex.wordpress.com/2017/02/23/setting-up-a-grafana-dashboard-using-node-red-and-influxdb-part-1-installing/
+- Post comment to
+
+    - https://primalcortex.wordpress.com/2017/02/23/setting-up-a-grafana-dashboard-using-node-red-and-influxdb-part-1-installing/
+    - https://opensource.com/article/17/3/build-smog-sensor-ESP8266-microcontroller
+    - https://blog.moneybag.de/
 
 - Docs: Update Mosquitto Logo
 - Debian armhf package for InfluxDB 1.2.2, see

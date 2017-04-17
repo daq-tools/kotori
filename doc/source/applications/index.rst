@@ -150,6 +150,7 @@ The complete list:
     ilaundry
     hydro2motion
     hiveeyes
+    luftdaten.info/index
     weewx
     lst
     mqttkit

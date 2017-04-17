@@ -215,6 +215,7 @@ valuable feedback for improving things gradually.
 .. attention::
 
     This section is just a stub. Read the source, luke.
+    As a start, please have a look at :ref:`kotori-setup`.
 
 
 Run Kotori

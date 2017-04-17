@@ -99,8 +99,6 @@ Start system service::
 Kotori
 ******
 
-.. _kotori-setup:
-
 Kotori package
 ==============
 
