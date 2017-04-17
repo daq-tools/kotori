@@ -13,6 +13,7 @@ in progress
 - Fix python module dependency woes re. OpenSSL on Darwin vs. Linux
 - Make Kotori run even without having “pandas” installed (w/o “export” extras)
 - Improve error logging in bootstrapping phase
+- Add support for architecture "ESP" to :ref:`firmware-builder`
 
 
 .. _kotori-0.15.0:

@@ -5,6 +5,7 @@ from copy import deepcopy
 from urlparse import urlparse
 from bunch import Bunch, bunchify
 from collections import defaultdict
+from pyramid.settings import asbool
 from twisted.internet import threads
 from twisted.web import http, server
 from twisted.logger import Logger
@@ -100,7 +101,7 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
 
         # Extract option fields and delete them from transformation dict
         options = Bunch()
-        option_fields = ['url', 'ref', 'path', 'makefile', 'suffix']
+        option_fields = ['url', 'ref', 'update_submodules', 'path', 'architecture', 'makefile', 'suffix']
         for field in option_fields:
             if field in data:
                 options[field] = data[field]
@@ -109,6 +110,9 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
         # Override url option with repo url from settings
         options.url = self.channel.repository
 
+        # Propagate path to ESP_ROOT
+        # TODO: Clone from https://github.com/esp8266/Arduino
+        options.esp_root = self.channel.esp_root
 
         # 2. Reporting
         log.info('Building firmware, options={options}, data={data}', options=dict(options), data=dict(data))
@@ -133,8 +137,16 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
         # Sanity checks
         # TODO: Check "options.suffix" for being "hex" or "elf" only
 
+        if 'update_submodules' in options:
+            options['update_submodules'] = asbool(options['update_submodules'])
+        else:
+            options['update_submodules'] = True
+
         # FirmwareBuilder machinery
-        fwbuilder = FirmwareBuilder(repo_url=options.url, repo_branch=options.ref, workingdir=options.path)
+        fwbuilder = FirmwareBuilder(
+            repo_url=options.url, repo_branch=options.ref, update_submodules=options.update_submodules,
+            workingdir=options.path,
+            architecture = options.get('architecture'), esp_root=options.esp_root)
 
         # Run build process with capturing its output
         with fwbuilder.capture() as result:
@@ -166,6 +178,8 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
             # Compute extended firmware name suffix from transformation dict
             fwparams = ''
             if data:
+                data = data.copy()
+                del data['slot']
                 dlist = []
                 for key, value in data.iteritems():
                     dlist.append(u'{key}={value}'.format(**locals()))

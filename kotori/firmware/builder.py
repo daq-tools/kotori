@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2016 Andreas Motl <andreas@getkotori.org>
+# (c) 2016-2017 Andreas Motl <andreas@getkotori.org>
 import os
 import re
 import sys
@@ -60,21 +60,33 @@ Prio 3
 
 class ProgressPrinter(RemoteProgress):
     def update(self, op_code, cur_count, max_count=None, message=''):
+
+        if not message:
+            return
+
         parts = (op_code, cur_count, max_count, cur_count / (max_count or 100.0), message or u"NO MESSAGE")
         parts = map(unicode, parts)
         message = u' '.join(parts)
         padding = u' ' * 120
-        sys.stderr.write(message.strip() + padding)
-        sys.stderr.write('\r')
+
+        # STDERR
+        #sys.stderr.write(message.strip() + padding)
+        #sys.stderr.write('\r')
         #sys.stderr.write('\n')
+
+        # Logger
+        log.info(message)
 
 class FirmwareBuilder(object):
 
-    def __init__(self, repo_url=None, repo_branch='master', workingdir='.'):
+    def __init__(self, repo_url=None, repo_branch='master', update_submodules=True, workingdir='.', architecture=None, esp_root=None):
         self.repo = None
         self.repo_url = repo_url
         self.repo_branch = repo_branch
+        self.update_submodules = update_submodules
         self.workingdir = workingdir
+        self.architecture = architecture or 'avr'
+        self.esp_root = esp_root
         self.stream = sys.stderr
 
         self.repo_info = {}
@@ -84,7 +96,7 @@ class FirmwareBuilder(object):
 
             # Preprocessor defines .ino, .pde, .cpp, .h, e.g.
             # #define HE_USER         "testdrive"
-            '#define\s+(?P<name>{name})\s+(?P<value>.*)',
+            '#define\s+(?P<name>{name})\s+(?P<value>.+)',
 
             # Makefile variables, e.g.
             # BOARD_TAG         = pro328
@@ -110,11 +122,13 @@ class FirmwareBuilder(object):
             # Fetch updates from remote
             # http://gitpython.readthedocs.io/en/stable/tutorial.html#handling-remotes
             origin = self.repo.remotes.origin
+            log.info('Fetching updates from repository {repository}'.format(repository=origin.url))
             origin.fetch(progress=ProgressPrinter())
 
         else:
 
             # Clone repository from a remote
+            log.info('Cloning repository {repository}'.format(repository=self.repo_url))
             self.repo = Repo.clone_from(self.repo_url, target_path, progress=ProgressPrinter())
 
 
@@ -143,8 +157,11 @@ class FirmwareBuilder(object):
         # 3. Initialize submodules
         # http://gitpython.readthedocs.io/en/stable/tutorial.html#advanced-repo-usage
         # update all submodules, non-recursively to save time, this method is very powerful, go have a look
-        self.repo.submodule_update(recursive=False, progress=ProgressPrinter())
-
+        if self.update_submodules:
+            log.info('Updating git submodules')
+            self.repo.submodule_update(recursive=True, progress=ProgressPrinter())
+        else:
+            log.info('Skip updating git submodules')
 
         # Return some information about repository
         self.repo_info = {
@@ -198,6 +215,8 @@ class FirmwareBuilder(object):
                 match['line-after'] = match['line-before'].replace(value_before, replacement)
                 replacements.append(match)
 
+        log.info('Replacements:\n%s', pformat(replacements))
+
         # Apply replacements
         for replacement in replacements:
             payload = payload.replace(replacement['line-before'], replacement['line-after'])
@@ -205,10 +224,13 @@ class FirmwareBuilder(object):
         # Write file
         file(filepath, 'w').write(payload)
 
-    def find_variable(self, payload, name):
+    def find_variable(self, payload, name, multiline=False):
         for pattern_template in self.variable_patterns:
             pattern = pattern_template.format(name=name)
-            matcher = re.compile(pattern, re.MULTILINE)
+            if multiline:
+                matcher = re.compile(pattern, re.MULTILINE)
+            else:
+                matcher = re.compile(pattern)
             for m in matcher.finditer(payload):
                 match = m.groupdict()
                 match['line-before'] = m.group(0)
@@ -221,6 +243,14 @@ class FirmwareBuilder(object):
             yield match
 
     def run_build(self, makefile=None):
+        log.info('Running build')
+        if self.architecture.lower() == 'esp':
+            with local.env(ESP_ROOT=self.esp_root):
+                return self.run_makefile(makefile=makefile)
+        else:
+            return self.run_makefile(makefile=makefile)
+
+    def run_makefile(self, makefile=None):
         """
         Run the whole build process with designated Makefile.
         """
@@ -242,38 +272,40 @@ class FirmwareBuilder(object):
                     make_firmware_info = make['--file', makefile, 'firmware-info'] | grep['TARGET_']
                     output = make_firmware_info()
 
-                # Grep "TARGET_HEX" and "TARGET_ELF" paths from build output and store into "self.build_result"
-                target_matcher = re.compile('(?P<name>TARGET_.+): (?P<value>.+)')
+                # Grep "TARGET_HEX", "TARGET_ELF" (for AVR) as well as "TARGET_BIN" and "TARGET_CHIP" (for ESP) paths
+                # from build output and store into "self.build_result"
+                target_matcher = re.compile('(?P<name>TARGET_.+):(?: (?P<value>.+))?')
                 for m in target_matcher.finditer(output):
                     match = m.groupdict()
                     name  = match['name']
                     value = match['value']
-                    self.build_result[name] = value
+                    if value:
+                        self.build_result[name] = value
 
                 # Add build path to build result
                 self.build_result['build_path'] = pwd().strip()
 
-                # Pull "BOARD_TAG" and "BOARD_SUB" from Makefile into build result
-                makefile_path = os.path.join(self.build_result['build_path'], makefile)
-                makefile_payload = file(makefile_path).read()
-                for name in ['BOARD_TAG', 'BOARD_SUB']:
-                    for match in self.find_variable(makefile_payload, name):
-                        name  = match['name']
-                        value = match['value']
-                        self.build_result[name] = value
-
     def make_artefact(self):
         artefact = Artefact()
 
+        artefact.architecture = self.architecture
         artefact.source = self.repo_info
         artefact.build  = self.build_result
 
-        target_hex = os.path.abspath(os.path.join(self.build_result['build_path'], self.build_result['TARGET_HEX']))
-        target_elf = os.path.abspath(os.path.join(self.build_result['build_path'], self.build_result['TARGET_ELF']))
+        # AVR
+        if self.architecture == 'avr':
+            target_hex = os.path.abspath(os.path.join(self.build_result['build_path'], self.build_result['TARGET_HEX']))
+            target_elf = os.path.abspath(os.path.join(self.build_result['build_path'], self.build_result['TARGET_ELF']))
 
-        artefact.name = os.path.splitext(os.path.basename(target_hex))[0]
-        artefact.hex = file(target_hex, 'rb').read()
-        artefact.elf = file(target_elf, 'rb').read()
+            artefact.name = os.path.splitext(os.path.basename(target_hex))[0]
+            artefact.hex = file(target_hex, 'rb').read()
+            artefact.elf = file(target_elf, 'rb').read()
+
+        # ESP
+        elif self.architecture == 'esp':
+            target_bin = os.path.abspath(self.build_result['TARGET_BIN'])
+            artefact.name = os.path.splitext(os.path.basename(target_bin))[0]
+            artefact.bin = file(target_bin, 'rb').read()
 
         return artefact
 
@@ -343,7 +375,9 @@ class FirmwareBuilder(object):
         return buf.getvalue()
 
 class Artefact(object):
+
     def __init__(self):
+        self.architecture = None
         self.source  = None
         self.build   = None
         self.name    = None
@@ -356,11 +390,24 @@ class Artefact(object):
 
     @property
     def fullname(self):
-        name_ref = '{name}_{board_tag}-{board_sub}_{ref}'.format(
-            name=self.name,
-            board_tag=self.build.get('BOARD_TAG', 'unknown'),
-            board_sub=self.build.get('BOARD_SUB', 'unknown'),
-            ref=self.commit_sha)
+
+        name_ref = self.commit_sha
+
+        if self.architecture == 'avr':
+            name_ref = '{name}_{architecture}-{board_tag}-{board_sub}_{ref}'.format(
+                name = self.name,
+                architecture = self.architecture,
+                board_tag = self.build.get('TARGET_BOARD_TAG', 'unknown'),
+                board_sub = self.build.get('TARGET_BOARD_SUB', 'unknown'),
+                ref = self.commit_sha)
+
+        elif self.architecture == 'esp':
+            name_ref = '{name}_{architecture}-{target_chip}_{ref}'.format(
+                name = self.name,
+                architecture = self.architecture,
+                target_chip = self.build.get('TARGET_CHIP', 'unknown'),
+                ref = self.commit_sha)
+
         return name_ref
 
     def __repr__(self):
@@ -394,8 +441,8 @@ def example_recipe(fb):
         }
     fb.patch_files(['*.ino', '*.pde', '*.cpp', '*.h', 'Makefile*'], data)
 
-    fb.run_build(makefile='Makefile-OSX.mk')
-    #fb.run_build(makefile='Makefile-FWB.mk')
+    fb.run_makefile(makefile='Makefile-OSX.mk')
+    #fb.run_makefile(makefile='Makefile-FWB.mk')
     artefact = fb.make_artefact()
     #print artefact.elf
 

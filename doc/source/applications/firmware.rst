@@ -75,10 +75,10 @@ Acquire firmware::
 
 This should deliver a hex file ready for programming::
 
-    Downloading to "hiveeyes_node-gprs-any_pro328-atmega328p_a05548bf-GPRSBEE_AP_NAME=internet.eplus.de,GPRSBEE_AP_PASS=123,HE_SITE=area-42,HE_HIVE=node-1,HE_USER=testdrive,GPRSBEE_AP_USER=barney@blau.de.hex"
+    Downloading to "hiveeyes_node-gprs-any_avr-pro328-atmega328p_7b8c6790-GPRSBEE_AP_NAME=internet.eplus.de,GPRSBEE_AP_PASS=123,HE_HIVE=node-1,HE_SITE=area-42,HE_USER=testdrive,GPRSBEE_AP_USER=barney@blau.de.hex"
     Done. 53.57 kB in 0.00064s (81.48 MB/s)
 
-Given, the filename is huge, but it includes every parameter
+Given, the filename is huge, but it includes each and every parameter
 to distinguish different build artifacts from each other.
 
 .. tip::
@@ -94,4 +94,21 @@ to distinguish different build artifacts from each other.
 
     - Windows: http://m8051.blogspot.de/2015/01/avrdude-on-windows-long-time-after.html
     - Mac OS X: https://www.pololu.com/docs/0J36/5.c, https://www.obdev.at/products/crosspack/
+
+
+*******
+Details
+*******
+
+
+Performance
+===========
+The speed of (re)builds depends mainly on the time required to clone, fetch or update from the remote repository.
+
+Example: It might take about two minutes to clone https://github.com/hiveeyes/arduino including updating all
+git submodules. However, when disabling the git submodule update process by using ``update_submodules=false``,
+it can come down to a few seconds.
+
+It is totally okay to run with ``update_submodules=false`` when you are
+sure the git submodules haven't been updated. This is usually not very often.
 
