@@ -33,7 +33,8 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         self.settings = self.parent.settings
 
         # Configure metrics to be collected each X seconds
-        self.metrics = Bunch(tx_count=0, starttime=time.time(), interval=2)
+        metrics_interval = int(self.channel.get('metrics_logger_interval', 60))
+        self.metrics = Bunch(tx_count=0, starttime=time.time(), interval=metrics_interval)
 
         subscriptions = read_list(self.channel.mqtt_topics)
         self.mqtt_service = MqttAdapter(
@@ -56,7 +57,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         self.log(log.info, u'Starting')
         MultiService.startService(self)
         self.metrics_twingo = LoopingCall(self.process_metrics)
-        self.metrics_twingo.start(self.metrics.interval, now=False)
+        self.metrics_twingo.start(self.metrics.interval, now=True)
 
     def log(self, level, prefix):
         level('{prefix} {class_name}. name={name}, channel={channel}',

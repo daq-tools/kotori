@@ -14,6 +14,7 @@ in progress
 - Make Kotori run even without having “pandas” installed (w/o “export” extras)
 - Improve error logging in bootstrapping phase
 - Add support for architecture "ESP" to :ref:`firmware-builder`
+- Make transaction logging interval configurable, default to 60 seconds to reduce log traffic significantly
 
 
 .. _kotori-0.15.0:
