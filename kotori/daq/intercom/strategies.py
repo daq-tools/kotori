@@ -79,7 +79,9 @@ class WanBusStrategy(object):
 
         # TODO: Investigate using tags additionally to / instead of database.measurement
 
-        if topology.slot.startswith('data'):
+        # data: Regular endpoint
+        # loop: WeeWX (TODO: Move to specific vendor configuration.)
+        if topology.slot.startswith('data') or topology.slot.startswith('loop'):
             suffix = 'sensors'
         elif topology.slot.startswith('event'):
             suffix = 'events'

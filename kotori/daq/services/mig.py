@@ -13,6 +13,7 @@ from kotori.configuration import read_list
 from kotori.daq.services import MultiServiceMixin
 from kotori.daq.intercom.mqtt import MqttAdapter
 from kotori.daq.storage.influx import InfluxDBAdapter
+from kotori.io.protocol.util import convert_floats
 
 log = Logger()
 
@@ -107,13 +108,24 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         message = None
 
         # a) En bloc: Multiple measurements in JSON object
-        if topic.endswith('data.json') or topic.endswith('data/__json__') or topic.endswith('message-json'):
+        #
+        # The suffixes are:
+        #
+        #   - data.json:        Regular
+        #   - data/__json__:    Homie
+        #   - loop:             WeeWX           (TODO: Move to specific vendor configuration.)
+        #   - message-json:     Deprecated
+        #
+        if topic.endswith('data.json') \
+            or topic.endswith('data/__json__') \
+            or topic.endswith('loop') \
+            or topic.endswith('message-json'):
 
             # This is sensor data
             message_type = 'data'
 
             # Decode message from json format
-            message = json.loads(payload)
+            message = convert_floats(json.loads(payload))
 
         # b) Discrete values
         else:

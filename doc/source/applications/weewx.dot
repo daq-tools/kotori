@@ -1,0 +1,33 @@
+// weeWX -> Grafana system overview
+digraph weewx {
+
+    // Options
+    rankdir=LR;
+    ranksep=0.5;
+
+    // Style
+    //graph [splines=ortho];
+    node [pin=true, shape="box", fontname="Verdana"];
+    edge [fontname="Verdana"];
+
+
+    // Graph nodes represent system components
+    "weather-station"       [label="Weather station"];
+    "weewx"                 [label="weeWX"];
+    "weewx-mqtt-plugin"     [label="weeWX MQTT plugin"];
+    "mqtt"                  [label="MQTT"];
+    "kotori"                [label="Kotori"];
+    {rank=same; "influxdb"; "grafana" };
+    "influxdb"              [label="InfluxDB"];
+    "grafana"               [label="Grafana"];
+
+    // Graph edges represent communication paths
+    "weather-station"       -> "weewx";
+    "weewx"                 -> "weewx-mqtt-plugin";
+    "weewx-mqtt-plugin"     -> "mqtt"         [label="JSON"];
+    "mqtt"                  -> "kotori";
+    "kotori"                -> "influxdb";
+    "kotori"                -> "grafana";
+    "influxdb"              -> "grafana";
+
+}

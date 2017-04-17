@@ -89,11 +89,14 @@ def convert_floats(data, integers=None):
     """
     integers = integers or []
     for key, value in data.iteritems():
-        if is_number(value):
-            if key in integers:
-                data[key] = int(value)
-            else:
-                data[key] = float(value)
+        try:
+            if is_number(value):
+                if key in integers:
+                    data[key] = int(value)
+                else:
+                    data[key] = float(value)
+        except:
+            pass
     return data
 
 def is_number(s):

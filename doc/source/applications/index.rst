@@ -117,6 +117,26 @@ luftdaten.info
 ----
 
 
+*****
+weeWX
+*****
+
+.. container:: legroom-md
+
+    .. container:: pull-left2 basic-hero align-right2
+
+        Receiving data from the weeWX weather station software over MQTT.
+
+    .. container:: text-xx-large
+
+        :ref:`Read all about it... <vendor-weewx>`
+
+
+|clearfix|
+
+----
+
+
 ************
 All projects
 ************
@@ -130,6 +150,7 @@ The complete list:
     ilaundry
     hydro2motion
     hiveeyes
+    weewx
     lst
     mqttkit
     forwarders/index

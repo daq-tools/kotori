@@ -135,6 +135,11 @@
 .. _LST-aviation: http://www.studentaviationmunich.com/lst/
 .. _LST-projects: http://sperlhome.userweb.mwn.de/
 
+.. Weather information
+.. _weeWX: http://www.weewx.com/
+.. _AmatYr: https://github.com/torhve/Amatyr
+.. _MQTT Plugin for weeWX: http://lancet.mit.edu/mwall/projects/weather/releases/weewx-mqtt-0.15.tgz
+.. _Davis Vantage Pro2: http://www.davisnet.com/solution/vantage-pro2/
 
 .. NEW
 .. _Funky v3: https://harizanov.com/product/funky-v3/

@@ -15,6 +15,7 @@ in progress
 - Improve error logging in bootstrapping phase
 - Add support for architecture "ESP" to :ref:`firmware-builder`
 - Make transaction logging interval configurable, default to 60 seconds to reduce log traffic significantly
+- Tune MQTT data acquisition to support the weeWX_ weather station software. Thanks, Jan!
 
 
 .. _kotori-0.15.0:

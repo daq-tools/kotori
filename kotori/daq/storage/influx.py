@@ -6,7 +6,7 @@ from funcy import project
 from collections import OrderedDict
 from twisted.logger import Logger
 from influxdb.client import InfluxDBClient, InfluxDBClientError
-from kotori.io.protocol.util import parse_timestamp
+from kotori.io.protocol.util import parse_timestamp, is_number
 
 log = Logger()
 
@@ -73,7 +73,7 @@ class InfluxDBAdapter(object):
     def write(self, meta, data):
         try:
             chunk = self.format_chunk(meta, data)
-            success = self.influx.write_points([chunk], time_precision='n')
+            success = self.influx.write_points([chunk], time_precision=chunk['time_precision'])
             if success:
                 log.debug(u"Storage success: {chunk}", chunk=chunk)
             else:
@@ -120,11 +120,22 @@ class InfluxDBAdapter(object):
             chunk["tags"]["node"]    = meta["node"]
         """
 
-        # Extract timestamp from data
-        if 'time' in data:
-            if data['time']:
-                chunk['time'] = data['time']
-            del data['time']
+        # Extract timestamp field from data
+        chunk['time_precision'] = 'n'
+        for time_field in ['time', 'dateTime']:
+            if time_field in data:
+
+                if data[time_field]:
+                    chunk['time'] = data[time_field]
+                    if is_number(chunk['time']):
+                        chunk['time'] = int(data[time_field])
+
+                # WeeWX. TODO: Move to specific vendor configuration.
+                if time_field == 'dateTime':
+                    chunk['time_precision'] = 's'
+
+                del data[time_field]
+
 
         # TODO: Maybe do this at data acquisition / transformation time, not here.
         if 'time' in chunk:
