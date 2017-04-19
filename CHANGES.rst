@@ -5,6 +5,12 @@ Changelog
 
 in progress
 ===========
+
+
+.. _kotori-0.16.0:
+
+2017-04-19 0.16.0
+=================
 - Add standalone program “`api_to_mqtt.py <https://github.com/zerotired/kotori/blob/master/kotori/vendor/luftdaten/api_to_mqtt.py>`_”
   to request data from `live data API of luftdaten.info <https://api.luftdaten.info/static/v1/data.json>`_,
   enrich geospatial information and publish to MQTT bus. Thanks, Richard!
