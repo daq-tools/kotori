@@ -10,6 +10,7 @@ in progress
     - Don't pull **all** build parameters into the artefact filename
       as this might raise ``OSError: [Errno 63] File name too long``.
     - Automatically derive "MQTT_TOPIC" from telemetry channel address information
+    - Update firmware builder configuration for :ref:`vendor-hiveeyes`
 
 
 .. _kotori-0.16.0:
