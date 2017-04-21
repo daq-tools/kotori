@@ -99,6 +99,11 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
         # Update transformation dict with information from request (body/params)
         data.update(bucket.data)
 
+        # Automatically derive "MQTT_TOPIC" from telemetry channel address information
+        if 'MQTT_TOPIC' not in data:
+            if 'TELEMETRY_REALM' in data and data['TELEMETRY_REALM']:
+                data['MQTT_TOPIC'] = '{TELEMETRY_REALM}/{TELEMETRY_USER}/{TELEMETRY_SITE}/{TELEMETRY_NODE}/data.json'.format(**data)
+
         # Extract option fields and delete them from transformation dict
         options = Bunch()
         option_fields = ['url', 'ref', 'update_submodules', 'path', 'architecture', 'makefile', 'suffix']

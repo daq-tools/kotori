@@ -5,8 +5,11 @@ Changelog
 
 in progress
 ===========
-- :ref:`firmware-builder`: Don't pull **all** build parameters into the artefact filename
-  as this might raise ``OSError: [Errno 63] File name too long``.
+- :ref:`firmware-builder` improvements:
+
+    - Don't pull **all** build parameters into the artefact filename
+      as this might raise ``OSError: [Errno 63] File name too long``.
+    - Automatically derive "MQTT_TOPIC" from telemetry channel address information
 
 
 .. _kotori-0.16.0:
