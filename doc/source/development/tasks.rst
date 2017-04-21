@@ -17,6 +17,16 @@ Kotori tasks
 ****
 
 
+2017-04-21
+==========
+- [x] Error::
+
+    http: error: OSError: [Errno 63] File name too long: 'hiveeyes_node-wifi-mqtt_esp-esp8266_3bb31b2c-MEASUREMENT_INTERVAL=60 * 1000,SENSOR_HX711=true,HE_SITE=area-42,WIFI_SSID_1=the-beekeepers,LOADCELL_ZERO_OFFSET=53623.0f,DEEPSLEEP_ENABLED=true,LOADCELL_KG_DIVIDER=18053,WIFI_PASS_1=secret,HE_HIVE=node-1,SENSOR_DHTxx=false,HE_USER=testdrive.bin'
+
+- [o] Store the firmware permanently and offer a marketplace-style portal around it displaying the build details etc.
+- [o] Improve HTTP router: Don't respond with "HTTP/1.1 405 Method Not Allowed" in case of 404s!
+
+
 2017-04-17
 ==========
 - Move/copy content from https://hiveeyes.org/docs/system/acquisition/#addressing

@@ -112,12 +112,24 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
                 options[field] = data[field]
                 del data[field]
 
+        # Sanity checks
+        # TODO: Check "options.suffix" for being "hex" or "elf" only
+
         # Override url option with repo url from settings
         options.url = self.channel.repository
 
         # Propagate path to ESP_ROOT
         # TODO: Clone from https://github.com/esp8266/Arduino
         options.esp_root = self.channel.esp_root
+
+        # Further "options" manipulations
+
+        # Type coercion with default value
+        if 'update_submodules' in options:
+            options['update_submodules'] = asbool(options['update_submodules'])
+        else:
+            options['update_submodules'] = True
+
 
         # 2. Reporting
         log.info('Building firmware, options={options}, data={data}', options=dict(options), data=dict(data))
@@ -138,14 +150,6 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
             return self.build_firmware(options=options, **kwargs)
 
     def build_firmware(self, bucket=None, options=None, data=None):
-
-        # Sanity checks
-        # TODO: Check "options.suffix" for being "hex" or "elf" only
-
-        if 'update_submodules' in options:
-            options['update_submodules'] = asbool(options['update_submodules'])
-        else:
-            options['update_submodules'] = True
 
         # FirmwareBuilder machinery
         fwbuilder = FirmwareBuilder(
@@ -181,6 +185,8 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
         if result.success:
 
             # Compute extended firmware name suffix from transformation dict
+            # TODO: Route this information to "Artefact" object
+            """
             fwparams = ''
             if data:
                 data = data.copy()
@@ -189,10 +195,10 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
                 for key, value in data.iteritems():
                     dlist.append(u'{key}={value}'.format(**locals()))
                 fwparams = u'-' + u','.join(dlist)
+            """
 
-            # TODO: Route "fwparams" to "Artefact"
             filename = '{realm}_{name}.{suffix}'.format(
-                realm=self.channel.realm, name=artefact.fullname, fwparams=fwparams, suffix=options.suffix)
+                realm=self.channel.realm, name=artefact.fullname, suffix=options.suffix)
 
             log.info(u'Build succeeded, filename: {filename}, artefact: {artefact}', filename=filename, artefact=artefact)
 
