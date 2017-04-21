@@ -5,6 +5,12 @@ Changelog
 
 in progress
 ===========
+
+
+.. _kotori-0.17.0:
+
+2017-04-21 0.17.0
+=================
 - :ref:`firmware-builder` improvements:
 
     - Don't pull **all** build parameters into the artefact filename
