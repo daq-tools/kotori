@@ -5,6 +5,8 @@ import re
 import sys
 import logging
 import StringIO
+import uuid
+import arrow
 from bunch import Bunch
 from appdirs import user_cache_dir
 from tempfile import NamedTemporaryFile
@@ -200,7 +202,7 @@ class FirmwareBuilder(object):
         # Machinery for computing replacements
         replacements = []
         for name, value in data.iteritems():
-            for match in self.find_variable(payload, name):
+            for match in self.find_variable(payload, name, multiline=True):
 
                 value_before = match['value']
 
@@ -298,14 +300,14 @@ class FirmwareBuilder(object):
             target_elf = os.path.abspath(os.path.join(self.build_result['build_path'], self.build_result['TARGET_ELF']))
 
             artefact.name = os.path.splitext(os.path.basename(target_hex))[0]
-            artefact.hex = file(target_hex, 'rb').read()
-            artefact.elf = file(target_elf, 'rb').read()
+            artefact.binary.hex = file(target_hex, 'rb').read()
+            artefact.binary.elf = file(target_elf, 'rb').read()
 
         # ESP
         elif self.architecture == 'esp':
             target_bin = os.path.abspath(self.build_result['TARGET_BIN'])
             artefact.name = os.path.splitext(os.path.basename(target_bin))[0]
-            artefact.bin = file(target_bin, 'rb').read()
+            artefact.binary.bin = file(target_bin, 'rb').read()
 
         return artefact
 
@@ -377,12 +379,23 @@ class FirmwareBuilder(object):
 class Artefact(object):
 
     def __init__(self):
+
+        # TODO: Add more build arguments
+        # TODO: Persist somehow
+        # TODO: Display contents on html page
+
         self.architecture = None
         self.source  = None
         self.build   = None
         self.name    = None
-        self.hex     = None
-        self.elf     = None
+
+        self.binary  = BinaryArtefact()
+
+        self.identifier = str(uuid.uuid4())
+        self.timestamp  = arrow.now().format('YYYYMMDDTHHmmss')
+
+    def get_binary(self, suffix):
+        return getattr(self.binary, suffix)
 
     @property
     def commit_sha(self):
@@ -391,32 +404,47 @@ class Artefact(object):
     @property
     def fullname(self):
 
-        name_ref = self.commit_sha
+        template = '{name}_{architecture}-{target}_{timestamp}_{commit}_{identifier}'
+
+        target = 'unknown'
+        commit = self.commit_sha
 
         if self.architecture == 'avr':
-            name_ref = '{name}_{architecture}-{board_tag}-{board_sub}_{ref}'.format(
-                name = self.name,
-                architecture = self.architecture,
+            target = '{board_tag}-{board_sub}'.format(
                 board_tag = self.build.get('TARGET_BOARD_TAG', 'unknown'),
-                board_sub = self.build.get('TARGET_BOARD_SUB', 'unknown'),
-                ref = self.commit_sha)
+                board_sub = self.build.get('TARGET_BOARD_SUB', 'unknown')
+            )
 
         elif self.architecture == 'esp':
-            name_ref = '{name}_{architecture}-{target_chip}_{ref}'.format(
-                name = self.name,
-                architecture = self.architecture,
+            target = '{target_chip}'.format(
                 target_chip = self.build.get('TARGET_CHIP', 'unknown'),
-                ref = self.commit_sha)
+            )
 
-        return name_ref
+        variables = {}
+        variables.update(**self.__dict__)
+        variables.update(**locals())
+
+        result = template.format(**variables)
+
+        return result
 
     def __repr__(self):
-        hex_size = self.hex and len(self.hex) or None
-        elf_size = self.elf and len(self.elf) or None
+        hex_size = self.binary.hex and len(self.binary.hex) or None
+        elf_size = self.binary.elf and len(self.binary.elf) or None
+        bin_size = self.binary.bin and len(self.binary.bin) or None
         tplvars = {}
         tplvars.update(**self.__dict__)
         tplvars.update(**locals())
-        return u'<{class_} name={name} source={source} hexsize={hex_size} elfsize={elf_size}>'.format(class_=type(self).__name__, **tplvars)
+        return u'<{class_} name={name} source={source} hexsize={hex_size} elfsize={elf_size} binsize={bin_size}>'.format(class_=type(self).__name__, **tplvars)
+
+
+class BinaryArtefact:
+
+    def __init__(self):
+
+        self.hex     = None
+        self.elf     = None
+        self.bin     = None
 
 
 

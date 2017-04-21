@@ -185,14 +185,17 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
                     dlist.append(u'{key}={value}'.format(**locals()))
                 fwparams = u'-' + u','.join(dlist)
 
-            filename = '{realm}_{name}{fwparams}.{suffix}'.format(
+            # TODO: Route "fwparams" to "Artefact"
+            filename = '{realm}_{name}.{suffix}'.format(
                 realm=self.channel.realm, name=artefact.fullname, fwparams=fwparams, suffix=options.suffix)
+
             log.info(u'Build succeeded, filename: {filename}, artefact: {artefact}', filename=filename, artefact=artefact)
+
             bucket.request.setHeader('Content-Type', 'application/octet-stream')
             bucket.request.setHeader('Content-Disposition', 'attachment; filename={filename}'.format(filename=filename))
 
             # "options.suffix" may be "hex" or "elf"
-            payload = getattr(artefact, options.suffix)
+            payload = artefact.get_binary(options.suffix)
             return payload
 
         else:
