@@ -6,6 +6,7 @@ Changelog
 in progress
 ===========
 - Improve InfluxDB database creation behaviour
+- Add geospatial data acquisition capabilities
 
 
 .. _kotori-0.17.0:

@@ -155,6 +155,17 @@ class InfluxDBAdapter(object):
 
                 del data[time_field]
 
+        # Extract geohash from data. Finally, thanks Rich!
+        # TODO: Also precompute geohash with 3-4 different zoomlevels and add them as tags
+        if "geohash" in data:
+            chunk["tags"]["geohash"] = data["geohash"]
+            del data['geohash']
+
+        # Extract more information specific to luftdaten.info
+        for field in ['location', 'location_id', 'location_name', 'sensor_id', 'sensor_type']:
+            if field in data:
+                chunk["tags"][field] = data[field]
+                del data[field]
 
         # TODO: Maybe do this at data acquisition / transformation time, not here.
         if 'time' in chunk:

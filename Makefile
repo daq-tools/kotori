@@ -159,7 +159,7 @@ version  := $(shell python setup.py --version)
 
 
 deb-build-daq:
-	$(MAKE) deb-build name=kotori features=daq,export,plotting,firmware,scientific
+	$(MAKE) deb-build name=kotori features=daq,daq_geospatial,export,plotting,firmware,scientific
 
 deb-build-daq-binary:
 	$(MAKE) deb-build name=kotori-daq-binary features=daq,daq_binary

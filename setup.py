@@ -58,6 +58,12 @@ extras = {
         #'txmongo==16.3.0',
         'pymongo==3.4.0',
     ],
+    'daq_geospatial': [
+        'Geohash==1.0',
+        'geopy==1.11.0',
+        'Beaker==1.8.1',
+        'tqdm==4.11.2',
+    ],
     'daq_binary': [
         'pyclibrary==0.1.3',
         'tabulate==0.7.5',          # 0.7.7
