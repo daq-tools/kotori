@@ -135,6 +135,9 @@
 .. _LST-aviation: http://www.studentaviationmunich.com/lst/
 .. _LST-projects: http://sperlhome.userweb.mwn.de/
 
+.. luftdaten.info
+.. _luftdaten_api_to_mqtt.py: https://github.com/zerotired/kotori/blob/master/kotori/vendor/luftdaten/luftdaten_api_to_mqtt.py
+
 .. Weather information
 .. _weeWX: http://www.weewx.com/
 .. _AmatYr: https://github.com/torhve/Amatyr

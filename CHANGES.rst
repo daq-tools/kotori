@@ -7,6 +7,12 @@ in progress
 ===========
 - Improve InfluxDB database creation behaviour
 - Add geospatial data acquisition capabilities
+- Improve `luftdaten_api_to_mqtt.py`_:
+
+    - Generic commandline interface
+    - Caching for Nominatim responses
+    - Appropriate timestamp mungling
+    - Documentation
 
 
 .. _kotori-0.17.0:
@@ -18,14 +24,14 @@ in progress
     - Don't pull **all** build parameters into the artefact filename
       as this might raise ``OSError: [Errno 63] File name too long``.
     - Automatically derive "MQTT_TOPIC" from telemetry channel address information
-    - Update firmware builder configuration for :ref:`vendor-hiveeyes`
+    - Update firmware builder configuration for vendor :ref:`vendor-hiveeyes`
 
 
 .. _kotori-0.16.0:
 
 2017-04-19 0.16.0
 =================
-- Add standalone program “`api_to_mqtt.py <https://github.com/zerotired/kotori/blob/master/kotori/vendor/luftdaten/api_to_mqtt.py>`_”
+- Add standalone program “`luftdaten_api_to_mqtt.py`_”
   to request data from `live data API of luftdaten.info <https://api.luftdaten.info/static/v1/data.json>`_,
   enrich geospatial information and publish to MQTT bus. Thanks, Richard!
 - Add documentation and configuration for vendor :ref:`vendor-luftdaten.info`. Thanks again, Richard!
