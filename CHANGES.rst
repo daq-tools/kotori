@@ -5,6 +5,7 @@ Changelog
 
 in progress
 ===========
+- Improve InfluxDB database creation behaviour
 
 
 .. _kotori-0.17.0:

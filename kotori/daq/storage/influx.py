@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2017 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2015-2017 Andreas Motl <andreas@getkotori.org>
 import types
 import requests
+from copy import deepcopy
 from funcy import project
 from collections import OrderedDict
 from twisted.logger import Logger
@@ -42,15 +43,15 @@ class InfluxDBAdapter(object):
             username=self.username, password=self.password,
             database=self.database)
 
-        self.connected = True
-
         # Run "CREATE DATABASE" only once
         if self.database in self.databases_created:
+            self.connected = True
             return True
 
         try:
             self.influx.create_database(self.database)
             self.databases_created.append(self.database)
+            self.connected = True
 
         except requests.exceptions.ConnectionError as ex:
             self.connected = False
@@ -71,8 +72,21 @@ class InfluxDBAdapter(object):
 
 
     def write(self, meta, data):
+
+        self.connect()
+
+        meta_copy = deepcopy(dict(meta))
+        data_copy = deepcopy(data)
+
         try:
             chunk = self.format_chunk(meta, data)
+
+        except Exception as ex:
+            log.failure(u'Could not format chunk (ex={ex_name}: {ex}): data={data}, meta={meta}',
+                ex_name=ex.__class__.__name__, ex=ex, meta=meta_copy, data=data_copy)
+            return False
+
+        try:
             success = self.influx.write_points([chunk], time_precision=chunk['time_precision'])
             if success:
                 log.debug(u"Storage success: {chunk}", chunk=chunk)
@@ -83,9 +97,14 @@ class InfluxDBAdapter(object):
         except requests.exceptions.ConnectionError:
             log.failure(u'InfluxDB connection error')
 
-        except ValueError as ex:
-            log.failure(u'Could not format chunk or write data (ex={ex}): data={data}, meta={meta}',
-                ex=ex, meta=dict(meta), data=data)
+        except InfluxDBClientError as ex:
+            if ex.code == 404 or ex.message == 'database not found':
+                self.connected = False
+                self.databases_created.remove(self.database)
+                log.failure('InfluxDBClientError: {ex}', ex=ex)
+            else:
+                raise
+
 
     @staticmethod
     def get_tags(data):
