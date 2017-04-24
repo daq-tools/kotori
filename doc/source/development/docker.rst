@@ -45,9 +45,9 @@ Setup
 -----
 - Run InfluxDB Docker container::
 
-    docker pull influxdb:latest
+    docker pull influxdb:1.2.2
 
-    docker run --name=influxdb --detach=true --publish 8083:8083 --publish 8086:8086 influxdb
+    docker run --name=influxdb-1.2.2 --detach=true --publish 8083:8083 --publish 8086:8086 influxdb:1.2.2
 
 
 Running
@@ -77,17 +77,22 @@ Installation via Docker
 -----------------------
 ::
 
-    docker pull grafana/grafana
+    docker pull grafana/grafana:4.2.0
 
     docker run \
-        --name=grafana \
+        --name=grafana-4.2.0 \
         --detach=true \
         --publish=3000:3000 \
         --volume=/var/lib/grafana:/var/lib/grafana \
         --env='GF_SECURITY_ADMIN_PASSWORD=secret' \
-        grafana/grafana
+        grafana/grafana:4.2.0
 
         #--volume=/etc/grafana:/etc/grafana \
+
+Setup Worldmap Panel::
+
+    docker exec -i grafana-4.2.0 grafana-cli plugins install grafana-worldmap-panel
+    docker restart grafana-4.2.0
 
 
 Running

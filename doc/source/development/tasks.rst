@@ -16,6 +16,60 @@ Kotori tasks
 2017
 ****
 
+2017-04-24
+==========
+::
+
+    2017-04-24T04:43:30+0200 [kotori.daq.services.mig            ] ERROR: Error processing MQTT message from topic "luftdaten/testdrive/earth/43/data.json":
+    [Failure instance: Traceback: <class 'influxdb.exceptions.InfluxDBServerError'>: {"error":"timeout"}
+
+        /usr/lib/python2.7/threading.py:810:__bootstrap_inner
+        /usr/lib/python2.7/threading.py:763:run
+        /opt/kotori/lib/python2.7/site-packages/twisted/_threads/_threadworker.py:46:work
+        /opt/kotori/lib/python2.7/site-packages/twisted/_threads/_team.py:190:doWork
+        --- <exception caught here> ---
+        /opt/kotori/lib/python2.7/site-packages/twisted/python/threadpool.py:250:inContext
+        /opt/kotori/lib/python2.7/site-packages/twisted/python/threadpool.py:266:<lambda>
+        /opt/kotori/lib/python2.7/site-packages/twisted/python/context.py:122:callWithContext
+        /opt/kotori/lib/python2.7/site-packages/twisted/python/context.py:85:callWithContext
+        /opt/kotori/lib/python2.7/site-packages/kotori/daq/services/mig.py:183:process_message
+        /opt/kotori/lib/python2.7/site-packages/kotori/daq/services/mig.py:197:store_message
+        /opt/kotori/lib/python2.7/site-packages/kotori/daq/storage/influx.py:90:write
+        /opt/kotori/lib/python2.7/site-packages/influxdb/client.py:411:write_points
+        /opt/kotori/lib/python2.7/site-packages/influxdb/client.py:461:_write_points
+        /opt/kotori/lib/python2.7/site-packages/influxdb/client.py:292:write
+        /opt/kotori/lib/python2.7/site-packages/influxdb/client.py:249:request
+        ]
+
+::
+
+    Apr 24 15:03:51 elbanco influxd[5910]: [httpd] 127.0.0.1 - admin [24/Apr/2017:15:03:48 +0200] "POST /write?db=luftdaten_testdrive&precision=n HTTP/1.1" 204 0 "-" "python-requests/2.13.0" 74cb40c9-28ee-11e7-8db0-000000000000 3337074
+    Apr 24 15:03:51 elbanco influxd[5910]: [I] 2017-04-24T13:03:51Z Snapshot for path /var/lib/influxdb/data/_internal/monitor/1703 written in 873.725945ms engine=tsm1
+    Apr 24 15:03:52 elbanco influxd[5910]: [I] 2017-04-24T13:03:52Z beginning level 1 compaction of group 0, 2 TSM files engine=tsm1
+    Apr 24 15:03:52 elbanco influxd[5910]: [I] 2017-04-24T13:03:52Z compacting level 1 group (0) /var/lib/influxdb/data/_internal/monitor/1703/000000069-000000001.tsm (#0) engine=tsm1
+    Apr 24 15:03:52 elbanco influxd[5910]: [I] 2017-04-24T13:03:52Z compacting level 1 group (0) /var/lib/influxdb/data/_internal/monitor/1703/000000070-000000001.tsm (#1) engine=tsm1
+
+    Apr 24 15:03:53 elbanco influxd[5910]: [I] 2017-04-24T13:03:53Z compacted level 1 group (0) into /var/lib/influxdb/data/_internal/monitor/1703/000000070-000000002.tsm.tmp (#0) engine=tsm1
+    Apr 24 15:03:53 elbanco influxd[5910]: [I] 2017-04-24T13:03:53Z compacted level 1 2 files into 1 files in 1.479397792s engine=tsm1
+
+- https://github.com/influxdata/influxdb/issues/7447
+- https://github.com/influxdata/influxdb/pull/8116
+- https://github.com/influxdata/influxdb/pull/8131
+- https://github.com/influxdata/influxdb/pull/8193
+
+
+2017-04-22
+==========
+- [o] Add Grafana dashboard for luftdaten.info
+- [o] Global Sensor Networks
+
+    - https://github.com/LSIR/gsn
+    - https://github.com/LSIR/gsn/wiki
+    - https://twitter.com/GSN_LSIR
+    - http://open-platforms.eu/library/global-sensor-networks-gsn/
+    - https://www.slideshare.net/jpcik/gsn-global-sensor-networks
+    - https://pdfs.semanticscholar.org/1e4a/ecd5bf998a64cfb57798de1ffc8685d528b2.pdf
+
 
 2017-04-21
 ==========
@@ -25,6 +79,7 @@ Kotori tasks
 
 - [o] Store the firmware permanently and offer a marketplace-style portal around it displaying the build details etc.
 - [o] Improve HTTP router: Don't respond with "HTTP/1.1 405 Method Not Allowed" in case of 404s!
+- [o] Interpolate build host information (OS, Compiler versions, etc.) into artefact information
 
 
 2017-04-17
