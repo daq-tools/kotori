@@ -40,6 +40,13 @@ We want to a) republish the live data to mqtt and b) import historical CSV data
 to display both using Grafana_.
 
 
+****
+Demo
+****
+- https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-tresholds
+- https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-map
+
+
 ***********
 Screenshots
 ***********

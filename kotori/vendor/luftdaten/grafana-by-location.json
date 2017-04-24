@@ -66,7 +66,8 @@
                         "P10 in 15 min": "#705DA0",
                         "P2,5": "#BF1B00",
                         "P2.5": "#BF1B00",
-                        "P2.5 in 15min": "#890F02"
+                        "P2.5 in 15min": "#890F02",
+                        "humidity": "#82B5D8"
                     },
                     "bars": false,
                     "datasource": "{{ database }}",
@@ -125,6 +126,11 @@
                             "lines": false,
                             "pointradius": 1,
                             "points": true
+                        },
+                        {
+                            "alias": "humidity",
+                            "linewidth": 2,
+                            "yaxis": 2
                         }
                     ],
                     "span": 12,
@@ -338,19 +344,57 @@
                                     "value": "/^$Location$/"
                                 }
                             ]
+                        },
+                        {
+                            "alias": "humidity",
+                            "dsType": "influxdb",
+                            "groupBy": [
+                                {
+                                    "params": [
+                                        "15m"
+                                    ],
+                                    "type": "time"
+                                },
+                                {
+                                    "params": [
+                                        "null"
+                                    ],
+                                    "type": "fill"
+                                }
+                            ],
+                            "policy": "default",
+                            "query": "SELECT mean(\"humidity\") FROM \"{{ measurement }}\" WHERE \"location_name\" =~ /^$Location$/ AND $timeFilter GROUP BY time(15m) fill(null)",
+                            "rawQuery": true,
+                            "refId": "E",
+                            "resultFormat": "time_series",
+                            "select": [
+                                [
+                                    {
+                                        "params": [
+                                            "value"
+                                        ],
+                                        "type": "field"
+                                    },
+                                    {
+                                        "params": [],
+                                        "type": "mean"
+                                    }
+                                ]
+                            ],
+                            "tags": []
                         }
                     ],
                     "thresholds": [
                         {
                             "colorMode": "critical",
-                            "fill": true,
+                            "fill": false,
                             "line": true,
                             "op": "gt",
                             "value": 40
                         },
                         {
                             "colorMode": "warning",
-                            "fill": true,
+                            "fill": false,
                             "line": true,
                             "op": "gt",
                             "value": 25
@@ -358,7 +402,7 @@
                     ],
                     "timeFrom": null,
                     "timeShift": null,
-                    "title": "P10 and P2.5",
+                    "title": "P10, P2.5 and humidity",
                     "tooltip": {
                         "shared": true,
                         "sort": 0,
@@ -381,7 +425,7 @@
                             "show": true
                         },
                         {
-                            "format": "celsius",
+                            "format": "humidity",
                             "label": "μm/m³",
                             "logBase": 1,
                             "max": null,
