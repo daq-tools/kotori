@@ -162,9 +162,9 @@ class InfluxDBAdapter(object):
         if 'time' in chunk:
             chunk['time'] = parse_timestamp(chunk['time'])
 
-        if isinstance(chunk['time'], datetime.datetime):
-            if chunk['time'].microsecond == 0:
-                chunk['time_precision'] = 's'
+            if isinstance(chunk['time'], datetime.datetime):
+                if chunk['time'].microsecond == 0:
+                    chunk['time_precision'] = 's'
 
         """
         Prevent errors like
