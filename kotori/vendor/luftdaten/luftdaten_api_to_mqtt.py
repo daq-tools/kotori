@@ -138,9 +138,15 @@ log = logging.getLogger(__name__)
 
 cache_options = {
     'type': 'file',
-    'data_dir': '/tmp/nominatim-cache/data',
-    'lock_dir': '/tmp/nominatim-cache/lock'
+    'data_dir': '/var/cache/nominatim/data',
+    'lock_dir': '/var/cache/nominatim/lock'
 }
+if sys.platform == 'darwin':
+    cache_options = {
+        'type': 'file',
+        'data_dir': '/tmp/nominatim-cache/data',
+        'lock_dir': '/tmp/nominatim-cache/lock'
+    }
 cache = CacheManager(**cache_options)
 
 VERSION  = '0.1.0'

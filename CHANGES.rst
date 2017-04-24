@@ -7,6 +7,7 @@ in progress
 ===========
 - Fix variable naming, references, data conversion and exception handling
 - Try to improve InfluxDB storage efficiency
+- luftdaten-to-mqtt: Configure Nominatim cache directory conditionally
 
 
 .. _kotori-0.18.0:
