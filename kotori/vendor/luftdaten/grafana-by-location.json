@@ -62,8 +62,11 @@
             "panels": [
                 {
                     "aliasColors": {
-                        "P10": "#82B5D8",
-                        "P2,5": "#BF1B00"
+                        "P10": "#AEA2E0",
+                        "P10 in 15 min": "#705DA0",
+                        "P2,5": "#BF1B00",
+                        "P2.5": "#BF1B00",
+                        "P2.5 in 15min": "#890F02"
                     },
                     "bars": false,
                     "datasource": "{{ database }}",
@@ -100,12 +103,28 @@
                     },
                     "seriesOverrides": [
                         {
-                            "alias": "P10",
+                            "alias": "P10 in 15 min",
+                            "fill": 1,
+                            "linewidth": 3,
                             "yaxis": 1
                         },
                         {
-                            "alias": "P2,5",
+                            "alias": "P2.5 in 15min",
+                            "fill": 1,
+                            "linewidth": 3,
                             "yaxis": 1
+                        },
+                        {
+                            "alias": "P10",
+                            "lines": false,
+                            "pointradius": 1,
+                            "points": true
+                        },
+                        {
+                            "alias": "P2.5",
+                            "lines": false,
+                            "pointradius": 1,
+                            "points": true
                         }
                     ],
                     "span": 12,
@@ -113,7 +132,7 @@
                     "steppedLine": false,
                     "targets": [
                         {
-                            "alias": "P10",
+                            "alias": "P2.5",
                             "dsType": "influxdb",
                             "fields": [
                                 {
@@ -124,7 +143,7 @@
                             "groupBy": [
                                 {
                                     "params": [
-                                        "$__interval"
+                                        "1m"
                                     ],
                                     "type": "time"
                                 },
@@ -141,6 +160,110 @@
                             "query": "SELECT mean(\"P1\") FROM \"{{ measurement }}\" WHERE \"location_name\" =~ /^$Location$/ AND $timeFilter GROUP BY time($__interval) fill(null)",
                             "rawQuery": false,
                             "refId": "A",
+                            "resultFormat": "time_series",
+                            "select": [
+                                [
+                                    {
+                                        "params": [
+                                            "P2"
+                                        ],
+                                        "type": "field"
+                                    },
+                                    {
+                                        "params": [],
+                                        "type": "mean"
+                                    }
+                                ]
+                            ],
+                            "tags": [
+                                {
+                                    "key": "location_name",
+                                    "operator": "=~",
+                                    "value": "/^$Location$/"
+                                }
+                            ]
+                        },
+                        {
+                            "alias": "P2.5 in 15min",
+                            "dsType": "influxdb",
+                            "fields": [
+                                {
+                                    "func": "mean",
+                                    "name": "P2"
+                                }
+                            ],
+                            "groupBy": [
+                                {
+                                    "params": [
+                                        "15m"
+                                    ],
+                                    "type": "time"
+                                },
+                                {
+                                    "params": [
+                                        "null"
+                                    ],
+                                    "type": "fill"
+                                }
+                            ],
+                            "groupByTags": [],
+                            "measurement": "{{ measurement }}",
+                            "policy": "default",
+                            "query": "SELECT mean(\"P2\") FROM \"{{ measurement }}\" WHERE $timeFilter GROUP BY time($interval)",
+                            "rawQuery": false,
+                            "refId": "B",
+                            "resultFormat": "time_series",
+                            "select": [
+                                [
+                                    {
+                                        "params": [
+                                            "P2"
+                                        ],
+                                        "type": "field"
+                                    },
+                                    {
+                                        "params": [],
+                                        "type": "mean"
+                                    }
+                                ]
+                            ],
+                            "tags": [
+                                {
+                                    "key": "location_name",
+                                    "operator": "=~",
+                                    "value": "/^$Location$/"
+                                }
+                            ]
+                        },
+                        {
+                            "alias": "P10",
+                            "dsType": "influxdb",
+                            "fields": [
+                                {
+                                    "func": "mean",
+                                    "name": "P1"
+                                }
+                            ],
+                            "groupBy": [
+                                {
+                                    "params": [
+                                        "1m"
+                                    ],
+                                    "type": "time"
+                                },
+                                {
+                                    "params": [
+                                        "null"
+                                    ],
+                                    "type": "fill"
+                                }
+                            ],
+                            "groupByTags": [],
+                            "measurement": "{{ measurement }}",
+                            "policy": "default",
+                            "query": "SELECT mean(\"P1\") FROM \"{{ measurement }}\" WHERE \"location_name\" =~ /^$Location$/ AND $timeFilter GROUP BY time($__interval) fill(null)",
+                            "rawQuery": false,
+                            "refId": "C",
                             "resultFormat": "time_series",
                             "select": [
                                 [
@@ -165,18 +288,18 @@
                             ]
                         },
                         {
-                            "alias": "P2,5",
+                            "alias": "P10 in 15 min",
                             "dsType": "influxdb",
                             "fields": [
                                 {
                                     "func": "mean",
-                                    "name": "P2"
+                                    "name": "P1"
                                 }
                             ],
                             "groupBy": [
                                 {
                                     "params": [
-                                        "$__interval"
+                                        "15m"
                                     ],
                                     "type": "time"
                                 },
@@ -190,15 +313,15 @@
                             "groupByTags": [],
                             "measurement": "{{ measurement }}",
                             "policy": "default",
-                            "query": "SELECT mean(\"P2\") FROM \"{{ measurement }}\" WHERE $timeFilter GROUP BY time($interval)",
+                            "query": "SELECT mean(\"P1\") FROM \"{{ measurement }}\" WHERE \"location_name\" =~ /^$Location$/ AND $timeFilter GROUP BY time($__interval) fill(null)",
                             "rawQuery": false,
-                            "refId": "B",
+                            "refId": "D",
                             "resultFormat": "time_series",
                             "select": [
                                 [
                                     {
                                         "params": [
-                                            "P2"
+                                            "P1"
                                         ],
                                         "type": "field"
                                     },
@@ -259,7 +382,7 @@
                         },
                         {
                             "format": "celsius",
-                            "label": "",
+                            "label": "μm/m³",
                             "logBase": 1,
                             "max": null,
                             "min": null,
@@ -343,8 +466,8 @@
                             "groupBy": [],
                             "measurement": "{{ measurement }}",
                             "policy": "default",
-                            "query": "SELECT mean(\"P1\") FROM \"{{ measurement }}\" WHERE \"location_name\" =~ /^$Location$/ AND $timeFilter GROUP BY time($__interval) fill(null)",
-                            "rawQuery": false,
+                            "query": "SELECT \"P1\" FROM \"{{ measurement }}\" WHERE \"location_name\" =~ /^$Location$/",
+                            "rawQuery": true,
                             "refId": "B",
                             "resultFormat": "time_series",
                             "select": [
@@ -368,7 +491,7 @@
                     ],
                     "thresholds": "25,50",
                     "timeFrom": "24h",
-                    "title": "last 24h P10",
+                    "title": "P10",
                     "type": "singlestat",
                     "valueFontSize": "80%",
                     "valueMaps": [
@@ -444,8 +567,8 @@
                             "groupBy": [],
                             "measurement": "{{ measurement }}",
                             "policy": "default",
-                            "query": "SELECT mean(\"P1\") FROM \"{{ measurement }}\" WHERE \"location_name\" =~ /^$Location$/ AND $timeFilter GROUP BY time($__interval) fill(null)",
-                            "rawQuery": false,
+                            "query": "SELECT \"P2\" FROM \"{{ measurement }}\" WHERE \"location_name\" =~ /^$Location$/",
+                            "rawQuery": true,
                             "refId": "B",
                             "resultFormat": "time_series",
                             "select": [
@@ -469,7 +592,7 @@
                     ],
                     "thresholds": "15,30",
                     "timeFrom": "24h",
-                    "title": "last 24h P2.5 (no limit)",
+                    "title": "P2.5 (no limit)",
                     "type": "singlestat",
                     "valueFontSize": "80%",
                     "valueMaps": [
@@ -545,8 +668,8 @@
                             "groupBy": [],
                             "measurement": "{{ measurement }}",
                             "policy": "default",
-                            "query": "SELECT mean(\"P1\") FROM \"{{ measurement }}\" WHERE \"location_name\" =~ /^$Location$/ AND $timeFilter GROUP BY time($__interval) fill(null)",
-                            "rawQuery": false,
+                            "query": "SELECT \"P1\" FROM \"{{ measurement }}\" WHERE \"location_name\" =~ /^$Location$/",
+                            "rawQuery": true,
                             "refId": "B",
                             "resultFormat": "time_series",
                             "select": [
@@ -570,7 +693,7 @@
                     ],
                     "thresholds": "20,40",
                     "timeFrom": "1y",
-                    "title": "P10 over the last year",
+                    "title": "P10",
                     "type": "singlestat",
                     "valueFontSize": "80%",
                     "valueMaps": [
@@ -646,8 +769,8 @@
                             "groupBy": [],
                             "measurement": "{{ measurement }}",
                             "policy": "default",
-                            "query": "SELECT mean(\"P1\") FROM \"{{ measurement }}\" WHERE \"location_name\" =~ /^$Location$/ AND $timeFilter GROUP BY time($__interval) fill(null)",
-                            "rawQuery": false,
+                            "query": "SELECT \"P2\" FROM \"{{ measurement }}\" WHERE \"location_name\" =~ /^$Location$/",
+                            "rawQuery": true,
                             "refId": "B",
                             "resultFormat": "time_series",
                             "select": [
@@ -671,7 +794,7 @@
                     ],
                     "thresholds": "12.5,25",
                     "timeFrom": "1y",
-                    "title": "P2.5 over last year",
+                    "title": "P2.5",
                     "type": "singlestat",
                     "valueFontSize": "80%",
                     "valueMaps": [
@@ -1213,5 +1336,5 @@
     },
     "timezone": "browser",
     "title": "{{ title }}",
-    "version": 0
+    "version": null
 }
