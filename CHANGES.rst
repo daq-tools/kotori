@@ -5,6 +5,12 @@ Changelog
 
 in progress
 ===========
+
+
+.. _kotori-0.18.1:
+
+2017-04-24 0.18.1
+=================
 - Fix variable naming, references, data conversion and exception handling
 - Try to improve InfluxDB storage efficiency
 - luftdaten-to-mqtt: Configure Nominatim cache directory conditionally
