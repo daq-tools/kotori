@@ -1,6 +1,6 @@
-#########################################
-Agenda for connecting with luftdaten.info
-#########################################
+######
+Agenda
+######
 
 .. contents::
    :local:

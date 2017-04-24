@@ -5,7 +5,11 @@ Changelog
 
 in progress
 ===========
-- Update Grafana dashboard "grafana-by-location.json" for vendor :ref:`vendor-luftdaten.info`. Thanks, Richard!
+- vendor :ref:`vendor-luftdaten.info`:
+
+    - Update Grafana dashboard "grafana-by-location.json". Thanks, Richard!
+    - Update documentation
+
 - Fix data convergence re. “time” field
 
 

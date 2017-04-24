@@ -54,7 +54,7 @@ Synopsis
 
     2017-04-22 03:53:47,947 [kotori.vendor.luftdaten.luftdaten_api_to_mqtt] INFO   : Publishing data to MQTT URI mqtt://mqtt.example.org/luftdaten.info
     2017-04-22 03:53:49,012 [kotori.vendor.luftdaten.luftdaten_api_to_mqtt] INFO   : Timestamp of first record: 2017-04-22T01:48:02Z
-    100%|██████████████████████████████████████████████████████████████████████████| 6617/6617 [00:01<00:00, 4184.30it/s]
+    100%|..........................................................................| 6617/6617 [00:01<00:00, 4184.30it/s]
 
 Result (reformatted for better readability)::
 
@@ -100,7 +100,7 @@ Publisher::
 
     2017-04-22 03:55:50,426 [kotori.vendor.luftdaten.luftdaten_api_to_mqtt] INFO   : Publishing data to MQTT URI mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json
     2017-04-22 03:55:51,396 [kotori.vendor.luftdaten.luftdaten_api_to_mqtt] INFO   : Timestamp of first record: 2017-04-22T01:50:02Z
-    100%|██████████████████████████████████████████████████████████████████████████| 6782/6782 [01:01<00:00, 109.77it/s]
+    100%|..........................................................................| 6782/6782 [01:01<00:00, 109.77it/s]
 
 Subscriber::
 
