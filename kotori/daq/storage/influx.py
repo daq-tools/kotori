@@ -7,7 +7,7 @@ from funcy import project
 from collections import OrderedDict
 from twisted.logger import Logger
 from influxdb.client import InfluxDBClient, InfluxDBClientError
-from kotori.io.protocol.util import parse_timestamp, is_number
+from kotori.io.protocol.util import parse_timestamp, is_number, convert_floats
 
 log = Logger()
 
@@ -184,6 +184,8 @@ class InfluxDBAdapter(object):
         return chunk
 
     def data_to_float(self, data):
+        return convert_floats(data)
+
         for key, value in data.iteritems():
 
             # Sanity checks

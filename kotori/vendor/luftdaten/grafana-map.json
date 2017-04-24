@@ -1,0 +1,431 @@
+{
+    "annotations": {
+        "list": [
+            {
+                "datasource": "{{ database }}",
+                "enable": true,
+                "iconColor": "rgba(255, 96, 96, 1)",
+                "limit": 100,
+                "name": "Events",
+                "query": "SELECT * FROM {{ measurement_events }} WHERE $timeFilter",
+                "tagsColumn": "tags",
+                "textColumn": "text",
+                "titleColumn": "title",
+                "type": "alert"
+            }
+        ]
+    },
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 0,
+    "hideControls": false,
+    "id": null,
+    "links": [
+        {
+            "icon": "external link",
+            "tags": [],
+            "targetBlank": true,
+            "title": "README",
+            "type": "link",
+            "url": "https://getkotori.org/docs/applications/luftdaten.info/"
+        },
+        {
+            "icon": "external link",
+            "tags": [],
+            "targetBlank": true,
+            "title": "luftdaten.info",
+            "type": "link",
+            "url": "http://luftdaten.info/"
+        },
+        {
+            "icon": "external link",
+            "tags": [],
+            "targetBlank": true,
+            "title": "luftdaten.info archive",
+            "type": "link",
+            "url": "http://archive.luftdaten.info/"
+        },
+        {
+            "icon": "external link",
+            "tags": [],
+            "targetBlank": true,
+            "title": "luftdaten.info map",
+            "type": "link",
+            "url": "http://deutschland.maps.luftdaten.info/"
+        }
+    ],
+    "refresh": false,
+    "rows": [
+        {
+            "collapse": false,
+            "height": 250,
+            "panels": [
+                {
+                    "circleMaxSize": "30",
+                    "circleMinSize": "3",
+                    "colors": [
+                        "rgba(48, 177, 3, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(215, 27, 27, 0.97)"
+                    ],
+                    "datasource": "{{ database }}",
+                    "decimals": 2,
+                    "description": "The European Union has established limits for particulates in the air\n\n|                                        | **PM10since 1 January 2005** | **PM2.5 since 1 January 2015** |\n|----------------------------------------|--------------------------|----------------------------|\n| **Yearly average**                         | 40 µg/m3                 | 25 µg/m3                   |\n| **Daily average (24-hour)**                | 50 µg/m3                 | None                       |\n| **Allowed number of exceedences per year** | 35                       | None                       |\n\nsource: https://en.wikipedia.org/wiki/Particulates#European_Union",
+                    "esGeoPoint": "geohash",
+                    "esLocationName": "",
+                    "esMetric": "metric",
+                    "height": "600px",
+                    "hideEmpty": true,
+                    "hideZero": true,
+                    "id": 2,
+                    "initialZoom": "5",
+                    "interval": "",
+                    "links": [],
+                    "locationData": "table",
+                    "mapCenter": "custom",
+                    "mapCenterLatitude": "51",
+                    "mapCenterLongitude": "10",
+                    "maxDataPoints": 1,
+                    "showLegend": true,
+                    "span": 8,
+                    "stickyLabels": false,
+                    "tableLabel": "location_name",
+                    "targets": [
+                        {
+                            "alias": "",
+                            "dsType": "influxdb",
+                            "groupBy": [
+                                {
+                                    "params": [
+                                        "geohash"
+                                    ],
+                                    "type": "tag"
+                                },
+                                {
+                                    "params": [
+                                        "location_name"
+                                    ],
+                                    "type": "tag"
+                                }
+                            ],
+                            "measurement": "{{ measurement }}",
+                            "policy": "default",
+                            "refId": "A",
+                            "resultFormat": "table",
+                            "select": [
+                                [
+                                    {
+                                        "params": [
+                                            "P1"
+                                        ],
+                                        "type": "field"
+                                    },
+                                    {
+                                        "params": [
+                                            "metric"
+                                        ],
+                                        "type": "alias"
+                                    }
+                                ]
+                            ],
+                            "tags": []
+                        }
+                    ],
+                    "thresholds": "20,40",
+                    "timeFrom": null,
+                    "timeShift": null,
+                    "title": "average PM 10 µm particle size  per m³",
+                    "transparent": false,
+                    "type": "grafana-worldmap-panel",
+                    "unitPlural": "mμ/m³ (P10)",
+                    "unitSingle": "",
+                    "unitSingular": "mμ/m³ (P10)",
+                    "valueName": "avg"
+                }
+            ],
+            "repeat": null,
+            "repeatIteration": null,
+            "repeatRowId": null,
+            "showTitle": true,
+            "title": "Map PM 10",
+            "titleSize": "h5"
+        },
+        {
+            "collapse": false,
+            "height": 250,
+            "panels": [
+                {
+                    "circleMaxSize": "20",
+                    "circleMinSize": "2",
+                    "colors": [
+                        "rgba(48, 177, 3, 0.9)",
+                        "rgba(237, 129, 40, 0.89)",
+                        "rgba(215, 27, 27, 0.97)"
+                    ],
+                    "datasource": "{{ database }}",
+                    "decimals": 2,
+                    "description": "The European Union has established limits for particulates in the air\n\n|                                        | **PM10since 1 January 2005** | **PM2.5 since 1 January 2015** |\n|----------------------------------------|--------------------------|----------------------------|\n| **Yearly average**                         | 40 µg/m3                 | 25 µg/m3                   |\n| **Daily average (24-hour)**                | 50 µg/m3                 | None                       |\n| **Allowed number of exceedences per year** | 35                       | None                       |\n\nsource: https://en.wikipedia.org/wiki/Particulates#European_Union",
+                    "esGeoPoint": "geohash",
+                    "esLocationName": "",
+                    "esMetric": "metric",
+                    "height": "600px",
+                    "hideEmpty": true,
+                    "hideZero": true,
+                    "id": 3,
+                    "initialZoom": "5",
+                    "links": [],
+                    "locationData": "table",
+                    "mapCenter": "custom",
+                    "mapCenterLatitude": "51",
+                    "mapCenterLongitude": "10",
+                    "maxDataPoints": 1,
+                    "showLegend": true,
+                    "span": 8,
+                    "stickyLabels": false,
+                    "tableLabel": "location_name",
+                    "targets": [
+                        {
+                            "alias": "",
+                            "dsType": "influxdb",
+                            "groupBy": [
+                                {
+                                    "params": [
+                                        "geohash"
+                                    ],
+                                    "type": "tag"
+                                },
+                                {
+                                    "params": [
+                                        "location_name"
+                                    ],
+                                    "type": "tag"
+                                }
+                            ],
+                            "measurement": "{{ measurement }}",
+                            "policy": "default",
+                            "refId": "A",
+                            "resultFormat": "table",
+                            "select": [
+                                [
+                                    {
+                                        "params": [
+                                            "P2"
+                                        ],
+                                        "type": "field"
+                                    },
+                                    {
+                                        "params": [
+                                            "metric"
+                                        ],
+                                        "type": "alias"
+                                    }
+                                ]
+                            ],
+                            "tags": []
+                        }
+                    ],
+                    "thresholds": "12.5,25",
+                    "timeFrom": null,
+                    "timeShift": null,
+                    "title": "average PM 2,5 µm particle size  per m³",
+                    "transparent": false,
+                    "type": "grafana-worldmap-panel",
+                    "unitPlural": "mμ/m³ (P2,5)",
+                    "unitSingle": "",
+                    "unitSingular": "mμ/m³ (P2,5)",
+                    "valueName": "avg"
+                }
+            ],
+            "repeat": null,
+            "repeatIteration": null,
+            "repeatRowId": null,
+            "showTitle": true,
+            "title": "Map PM 2,5",
+            "titleSize": "h5"
+        },
+        {
+            "collapse": false,
+            "height": 284,
+            "panels": [
+                {
+                    "content": "# Particulates\n\nAtmospheric particulate matter – also known as particulate matter (PM) or particulates – are microscopic solid or liquid matter suspended in the Earth's atmosphere. The term aerosol commonly refers to the particulate/air mixture, as opposed to the particulate matter alone. Sources of particulate matter can be man-made or natural. They have impacts on climate and precipitation that adversely affect human health.\n\nSubtypes of atmospheric particulate matter include suspended particulate matter (SPM), thoracic and respirable particles, inhalable coarse particles, which are particles with a diameter between 2.5 and 10 micrometres (μm), fine particles with a diameter of 2.5 μm or less PM2.5 , PM10 ultrafine particles, and soot\n\nThe IARC and WHO designate airborne particulates a Group 1 carcinogen. Particulates are the deadliest form of air pollution[citation needed] due to their ability to penetrate deep into the lungs and blood streams unfiltered, causing permanent DNA mutations, heart attacks, and premature death. In 2013, a study involving 312,944 people in nine European countries revealed that there was no safe level of particulates and that for every increase of 10 μg/m3 in PM10, the lung cancer rate rose 22%. The smaller PM2.5 were particularly deadly, with a 36% increase in lung cancer per 10 μg/m3 as it can penetrate deeper into the lungs.\n\nThe European Union has established limits for particulates in the air\n\n|                                        | **PM10since 1 January 2005** | **PM2.5 since 1 January 2015** |\n|----------------------------------------|--------------------------|----------------------------|\n| **Yearly average**                         | 40 µg/m3                 | 25 µg/m3                   |\n| **Daily average (24-hour)**                | 50 µg/m3                 | None                       |\n| **Allowed number of exceedences per year** | 35                       | None                       |\n\n([*source: Wikipedia*](https://en.wikipedia.org/wiki/Particulates))",
+                    "id": 6,
+                    "links": [],
+                    "mode": "markdown",
+                    "span": 6,
+                    "title": "About Atmospheric particulate matter",
+                    "type": "text"
+                },
+                {
+                    "content": "# What is Luftdaten.info\n\n [Luftdaten.info](http://luftdaten.info) is a community project which started in Stuttgart, where the PM levels get exceeded very regular. People around the [OK Lab Stuttgart](https://codefor.de/stuttgart/), a project supported through the founding [code for germany](https://codefor.de/) of the [open knowledge foundation](https://okfn.de/) constructed cost-effective particulate sensors. Those sensors, easy to build and available for everyone who want one in conjunction with the [map](http://deutschland.maps.luftdaten.info/) where the readings are displayed make the information easily accessabile to everyone a independent from governmental anouncements. Its a classical civil-tech which also got international attention. \n\n> There is certainly growing awareness of the issue among Stuttgart residents. Luftdaten is in the process of installing low cost, crowdfunded sensors across the city to measure PM levels, much like the one on Jallow’s balcony.\n\n> “I wanted to build cost-effective sensors, given the less than reliable government data and coverage regarding air pollution,” explains Jan Lutz, a social entrepreneur who runs Luftdaten’s website.\n\n>“But I think in five years Stuttgart will be like Detroit or something, because there is simply no innovation,” he adds. “The automobile industry continues to produce more cars, which is basically two tonnes of steel transporting a 70kg human. It’s an overkill, and not sustainable in the long run.”\n\n([*Source: theguardian.com 2017*](https://www.theguardian.com/cities/2017/mar/02/stuttgart-residents-sue-mayor-bodily-harm-air-pollution*) )\n\nSince the [visualisation of Luftdaten.info](http://deutschland.maps.luftdaten.info/) lacks the historical comparable data but makes all data accessable via their [archive](http://archive.luftdaten.info) in *csv* format its is a perfect use case, to get the data into [Grafana](https://grafana.com) with help of [Kotori](https://getkotori.org).\n",
+                    "id": 7,
+                    "links": [],
+                    "mode": "markdown",
+                    "span": 6,
+                    "title": "About luftdaten.info",
+                    "type": "text"
+                }
+            ],
+            "repeat": null,
+            "repeatIteration": null,
+            "repeatRowId": null,
+            "showTitle": true,
+            "title": "Info",
+            "titleSize": "h5"
+        },
+        {
+            "collapse": true,
+            "height": 250,
+            "panels": [
+                {
+                    "id": 8,
+                    "limit": 10,
+                    "onlyAlertsOnDashboard": false,
+                    "show": "current",
+                    "sortOrder": 1,
+                    "span": 4,
+                    "stateFilter": [],
+                    "title": "Panel Title",
+                    "type": "alertlist"
+                },
+                {
+                    "columns": [],
+                    "datasource": "{{ database }}",
+                    "filterNull": false,
+                    "fontSize": "100%",
+                    "id": 10,
+                    "interval": "",
+                    "links": [],
+                    "pageSize": null,
+                    "scroll": true,
+                    "showHeader": true,
+                    "sort": {
+                        "col": 0,
+                        "desc": true
+                    },
+                    "span": 4,
+                    "styles": [
+                        {
+                            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                            "pattern": "Time",
+                            "type": "date"
+                        },
+                        {
+                            "colorMode": "cell",
+                            "colors": [
+                                "rgba(50, 172, 45, 0.97)",
+                                "rgba(237, 129, 40, 0.89)",
+                                "rgba(245, 54, 54, 0.9)"
+                            ],
+                            "decimals": 2,
+                            "pattern": "/.*/",
+                            "thresholds": [
+                                "20",
+                                "40"
+                            ],
+                            "type": "number",
+                            "unit": "short"
+                        }
+                    ],
+                    "targets": [
+                        {
+                            "dsType": "influxdb",
+                            "groupBy": [
+                                {
+                                    "params": [
+                                        "24h"
+                                    ],
+                                    "type": "time"
+                                }
+                            ],
+                            "measurement": "{{ measurement }}",
+                            "policy": "default",
+                            "query": "SELECT mean(\"P1\") FROM \"{{ measurement }}\" WHERE \"location_name\" =~ /^$Location$/ AND $timeFilter GROUP BY time($__interval) fill(null)",
+                            "rawQuery": false,
+                            "refId": "A",
+                            "resultFormat": "time_series",
+                            "select": [
+                                [
+                                    {
+                                        "params": [
+                                            "P1"
+                                        ],
+                                        "type": "field"
+                                    }
+                                ],
+                                [
+                                    {
+                                        "params": [
+                                            "P2"
+                                        ],
+                                        "type": "field"
+                                    }
+                                ]
+                            ],
+                            "tags": [
+                                {
+                                    "key": "location_name",
+                                    "operator": "=~",
+                                    "value": "/^$Location$/"
+                                }
+                            ]
+                        }
+                    ],
+                    "title": "treshholds",
+                    "transform": "timeseries_to_columns",
+                    "type": "table"
+                }
+            ],
+            "repeat": null,
+            "repeatIteration": null,
+            "repeatRowId": null,
+            "showTitle": true,
+            "title": "Experiments",
+            "titleSize": "h6"
+        }
+    ],
+    "schemaVersion": 14,
+    "style": "dark",
+    "tags": [
+        "automatic",
+        "luftdaten"
+    ],
+    "time": {
+        "from": "now-15m",
+        "to": "now"
+    },
+    "timepicker": {
+        "collapse": false,
+        "enable": true,
+        "notice": false,
+        "now": true,
+        "refresh_intervals": [
+            "5s",
+            "10s",
+            "30s",
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "2h",
+            "1d"
+        ],
+        "status": "Stable",
+        "time_options": [
+            "5m",
+            "15m",
+            "1h",
+            "6h",
+            "12h",
+            "24h",
+            "2d",
+            "7d",
+            "30d"
+        ],
+        "type": "timepicker"
+    },
+    "timezone": "browser",
+    "title": "{{ title }}",
+    "version": 0
+}

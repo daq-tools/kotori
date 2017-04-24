@@ -93,12 +93,16 @@ class WanBusStrategy(object):
 
         # Format and sanitize all input parameters used for database addressing
         sanitize = self.sanitize_db_identifier
+        storage.label       = sanitize('{}-{}'.format(storage.gateway, storage.node))
         storage.database    = sanitize('{}_{}'.format(storage.realm, storage.network))
         storage.measurement = sanitize('{}_{}_{}'.format(storage.gateway, storage.node, suffix))
         storage.measurement_events = sanitize('{}_{}_{}'.format(storage.gateway, storage.node, 'events'))
 
         return storage
 
+    @classmethod
+    def topology_to_label(cls, topology):
+        return '{}-{}-{}-{}'.format(topology.realm, topology.network, topology.gateway, topology.node)
 
     @staticmethod
     def sanitize_db_identifier(value):

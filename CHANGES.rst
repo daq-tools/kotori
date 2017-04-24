@@ -6,13 +6,17 @@ Changelog
 in progress
 ===========
 - Improve InfluxDB database creation behaviour
-- Add geospatial data acquisition capabilities
-- Improve `luftdaten_api_to_mqtt.py`_:
+- :ref:`vendor-luftdaten.info`:
 
-    - Generic commandline interface
-    - Caching for Nominatim responses
-    - Appropriate timestamp mungling
-    - Documentation
+    - Add geospatial data acquisition capabilities
+    - Improve `luftdaten_api_to_mqtt.py`_:
+
+        - Generic commandline interface
+        - Caching for Nominatim responses
+        - Appropriate timestamp mungling
+        - Documentation
+
+    - Add ``LuftdatenGrafanaManager`` for provisioning appropriate Grafana dashboards
 
 
 .. _kotori-0.17.0:

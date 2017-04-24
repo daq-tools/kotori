@@ -322,14 +322,7 @@ class GrafanaManager(object):
 
         self.skip_cache = {}
 
-        self.grafana = GrafanaApi(
-            host = self.config['grafana']['host'],
-            port = int(self.config['grafana']['port']),
-            # TODO: improve multi-tenancy / per-user isolation by using distinct credentials for each user
-            username = self.config['grafana']['username'],
-            password = self.config['grafana']['password'],
-        )
-
+        self.connect()
 
     def _get_skip_key(self, *args):
         key_parts = []
@@ -349,7 +342,32 @@ class GrafanaManager(object):
         skip_key = self._get_skip_key(*args)
         self.skip_cache[skip_key] = True
 
+    def connect(self):
+
+        # TODO: Improve multi-tenancy / per-user isolation by using distinct configuration values and credentials per ingress channel.
+
+        self.grafana_api = GrafanaApi(
+            host = self.config['grafana']['host'],
+            port = int(self.config['grafana']['port']),
+            username = self.config['grafana']['username'],
+            password = self.config['grafana']['password'],
+        )
+
+    def create_datasource(self, storage_location):
+        self.grafana_api.create_datasource(storage_location.database, {
+            "type":     "influxdb",
+            "url":      "http://{host}:{port}/".format(
+                host=self.config['influxdb']['host'],
+                port=int(self.config['influxdb'].get('port', '8086'))),
+            "database": storage_location.database,
+            "user":     self.config['influxdb']['username'],
+            "password": self.config['influxdb']['password'],
+            })
+
     def provision(self, storage_location, data, topology=None):
+
+        # TODO: Get into templating, finally: Create a template variable for each InfluxDB tag
+        # TODO: Also provision a WorldMap plugin
 
         topology = topology or {}
         dashboard_name = \
@@ -362,17 +380,7 @@ class GrafanaManager(object):
         log.info('Provisioning Grafana for database "{}" and measurement "{}". dashboard={}'.format(
             storage_location.database, storage_location.measurement, dashboard_name))
 
-        self.grafana.create_datasource(storage_location.database, {
-            "type":     "influxdb",
-            "url":      "http://{host}:{port}/".format(
-                host=self.config['influxdb']['host'],
-                port=int(self.config['influxdb'].get('port', '8086'))),
-            "database": storage_location.database,
-            # TODO: improve multi-tenancy / per-user isolation by using distinct credentials for each user
-            "user":     self.config['influxdb']['username'],
-            "password": self.config['influxdb']['password'],
-            })
-
+        self.create_datasource(storage_location)
 
         # get dashboard if already exists
         dashboard_data = self.grafana.get_dashboard(name=dashboard_name)
