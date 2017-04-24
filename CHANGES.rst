@@ -5,6 +5,11 @@ Changelog
 
 in progress
 ===========
+
+.. _kotori-0.18.0:
+
+2017-04-24 0.18.0
+=================
 - Improve InfluxDB database creation behaviour
 - :ref:`vendor-luftdaten.info`:
 
