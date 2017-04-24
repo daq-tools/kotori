@@ -7,12 +7,19 @@ in progress
 ===========
 
 
+.. _kotori-0.18.2:
+
+2017-04-24 0.18.2
+=================
+- Attempt to improve InfluxDB write performance by using UDP protocol for vendor :ref:`vendor-luftdaten.info`
+
+
 .. _kotori-0.18.1:
 
 2017-04-24 0.18.1
 =================
 - Fix variable naming, references, data conversion and exception handling
-- Try to improve InfluxDB storage efficiency
+- Attempt to improve InfluxDB write performance
 - luftdaten-to-mqtt: Configure Nominatim cache directory conditionally
 
 

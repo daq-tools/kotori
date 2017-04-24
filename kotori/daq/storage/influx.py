@@ -2,6 +2,8 @@
 # (c) 2015-2017 Andreas Motl <andreas@getkotori.org>
 import types
 import requests
+import datetime
+from sets import Set
 from copy import deepcopy
 from funcy import project
 from collections import OrderedDict
@@ -21,15 +23,27 @@ class InfluxDBAdapter(object):
         settings.setdefault('version', u'0.9')
         settings.setdefault('username', u'root')
         settings.setdefault('password', u'root')
+
+        settings.setdefault('use_udp', False)
+        settings.setdefault('udp_port', u'4444')
+
         settings['port'] = int(settings['port'])
+        settings['udp_port'] = int(settings['udp_port'])
 
         self.__dict__.update(**settings)
+
+        self.databases_written_once = Set()
 
         log.info(u'Storage target is influxdb://{host}:{port}', **self.__dict__)
         self.influx_client = InfluxDBClient(
             host=self.host, port=self.port,
             username=self.username, password=self.password)
 
+        self.influx_client_udp = None
+        if settings['use_udp']:
+            self.influx_client_udp = InfluxDBClient(
+                host=self.host, port=self.port,
+                username=self.username, password=self.password, use_udp=settings['use_udp'], udp_port=settings['udp_port'])
 
     def write(self, meta, data):
 
@@ -72,7 +86,11 @@ class InfluxDBAdapter(object):
                 raise
 
     def write_chunk(self, meta, chunk):
-        success = self.influx_client.write_points([chunk], time_precision=chunk['time_precision'], database=meta.database)
+        if self.influx_client_udp and chunk['time_precision'] == 's' and meta.database in self.databases_written_once:
+            success = self.influx_client_udp.write_points([chunk], time_precision=chunk['time_precision'], database=meta.database)
+        else:
+            success = self.influx_client.write_points([chunk], time_precision=chunk['time_precision'], database=meta.database)
+            self.databases_written_once.add(meta.database)
         if success:
             log.debug(u"Storage success: {chunk}", chunk=chunk)
         else:
@@ -143,6 +161,10 @@ class InfluxDBAdapter(object):
         # TODO: Maybe do this at data acquisition / transformation time, not here.
         if 'time' in chunk:
             chunk['time'] = parse_timestamp(chunk['time'])
+
+        if isinstance(chunk['time'], datetime.datetime):
+            if chunk['time'].microsecond == 0:
+                chunk['time_precision'] = 's'
 
         """
         Prevent errors like

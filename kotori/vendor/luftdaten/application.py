@@ -5,7 +5,9 @@ from pkg_resources import resource_filename
 from jinja2 import Template
 from twisted.logger import Logger
 from grafana_api_client import GrafanaPreconditionFailedError, GrafanaClientError
-from kotori.daq.graphing.grafana import GrafanaManager, GrafanaApi
+from kotori.daq.services.mig import MqttInfluxGrafanaService
+from kotori.daq.graphing.grafana import GrafanaManager
+from kotori.daq.storage.influx import InfluxDBAdapter
 
 log = Logger()
 
@@ -63,3 +65,12 @@ class LuftdatenGrafanaManager(GrafanaManager):
 
         # Remember dashboard/panel creation for this kind of data inflow
         self._signal_creation(storage_location.database, storage_location.measurement)
+
+
+class LuftdatenMqttInfluxGrafanaService(MqttInfluxGrafanaService):
+
+    def setupService(self):
+        MqttInfluxGrafanaService.setupService(self)
+        self.settings.influxdb.use_udp = True
+        self.settings.influxdb.udp_port = 4445
+        self.influx = InfluxDBAdapter(settings = self.settings.influxdb)
