@@ -76,7 +76,7 @@ extras = {
     # Data export: Basic formats
     'export': [
         'pyinfluxql==0.0.1',
-        'pandas==0.18.2',           # 0.19.2
+        'pandas==0.18.1',           # 0.19.2
         'numpy>=1.8.2',             # 1.12.1
         'XlsxWriter==0.9.2',        # 0.9.6
     ],
