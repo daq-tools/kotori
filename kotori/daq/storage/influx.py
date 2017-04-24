@@ -13,8 +13,6 @@ log = Logger()
 
 class InfluxDBAdapter(object):
 
-    databases_created = []
-
     def __init__(self, settings=None, database='kotori_develop'):
 
         settings = settings or {}
@@ -26,54 +24,14 @@ class InfluxDBAdapter(object):
         settings['port'] = int(settings['port'])
 
         self.__dict__.update(**settings)
-        self.database = database
 
-        self.influx = None
-        self.connected = False
-        self.connect()
-
-    def connect(self):
-
-        if self.connected:
-            return True
-
-        log.debug(u'Storage target is influxdb://{host}:{port}', **self.__dict__)
-        self.influx = InfluxDBClient(
+        log.info(u'Storage target is influxdb://{host}:{port}', **self.__dict__)
+        self.influx_client = InfluxDBClient(
             host=self.host, port=self.port,
-            username=self.username, password=self.password,
-            database=self.database)
-
-        # Run "CREATE DATABASE" only once
-        if self.database in self.databases_created:
-            self.connected = True
-            return True
-
-        try:
-            self.influx.create_database(self.database)
-            self.databases_created.append(self.database)
-            self.connected = True
-
-        except requests.exceptions.ConnectionError as ex:
-            self.connected = False
-            log.failure(u'InfluxDB network error')
-            return False
-
-        except InfluxDBClientError as ex:
-            # [0.8] ignore "409: database kotori-dev exists"
-            # [0.9] ignore "database already exists"
-            if ex.code == 409 or ex.message == 'database already exists':
-                pass
-            else:
-                self.connected = False
-                log.failure(u'InfluxDBClientError')
-                return False
-
-        return True
+            username=self.username, password=self.password)
 
 
     def write(self, meta, data):
-
-        self.connect()
 
         meta_copy = deepcopy(dict(meta))
         data_copy = deepcopy(data)
@@ -87,24 +45,39 @@ class InfluxDBAdapter(object):
             return False
 
         try:
-            success = self.influx.write_points([chunk], time_precision=chunk['time_precision'])
-            if success:
-                log.debug(u"Storage success: {chunk}", chunk=chunk)
-            else:
-                log.error(u"Storage failed:  {chunk}", chunk=chunk)
+            success = self.write_chunk(meta, chunk)
             return success
 
-        except requests.exceptions.ConnectionError:
+        except requests.exceptions.ConnectionError as ex:
             log.failure(u'InfluxDB connection error')
 
         except InfluxDBClientError as ex:
+
             if ex.code == 404 or ex.message == 'database not found':
-                self.connected = False
-                self.databases_created.remove(self.database)
-                log.failure('InfluxDBClientError: {ex}', ex=ex)
+
+                log.info('Creating database "{database}"', database=meta.database)
+                self.influx_client.create_database(meta.database)
+
+                # Attempt second write
+                success = self.write_chunk(meta, chunk)
+                return success
+
+                #log.failure('InfluxDBClientError: {ex}', ex=ex)
+
+            # [0.8] ignore "409: database kotori-dev exists"
+            # [0.9] ignore "database already exists"
+            elif ex.code == 409 or ex.message == 'database already exists':
+                pass
             else:
                 raise
 
+    def write_chunk(self, meta, chunk):
+        success = self.influx_client.write_points([chunk], time_precision=chunk['time_precision'], database=meta.database)
+        if success:
+            log.debug(u"Storage success: {chunk}", chunk=chunk)
+        else:
+            log.error(u"Storage failed:  {chunk}", chunk=chunk)
+        return success
 
     @staticmethod
     def get_tags(data):

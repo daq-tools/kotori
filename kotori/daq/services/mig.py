@@ -52,6 +52,8 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
         self.registerService(self.mqtt_service)
 
+        self.influx = InfluxDBAdapter(settings = self.settings.influxdb)
+
         # Perform MQTT message processing using a different thread pool
         self.threadpool = ThreadPool()
         self.thimble = Thimble(reactor, self.threadpool, self, ["process_message"])
@@ -190,12 +192,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
 
     def store_message(self, storage, data):
-        influx = InfluxDBAdapter(
-            settings = self.settings.influxdb,
-            database = storage.database)
-
-        influx.write(storage, data)
-
+        self.influx.write(storage, data)
 
     def process_metrics(self):
 

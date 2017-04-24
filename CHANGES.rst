@@ -6,6 +6,7 @@ Changelog
 in progress
 ===========
 - Fix variable naming, references, data conversion and exception handling
+- Try to improve InfluxDB storage efficiency
 
 
 .. _kotori-0.18.0:
