@@ -5,6 +5,8 @@ Changelog
 
 in progress
 ===========
+- Fix variable naming, references, data conversion and exception handling
+
 
 .. _kotori-0.18.0:
 

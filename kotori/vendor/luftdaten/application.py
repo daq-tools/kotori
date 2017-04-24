@@ -4,7 +4,7 @@ import json
 from pkg_resources import resource_filename
 from jinja2 import Template
 from twisted.logger import Logger
-from grafana_api_client import GrafanaPreconditionFailedError
+from grafana_api_client import GrafanaPreconditionFailedError, GrafanaClientError
 from kotori.daq.graphing.grafana import GrafanaManager, GrafanaApi
 
 log = Logger()
@@ -22,12 +22,12 @@ class LuftdatenGrafanaManager(GrafanaManager):
     def provision(self, storage_location, message, topology):
 
         topology = topology or {}
-        dashboard_name = self.strategy.topology_to_label(topology)
 
         # TODO: Improve locking to prevent race conditions.
-
         if self._skip_creation(storage_location.database, storage_location.measurement):
             return
+
+        dashboard_name = self.strategy.topology_to_label(topology)
 
         log.info('Provisioning Grafana for database "{}" and series "{}". dashboard={}'.format(
             storage_location.database,
@@ -42,7 +42,7 @@ class LuftdatenGrafanaManager(GrafanaManager):
             'measurement': storage_location.measurement,
             'measurement_events': storage_location.measurement_events,
         }
-        dashboard_json_map = self.tpl_dashboard_map.render(data_dashboard, title='{name} map automatic'.format(name=dashboard_name))
+        dashboard_json_map      = self.tpl_dashboard_map.render(data_dashboard, title='{name} map automatic'.format(name=dashboard_name))
         dashboard_json_location = self.tpl_dashboard_location.render(data_dashboard, title='{name} location automatic'.format(name=dashboard_name))
 
         for dashboard_json in [dashboard_json_map, dashboard_json_location]:
@@ -56,7 +56,10 @@ class LuftdatenGrafanaManager(GrafanaManager):
                 if 'name-exists' in ex.message or 'A dashboard with the same name already exists' in ex.message:
                     log.warn(ex.message)
                 else:
-                    raise
+                    log.error('Grafana Error: {ex}', ex=ex.message)
+
+            except GrafanaClientError as ex:
+                log.error('Grafana Error: {ex}', ex=ex.message)
 
         # Remember dashboard/panel creation for this kind of data inflow
         self._signal_creation(storage_location.database, storage_location.measurement)

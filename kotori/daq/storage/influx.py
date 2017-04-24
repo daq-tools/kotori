@@ -147,7 +147,7 @@ class InfluxDBAdapter(object):
                 if data[time_field]:
                     chunk['time'] = data[time_field]
                     if is_number(chunk['time']):
-                        chunk['time'] = int(data[time_field])
+                        chunk['time'] = int(float(chunk['time']))
 
                 # WeeWX. TODO: Move to specific vendor configuration.
                 if time_field == 'dateTime':

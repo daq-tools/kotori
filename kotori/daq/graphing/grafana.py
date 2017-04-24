@@ -383,7 +383,7 @@ class GrafanaManager(object):
         self.create_datasource(storage_location)
 
         # get dashboard if already exists
-        dashboard_data = self.grafana.get_dashboard(name=dashboard_name)
+        dashboard_data = self.grafana_api.get_dashboard(name=dashboard_name)
 
         # wrap into convenience object
         dashboard = GrafanaDashboard(
@@ -408,7 +408,7 @@ class GrafanaManager(object):
             dashboard.update_annotations(measurement=storage_location.measurement_events)
 
             # Create dashboard
-            self.grafana.create_dashboard(dashboard, name=dashboard_name)
+            self.grafana_api.create_dashboard(dashboard, name=dashboard_name)
 
         else:
 
@@ -420,7 +420,7 @@ class GrafanaManager(object):
             if self.provision_new_panels(storage_location, dashboard, panels_new):
 
                 # Update dashboard with new panels
-                self.grafana.create_dashboard(dashboard, name=dashboard_name)
+                self.grafana_api.create_dashboard(dashboard, name=dashboard_name)
 
             # Update existing panel with new targets
             else:
@@ -443,7 +443,7 @@ class GrafanaManager(object):
                         panel['targets'].append(new_target_json)
 
                     # Update dashboard with new panel targets
-                    self.grafana.create_dashboard(dashboard, name=dashboard_name)
+                    self.grafana_api.create_dashboard(dashboard, name=dashboard_name)
 
 
         # Remember dashboard/panel creation for this kind of data inflow

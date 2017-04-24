@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2017 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2015-2017 Andreas Motl <andreas@getkotori.org>
 import time
 import json
 from bunch import Bunch
@@ -26,6 +26,9 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         self.channel = channel or Bunch(realm=None, subscriptions=[])
         self.graphing = graphing
         self.strategy = strategy
+
+        # Mix in references to each other. A bit of a hack, but okay for now :-).
+        self.graphing.strategy = self.strategy
 
         self.name = u'service-mig-' + self.channel.get('realm', unicode(id(self)))
 
@@ -125,7 +128,9 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             message_type = 'data'
 
             # Decode message from json format
-            message = convert_floats(json.loads(payload))
+            # Required for weeWX data
+            #message = convert_floats(json.loads(payload))
+            message = json.loads(payload)
 
         # b) Discrete values
         else:
