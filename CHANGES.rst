@@ -7,9 +7,9 @@ in progress
 ===========
 
 
-.. _kotori-0.18.3:
+.. _kotori-0.19.0:
 
-2017-04-25 0.18.3
+2017-04-25 0.19.0
 =================
 - vendor :ref:`vendor-luftdaten.info`:
 
