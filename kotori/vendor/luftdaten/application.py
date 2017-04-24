@@ -16,7 +16,7 @@ class LuftdatenGrafanaManager(GrafanaManager):
     def __init__(self, *args, **kwargs):
         GrafanaManager.__init__(self, *args, **kwargs)
         self.tpl_dashboard_map      = self.get_template('grafana-map.json')
-        self.tpl_dashboard_location = self.get_template('grafana-location.json')
+        self.tpl_dashboard_location = self.get_template('grafana-by-location.json')
 
     def get_template(self, filename):
         return Template(file(resource_filename('kotori.vendor.luftdaten', filename)).read().decode('utf-8'))
@@ -45,7 +45,7 @@ class LuftdatenGrafanaManager(GrafanaManager):
             'measurement_events': storage_location.measurement_events,
         }
         dashboard_json_map      = self.tpl_dashboard_map.render(data_dashboard, title='{name} map automatic'.format(name=dashboard_name))
-        dashboard_json_location = self.tpl_dashboard_location.render(data_dashboard, title='{name} location automatic'.format(name=dashboard_name))
+        dashboard_json_location = self.tpl_dashboard_location.render(data_dashboard, title='{name} by-location automatic'.format(name=dashboard_name))
 
         for dashboard_json in [dashboard_json_map, dashboard_json_location]:
 

@@ -5,6 +5,7 @@ Changelog
 
 in progress
 ===========
+- Update Grafana dashboard "grafana-by-location.json" for vendor :ref:`vendor-luftdaten.info`. Thanks, Richard!
 
 
 .. _kotori-0.18.2:
