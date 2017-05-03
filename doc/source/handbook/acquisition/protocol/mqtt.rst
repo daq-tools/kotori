@@ -159,6 +159,8 @@ Language bindings
 ***************
 Troubleshooting
 ***************
+.. seealso:: Please read about general :ref:`error-signalling`.
+
 .. todo:: Add notes about no data appearing in Grafana, etc.
 
 

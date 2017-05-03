@@ -105,7 +105,8 @@ class PahoMqttAdapter(BaseMqttAdapter, Service):
         # Mungle userdata into message
         metadata['userdata'] = userdata
 
-        log.debug('on_message: name={name}, topic={topic}, payload={payload}, kwargs={kwargs}', name=self.name, topic=topic, payload=payload, kwargs=metadata)
+        if not topic.endswith('error.json'):
+            log.debug('on_message: name={name}, topic={topic}, payload={payload}, kwargs={kwargs}', name=self.name, topic=topic, payload=payload, kwargs=metadata)
 
         return self.callback(topic=topic, payload=payload, **metadata)
 

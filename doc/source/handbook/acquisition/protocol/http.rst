@@ -307,6 +307,9 @@ Troubleshooting
 ***************
 Some guidelines about troubleshooting the HTTP interface when sending invalid data acquisition requests.
 
+.. seealso:: Please read about general :ref:`error-signalling`.
+
+
 Empty request body
 ==================
 Empty request bodies don't make sense::

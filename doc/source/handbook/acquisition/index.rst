@@ -61,10 +61,20 @@ Serialization formats
     format/bencode
 
 
+*******************
+Metadata signalling
+*******************
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    error-signalling
+
+
 ********
 Examples
 ********
 
 A :ref:`sawtooth-signal` is convenient to publish
 measurement values without having any hardware in place.
-

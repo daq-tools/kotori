@@ -3,7 +3,6 @@
 import time
 import json
 from bunch import Bunch
-from kotori.thimble import Thimble
 from twisted.logger import Logger, LogLevel
 from twisted.internet import reactor, threads
 from twisted.internet.task import LoopingCall
@@ -14,6 +13,7 @@ from kotori.daq.services import MultiServiceMixin
 from kotori.daq.intercom.mqtt import MqttAdapter
 from kotori.daq.storage.influx import InfluxDBAdapter
 from kotori.io.protocol.util import convert_floats
+from kotori.thimble import Thimble
 
 log = Logger()
 
@@ -86,20 +86,57 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             # Asynchronous message processing using different thread pool
             deferred = self.thimble.process_message(topic, payload, **kwargs)
 
-            deferred.addErrback(self.mqtt_receive_error, topic)
+            deferred.addErrback(self.mqtt_receive_error, topic, payload)
             return deferred
 
         except Exception:
             log.failure(u'Processing MQTT message failed. topic={topic}, payload={payload}', topic=topic, payload=payload)
 
-    def mqtt_receive_error(self, failure, topic):
+    def mqtt_receive_error(self, failure, topic, payload):
         log.failure('Error processing MQTT message from topic "{topic}": {log_failure}', topic=topic, failure=failure, level=LogLevel.error)
+
+        # Error signalling over MQTT to "error.json" topic suffix
+        try:
+            if self.is_data_topic(topic) or self.is_event_topic(topic):
+                error = {
+                    'type': unicode(failure.type),
+                    'message': failure.getErrorMessage(),
+                    'description': u'Error processing MQTT message "{payload}" from topic "{topic}".'.format(topic=topic, payload=payload),
+                    #'failure': unicode(failure),
+                }
+                message = json.dumps(error, indent=4)
+
+                # TODO: Check for more topic suffix variants
+                topic = topic.replace('data.json', 'error.json').replace('event.json', 'error.json')
+                self.mqtt_service.publish(topic, message)
+
+        except:
+            raise
+
+    def is_data_topic(self, topic):
+
+        if topic.endswith('data.json')\
+            or topic.endswith('data/__json__')\
+            or topic.endswith('loop')\
+            or topic.endswith('message-json'):
+            return True
+
+        return False
+
+    def is_event_topic(self, topic):
+
+        if topic.endswith('event.json')\
+            or topic.endswith('event/__json__'):
+            return True
+
+        return False
 
     def process_message(self, topic, payload, **kwargs):
 
         payload = payload.decode('utf-8')
 
-        log.debug('Received message on topic "{topic}" with payload "{payload}"', topic=topic, payload=payload)
+        if not topic.endswith('error.json'):
+            log.debug('Received message on topic "{topic}" with payload "{payload}"', topic=topic, payload=payload)
 
         if self.channel.realm and not topic.startswith(self.channel.realm):
             #log.info('Ignoring message to topic {topic}, realm={realm}', topic=topic, realm=self.channel.realm)
@@ -121,10 +158,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         #   - loop:             WeeWX           (TODO: Move to specific vendor configuration.)
         #   - message-json:     Deprecated
         #
-        if topic.endswith('data.json') \
-            or topic.endswith('data/__json__') \
-            or topic.endswith('loop') \
-            or topic.endswith('message-json'):
+        if self.is_data_topic(topic):
 
             # This is sensor data
             message_type = 'data'
@@ -154,7 +188,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
 
         # Set an event
-        if topic.endswith('event.json'):
+        if self.is_event_topic(topic):
 
             # This is an event
             message_type = 'event'
