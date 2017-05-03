@@ -5,6 +5,9 @@ Changelog
 
 in progress
 ===========
+- Re-add export/influx.py lost during refactoring
+
+
 
 
 .. _kotori-0.19.1:
