@@ -7,6 +7,13 @@ in progress
 ===========
 
 
+.. _kotori-0.19.1:
+
+2017-05-03 0.19.1
+=================
+- Fix regression re. CSV data acquisition
+
+
 .. _kotori-0.19.0:
 
 2017-04-25 0.19.0

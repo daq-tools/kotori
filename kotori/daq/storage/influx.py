@@ -33,17 +33,27 @@ class InfluxDBAdapter(object):
         self.__dict__.update(**settings)
 
         self.databases_written_once = Set()
+        self.udp_databases = [
+            {'name': 'luftdaten_testdrive', 'port': u'4445'},
+        ]
 
         log.info(u'Storage target is influxdb://{host}:{port}', **self.__dict__)
         self.influx_client = InfluxDBClient(
             host=self.host, port=self.port,
             username=self.username, password=self.password)
 
+        # TODO: Hold references to multiple UDP databases using mapping "self.udp_databases".
         self.influx_client_udp = None
         if settings['use_udp']:
             self.influx_client_udp = InfluxDBClient(
                 host=self.host, port=self.port,
                 username=self.username, password=self.password, use_udp=settings['use_udp'], udp_port=settings['udp_port'])
+
+    def is_udp_database(self, name):
+        for entry in self.udp_databases:
+            if entry['name'] == name:
+                return True
+        return False
 
     def write(self, meta, data):
 
@@ -86,7 +96,7 @@ class InfluxDBAdapter(object):
                 raise
 
     def write_chunk(self, meta, chunk):
-        if self.influx_client_udp and chunk['time_precision'] == 's' and meta.database in self.databases_written_once:
+        if self.influx_client_udp and self.is_udp_database(meta.database) and meta.database in self.databases_written_once:
             success = self.influx_client_udp.write_points([chunk], time_precision=chunk['time_precision'], database=meta.database)
         else:
             success = self.influx_client.write_points([chunk], time_precision=chunk['time_precision'], database=meta.database)
@@ -162,9 +172,12 @@ class InfluxDBAdapter(object):
         if 'time' in chunk:
             chunk['time'] = parse_timestamp(chunk['time'])
 
+            """
+            # FIXME: Breaks CSV data acquisition. Why?
             if isinstance(chunk['time'], datetime.datetime):
                 if chunk['time'].microsecond == 0:
                     chunk['time_precision'] = 's'
+            """
 
         """
         Prevent errors like
