@@ -8,6 +8,7 @@ in progress
 - Re-add export/influx.py lost during refactoring
 - Fix InfluxDB UDP data acquisition
 - Tap into error signalling over MQTT
+- Minor updates to luftdaten.info docs & co.
 
 
 .. _kotori-0.19.1:

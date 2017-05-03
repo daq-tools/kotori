@@ -16,31 +16,9 @@ Kotori tasks
 2017
 ****
 
+
 2017-04-24
 ==========
-::
-
-    2017-04-24T04:43:30+0200 [kotori.daq.services.mig            ] ERROR: Error processing MQTT message from topic "luftdaten/testdrive/earth/43/data.json":
-    [Failure instance: Traceback: <class 'influxdb.exceptions.InfluxDBServerError'>: {"error":"timeout"}
-
-        /usr/lib/python2.7/threading.py:810:__bootstrap_inner
-        /usr/lib/python2.7/threading.py:763:run
-        /opt/kotori/lib/python2.7/site-packages/twisted/_threads/_threadworker.py:46:work
-        /opt/kotori/lib/python2.7/site-packages/twisted/_threads/_team.py:190:doWork
-        --- <exception caught here> ---
-        /opt/kotori/lib/python2.7/site-packages/twisted/python/threadpool.py:250:inContext
-        /opt/kotori/lib/python2.7/site-packages/twisted/python/threadpool.py:266:<lambda>
-        /opt/kotori/lib/python2.7/site-packages/twisted/python/context.py:122:callWithContext
-        /opt/kotori/lib/python2.7/site-packages/twisted/python/context.py:85:callWithContext
-        /opt/kotori/lib/python2.7/site-packages/kotori/daq/services/mig.py:183:process_message
-        /opt/kotori/lib/python2.7/site-packages/kotori/daq/services/mig.py:197:store_message
-        /opt/kotori/lib/python2.7/site-packages/kotori/daq/storage/influx.py:90:write
-        /opt/kotori/lib/python2.7/site-packages/influxdb/client.py:411:write_points
-        /opt/kotori/lib/python2.7/site-packages/influxdb/client.py:461:_write_points
-        /opt/kotori/lib/python2.7/site-packages/influxdb/client.py:292:write
-        /opt/kotori/lib/python2.7/site-packages/influxdb/client.py:249:request
-        ]
-
 ::
 
     Apr 24 15:03:51 elbanco influxd[5910]: [httpd] 127.0.0.1 - admin [24/Apr/2017:15:03:48 +0200] "POST /write?db=luftdaten_testdrive&precision=n HTTP/1.1" 204 0 "-" "python-requests/2.13.0" 74cb40c9-28ee-11e7-8db0-000000000000 3337074

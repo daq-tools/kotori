@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2017 Andreas Motl <andreas@getkotori.org>
-# Copyright (c) 2017 Richard Pobering <richard@hiveeyes.org>
+# (c) 2017 Andreas Motl <andreas@getkotori.org>
+# (c) 2017 Richard Pobering <richard@hiveeyes.org>
+# License: GNU General Public License, Version 3
 import os
 import sys
 import time
@@ -138,14 +139,14 @@ log = logging.getLogger(__name__)
 
 cache_options = {
     'type': 'file',
-    'data_dir': '/var/cache/nominatim/data',
-    'lock_dir': '/var/cache/nominatim/lock'
+    'data_dir': '/var/cache/luftdaten/nominatim/data',
+    'lock_dir': '/var/cache/luftdaten/nominatim/lock'
 }
 if sys.platform == 'darwin':
     cache_options = {
         'type': 'file',
-        'data_dir': '/tmp/nominatim-cache/data',
-        'lock_dir': '/tmp/nominatim-cache/lock'
+        'data_dir': '/tmp/luftdaten/nominatim-cache/data',
+        'lock_dir': '/tmp/luftdaten/nominatim-cache/lock'
     }
 cache = CacheManager(**cache_options)
 
@@ -259,6 +260,9 @@ class LuftdatenPumpe:
                 readings['location_name'] = reverse_geocode(item['location']['latitude'], item['location']['longitude'])
 
             self.publish_mqtt(readings)
+
+            # Debugging
+            #break
 
     @staticmethod
     def convert_timestamp(timestamp):
