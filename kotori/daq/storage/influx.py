@@ -97,7 +97,7 @@ class InfluxDBAdapter(object):
 
     def write_chunk(self, meta, chunk):
         if self.influx_client_udp and self.is_udp_database(meta.database) and meta.database in self.databases_written_once:
-            success = self.influx_client_udp.write_points([chunk], time_precision=chunk['time_precision'], database=meta.database)
+            success = self.influx_client_udp.write_points([chunk], time_precision='s', database=meta.database)
         else:
             success = self.influx_client.write_points([chunk], time_precision=chunk['time_precision'], database=meta.database)
             self.databases_written_once.add(meta.database)

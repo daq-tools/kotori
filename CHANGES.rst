@@ -6,6 +6,7 @@ Changelog
 in progress
 ===========
 - Re-add export/influx.py lost during refactoring
+- Fix InfluxDB UDP data acquisition
 
 
 
