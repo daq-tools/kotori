@@ -5,6 +5,12 @@ Changelog
 
 in progress
 ===========
+
+
+.. _kotori-0.20.0:
+
+2017-05-04 0.20.0
+=================
 - Re-add export/influx.py lost during refactoring
 - Fix InfluxDB UDP data acquisition
 - Tap into error signalling over MQTT
