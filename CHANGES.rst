@@ -5,6 +5,7 @@ Changelog
 
 in progress
 ===========
+- Fix raw data export
 
 
 .. _kotori-0.20.0:

@@ -15,14 +15,15 @@ log = Logger()
 
 class InfluxDBAdapter(object):
 
-    def __init__(self, settings=None, database='kotori_develop'):
+    def __init__(self, settings=None, database=None):
 
-        settings = settings or {}
+        settings = deepcopy(settings) or {}
         settings.setdefault('host', u'localhost')
         settings.setdefault('port', u'8086')
         settings.setdefault('version', u'0.9')
         settings.setdefault('username', u'root')
         settings.setdefault('password', u'root')
+        settings.setdefault('database', database)
 
         settings.setdefault('use_udp', False)
         settings.setdefault('udp_port', u'4444')
@@ -40,7 +41,8 @@ class InfluxDBAdapter(object):
         log.info(u'Storage target is influxdb://{host}:{port}', **self.__dict__)
         self.influx_client = InfluxDBClient(
             host=self.host, port=self.port,
-            username=self.username, password=self.password)
+            username=self.username, password=self.password,
+            database=self.database)
 
         # TODO: Hold references to multiple UDP databases using mapping "self.udp_databases".
         self.influx_client_udp = None

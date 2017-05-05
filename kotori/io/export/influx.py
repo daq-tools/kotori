@@ -34,7 +34,7 @@ class DataFrameQuery(object):
         log.info('InfluxDB expression: {expression}', expression=expression)
 
         # Run database query
-        result = influx.influx.query(expression)
+        result = influx.influx_client.query(expression)
 
         # Massage result format
         entries = list(flatten(result))
