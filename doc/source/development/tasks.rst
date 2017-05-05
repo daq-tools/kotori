@@ -17,6 +17,13 @@ Kotori tasks
 ****
 
 
+2017-05-05
+==========
+- https://opensensemap.org/
+- https://archive.opensensemap.org/
+- https://api.opensensemap.org/boxes
+
+
 2017-04-24
 ==========
 ::

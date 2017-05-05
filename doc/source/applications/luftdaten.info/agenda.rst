@@ -119,10 +119,12 @@ Feed data from live data API https://api.luftdaten.info/static/v1/data.json to M
 
     - https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-testdrive-automatic
 
+.. _luftdaten.info-todo:
 
 ****
 Todo
 ****
+- Link/embed to dashboard by Sensor ID.
 - Check for proper timezone when importing CSV vs. fetching data from live API
 - Filter out fields like sensor_id, location, lat, lon from timeseries data
 - Convert lat/lon or latitude/longitude to geohash (The Grafana Worldmap Panel requires GeoHash)

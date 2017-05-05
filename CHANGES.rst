@@ -7,6 +7,7 @@ in progress
 ===========
 - Fix raw data export
 - Properly apply charset encoding for data export
+- Update documentation for vendors :ref:`vendor-luftdaten.info` and :ref:`vendor-weewx`
 
 
 .. _kotori-0.20.0:
@@ -16,7 +17,7 @@ in progress
 - Re-add export/influx.py lost during refactoring
 - Fix InfluxDB UDP data acquisition
 - Tap into error signalling over MQTT
-- Minor updates to luftdaten.info docs & co.
+- Minor updates to vendor :ref:`vendor-luftdaten.info` docs & co.
 
 
 .. _kotori-0.19.1:
@@ -30,7 +31,7 @@ in progress
 
 2017-04-25 0.19.0
 =================
-- vendor :ref:`vendor-luftdaten.info`:
+- Vendor :ref:`vendor-luftdaten.info`:
 
     - Update Grafana dashboard "grafana-by-location.json". Thanks, Richard!
     - Update documentation

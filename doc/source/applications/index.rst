@@ -21,35 +21,19 @@ Hydro2Motion
 
         .. figure:: https://ptrace.isarengineering.de/2016-09-14_hydro2motion-logo.png
             :alt: Hydro2Motion Logo
-
-        .. container:: text-xx-large
-
-            |
-            | :ref:`Read all about it... <vendor-hydro2motion>`
-
+            :target: http://www.hydro2motion.de/
 
     .. container:: pull-right basic-hero align-right
 
-        The Hydro2Motion_ team used Kotori as the telemetry platform
-        for their fuel cell powered vehicle
+        The Hydro2Motion_ team used Kotori as the telemetry platform for their fuel cell powered vehicle
         at the "`Shell Eco-marathon europe`_ 2015" in Rotterdam.
 
 |clearfix|
 
-    .. container:: pull-left
+.. container:: align-center text-xx-large
 
-        .. figure:: https://ptrace.isarengineering.de/2016-09-14_hydro2motion-vehicle-small.jpg
-            :alt: Hydro2Motion vehicle
-            :width: 480px
+    :ref:`Read more... <vendor-hydro2motion>`
 
-    .. container:: pull-right
-
-        .. figure:: https://ptrace.isarengineering.de/2016-03-07_h2m-telemetry-72.jpg
-            :alt: Hydro2Motion telemetry
-            :width: 480px
-
-
-|clearfix|
 
 ----
 
@@ -59,41 +43,25 @@ Hiveeyes
 
 .. container:: legroom-md
 
-    .. container:: pull-left2 basic-hero align-right2
+    .. container:: pull-left basic-hero width-50
 
-        A flexible beehive monitoring infrastructure platform and toolkit based on affordable hardware,
-        wireless telemetry and modern software. Open source and open hardware.
+        The people of the Hiveeyes project are developing a flexible beehive monitoring infrastructure
+        platform and toolkit based on affordable hardware, wireless telemetry and modern software.
+        Open source, open hardware and a friendly community.
 
-    .. container:: text-xx-large
-
-        :ref:`Read all about it... <vendor-hiveeyes>`
-
-    .. container:: pull-right
+    .. container:: pull-right align-right
 
         .. figure:: https://ptrace.isarengineering.de/2016-10-31_hiveeyes-website.jpg
             :alt: Hiveeyes Website
-            :width: 640px
+            :width: 480px
             :target: https://hiveeyes.org/
 
 |clearfix|
 
-    .. container:: pull-left
+.. container:: align-center text-xx-large
 
-        .. figure:: https://ptrace.hiveeyes.org/2016-07-08_open-hive_box-with-electronics.jpg
-            :alt: Open Hive Box
-            :width: 480px
+    :ref:`Read all about it... <vendor-hiveeyes>`
 
-            The Open Hive Box telemetry sensor hardware
-
-    .. container:: pull-right
-
-        .. figure:: https://ptrace.hiveeyes.org/2016-05-25_Scale%20Frame%20-%2005%20-%20Ready%2C%20Back.jpg
-            :alt: Beehive scale in the field
-            :width: 480px
-
-            Beehive scale in the field
-
-|clearfix|
 
 ----
 
@@ -103,16 +71,32 @@ luftdaten.info
 
 .. container:: legroom-md
 
-    .. container:: pull-left2 basic-hero align-right2
+    .. container:: pull-left
 
-        An air quality monitoring platform based on open source software and open hardware.
+        .. figure:: https://ptrace.isarengineering.de/2017-05-05_luftdaten-logo.png
+            :alt: luftdaten.info Website
+            :target: http://luftdaten.info/
 
-    .. container:: text-xx-large
+    .. container:: pull-right basic-hero
 
-        :ref:`Read all about it... <vendor-luftdaten.info>`
+        A DIY Citizen Science air quality monitoring platform based on open source software and open hardware.
+        The idea is:
 
+            Das OK Lab Stuttgart widmet sich mit dem Citizen Science Projekt luftdaten.info der Feinstaub­messung.
+            Du und 299 Paten installieren selbst gebaute Messgeräte an der Außenwand ihres Hauses.
+            Aus den übermittelten Daten generiert luftdaten.info eine sich ständig aktualisierende
+            `Feinstaub-Karte <luftdaten.info map_>`_ für die gesamte Region.
+            So wird Feinstaub sichtbar…
 
 |clearfix|
+
+.. container:: align-center text-xx-large
+
+    :ref:`Continue reading... <vendor-luftdaten.info>`
+
+
+.. _luftdaten.info map: http://deutschland.maps.luftdaten.info/
+
 
 ----
 
@@ -123,16 +107,23 @@ weeWX
 
 .. container:: legroom-md
 
-    .. container:: pull-left2 basic-hero align-right2
+    .. container:: pull-left basic-hero
 
-        Receiving data from the weeWX weather station software over MQTT.
+        weeWX_ is a popular, free, open source weather station data collection software.
+        It is written in Python and runs under most versions of Linux, as well as macOS, \*BSD, and Solaris.
+        Many users are running it on the Raspberry Pi.
 
-    .. container:: text-xx-large
+    .. container:: pull-right
 
-        :ref:`Read all about it... <vendor-weewx>`
-
+        .. figure:: https://ptrace.isarengineering.de/2017-05-05_weewx-logo.png
+            :alt: weeWX Logo
+            :target: http://www.weewx.com/
 
 |clearfix|
+
+.. container:: align-center text-xx-large
+
+    :ref:`Enjoy reading... <vendor-weewx>`
 
 ----
 

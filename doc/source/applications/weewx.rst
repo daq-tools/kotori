@@ -143,27 +143,15 @@ System overview
 |clearfix|
 
 
-*******************
-Platform operations
-*******************
+*****
+Setup
+*****
 This section is about running the whole platform on your own hardware.
-Please be aware this is a work in progress. We are happy to receive
-valuable feedback for improving things gradually.
+For full installation of the InfluxDB_/Grafana_/Mosquitto_/Kotori_ stack, please have a look at the :ref:`kotori-setup` page.
 
-.. attention::
-
-    This section is just a stub. Read the source, luke.
-
-
-Setup Kotori
-============
-Please have a look at :ref:`kotori-setup`.
-
-
-Setup weeWX
-===========
-See also http://www.weewx.com/docs.html.
-
+weeWX
+=====
+For setting up weeWX, see also http://www.weewx.com/docs.html.
 
 Setup weeWX MQTT plugin
 =======================
@@ -184,12 +172,29 @@ Configure plugin in ``weewx.conf``::
             topic = weewx/097287c4-6fb0-4aeb-a095-00d65ecb15f7/Leoni/VantagePro2
             unit_system = METRIC
 
+Kotori
+======
+Activate `weewx.ini <https://github.com/daq-tools/kotori/blob/master/etc/examples/vendors/weewx.ini>`_ as configuration::
 
-Receive telemetry data
-======================
+    ln -sr /etc/kotori/examples/vendors/weewx.ini /etc/kotori/apps-available/
+    ln -sr /etc/kotori/apps-available/weewx.ini /etc/kotori/apps-enabled/
+    systemctl restart kotori
+
+
+*****
+Usage
+*****
+
+Receive measurement data
+========================
 ::
 
     mosquitto_sub -h mqtt.example.org -p 1883 -t 'weewx/#' -v
+
+
+Display measurement data
+========================
+Go to https://grafana.example.org/grafana/dashboard/db/weewx-097287c4-6fb0-4aeb-a095-00d65ecb15f7-automatic.
 
 
 *******

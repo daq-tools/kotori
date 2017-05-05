@@ -32,83 +32,93 @@ many cities in Germany to measure PM levels.
 ****
 Goal
 ****
-The goal is to display data from luftdaten.info using a rich data visualization dashboard in Grafana_.
+The goal is to display data from luftdaten.info using a Grafana_ dashboard for data visualization.
 Historical data should be able to be displayed by geographical location to make it a meaningful supplement
-to the `luftdaten.info map`_.
+to the `luftdaten.info map`_ with more flexible access capabilities compared to the current
+`RRDTOOL-based graphing <https://www.madavi.de/sensor/graph.php>`_.
 luftdaten.info already makes all historical data accessible on the `luftdaten.info Archive`_ (CSV format)
 and live data via `luftdaten.info API`_ (JSON format).
 
-There are two goals:
+There are two different data paths:
 
-a) republish live JSON data to MQTT and
-b) import historical CSV data
+- Read data from live json api and republish to MQTT, see :ref:`daq-mqtt`.
+- Import historical CSV data, see :ref:`CSV data acquisition <daq-http-csv>`.
 
 
 **********
 Status quo
 **********
 
+Demo
+====
+- https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-tresholds
+- https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-map
+
 LuftdatenPumpe
 ==============
 The main workhorse, `luftdaten-to-mqtt`_ requests data from the live API of luftdaten.info each 10 minutes,
-enriches it with geospatial information (reverse geocoding) and republishes its results to the MQTT bus.
-From there, the regular data acquisition subsystem collects the measurement data, stores it into InfluxDB
-appropriately and adds a rich data visualization dashboard to Grafana.
+enriches it with geographic location information (reverse geocoding) and republishes its results to the MQTT bus.
+Kotori picks it up from there, stores it into InfluxDB with appropriate tags as pivot points and
+adds a corresponding Grafana_ dashboard for data visualization.
 
-`luftdaten-to-mqtt`_ can be used as an universal MQTT forwarder, as `Rajko <https://github.com/ricki-z>`_
-explains `here <https://github.com/opendata-stuttgart/sensors-software/issues/33#issuecomment-272711445>`_:
+As one of the authors of the `feinstaub-api`_
+outlined `here <https://github.com/opendata-stuttgart/sensors-software/issues/33#issuecomment-272711445>`_:
 
-    | You can easily implement a "proxy" that translates json to mqtt. Then you can use this proxy as custom api.
+    | You can easily implement a "proxy" that translates json to mqtt. Then you can use this proxy as a custom api.
     | Historical data can be found here: https://archive.luftdaten.info/
     | Graphs can be found here: https://www.madavi.de/sensor/graph.php
     | Live data can be found here: https://api.luftdaten.info/static/v1/data.json
     | This file is updated every minute and contains all sensors and values sent to the server in the last 5 minutes.
 
-The setup is pretty straight-forward, see also :ref:`luftdaten.info-setup`.
-
-.. todo::
-
-    All acquisition infrastructure for importing **historical** data is in place already (see :ref:`daq-http-csv` import),
-    but there is still some data munging required. To get results of similar richness as the live data import,
-    some parts of the code should be refactored from the `luftdaten-to-mqtt`_ program to the internal data acquisition routines.
+`luftdaten-to-mqtt`_ is such a "translator" and can be used as an universal MQTT forwarder.
 
 
-****
-Demo
-****
-- https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-tresholds
-- https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-map
+*************************
+Screenshots and live data
+*************************
 
-
-*********
 Live data
-*********
+=========
 
 .. raw:: html
 
     <iframe src="https://luftdaten.getkotori.org/grafana/dashboard-solo/db/luftdaten-tresholds?orgId=1&var-Location=Gr%C3%BCntaler%20Stra%C3%9Fe%2C%20Gesundbrunnen%2C%20Berlin%2C%20DE&panelId=18&theme=light" width="100%" height="600" frameborder="0"></iframe>
 
 
-***********
 Screenshots
-***********
+===========
 
-.. figure:: https://ptrace.isarengineering.de/2017-04-24_luftdaten-measurements-by-location.jpg
+.. figure:: https://ptrace.isarengineering.de/2017-05-05_luftdaten-by-location.jpg
     :target: https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-tresholds
-    :alt: luftdaten.info - Measurements by location
+    :alt: luftdaten.info - Measurement timeseries by location, with EU-Limits as threshold lines
     :width: 1024
 
-    luftdaten.info - Measurements by location
+    luftdaten.info - Measurement timeseries by location, with EU-Limits as threshold lines
 
 
-.. figure:: https://ptrace.isarengineering.de/2017-04-24_luftdaten-location-chooser.jpg
+.. figure:: https://ptrace.isarengineering.de/2017-05-05_luftdaten-current-gauge-green.jpg
+    :target: https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-tresholds
+    :alt: luftdaten.info - Current measurement value, with EU-Limits (green)
+    :width: 1024
+
+    luftdaten.info - Current measurement value, with EU-Limits (green)
+
+.. figure:: https://ptrace.isarengineering.de/2017-05-05_luftdaten-current-gauge-orange.jpg
+    :target: https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-tresholds
+    :alt: luftdaten.info - Current measurement value, with EU-Limits (orange)
+    :width: 1024
+
+    luftdaten.info - Current measurement value, with EU-Limits (orange)
+
+
+.. figure:: https://ptrace.isarengineering.de/2017-05-05_luftdaten-location-chooser.jpg
     :alt: luftdaten.info - Location chooser
-    :width: 1024
+    :width: 480
 
     luftdaten.info - Location chooser
 
 
-.. figure:: https://ptrace.isarengineering.de/2017-04-24_luftdaten-grafana-worldmap.jpg
+.. figure:: https://ptrace.isarengineering.de/2017-05-05_luftdaten-grafana-worldmap.jpg
     :target: https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-map
     :alt: luftdaten.info - Grafana Worldmap
     :width: 1024
@@ -116,15 +126,19 @@ Screenshots
     luftdaten.info - Grafana Worldmap
 
 
+
+
 .. _luftdaten.info-setup:
 
 *****
 Setup
 *****
+This section is about running the whole platform on your own hardware.
+For full installation of the InfluxDB_/Grafana_/Mosquitto_/Kotori_ stack, please have a look at the :ref:`kotori-setup` page.
 
 InfluxDB
 ========
-/etc/influxdb/influxdb.conf::
+Configure ``/etc/influxdb/influxdb.conf``::
 
     [[udp]]
       # High-traffic UDP
@@ -136,9 +150,14 @@ InfluxDB
       batch-pending = 100 # number of batches that may be pending in memory
       read-buffer = 8388608 # (8*1024*1024) UDP read buffer size
 
+Then::
+
+    systemctl restart influxdb
+
+
 Kotori
 ======
-Use https://github.com/daq-tools/kotori/blob/master/etc/examples/vendors/luftdaten.ini as configuration::
+Activate `luftdaten.ini <https://github.com/daq-tools/kotori/blob/master/etc/examples/vendors/luftdaten.ini>`_ as configuration::
 
     ln -sr /etc/kotori/examples/vendors/luftdaten.ini /etc/kotori/apps-available/
     ln -sr /etc/kotori/apps-available/luftdaten.ini /etc/kotori/apps-enabled/
@@ -161,7 +180,7 @@ Synopsis
 
 Run each 10 minutes
 -------------------
-/etc/cron.d/luftdaten-to-mqtt::
+``/etc/cron.d/luftdaten-to-mqtt``::
 
     # /etc/cron.d/luftdaten-to-mqtt -- forward data from luftdaten.info json api to mqtt
 
@@ -169,17 +188,50 @@ Run each 10 minutes
     */10 * * * * root /opt/kotori/bin/luftdaten-to-mqtt --mqtt-uri mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json --geohash --reverse-geocode --progress
 
 
+*****
+Usage
+*****
+This is an ad hoc example about how to republish measurement data.
+
+Subscribe to the luftdaten.info feed on MQTT::
+
+    mosquitto_sub -h mqtt.example.org -t 'luftdaten/#' -v
+
+Start feeding measurements::
+
+    luftdaten-to-mqtt --mqtt-uri mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json --geohash --reverse-geocode --progress
+
+Data payloads will be per-sensor in JSON format, enriched by geographic location information.
+
+Example::
+
+    luftdaten/testdrive/earth/43/data.json {"sensor_id": 2115, "sensor_type": "SDS011", "P1": 11.17, "P2": 7.95,               "time": "2017-05-05T01:27:42Z", "location_id": 1064, "geohash": "u33dbz90yu6r", "location_name": "Gr\u00fcntaler Stra\u00dfe, Gesundbrunnen, Berlin, DE"}
+    luftdaten/testdrive/earth/43/data.json {"sensor_id": 2116, "sensor_type": "DHT22",  "temperature": 12.3, "humidity": 65.5, "time": "2017-05-05T01:27:42Z", "location_id": 1064, "geohash": "u33dbz90yu6r", "location_name": "Gr\u00fcntaler Stra\u00dfe, Gesundbrunnen, Berlin, DE"}
+
+
+*******
+Credits
+*******
+- All the people of luftdaten.info.
+- Richard Pobering for thoughtful design decisions, hard work on the beautiful Grafana dashboards and for pushing things forward in general.
+
+
 ******
 Agenda
 ******
-There are more things on the todo list.
 
-.. toctree::
-    :maxdepth: 1
-    :glob:
+.. todo::
 
-    agenda
+    Import **historical data** from the `luftdaten.info Archive`_.
 
+    All acquisition infrastructure for reading the :ref:`daq-http-csv` is in place already,
+    but there is still some data munging required. To get results of similar richness as the live data import,
+    some parts of the code should be refactored from the `luftdaten-to-mqtt`_ program to the internal data
+    acquisition routines to provide things like reverse geocoding also when importing raw CSV files.
+
+.. todo::
+
+    There are more things on the :ref:`todo list <luftdaten.info-todo>`.
 
 
 .. _luftdaten.info: http://luftdaten.info
