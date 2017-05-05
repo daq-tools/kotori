@@ -5,6 +5,12 @@ Changelog
 
 in progress
 ===========
+
+
+.. _kotori-0.20.1:
+
+2017-05-05 0.20.1
+=================
 - Fix raw data export
 - Properly apply charset encoding for data export
 - Update documentation for vendors :ref:`vendor-luftdaten.info` and :ref:`vendor-weewx`
