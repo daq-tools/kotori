@@ -560,6 +560,7 @@ class HttpDataFrameResponse(object):
 
         # Buffer object most output handlers write their content to
         buffer = BytesIO()
+        charset = None
 
 
         # Dispatch to appropriate output handler
@@ -570,18 +571,25 @@ class HttpDataFrameResponse(object):
 
         if suffix in ['csv', 'txt']:
             # http://pandas.pydata.org/pandas-docs/stable/io.html#io-store-in-csv
-            df.to_csv(buffer, header=True, index=False, date_format='%Y-%m-%dT%H:%M:%S.%fZ')
+            df.to_csv(buffer, header=True, index=False, encoding='utf-8', date_format='%Y-%m-%dT%H:%M:%S.%fZ')
+            charset = 'utf-8'
 
         elif suffix == 'tsv':
-            df.to_csv(buffer, header=True, index=False, date_format='%Y-%m-%dT%H:%M:%S.%fZ', sep='\t')
+            df.to_csv(buffer, header=True, index=False, encoding='utf-8', date_format='%Y-%m-%dT%H:%M:%S.%fZ', sep='\t')
+            charset = 'utf-8'
 
         elif suffix == 'json':
             # http://pandas.pydata.org/pandas-docs/stable/io.html#io-json-writer
             df.to_json(buffer, orient='records', date_format='iso')
+            charset = 'utf-8'
 
         elif suffix == 'html':
             # http://pandas.pydata.org/pandas-docs/stable/io.html#io-html
+            buffer.write('<html>\n')
+            #buffer.write('<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n')
             df.to_html(buffer, index=False, justify='center')
+            buffer.write('\n</html>')
+            charset = 'utf-8'
 
         elif suffix == 'xlsx':
             exporter = UniversalTabularExporter(bucket, dataframe=df)
@@ -655,7 +663,10 @@ class HttpDataFrameResponse(object):
 
         # Set "Content-Type" header
         if mimetype:
-            bucket.request.setHeader('Content-Type', mimetype)
+            content_type = mimetype
+            if charset:
+                content_type += '; charset=' + charset
+            bucket.request.setHeader('Content-Type', content_type)
 
         # Set "Content-Disposition" header
         disposition = 'attachment'

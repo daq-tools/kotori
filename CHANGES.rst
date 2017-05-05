@@ -6,6 +6,7 @@ Changelog
 in progress
 ===========
 - Fix raw data export
+- Properly apply charset encoding for data export
 
 
 .. _kotori-0.20.0:
