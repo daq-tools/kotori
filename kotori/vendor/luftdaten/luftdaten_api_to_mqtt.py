@@ -156,7 +156,7 @@ APP_NAME = 'luftdaten-to-mqtt ' + VERSION
 def main():
     """
     Usage:
-      luftdaten-to-mqtt --mqtt-uri mqtt://mqtt.example.org/luftdaten.info [--geohash] [--reverse-geocode] [--progress] [--sensorId <sensorId>] [--debug]
+      luftdaten-to-mqtt --mqtt-uri mqtt://mqtt.example.org/luftdaten.info [--geohash] [--reverse-geocode] [--progress] [--sensorIds=<sensorIds>] [--debug]
       luftdaten-to-mqtt --version
       luftdaten-to-mqtt (-h | --help)
 
@@ -165,7 +165,7 @@ def main():
       --geohash                     Compute Geohash from latitude/longitude and add to MQTT message
       --reverse-geocode             Compute geographical address using the Nominatim reverse geocoder and add to MQTT message
       --progress                    Show progress bar
-      --sensorId=<sensorId>         Only publish data for the sensor with the given id.
+      --sensorIds=<sensorIds>       Only publish data for the sensors with the given ids. Format: sensorIds='23, 42, 1337'
       --version                     Show version information
       --debug                       Enable debug messages
       -h --help                     Show this screen
@@ -199,12 +199,21 @@ def main():
 
     # Run
     log.info('Publishing data to MQTT URI {}'.format(mqtt_uri))
+
+    #if there a specific sensor ids supplied, parse them into a list of ints
+    if options['--sensorIds']:
+        sensorIds = list()
+        for sensorId in options['--sensorIds'].replace(' ', '').split(','):
+            sensorIds.append(int(sensorId))
+    else:
+        sensorIds = False
+
     pump = LuftdatenPumpe(
         mqtt_uri,
         geohash=options['--geohash'],
         reverse_geocode=options['--reverse-geocode'],
         progressbar=options['--progress'],
-        sensorId=options['--sensorId']
+        sensorIds=sensorIds
     )
     pump.request_and_publish()
 
@@ -214,12 +223,12 @@ class LuftdatenPumpe:
     # luftdaten.info API URI
     uri = 'https://api.luftdaten.info/static/v1/data.json'
 
-    def __init__(self, mqtt_uri, geohash=False, reverse_geocode=False, progressbar=False, sensorId=False):
+    def __init__(self, mqtt_uri, geohash=False, reverse_geocode=False, progressbar=False, sensorIds=False):
         self.mqtt_uri = mqtt_uri
         self.geohash = geohash
         self.reverse_geocode = reverse_geocode
         self.progressbar = progressbar
-        self.sensorId = sensorId
+        self.sensorIds = sensorIds
         self.mqtt = MQTTAdapter(mqtt_uri)
 
     def request_and_publish(self):
@@ -261,10 +270,10 @@ class LuftdatenPumpe:
 
             if self.reverse_geocode:
                 readings['location_name'] = reverse_geocode(item['location']['latitude'], item['location']['longitude'])
-            #print "{} : {}".format(type(sensor_id), sensor_id)
             
-            if self.sensorId:
-                if int(self.sensorId) == sensor_id:
+            #if there is a filter for specific sensor ids, only publish data for those sensors
+            if self.sensorIds:
+                if sensor_id in self.sensorIds:
                     self.publish_mqtt(readings)
             else:
                 self.publish_mqtt(readings)
