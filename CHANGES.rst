@@ -8,6 +8,7 @@ in progress
 - [doc] Update documentation
 - [doc] Use ptrace.getkotori.org for documentation media assets
 - [doc] Correct GitHub repository url
+- [grafana] Improve Grafana dashboard builder in the context of Hiveeyes
 
 
 .. _kotori-0.20.1:

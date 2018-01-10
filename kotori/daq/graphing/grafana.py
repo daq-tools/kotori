@@ -608,7 +608,7 @@ class GrafanaManager(object):
 
             elif isinstance(prefixes, types.ListType):
                 for prefix in prefixes:
-                    if field.startswith(prefix):
+                    if field.startswith(prefix) or field.endswith(prefix):
                         fields.append(field)
                         break
 

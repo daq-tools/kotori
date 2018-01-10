@@ -13,8 +13,8 @@ log = Logger()
 class HiveeyesGrafanaManager(GrafanaManager):
 
     knowledge = [
-        {'name': 'temperature', 'prefixes': ['temp', 'Temp'],                           'format': 'celsius'},
-        {'name': 'humidity',    'prefixes': ['hum'],                                    'format': 'humidity'},
+        {'name': 'temperature', 'prefixes': ['temp', 'Temp'],   'suffixes': ['temp', 'temperature'],    'format': 'celsius'},
+        {'name': 'humidity',    'prefixes': ['hum'],            'suffixes': ['hum', 'humidity'],        'format': 'humidity'},
         {'name': 'weight',      'prefixes': ['wght', 'weight', 'Gewicht', 'Weight'],    'label':  'kg'},
         {'name': 'volume',      'prefixes': ['volume'],                                 'label':  'dB', 'scale': 10},
     ]
@@ -60,6 +60,14 @@ class HiveeyesGrafanaManager(GrafanaManager):
                         key = '-'.join(rule['prefixes'])
                         prefixes[key] = rule['prefixes']
                         fields_used.append(fieldname)
+
+            if 'suffixes' in rule:
+                for suffix in rule['suffixes']:
+                    for fieldname in fields_given:
+                        if fieldname.endswith(suffix):
+                            key = '-'.join(rule['prefixes'])
+                            prefixes[key] = rule['suffixes']
+                            fields_used.append(fieldname)
 
         # Add unused fields
         fields_unused = list(set(fields_given) - set(fields_used))
