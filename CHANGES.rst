@@ -6,6 +6,7 @@ Changelog
 in progress
 ===========
 - Update documentation
+- Use ptrace.getkotori.org for documentation media assets
 
 
 .. _kotori-0.20.1:

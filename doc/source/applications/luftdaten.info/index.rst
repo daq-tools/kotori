@@ -88,7 +88,7 @@ Live data
 Screenshots
 ===========
 
-.. figure:: https://ptrace.isarengineering.de/2017-05-05_luftdaten-by-location.jpg
+.. figure:: https://ptrace.getkotori.org/2017-05-05_luftdaten-by-location.jpg
     :target: https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-tresholds
     :alt: luftdaten.info - Measurement timeseries by location, with EU-Limits as threshold lines
     :width: 1024
@@ -96,14 +96,14 @@ Screenshots
     luftdaten.info - Measurement timeseries by location, with EU-Limits as threshold lines
 
 
-.. figure:: https://ptrace.isarengineering.de/2017-05-05_luftdaten-current-gauge-green.jpg
+.. figure:: https://ptrace.getkotori.org/2017-05-05_luftdaten-current-gauge-green.jpg
     :target: https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-tresholds
     :alt: luftdaten.info - Current measurement value, with EU-Limits (green)
     :width: 1024
 
     luftdaten.info - Current measurement value, with EU-Limits (green)
 
-.. figure:: https://ptrace.isarengineering.de/2017-05-05_luftdaten-current-gauge-orange.jpg
+.. figure:: https://ptrace.getkotori.org/2017-05-05_luftdaten-current-gauge-orange.jpg
     :target: https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-tresholds
     :alt: luftdaten.info - Current measurement value, with EU-Limits (orange)
     :width: 1024
@@ -111,14 +111,14 @@ Screenshots
     luftdaten.info - Current measurement value, with EU-Limits (orange)
 
 
-.. figure:: https://ptrace.isarengineering.de/2017-05-05_luftdaten-location-chooser.jpg
+.. figure:: https://ptrace.getkotori.org/2017-05-05_luftdaten-location-chooser.jpg
     :alt: luftdaten.info - Location chooser
     :width: 480
 
     luftdaten.info - Location chooser
 
 
-.. figure:: https://ptrace.isarengineering.de/2017-05-05_luftdaten-grafana-worldmap.jpg
+.. figure:: https://ptrace.getkotori.org/2017-05-05_luftdaten-grafana-worldmap.jpg
     :target: https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-map
     :alt: luftdaten.info - Grafana Worldmap
     :width: 1024

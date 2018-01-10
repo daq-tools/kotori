@@ -233,7 +233,7 @@ deb-build: check-build-options
 
 	# Install from egg on package server
 	# https://pip.pypa.io/en/stable/reference/pip_wheel/#cmdoption--extra-index-url
-	#TMPDIR=/var/tmp $(buildpath)/bin/pip install kotori[$(features)]==$(version) --process-dependency-links --extra-index-url=https://packages.elmyra.de/isarengineering/python/eggs/
+	#TMPDIR=/var/tmp $(buildpath)/bin/pip install kotori[$(features)]==$(version) --process-dependency-links --extra-index-url=https://packages.elmyra.de/elmyra/foss/python/
 
 
 	# 4. Relocate virtualenv to /opt/kotori
@@ -357,13 +357,13 @@ virtualenv:
 
 
 # ==========================================
-#         ptrace.isarengineering.de
+#           ptrace.getkotori.org
 # ==========================================
 
 # Don't commit media assets (screenshots, etc.) to the repository.
-# Instead, upload them to https://ptrace.isarengineering.de/
-ptrace_target := root@ptrace.isarengineering.de:/data/web/basti/ptrace.isarengineering.de/htdocs/
-ptrace_http   := https://ptrace.isarengineering.de/
+# Instead, upload them to https://ptrace.getkotori.org/
+ptrace_target := root@ptrace.getkotori.org:/srv/www/organizations/daq-tools/ptrace.getkotori.org/htdocs/
+ptrace_http   := https://ptrace.getkotori.org/
 ptrace: check-ptrace-options
 	$(eval prefix := $(shell date --iso-8601))
 	$(eval name   := $(shell basename $(source)))

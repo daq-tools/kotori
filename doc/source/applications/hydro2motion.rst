@@ -28,16 +28,16 @@ at the `Munich University of Applied Sciences`_.
 They have an article about the event at their blog: `Hydro2Motion at Shell Eco-Marathon 2015 in Rotterdam`_.
 We also have some impressions:
 
-.. figure:: https://ptrace.isarengineering.de/2016-06-05_H2M-2015-DSC07107-300x200.jpg
-    :target: https://ptrace.isarengineering.de/2016-06-05_H2M-2015-DSC07107.jpg
+.. figure:: https://ptrace.getkotori.org/2016-06-05_H2M-2015-DSC07107-300x200.jpg
+    :target: https://ptrace.getkotori.org/2016-06-05_H2M-2015-DSC07107.jpg
     :alt: On the way
     :width: 450px
     :align: left
 
     On the way
 
-.. figure:: https://ptrace.isarengineering.de/2016-06-05_H2M-2015-DSC07514-300x200.jpg
-    :target: https://ptrace.isarengineering.de/2016-06-05_H2M-2015-DSC07514.jpg
+.. figure:: https://ptrace.getkotori.org/2016-06-05_H2M-2015-DSC07514-300x200.jpg
+    :target: https://ptrace.getkotori.org/2016-06-05_H2M-2015-DSC07514.jpg
     :alt: Getting ready
     :width: 450px
     :align: right
@@ -46,7 +46,7 @@ We also have some impressions:
 
 |clearfix|
 
-.. figure:: https://ptrace.isarengineering.de/2016-03-07_h2m-racing-rotterdam2015.jpg
+.. figure:: https://ptrace.getkotori.org/2016-03-07_h2m-racing-rotterdam2015.jpg
     :alt: Racing
     :width: 450px
     :align: left
@@ -59,8 +59,8 @@ We also have some impressions:
 The vehicle
 ===========
 
-.. figure:: https://ptrace.isarengineering.de/2016-03-07_h2m-mission-72.jpg
-    :target: https://ptrace.isarengineering.de/2016-03-07_h2m-mission-150.jpg
+.. figure:: https://ptrace.getkotori.org/2016-03-07_h2m-mission-72.jpg
+    :target: https://ptrace.getkotori.org/2016-03-07_h2m-mission-150.jpg
     :alt: Mission
     :width: 450px
 
@@ -69,14 +69,14 @@ The fuel cell
 =============
 Their vehicle is powered by a hydrogen fuel cell.
 
-.. figure:: https://ptrace.isarengineering.de/2016-03-07_h2m-fuel-cell-component.jpg
+.. figure:: https://ptrace.getkotori.org/2016-03-07_h2m-fuel-cell-component.jpg
     :alt: Fuel cell component
     :width: 450px
     :align: left
 
     Fuel cell component
 
-.. figure:: https://ptrace.isarengineering.de/2016-03-07_h2m-fuel-cell-vehicle.jpg
+.. figure:: https://ptrace.getkotori.org/2016-03-07_h2m-fuel-cell-vehicle.jpg
     :alt: Fuel cell in vehicle
     :width: 450px
     :align: right
@@ -87,8 +87,8 @@ Their vehicle is powered by a hydrogen fuel cell.
 
 Its auxiliary equipment emits telemetry data.
 
-.. figure:: https://ptrace.isarengineering.de/2016-03-07_h2m-fuel-cell-schematics-72.jpg
-    :target: https://ptrace.isarengineering.de/2016-03-07_h2m-fuel-cell-schematics-150.jpg
+.. figure:: https://ptrace.getkotori.org/2016-03-07_h2m-fuel-cell-schematics-72.jpg
+    :target: https://ptrace.getkotori.org/2016-03-07_h2m-fuel-cell-schematics-150.jpg
     :alt: Fuel cell schematics
     :width: 450px
     :align: left
@@ -169,8 +169,8 @@ System overview
 - Store measurements to the InfluxDB_ timeseries database.
 - Automatically create Grafana_ panels for instant telemetry data visualization.
 
-    .. figure:: https://ptrace.isarengineering.de/2016-03-07_h2m-telemetry-72.jpg
-        :target: https://ptrace.isarengineering.de/2016-03-07_h2m-telemetry-150.jpg
+    .. figure:: https://ptrace.getkotori.org/2016-03-07_h2m-telemetry-72.jpg
+        :target: https://ptrace.getkotori.org/2016-03-07_h2m-telemetry-150.jpg
         :alt: Live telemetry with Grafana
         :width: 450px
         :align: left
@@ -182,7 +182,7 @@ System overview
 - Publish telemetry data to the WAMP_ bus.
 - Subscribe to WAMP_ data streams inside the web browser and process the data points.
 
-    .. figure:: https://ptrace.isarengineering.de/2016-06-05_H2M-2015-Kotori-Dashboard.png
+    .. figure:: https://ptrace.getkotori.org/2016-06-05_H2M-2015-Kotori-Dashboard.png
         :target: `Live Telemetry at Hydro2Motion`_
         :alt: Live telemetry with GPS position on map
         :width: 450px

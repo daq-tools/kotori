@@ -120,7 +120,7 @@
 .. _Live Telemetrie at Hydro2Motion: http://blog.hydro2motion.de/?p=1077
 .. _Live Telemetry at Hydro2Motion: http://blog.hydro2motion.de/?p=1081&lang=en
 
-.. _Case study of simulation-driven designed components for a hydrogen-powered prototype vehicle: https://ptrace.isarengineering.de/2015-11-10_H2M_Presentation_EATC15.pdf
+.. _Case study of simulation-driven designed components for a hydrogen-powered prototype vehicle: https://ptrace.getkotori.org/2015-11-10_H2M_Presentation_EATC15.pdf
 .. _Kotori Telemetry Dashboard for Hydro2Motion: http://h2mdata.cicer.de/
 
 .. _mbed: https://mbed.org/

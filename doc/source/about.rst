@@ -15,7 +15,7 @@ About Kotori
 
 .. container:: pull-right
 
-    .. figure:: https://ptrace.isarengineering.de/2016-05-23_chart-recorder.png
+    .. figure:: https://ptrace.getkotori.org/2016-05-23_chart-recorder.png
         :alt: Chart recorder
         :width: 300px
         :align: left

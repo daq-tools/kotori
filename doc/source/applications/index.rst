@@ -19,7 +19,7 @@ Hydro2Motion
 
     .. container:: pull-left text-xx-large
 
-        .. figure:: https://ptrace.isarengineering.de/2016-09-14_hydro2motion-logo.png
+        .. figure:: https://ptrace.getkotori.org/2016-09-14_hydro2motion-logo.png
             :alt: Hydro2Motion Logo
             :target: http://www.hydro2motion.de/
 
@@ -51,7 +51,7 @@ Hiveeyes
 
     .. container:: pull-right align-right
 
-        .. figure:: https://ptrace.isarengineering.de/2016-10-31_hiveeyes-website.jpg
+        .. figure:: https://ptrace.getkotori.org/2016-10-31_hiveeyes-website.jpg
             :alt: Hiveeyes Website
             :width: 450px
             :target: https://hiveeyes.org/
@@ -73,7 +73,7 @@ luftdaten.info
 
     .. container:: pull-left
 
-        .. figure:: https://ptrace.isarengineering.de/2017-05-05_luftdaten-logo.png
+        .. figure:: https://ptrace.getkotori.org/2017-05-05_luftdaten-logo.png
             :alt: luftdaten.info Website
             :target: http://luftdaten.info/
 
@@ -115,7 +115,7 @@ weeWX
 
     .. container:: pull-right
 
-        .. figure:: https://ptrace.isarengineering.de/2017-05-05_weewx-logo.png
+        .. figure:: https://ptrace.getkotori.org/2017-05-05_weewx-logo.png
             :alt: weeWX Logo
             :target: http://www.weewx.com/
 

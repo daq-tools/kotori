@@ -137,8 +137,8 @@ System overview
 - Store measurements to the InfluxDB_ timeseries database.
 - Automatically create Grafana_ panels for instant telemetry data visualization.
 
-    .. figure:: https://ptrace.isarengineering.de/2017-04-18_weewx-weather-leoni.jpg
-        :target: https://ptrace.isarengineering.de/2017-04-18_weewx-weather-leoni.jpg
+    .. figure:: https://ptrace.getkotori.org/2017-04-18_weewx-weather-leoni.jpg
+        :target: https://ptrace.getkotori.org/2017-04-18_weewx-weather-leoni.jpg
         :alt: Live weather data with Grafana
         :width: 800px
         :align: left
