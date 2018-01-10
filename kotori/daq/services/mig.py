@@ -212,14 +212,35 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             self.metrics.packet_time = None
         """
 
+        # TODO: Data enrichment machinery, e.g. for geospatial data
+        # latitude/lat, longitude/long/lon/lng
+        # 1. geohash => lat/lon
+        # 2. postcode/city => lat/lon (forward geocoder)
+        # 3. lat/lon => geohash if not geohash
+        # 4. lat/lon => reverse geocoder (address information)
+        # The outcome can provide additional meta information to be used by the tagging machinery below,
+        # e.g. create tags from homogenized Nomatim address modulo "house_number" etc.
+
+        # TODO: Already do the tagging enrichment machinery here(!) to
+        # establish additional metadata schema for further processing, e.g. Grafana.
+        # So, move the schwumms from storage handler here!
+        # Sane order for Grafana template variables:
+        # continent, country_code (upper), q-region, city, q-hood, road, (compound)
+
+        # Compute storage location
         storage_location = self.topology_to_storage(topology)
         log.debug(u'Storage location: {storage}', storage=dict(storage_location))
 
-        # store data
+        # Store data
         self.store_message(storage_location, message)
 
-        # provision graphing subsystem
+        # Provision graphing subsystem
         if message_type == 'data':
+            # TODO: Purge message from fields to be used as tags
+            # Namely:
+            # 'geohash',
+            # 'location', 'location_id', 'location_name', 'sensor_id', 'sensor_type',
+            # 'latitude', 'longitude', 'lat', 'lon'
             self.graphing.provision(storage_location, message, topology=topology)
 
         return True

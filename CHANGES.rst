@@ -11,6 +11,7 @@ in progress
 - [grafana] Improve Grafana dashboard builder in the context of Hiveeyes
 - [import] Also accept the CSV field "Date" as field containing timestamp information
 - [firmware builder] Add “esp_root” configuration variable to example configuration file
+- [core] Add comments to MqttInfluxGrafanaService regarding ingress data enrichment
 
 
 .. _kotori-0.20.1:
