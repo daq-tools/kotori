@@ -9,6 +9,7 @@ in progress
 - [doc] Use ptrace.getkotori.org for documentation media assets
 - [doc] Correct GitHub repository url
 - [grafana] Improve Grafana dashboard builder in the context of Hiveeyes
+- [import] Also accept the CSV field "Date" as field containing timestamp information
 
 
 .. _kotori-0.20.1:

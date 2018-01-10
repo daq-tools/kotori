@@ -347,7 +347,10 @@ class HttpChannelEndpoint(Resource):
 
                     if header_line:
                         # Streamline various differences for even more convenience
-                        header_line = header_line.replace(';', ',').replace('Date/Time', 'time').replace('Datum/Zeit', 'time').replace('timestamp', 'time')
+                        header_line = header_line.replace(';', ',')
+                        date_fields = ['Date/Time', 'Date', 'Datum/Zeit', 'timestamp']
+                        for date_field in date_fields:
+                            header_line = header_line.replace(date_field, 'time')
                         header_fields = map(str.strip, header_line.split(','))
                         msg = u'CSV Header: fields={fields}, key={key}'.format(fields=header_fields, key=request.channel_identifier)
                         log.info(msg)
