@@ -9,6 +9,12 @@
 Data export
 ###########
 
+.. contents::
+   :local:
+   :depth: 1
+
+----
+
 
 ********
 Synopsis
@@ -172,4 +178,18 @@ Hierarchical data
 =================
 Kotori supports exporting data in HDF5_ and NetCDF_ formats.
 See :ref:`export-hierarchical-data`.
+
+
+****
+Todo
+****
+
+.. todo::
+
+    Describe parameters::
+
+        include, exclude, pad
+        interpolate=true
+        &from=20160519
+        sorted
 

@@ -5,6 +5,7 @@ Changelog
 
 in progress
 ===========
+- Update documentation
 
 
 .. _kotori-0.20.1:
@@ -300,7 +301,7 @@ in progress
 - Add export parameters "exclude", "include", "interpolate" and "sorted"
 - Fix data routing and processing
 - Add license to documentation
-- Quick hack for making :ref:`firmware-builder` endpoint no convert numeric values to floats
+- Quick hack for making :ref:`firmware-builder` endpoint not convert numeric values to floats
 - Packaging fixes
 
 

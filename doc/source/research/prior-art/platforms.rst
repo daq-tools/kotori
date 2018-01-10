@@ -93,6 +93,11 @@ Open
   | https://getyeti.co/
   | https://github.com/netbeast/dashboard
 
+- | http://mainflux.io/
+  | https://github.com/mainflux/mainflux
+  | Industrial IoT Messaging and Device Management Server
+
+
 Eclipse IoT
 -----------
 - https://github.com/eclipse/hawkbit
@@ -225,7 +230,10 @@ Closed
 - https://grovestreams.com/
 - http://sensorcloud.com/
 - https://freeboard.io/
-- https://thingspeak.com/
+
+- | https://thingspeak.com/
+  | https://github.com/iobridge/thingspeak
+
 - http://ubidots.com/
 
     - http://ubidots.com/docs/devices/gprsbee.html#gprsbee

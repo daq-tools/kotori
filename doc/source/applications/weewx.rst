@@ -21,7 +21,12 @@ weeWX_ is a free, open source weather station data collection software written i
 It supports `many popular weather stations <http://www.weewx.com/hardware.html>`_.
 
 To store all data in InfluxDB_ and display it in Grafana_, we connected a `Davis Vantage Pro2`_ weather station,
-added the `MQTT Plugin for weeWX`_ into the mix - and voilà:
+added the `MQTT Plugin for weeWX`_ into the mix - and voilà ...
+
+Live data:
+https://swarm.hiveeyes.org/grafana/dashboard/db/weather-leoni
+
+Embedded view:
 
 .. raw:: html
 
@@ -194,7 +199,7 @@ Receive measurement data
 
 Display measurement data
 ========================
-Go to https://grafana.example.org/grafana/dashboard/db/weewx-097287c4-6fb0-4aeb-a095-00d65ecb15f7-automatic.
+Go to ``https://grafana.example.org/grafana/dashboard/db/weewx-097287c4-6fb0-4aeb-a095-00d65ecb15f7-automatic``.
 
 
 *******

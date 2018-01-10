@@ -17,11 +17,116 @@ Kotori tasks
 ****
 
 
+2017-12-31
+==========
+- [o] https://getkotori.org/docs/handbook/export/gallery.html is broken,
+
+2017-08-14
+==========
+- [o] Software foundation for a contemporary map-based view
+
+    - Hopglass
+
+        - https://github.com/hopglass/hopglass
+          https://hopglass.berlin.freifunk.net/
+          https://map.freifunk-3laendereck.net/
+
+    - meshviewer
+
+        - https://github.com/ffrgb/meshviewer
+          https://map.hochstift.freifunk.net/
+
+2017-08-09
+==========
+- [o] Enable Grafana feature "Panel Options » Graph Tooltip » Shared Crosshair" by default
+- [o] Make Dashboard per-channel, not just per-network
+- [o] Upload very large CSV files as .zip or .gz
+- [o] In overload situations::
+
+    2017-08-09T06:13:13+0200 [kotori.daq.services.mig            ] ERROR: Error processing MQTT message from topic "hiveeyes/testdrive-hivetool/test/15/data.json": [Failure instance: Traceback: <class 'influxdb.exceptions.InfluxDBServerError'>: {"error":"timeout"}
+    and/or
+    2017-08-09 06:18:21,983 [requests.packages.urllib3.connectionpool] WARNING: Connection pool is full, discarding connection: localhost
+
+- [o] Grafana: Display » Stacking & Null value » Null value: null
+- [o] Update link to Grafana Dashboard:
+  https://getkotori.org/docs/applications/weewx.html
+
+- Have a look at https://www.opensensors.io/
+
+
+
+2017-07-24
+==========
+- Integrate with Pelias
+  Pelias is a modular open-source geocoder using ElasticSearch for fast geocoding.
+  https://github.com/pelias/pelias
+
+- Integrate with https://www.mysensors.org/
+
+    - http://www.mycontroller.org/
+    - https://www.mysensors.org/download/serial_api_20
+    - https://www.mysensors.org/build/raspberry
+    - https://forum.mysensors.org/topic/3183/influxdb-and-grafana-on-raspberrypi
+    - https://forum.mysensors.org/topic/4625/show-real-time-imu-data-from-four-nodes
+    - https://forum.mysensors.org/topic/7140/raspberry-gateway-arduino-pro-mini-atmega328p-nrf24l01-without-plus
+    - https://forum.mysensors.org/topic/5143/mqtt-gateway
+    - https://forum.mysensors.org/topic/7215/mqtt-sensors/3
+
+
+2017-07-10
+==========
+- Integrate with Open Pipe Kit
+
+    - https://openpipekit.github.io/
+    - https://github.com/openpipekit
+
+
+2017-06-01
+==========
+- https://www.thethingsnetwork.org/forum/t/labs-store-and-visualize-data-using-influxdb-and-grafana/5297
+- https://www.thethingsnetwork.org/forum/t/data-storage-and-visualization-for-ttn/4041
+- http://miscellany.bouillot.org/post/153134895780/data-storage-and-visualization-for-the-things
+- https://www.thethingsnetwork.org/forum/t/where-do-you-keep-your-data/3839
+
+
+2017-05-09
+==========
+- Add to documentation: https://github.com/daq-tools/kotori
+- Grok data from safecast
+
+    - http://blog.safecast.org/
+    - http://blog.safecast.org/bgeigie-nano/
+    - https://github.com/Safecast/GeoSense
+    - http://safecast.org/tilemap/
+    - http://blog.safecast.org/downloads/
+    - https://api.safecast.org/
+    - https://api.safecast.org/en-US/measurements.json
+    - https://github.com/safecast
+    - http://blog.safecast.org/team/
+    - http://blog.safecast.org/thanks/
+    - http://blog.safecast.org/2017/03/event-announcement-our-world-our-data-at-mit/
+
+
 2017-05-05
 ==========
-- https://opensensemap.org/
-- https://archive.opensensemap.org/
-- https://api.opensensemap.org/boxes
+- Integrate with / grok data from openSenseMap
+
+    - https://opensensemap.org/
+    - https://archive.opensensemap.org/
+    - https://api.opensensemap.org/boxes
+
+- Provide integrated "archive.example.org", e.g. by using the
+  Datalad data management and distribution suite: http://docs.datalad.org/.
+
+- Update https://getkotori.org/docs/handbook/export/gallery.html
+
+- Update file:///Users/amo/dev/daq-tools/sources/kotori/doc/build/html/handbook/acquisition/index.html
+  and file:///Users/amo/dev/daq-tools/sources/kotori/doc/build/html/handbook/export/index.html
+  with dotfiles
+  from file:///Users/amo/dev/daq-tools/sources/kotori/doc/build/html/applications/hiveeyes.html
+
+- Promote using the https://opendatacommons.org/licenses/pddl/ for all collected data.
+- Provide a complete Docker container / Docker Compose service environment / Docker Swarm setup
 
 
 2017-04-24

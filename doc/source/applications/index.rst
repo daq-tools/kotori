@@ -7,7 +7,7 @@
 Applications
 ############
 
-Some example showcases where Kotori and associated infrastructure is used in production telemetry systems.
+Some example showcases where the system is used for data acquisition and -visualization.
 
 ----
 
@@ -23,7 +23,7 @@ Hydro2Motion
             :alt: Hydro2Motion Logo
             :target: http://www.hydro2motion.de/
 
-    .. container:: pull-right basic-hero align-right
+    .. container:: pull-right basic-hero width-50 align-right
 
         The Hydro2Motion_ team used Kotori as the telemetry platform for their fuel cell powered vehicle
         at the "`Shell Eco-marathon europe`_ 2015" in Rotterdam.
@@ -53,7 +53,7 @@ Hiveeyes
 
         .. figure:: https://ptrace.isarengineering.de/2016-10-31_hiveeyes-website.jpg
             :alt: Hiveeyes Website
-            :width: 480px
+            :width: 450px
             :target: https://hiveeyes.org/
 
 |clearfix|
@@ -124,6 +124,32 @@ weeWX
 .. container:: align-center text-xx-large
 
     :ref:`Enjoy reading... <vendor-weewx>`
+
+----
+
+
+***
+LST
+***
+
+.. container:: legroom-md
+
+    .. container:: pull-left
+
+        .. figure:: https://ptrace.getkotori.org/2017-05-05_muas-logo.jpg
+            :alt: Munich University of Applied Sciences Website
+            :target: https://www.hm.edu/en/
+
+    .. container:: pull-right basic-hero
+
+        The `Labor für Systemtechnik`_ at the `Munich University of Applied Sciences`_
+        uses a binary data telemetry format based on the schema of C structs.
+
+|clearfix|
+
+.. container:: align-center text-xx-large
+
+    :ref:`Read what it's all about... <vendor-lst>`
 
 ----
 

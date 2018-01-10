@@ -37,3 +37,20 @@ Open Data Stuttgart » luftdaten.info
     - http://archive.luftdaten.info/
 - https://github.com/opendata-stuttgart/mqtt-stack
 - https://github.com/opendata-stuttgart/mqtt-stack/blob/master/howto_setup_tick_stack.md
+
+
+Energy Grid
+===========
+- https://www.uni-ulm.de/in/ews/
+- http://www.smartgrids-bw.net/
+- http://forschung-stromnetze.info/projekte/offene-kommunikationsplattform-fuer-verteilnetzbetreiber/
+- https://www.enargus.de/pub/bscw.cgi/?op=enargus.eps2&q=0325811
+- https://www.enargus.de/pub/bscw.cgi?op=enargus.eps2
+- http://esoseg.in.tum.de/
+- http://esoseg.in.tum.de/?page_id=12
+- https://www.sekas.de/
+- https://www.sekas.de/leistungen/energietechnik.html
+- https://www.sekas.de/referenzen/powerline-kommunikation-fuer-smartgrids.html
+
+
+https://iotool.io/

@@ -203,7 +203,7 @@ Start feeding measurements::
 
 Data payloads will be per-sensor in JSON format, enriched by geographic location information.
 
-Example::
+Example MQTT messages::
 
     luftdaten/testdrive/earth/43/data.json {"sensor_id": 2115, "sensor_type": "SDS011", "P1": 11.17, "P2": 7.95,               "time": "2017-05-05T01:27:42Z", "location_id": 1064, "geohash": "u33dbz90yu6r", "location_name": "Gr\u00fcntaler Stra\u00dfe, Gesundbrunnen, Berlin, DE"}
     luftdaten/testdrive/earth/43/data.json {"sensor_id": 2116, "sensor_type": "DHT22",  "temperature": 12.3, "humidity": 65.5, "time": "2017-05-05T01:27:42Z", "location_id": 1064, "geohash": "u33dbz90yu6r", "location_name": "Gr\u00fcntaler Stra\u00dfe, Gesundbrunnen, Berlin, DE"}
