@@ -35,7 +35,7 @@ Get the source code
 ::
 
     mkdir -p develop; cd !$
-    git clone https://github.com/zerotired/kotori.git
+    git clone https://github.com/daq-tools/kotori.git
     cd kotori
 
 Setup virtualenv

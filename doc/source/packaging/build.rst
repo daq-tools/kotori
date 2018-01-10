@@ -29,7 +29,7 @@ Initially::
 
     ssh workbench@buildhost.example.org
     mkdir -p develop
-    git clone git@git.elmyra.de:isarengineering/kotori.git ~/develop/kotori
+    git clone https://github.com/daq-tools/kotori.git ~/develop/kotori
     cd develop/kotori
 
 Update the repository

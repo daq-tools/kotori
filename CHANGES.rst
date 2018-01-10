@@ -5,8 +5,9 @@ Changelog
 
 in progress
 ===========
-- Update documentation
-- Use ptrace.getkotori.org for documentation media assets
+- [doc] Update documentation
+- [doc] Use ptrace.getkotori.org for documentation media assets
+- [doc] Correct GitHub repository url
 
 
 .. _kotori-0.20.1:
