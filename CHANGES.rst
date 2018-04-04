@@ -16,6 +16,7 @@ in progress
 - [doc] Add documentation about Nginx reverse proxy setup
 - [dev] Switch development environment from Docker to native
 - [io] Make MQTT client identifier even more unique by adding process id
+- [:ref:`vendor-luftdaten.info`] Add option ``--dry-run`` to ``luftdaten-to-mqtt``
 
 
 .. _kotori-0.20.1:

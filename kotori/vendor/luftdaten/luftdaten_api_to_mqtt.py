@@ -137,6 +137,7 @@ License
 
 log = logging.getLogger(__name__)
 
+# TODO: Use "userdirs" module
 cache_options = {
     'type': 'file',
     'data_dir': '/var/cache/luftdaten/nominatim/data',
@@ -150,13 +151,13 @@ if sys.platform == 'darwin':
     }
 cache = CacheManager(**cache_options)
 
-VERSION  = '0.1.0'
-APP_NAME = 'luftdaten-to-mqtt ' + VERSION
+APP_NAME    = 'luftdaten-to-mqtt'
+APP_VERSION = '0.2.0'
 
 def main():
     """
     Usage:
-      luftdaten-to-mqtt --mqtt-uri mqtt://mqtt.example.org/luftdaten.info [--geohash] [--reverse-geocode] [--progress] [--sensorIds=<sensorIds>] [--debug]
+      luftdaten-to-mqtt --mqtt-uri mqtt://mqtt.example.org/luftdaten.info [--geohash] [--reverse-geocode] [--progress] [--sensorIds=<sensorIds>] [--debug] [--dry-run]
       luftdaten-to-mqtt --version
       luftdaten-to-mqtt (-h | --help)
 
@@ -167,6 +168,7 @@ def main():
       --progress                    Show progress bar
       --sensorIds=<sensorIds>       Only publish data for the sensors with the given ids. Format: sensorIds='23, 42, 1337'
       --version                     Show version information
+      --dry-run                     Run data acquisition and postprocessing but skip publishing to MQTT bus
       --debug                       Enable debug messages
       -h --help                     Show this screen
 
@@ -181,7 +183,7 @@ def main():
     """
 
     # Parse command line arguments
-    options = docopt(main.__doc__, version=APP_NAME)
+    options = docopt(main.__doc__, version=APP_NAME + ' ' + APP_VERSION)
     #print 'options: {}'.format(options)
 
     debug = options.get('--debug')
@@ -212,6 +214,7 @@ def main():
         mqtt_uri,
         geohash=options['--geohash'],
         reverse_geocode=options['--reverse-geocode'],
+        dry_run=options['--dry-run'],
         progressbar=options['--progress'],
         sensorIds=sensorIds
     )
@@ -223,10 +226,11 @@ class LuftdatenPumpe:
     # luftdaten.info API URI
     uri = 'https://api.luftdaten.info/static/v1/data.json'
 
-    def __init__(self, mqtt_uri, geohash=False, reverse_geocode=False, progressbar=False, sensorIds=False):
+    def __init__(self, mqtt_uri, geohash=False, reverse_geocode=False, dry_run=False, progressbar=False, sensorIds=False):
         self.mqtt_uri = mqtt_uri
         self.geohash = geohash
         self.reverse_geocode = reverse_geocode
+        self.dry_run = dry_run
         self.progressbar = progressbar
         self.sensorIds = sensorIds
         self.mqtt = MQTTAdapter(mqtt_uri)
@@ -250,6 +254,8 @@ class LuftdatenPumpe:
             location_id = item['location']['id']
             sensor_id = item['sensor']['id']
             sensor_type = item['sensor']['sensor_type']['name']
+
+            # Collect readings
             readings = {}
             for sensor in item['sensordatavalues']:
                 name = sensor['value_type']
@@ -275,6 +281,9 @@ class LuftdatenPumpe:
             if self.sensorIds:
                 if sensor_id in self.sensorIds:
                     self.publish_mqtt(readings)
+            # Publish to MQTT bus
+            if self.dry_run:
+                log.info('Dry-run. Would publish record:\n{}'.format(pformat(readings)))
             else:
                 self.publish_mqtt(readings)
 
