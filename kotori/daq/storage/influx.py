@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2017 Andreas Motl <andreas@getkotori.org>
+# (c) 2015-2018 Andreas Motl <andreas@getkotori.org>
 import types
 import requests
 import datetime
@@ -12,6 +12,7 @@ from influxdb.client import InfluxDBClient, InfluxDBClientError
 from kotori.io.protocol.util import parse_timestamp, is_number, convert_floats
 
 log = Logger()
+
 
 class InfluxDBAdapter(object):
 
@@ -37,19 +38,23 @@ class InfluxDBAdapter(object):
         self.udp_databases = [
             {'name': 'luftdaten_testdrive', 'port': u'4445'},
         ]
+        self.host_uri = u'influxdb://{host}:{port}'.format(**self.__dict__)
 
-        log.info(u'Storage target is influxdb://{host}:{port}', **self.__dict__)
+        log.info(u'Storage target is {uri}', uri=self.host_uri)
         self.influx_client = InfluxDBClient(
             host=self.host, port=self.port,
             username=self.username, password=self.password,
-            database=self.database)
+            database=self.database,
+            timeout=10)
 
         # TODO: Hold references to multiple UDP databases using mapping "self.udp_databases".
         self.influx_client_udp = None
         if settings['use_udp']:
             self.influx_client_udp = InfluxDBClient(
                 host=self.host, port=self.port,
-                username=self.username, password=self.password, use_udp=settings['use_udp'], udp_port=settings['udp_port'])
+                username=self.username, password=self.password,
+                use_udp=settings['use_udp'], udp_port=settings['udp_port'],
+                timeout=10)
 
     def is_udp_database(self, name):
         for entry in self.udp_databases:
@@ -68,14 +73,15 @@ class InfluxDBAdapter(object):
         except Exception as ex:
             log.failure(u'Could not format chunk (ex={ex_name}: {ex}): data={data}, meta={meta}',
                 ex_name=ex.__class__.__name__, ex=ex, meta=meta_copy, data=data_copy)
-            return False
+            raise
 
         try:
             success = self.write_chunk(meta, chunk)
             return success
 
         except requests.exceptions.ConnectionError as ex:
-            log.failure(u'InfluxDB connection error')
+            log.failure(u'Problem connecting to InfluxDB at {uri}: {ex}', uri=self.host_uri, ex=ex)
+            raise
 
         except InfluxDBClientError as ex:
 
@@ -128,6 +134,8 @@ class InfluxDBAdapter(object):
             }
         }
         """
+
+        assert isinstance(data, dict), 'Data payload is not a dictionary'
 
         chunk = {
             "measurement": meta['measurement'],

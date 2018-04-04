@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2017 Andreas Motl <andreas@getkotori.org>
+# (c) 2015-2018 Andreas Motl <andreas@getkotori.org>
+import re
 import time
 import json
+import arrow
 from bunch import Bunch
 from twisted.logger import Logger, LogLevel
 from twisted.internet import reactor, threads
 from twisted.internet.task import LoopingCall
 from twisted.application.service import MultiService
+from twisted.python.failure import Failure
 from twisted.python.threadpool import ThreadPool
 from kotori.configuration import read_list
+from kotori.daq.services.schema import MessageType, TopicMatchers
 from kotori.daq.services import MultiServiceMixin
 from kotori.daq.intercom.mqtt import MqttAdapter
 from kotori.daq.storage.influx import InfluxDBAdapter
@@ -16,6 +20,7 @@ from kotori.io.protocol.util import convert_floats
 from kotori.thimble import Thimble
 
 log = Logger()
+
 
 class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
@@ -75,6 +80,17 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
     def topology_to_storage(self, topology):
         return self.strategy.topology_to_storage(topology)
 
+    def get_basetopic(self, topic):
+        topic = TopicMatchers.data.sub('', topic)
+        topic = TopicMatchers.event.sub('', topic)
+        return topic
+
+    def classify_topic(self, topic):
+        if TopicMatchers.data.search(topic): return MessageType.DATA_CONTAINER
+        if TopicMatchers.discrete.search(topic): return MessageType.DATA_DISCRETE
+        if TopicMatchers.event.search(topic): return MessageType.EVENT
+        if TopicMatchers.error.search(topic): return MessageType.ERROR
+
     def mqtt_receive(self, topic=None, payload=None, **kwargs):
         try:
             # Synchronous message processing
@@ -86,67 +102,31 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             # Asynchronous message processing using different thread pool
             deferred = self.thimble.process_message(topic, payload, **kwargs)
 
-            deferred.addErrback(self.mqtt_receive_error, topic, payload)
+            deferred.addErrback(self.mqtt_process_error, topic, payload)
             return deferred
 
         except Exception:
             log.failure(u'Processing MQTT message failed. topic={topic}, payload={payload}', topic=topic, payload=payload)
 
-    def mqtt_receive_error(self, failure, topic, payload):
-        log.failure('Error processing MQTT message from topic "{topic}": {log_failure}', topic=topic, failure=failure, level=LogLevel.error)
-
-        # Error signalling over MQTT to "error.json" topic suffix
-        try:
-            if self.is_data_topic(topic) or self.is_event_topic(topic):
-                error = {
-                    'type': unicode(failure.type),
-                    'message': failure.getErrorMessage(),
-                    'description': u'Error processing MQTT message "{payload}" from topic "{topic}".'.format(topic=topic, payload=payload),
-                    #'failure': unicode(failure),
-                }
-                message = json.dumps(error, indent=4)
-
-                # TODO: Check for more topic suffix variants
-                topic = topic.replace('data.json', 'error.json').replace('event.json', 'error.json')
-                self.mqtt_service.publish(topic, message)
-
-        except:
-            raise
-
-    def is_data_topic(self, topic):
-
-        if topic.endswith('data.json')\
-            or topic.endswith('data/__json__')\
-            or topic.endswith('loop')\
-            or topic.endswith('message-json'):
-            return True
-
-        return False
-
-    def is_event_topic(self, topic):
-
-        if topic.endswith('event.json')\
-            or topic.endswith('event/__json__'):
-            return True
-
-        return False
-
     def process_message(self, topic, payload, **kwargs):
 
         payload = payload.decode('utf-8')
 
-        if not topic.endswith('error.json'):
-            log.debug('Received message on topic "{topic}" with payload "{payload}"', topic=topic, payload=payload)
+        # Ignore MQTT error signalling messages
+        if topic.endswith('error.json'):
+            return
 
         if self.channel.realm and not topic.startswith(self.channel.realm):
             #log.info('Ignoring message to topic {topic}, realm={realm}', topic=topic, realm=self.channel.realm)
             return False
 
+        log.debug('Processing message on topic "{topic}" with payload "{payload}"', topic=topic, payload=payload)
+
         # Compute storage address from topic
         topology = self.topic_to_topology(topic)
         log.debug(u'Topology address: {topology}', topology=dict(topology))
 
-        message_type = None
+        message_type = self.classify_topic(topic)
         message = None
 
         # a) En bloc: Multiple measurements in JSON object
@@ -158,10 +138,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         #   - loop:             WeeWX           (TODO: Move to specific vendor configuration.)
         #   - message-json:     Deprecated
         #
-        if self.is_data_topic(topic):
-
-            # This is sensor data
-            message_type = 'data'
+        if message_type == MessageType.DATA_CONTAINER:
 
             # Decode message from json format
             # Required for weeWX data
@@ -169,17 +146,25 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             message = json.loads(payload)
 
         # b) Discrete values
-        else:
+        #
+        # The suffixes are:
+        #
+        #   - data/temperature
+        #   - data/humidity
+        #   - ...
+        #
+        elif message_type == MessageType.DATA_DISCRETE:
 
             # TODO: Backward compat for single readings - remove!
             if 'slot' in topology and topology.slot.startswith('measure/'):
                 topology.slot = topology.slot.replace('measure/', 'data/')
 
             # Single measurement as plain value; assume float
+            # Convert to MessageType.DATA_CONTAINER
             if 'slot' in topology and topology.slot.startswith('data/'):
 
                 # This is sensor data
-                message_type = 'data'
+                message_type = MessageType.DATA_CONTAINER
 
                 # Amend topic and compute storage message from single scalar value
                 name = topology.slot.replace('data/', '')
@@ -188,16 +173,21 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
 
         # Set an event
-        if self.is_event_topic(topic):
+        elif message_type == MessageType.EVENT:
 
             # This is an event
-            message_type = 'event'
+            message_type = MessageType.EVENT
 
             # Decode message from json format
             message = json.loads(payload)
 
+        # Catch an error message
+        elif message_type == MessageType.ERROR:
+            log.debug('Ignoring error message from MQTT, "{topic}" with payload "{payload}"', topic=topic, payload=payload)
+            return
 
-        if not message_type:
+        else:
+            log.debug('Unknown message type on topic "{topic}" with payload "{payload}"', topic=topic, payload=payload)
             return
 
         # count transaction
@@ -231,23 +221,47 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         storage_location = self.topology_to_storage(topology)
         log.debug(u'Storage location: {storage}', storage=dict(storage_location))
 
-        # Store data
-        self.store_message(storage_location, message)
+        # Store data or event
+        if message_type in (MessageType.DATA_CONTAINER, MessageType.EVENT):
+            self.store_message(storage_location, message)
 
         # Provision graphing subsystem
-        if message_type == 'data':
+        if message_type == MessageType.DATA_CONTAINER:
             # TODO: Purge message from fields to be used as tags
             # Namely:
             # 'geohash',
             # 'location', 'location_id', 'location_name', 'sensor_id', 'sensor_type',
             # 'latitude', 'longitude', 'lat', 'lon'
-            self.graphing.provision(storage_location, message, topology=topology)
+            try:
+                self.graphing.provision(storage_location, message, topology=topology)
+            except Exception as ex:
+                log.failure('Grafana provisioning failed for storage={storage}, message={message}: {log_failure}',
+                            storage=storage_location, message=message,
+                            level=LogLevel.error)
+
 
         return True
 
-
     def store_message(self, storage, data):
+        """
+        Store data to timeseries database
+
+        :param storage: The storage location object
+        :param data:    The data ready for storing
+        """
         self.influx.write(storage, data)
+
+    def mqtt_process_error(self, failure, topic, payload):
+        """
+        Failure handling
+
+        :param failure: Failure object from Twisted
+        :param topic:   Full MQTT topic
+        :param payload: Raw MQTT payload
+        """
+
+        # Log failure
+        log.failure('Processing MQTT message failed from topic "{topic}": {log_failure}', topic=topic, failure=failure, level=LogLevel.error)
 
     def process_metrics(self):
 

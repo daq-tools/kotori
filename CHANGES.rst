@@ -23,6 +23,7 @@ in progress
     - Fix access to Nominatim reverse geocoder API
 
 - [doc] Add installation instructions for Mac OS X
+- [io] Improve resiliency when connecting to InfluxDB and Grafana
 
 
 .. _kotori-0.20.1:
