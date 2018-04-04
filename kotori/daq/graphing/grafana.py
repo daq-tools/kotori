@@ -174,6 +174,16 @@ class GrafanaApi(object):
             else:
                 raise
 
+    def get_dashboard_by_uid(self, uid):
+        """
+        Will return the dashboard given the dashboard unique identifier (uid).
+        http://docs.grafana.org/http_api/dashboard/#get-dashboard-by-uid
+
+        :param uid: Unique dashboard identifier (uid)
+        :return:    Dashboard data structure as dictionary
+        """
+        return self.grafana_client.dashboards.uid[uid].get()
+
     def format_dashboard_name(self, name):
         return name.replace(' ', '-')
 
@@ -182,6 +192,25 @@ class GrafanaApi(object):
         #    {"id":1,"name":"Main Org."}
         #client.org.replace(name="Your Org Ltd.")
         #    {"id":1,"name":"Your Org Ltd."}
+
+    def get_dashboards(self):
+        return self.grafana_client.search(type='dash-db')
+
+    def tame_refresh_interval(self, interval):
+        for dashboard_meta in self.get_dashboards():
+
+            # Get dashboard by uid
+            dashboard_uid = dashboard_meta['uid']
+            dashboard = self.get_dashboard_by_uid(dashboard_uid)
+
+            # TODO: Look at dashboard.meta.updated and apply taming only on appropriate threshold.
+            #       e.g. u'2018-04-04T20:07:10+02:00'
+            # TODO: Look at list of tags and apply interval=null if it contains "historical".
+            # TODO: Look at list of tags and apply interval=5m if it contains "live".
+
+            # Update refresh interval
+            dashboard['dashboard']['refresh'] = interval
+            response = self.grafana_client.dashboards.db.create(**dashboard)
 
 
 class GrafanaDashboard(object):
@@ -691,19 +720,21 @@ class GrafanaManager(object):
 
 if __name__ == '__main__':
 
-    grafana = GrafanaApi(host='192.168.59.103', username='admin', password='admin')
+    grafana = GrafanaApi(host='localhost', username='admin', password='admin')
     grafana.create_datasource('hiveeyes_test', {
         "type":     "influxdb",
-        "url":      "http://192.168.59.103:8086/",
+        "url":      "http://localhost:8086/",
         "database": "hiveeyes_test",
         "user":     "root",
         "password": "root",
     })
 
     dashboard = GrafanaDashboard(datasource='hiveeyes_test', title='hiveeyes_test')
-    dashboard.create(measurement='1_2', row_title='node=2,gw=1', panels=[
+    dashboard.build(measurement='1_2', row_title='node=2,gw=1', panels=[
         {'title': 'temp',      'fieldnames': ['temp1', 'temp2', 'temp3', 'temp4'], 'format': 'celsius'},
         {'title': 'humidity',  'fieldnames': ['hum1', 'hum2']},
         {'title': 'weight',    'fieldnames': ['wght1'], 'label': 'kg'},
     ])
     grafana.create_dashboard(dashboard)
+
+    grafana.tame_refresh_interval('5m')
