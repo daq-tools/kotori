@@ -12,6 +12,7 @@ in progress
 - [import] Also accept the CSV field "Date" as field containing timestamp information
 - [firmware builder] Add “esp_root” configuration variable to example configuration file
 - [core] Add comments to MqttInfluxGrafanaService regarding ingress data enrichment
+- [package] Improve list of suggested packages to ease installing on more modern Debian distributions
 
 
 .. _kotori-0.20.1:

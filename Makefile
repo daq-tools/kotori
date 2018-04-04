@@ -141,7 +141,7 @@ fpm-options := \
 	--depends python \
 	--deb-recommends "influxdb, mosquitto, mosquitto-clients, grafana, mongodb" \
 	--deb-suggests "python-scipy, python-numpy, python-matplotlib, fonts-humor-sans" \
-	--deb-suggests "python-tables, libatlas3-base, libopenblas-base, liblapack3, libhdf5-8, libnetcdfc7, liblzo2-2, libbz2-1.0" \
+	--deb-suggests "python-tables, libatlas3-base, libopenblas-base, liblapack3, libhdf5-8, libhdf5-100, libnetcdfc7, libnetcdf11, liblzo2-2, libbz2-1.0" \
 	--provides "kotori" \
 	--provides "kotori-daq" \
 	--maintainer "andreas.motl@elmyra.de" \
