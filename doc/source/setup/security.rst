@@ -2,13 +2,17 @@
 Secure the installation
 #######################
 
+
 Close ports
 ===========
 
 InfluxDB
 --------
 
-/etc/opt/influxdb/influxdb.conf::
+/etc/influxdb/influxdb.conf::
+
+    # Outside of any scope
+    bind-address = "localhost:8088"
 
     [admin]
     bind-address = "localhost:8083"
@@ -64,11 +68,3 @@ Purpose: Enable auth-only access to InfluxDB.
     - `InfluxDB docs: Set up authentication <https://influxdb.com/docs/v0.9/administration/authentication_and_authorization.html#set-up-authentication>`_
     - :ref:`influxdb-handbook`
 
-
-
-Nginx
------
-Todo.
-
-- Configuration
-- Let's Encrypt

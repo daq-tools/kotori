@@ -16,6 +16,7 @@ Software
     arch-linux
     python-package
     security
+    nginx
 
 
 ----
