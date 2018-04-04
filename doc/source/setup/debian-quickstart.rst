@@ -36,25 +36,25 @@ Setup steps
 Prerequisites
 =============
 
-Add GPG key for checking package signatures::
-
-    wget -qO - https://packages.elmyra.de/elmyra/foss/debian/pubkey.txt | apt-key add -
-
 Add https addon for apt::
 
-    apt-get install apt-transport-https
+    apt install apt-transport-https software-properties-common
 
 
 Register with package repository
 ================================
 
-Add source for "testing" distribution (e.g. append to /etc/apt/sources.list)::
+Add source for "testing" distribution (will append to /etc/apt/sources.list)::
 
-    deb https://packages.elmyra.de/elmyra/foss/debian/ testing main foundation
+    apt-add-repository 'deb https://packages.elmyra.de/elmyra/foss/debian/ testing main foundation'
+
+Add GPG key for checking package signatures::
+
+    wget -qO - https://packages.elmyra.de/elmyra/foss/debian/pubkey.txt | apt-key add -
 
 Reindex package database::
 
-    apt-get update
+    apt update
 
 
 Setup the whole software stack
@@ -62,15 +62,24 @@ Setup the whole software stack
 Install Kotori as well as recommended and suggested packages::
 
     PACKAGES=kotori
-    DEPENDENCIES=$(LANG=c apt-cache depends $PACKAGES | egrep -i 'suggests|recommends' | cut -d' ' -f4 | xargs)
-    apt-get install $PACKAGES $DEPENDENCIES
-    systemctl start influxdb
+    DEPENDENCIES=$(LANG=c apt-cache depends $PACKAGES | egrep -i 'suggests|recommends' | grep -v '<' | cut -d' ' -f4 | xargs)
+    apt install $PACKAGES $DEPENDENCIES
+    systemctl start influxdb grafana-server
 
 .. tip::
 
-    Better install ``chrony`` or use other means to keep your system times sound::
+    You should keep your system time sound. Either carry out::
 
-        aptitude install chrony
+        timedatectl set-ntp true
+
+    or install ``chrony``::
+
+        apt install chrony
+
+
+
+tail -F /var/log/kotori/*.log /var/log/grafana/*.log /var/log/influxdb/*.log /var/log/mosquitto/*.log
+journalctl -f -u influxdb
 
 
 ***************

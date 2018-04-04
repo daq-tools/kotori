@@ -10,6 +10,66 @@ Kotori tasks
    :local:
    :depth: 1
 
+
+----
+
+****
+2018
+****
+
+2018-04-03
+==========
+- [o] Have a look at other infrastructure things around luftdaten-info
+
+    - https://github.com/corny/luftdaten-python
+    - https://github.com/verschwoerhaus/ttn-ulm-muecke
+    - https://github.com/Cinezaster/ttn2luftdaten_forwarder
+
+- https://www.messpc.de/
+
+2018-04-04T02:58:02+0200 [kotori.daq.services.mig            ] DEBUG: Storage location:
+2018-04-04T03:01:52+0200 [kotori.daq.storage.influx          ] CRITICAL: InfluxDB connection error
+
+2018-04-04T03:01:52+0200 [kotori.daq.graphing.grafana        ] INFO: Provisioning Grafana for database "mqttkit_1_testdrive" and measurement "area_42_node_1_sensors". dashboard=mqttkit-1 testdrive automatic
+2018-04-04T03:01:52+0200 [kotori.daq.graphing.grafana        ] INFO: Checking/Creating datasource "mqttkit_1_testdrive"
+2018-04-04T03:03:08+0200 [kotori.daq.services.mig            ] ERROR: Error processing MQTT message from topic "mqttkit-1/testdrive/area-42/node-1/data/temperature": [Failure instance: Traceback: <class 'requests.exceptions.ConnectionError'>: HTTPConnectionPool(host='192.168.59.103', port=3000): Max retries exceeded with url: /api/datasources (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x103b61e50>: Failed to establish a new connection: [Errno 60] Operation timed out',))
+
+
+
+2018-04-02
+==========
+- [o] Let "luftdaten-to-mqtt" report about its cache location
+- [o] Reduce default refresh time for Grafana panels
+- [o] Don't pipe Luftdaten through the whole Kotori incl. MQTT bus.
+      => Write it directly to InfluxDB, but using the appropriate core methods from Kotori.
+      ==> Extract this piece of code into an addon namespace to make it
+          available to *both* Kotori channels *and* standalone applications.
+- [o] Update Grafana dashboards in vendor/luftdaten/application
+
+
+2018-03-24
+==========
+- [o] Put automatically generated dashboards into specific folder "Instant dashboards"
+
+
+2018-03-13
+==========
+- Supply logrotate configuration::
+
+    cat /etc/logrotate.d/kotori
+    /var/log/kotori/kotori.log {
+        su kotori kotori
+        weekly
+        rotate 52
+        missingok
+        dateext
+        copytruncate
+        compress
+    }
+
+- Re. "systemctl reload kotori": Prepare Kotori for HUP signals for restarting the logging subsystem
+
+
 ----
 
 ****

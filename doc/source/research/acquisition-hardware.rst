@@ -47,3 +47,7 @@ Acquisition Hardware
     - http://www.bosch-connectivity.com/
     - https://www.facebook.com/boschbcds
 
+- | Dewesoft
+  | DEWESoft produces hardware and software for test measurement, data aquisition, and storage.
+  | https://github.com/costerwi/dwdatareader
+
