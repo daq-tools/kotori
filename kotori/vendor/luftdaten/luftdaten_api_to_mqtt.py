@@ -316,22 +316,36 @@ def geohash(latitude, longitude):
     return Geohash.encode(float(latitude), float(longitude))
 
 
-# Cache responses from Nominatim for 1 month
-@cache.cache(expire = 60 * 60 * 24 * 30)
+# Cache responses from Nominatim for 3 months
+@cache.cache(expire = 60 * 60 * 24 * 30 * 3)
 def reverse_geocode(latitude, longitude):
     """
     # Done: Use memoization! Maybe cache into MongoDB as well using Beaker.
     # TODO: Or use a local version of Nomatim: https://wiki.openstreetmap.org/wiki/Nominatim/Installation
     """
     try:
-        geolocator = Nominatim()
+        # 2018-03-24
+        # Nominatim expects the User-Agent as HTTP header otherwise it returns a HTTP-403.
+        # This has been fixed in geopy-1.12.0.
+        # https://operations.osmfoundation.org/policies/nominatim/
+        # https://github.com/geopy/geopy/issues/185
+        geolocator = Nominatim(user_agent=APP_NAME + '/' + APP_VERSION)
+
+        # FIXME: When using "HTTP_PROXY" from environment, use scheme='http'
+        # export HTTP_PROXY=http://weather.hiveeyes.org:8912/
+        # See also https://github.com/geopy/geopy/issues/263
+        #geolocator = Nominatim(user_agent=APP_NAME + '/' + APP_VERSION, scheme='http')
+
         position_string = '{}, {}'.format(float(latitude), float(longitude))
         location = geolocator.reverse(position_string)
-        # Fair use!
-        time.sleep(1)
     except Exception as ex:
-        log.error('Reverse geocoding failed: {}. lat={}, lon={}'.format(ex, latitude, longitude))
-        return ''
+        name = ex.__class__.__name__
+        log.error('Reverse geocoding failed: {}: {}. lat={}, lon={}'.format(name, ex, latitude, longitude))
+        raise
+    finally:
+        # Obey to fair use policy (an absolute maximum of 1 request per second).
+        # https://operations.osmfoundation.org/policies/nominatim/
+        time.sleep(1)
 
     #log.debug('Reverse geocoder: {}'.format(pformat(location.raw)))
 

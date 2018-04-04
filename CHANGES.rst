@@ -20,6 +20,7 @@ in progress
 
     - Add option ``--dry-run``
     - Fix filtering by station id
+    - Fix access to Nominatim reverse geocoder API
 
 
 .. _kotori-0.20.1:
