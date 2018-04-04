@@ -17,77 +17,77 @@ requires = requires_core + [
     # Core
     #'Twisted[tls]==17.1.0',
     #'Twisted==17.1.0',
-    'pyramid==1.5.7',               # 1.8.3
+    'pyramid==1.5.7',               # 1.9.1
     'pyramid_jinja2==2.5',          # 2.7
-    'cornice==1.0.0',               # 1.2.1, 2.4.0
-    'simplejson==3.8.2',            # 3.10.0
-    'Jinja2==2.8',                  # 2.9.5
+    'cornice==1.0.0',               # 2.4.0, 3.1.0
+    'simplejson==3.8.2',            # 3.13.2
+    'Jinja2==2.8',                  # 2.10
     'Bunch==1.0.1',
     'appdirs==1.4.0',               # 1.4.3
     'json-store==2.1',
-    'python-dateutil==2.6.0',
-    'arrow==0.10.0',
-    'funcy==1.7.2',                 # 1.7.3
+    'python-dateutil==2.6.0',       # 2.7.0
+    'arrow==0.10.0',                # 0.12.1
+    'funcy==1.7.2',                 # 1.10.1
 
     # Bus adapters
     #'twisted-mqtt==0.1.4',         # 0.2.1
-    'paho-mqtt==1.2',
-    'autobahn[twisted]==0.13.0',    # 0.17.2
-    'msgpack-python==0.4.7',        # 0.4.8
+    'paho-mqtt==1.2',               # 1.3.1
+    'autobahn[twisted]==0.13.0',    # 18.3.1
+    'msgpack-python==0.4.7',        # 0.5.6
 
     # Misc
-    'setuptools==22.0.5',           # 34.3.3; setuptools>=18.3.1 is required by set(['crossbar'])
-    'distlib==0.2.4',
+    'setuptools==22.0.5',           # 39.0.1; 34.3.3; setuptools>=18.3.1 is required by set(['crossbar'])
+    'distlib==0.2.4',               # 0.2.6
     'docopt==0.6.2',
 
     # More dependencies (required for running on Ubuntu 16.04)
     #'pyOpenSSL==16.2.0',
     #'cryptography==1.3.4',
-    'pyasn1==0.2.3',
-    'pycparser==2.17',
+    'pyasn1==0.2.3',                # 0.4.2
+    'pycparser==2.17',              # 2.18
     'pyparsing==2.2.0',
 
 ]
 
 extras = {
     'daq': [
-        'influxdb==4.0.0',
-        'grafana_api_client==0.1.4',
-        'requests==2.13.0',
+        'influxdb==4.0.0',          # 5.0.0
+        'requests==2.18.4',
+        'grafana_api_client==0.1.4',# 0.2.0
         #'grafana-dashboard-builder==0.1.0a7',      # evaluated, but not suitable
         #'txmongo==16.3.0',
-        'pymongo==3.4.0',
+        'pymongo==3.4.0',           # 3.6.1
     ],
     'daq_geospatial': [
         'Geohash==1.0',
-        'geopy==1.11.0',
-        'Beaker==1.8.1',
-        'tqdm==4.11.2',
+        'geopy==1.12.0',
+        'Beaker==1.9.0',
+        'tqdm==4.19.8',
     ],
     'daq_binary': [
         'pyclibrary==0.1.3',
-        'tabulate==0.7.5',          # 0.7.7
-        'sympy==0.7.6.1',           # 1.0
+        'tabulate==0.7.5',          # 0.8.2
+        'sympy==0.7.6.1',           # 1.1.1
     ],
     'storage_plus': [
-        'alchimia==0.4',            # 0.7.0
+        'alchimia==0.4',            # 0.8.1
     ],
 
     # Data export: Basic formats
     'export': [
         'pyinfluxql==0.0.1',
-        'pandas==0.18.1',           # 0.19.2
-        'numpy>=1.8.2',             # 1.12.1
-        'XlsxWriter==0.9.2',        # 0.9.6
+        'pandas==0.18.1',           # 0.22.2
+        'numpy>=1.8.2',             # 1.14.2
+        'XlsxWriter==0.9.2',        # 1.0.2
     ],
 
     'plotting': [
         #'dyplot==0.8.8',
 
         # sudo port install py27-matplotlib
-        'matplotlib>=1.4.2',        # 2.0.0
+        'matplotlib>=1.4.2',        # 2.2.2
         #'cairocffi>=0.5.4',
-        'bokeh==0.12.4',
+        'bokeh==0.12.4',            # 0.12.14
         'vincent==0.4.4',
     ],
 
@@ -99,18 +99,18 @@ extras = {
         # HDF5
         # "PyTables" requires HDF5 libraries
         # sudo port install hdf5
-        'tables>=3.1.1',            # 3.3.0
+        'tables>=3.1.1',            # 3.4.2
 
         # NetCDF (Network Common Data Form)
-        'xarray==0.7.2',            # 0.9.1
+        'xarray==0.7.2',            # 0.10.2
         # sudo port install netcdf
-        'netCDF4==1.2.4',           # 1.2.7
+        'netCDF4==1.2.4',           # 1.3.1
         #'h5netcdf==0.2.2',
 
         # Algorithms
         # ----------
         # sudo port install py27-scipy
-        'scipy>=0.14.0',            # 0.19.0
+        'scipy>=0.14.0',            # 1.0.0
         'ggplot==0.9.7',            # 0.11.5
 
         # gfortran
@@ -124,8 +124,8 @@ extras = {
     ],
 
     'firmware': [
-        'GitPython==2.0.5',         # 2.1.3
-        'plumbum==1.6.1.post0',     # 1.6.3
+        'GitPython==2.0.5',         # 2.1.8
+        'plumbum==1.6.1.post0',     # 1.6.6
     ],
 
 }
@@ -170,7 +170,7 @@ setup(name='kotori',
         "Operating System :: MacOS"
         ],
       author='Andreas Motl',
-      author_email='andreas.motl@elmyra.de',
+      author_email='andreas@getkotori.org',
       url='https://getkotori.org/',
       keywords='data acquisition graphing export plotting daq routine engine' +
                'mqtt wamp http rest sql web html csv json cdf hdf5 png ' +
