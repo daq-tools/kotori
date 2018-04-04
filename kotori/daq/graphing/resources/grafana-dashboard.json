@@ -1,5 +1,6 @@
 {
     "id": {{ id }},
+    "uid": {{ uid and '"' + uid + '"' or 'null' }},
     "title": "{{ title }}",
     "originalTitle": "{{ title }}",
     "tags": {{ tags }},

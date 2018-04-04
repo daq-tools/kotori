@@ -1,4 +1,6 @@
 {
+    "id": null,
+    "uid": {{ uid and '"' + uid + '"' or 'null' }},
     "annotations": {
         "list": [
             {
@@ -19,7 +21,6 @@
     "gnetId": null,
     "graphTooltip": 0,
     "hideControls": false,
-    "id": null,
     "links": [
         {
             "icon": "external link",

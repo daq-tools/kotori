@@ -188,6 +188,7 @@ class GrafanaDashboard(object):
 
     def __init__(self, channel=None, uid=None, title='default', datasource='default', folder_id=None, dashboard_data=None):
         self.channel = channel or Bunch()
+        self.dashboard_uid = uid
         self.dashboard_title = title
         self.datasource = datasource
         self.folder_id = folder_id
@@ -228,6 +229,7 @@ class GrafanaDashboard(object):
 
         data_dashboard = {
             'id': 'null',
+            'uid': self.dashboard_uid,
             'title': self.dashboard_title,
             'row_title': row_title,
             'row_height': '300px',
@@ -431,6 +433,8 @@ class GrafanaManager(object):
         realm = topology.get('realm', 'default')
         network = topology.get('network', storage_location.database)
 
+        # Derive dashboard uid and name from topology information
+        dashboard_uid = realm + u'-' + network
         dashboard_name = realm + u' ' + network
 
         # Skip dashboard creation if it already has been created while Kotori is running
@@ -453,6 +457,7 @@ class GrafanaManager(object):
         # Wrap everything into convenience object
         dashboard = GrafanaDashboard(
             channel=self.channel,
+            uid=dashboard_uid,
             title=dashboard_name,
             datasource=storage_location.database,
             folder_id=folder_id,

@@ -26,6 +26,7 @@ in progress
 - [io] Improve resiliency when connecting to InfluxDB and Grafana
 - [io] Fix MQTT error signalling
 - [grafana] Use specific Grafana folder for stuffing instant dashboards into
+- [grafana] Use topology information for deriving unique dashboard id from
 
 
 .. _kotori-0.20.1:
