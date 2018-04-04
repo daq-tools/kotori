@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-# (c) 2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2016-2018 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 # https://pypi.python.org/pypi/paho-mqtt/
 from __future__ import absolute_import
+import os
 import paho.mqtt.client as mqtt
 from twisted.logger import Logger
 from twisted.internet import reactor
@@ -20,14 +21,22 @@ class PahoMqttAdapter(BaseMqttAdapter, Service):
         """
         Connect to MQTT broker.
         """
-        # TODO: This is currently done synchronous which could have issues in timeout situations
-        #       because it would block other subsystems.
-        #       => Check if we can do asynchronous connection establishment.
-        self.client = mqtt.Client(client_id=self.name, clean_session=True, userdata={'foo': 'bar'})
+        # TODO: Check if we can do asynchronous connection establishment.
+        #       Currently, this is done synchronously which could harm
+        #       other subsystems in timeout or otherwise blocking situations.
 
+        # Make MQTT client identifier even more unique by adding process id
+        pid = os.getpid()
+        client_id = '{}:{}'.format(self.name, str(pid))
+
+        # Connection establishment
+        self.client = mqtt.Client(client_id=client_id, clean_session=True)
+
+        # Optionally authenticate connection
         if self.broker_username:
             self.client.username_pw_set(self.broker_username, self.broker_password)
 
+        # Set event handlers
         self.client.on_connect = lambda *args: reactor.callFromThread(self.on_connect, *args)
         self.client.on_message = lambda *args: reactor.callFromThread(self.on_message, *args)
         self.client.on_log     = lambda *args: reactor.callFromThread(self.on_log, *args)
@@ -50,7 +59,6 @@ class PahoMqttAdapter(BaseMqttAdapter, Service):
         start a new thread to process network traffic. This provides an
         alternative to repeatedly calling loop() yourself.
         """
-        # TODO: Check whether reconnect works with this interface.
         self.client.loop_start()
         reactor.addSystemEventTrigger('before', 'shutdown', self.client.loop_stop, True)
 

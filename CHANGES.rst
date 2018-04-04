@@ -11,10 +11,11 @@ in progress
 - [grafana] Improve Grafana dashboard builder in the context of Hiveeyes
 - [import] Also accept the CSV field "Date" as field containing timestamp information
 - [firmware builder] Add “esp_root” configuration variable to example configuration file
-- [core] Add comments to MqttInfluxGrafanaService regarding ingress data enrichment
+- [io] Add comments to MqttInfluxGrafanaService regarding ingress data enrichment
 - [package] Improve list of suggested packages to ease installing on more modern Debian distributions
 - [doc] Add documentation about Nginx reverse proxy setup
 - [dev] Switch development environment from Docker to native
+- [io] Make MQTT client identifier even more unique by adding process id
 
 
 .. _kotori-0.20.1:
