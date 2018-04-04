@@ -22,6 +22,8 @@ in progress
     - Fix filtering by station id
     - Fix access to Nominatim reverse geocoder API
 
+- [doc] Add installation instructions for Mac OS X
+
 
 .. _kotori-0.20.1:
 
