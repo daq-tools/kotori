@@ -21,6 +21,8 @@ in progress
     - Add option ``--dry-run``
     - Fix filtering by station id
     - Fix access to Nominatim reverse geocoder API
+    - Use "appdirs" module for computing cache location
+    - Report about cache location at startup
 
 - [doc] Add installation instructions for Mac OS X
 - [io] Improve resiliency when connecting to InfluxDB and Grafana

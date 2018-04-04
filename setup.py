@@ -23,7 +23,7 @@ requires = requires_core + [
     'simplejson==3.8.2',            # 3.13.2
     'Jinja2==2.8',                  # 2.10
     'Bunch==1.0.1',
-    'appdirs==1.4.0',               # 1.4.3
+    'appdirs==1.4.3',
     'json-store==2.1',
     'python-dateutil==2.6.0',       # 2.7.0
     'arrow==0.10.0',                # 0.12.1

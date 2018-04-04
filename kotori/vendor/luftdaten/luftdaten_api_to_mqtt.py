@@ -7,6 +7,8 @@ import sys
 import time
 import json
 import logging
+
+import appdirs
 import requests
 import Geohash
 import paho.mqtt.client as mqtt
@@ -137,22 +139,17 @@ License
 
 log = logging.getLogger(__name__)
 
-# TODO: Use "userdirs" module
+# Configure cache for responses from Nominatim
+cache_path = os.path.join(appdirs.user_cache_dir(appname='luftdaten.info', appauthor=False), 'nominatim')
 cache_options = {
     'type': 'file',
-    'data_dir': '/var/cache/luftdaten/nominatim/data',
-    'lock_dir': '/var/cache/luftdaten/nominatim/lock'
+    'data_dir': os.path.join(cache_path, 'data'),
+    'lock_dir': os.path.join(cache_path, 'lock'),
 }
-if sys.platform == 'darwin':
-    cache_options = {
-        'type': 'file',
-        'data_dir': '/tmp/luftdaten/nominatim-cache/data',
-        'lock_dir': '/tmp/luftdaten/nominatim-cache/lock'
-    }
 cache = CacheManager(**cache_options)
 
 APP_NAME    = 'luftdaten-to-mqtt'
-APP_VERSION = '0.2.0'
+APP_VERSION = '0.2.1'
 
 def main():
     """
@@ -200,7 +197,8 @@ def main():
         sys.exit(1)
 
     # Run
-    log.info('Publishing data to MQTT URI {}'.format(mqtt_uri))
+    log.info('Nominatim cache path is {}'.format(cache_path))
+    log.info('Will publish to MQTT at {}'.format(mqtt_uri))
 
     #if there a specific sensor ids supplied, parse them into a list of ints
     if options['--sensorIds']:
