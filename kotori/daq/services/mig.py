@@ -103,6 +103,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             deferred = self.thimble.process_message(topic, payload, **kwargs)
 
             deferred.addErrback(self.mqtt_process_error, topic, payload)
+            deferred.addErrback(self.mqtt_exception, topic, payload)
             return deferred
 
         except Exception:
@@ -239,6 +240,9 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
                             storage=storage_location, message=message,
                             level=LogLevel.error)
 
+                # MQTT error signalling
+                failure = Failure()
+                self.mqtt_publish_error(failure, topic, payload)
 
         return True
 
@@ -262,6 +266,42 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
         # Log failure
         log.failure('Processing MQTT message failed from topic "{topic}": {log_failure}', topic=topic, failure=failure, level=LogLevel.error)
+
+        # MQTT error signalling
+        self.mqtt_publish_error(failure, topic, payload)
+
+    def mqtt_exception(self, failure, topic, payload):
+        log.failure('Problem publishing error message: {log_failure}', failure=failure, level=LogLevel.warn)
+
+    def mqtt_publish_error(self, failure, topic, payload):
+        """
+        Error signalling over MQTT to "error.json" topic suffix
+
+        :param failure: Failure object from Twisted
+        :param topic:   Full MQTT topic
+        :param payload: Raw MQTT payload
+        """
+
+        # Compute base topic of data acquisition channel
+        basetopic = self.get_basetopic(topic)
+        log.debug('Channel base topic is {basetopic}', basetopic=basetopic)
+
+        # Effective error reporting topic
+        error_topic = basetopic + '/' + 'error.json'
+
+        #
+        error = {
+            'type': unicode(failure.type),
+            'message': failure.getErrorMessage(),
+            'description': u'Error processing MQTT message "{payload}" from topic "{topic}".'.format(topic=topic, payload=payload),
+            'timestamp': arrow.utcnow().format('YYYY-MM-DDTHH:mm:ssZZ'),
+            #'failure': unicode(failure),
+        }
+        message = json.dumps(error, indent=4)
+
+        # Publish error signal over MQTT
+        #log.debug('Publishing error message to topic {topic}: {message}', topic=error_topic, message=message)
+        self.mqtt_service.publish(error_topic, message)
 
     def process_metrics(self):
 

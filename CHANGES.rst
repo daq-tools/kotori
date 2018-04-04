@@ -24,6 +24,7 @@ in progress
 
 - [doc] Add installation instructions for Mac OS X
 - [io] Improve resiliency when connecting to InfluxDB and Grafana
+- [io] Fix MQTT error signalling
 
 
 .. _kotori-0.20.1:
