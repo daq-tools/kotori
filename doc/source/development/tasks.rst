@@ -17,6 +17,17 @@ Kotori tasks
 2018
 ****
 
+
+2018-04-04
+==========
+- [o] Build firmware builder on top of platform.io
+- [o] Introduce unique IDs for improved addressing, see
+      Identifier (id) vs unique identifier (uid)
+      http://docs.grafana.org/http_api/dashboard/#identifier-id-vs-unique-identifier-uid
+- [o] Wrap all heuristic enrichment stuff into feature "autotagging" or "enrichment",
+      controlled by individual per-channel settings eventually.
+
+
 2018-04-03
 ==========
 - [o] Have a look at other infrastructure things around luftdaten-info
@@ -33,7 +44,6 @@ Kotori tasks
 2018-04-04T03:01:52+0200 [kotori.daq.graphing.grafana        ] INFO: Provisioning Grafana for database "mqttkit_1_testdrive" and measurement "area_42_node_1_sensors". dashboard=mqttkit-1 testdrive automatic
 2018-04-04T03:01:52+0200 [kotori.daq.graphing.grafana        ] INFO: Checking/Creating datasource "mqttkit_1_testdrive"
 2018-04-04T03:03:08+0200 [kotori.daq.services.mig            ] ERROR: Error processing MQTT message from topic "mqttkit-1/testdrive/area-42/node-1/data/temperature": [Failure instance: Traceback: <class 'requests.exceptions.ConnectionError'>: HTTPConnectionPool(host='192.168.59.103', port=3000): Max retries exceeded with url: /api/datasources (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x103b61e50>: Failed to establish a new connection: [Errno 60] Operation timed out',))
-
 
 
 2018-04-02
