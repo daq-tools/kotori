@@ -14,6 +14,7 @@ in progress
 - [core] Add comments to MqttInfluxGrafanaService regarding ingress data enrichment
 - [package] Improve list of suggested packages to ease installing on more modern Debian distributions
 - [doc] Add documentation about Nginx reverse proxy setup
+- [dev] Switch development environment from Docker to native
 
 
 .. _kotori-0.20.1:
