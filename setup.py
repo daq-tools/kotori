@@ -53,7 +53,7 @@ extras = {
     'daq': [
         'influxdb==4.0.0',          # 5.0.0
         'requests==2.18.4',
-        'grafana_api_client==0.1.4',# 0.2.0
+        'grafana_api_client==0.2.0',
         #'grafana-dashboard-builder==0.1.0a7',      # evaluated, but not suitable
         #'txmongo==16.3.0',
         'pymongo==3.4.0',           # 3.6.1

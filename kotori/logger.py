@@ -77,7 +77,7 @@ def formatLogEvent(event, formatTime=formatTime):
     return u"{timeStamp} [{system}] {level}: {event}\n".format(
         timeStamp=timeStamp,
         system=system.ljust(35),
-        level=levelName.upper(),
+        level=levelName.upper().ljust(8),
         event=eventText,
     )
 

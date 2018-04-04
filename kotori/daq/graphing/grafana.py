@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2017 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2015-2018 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import os
 import json
 import types
@@ -22,12 +22,66 @@ class GrafanaApi(object):
         self.username = username
         self.password = password
 
+        # A GrafanaClient instance
         self.grafana_client = None
+
+        # The uid of the "Instant Dashboards" folder
+        self.instant_folder_uid = u'instagraf'
+        self.instant_folder_title = u'# Instant Dashboards'
 
         self.connect()
 
     def connect(self):
         self.grafana_client = GrafanaClient((self.username, self.password), host=self.host, port=self.port)
+        try:
+            self.ensure_instant_folder()
+        except Exception as ex:
+            log.warn('Problem creating instant folder: {ex}', ex=ex)
+
+    def ensure_instant_folder(self):
+        return self.ensure_folder(uid=self.instant_folder_uid, title=self.instant_folder_title)
+
+    def ensure_folder(self, uid=None, title=None):
+
+        try:
+            return self.get_folder(uid=uid)
+
+        except GrafanaClientError as ex:
+
+            if '404' in ex.message or 'not-found' in ex.message or 'Folder not found' in ex.message:
+                log.debug('Folder with uid="{uid}" not found, creating', uid=uid)
+                try:
+                    return self.create_folder(uid=uid, title=title)
+
+                except Exception as ex:
+                    log.warn('Problem creating folder uid="{uid}", title="{title}": {ex}', uid=uid, title=title, ex=ex)
+
+            else:
+                log.warn('Problem getting folder uid="{uid}"": {ex}', uid=uid, ex=ex)
+                raise
+
+
+    def create_folder(self, uid=None, title=None):
+        log.info('Creating folder with uid="{uid}" and title="{title}"', uid=uid, title=title)
+        data = {}
+        if uid: data['uid'] = uid
+        if title: data['title'] = title
+        try:
+            return self.grafana_client.folders.create(**data)
+
+        except GrafanaPreconditionFailedError as ex:
+            # Ignore modifications from other users while doing our own
+            # TODO: Add some locking mechanisms to protect against these issues
+            if 'version-mismatch' in ex.message or 'The folder has been changed by someone else' in ex.message:
+                #log.warn('{message}', message=ex.message)
+                pass
+            else:
+                raise
+
+    def get_folder(self, uid):
+        log.info('Get folder with uid="{}"'.format(uid))
+        data = self.grafana_client.folders[uid].get()
+        return data
 
     def create_datasource(self, name=None, data=None):
         data = data or {}
@@ -132,10 +186,11 @@ class GrafanaApi(object):
 
 class GrafanaDashboard(object):
 
-    def __init__(self, channel=None, datasource='default', title='default', dashboard_data=None):
+    def __init__(self, channel=None, uid=None, title='default', datasource='default', folder_id=None, dashboard_data=None):
         self.channel = channel or Bunch()
-        self.datasource = datasource
         self.dashboard_title = title
+        self.datasource = datasource
+        self.folder_id = folder_id
 
         self.dashboard_data = dashboard_data
 
@@ -167,7 +222,7 @@ class GrafanaDashboard(object):
         panels = panels or []
         #pprint(dict(self.channel))
 
-        dashboard_tags = ['automatic']
+        dashboard_tags = ['instant']
         if 'realm' in self.channel:
             dashboard_tags.append(self.channel.realm)
 
@@ -298,6 +353,8 @@ class GrafanaDashboard(object):
             "dashboard": self.dashboard_data,
             "overwrite": False,
         }
+        if self.folder_id is not None:
+            payload['folderId'] = self.folder_id
         return payload
 
     @staticmethod
@@ -369,42 +426,52 @@ class GrafanaManager(object):
         # TODO: Get into templating, finally: Create a template variable for each InfluxDB tag
         # TODO: Also provision a WorldMap plugin
 
+        # Compute effective topology information
         topology = topology or {}
-        dashboard_name = \
-            topology.get('realm', 'default') + ' ' + \
-            topology.get('network', storage_location.database) + ' automatic'
+        realm = topology.get('realm', 'default')
+        network = topology.get('network', storage_location.database)
 
+        dashboard_name = realm + u' ' + network
+
+        # Skip dashboard creation if it already has been created while Kotori is running
         if self._skip_creation(storage_location.database, storage_location.gateway, storage_location.node, data):
             return
 
-        log.info('Provisioning Grafana for database "{}" and measurement "{}". dashboard={}'.format(
+        log.info('Provisioning Grafana for database "{}" and measurement "{}". dashboard="{}"'.format(
             storage_location.database, storage_location.measurement, dashboard_name))
 
+        # Create a Grafana datasource object for designated database
         self.create_datasource(storage_location)
 
-        # get dashboard if already exists
+        # Create Grafana folder for stuffing all instant dashboards into
+        folder = self.grafana_api.ensure_instant_folder()
+        folder_id = folder and folder.get('id') or None
+
+        # Get dashboard if already exists
         dashboard_data = self.grafana_api.get_dashboard(name=dashboard_name)
 
-        # wrap into convenience object
+        # Wrap everything into convenience object
         dashboard = GrafanaDashboard(
             channel=self.channel,
-            datasource=storage_location.database,
             title=dashboard_name,
+            datasource=storage_location.database,
+            folder_id=folder_id,
             dashboard_data=dashboard_data)
 
-        # generate panels
+        # Generate panels
         panels_new = self.panel_generator(storage_location, data=data, topology=topology)
         #print 'panels_new:'; pprint(panels_new)
 
         # Create whole dashboard with all panels
         if not dashboard.dashboard_data:
 
-            # Compute title for Dashboard row
+            # Compute title for dashboard row
             row_title = self.row_title(storage_location, topology)
 
             # Build dashboard representation
             dashboard.build(measurement=storage_location.measurement, row_title=row_title, panels=panels_new)
 
+            # Optionally, add annotations
             dashboard.update_annotations(measurement=storage_location.measurement_events)
 
             # Create dashboard
