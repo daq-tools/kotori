@@ -16,7 +16,10 @@ in progress
 - [doc] Add documentation about Nginx reverse proxy setup
 - [dev] Switch development environment from Docker to native
 - [io] Make MQTT client identifier even more unique by adding process id
-- [:ref:`vendor-luftdaten.info`] Add option ``--dry-run`` to ``luftdaten-to-mqtt``
+- [feed] Improve ``luftdaten-to-mqtt`` of [:ref:`vendor-luftdaten.info`]
+
+    - Add option ``--dry-run``
+    - Fix filtering by station id
 
 
 .. _kotori-0.20.1:

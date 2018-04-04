@@ -255,6 +255,11 @@ class LuftdatenPumpe:
             sensor_id = item['sensor']['id']
             sensor_type = item['sensor']['sensor_type']['name']
 
+            # If there is a filter for specific sensor ids, skip further processing
+            if self.sensorIds:
+                if sensor_id not in self.sensorIds:
+                    continue
+
             # Collect readings
             readings = {}
             for sensor in item['sensordatavalues']:
@@ -275,12 +280,11 @@ class LuftdatenPumpe:
                 readings['geohash'] = geohash(item['location']['latitude'], item['location']['longitude'])
 
             if self.reverse_geocode:
-                readings['location_name'] = reverse_geocode(item['location']['latitude'], item['location']['longitude'])
-            
-            #if there is a filter for specific sensor ids, only publish data for those sensors
-            if self.sensorIds:
-                if sensor_id in self.sensorIds:
-                    self.publish_mqtt(readings)
+                try:
+                    readings['location_name'] = reverse_geocode(item['location']['latitude'], item['location']['longitude'])
+                except Exception as ex:
+                    pass
+
             # Publish to MQTT bus
             if self.dry_run:
                 log.info('Dry-run. Would publish record:\n{}'.format(pformat(readings)))
@@ -300,6 +304,11 @@ class LuftdatenPumpe:
         return timestamp
 
     def publish_mqtt(self, measurement):
+        # FIXME: Don't only use ``sort_keys``. Also honor the field names of the actual readings by
+        # putting them first. This is:
+        # - "P1" and "P2" for "sensor_type": "SDS011"
+        # - "temperature" and "humidity" for "sensor_type": "DHT22"
+        # - "temperature", "humidity", "pressure" and "pressure_at_sealevel" for "sensor_type": "BME280"
         mqtt_message = json.dumps(measurement, sort_keys=True)
         self.mqtt.publish(mqtt_message)
 
