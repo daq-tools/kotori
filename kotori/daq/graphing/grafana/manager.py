@@ -3,12 +3,11 @@
 import json
 import types
 from collections import OrderedDict
-from pprint import pprint
 
 from kotori.daq.graphing.grafana.api import GrafanaApi
 from kotori.daq.graphing.grafana.model import GrafanaDashboard
 from kotori.daq.graphing.grafana.service import DashboardRefreshTamingService
-from kotori.daq.services import RootService, MultiServiceMixin
+from kotori.daq.services import MultiServiceMixin
 from twisted.application.service import MultiService
 from twisted.logger import Logger
 
@@ -123,7 +122,7 @@ class GrafanaManager(MultiService, MultiServiceMixin):
         # Create a Grafana datasource object for designated database
         self.create_datasource(storage_location)
 
-        # Create Grafana folder for stuffing all instant dashboards into
+        # Get or create Grafana folder for stuffing all instant dashboards into
         folder = self.grafana_api.ensure_instant_folder()
         folder_id = folder and folder.get('id') or None
 
@@ -366,8 +365,19 @@ class GrafanaManager(MultiService, MultiServiceMixin):
 
 
 if __name__ == '__main__':
+    """
+    Example usage of GrafanaApi and GrafanaDashboard objects.
+    """
 
+    # Bootstrap logging
+    import sys
+    import twisted
+    twisted.python.log.startLogging(sys.stderr)
+
+    # Connect to Grafana
     grafana = GrafanaApi(host='localhost', username='admin', password='admin')
+
+    # Create Grafana Datasource object
     grafana.create_datasource('hiveeyes_test', {
         "type":     "influxdb",
         "url":      "http://localhost:8086/",
@@ -376,7 +386,12 @@ if __name__ == '__main__':
         "password": "root",
     })
 
-    dashboard = GrafanaDashboard(datasource='hiveeyes_test', title='hiveeyes_test')
+    # Get or create Grafana folder for stuffing all instant dashboards into
+    folder = grafana.ensure_instant_folder()
+    folder_id = folder and folder.get('id') or None
+
+    # Create dashboard
+    dashboard = GrafanaDashboard(datasource='hiveeyes_test', title='hiveeyes_test', folder_id=folder_id)
     dashboard.build(measurement='1_2', row_title='node=2,gw=1', panels=[
         {'title': 'temp',      'fieldnames': ['temp1', 'temp2', 'temp3', 'temp4'], 'format': 'celsius'},
         {'title': 'humidity',  'fieldnames': ['hum1', 'hum2']},

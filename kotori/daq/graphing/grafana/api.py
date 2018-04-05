@@ -124,7 +124,7 @@ class GrafanaApi(object):
             try:
                 log.info('Deleting dashboard "{}"'.format(name))
                 response = self.grafana_client.dashboards.db[name].delete()
-                log.info('response: {response}', response=response)
+                log.info('Grafana response: {response}', response=response)
 
             except GrafanaClientError as ex:
                 if '404' in ex.message or 'Dashboard not found' in ex.message:
@@ -134,10 +134,9 @@ class GrafanaApi(object):
 
         try:
             log.info('Creating/updating dashboard "{}"'.format(name))
-            #print 'dashboard:'
-            #pprint(dashboard.dashboard)
-            response = self.grafana_client.dashboards.db.create(**dashboard.wrap_api())
-            log.info('response: {response}', response=response)
+            dashboard_payload = dashboard.wrap_api()
+            response = self.grafana_client.dashboards.db.create(**dashboard_payload)
+            log.info('Grafana response: {response}', response=response)
 
         except GrafanaPreconditionFailedError as ex:
             if 'name-exists' in ex.message or 'A dashboard with the same name already exists' in ex.message:
