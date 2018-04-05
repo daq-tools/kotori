@@ -18,10 +18,16 @@ Kotori tasks
 ****
 
 
+2018-04-05
+==========
+- [x] Refactoring of kotori.daq.graphing.grafana
+- [o] Governance model: Map Kotori realms to Grafana organizations - finally?
+
+
 2018-04-04
 ==========
 - [o] Build firmware builder on top of platform.io
-- [o] Introduce unique IDs for improved addressing, see
+- [x] Introduce unique IDs for improved addressing, see
       Identifier (id) vs unique identifier (uid)
       http://docs.grafana.org/http_api/dashboard/#identifier-id-vs-unique-identifier-uid
 - [o] Wrap all heuristic enrichment stuff into feature "autotagging" or "enrichment",
@@ -36,30 +42,27 @@ Kotori tasks
     - https://github.com/verschwoerhaus/ttn-ulm-muecke
     - https://github.com/Cinezaster/ttn2luftdaten_forwarder
 
-- https://www.messpc.de/
-
-2018-04-04T02:58:02+0200 [kotori.daq.services.mig            ] DEBUG: Storage location:
-2018-04-04T03:01:52+0200 [kotori.daq.storage.influx          ] CRITICAL: InfluxDB connection error
-
-2018-04-04T03:01:52+0200 [kotori.daq.graphing.grafana        ] INFO: Provisioning Grafana for database "mqttkit_1_testdrive" and measurement "area_42_node_1_sensors". dashboard=mqttkit-1 testdrive automatic
-2018-04-04T03:01:52+0200 [kotori.daq.graphing.grafana        ] INFO: Checking/Creating datasource "mqttkit_1_testdrive"
-2018-04-04T03:03:08+0200 [kotori.daq.services.mig            ] ERROR: Error processing MQTT message from topic "mqttkit-1/testdrive/area-42/node-1/data/temperature": [Failure instance: Traceback: <class 'requests.exceptions.ConnectionError'>: HTTPConnectionPool(host='192.168.59.103', port=3000): Max retries exceeded with url: /api/datasources (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x103b61e50>: Failed to establish a new connection: [Errno 60] Operation timed out',))
 
 
 2018-04-02
 ==========
-- [o] Let "luftdaten-to-mqtt" report about its cache location
-- [o] Reduce default refresh time for Grafana panels
+- [x] Let "luftdaten-to-mqtt" report about its cache location
+- [o] Reduce default refresh time for Grafana panels.
+      But how? What we really want is to keep the instant-on effect for new users
+      but gradually tame the refresh interval down to "Each 5 minutes".
+      At best, this would be done by checking the most recent modification timestamp
+      against a configured threshold.
 - [o] Don't pipe Luftdaten through the whole Kotori incl. MQTT bus.
       => Write it directly to InfluxDB, but using the appropriate core methods from Kotori.
       ==> Extract this piece of code into an addon namespace to make it
           available to *both* Kotori channels *and* standalone applications.
+      ===> Maybe use golang?
 - [o] Update Grafana dashboards in vendor/luftdaten/application
 
 
 2018-03-24
 ==========
-- [o] Put automatically generated dashboards into specific folder "Instant dashboards"
+- [x] Put automatically generated dashboards into specific folder "Instant dashboards"
 
 
 2018-03-13
@@ -89,7 +92,8 @@ Kotori tasks
 
 2017-12-31
 ==========
-- [o] https://getkotori.org/docs/handbook/export/gallery.html is broken,
+- [x] https://getkotori.org/docs/handbook/export/gallery.html is broken
+
 
 2017-08-14
 ==========
