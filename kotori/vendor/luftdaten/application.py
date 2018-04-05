@@ -25,20 +25,26 @@ class LuftdatenGrafanaManager(GrafanaManager):
     def provision(self, storage_location, message, topology):
 
         topology = topology or {}
-
-        # TODO: Improve locking to prevent race conditions.
-        if self._skip_creation(storage_location.database, storage_location.measurement):
-            return
-
         dashboard_name = self.strategy.topology_to_label(topology)
 
-        log.info('Provisioning Grafana for database "{}" and series "{}". dashboard={}'.format(
-            storage_location.database,
-            storage_location.measurement,
-            dashboard_name))
+        # The identity information of this provisioning process
+        signature = (storage_location.database, storage_location.measurement)
+        whoami = 'dashboard "{}" for database "{}" and measurement "{}"'.format(
+            storage_location.database, storage_location.measurement, dashboard_name)
 
+        # Skip dashboard creation if it already has been created while Kotori is running
+        # TODO: Improve locking to prevent race conditions.
+        if self.keycache.exists(*signature):
+            log.debug('Data signature not changed, skip update of {whoami}', whoami=whoami)
+            return
+
+        log.info('Provisioning Grafana {whoami}', whoami=whoami)
+
+        # Create a Grafana datasource object for designated database
         self.create_datasource(storage_location)
 
+
+        # Create appropriate Grafana dashboard
 
         data_dashboard = {
             'database': storage_location.database,
@@ -70,7 +76,7 @@ class LuftdatenGrafanaManager(GrafanaManager):
                 log.error('Grafana Error: {ex}', ex=ex.message)
 
         # Remember dashboard/panel creation for this kind of data inflow
-        self._signal_creation(storage_location.database, storage_location.measurement)
+        self.keycache.set(storage_location.database, storage_location.measurement)
 
 
 class LuftdatenMqttInfluxGrafanaService(MqttInfluxGrafanaService):

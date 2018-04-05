@@ -6,6 +6,8 @@ import sys
 import shelve
 import socket
 import logging
+import types
+
 import json_store
 from uuid import uuid4
 from appdirs import user_data_dir
@@ -154,3 +156,29 @@ class SmartBunch(Bunch):
             return type(x)( cls.bunchify(v) for v in x )
         else:
             return x
+
+
+class KeyCache(object):
+
+    def __init__(self):
+        self.storage = {}
+
+    # Utility functions for remembering whether the dashboard has been created already.
+    # This is important as we would otherwise talk to Grafana for each ingress measurement (on each hit).
+    def _get_skip_key(self, *args):
+        key_parts = []
+        for arg in args:
+            if isinstance(arg, types.StringTypes):
+                key_parts.append(arg)
+            elif isinstance(arg, types.DictionaryType):
+                key_parts.append(','.join(arg.keys()))
+        skip_key = '-'.join(key_parts)
+        return skip_key
+
+    def set(self, *args):
+        skip_key = self._get_skip_key(*args)
+        self.storage[skip_key] = True
+
+    def exists(self, *args):
+        skip_key = self._get_skip_key(*args)
+        return skip_key in self.storage

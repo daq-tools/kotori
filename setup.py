@@ -29,6 +29,7 @@ requires = requires_core + [
     'arrow==0.10.0',                # 0.12.1
     'funcy==1.7.2',                 # 1.10.1
     'delegator.py==0.1.0',
+    'attrs==17.4.0',
 
     # Bus adapters
     #'twisted-mqtt==0.1.4',         # 0.2.1

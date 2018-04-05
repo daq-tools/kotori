@@ -35,6 +35,7 @@ in progress
 - [command] Add ``kotori-selftest`` program, still in its infancy
 - [code] Namespace refactoring
 - [grafana] Relocate template resources (.json files)
+- [grafana] Subsystem refactoring
 
 
 .. _kotori-0.20.1:
