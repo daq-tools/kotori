@@ -17,7 +17,6 @@ class DashboardRefreshTamingService(MultiServiceMixin, MultiService):
     def __init__(self, channel=None, preset='standard'):
         self.channel = channel or Bunch()
         self.preset = preset
-        #MultiServiceMixin.__init__(self, name=self.channel.name + '-dashboard-tamer')
         MultiService.__init__(self)
 
     def startService(self):
@@ -42,7 +41,8 @@ class DashboardRefreshTamingService(MultiServiceMixin, MultiService):
             log.failure('Starting dashboard refresh interval taming task failed: {ex}\n{log_failure}', ex=ex)
 
     def tamer_start(self, now=False):
-        self.tamer = SmartTask(worker=self.tamer_process, interval=3, onerror='restart')
+        one_day = 60 * 60 * 24
+        self.tamer = SmartTask(worker=self.tamer_process, interval=one_day, onerror='restart')
         self.tamer.start(now=now)
 
     def tamer_process(self):
