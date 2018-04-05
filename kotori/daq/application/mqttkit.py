@@ -5,7 +5,7 @@ from twisted.logger import Logger
 from kotori.daq.services import RootService
 from kotori.daq.services.mig import MqttInfluxGrafanaService
 from kotori.daq.intercom.strategies import WanBusStrategy
-from kotori.daq.graphing.grafana import GrafanaManager
+from kotori.daq.graphing.grafana.manager import GrafanaManager
 
 log = Logger()
 

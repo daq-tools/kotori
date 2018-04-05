@@ -8,7 +8,7 @@ from bunch import Bunch
 from twisted.logger import Logger, LogLevel
 from twisted.internet import reactor, threads
 from twisted.internet.task import LoopingCall
-from twisted.application.service import MultiService
+from twisted.application.service import MultiService, Service
 from twisted.python.failure import Failure
 from twisted.python.threadpool import ThreadPool
 from kotori.configuration import read_list
@@ -28,6 +28,8 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
         MultiService.__init__(self)
 
+        # TODO: Make subsystems dynamic
+        self.subsystems = ['channel', 'graphing', 'strategy']
         self.channel = channel or Bunch(realm=None, subscriptions=[])
         self.graphing = graphing
         self.strategy = strategy
@@ -38,8 +40,17 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         self.name = u'service-mig-' + self.channel.get('realm', unicode(id(self)))
 
     def setupService(self):
-        #self.log(log.info, u'Setting up')
+
+        self.log(log.info, u'Bootstrapping')
         self.settings = self.parent.settings
+
+        # Optionally register subsystem component as child service
+        for subsystem in self.subsystems:
+            if hasattr(self, subsystem):
+                subsystem_service = getattr(self, subsystem)
+                if isinstance(subsystem_service, Service):
+                    log.info('Registering subsystem component "{subsystem}" as service', subsystem=subsystem)
+                    self.registerService(subsystem_service)
 
         # Configure metrics to be collected each X seconds
         metrics_interval = int(self.channel.get('metrics_logger_interval', 60))
@@ -65,7 +76,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
     def startService(self):
         self.setupService()
-        self.log(log.info, u'Starting')
+        #self.log(log.info, u'Starting')
         MultiService.startService(self)
         self.metrics_twingo = LoopingCall(self.process_metrics)
         self.metrics_twingo.start(self.metrics.interval, now=True)
@@ -236,7 +247,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             try:
                 self.graphing.provision(storage_location, message, topology=topology)
             except Exception as ex:
-                log.failure('Grafana provisioning failed for storage={storage}, message={message}: {log_failure}',
+                log.failure('Grafana provisioning failed for storage={storage}, message={message}:\n{log_failure}',
                             storage=storage_location, message=message,
                             level=LogLevel.error)
 
@@ -265,13 +276,13 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         """
 
         # Log failure
-        log.failure('Processing MQTT message failed from topic "{topic}": {log_failure}', topic=topic, failure=failure, level=LogLevel.error)
+        log.failure('Processing MQTT message failed from topic "{topic}":\n{log_failure}', topic=topic, failure=failure, level=LogLevel.error)
 
         # MQTT error signalling
         self.mqtt_publish_error(failure, topic, payload)
 
     def mqtt_exception(self, failure, topic, payload):
-        log.failure('Problem publishing error message: {log_failure}', failure=failure, level=LogLevel.warn)
+        log.failure('Problem publishing error message:\n{log_failure}', failure=failure, level=LogLevel.warn)
 
     def mqtt_publish_error(self, failure, topic, payload):
         """

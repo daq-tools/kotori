@@ -2,11 +2,12 @@
 # (c) 2015-2017 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 from bunch import Bunch
 from collections import OrderedDict
+
 from twisted.logger import Logger
 from kotori.daq.services import RootService
 from kotori.daq.services.mig import MqttInfluxGrafanaService
 from kotori.daq.intercom.strategies import WanBusStrategy
-from kotori.daq.graphing.grafana import GrafanaManager
+from kotori.daq.graphing.grafana.manager import GrafanaManager
 
 log = Logger()
 
@@ -97,6 +98,7 @@ def hiveeyes_boot(settings, debug=False):
     # Service container root
     rootService = RootService(settings=settings)
 
+    # Channel realm
     channel = Bunch(**settings.hiveeyes)
 
     # Main application service

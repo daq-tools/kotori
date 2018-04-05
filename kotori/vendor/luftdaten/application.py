@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 # (c) 2017 Andreas Motl <andreas@getkotori.org>
 import json
+
 from pkg_resources import resource_filename
 from jinja2 import Template
 from twisted.logger import Logger
 from grafana_api_client import GrafanaPreconditionFailedError, GrafanaClientError
 from kotori.daq.services.mig import MqttInfluxGrafanaService
-from kotori.daq.graphing.grafana import GrafanaManager
+from kotori.daq.graphing.grafana.manager import GrafanaManager
 from kotori.daq.storage.influx import InfluxDBAdapter
 
 log = Logger()

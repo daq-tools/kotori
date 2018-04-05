@@ -26,9 +26,7 @@ class ProtocolForwarderApplication(RootService):
         self.name = u'app-{name}'.format(name=name)
 
         # Make channel object from application settings configuration object
-        application_settings = deepcopy(application_settings)
-        application_settings.update(name=name)
-        self.channel = Bunch(**application_settings)
+        self.setupChannel(channel=application_settings, name=name)
 
         # Create application service object composed of subsystem components
         service = ProtocolForwarderService(
