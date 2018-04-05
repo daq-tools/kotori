@@ -35,10 +35,17 @@ class KotoriBootloader(object):
 
         # Initialize application and run as Twisted service
         factory = self.get_application_factory(name)
-        if factory:
+
+        if not factory:
+            return
+
+        try:
             application_settings = self.settings[name]
             application = factory(name=name, application_settings=application_settings, global_settings=self.settings)
             application.startService()
+        except Exception as ex:
+            log.failure('Error running application factory "{name}":\n{log_failure}', name=name)
+            return
 
     def get_application_factory(self, name):
 
@@ -63,7 +70,7 @@ class KotoriBootloader(object):
         return factory_callable
 
     @classmethod
-    def load_entrypoint(cls, reference):
+    def load_entrypoint(cls, reference, onerror='raise'):
 
         # Resolve entrypoint
         expression = u'_ = {reference}'.format(reference=reference)
@@ -79,9 +86,17 @@ class KotoriBootloader(object):
             thing = entrypoint.load(require=False)
         except:
             log.failure('Error loading entrypoint "{reference}"', reference=reference)
-            raise
+            if onerror == 'raise':
+                raise
+            elif onerror == 'ignore':
+                return cls.noop_callable
+            #raise
 
         return thing
+
+    @classmethod
+    def noop_callable(cls, *args, **kwargs):
+        pass
 
     def get_vendors(self):
         for name, config_object in self.settings.iteritems():
@@ -104,21 +119,40 @@ class KotoriBootloader(object):
 
         debug = self.settings.options.debug
 
-        if 'hydro2motion' in vendors:
-            #log.info(u'Starting vendor "{name}"', name=name)
-            from kotori.vendor.hydro2motion.database.influx import h2m_boot_influx_database
-            from kotori.vendor.hydro2motion.network.udp import h2m_boot_udp_adapter
-            from kotori.vendor.hydro2motion.web.server import boot_web
-            boot_web(self.settings, debug=debug)
-            h2m_boot_udp_adapter(self.settings, debug=debug)
-            h2m_boot_influx_database(self.settings)
+        for vendor in vendors:
+            if hasattr(VendorBootloader, vendor):
+                log.info(u'Starting vendor environment for "{vendor}"', vendor=vendor)
+                bootloader = getattr(VendorBootloader, vendor)
+                try:
+                    bootloader(self.settings)
+                except Exception as ex:
+                    log.failure(
+                        'Error booting vendor environment for "{vendor}"":\n{log_failure}"', vendor=vendor)
 
-        if 'hiveeyes' in vendors:
-            from kotori.vendor.hiveeyes.application import hiveeyes_boot
-            hiveeyes_boot(self.settings, debug=debug)
 
-        if 'lst' in vendors:
-            from kotori.vendor.lst.application import lst_boot
-            if self.settings.options.debug_vendor and 'lst' in read_list(self.settings.options.debug_vendor):
-                changeLogLevel('kotori.vendor.lst', LogLevel.debug)
-            lst_boot(self.settings)
+class VendorBootloader(object):
+
+    @classmethod
+    def hydro2motion(cls, settings):
+        from kotori.vendor.hydro2motion.database.influx import h2m_boot_influx_database
+        from kotori.vendor.hydro2motion.network.udp import h2m_boot_udp_adapter
+        from kotori.vendor.hydro2motion.web.server import boot_web
+
+        debug = settings.options.debug
+        boot_web(settings, debug=debug)
+        h2m_boot_udp_adapter(settings, debug=debug)
+        h2m_boot_influx_database(settings)
+
+    @classmethod
+    def hiveeyes(cls, settings):
+        from kotori.vendor.hiveeyes.application import hiveeyes_boot
+        debug = settings.options.debug
+        hiveeyes_boot(settings, debug=debug)
+
+    @classmethod
+    def lst(cls, settings):
+        from kotori.vendor.lst.application import lst_boot
+        debug = settings.options.debug
+        if settings.options.debug_vendor and 'lst' in read_list(settings.options.debug_vendor):
+            changeLogLevel('kotori.vendor.lst', LogLevel.debug)
+        lst_boot(settings)

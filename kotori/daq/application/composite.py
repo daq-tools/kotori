@@ -26,15 +26,22 @@ class CompositeApplication(RootService):
         for service_reference in read_list(application_settings.services):
 
             # Load service component
-            service_factory = KotoriBootloader.load_entrypoint(service_reference)
+            try:
+                service_factory = KotoriBootloader.load_entrypoint(service_reference)
+            except Exception as ex:
+                log.failure('Error loading composite service component "{service_name}" into "{app_name}":\n{log_failure}"',
+                            service_name=service_reference, app_name=name)
+                continue
 
             # Load data processing strategy and graphing components
             # TODO: Review whether this should be per-service or not
-            strategy_factory = KotoriBootloader.load_entrypoint(application_settings.strategy)
-            graphing_factory = KotoriBootloader.load_entrypoint(application_settings.graphing)
+            # TODO: Introduce strict/non-strict handling
+            strategy_factory = KotoriBootloader.load_entrypoint(application_settings.strategy, onerror='ignore')
+            graphing_factory = KotoriBootloader.load_entrypoint(application_settings.graphing, onerror='ignore')
 
             # Create application service object composed of subsystem components
             # TODO: Bundle all arguments into yet another wrapper object for an universal object factory
+
             service = service_factory(
                 channel  = self.channel,
                 strategy = strategy_factory(settings=global_settings),
