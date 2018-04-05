@@ -34,6 +34,7 @@ in progress
 - [grafana] Refactoring. Robustness. Run GrafanaManager as service. Add worker service for taming dashboard refresh intervals.
 - [command] Add ``kotori-selftest`` program, still in its infancy
 - [code] Namespace refactoring
+- [grafana] Relocate template resources (.json files)
 
 
 .. _kotori-0.20.1:

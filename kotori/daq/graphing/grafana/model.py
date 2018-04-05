@@ -43,7 +43,7 @@ class GrafanaDashboard(object):
 
     def get_template(self, filename):
         filename = os.path.join('resources', filename)
-        return Template(file(resource_filename('kotori.daq.graphing', filename)).read())
+        return Template(file(resource_filename('kotori.daq.graphing.grafana', filename)).read())
 
     def build(self, measurement, row_title='default', panels=None):
 
