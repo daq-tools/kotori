@@ -29,13 +29,14 @@ in progress
 - [io] Fix MQTT error signalling
 - [grafana] Use specific Grafana folder for stuffing instant dashboards into
 - [grafana] Use topology information for deriving unique dashboard id from
-- [grafana] Add mechanisms for taming the dashboard refresh interval
+- [grafana] Add basic mechanisms for taming the dashboard refresh interval
 - [core] Improve component loading robustness
 - [grafana] Refactoring. Robustness. Run GrafanaManager as service. Add worker service for taming dashboard refresh intervals.
 - [command] Add ``kotori-selftest`` program, still in its infancy
 - [code] Namespace refactoring
 - [grafana] Relocate template resources (.json files)
 - [grafana] Subsystem refactoring
+- [grafana] Implement sensible rules for dashboard refresh interval taming
 
 
 .. _kotori-0.20.1:

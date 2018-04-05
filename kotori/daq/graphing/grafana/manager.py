@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2015-2018 Andreas Motl, <andreas@getkotori.org>
+import arrow
 from twisted.logger import Logger
 from twisted.application.service import MultiService
 
@@ -7,7 +8,7 @@ from kotori.daq.services import MultiServiceMixin
 from kotori.daq.graphing.grafana.api import GrafanaApi
 from kotori.daq.graphing.grafana.dashboard import GrafanaDashboardBuilder, GrafanaDashboardModel
 from kotori.daq.graphing.grafana.service import DashboardRefreshTamingService
-from kotori.util.common import KeyCache
+from kotori.util.common import KeyCache, SmartBunch
 
 log = Logger()
 
@@ -137,6 +138,99 @@ class GrafanaManager(MultiService, MultiServiceMixin):
         # Remember dashboard/panel creation for this kind of data inflow
         self.keycache.set(*signature)
 
+    def tame_refresh_interval(self, preset='standard', force=False):
+        """
+        Tame refresh interval for all dashboards.
+
+        :param mode: Which taming preset to use. Currently, only "standard" is
+                     implemented, which is also the default preset.
+
+        Introduction
+        ------------
+        The default dashboard refresh interval of 5 seconds is important
+        for instant-on workbench operations. However, the update interval
+        is usually just about 5 minutes after the sensor node is in the field.
+
+        Problem
+        -------
+        Having high refresh rates on many dashboards can increase the overall
+        system usage significantly, depending on how many users are displaying
+        them in their browsers and the complexity of the database queries
+        issued when rendering the dashboard.
+
+        Solution
+        --------
+        In order to reduce the overall load on the data acquisition system,
+        the refresh interval of dashboards not updated since a configurable
+        threshold time is decreased according to rules of built-in presets.
+
+        The default "standard" preset currently implements the following rules:
+
+        - Leave all dashboards completely untouched which have been updated during the last 14 days
+        - Apply a refresh interval of 5 minutes for all dashboards having the "live" tag
+        - Completely disable refreshing for all dashboards having the "historical" tag
+        - Apply a refresh interval of 30 minutes for all other dashboards
+
+        """
+
+        dashboard_list = self.grafana_api.get_dashboards()
+
+        log.info('Taming dashboard refresh interval with preset="{preset}" for {count} dashboards',
+                 preset=preset, count=len(dashboard_list))
+
+        # Date of 14 days in the past
+        before_14_days = arrow.utcnow().shift(days=-14)
+
+        for dashboard_meta in dashboard_list:
+
+            dashboard_meta = SmartBunch.bunchify(dashboard_meta)
+            #print dashboard_meta.prettify()
+
+            whoami = u'title="{title}", uid="{uid}"'.format(title=dashboard_meta['title'], uid=dashboard_meta['uid'])
+
+            # Request dashboard by uid
+            dashboard_uid = dashboard_meta['uid']
+            response = self.grafana_api.get_dashboard_by_uid(dashboard_uid)
+            response = SmartBunch.bunchify(response)
+
+            # Get effective dashboard information from response
+            folder_id = response.meta.folderId
+            dashboard = response.dashboard
+
+            # Compute new dashboard refresh interval by applying taming rules
+            # Units: Mwdhmsy
+
+            # 1. Check dashboard modification time against threshold
+            modification_time = arrow.get(response.meta.updated)
+            if not force and modification_time > before_14_days:
+                log.debug('Skip taming dashboard with {whoami}, it has recently been modified', whoami=whoami)
+                continue
+
+            # 2. Apply refresh interval by looking at the dashboard tags
+            if 'live' in dashboard_meta.tags:
+                refresh_interval = '5m'
+            elif 'historical' in dashboard_meta.tags:
+                refresh_interval = None
+            else:
+                refresh_interval = '30m'
+
+            # Skip update procedure if refresh interval hasn't changed at all
+            if refresh_interval == dashboard.refresh:
+                continue
+
+            # Set new refresh interval
+            dashboard.refresh = refresh_interval
+
+            # Update dashboard
+            log.debug('Taming dashboard with {whoami} to refresh interval of {interval}', whoami=whoami, interval=refresh_interval)
+            response = self.grafana_api.grafana_client.dashboards.db.create(dashboard=dashboard, folderId=folder_id)
+
+            # Report about the outcome
+            if response['status'] == 'success':
+                log.info('Successfully tamed dashboard with {whoami}', whoami=whoami)
+            else:
+                log.warn('Failed taming dashboard with {whoami}', whoami=whoami)
+
 
 if __name__ == '__main__':
     """
@@ -151,7 +245,11 @@ if __name__ == '__main__':
     twisted.python.log.startLogging(sys.stderr)
 
     # Connect to Grafana
-    grafana = GrafanaApi(host='localhost', username='admin', password='admin')
+    manager = GrafanaManager(
+        settings={"grafana": dict(host='localhost', username='admin', password='admin')},
+        channel={}
+    )
+    grafana = manager.grafana_api
 
     # Create Grafana Datasource object
     grafana.create_datasource('hiveeyes_test', {
@@ -176,4 +274,4 @@ if __name__ == '__main__':
     grafana.create_dashboard(dashboard)
 
     # Run one-shot task to tame the dashboard intervals
-    grafana.tame_refresh_interval()
+    manager.tame_refresh_interval()

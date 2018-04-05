@@ -7,6 +7,10 @@ log = Logger()
 
 
 class GrafanaApi(object):
+    """
+    A small wrapper around ``grafana_api_client``.
+    https://pypi.python.org/pypi/grafana_api_client
+    """
 
     def __init__(self, host='localhost', port=3000, username='admin', password='admin'):
         self.host = host
@@ -87,7 +91,7 @@ class GrafanaApi(object):
         try:
             logger.info('deleting datasource: {}'.format(name))
             response = self.grafana_client.datasources[name].delete()
-            logger.info(slm(response))
+            print response
         except GrafanaClientError as ex:
             if '404' in ex.message or 'Dashboard not found' in ex.message:
                 logger.warn(slm(ex.message))
@@ -186,53 +190,3 @@ class GrafanaApi(object):
 
     def get_dashboards(self):
         return self.grafana_client.search(type='dash-db')
-
-    def tame_refresh_interval(self, preset='standard'):
-        """
-        Tame refresh interval for all dashboards.
-
-        :param mode: Which taming preset to use. Currently, only "standard" is
-                     implemented, which is also the default preset.
-
-        Introduction
-        ------------
-        The default dashboard refresh interval of 5 seconds is important
-        for instant-on workbench operations. However, the update interval
-        is usually just about 5 minutes after the sensor node is in the field.
-
-        Problem
-        -------
-        Having high refresh rates on many dashboards can increase the overall
-        system usage significantly, depending on how many users are displaying
-        them in their browsers and the complexity of the database queries
-        issued when rendering the dashboard.
-
-        Solution
-        --------
-        In order to reduce the overall load on the data acquisition system,
-        the refresh interval of dashboards not updated since a configurable
-        threshold time is decreased according to rules of built-in presets.
-
-        The default "standard" preset currently implements the following rules:
-
-        - Leave all dashboards completely untouched which have been updated during the last 14 days
-        - Apply a refresh interval of 5 minutes for all dashboards having the "live" tag
-        - Completely disable refreshing for all dashboards having the "historical" tag
-        - Apply a refresh interval of 30 minutes for all other dashboards
-
-        """
-        log.info('Taming dashboard refresh interval with preset="{preset}"', preset=preset)
-        for dashboard_meta in self.get_dashboards():
-
-            # Get dashboard by uid
-            dashboard_uid = dashboard_meta['uid']
-            dashboard = self.get_dashboard_by_uid(dashboard_uid)
-
-            # TODO: Look at dashboard.meta.updated and apply taming only on appropriate threshold.
-            #       e.g. u'2018-04-04T20:07:10+02:00'
-            # TODO: Look at list of tags and apply interval=null if it contains "historical".
-            # TODO: Look at list of tags and apply interval=5m if it contains "live".
-
-            # Update refresh interval
-            dashboard['dashboard']['refresh'] = '5m'
-            response = self.grafana_client.dashboards.db.create(**dashboard)

@@ -46,6 +46,4 @@ class DashboardRefreshTamingService(MultiServiceMixin, MultiService):
         self.tamer.start(now=now)
 
     def tamer_process(self):
-        self.parent.grafana_api.tame_refresh_interval(preset=self.preset)
-
-
+        self.parent.tame_refresh_interval(preset=self.preset, force=False)
