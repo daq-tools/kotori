@@ -32,6 +32,7 @@ in progress
 - [grafana] Add mechanisms for taming the dashboard refresh interval
 - [core] Improve component loading robustness
 - [grafana] Refactoring. Robustness. Run GrafanaManager as service. Add worker service for taming dashboard refresh intervals.
+- [command] Add ``kotori-selftest`` program, still in its infancy
 
 
 .. _kotori-0.20.1:
