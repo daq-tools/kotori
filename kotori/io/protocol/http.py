@@ -23,7 +23,7 @@ from kotori.io.router.path import PathRoutingEngine
 from kotori.io.export.tabular import UniversalTabularExporter
 from kotori.io.export.plot import UniversalPlotter
 from kotori.io.protocol.util import convert_floats, slugify_datettime, flatten_request_args, handleFailure
-from kotori.errors import last_error_and_traceback
+from kotori.util.errors import last_error_and_traceback
 
 log = Logger()
 

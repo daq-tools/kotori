@@ -10,7 +10,7 @@ from twisted.internet import threads
 from twisted.web import http, server
 from twisted.logger import Logger
 from twisted.application.service import MultiService
-from kotori.configuration import read_list
+from kotori.util.configuration import read_list
 from kotori.daq.services import RootService, MultiServiceMixin
 from kotori.io.protocol.forwarder import ForwarderAddress
 from kotori.io.protocol.http import HttpServerService

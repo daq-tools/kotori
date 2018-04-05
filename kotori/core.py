@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-# (c) 2014-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2014-2018 Andreas Motl, <andreas@getkotori.org>
 from pkg_resources import EntryPoint
 from pyramid.settings import asbool
 from twisted.logger import Logger, LogLevel
-from kotori.logger import changeLogLevel
-from kotori.configuration import read_list
+from kotori.util.configuration import read_list
+from kotori.util.errors import last_error_and_traceback
+from kotori.util.logger import changeLogLevel
 from kotori.version import __VERSION__
-from kotori.errors import last_error_and_traceback
 
 log = Logger()
 APP_NAME = u'Kotori version ' + __VERSION__

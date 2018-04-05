@@ -8,7 +8,7 @@ from twisted.internet.defer import inlineCallbacks
 from twisted.python import log
 from twisted.internet import reactor
 from autobahn.twisted.websocket import connectWS, WampWebSocketClientProtocol, WampWebSocketClientFactory
-from kotori.util import NodeId, get_hostname
+from kotori.util.common import NodeId, get_hostname
 from kotori.io.node.util import tts_say
 
 node_manager = None

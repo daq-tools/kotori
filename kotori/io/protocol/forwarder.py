@@ -6,7 +6,7 @@ from urlparse import urlparse
 from bunch import Bunch, bunchify
 from twisted.logger import Logger
 from twisted.application.service import MultiService
-from kotori.configuration import read_list
+from kotori.util.configuration import read_list
 from kotori.core import KotoriBootloader
 from kotori.daq.services import RootService, MultiServiceMixin
 from kotori.io.protocol.http import HttpServerService

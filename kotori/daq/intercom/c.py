@@ -16,7 +16,7 @@ from sympy.core.sympify import sympify
 from twisted.logger import Logger
 from kotori.daq.intercom.pyclibrary_ext.c_parser import CParserEnhanced
 from kotori.daq.intercom.pyclibrary_ext.backend_ctypes import monkeypatch_pyclibrary_ctypes_struct
-from kotori.util import slm
+from kotori.util.common import slm
 
 logger = Logger()
 

@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 """Implementation of a Twisted-friendly thread pool wrapper."""
+from __future__ import absolute_import
 from functools import partial
 from twisted.internet.threads import deferToThreadPool
 from twisted.internet.defer import fail

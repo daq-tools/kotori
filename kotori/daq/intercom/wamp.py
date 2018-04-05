@@ -4,7 +4,7 @@ import sys
 from twisted.logger import Logger, LogLevel
 from twisted.internet import reactor
 from autobahn.twisted.wamp import ApplicationRunner, ApplicationSession
-from kotori.logger import startLogging
+from kotori.util.logger import startLogging
 
 log = Logger()
 

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-# (c) 2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2016 Andreas Motl, <andreas@getkotori.org>
 from bunch import Bunch
 from twisted.logger import Logger
 from kotori import KotoriBootloader
-from kotori.configuration import read_list
 from kotori.daq.services import RootService
+from kotori.util.configuration import read_list
 
 log = Logger()
 

@@ -8,7 +8,7 @@ from binascii import unhexlify
 from urlparse import urlparse
 from tabulate import tabulate
 from collections import OrderedDict
-from kotori.configuration import read_list
+from kotori.util.configuration import read_list
 
 logger = logging.getLogger(__name__)
 

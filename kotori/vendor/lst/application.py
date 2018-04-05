@@ -7,7 +7,7 @@ from copy import deepcopy
 from pkg_resources import resource_filename
 from twisted.logger import Logger
 from twisted.internet import reactor
-from kotori.configuration import read_list
+from kotori.util.configuration import read_list
 from kotori.daq.intercom.c import LibraryAdapter, StructRegistryByID
 from kotori.daq.intercom.wamp import WampApplication, WampSession
 from kotori.daq.intercom.udp import UdpBusForwarder

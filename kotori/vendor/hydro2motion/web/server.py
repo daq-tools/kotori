@@ -7,7 +7,7 @@ from twisted.internet import reactor
 from twisted.web.resource import Resource
 from twisted.web.server import Site
 from twisted.web.static import File
-from kotori.util import NodeId, get_hostname
+from kotori.util.common import NodeId, get_hostname
 
 log = Logger()
 

@@ -14,7 +14,7 @@ in progress
 - [io] Add comments to MqttInfluxGrafanaService regarding ingress data enrichment
 - [package] Improve list of suggested packages to ease installing on more modern Debian distributions
 - [doc] Add documentation about Nginx reverse proxy setup
-- [dev] Switch development environment from Docker to native
+- [env] Switch development environment from Docker to native
 - [io] Make MQTT client identifier even more unique by adding process id
 - [feed] Improve ``luftdaten-to-mqtt`` of [:ref:`vendor-luftdaten.info`]
 
@@ -33,6 +33,7 @@ in progress
 - [core] Improve component loading robustness
 - [grafana] Refactoring. Robustness. Run GrafanaManager as service. Add worker service for taming dashboard refresh intervals.
 - [command] Add ``kotori-selftest`` program, still in its infancy
+- [code] Namespace refactoring
 
 
 .. _kotori-0.20.1:

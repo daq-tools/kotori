@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-# (c) 2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2015 Andreas Motl, <andreas@getkotori.org>
+from __future__ import absolute_import
 
-from twisted.logger   import (
+from twisted.logger import (
     LogLevel, globalLogBeginner,
     FileLogObserver, FilteringLogObserver, LogLevelFilterPredicate,
     formatTime, timeFormatRFC3339, formatEvent)

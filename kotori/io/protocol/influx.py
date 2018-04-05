@@ -8,7 +8,7 @@ from pyinfluxql import Query
 from pyinfluxql.functions import Mean
 from twisted.logger import Logger
 from kotori.io.protocol.util import is_number
-from kotori.util import tdelta
+from kotori.util.common import tdelta
 
 log = Logger()
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2014,2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2014-2015 Andreas Motl, <andreas@getkotori.org>
 import sys
 import traceback
 from StringIO import StringIO

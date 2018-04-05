@@ -17,7 +17,7 @@ from git import Repo
 from git import RemoteProgress
 from plumbum import local
 from plumbum.cmd import pwd, make, grep, ls
-from kotori.errors import last_error_and_traceback
+from kotori.util.errors import last_error_and_traceback
 
 log = logging.getLogger(__name__)
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2014-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2014-2017 Andreas Motl, <andreas@getkotori.org>
 import os
 import logging
 from glob import glob

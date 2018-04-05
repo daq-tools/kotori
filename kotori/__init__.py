@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
-# (c) 2014-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2014-2017 Andreas Motl, <andreas@getkotori.org>
 import sys
 from bunch import Bunch
 from docopt import docopt
 from pkgutil import extend_path
 from twisted.internet import reactor
 from twisted.logger import Logger, LogLevel
-from kotori.util import setup_logging
 from kotori.core import APP_NAME, KotoriBootloader
-from kotori.logger import startLogging
-from kotori.configuration import get_configuration, get_configuration_file, apply_default_settings
 from kotori.frontend.server import boot_frontend
+from kotori.util.common import setup_logging
+from kotori.util.logger import startLogging
+from kotori.util.configuration import get_configuration, get_configuration_file, apply_default_settings
 
 __path__ = extend_path(__path__, __name__)
 

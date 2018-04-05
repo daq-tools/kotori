@@ -11,7 +11,7 @@ from autobahn.twisted.websocket import WampWebSocketClientProtocol, WampWebSocke
 from autobahn.twisted.websocket import WampWebSocketServerProtocol, WampWebSocketServerFactory
 from twisted.python import log
 from twisted.internet import reactor
-from kotori.util import ConfigStoreJson
+from kotori.util.common import ConfigStoreJson
 
 
 client = None

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2014-2016 Andreas Motl <andreas.motl@elmyra.de>
+# (c) 2014-2018 Andreas Motl <andreas@getkotori.org>
 import re
 import os
 import sys
@@ -11,11 +11,15 @@ from uuid import uuid4
 from appdirs import user_data_dir
 from datetime import timedelta
 
+from bunch import Bunch
+
 logger = logging.getLogger()
+
 
 def slm(message):
     """sanitize log message"""
     return unicode(message).replace('{', '{{').replace('}', '}}')
+
 
 class Singleton(object):
     """
@@ -104,6 +108,7 @@ class NodeId(Singleton):
 def get_hostname():
     return socket.gethostname()
 
+
 def setup_logging(level=logging.INFO):
     log_format = '%(asctime)-15s [%(name)-25s] %(levelname)-7s: %(message)s'
     logging.basicConfig(
@@ -125,3 +130,27 @@ def tdelta(input):
         kwargs[k] = int(v)
     return timedelta(**kwargs)
 
+
+class SmartBunch(Bunch):
+
+    def dump(self):
+        return self.toJSON()
+
+    def pretty(self):
+        return self.toJSON(indent=4)
+
+    def prettify(self):
+        return self.pretty()
+
+    @classmethod
+    def bunchify(cls, x):
+        """
+        Recursively transforms a dictionary into a SmartBunch via copy.
+        Generic "bunchify", also works with descendants of Bunch.
+        """
+        if isinstance(x, dict):
+            return cls( (k, cls.bunchify(v)) for k,v in x.iteritems() )
+        elif isinstance(x, (list, tuple)):
+            return type(x)( cls.bunchify(v) for v in x )
+        else:
+            return x

@@ -5,12 +5,12 @@ from twisted.internet import threads
 from twisted.web import http, server
 from twisted.logger import Logger, LogLevel
 from twisted.application.service import MultiService
-from kotori.configuration import read_list
+from kotori.util.configuration import read_list
 from kotori.daq.services import MultiServiceMixin
 from kotori.daq.intercom.mqtt import MqttAdapter
 from kotori.io.protocol.http import HttpDataFrameResponse
 from kotori.io.protocol.util import handleFailure
-from kotori.errors import last_error_and_traceback
+from kotori.util.errors import last_error_and_traceback
 
 log = Logger()
 

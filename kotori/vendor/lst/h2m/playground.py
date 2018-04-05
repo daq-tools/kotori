@@ -6,7 +6,7 @@ import logging
 from pprint import pprint
 from binascii import unhexlify, hexlify
 from tabulate import tabulate
-from kotori.util import setup_logging
+from kotori.util.common import setup_logging
 from kotori.vendor.lst.h2m.util import setup_h2m_structs
 from kotori.daq.intercom.c import LibraryAdapter, StructRegistry, StructRegistryByID
 

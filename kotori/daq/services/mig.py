@@ -11,13 +11,13 @@ from twisted.internet.task import LoopingCall
 from twisted.application.service import MultiService, Service
 from twisted.python.failure import Failure
 from twisted.python.threadpool import ThreadPool
-from kotori.configuration import read_list
 from kotori.daq.services.schema import MessageType, TopicMatchers
 from kotori.daq.services import MultiServiceMixin
 from kotori.daq.intercom.mqtt import MqttAdapter
 from kotori.daq.storage.influx import InfluxDBAdapter
 from kotori.io.protocol.util import convert_floats
-from kotori.thimble import Thimble
+from kotori.util.configuration import read_list
+from kotori.util.thimble import Thimble
 
 log = Logger()
 
