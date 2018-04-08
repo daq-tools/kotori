@@ -5,6 +5,7 @@ import time
 import json
 import arrow
 from bunch import Bunch
+from cornice.util import to_list
 from twisted.logger import Logger, LogLevel
 from twisted.internet import reactor, threads
 from twisted.internet.task import LoopingCall
@@ -28,14 +29,13 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
         MultiService.__init__(self)
 
+        # TODO: Sanity checks/assertions against channel, graphing and strategy
+
         # TODO: Make subsystems dynamic
         self.subsystems = ['channel', 'graphing', 'strategy']
         self.channel = channel or Bunch(realm=None, subscriptions=[])
-        self.graphing = graphing
+        self.graphing = to_list(graphing)
         self.strategy = strategy
-
-        # Mix in references to each other. A bit of a hack, but okay for now :-).
-        self.graphing.strategy = self.strategy
 
         self.name = u'service-mig-' + self.channel.get('realm', unicode(id(self)))
 
@@ -244,16 +244,24 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             # 'geohash',
             # 'location', 'location_id', 'location_name', 'sensor_id', 'sensor_type',
             # 'latitude', 'longitude', 'lat', 'lon'
-            try:
-                self.graphing.provision(storage_location, message, topology=topology)
-            except Exception as ex:
-                log.failure('Grafana provisioning failed for storage={storage}, message={message}:\n{log_failure}',
-                            storage=storage_location, message=message,
-                            level=LogLevel.error)
+            for graphing_subsystem in self.graphing:
 
-                # MQTT error signalling
-                failure = Failure()
-                self.mqtt_publish_error(failure, topic, payload)
+                # Mix in references to each other. A bit of a hack, but okay for now :-).
+                graphing_subsystem.strategy = self.strategy
+
+                subsystem_name = graphing_subsystem.__class__.__name__
+                log.debug(u'Provisioning Grafana with {name}', name=subsystem_name)
+                try:
+                    graphing_subsystem.provision(storage_location, message, topology=topology)
+
+                except Exception as ex:
+                    log.failure('Grafana provisioning failed for storage={storage}, message={message}:\n{log_failure}',
+                                storage=storage_location, message=message,
+                                level=LogLevel.error)
+
+                    # MQTT error signalling
+                    failure = Failure()
+                    self.mqtt_publish_error(failure, topic, payload)
 
         return True
 

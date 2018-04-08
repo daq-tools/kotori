@@ -41,6 +41,7 @@ in progress
 - [grafana] Properly compute dashboard identity. Don't use the ``uid`` field for stable addressing as it is limited to 40 characters.
 - [grafana] Allow unicode strings for dashboard names
 - [core] Improve log level selection when (not) running with "--debug-mqtt-driver"
+- [grafana] Allow multiple graphing subsystems/managers for a single data acquisition channel driver
 
 
 .. _kotori-0.20.1:
