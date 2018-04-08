@@ -29,8 +29,8 @@ class LuftdatenGrafanaManager(GrafanaManager):
 
         # The identity information of this provisioning process
         signature = (storage_location.database, storage_location.measurement)
-        whoami = 'dashboard "{}" for database "{}" and measurement "{}"'.format(
-            storage_location.database, storage_location.measurement, dashboard_name)
+        whoami = 'dashboard "{dashboard_name}" for database "{database}" and measurement "{measurement}"'.format(
+            dashboard_name=dashboard_name, database=storage_location.database, measurement=storage_location.measurement)
 
         # Skip dashboard creation if it already has been created while Kotori is running
         # TODO: Improve locking to prevent race conditions.
