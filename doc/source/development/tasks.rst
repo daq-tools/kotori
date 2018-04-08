@@ -18,6 +18,19 @@ Kotori tasks
 ****
 
 
+2018-04-08
+==========
+- [o] Add inline implementation for a seashells.io-like functionality based on WAMP.
+      While being at it, easily make it channel-based by just consuming
+      the per-channel export=>json endpoint as a data feed.
+
+
+2018-04-06
+==========
+- [o] Grafana Annotations says "title" field is deprecated. Investigate and remedy eventual issues.
+- [o] Write Issue @ Grafana re. stable addressing of panels and the 40 character limit on uid's vs. len(`uuid -v4`) == 36 already
+
+
 2018-04-05
 ==========
 - [x] Refactoring of kotori.daq.graphing.grafana
