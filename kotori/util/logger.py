@@ -24,6 +24,10 @@ def startLogging(settings, stream=None, level=LogLevel.debug):
         predicate.setLogLevelForNamespace('kotori.daq.intercom.mqtt', LogLevel.debug)
         predicate.setLogLevelForNamespace('mqtt', LogLevel.debug)
         predicate.setLogLevelForNamespace('paho.mqtt', LogLevel.debug)
+    else:
+        predicate.setLogLevelForNamespace('kotori.daq.intercom.mqtt', LogLevel.info)
+        predicate.setLogLevelForNamespace('mqtt', LogLevel.info)
+        predicate.setLogLevelForNamespace('paho.mqtt', LogLevel.info)
 
     if settings.options.debug_influx:
         predicate.setLogLevelForNamespace('kotori.daq.storage.influx', LogLevel.debug)
