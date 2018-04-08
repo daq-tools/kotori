@@ -32,7 +32,7 @@ class GrafanaApi(object):
         try:
             self.ensure_instant_folder()
         except Exception as ex:
-            log.warn('Problem creating instant folder: {ex}', ex=ex)
+            log.warn(u'Problem creating instant folder: {ex}', ex=ex)
 
     def ensure_instant_folder(self):
         return self.ensure_folder(uid=self.instant_folder_uid, title=self.instant_folder_title)
@@ -45,20 +45,20 @@ class GrafanaApi(object):
         except GrafanaClientError as ex:
 
             if '404' in ex.message or 'not-found' in ex.message or 'Folder not found' in ex.message:
-                log.debug('Folder with uid="{uid}" not found, creating', uid=uid)
+                log.debug(u'Folder with uid="{uid}" not found, creating', uid=uid)
                 try:
                     return self.create_folder(uid=uid, title=title)
 
                 except Exception as ex:
-                    log.warn('Problem creating folder uid="{uid}", title="{title}": {ex}', uid=uid, title=title, ex=ex)
+                    log.warn(u'Problem creating folder uid="{uid}", title="{title}": {ex}', uid=uid, title=title, ex=ex)
 
             else:
-                log.warn('Problem getting folder uid="{uid}"": {ex}', uid=uid, ex=ex)
+                log.warn(u'Problem getting folder uid="{uid}"": {ex}', uid=uid, ex=ex)
                 raise
 
 
     def create_folder(self, uid=None, title=None):
-        log.info('Creating folder with uid="{uid}" and title="{title}"', uid=uid, title=title)
+        log.info(u'Creating folder with uid="{uid}" and title="{title}"', uid=uid, title=title)
         data = {}
         if uid: data['uid'] = uid
         if title: data['title'] = title
@@ -100,7 +100,7 @@ class GrafanaApi(object):
         """
 
         try:
-            log.info('Checking/Creating datasource "{}"'.format(name))
+            log.info(u'Checking/Creating datasource "{}"'.format(name))
             response = self.grafana_client.datasources.create(**data)
             log.info('response: {response}', response=response)
         except GrafanaServerError as ex:
@@ -126,46 +126,46 @@ class GrafanaApi(object):
 
         if delete:
             try:
-                log.info('Deleting dashboard "{}"'.format(name))
+                log.info(u'Deleting dashboard "{}"'.format(name))
                 response = self.grafana_client.dashboards.db[name].delete()
-                log.info('Grafana response: {response}', response=response)
+                log.info(u'Grafana response: {response}', response=response)
 
             except GrafanaClientError as ex:
                 if '404' in ex.message or 'Dashboard not found' in ex.message:
-                    log.warn('{message}', message=ex.message)
+                    log.warn(u'{message}', message=ex.message)
                 else:
                     raise
 
         try:
-            log.info('Creating/updating dashboard "{}"'.format(name))
+            log.info(u'Creating/updating dashboard "{}"'.format(name))
             dashboard_payload = dashboard.wrap_api()
             response = self.grafana_client.dashboards.db.create(**dashboard_payload)
-            log.info('Grafana response: {response}', response=response)
+            log.info(u'Grafana response: {response}', response=response)
 
         except GrafanaPreconditionFailedError as ex:
             if 'name-exists' in ex.message or 'A dashboard with the same name already exists' in ex.message:
-                log.warn('{message}', message=ex.message)
+                log.warn(u'{message}', message=ex.message)
             else:
                 raise
 
         try:
-            log.info('Checking dashboard "{}"'.format(name))
+            log.info(u'Checking dashboard "{}"'.format(name))
             dashboard = self.grafana_client.dashboards.db[name].get()
         except GrafanaClientError as ex:
             if '404' in ex.message or 'Dashboard not found' in ex.message:
-                log.warn('{message}', message=ex.message)
+                log.warn(u'{message}', message=ex.message)
             else:
                 raise
 
     def get_dashboard(self, name):
         try:
             name = self.format_dashboard_name(name)
-            log.info('Getting dashboard "{}"'.format(name))
+            log.info(u'Getting dashboard "{}"'.format(name))
             dashboard = self.grafana_client.dashboards.db[name].get()
             return dashboard['dashboard']
         except GrafanaClientError as ex:
             if '404' in ex.message or 'Dashboard not found' in ex.message:
-                log.info('{message}', message=ex.message)
+                log.info(u'{message}', message=ex.message)
             else:
                 raise
 

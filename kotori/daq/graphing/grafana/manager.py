@@ -120,10 +120,10 @@ class GrafanaManager(MultiService, MultiServiceMixin):
         # Skip dashboard creation if it already has been created while Kotori is running
         # TODO: Improve locking to prevent race conditions.
         if self.keycache.exists(*signature):
-            log.debug('Data signature not changed, skip update of {whoami}', whoami=whoami)
+            log.debug(u'Data signature not changed, skip update of {whoami}', whoami=whoami)
             return
 
-        log.info('Provisioning Grafana {whoami}', whoami=whoami)
+        log.info(u'Provisioning Grafana {whoami}', whoami=whoami)
 
         # Create a Grafana datasource object for designated database
         datasource_name = self.create_datasource(storage_location)
