@@ -107,7 +107,14 @@ class GrafanaDashboardBuilder(object):
 
     def find_panel_by_title(self, dashboard, title):
         #print 'find panel by title:', title
-        for row in dashboard.get('rows', []):
+        schema_version = dashboard.get('schemaVersion', 6)
+
+        if schema_version >= 16:
+            rows = [dashboard]
+        elif schema_version >= 6:
+            rows = dashboard.get('rows', [])
+
+        for row in rows:
             for panel in row.get('panels', []):
                 if panel.get('title') == title:
                     return panel
@@ -121,9 +128,14 @@ class GrafanaDashboardBuilder(object):
 
     def provision_new_panels(self, dashboard, panels_new):
 
-        # compute which panels are missing
+        schema_version = dashboard.dashboard_data.get('schemaVersion', 6)
+
+        # Compute which panels are missing
         # TODO: this is hardcoded on row=0
-        panels_exists = dashboard.dashboard_data['rows'][0]['panels']
+        if schema_version >= 16:
+            panels_exists = dashboard.dashboard_data['panels']
+        elif schema_version >= 6:
+            panels_exists = dashboard.dashboard_data['rows'][0]['panels']
         panels_exists_titles = [panel['title'] for panel in panels_exists]
         panels_new_titles = [panel['title'] for panel in panels_new]
 
@@ -286,19 +298,46 @@ class GrafanaDashboard(object):
 
         self.dashboard_data = dashboard_data
 
-        # bookkeeping: which panel id to use when adding new panels
-        # if a dashboard already exists, use the maximum id currently exists as new index
+        # Bookkeeping: Which panel id to use when adding new panels?
+        # If a dashboard already exists, use the maximum id currently exists as new index.
         self.panel_id = 0
         if dashboard_data:
 
-            # FIXME: This is hardcoded on row=0
-            if dashboard_data['rows'][0]['panels'] == [None]:
-                del dashboard_data['rows'][0]['panels'][0]
+            # Debugging dashboard JSON
+            """
+            msg = '''
+            -----------------
+            title: {title}
+            datasource: {datasource}
+            dashboard_data:
+            {dashboard_data}
+            '''
+            log.info(msg, title=title, datasource=datasource, dashboard_data=pformat(dashboard_data))
+            """
 
-            panels = dashboard_data['rows'][0]['panels']
-            panel_ids = [panel['id'] for panel in panels]
-            if panel_ids:
-                self.panel_id = max(panel_ids)
+            schema_version = dashboard_data.get('schemaVersion', 6)
+            if schema_version >= 16:
+
+                # FIXME: This is hardcoded on row=0
+                if dashboard_data['panels'] == [None]:
+                    del dashboard_data['panels'][0]
+
+                panels = dashboard_data['panels']
+                panel_ids = [panel['id'] for panel in panels]
+                if panel_ids:
+                    self.panel_id = max(panel_ids)
+
+            elif schema_version >= 6:
+
+                # FIXME: This is hardcoded on row=0
+                if dashboard_data['rows'][0]['panels'] == [None]:
+                    del dashboard_data['rows'][0]['panels'][0]
+
+                panels = dashboard_data['rows'][0]['panels']
+                panel_ids = [panel['id'] for panel in panels]
+                if panel_ids:
+                    self.panel_id = max(panel_ids)
+
 
         self.tpl_dashboard = self.get_template('grafana-dashboard.json')
         self.tpl_annotation = self.get_template('grafana-annotation.json')

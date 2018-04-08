@@ -37,6 +37,7 @@ in progress
 - [grafana] Relocate template resources (.json files)
 - [grafana] Subsystem refactoring
 - [grafana] Implement sensible rules for dashboard refresh interval taming
+- [grafana] Properly talk to Grafana 5: Fix compatibility with dashboards having ``schemaVersion`` 6 (old) vs. 16 (new)
 
 
 .. _kotori-0.20.1:
