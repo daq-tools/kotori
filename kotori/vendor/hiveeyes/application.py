@@ -8,6 +8,7 @@ from kotori.daq.services import RootService
 from kotori.daq.services.mig import MqttInfluxGrafanaService
 from kotori.daq.intercom.strategies import WanBusStrategy
 from kotori.daq.graphing.grafana.manager import GrafanaManager
+from kotori.util.common import SmartBunch
 
 log = Logger()
 
@@ -19,6 +20,25 @@ class HiveeyesGrafanaManager(GrafanaManager):
         {'name': 'weight',      'prefixes': ['wght', 'weight', 'Gewicht', 'Weight'],    'label':  'kg'},
         {'name': 'volume',      'prefixes': ['volume'],                                 'label':  'dB', 'scale': 10},
     ]
+
+    def get_dashboard_identity(self, storage_location, topology=None):
+
+        # Compute effective topology information
+        topology = topology or {}
+        realm = topology.get('realm', 'default')
+        network = topology.get('network', storage_location.database)
+
+        # Derive dashboard uid and name from topology information
+        identity = SmartBunch(
+            uid=u'{realm}-{network}-instant'.format(realm=realm, network=network),
+            name=u'{realm}-{network}'.format(realm=realm, network=network),
+            title=u'{realm}-{network}'.format(realm=realm, network=network),
+            # TODO: Use real title after fully upgrading to new Grafana API (i.e. don't use get-by-slug anymore!)
+            #title=u'Hiveeyes Rohdaten im Netzwerk ' + network,
+        )
+        #print identity.prettify()
+
+        return identity
 
     def get_rule(self, fieldnames):
         """

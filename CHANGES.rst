@@ -38,6 +38,7 @@ in progress
 - [grafana] Subsystem refactoring
 - [grafana] Implement sensible rules for dashboard refresh interval taming
 - [grafana] Properly talk to Grafana 5: Fix compatibility with dashboards having ``schemaVersion`` 6 (old) vs. 16 (new)
+- [grafana] Properly compute dashboard identity. Don't use the ``uid`` field for stable addressing as it is limited to 40 characters.
 
 
 .. _kotori-0.20.1:

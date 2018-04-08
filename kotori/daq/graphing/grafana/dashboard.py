@@ -14,12 +14,12 @@ log = Logger()
 
 @attr.s
 class GrafanaDashboardModel(object):
-
-    uid = attr.ib()
     name = attr.ib()
+    title = attr.ib()
     datasource = attr.ib()
     measurement_sensors = attr.ib()
     measurement_events = attr.ib()
+    uid = attr.ib(default=None)
 
 @attr.s
 class GrafanaDashboardBuilder(object):
@@ -33,6 +33,7 @@ class GrafanaDashboardBuilder(object):
 
         dashboard_uid = self.model.uid
         dashboard_name = self.model.name
+        dashboard_title = self.model.title
         datasource = self.model.datasource
 
         # Get or create Grafana folder for stuffing all instant dashboards into
@@ -42,11 +43,14 @@ class GrafanaDashboardBuilder(object):
         # Get dashboard if already exists
         dashboard_data = self.grafana_api.get_dashboard(name=dashboard_name)
 
+        # Debugging
+        #print 'dashboard_data:'; pprint(dashboard_data)
+
         # Wrap everything into convenience object
         dashboard = GrafanaDashboard(
             channel=self.channel,
             uid=dashboard_uid,
-            title=dashboard_name,
+            title=dashboard_title,
             datasource=datasource,
             folder_id=folder_id,
             dashboard_data=dashboard_data)
@@ -98,7 +102,7 @@ class GrafanaDashboardBuilder(object):
                 if new_fields:
 
                     for new_field in sorted(new_fields):
-                        new_target = dashboard.get_target(panel=panel_new, measurement=self.model.measurement, fieldname=new_field)
+                        new_target = dashboard.get_target(panel=panel_new, measurement=self.model.measurement_sensors, fieldname=new_field)
                         new_target_json = json.loads(dashboard.build_target(new_target))
                         panel['targets'].append(new_target_json)
 
@@ -172,7 +176,7 @@ class GrafanaDashboardBuilder(object):
             for panel in panels_new:
                 panel_title = panel.get('title')
                 if panel_title in panels_missing_titles:
-                    panels_exists.append(dashboard.build_panel(panel=panel, measurement=self.model.measurement))
+                    panels_exists.append(dashboard.build_panel(panel=panel, measurement=self.model.measurement_sensors))
 
             return True
 
@@ -193,13 +197,13 @@ class GrafanaDashboardBuilder(object):
     def panel_title(self, fieldname_prefixes=None):
         """
         return u'{measurement} @ {suffix}'.format(
-            measurement = self.model.measurement,
+            measurement = self.model.measurement_sensors,
             suffix = self.panel_title_suffix())
         """
         #fieldname_prefixes = fieldname_prefixes or []
         title = self.panel_title_human()
         if not title:
-            title = self.model.measurement
+            title = self.model.measurement_sensors
 
         title_prefix = self.panel_title_prefix(fieldname_prefixes)
         if title_prefix:

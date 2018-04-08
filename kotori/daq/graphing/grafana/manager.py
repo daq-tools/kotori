@@ -87,10 +87,7 @@ class GrafanaManager(MultiService, MultiServiceMixin):
 
         return datasource_name
 
-    def provision(self, storage_location, data, topology=None):
-
-        # TODO: Get into templating, finally: Create a template variable for each InfluxDB tag
-        # TODO: Also provision a WorldMap plugin
+    def get_dashboard_identity(self, storage_location, topology=None):
 
         # Compute effective topology information
         topology = topology or {}
@@ -98,13 +95,27 @@ class GrafanaManager(MultiService, MultiServiceMixin):
         network = topology.get('network', storage_location.database)
 
         # Derive dashboard uid and name from topology information
-        dashboard_uid = realm + u'-' + network
-        dashboard_name = realm + u' ' + network
+        identity = SmartBunch(
+            #uid=u'{realm}-{network}-instant'.format(realm=realm, network=network),
+            name=u'{realm}-{network}'.format(realm=realm, network=network),
+            title=u'{realm}-{network}'.format(realm=realm, network=network),
+            # TODO: Use real title after fully upgrading to new Grafana API (i.e. don't use get-by-slug anymore!)
+            #title=u'Raw data for realm={realm} network={network}'.format(realm=realm, network=network),
+        )
+        #print identity.prettify()
+
+        return identity
+
+    def provision(self, storage_location, data, topology=None):
+
+        # TODO: Get into templating, finally: Create a template variable for each InfluxDB tag
+        # TODO: Also provision a WorldMap plugin
 
         # The identity information of this provisioning process
+        dashboard_identity = self.get_dashboard_identity(storage_location, topology)
         signature = (storage_location.database, storage_location.gateway, storage_location.node, data)
-        whoami = 'dashboard "{}" for database "{}" and measurement "{}"'.format(
-            storage_location.database, storage_location.measurement, dashboard_name)
+        whoami = u'dashboard "{dashboard_name}" for database "{database}" and measurement "{measurement}"'.format(
+            dashboard_name=dashboard_identity.name, database=storage_location.database, measurement=storage_location.measurement)
 
         # Skip dashboard creation if it already has been created while Kotori is running
         # TODO: Improve locking to prevent race conditions.
@@ -119,8 +130,9 @@ class GrafanaManager(MultiService, MultiServiceMixin):
 
         # Define Grafana dashboard model
         model = GrafanaDashboardModel(
-            uid=dashboard_uid,
-            name=dashboard_name,
+            #uid=dashboard_identity.uid,
+            name=dashboard_identity.name,
+            title=dashboard_identity.title,
             datasource=datasource_name,
             measurement_sensors=storage_location.measurement,
             measurement_events=storage_location.measurement_events
