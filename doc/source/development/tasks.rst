@@ -20,9 +20,36 @@ Kotori tasks
 
 2018-04-09
 ==========
-- [o] Hiveeyes/Grafana: When provisioning with new per-node Grafana panel, check whether datasource
+- [o] Hiveeyes/Grafana
+
+    - [o] When provisioning with new per-node Grafana panel, check whether datasource
       "WETTERDATEN" and/or "sunmoon" already exists. Otherwise, create them on demand?
-- [o] Optimize vendor.hiveeyes.application.BeekeeperFields
+    - [o] Optimize regex performance for vendor.hiveeyes.application.BeekeeperFields
+
+    - [o] Check Grafana Instant Dashboard for
+
+        - [x] https://swarm.hiveeyes.org/grafana/d/54DWrEmmz/hiveeyes-ecf35a8f-fb5e-44ad-9263-be74d318d43c-mmathome-hive_1
+        - [o] https://swarm.hiveeyes.org/grafana/d/nIDtrEimz/hiveeyes-c3664391-ac4c-41b3-97aa-66f63127471b-spielwiese-node-1
+        - [o] https://swarm.hiveeyes.org/grafana/d/6WwuXEmiz/hiveeyes-thias-thias-hive2-up::
+
+            2018-04-09T04:26:19+0200 [kotori.daq.services.mig            ] ERROR   : Grafana provisioning failed for storage=database: hiveeyes_thias
+
+                , message={'relative_humidity_1': 52.0}:
+                , message={'relative_humidity_2': 52.0}:
+                , message={'analog_in_1': -13.54}:
+                , message={'relative_humidity_2': 52.0}:
+                [Failure instance: Traceback: <class 'grafana_api_client.GrafanaPreconditionFailedError'>: Precondition failed: version-mismatch (`The dashboard has been changed by someone else`)
+                --- <exception caught here> ---
+                /opt/kotori/lib/python2.7/site-packages/kotori/daq/services/mig.py:255:process_message
+                /opt/kotori/lib/python2.7/site-packages/kotori/daq/graphing/grafana/manager.py:148:provision
+                /opt/kotori/lib/python2.7/site-packages/kotori/daq/graphing/grafana/dashboard.py:110:make
+                /opt/kotori/lib/python2.7/site-packages/kotori/daq/graphing/grafana/api.py:142:create_dashboard
+
+    - [o] Capability to **update** the new per-node instant dashboard with fields arriving from discrete telemetry data submissions
+
+- [o] Warning when building a release: "Dependency Links processing has been deprecated with an accelerated time schedule and will be removed in pip 1.6"
+- [o] After building on oasis: rm dist/*.deb
+- [o] Release fresh package for arm
 
 
 2018-04-08

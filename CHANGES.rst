@@ -5,6 +5,12 @@ Changelog
 
 in progress
 ===========
+
+
+.. _kotori-0.21.1:
+
+2018-04-09 0.21.1
+=================
 - [core] Improve unicode support
 - [core] Warn if topic could not be classified
 - [core] Add "measure" topic suffix to topic classifier to retain backwards compatibility
