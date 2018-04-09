@@ -199,7 +199,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             return
 
         else:
-            log.debug('Unknown message type on topic "{topic}" with payload "{payload}"', topic=topic, payload=payload)
+            log.warn(u'Unknown message type on topic "{topic}" with payload "{payload}"', topic=topic, payload=payload)
             return
 
         # count transaction

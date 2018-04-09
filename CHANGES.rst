@@ -6,6 +6,7 @@ Changelog
 in progress
 ===========
 - [core] Improve unicode support
+- [core] Warn if topic could not be classified
 
 
 .. _kotori-0.21.0:
