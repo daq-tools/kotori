@@ -18,11 +18,19 @@ Kotori tasks
 ****
 
 
+2018-04-09
+==========
+- [o] Hiveeyes/Grafana: When provisioning with new per-node Grafana panel, check whether datasource
+      "WETTERDATEN" and/or "sunmoon" already exists. Otherwise, create them on demand?
+- [o] Optimize vendor.hiveeyes.application.BeekeeperFields
+
+
 2018-04-08
 ==========
 - [o] Add inline implementation for a seashells.io-like functionality based on WAMP.
       While being at it, easily make it channel-based by just consuming
       the per-channel export=>json endpoint as a data feed.
+- [o] Grafana: Use human readable title again after fully upgrading to new Grafana API (i.e. don't use get-by-slug anymore!)
 
 
 2018-04-06
