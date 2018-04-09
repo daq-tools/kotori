@@ -9,6 +9,7 @@ in progress
 - [core] Warn if topic could not be classified
 - [core] Add "measure" topic suffix to topic classifier to retain backwards compatibility
 - [grafana] Properly quote measurement names for annotations in JSON templates
+- [grafana] Add "hiveeyes" tag to all instant dashboards
 
 
 .. _kotori-0.21.0:

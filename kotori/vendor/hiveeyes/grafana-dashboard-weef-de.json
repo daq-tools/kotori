@@ -5,6 +5,7 @@
   "title": "{{ title }}",
   "description": "Beekeeper cockpit derived from silver master derived from weef's version of MUC-MH-B99",
   "tags": [
+    "hiveeyes",
     "instant"
   ],
   "refresh": "5s",
