@@ -82,7 +82,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         self.metrics_twingo.start(self.metrics.interval, now=True)
 
     def log(self, level, prefix):
-        level('{prefix} {class_name}. name={name}, channel={channel}',
+        level(u'{prefix} {class_name}. name={name}, channel={channel}',
             prefix=prefix, class_name=self.__class__.__name__, name=self.name, channel=dict(self.channel))
 
     def topic_to_topology(self, topic):
@@ -132,7 +132,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             #log.info('Ignoring message to topic {topic}, realm={realm}', topic=topic, realm=self.channel.realm)
             return False
 
-        log.debug('Processing message on topic "{topic}" with payload "{payload}"', topic=topic, payload=payload)
+        log.debug(u'Processing message on topic "{topic}" with payload "{payload}"', topic=topic, payload=payload)
 
         # Compute storage address from topic
         topology = self.topic_to_topology(topic)
@@ -195,7 +195,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
         # Catch an error message
         elif message_type == MessageType.ERROR:
-            log.debug('Ignoring error message from MQTT, "{topic}" with payload "{payload}"', topic=topic, payload=payload)
+            log.debug(u'Ignoring error message from MQTT, "{topic}" with payload "{payload}"', topic=topic, payload=payload)
             return
 
         else:
@@ -255,7 +255,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
                     graphing_subsystem.provision(storage_location, message, topology=topology)
 
                 except Exception as ex:
-                    log.failure('Grafana provisioning failed for storage={storage}, message={message}:\n{log_failure}',
+                    log.failure(u'Grafana provisioning failed for storage={storage}, message={message}:\n{log_failure}',
                                 storage=storage_location, message=message,
                                 level=LogLevel.error)
 
@@ -284,13 +284,13 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         """
 
         # Log failure
-        log.failure('Processing MQTT message failed from topic "{topic}":\n{log_failure}', topic=topic, failure=failure, level=LogLevel.error)
+        log.failure(u'Processing MQTT message failed from topic "{topic}":\n{log_failure}', topic=topic, failure=failure, level=LogLevel.error)
 
         # MQTT error signalling
         self.mqtt_publish_error(failure, topic, payload)
 
     def mqtt_exception(self, failure, topic, payload):
-        log.failure('Problem publishing error message:\n{log_failure}', failure=failure, level=LogLevel.warn)
+        log.failure(u'Problem publishing error message:\n{log_failure}', failure=failure, level=LogLevel.warn)
 
     def mqtt_publish_error(self, failure, topic, payload):
         """
@@ -303,7 +303,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
         # Compute base topic of data acquisition channel
         basetopic = self.get_basetopic(topic)
-        log.debug('Channel base topic is {basetopic}', basetopic=basetopic)
+        log.debug(u'Channel base topic is {basetopic}', basetopic=basetopic)
 
         # Effective error reporting topic
         error_topic = basetopic + '/' + 'error.json'

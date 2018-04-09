@@ -5,6 +5,8 @@ Changelog
 
 in progress
 ===========
+- [core] Improve unicode support
+
 
 .. _kotori-0.21.0:
 
