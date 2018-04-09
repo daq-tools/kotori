@@ -42,6 +42,7 @@ in progress
 - [grafana] Allow unicode strings for dashboard names
 - [core] Improve log level selection when (not) running with "--debug-mqtt-driver"
 - [grafana] Allow multiple graphing subsystems/managers for a single data acquisition channel driver
+- [hiveeyes] Add per-node Grafana dashboard for beekeepers. Thanks, weef!
 
 
 .. _kotori-0.20.1:

@@ -3,13 +3,26 @@
 import json
 import delegator
 
-def run():
-    realms = ['mqttkit-1', 'hiveeyes', 'luftdaten', 'weewx']
+def publish(topic, message):
+    command = 'mosquitto_pub -h "{host}" -t "{topic}" -m \'{message}\''.format(
+        host='localhost', topic=topic, message=message)
+
+    print 'Running command: {}'.format(command)
+    delegator.run(command)
+
+def all_realms():
+    #realms = ['mqttkit-1', 'hiveeyes', 'luftdaten', 'weewx']
+    realms = ['hiveeyes']
     measurements = {"temperature": 42.84, "weight": 84.85}
     for realm in realms:
         topic = '{}/testdrive/area-42/node-1/data.json'.format(realm)
-        command = 'mosquitto_pub -h "{host}" -t "{topic}" -m \'{message}\''.format(
-            host='localhost', topic=topic, message=json.dumps(measurements))
+        publish(topic, json.dumps(measurements))
 
-        print 'Running command: {}'.format(command)
-        delegator.run(command)
+def run():
+
+    # Publish something to all configured realms
+    #all_realms()
+
+    # Publish something to the "hiveeyes" realm
+    data = json.dumps({u'Gewicht 1': 5.0, u'Gewicht Total': 42.42, u'Außentemperatur': 32.32})
+    publish('hiveeyes/testdrive/area-42/node-1/data.json', data)
