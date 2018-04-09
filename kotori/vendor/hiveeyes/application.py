@@ -143,7 +143,8 @@ class HiveeyesBeehiveGrafanaManager(GrafanaManager):
             name=self.strategy.topology_to_label(topology),
             title=self.strategy.topology_to_label(topology),
             # TODO: Use real title after fully upgrading to new Grafana API (i.e. don't use get-by-slug anymore!)
-            #title=u'Hiveeyes Umweltcockpit für Meßknoten {nodename} im Netzwerk {network}'.format(nodename=nodename, network=network),
+            # title=u'Hiveeyes Umweltcockpit für Meßknoten {nodename} im Netzwerk {network}'.format(nodename=nodename, network=network),
+            # title=u'Hiveeyes Ertragscockpit für Meßknoten {nodename} im Netzwerk {network}'.format(nodename=nodename, network=network),
         )
         #print identity.prettify()
 
@@ -172,8 +173,9 @@ class HiveeyesBeehiveGrafanaManager(GrafanaManager):
         # Create a Grafana datasource object for designated database
         datasource_name = self.create_datasource(storage_location)
 
-        # Try to guess designated field names from message payload
-        computed_fields = BeekeeperFields(fieldnames=message.keys()).classify()
+        # Try to classify designated field names from field names in message payload
+        fieldnames = sorted(message.keys())
+        computed_fields = BeekeeperFields(fieldnames=fieldnames).classify()
 
         # Create appropriate Grafana dashboard
         data_dashboard = {
@@ -230,12 +232,12 @@ class BeekeeperFields(object):
 
         weight_synonyms = u'(weight|wght|gewicht)'
         temperature_synonyms = u'(temperature|temp|temperatur)'
-        outside_synonyms = u'(outside|out|air|entry|außen)'
+        outside_synonyms = u'(outside|out|air|außen|aussen)'
 
         candidates = {
             'weight_total': [
-                self.from_words(weight_synonyms, 'total'),
-                self.from_words(weight_synonyms),
+                self.from_words(weight_synonyms, 'total', exclude=['stddev']),
+                self.from_words(weight_synonyms, exclude=['stddev']),
             ],
             'temperature_outside': [
                 self.from_words(temperature_synonyms, outside_synonyms),
@@ -254,16 +256,29 @@ class BeekeeperFields(object):
             if fieldname is not None:
                 results[name] = fieldname
 
-        log.info(u'Classified beekeeper fields "{fields}" from "{fieldnames}"', fields=results, fieldnames=self.fieldnames)
+        log.info(u'Classified beekeeper fields "{fields}" from "{fieldnames}"', fields=results.dump(), fieldnames=self.fieldnames)
 
         return results
 
     @staticmethod
-    def from_words(*words):
-        # (?=^.*?foo.*$)(?=^.*?bar.*$)(?=^.*?green.*$)^.*$
+    def from_words(*words, **kwargs):
+        """
+        Positive and Negative Lookahead
+        https://www.regular-expressions.info/lookaround.html
+
+        Positive lookahead
+        Synopsis: q(?=u)
+        Example:  (?=^.*?foo.*$)(?=^.*?bar.*$)(?=^.*?green.*$)^.*$
+
+        Negative lookahead
+        Synopsis: q(?!u)
+        """
         patterns = []
         for word in words:
             patterns.append(u'(?=^.*?{word}.*$)'.format(word=word))
+        if 'exclude' in kwargs:
+            for word in kwargs['exclude']:
+                patterns.append(u'(?!^.*?{word}.*$)'.format(word=word))
         pattern = u''.join(patterns) + u'^.*$'
         return pattern
 

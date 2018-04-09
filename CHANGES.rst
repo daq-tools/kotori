@@ -10,6 +10,7 @@ in progress
 - [core] Add "measure" topic suffix to topic classifier to retain backwards compatibility
 - [grafana] Properly quote measurement names for annotations in JSON templates
 - [grafana] Add "hiveeyes" tag to all instant dashboards
+- [:ref:`vendor-hiveeyes`] Improve per-node Grafana dashboard re. field name classification
 
 
 .. _kotori-0.21.0:
