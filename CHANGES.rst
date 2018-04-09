@@ -5,18 +5,39 @@ Changelog
 
 in progress
 ===========
-- [doc] Update documentation
-- [doc] Use ptrace.getkotori.org for documentation media assets
-- [doc] Correct GitHub repository url
-- [grafana] Improve Grafana dashboard builder in the context of Hiveeyes
+
+.. _kotori-0.21.0:
+
+2018-04-09 0.21.0
+=================
+- [core] Improve component loading robustness
+- [core] Improve log level selection when (not) running with "--debug-mqtt-driver"
+- [code] Module namespace refactoring
+- [io] Make MQTT client identifier more unique by adding process id
+- [io] Improve resiliency when connecting to InfluxDB and Grafana
+- [io] Fix MQTT error signalling
 - [import] Also accept the CSV field "Date" as field containing timestamp information
-- [firmware builder] Add “esp_root” configuration variable to example configuration file
-- [io] Add comments to MqttInfluxGrafanaService regarding ingress data enrichment
+- [command] Add ``kotori-selftest`` program, still in its infancy
+- [firmware builder] Add "esp_root" configuration variable to example configuration file
 - [package] Improve list of suggested packages to ease installing on more modern Debian distributions
-- [doc] Add documentation about Nginx reverse proxy setup
 - [env] Switch development environment from Docker to native
-- [io] Make MQTT client identifier even more unique by adding process id
-- [feed] Improve ``luftdaten-to-mqtt`` of [:ref:`vendor-luftdaten.info`]
+
+- [grafana]
+
+    - Improve Grafana dashboard builder in the context of Hiveeyes
+    - Use specific Grafana folder for stuffing instant dashboards into
+    - Use topology information for deriving unique dashboard id from
+    - Add basic mechanisms for taming the dashboard refresh interval
+    - Refactoring. Robustness. Run GrafanaManager as service. Add worker service for taming dashboard refresh intervals.
+    - Relocate template resources (.json files)
+    - Subsystem refactoring
+    - Implement sensible rules for dashboard refresh interval taming
+    - Properly talk to Grafana 5: Fix compatibility with dashboards having ``schemaVersion`` 6 (old) vs. 16 (new)
+    - Properly compute dashboard identity. Don't use the ``uid`` field for stable addressing as it is limited to 40 characters.
+    - Allow unicode strings for dashboard names
+    - Allow multiple graphing subsystems/managers for a single data acquisition channel driver
+
+- [:ref:`vendor-luftdaten.info`] Improve `luftdaten_api_to_mqtt.py`_
 
     - Add option ``--dry-run``
     - Fix filtering by station id
@@ -24,34 +45,25 @@ in progress
     - Use "appdirs" module for computing cache location
     - Report about cache location at startup
 
-- [doc] Add installation instructions for Mac OS X
-- [io] Improve resiliency when connecting to InfluxDB and Grafana
-- [io] Fix MQTT error signalling
-- [grafana] Use specific Grafana folder for stuffing instant dashboards into
-- [grafana] Use topology information for deriving unique dashboard id from
-- [grafana] Add basic mechanisms for taming the dashboard refresh interval
-- [core] Improve component loading robustness
-- [grafana] Refactoring. Robustness. Run GrafanaManager as service. Add worker service for taming dashboard refresh intervals.
-- [command] Add ``kotori-selftest`` program, still in its infancy
-- [code] Namespace refactoring
-- [grafana] Relocate template resources (.json files)
-- [grafana] Subsystem refactoring
-- [grafana] Implement sensible rules for dashboard refresh interval taming
-- [grafana] Properly talk to Grafana 5: Fix compatibility with dashboards having ``schemaVersion`` 6 (old) vs. 16 (new)
-- [grafana] Properly compute dashboard identity. Don't use the ``uid`` field for stable addressing as it is limited to 40 characters.
-- [grafana] Allow unicode strings for dashboard names
-- [core] Improve log level selection when (not) running with "--debug-mqtt-driver"
-- [grafana] Allow multiple graphing subsystems/managers for a single data acquisition channel driver
-- [hiveeyes] Add per-node Grafana dashboard for beekeepers. Thanks, weef!
+- [:ref:`vendor-hiveeyes`] Add per-node Grafana dashboard for beekeepers. Thanks, weef!
+
+- [doc]
+
+    - Add comments to MqttInfluxGrafanaService regarding ingress data enrichment
+    - Use ptrace.getkotori.org for documentation media assets
+    - Correct GitHub repository url
+    - Add documentation about Nginx reverse proxy setup
+    - Add installation instructions for Mac OS X
+
 
 
 .. _kotori-0.20.1:
 
 2017-05-05 0.20.1
 =================
-- Fix raw data export
-- Properly apply charset encoding for data export
-- Update documentation for vendors :ref:`vendor-luftdaten.info` and :ref:`vendor-weewx`
+- [export] Fix raw data export
+- [export] Properly apply charset encoding for data export
+- [doc] Update documentation for vendors :ref:`vendor-luftdaten.info` and :ref:`vendor-weewx`
 
 
 .. _kotori-0.20.0:
