@@ -7,6 +7,7 @@ in progress
 ===========
 - [core] Improve unicode support
 - [core] Warn if topic could not be classified
+- [grafana] Properly quote measurement names for annotations in JSON templates
 
 
 .. _kotori-0.21.0:

@@ -67,7 +67,7 @@
         "iconColor": "rgba(255, 96, 96, 1)",
         "limit": 100,
         "name": "Beobachtungen und Eingriffe anzeigen",
-        "query": "SELECT * FROM {{ measurement_events }} WHERE $timeFilter",
+        "query": "SELECT * FROM \"{{ measurement_events }}\" WHERE $timeFilter",
         "showIn": 0,
         "tags": [],
         "tagsColumn": "tags",
