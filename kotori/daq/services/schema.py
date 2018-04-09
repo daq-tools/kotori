@@ -31,7 +31,7 @@ class TopicPatterns:
     discrete = [
         # Discrete value
         # {base}/data/temperature
-        '/data/[^/]+',
+        '/(data|measure)/[^/]+',
     ]
 
     event = [
