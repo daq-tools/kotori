@@ -55,11 +55,13 @@ def hiveeyes_testcases():
 
 
     # Special characters in topic name
+    """
     data = json.dumps({"Weight Total StdDev": -0.017, "Temperature 3 Inside": "  7.00", "Humidity Outside": "99.90",
                        "Temperature 8 Outside": "3.60", "Temperature 1 Inside": "  6.69", "Temperature 2 Inside": "  3.56",
                        "Yield Sum": -0.821, "Weight Total": 25.599, "Weight 1": 4.827, "Weight 2": 8.45, "Weight 3": 5.202,
                        "Weight 4": 7.12})
     publish('hiveeyes/testdrive/area@42/node-5/data.json', data)
+    """
 
 
 def run():
@@ -68,4 +70,9 @@ def run():
     #all_realms()
 
     # Runbook for some acquisition feeds arriving for the "hiveeyes" realm
-    hiveeyes_testcases()
+    #hiveeyes_testcases()
+
+    # weewx problem
+    # 2018-04-09T07:20:15+0200 [kotori.daq.services.mig            ] WARN    : Unknown message type on topic "pressure_mbar" with payload "937.860347662"
+    # weewx/097287c4-6fb0-4aeb-a095-00d65ecb15f7/Leoni/VantagePro2/pressure_mbar 937.860347662
+    publish('weewx/testdrive/area-42/node-1/pressure_mbar', 937.860347662)

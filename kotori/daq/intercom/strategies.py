@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2017 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2015-2018 Andreas Motl, <andreas@getkotori.org>
 import re
-from bunch import Bunch
+from kotori.util.common import SmartBunch
+
 
 class WanBusStrategy(object):
 
@@ -51,7 +52,7 @@ class WanBusStrategy(object):
         p = re.compile(pattern)
         m = p.match(topic)
         if m:
-            address = Bunch(m.groupdict())
+            address = SmartBunch(m.groupdict())
         else:
             address = {}
 
@@ -89,7 +90,7 @@ class WanBusStrategy(object):
             suffix = 'unknown'
 
         # Use topology information as blueprint for storage address
-        storage = Bunch(topology)
+        storage = SmartBunch(topology)
 
         # Format and sanitize all input parameters used for database addressing
         sanitize = self.sanitize_db_identifier

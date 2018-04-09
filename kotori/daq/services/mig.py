@@ -199,7 +199,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             return
 
         else:
-            log.warn(u'Unknown message type on topic "{topic}" with payload "{payload}"', topic=topic, payload=payload)
+            log.debug(u'Unknown message type on topic "{topic}" with payload "{payload}", ignoring.', topic=topic, payload=payload)
             return
 
         # count transaction
@@ -256,7 +256,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
                 except Exception as ex:
                     log.failure(u'Grafana provisioning failed for storage={storage}, message={message}:\n{log_failure}',
-                                storage=storage_location, message=message,
+                                storage=storage_location.dump(), message=message,
                                 level=LogLevel.error)
 
                     # MQTT error signalling
