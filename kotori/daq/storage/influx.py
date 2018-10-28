@@ -152,7 +152,7 @@ class InfluxDBAdapter(object):
 
         # Extract timestamp field from data
         chunk['time_precision'] = 'n'
-        for time_field in ['time', 'dateTime']:
+        for time_field in ['time', 'datetime', 'dateTime']:
             if time_field in data:
 
                 if data[time_field]:

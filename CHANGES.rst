@@ -5,6 +5,7 @@ Changelog
 
 in progress
 ===========
+- [io] Add "datetime" field to list of valid timestamp fields on data ingress
 
 
 .. _kotori-0.21.1:
