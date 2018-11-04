@@ -6,6 +6,7 @@ Changelog
 in progress
 ===========
 - [io] Add "datetime" field to list of valid timestamp fields on data ingress
+- [:ref:`vendor-luftdaten.info`] Rename "luftdaten-to-mqtt" to "luftdatenpumpe"
 
 
 .. _kotori-0.21.1:
@@ -51,7 +52,7 @@ in progress
     - Allow unicode strings for dashboard names
     - Allow multiple graphing subsystems/managers for a single data acquisition channel driver
 
-- [:ref:`vendor-luftdaten.info`] Improve `luftdaten_api_to_mqtt.py`_
+- [:ref:`vendor-luftdaten.info`] Improve `luftdatenpumpe.py`_
 
     - Add option ``--dry-run``
     - Fix filtering by station id
@@ -122,7 +123,7 @@ in progress
 =================
 - Fix variable naming, references, data conversion and exception handling
 - Attempt to improve InfluxDB write performance
-- luftdaten-to-mqtt: Configure Nominatim cache directory conditionally
+- luftdatenpumpe: Configure Nominatim cache directory conditionally
 
 
 .. _kotori-0.18.0:
@@ -133,7 +134,7 @@ in progress
 - :ref:`vendor-luftdaten.info`:
 
     - Add geospatial data acquisition capabilities
-    - Improve `luftdaten_api_to_mqtt.py`_:
+    - Improve `luftdatenpumpe.py`_:
 
         - Generic commandline interface
         - Caching for Nominatim responses
@@ -159,7 +160,7 @@ in progress
 
 2017-04-19 0.16.0
 =================
-- Add standalone program “`luftdaten_api_to_mqtt.py`_”
+- Add standalone program “`luftdatenpumpe.py`_”
   to request data from `live data API of luftdaten.info <https://api.luftdaten.info/static/v1/data.json>`_,
   enrich geospatial information and publish to MQTT bus. Thanks, Richard!
 - Add documentation and configuration for vendor :ref:`vendor-luftdaten.info`. Thanks again, Richard!

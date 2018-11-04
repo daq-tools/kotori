@@ -201,7 +201,7 @@ setup(name='kotori',
               'h2m-csv-udp-client  = kotori.vendor.hydro2motion.client:run_udp_client',
               'h2m-csv-udp-fuzzer  = kotori.vendor.hydro2motion.client:run_udp_fuzzer',
               'lst-message         = kotori.vendor.lst.shell:message',
-              'luftdaten-to-mqtt   = kotori.vendor.luftdaten.luftdaten_api_to_mqtt:main',
+              'luftdatenpumpe      = kotori.vendor.luftdaten.luftdatenpumpe:main',
               'kotori-selftest     = kotori.vendor.selftest:run',
           ],
           'paste.app_factory': [

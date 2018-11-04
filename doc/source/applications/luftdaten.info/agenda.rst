@@ -113,7 +113,7 @@ Import CSV data (see above).
 Phase 2
 =======
 Feed data from live data API https://api.luftdaten.info/static/v1/data.json to MQTT using
-`api_to_mqtt.py <https://github.com/zerotired/kotori/blob/master/kotori/vendor/luftdaten/api_to_mqtt.py>`_.
+`luftdatenpumpe.py <https://github.com/zerotired/kotori/blob/master/kotori/vendor/luftdaten/luftdatenpumpe.py>`_.
 
 [29.03.17 16:44:09] Richard Pobering: ping. ich habe das dashboard jetzt inhaltlich nochmal ein bisschen angepasst:
 
@@ -132,7 +132,7 @@ Todo
 - Live data convergence by polling on https://api.luftdaten.info/static/v1/data.json,
   see also https://github.com/opendata-stuttgart/sensors-software/issues/33
 - Resolve geohash to regional/city name
-- Migrate new routines from (luftdaten.info) api_to_mqtt.py into Kotori
+- Migrate new routines from (luftdaten.info) ``luftdatenpumpe.py`` into Kotori
 - Kotori: Re-create database when ERROR: Error processing MQTT message from topic "luftdaten/testdrive/earth/42/data.json": [Failure instance: Traceback: <class 'influxdb.exceptions.InfluxDBClientError'>: 404: {"error":"database not found: \"luftdaten_testdrive\""}
 - Worldmap Plugin:
 

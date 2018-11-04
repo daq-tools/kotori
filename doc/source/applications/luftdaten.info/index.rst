@@ -56,7 +56,7 @@ Demo
 
 LuftdatenPumpe
 ==============
-The main workhorse, `luftdaten-to-mqtt`_ requests data from the live API of luftdaten.info each 10 minutes,
+The main workhorse, `luftdatenpumpe`_ requests data from the live API of luftdaten.info each 10 minutes,
 enriches it with geographic location information (reverse geocoding) and republishes its results to the MQTT bus.
 Kotori picks it up from there, stores it into InfluxDB with appropriate tags as pivot points and
 adds a corresponding Grafana_ dashboard for data visualization.
@@ -70,7 +70,7 @@ outlined `here <https://github.com/opendata-stuttgart/sensors-software/issues/33
     | Live data can be found here: https://api.luftdaten.info/static/v1/data.json
     | This file is updated every minute and contains all sensors and values sent to the server in the last 5 minutes.
 
-`luftdaten-to-mqtt`_ is such a "translator" and can be used as an universal MQTT forwarder.
+`luftdatenpumpe`_ is such a "translator" and can be used as an universal MQTT forwarder.
 
 
 *************************
@@ -166,26 +166,26 @@ Activate `luftdaten.ini <https://github.com/daq-tools/kotori/blob/master/etc/exa
 
 LuftdatenPumpe
 ==============
-`luftdaten-to-mqtt`_ requests data from the live API of luftdaten.info,
+`luftdatenpumpe`_ requests data from the live API of luftdaten.info,
 enriches it with geospatial information and republishes it to the MQTT bus.
 
 Synopsis
 --------
 ::
 
-    /opt/kotori/bin/luftdaten-to-mqtt --mqtt-uri mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json --geohash --reverse-geocode --progress
-    2017-04-22 03:55:50,426 [kotori.vendor.luftdaten.luftdaten_api_to_mqtt] INFO   : Publishing data to MQTT URI mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json
-    2017-04-22 03:55:51,396 [kotori.vendor.luftdaten.luftdaten_api_to_mqtt] INFO   : Timestamp of first record: 2017-04-22T01:50:02Z
+    /opt/kotori/bin/luftdatenpumpe --mqtt-uri mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json --geohash --reverse-geocode --progress
+    2017-04-22 03:55:50,426 [kotori.vendor.luftdaten.luftdatenpumpe] INFO   : Publishing data to MQTT URI mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json
+    2017-04-22 03:55:51,396 [kotori.vendor.luftdaten.luftdatenpumpe] INFO   : Timestamp of first record: 2017-04-22T01:50:02Z
     100%|..........................................................................| 6782/6782 [01:01<00:00, 109.77it/s]
 
 Run each 10 minutes
 -------------------
-``/etc/cron.d/luftdaten-to-mqtt``::
+``/etc/cron.d/luftdatenpumpe``::
 
-    # /etc/cron.d/luftdaten-to-mqtt -- forward data from luftdaten.info json api to mqtt
+    # /etc/cron.d/luftdatenpumpe -- forward data from luftdaten.info json api to mqtt
 
-    # run luftdaten-to-mqtt each 10 minutes
-    */10 * * * * root /opt/kotori/bin/luftdaten-to-mqtt --mqtt-uri mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json --geohash --reverse-geocode --progress
+    # run luftdatenpumpe each 10 minutes
+    */10 * * * * root /opt/kotori/bin/luftdatenpumpe --mqtt-uri mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json --geohash --reverse-geocode --progress
 
 
 *****
@@ -199,7 +199,7 @@ Subscribe to the luftdaten.info feed on MQTT::
 
 Start feeding measurements::
 
-    luftdaten-to-mqtt --mqtt-uri mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json --geohash --reverse-geocode --progress
+    luftdatenpumpe --mqtt-uri mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json --geohash --reverse-geocode --progress
 
 Data payloads will be per-sensor in JSON format, enriched by geographic location information.
 
@@ -226,7 +226,7 @@ Agenda
 
     All acquisition infrastructure for reading the :ref:`daq-http-csv` is in place already,
     but there is still some data munging required. To get results of similar richness as the live data import,
-    some parts of the code should be refactored from the `luftdaten-to-mqtt`_ program to the internal data
+    some parts of the code should be refactored from the `luftdatenpumpe`_ program to the internal data
     acquisition routines to provide things like reverse geocoding also when importing raw CSV files.
 
 .. todo::
@@ -243,6 +243,6 @@ Agenda
 .. _Source - theguardian.com 2017: https://www.theguardian.com/cities/2017/mar/02/stuttgart-residents-sue-mayor-bodily-harm-air-pollution
 .. _Kotori: https://getkotori.org
 .. _luftdaten.info API: https://api.luftdaten.info/static/v1/data.json
-.. _luftdaten-to-mqtt: https://github.com/daq-tools/kotori/blob/master/kotori/vendor/luftdaten/luftdaten_api_to_mqtt.py
+.. _luftdatenpumpe: https://github.com/daq-tools/kotori/blob/master/kotori/vendor/luftdaten/luftdatenpumpe.py
 .. _feinstaub-api: https://github.com/opendata-stuttgart/feinstaub-api
 

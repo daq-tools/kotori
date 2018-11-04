@@ -19,9 +19,9 @@ from urlparse import urlsplit
 from beaker.cache import CacheManager
 from geopy.geocoders import Nominatim
 """
-=================
-luftdaten-to-mqtt
-=================
+==============
+Luftdatenpumpe
+==============
 
 
 About
@@ -53,10 +53,10 @@ Synopsis
 ========
 ::
 
-    luftdaten-to-mqtt --mqtt-uri mqtt://mqtt.example.org/luftdaten.info --progress
+    luftdatenpumpe forward --mqtt-uri mqtt://mqtt.example.org/luftdaten.info --progress
 
-    2017-04-22 03:53:47,947 [kotori.vendor.luftdaten.luftdaten_api_to_mqtt] INFO   : Publishing data to MQTT URI mqtt://mqtt.example.org/luftdaten.info
-    2017-04-22 03:53:49,012 [kotori.vendor.luftdaten.luftdaten_api_to_mqtt] INFO   : Timestamp of first record: 2017-04-22T01:48:02Z
+    2017-04-22 03:53:47,947 [kotori.vendor.luftdaten.luftdatenpumpe] INFO   : Publishing data to MQTT URI mqtt://mqtt.example.org/luftdaten.info
+    2017-04-22 03:53:49,012 [kotori.vendor.luftdaten.luftdatenpumpe] INFO   : Timestamp of first record: 2017-04-22T01:48:02Z
     100%|..........................................................................| 6617/6617 [00:01<00:00, 4184.30it/s]
 
 Result (reformatted for better readability)::
@@ -76,7 +76,7 @@ With authentication
 -------------------
 ::
 
-    luftdaten-to-mqtt --mqtt-uri mqtt://username:password@mqtt.example.org/luftdaten.info
+    luftdatenpumpe forward --mqtt-uri mqtt://username:password@mqtt.example.org/luftdaten.info
 
 
 WAN topology
@@ -99,10 +99,10 @@ Suitable for data acquisition with Kotori and InfluxDB. Display with Grafana Wor
 
 Publisher::
 
-    luftdaten-to-mqtt --mqtt-uri mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json --geohash --reverse-geocode --progress
+    luftdatenpumpe forward --mqtt-uri mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json --geohash --reverse-geocode --progress
 
-    2017-04-22 03:55:50,426 [kotori.vendor.luftdaten.luftdaten_api_to_mqtt] INFO   : Publishing data to MQTT URI mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json
-    2017-04-22 03:55:51,396 [kotori.vendor.luftdaten.luftdaten_api_to_mqtt] INFO   : Timestamp of first record: 2017-04-22T01:50:02Z
+    2017-04-22 03:55:50,426 [kotori.vendor.luftdaten.luftdatenpumpe] INFO   : Publishing data to MQTT URI mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json
+    2017-04-22 03:55:51,396 [kotori.vendor.luftdaten.luftdatenpumpe] INFO   : Timestamp of first record: 2017-04-22T01:50:02Z
     100%|..........................................................................| 6782/6782 [01:01<00:00, 109.77it/s]
 
 Subscriber::
@@ -148,15 +148,15 @@ cache_options = {
 }
 cache = CacheManager(**cache_options)
 
-APP_NAME    = 'luftdaten-to-mqtt'
+APP_NAME    = 'luftdatenpumpe'
 APP_VERSION = '0.2.1'
 
 def main():
     """
     Usage:
-      luftdaten-to-mqtt --mqtt-uri mqtt://mqtt.example.org/luftdaten.info [--geohash] [--reverse-geocode] [--progress] [--sensorIds=<sensorIds>] [--debug] [--dry-run]
-      luftdaten-to-mqtt --version
-      luftdaten-to-mqtt (-h | --help)
+      luftdatenpumpe forward --mqtt-uri mqtt://mqtt.example.org/luftdaten.info [--geohash] [--reverse-geocode] [--progress] [--sensorIds=<sensorIds>] [--debug] [--dry-run]
+      luftdatenpumpe --version
+      luftdatenpumpe (-h | --help)
 
     Options:
       --mqtt-uri=<mqtt-uri>         Use specified MQTT broker
@@ -172,10 +172,13 @@ def main():
     Examples:
 
       # Publish data to topic "luftdaten.info" at MQTT broker "mqtt.example.org"
-      luftdaten-to-mqtt --mqtt-uri mqtt://mqtt.example.org/luftdaten.info
+      luftdatenpumpe forward --mqtt-uri mqtt://mqtt.example.org/luftdaten.info
+
+      # Publish fully enriched data for multiple sensor ids
+      luftdatenpumpe forward --mqtt-uri mqtt://mqtt.example.org/luftdaten.info --geohash --reverse-geocode --sensorIds=2115,2116
 
       # Publish data suitable for displaying in Grafana Worldmap Panel using Kotori
-      luftdaten-to-mqtt --mqtt-uri mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json --geohash --reverse-geocode --progress
+      luftdatenpumpe forward --mqtt-uri mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json --geohash --reverse-geocode --progress
 
     """
 
