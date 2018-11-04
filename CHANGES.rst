@@ -10,6 +10,7 @@ in progress
 - luftdatenpumpe: Filter by numeric sensor- and location-identifiers in forwarding mode
 - luftdatenpumpe: Implement "stations" subcommand
 - luftdatenpumpe: Prevent duplicate successors in address segments
+- luftdatenpumpe: Compute location name from blurred geohash
 
 
 .. _kotori-0.21.1:

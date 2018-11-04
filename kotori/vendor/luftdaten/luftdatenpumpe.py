@@ -149,7 +149,7 @@ cache_options = {
 cache = CacheManager(**cache_options)
 
 APP_NAME    = 'luftdatenpumpe'
-APP_VERSION = '0.2.1'
+APP_VERSION = '0.3.0'
 
 def main():
     """
@@ -315,21 +315,38 @@ class LuftdatenPumpe:
 
             # Insert geo data
             if self.geohash:
-                reading['geohash'] = geohash(item['location']['latitude'], item['location']['longitude'])
-                altitude = item['location']['altitude']
+
+                blur = True
+
+                # Compute geohash
+                reading['geohash'] = geohash_encode(item['location']['latitude'], item['location']['longitude'])
+
+                # Blur a bit
+                if blur:
+                    reading['geohash'] = reading['geohash'][:-3]
+
                 try:
+                    altitude = item['location']['altitude']
                     reading['altitude'] = float(altitude)
                 except:
-                    log.error('Problem converting %s to float', altitude)
+                    log.error('Problem reading altitude value')
 
             # Human readable location name
             if self.reverse_geocode:
                 try:
-                    reading['location_name'] = reverse_geocode(item['location']['latitude'], item['location']['longitude'])
+                    if 'geohash' in reading:
+                        location_name = reverse_geocode(geohash=reading['geohash'])
+                    else:
+                        location_name = reverse_geocode(
+                            latitude=item['location']['latitude'],
+                            longitude=item['location']['longitude'])
+                    reading['location_name'] = location_name
+
                 except Exception as ex:
                     pass
 
             #reading['__item__'] = item
+            log.debug('Reading: %s', reading)
 
             yield reading
 
@@ -399,17 +416,25 @@ class LuftdatenPumpe:
         self.mqtt.publish(mqtt_message)
 
 
-def geohash(latitude, longitude):
+def geohash_encode(latitude, longitude):
     return Geohash.encode(float(latitude), float(longitude))
+
+
+def geohash_decode(geohash):
+    return Geohash.decode(geohash)
 
 
 # Cache responses from Nominatim for 3 months
 @cache.cache(expire = 60 * 60 * 24 * 30 * 3)
-def reverse_geocode(latitude, longitude):
+def reverse_geocode(latitude=None, longitude=None, geohash=None):
     """
     # Done: Use memoization! Maybe cache into MongoDB as well using Beaker.
     # TODO: Or use a local version of Nomatim: https://wiki.openstreetmap.org/wiki/Nominatim/Installation
     """
+
+    if geohash is not None:
+        latitude, longitude = geohash_decode(geohash)
+
     try:
         # 2018-03-24
         # Nominatim expects the User-Agent as HTTP header otherwise it returns a HTTP-403.
