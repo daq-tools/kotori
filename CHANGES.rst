@@ -9,6 +9,7 @@ in progress
 - [:ref:`vendor-luftdaten.info`] Rename "luftdaten-to-mqtt" to "luftdatenpumpe"
 - luftdatenpumpe: Filter by numeric sensor- and location-identifiers in forwarding mode
 - luftdatenpumpe: Implement "stations" subcommand
+- luftdatenpumpe: Prevent duplicate successors in address segments
 
 
 .. _kotori-0.21.1:

@@ -425,10 +425,12 @@ def reverse_geocode(latitude, longitude):
 
         position_string = '{}, {}'.format(float(latitude), float(longitude))
         location = geolocator.reverse(position_string)
+
     except Exception as ex:
         name = ex.__class__.__name__
         log.error('Reverse geocoding failed: {}: {}. lat={}, lon={}'.format(name, ex, latitude, longitude))
         raise
+
     finally:
         # Obey to fair use policy (an absolute maximum of 1 request per second).
         # https://operations.osmfoundation.org/policies/nominatim/
@@ -495,7 +497,10 @@ def reverse_geocode(latitude, longitude):
     address_parts = []
     for address_field in address_fields:
         if address_field in address:
-            address_parts.append(address[address_field])
+            next_field = address[address_field]
+            if address_parts and next_field == address_parts[-1]:
+                continue
+            address_parts.append(next_field)
 
     try:
         location_label = ', '.join(address_parts).encode('utf-8')
