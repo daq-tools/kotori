@@ -310,6 +310,7 @@ class LuftdatenPumpe:
         mqtt_message = json.dumps(measurement, sort_keys=True)
         self.mqtt.publish(mqtt_message)
 
+
 def geohash(latitude, longitude):
     return Geohash.encode(float(latitude), float(longitude))
 
@@ -401,7 +402,8 @@ def reverse_geocode(latitude, longitude):
     # Uppercase country code
     address['country_code'] = address['country_code'].upper()
 
-    address_fields = ['road', 'city', 'state', 'country_code']
+    # Build display location from components
+    address_fields = ['road', 'suburb', 'city', 'state', 'country_code']
     address_parts = []
     for address_field in address_fields:
         if address_field in address:
