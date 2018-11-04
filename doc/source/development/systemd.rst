@@ -54,7 +54,7 @@ systemd service
 
    Amend ``/usr/lib/systemd/system/kotori.service`` and adapt path to executable to ``/usr/local/sbin/kotori`` in ExecStart
 
-.. attention:: Symlinking does not work in any case! See also:
+.. attention:: Symlinking does not always work! See also:
 
     | systemctl enable fails for symlinks in /etc/systemd/system
     | https://bugzilla.redhat.com/show_bug.cgi?id=955379

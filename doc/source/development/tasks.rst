@@ -18,6 +18,43 @@ Kotori tasks
 ****
 
 
+2018-10-13
+==========
+::
+
+    hiveeyes/testdrive/sandsjo/data.json {"weight":33.33,"temperature1":42.42,"humidity1":84.84,"battery_level":50}
+    hiveeyes/testdrive/sandsjo/error.json {
+        "timestamp": "2018-10-13T18:51:10+00:00",
+        "message": "'NoneType' object has no attribute 'startswith'",
+        "type": "<type 'exceptions.AttributeError'>",
+        "description": "Error processing MQTT message \"{\"weight\":33.33,\"temperature1\":42.42,\"humidity1\":84.84,\"battery_level\":50}\" from topic \"hiveeyes/testdrive/sandsjo/data.json\"."
+    }
+
+
+2018-09-05
+==========
+- Introduce AMQP data acquisition
+- Introduce OpenDDS data acquisition
+
+    - http://opendds.org/
+    - http://mnb.ociweb.com/mnb/MiddlewareNewsBrief-201004.html
+    - https://serverfault.com/questions/80679/how-to-pick-between-rabbitmq-and-zeromq-or-something-else
+
+
+2018-04-11
+==========
+- [o] Wrong error channel::
+
+    hiveeyes/kh/cfb/hive1/measure/airhumidity_outside (null)
+    hiveeyes/kh/cfb/hive1/measure/airhumidity_outside/error.json
+        {
+        "timestamp": "2018-04-10T12:09:18+00:00",
+        "message": "could not convert string to float: ",
+        "type": "<type 'exceptions.ValueError'>",
+        "description": "Error processing MQTT message \"\" from topic \"hiveeyes/kh/cfb/hive1/measure/airhumidity_outside\"."
+        }
+
+
 2018-04-09
 ==========
 - [o] Hiveeyes/Grafana
@@ -50,6 +87,15 @@ Kotori tasks
 - [o] Warning when building a release: "Dependency Links processing has been deprecated with an accelerated time schedule and will be removed in pip 1.6"
 - [o] After building on oasis: rm dist/*.deb
 - [o] Release fresh package for arm
+- [o] Does the Grafana refresh interval tamer really run and work properly?
+- [o] Improve wording of MQTT error signalling::
+
+    hiveeyes/kh/cfb/hive1/measure/airhumidity_outside/error.json {
+        "timestamp": "2018-04-09T05:56:42+00:00",
+        "message": "could not convert string to float: ",
+        "type": "<type 'exceptions.ValueError'>",
+        "description": "Error processing MQTT message \"\" from topic \"hiveeyes/kh/cfb/hive1/measure/airhumidity_outside\"."
+    }
 
 
 2018-04-08
@@ -94,7 +140,7 @@ Kotori tasks
 
 2018-04-02
 ==========
-- [x] Let "luftdaten-to-mqtt" report about its cache location
+- [x] Let "luftdatenpumpe" report about its cache location
 - [o] Reduce default refresh time for Grafana panels.
       But how? What we really want is to keep the instant-on effect for new users
       but gradually tame the refresh interval down to "Each 5 minutes".

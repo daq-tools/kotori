@@ -34,6 +34,7 @@ class InfluxDBAdapter(object):
 
         self.__dict__.update(**settings)
 
+        # Bookeeping for all databases having been touched already
         self.databases_written_once = Set()
         self.udp_databases = [
             {'name': 'luftdaten_testdrive', 'port': u'4445'},

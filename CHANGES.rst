@@ -14,11 +14,11 @@ in progress
 
 2018-04-09 0.21.1
 =================
-- [core] Improve unicode support
-- [core] Warn if topic could not be classified
-- [core] Add "measure" topic suffix to topic classifier to retain backwards compatibility
+- [io] Improve unicode support
+- [io] Warn if topic could not be classified
+- [io] Add "measure" topic suffix to topic classifier to retain backwards compatibility
 - [grafana] Properly quote measurement names for annotations in JSON templates
-- [grafana] Add "hiveeyes" tag to all instant dashboards
+- [:ref:`vendor-hiveeyes`] Add "hiveeyes" tag to all instant Grafana dashboards
 - [:ref:`vendor-hiveeyes`] Improve per-node Grafana dashboard re. field name classification
 
 
@@ -27,7 +27,7 @@ in progress
 2018-04-09 0.21.0
 =================
 - [core] Improve component loading robustness
-- [core] Improve log level selection when (not) running with "--debug-mqtt-driver"
+- [core] Improve log level selection when (not) running with ``--debug-mqtt-driver``
 - [code] Module namespace refactoring
 - [io] Make MQTT client identifier more unique by adding process id
 - [io] Improve resiliency when connecting to InfluxDB and Grafana

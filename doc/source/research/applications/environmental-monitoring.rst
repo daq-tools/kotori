@@ -54,4 +54,4 @@ Other projects
 - http://flood.network/
 - http://www.photosynq.org/
 - https://mhkweather.com/
-
+- https://www.hackster.io/taifur/solar-powered-environmental-monitoring-kit-b1d03d

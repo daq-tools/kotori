@@ -283,6 +283,7 @@ class BeekeeperFields(object):
         return pattern
 
     def find_match(self, patterns):
+        # TODO: Should optimize this - don't compile regex patterns on each invocation!
         for pattern in patterns:
             matcher = re.compile(pattern, re.IGNORECASE)
             for fieldname in self.fieldnames:

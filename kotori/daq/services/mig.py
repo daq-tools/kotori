@@ -194,6 +194,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             message = json.loads(payload)
 
         # Catch an error message
+        # TODO: Signal via MQTT
         elif message_type == MessageType.ERROR:
             log.debug(u'Ignoring error message from MQTT, "{topic}" with payload "{payload}"', topic=topic, payload=payload)
             return
