@@ -21,7 +21,6 @@ class InfluxDBAdapter(object):
         settings = deepcopy(settings) or {}
         settings.setdefault('host', u'localhost')
         settings.setdefault('port', u'8086')
-        settings.setdefault('version', u'0.9')
         settings.setdefault('username', u'root')
         settings.setdefault('password', u'root')
         settings.setdefault('database', database)
