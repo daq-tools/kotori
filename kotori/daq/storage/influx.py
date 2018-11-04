@@ -35,8 +35,11 @@ class InfluxDBAdapter(object):
 
         # Bookeeping for all databases having been touched already
         self.databases_written_once = Set()
+
+        # Knowledge about all databases to be accessed using UDP
+        # TODO: Refactor to configuration setting
         self.udp_databases = [
-            {'name': 'luftdaten_testdrive', 'port': u'4445'},
+            {'name': 'luftdaten_info', 'port': u'4445'},
         ]
         self.host_uri = u'influxdb://{host}:{port}'.format(**self.__dict__)
 
