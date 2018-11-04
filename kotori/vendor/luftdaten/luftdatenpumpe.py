@@ -154,17 +154,19 @@ APP_VERSION = '0.2.1'
 def main():
     """
     Usage:
-      luftdatenpumpe forward --mqtt-uri mqtt://mqtt.example.org/luftdaten.info [--geohash] [--reverse-geocode] [--progress] [--sensors=<sensors>] [--locations=<locations>] [--debug] [--dry-run]
+      luftdatenpumpe forward --mqtt-uri mqtt://mqtt.example.org/luftdaten.info [--sensors=<sensors>] [--locations=<locations>] [--geohash] [--reverse-geocode] [--progress] [--debug] [--dry-run]
+      luftdatenpumpe stations [--sensors=<sensors>] [--locations=<locations>] [--geohash] [--reverse-geocode] [--format=<format>] [--progress] [--debug] [--dry-run]
       luftdatenpumpe --version
       luftdatenpumpe (-h | --help)
 
     Options:
       --mqtt-uri=<mqtt-uri>         Use specified MQTT broker
-      --geohash                     Compute Geohash from latitude/longitude and add to MQTT message
-      --reverse-geocode             Compute geographical address using the Nominatim reverse geocoder and add to MQTT message
-      --progress                    Show progress bar
       --sensors=<sensors>           Filter data by given sensor ids, comma-separated.
       --locations=<locations>       Filter data by given location ids, comma-separated.
+      --geohash                     Compute Geohash from latitude/longitude and add to MQTT message
+      --reverse-geocode             Compute geographical address using the Nominatim reverse geocoder and add to MQTT message
+      --format=<format>             Output format
+      --progress                    Show progress bar
       --version                     Show version information
       --dry-run                     Run data acquisition and postprocessing but skip publishing to MQTT bus
       --debug                       Enable debug messages
@@ -183,6 +185,12 @@ def main():
 
       # Publish data suitable for displaying in Grafana Worldmap Panel using Kotori
       luftdatenpumpe forward --mqtt-uri mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json --geohash --reverse-geocode --progress
+
+      # Display list of stations in JSON format
+      luftdatenpumpe stations --locations=1064,1071 --geohash --reverse-geocode
+
+      # Display list of stations in JSON format, suitable for integrating with Grafana
+      luftdatenpumpe stations --locations=1064,1071 --geohash --reverse-geocode --format=grafana
 
     """
 
@@ -208,23 +216,33 @@ def main():
         if options[filter_option]:
             filter[filter_name] = map(int, options[filter_option].replace(' ', '').split(','))
 
+    mqtt_uri = options.get('--mqtt-uri')
+
+    pump = LuftdatenPumpe(
+        filter=filter,
+        geohash=options['--geohash'],
+        reverse_geocode=options['--reverse-geocode'],
+        mqtt_uri=mqtt_uri,
+        progressbar=options['--progress'],
+        dry_run=options['--dry-run'],
+    )
+
+    if options['stations']:
+        log.info('List of stations')
+        if options['--format'] == 'grafana':
+            stations = pump.get_stations_grafana()
+        else:
+            stations = pump.get_stations()
+        print(json.dumps(stations, indent=4))
+
     elif options['forward']:
 
-        mqtt_uri = options.get('--mqtt-uri')
         if not mqtt_uri:
             log.critical('Parameter "--mqtt-uri" missing or empty')
             sys.exit(1)
 
         log.info('Will publish to MQTT at {}'.format(mqtt_uri))
 
-        pump = LuftdatenPumpe(
-            mqtt_uri,
-            geohash=options['--geohash'],
-            reverse_geocode=options['--reverse-geocode'],
-            dry_run=options['--dry-run'],
-            progressbar=options['--progress'],
-            filter=filter
-        )
         pump.request_and_publish()
 
 
@@ -233,16 +251,17 @@ class LuftdatenPumpe:
     # luftdaten.info API URI
     uri = 'https://api.luftdaten.info/static/v1/data.json'
 
-    def __init__(self, mqtt_uri, geohash=False, reverse_geocode=False, dry_run=False, progressbar=False, filter=None):
+    def __init__(self, filter=None, geohash=False, reverse_geocode=False, mqtt_uri=None, progressbar=False, dry_run=False):
         self.mqtt_uri = mqtt_uri
         self.geohash = geohash
         self.reverse_geocode = reverse_geocode
         self.dry_run = dry_run
         self.progressbar = progressbar
         self.filter = filter
-        self.mqtt = MQTTAdapter(mqtt_uri)
+        if mqtt_uri:
+            self.mqtt = MQTTAdapter(mqtt_uri)
 
-    def request_and_publish(self):
+    def request(self):
         payload = requests.get(self.uri).content
         data = json.loads(payload)
         #pprint(data)
@@ -255,6 +274,8 @@ class LuftdatenPumpe:
             iterator = tqdm(data)
 
         for item in iterator:
+
+            #log.info('item: %s', item)
 
             # Decode JSON item
             timestamp = item['timestamp']
@@ -272,39 +293,92 @@ class LuftdatenPumpe:
                     if sensor_id not in self.filter['sensors']:
                         continue
 
-            # Collect readings
-            readings = {}
+            # Build reading
+            reading = {}
+
+            # Collect sensor values
             for sensor in item['sensordatavalues']:
                 name = sensor['value_type']
                 value = float(sensor['value'])
-                readings[name] = value
+                reading[name] = value
 
-            readings['time'] = self.convert_timestamp(timestamp)
+            # Insert timestamp in appropriate format
+            reading['time'] = self.convert_timestamp(timestamp)
 
+            # Insert sensor address information
             sensor_address = {
                 'location_id': location_id,
                 'sensor_id':   sensor_id,
                 'sensor_type': sensor_type,
             }
-            readings.update(sensor_address)
+            reading.update(sensor_address)
 
+            # Insert geo data
             if self.geohash:
-                readings['geohash'] = geohash(item['location']['latitude'], item['location']['longitude'])
+                reading['geohash'] = geohash(item['location']['latitude'], item['location']['longitude'])
+                altitude = item['location']['altitude']
+                try:
+                    reading['altitude'] = float(altitude)
+                except:
+                    log.error('Problem converting %s to float', altitude)
 
+            # Human readable location name
             if self.reverse_geocode:
                 try:
-                    readings['location_name'] = reverse_geocode(item['location']['latitude'], item['location']['longitude'])
+                    reading['location_name'] = reverse_geocode(item['location']['latitude'], item['location']['longitude'])
                 except Exception as ex:
                     pass
 
-            # Publish to MQTT bus
-            if self.dry_run:
-                log.info('Dry-run. Would publish record:\n{}'.format(pformat(readings)))
-            else:
-                self.publish_mqtt(readings)
+            #reading['__item__'] = item
+
+            yield reading
 
             # Debugging
             #break
+
+    def request_and_publish(self):
+        for reading in self.request():
+            # Publish to MQTT bus
+            if self.dry_run:
+                log.info('Dry-run. Would publish record:\n{}'.format(pformat(reading)))
+            else:
+                self.publish_mqtt(reading)
+
+    def get_stations(self):
+        locations = {}
+        field_candidates = ['location_id', 'location_name', 'geohash', 'altitude']
+        for reading in self.request():
+
+            #print('ITEM: %s', reading['__item__'])
+
+            location_id = reading['location_id']
+            if location_id in locations:
+                sensor_id = reading['sensor_id']
+                if sensor_id not in location['sensors']:
+                    location['sensors'].append(sensor_id)
+                continue
+
+            location = {}
+            for field in field_candidates:
+                if field in reading:
+                    location[field] = reading[field]
+
+            location['sensors'] = [reading['sensor_id']]
+
+            if location:
+                locations[location_id] = location
+
+        return locations
+
+    def get_stations_grafana(self):
+        stations = self.get_stations()
+        entries = []
+        for location_id, location in stations.items():
+            #print(location_id, location)
+            entry = {'value': location_id, 'text': location['location_name']}
+            entries.append(entry)
+        return entries
+
 
     @staticmethod
     def convert_timestamp(timestamp):

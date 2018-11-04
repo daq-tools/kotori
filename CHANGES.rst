@@ -8,6 +8,7 @@ in progress
 - [io] Add "datetime" field to list of valid timestamp fields on data ingress
 - [:ref:`vendor-luftdaten.info`] Rename "luftdaten-to-mqtt" to "luftdatenpumpe"
 - luftdatenpumpe: Filter by numeric sensor- and location-identifiers in forwarding mode
+- luftdatenpumpe: Implement "stations" subcommand
 
 
 .. _kotori-0.21.1:
