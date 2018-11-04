@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# (c) 2017 Andreas Motl <andreas@getkotori.org>
-# (c) 2017 Richard Pobering <richard@hiveeyes.org>
+# (c) 2017,2018 Andreas Motl <andreas@hiveeyes.org>
+# (c) 2017,2018 Richard Pobering <richard@hiveeyes.org>
 # License: GNU General Public License, Version 3
 import os
 import sys
@@ -154,7 +154,7 @@ APP_VERSION = '0.2.1'
 def main():
     """
     Usage:
-      luftdatenpumpe forward --mqtt-uri mqtt://mqtt.example.org/luftdaten.info [--geohash] [--reverse-geocode] [--progress] [--sensorIds=<sensorIds>] [--debug] [--dry-run]
+      luftdatenpumpe forward --mqtt-uri mqtt://mqtt.example.org/luftdaten.info [--geohash] [--reverse-geocode] [--progress] [--sensors=<sensors>] [--locations=<locations>] [--debug] [--dry-run]
       luftdatenpumpe --version
       luftdatenpumpe (-h | --help)
 
@@ -163,7 +163,8 @@ def main():
       --geohash                     Compute Geohash from latitude/longitude and add to MQTT message
       --reverse-geocode             Compute geographical address using the Nominatim reverse geocoder and add to MQTT message
       --progress                    Show progress bar
-      --sensorIds=<sensorIds>       Only publish data for the sensors with the given ids. Format: sensorIds='23, 42, 1337'
+      --sensors=<sensors>           Filter data by given sensor ids, comma-separated.
+      --locations=<locations>       Filter data by given location ids, comma-separated.
       --version                     Show version information
       --dry-run                     Run data acquisition and postprocessing but skip publishing to MQTT bus
       --debug                       Enable debug messages
@@ -175,7 +176,10 @@ def main():
       luftdatenpumpe forward --mqtt-uri mqtt://mqtt.example.org/luftdaten.info
 
       # Publish fully enriched data for multiple sensor ids
-      luftdatenpumpe forward --mqtt-uri mqtt://mqtt.example.org/luftdaten.info --geohash --reverse-geocode --sensorIds=2115,2116
+      luftdatenpumpe forward --mqtt-uri mqtt://mqtt.example.org/luftdaten.info --geohash --reverse-geocode --sensors=2115,2116
+
+      # Publish fully enriched data for multiple location ids
+      luftdatenpumpe forward --mqtt-uri mqtt://mqtt.example.org/luftdaten.info --geohash --reverse-geocode --locations=1064,1071
 
       # Publish data suitable for displaying in Grafana Worldmap Panel using Kotori
       luftdatenpumpe forward --mqtt-uri mqtt://mqtt.example.org/luftdaten/testdrive/earth/42/data.json --geohash --reverse-geocode --progress
@@ -194,32 +198,34 @@ def main():
         log_level = logging.DEBUG
     setup_logging(log_level)
 
-    mqtt_uri = options.get('--mqtt-uri')
-    if not mqtt_uri:
-        log.critical('Parameter "--mqtt-uri" missing or empty')
-        sys.exit(1)
-
     # Run
     log.info('Nominatim cache path is {}'.format(cache_path))
-    log.info('Will publish to MQTT at {}'.format(mqtt_uri))
 
-    #if there a specific sensor ids supplied, parse them into a list of ints
-    if options['--sensorIds']:
-        sensorIds = list()
-        for sensorId in options['--sensorIds'].replace(' ', '').split(','):
-            sensorIds.append(int(sensorId))
-    else:
-        sensorIds = False
+    # Optionally, apply filters by sensor id and location id
+    filter = {}
+    for filter_name in ['locations', 'sensors']:
+        filter_option = '--' + filter_name
+        if options[filter_option]:
+            filter[filter_name] = map(int, options[filter_option].replace(' ', '').split(','))
 
-    pump = LuftdatenPumpe(
-        mqtt_uri,
-        geohash=options['--geohash'],
-        reverse_geocode=options['--reverse-geocode'],
-        dry_run=options['--dry-run'],
-        progressbar=options['--progress'],
-        sensorIds=sensorIds
-    )
-    pump.request_and_publish()
+    elif options['forward']:
+
+        mqtt_uri = options.get('--mqtt-uri')
+        if not mqtt_uri:
+            log.critical('Parameter "--mqtt-uri" missing or empty')
+            sys.exit(1)
+
+        log.info('Will publish to MQTT at {}'.format(mqtt_uri))
+
+        pump = LuftdatenPumpe(
+            mqtt_uri,
+            geohash=options['--geohash'],
+            reverse_geocode=options['--reverse-geocode'],
+            dry_run=options['--dry-run'],
+            progressbar=options['--progress'],
+            filter=filter
+        )
+        pump.request_and_publish()
 
 
 class LuftdatenPumpe:
@@ -227,13 +233,13 @@ class LuftdatenPumpe:
     # luftdaten.info API URI
     uri = 'https://api.luftdaten.info/static/v1/data.json'
 
-    def __init__(self, mqtt_uri, geohash=False, reverse_geocode=False, dry_run=False, progressbar=False, sensorIds=False):
+    def __init__(self, mqtt_uri, geohash=False, reverse_geocode=False, dry_run=False, progressbar=False, filter=None):
         self.mqtt_uri = mqtt_uri
         self.geohash = geohash
         self.reverse_geocode = reverse_geocode
         self.dry_run = dry_run
         self.progressbar = progressbar
-        self.sensorIds = sensorIds
+        self.filter = filter
         self.mqtt = MQTTAdapter(mqtt_uri)
 
     def request_and_publish(self):
@@ -256,10 +262,15 @@ class LuftdatenPumpe:
             sensor_id = item['sensor']['id']
             sensor_type = item['sensor']['sensor_type']['name']
 
-            # If there is a filter for specific sensor ids, skip further processing
-            if self.sensorIds:
-                if sensor_id not in self.sensorIds:
-                    continue
+            # If there is a filter defined, evaluate it
+            # For specific location|sensor ids, skip further processing
+            if self.filter:
+                if 'locations' in self.filter:
+                    if location_id not in self.filter['locations']:
+                        continue
+                if 'sensors' in self.filter:
+                    if sensor_id not in self.filter['sensors']:
+                        continue
 
             # Collect readings
             readings = {}
