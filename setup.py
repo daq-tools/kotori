@@ -45,7 +45,7 @@ requires = requires_core + [
     # More dependencies (required for running on Ubuntu 16.04)
     #'pyOpenSSL==16.2.0',
     #'cryptography==1.3.4',
-    'pyasn1==0.2.3',                # 0.4.2
+    'pyasn1>=0.2.3',                # 0.4.2
     'pycparser==2.17',              # 2.18
     'pyparsing==2.2.0',
 
