@@ -345,7 +345,7 @@ def reverse_geocode(latitude, longitude):
         # https://operations.osmfoundation.org/policies/nominatim/
         time.sleep(1)
 
-    #log.debug('Reverse geocoder: {}'.format(pformat(location.raw)))
+    #log.debug(u'Reverse geocoder result: {}'.format(pformat(location.raw)))
 
     # Be agnostic against city vs. village
     # TODO: Handle Rgbg
@@ -386,19 +386,17 @@ def reverse_geocode(latitude, longitude):
     3. "Überregional": "q-region"
         - county, state_district, state
     4. "Regional": "q-hood"
-        - neighbourhood vs. quarter vs. residential vs. suburb vs. city_district vs. city
+        - neighbourhood vs. quarter vs. residential vs. suburb vs. city_district vs. city vs. allotments
 
     How to handle "building", "public_building", "residential", "pedestrian", "kindergarten", "clothes"?
     """
 
     # Be agnostic against road vs. path
     if 'road' not in address:
-        if 'path' in address:
-            address['road'] = address['path']
-        elif 'pedestrian' in address:
-            address['road'] = address['pedestrian']
-        elif 'cycleway' in address:
-            address['road'] = address['cycleway']
+        road_choices = ['path', 'pedestrian', 'cycleway', 'footway']
+        for field in road_choices:
+            if field in address:
+                address['road'] = address[field]
 
     # Uppercase country code
     address['country_code'] = address['country_code'].upper()
