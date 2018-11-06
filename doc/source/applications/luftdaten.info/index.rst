@@ -51,8 +51,8 @@ Status quo
 
 Demo
 ====
-- https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-tresholds
-- https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-map
+- https://luftdaten.hiveeyes.org/grafana/particulates-trend
+- https://luftdaten.hiveeyes.org/grafana/particulates-map
 
 LuftdatenPumpe
 ==============
@@ -82,14 +82,14 @@ Live data
 
 .. raw:: html
 
-    <iframe src="https://luftdaten.getkotori.org/grafana/dashboard-solo/db/luftdaten-tresholds?orgId=1&var-Location=Gr%C3%BCntaler%20Stra%C3%9Fe%2C%20Gesundbrunnen%2C%20Berlin%2C%20DE&panelId=18&theme=light" width="100%" height="600" frameborder="0"></iframe>
+    <iframe src="https://luftdaten.hiveeyes.org/grafana/d/bEe6HJamk/feinstaub-verlauf-berlin?theme=light&var-location_id=1071&panelId=18&fullscreen" width="100%" height="600" frameborder="0"></iframe>
 
 
 Screenshots
 ===========
 
 .. figure:: https://ptrace.getkotori.org/2017-05-05_luftdaten-by-location.jpg
-    :target: https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-tresholds
+    :target: https://luftdaten.hiveeyes.org/grafana/particulates-trend
     :alt: luftdaten.info - Measurement timeseries by location, with EU-Limits as threshold lines
     :width: 1024
 
@@ -97,14 +97,14 @@ Screenshots
 
 
 .. figure:: https://ptrace.getkotori.org/2017-05-05_luftdaten-current-gauge-green.jpg
-    :target: https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-tresholds
+    :target: https://luftdaten.hiveeyes.org/grafana/particulates-trend
     :alt: luftdaten.info - Current measurement value, with EU-Limits (green)
     :width: 1024
 
     luftdaten.info - Current measurement value, with EU-Limits (green)
 
 .. figure:: https://ptrace.getkotori.org/2017-05-05_luftdaten-current-gauge-orange.jpg
-    :target: https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-tresholds
+    :target: https://luftdaten.hiveeyes.org/grafana/particulates-trend
     :alt: luftdaten.info - Current measurement value, with EU-Limits (orange)
     :width: 1024
 
@@ -119,7 +119,7 @@ Screenshots
 
 
 .. figure:: https://ptrace.getkotori.org/2017-05-05_luftdaten-grafana-worldmap.jpg
-    :target: https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-map
+    :target: https://luftdaten.hiveeyes.org/grafana/particulates-map
     :alt: luftdaten.info - Grafana Worldmap
     :width: 1024
 
@@ -205,8 +205,8 @@ Data payloads will be per-sensor in JSON format, enriched by geographic location
 
 Example MQTT messages::
 
-    luftdaten/testdrive/earth/43/data.json {"sensor_id": 2115, "sensor_type": "SDS011", "P1": 11.17, "P2": 7.95,               "time": "2017-05-05T01:27:42Z", "location_id": 1064, "geohash": "u33dbz90yu6r", "location_name": "Gr\u00fcntaler Stra\u00dfe, Gesundbrunnen, Berlin, DE"}
-    luftdaten/testdrive/earth/43/data.json {"sensor_id": 2116, "sensor_type": "DHT22",  "temperature": 12.3, "humidity": 65.5, "time": "2017-05-05T01:27:42Z", "location_id": 1064, "geohash": "u33dbz90yu6r", "location_name": "Gr\u00fcntaler Stra\u00dfe, Gesundbrunnen, Berlin, DE"}
+    luftdaten/testdrive/earth/42/data.json {"sensor_id": 2115, "sensor_type": "SDS011", "P1": 11.17, "P2": 7.95,               "time": "2017-05-05T01:27:42Z", "location_id": 1064, "geohash": "u33dbz90yu6r", "location_name": "Gr\u00fcntaler Stra\u00dfe, Gesundbrunnen, Berlin, DE"}
+    luftdaten/testdrive/earth/42/data.json {"sensor_id": 2116, "sensor_type": "DHT22",  "temperature": 12.3, "humidity": 65.5, "time": "2017-05-05T01:27:42Z", "location_id": 1064, "geohash": "u33dbz90yu6r", "location_name": "Gr\u00fcntaler Stra\u00dfe, Gesundbrunnen, Berlin, DE"}
 
 
 *******
