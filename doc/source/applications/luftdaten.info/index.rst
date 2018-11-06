@@ -82,7 +82,7 @@ Live data
 
 .. raw:: html
 
-    <iframe src="https://luftdaten.hiveeyes.org/grafana/d/bEe6HJamk/feinstaub-verlauf-berlin?theme=light&var-location_id=1071&panelId=18&fullscreen" width="100%" height="600" frameborder="0"></iframe>
+    <iframe src="https://luftdaten.hiveeyes.org/grafana/d-solo/bEe6HJamk/feinstaub-verlauf-berlin?theme=light&var-location_id=1071&panelId=18" width="100%" height="600" frameborder="0"></iframe>
 
 
 Screenshots
