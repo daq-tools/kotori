@@ -316,14 +316,16 @@ class LuftdatenPumpe:
             # Insert geo data
             if self.geohash:
 
-                blur = True
+                enable_blur = True
 
                 # Compute geohash
-                reading['geohash'] = geohash_encode(item['location']['latitude'], item['location']['longitude'])
+                geohash = geohash_encode(item['location']['latitude'], item['location']['longitude'])
 
                 # Blur a bit
-                if blur:
-                    reading['geohash'] = reading['geohash'][:-3]
+                if enable_blur and len(geohash) == 12:
+                    geohash = geohash[:-3]
+
+                reading['geohash'] = geohash
 
                 try:
                     altitude = item['location']['altitude']
@@ -340,6 +342,7 @@ class LuftdatenPumpe:
                         location_name = reverse_geocode(
                             latitude=item['location']['latitude'],
                             longitude=item['location']['longitude'])
+
                     reading['location_name'] = location_name
 
                 except Exception as ex:
