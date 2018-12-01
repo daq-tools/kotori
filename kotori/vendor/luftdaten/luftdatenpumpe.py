@@ -395,10 +395,13 @@ class LuftdatenPumpe:
         entries = []
         for location_id, location in stations.items():
             #print(location_id, location)
-            entry = {'value': location_id, 'text': location['location_name']}
+            if 'location_name' in location:
+                location_name = location['location_name']
+            else:
+                location_name = u'Location: {}'.format(location_id)
+            entry = {'value': location_id, 'text': location_name}
             entries.append(entry)
         return entries
-
 
     @staticmethod
     def convert_timestamp(timestamp):
@@ -428,7 +431,7 @@ def geohash_decode(geohash):
 
 
 # Cache responses from Nominatim for 3 months
-@cache.cache(expire = 60 * 60 * 24 * 30 * 3)
+@cache.cache(expire=60 * 60 * 24 * 30 * 3)
 def reverse_geocode(latitude=None, longitude=None, geohash=None):
     """
     # Done: Use memoization! Maybe cache into MongoDB as well using Beaker.
@@ -521,6 +524,7 @@ def reverse_geocode(latitude=None, longitude=None, geohash=None):
     address['country_code'] = address['country_code'].upper()
 
     # Build display location from components
+    # TODO: Modify suburb with things like "Fhain" => "Friedrichshain"
     address_fields = ['road', 'suburb', 'city', 'state', 'country_code']
     address_parts = []
     for address_field in address_fields:

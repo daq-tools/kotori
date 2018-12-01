@@ -12,6 +12,7 @@ in progress
 - luftdatenpumpe: Prevent duplicate successors in address segments
 - luftdatenpumpe: Compute location name from blurred geohash
 - luftdatenpumpe: Improve robustness of location blurring
+- luftdatenpumpe: Use location id as label when name is not available
 
 
 .. _kotori-0.21.1:
