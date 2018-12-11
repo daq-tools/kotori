@@ -15,6 +15,7 @@ of the people who contributed to Kotori:
 * Jens Schmelkus <jens@schmelkus.net>
 * Karsten Harazim <email@karstenharazim.de>
 * Matthias Büchner <m.buechner@gmail.com>
+* Matthias Mehldau <wetter@hiveeyes.org>
 * Richard Pobering <einsiedlerkrebs@ginnungagap.org>
 * Sebastian Donner <info@thunder-gfx.de>
 * Sebastian Henneke <s.henneke@isarengineering.de>

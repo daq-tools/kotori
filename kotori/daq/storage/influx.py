@@ -200,6 +200,8 @@ class InfluxDBAdapter(object):
         """
         self.data_to_float(data)
 
+        assert data, 'Data payload is empty'
+
         chunk["fields"] = data
 
         return chunk

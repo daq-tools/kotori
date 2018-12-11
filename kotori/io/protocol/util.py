@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2016 Andreas Motl <andreas.motl@elmyra.de>
+import math
 import arrow
 import types
 from six import text_type
@@ -88,6 +89,7 @@ def convert_floats(data, integers=None):
     Convert all numeric values in dictionary to float type.
     """
     integers = integers or []
+    delete_keys = []
     for key, value in data.iteritems():
         try:
             if is_number(value):
@@ -95,8 +97,14 @@ def convert_floats(data, integers=None):
                     data[key] = int(value)
                 else:
                     data[key] = float(value)
+            if math.isnan(data[key]):
+                delete_keys.append(key)
         except:
             pass
+
+    for key in delete_keys:
+        del data[key]
+
     return data
 
 def is_number(s):

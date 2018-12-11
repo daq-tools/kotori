@@ -7,6 +7,7 @@ in progress
 ===========
 - [io] Add "datetime" field to list of valid timestamp fields on data ingress
 - [:ref:`vendor-luftdaten.info`] Move Luftdatenpumpe to https://github.com/hiveeyes/luftdatenpumpe
+- Delete NaN values from ingress payload. Thanks, wtf!
 
 
 .. _kotori-0.21.1:
