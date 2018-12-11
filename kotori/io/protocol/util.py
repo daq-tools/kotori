@@ -3,6 +3,7 @@
 import math
 import arrow
 import types
+import datetime
 from six import text_type
 from dateutil.tz import gettz
 from dateutil.parser import parse
@@ -92,6 +93,8 @@ def convert_floats(data, integers=None):
     delete_keys = []
     for key, value in data.iteritems():
         try:
+            if isinstance(value, datetime.datetime):
+                continue
             if is_number(value):
                 if key in integers:
                     data[key] = int(value)

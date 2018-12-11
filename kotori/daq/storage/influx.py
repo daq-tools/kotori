@@ -183,7 +183,22 @@ class InfluxDBAdapter(object):
 
         # TODO: Maybe do this at data acquisition / transformation time, not here.
         if 'time' in chunk:
-            chunk['time'] = parse_timestamp(chunk['time'])
+            timestamp = chunk['time'] = parse_timestamp(chunk['time'])
+
+            # Heuristically compute timestamp precision
+            if isinstance(timestamp, int):
+                if timestamp >= 1e17 or timestamp <= -1e17:
+                    time_precision = 'ns'
+                elif timestamp >= 1e14 or timestamp <= -1e14:
+                    time_precision = 'u'
+                elif timestamp >= 1e11 or timestamp <= -1e11:
+                    time_precision = 'ms'
+
+                # FIXME: Is this a reasonable default?
+                else:
+                    time_precision = 's'
+
+                chunk['time_precision'] = time_precision
 
             """
             # FIXME: Breaks CSV data acquisition. Why?
