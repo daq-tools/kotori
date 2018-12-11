@@ -33,7 +33,7 @@ requires = requires_core + [
 
     # Bus adapters
     #'twisted-mqtt==0.1.4',         # 0.2.1
-    'paho-mqtt==1.2',               # 1.3.1
+    'paho-mqtt==1.2',               # 1.4.0
     'autobahn[twisted]==0.13.0',    # 18.3.1
     'msgpack-python==0.4.7',        # 0.5.6
 
@@ -62,9 +62,9 @@ extras = {
     ],
     'daq_geospatial': [
         'Geohash==1.0',
-        'geopy==1.12.0',
-        'Beaker==1.9.0',
-        'tqdm==4.19.8',
+        'geopy==1.12.0',            # 1.17.0
+        'Beaker==1.9.0',            # 1.10.0
+        'tqdm==4.19.8',             # 4.28.1
     ],
     'daq_binary': [
         'pyclibrary==0.1.3',
@@ -175,7 +175,7 @@ setup(name='kotori',
       author='Andreas Motl',
       author_email='andreas@getkotori.org',
       url='https://getkotori.org/',
-      keywords='data acquisition graphing export plotting daq routine engine' +
+      keywords='data acquisition graphing export plotting daq routing engine ' +
                'mqtt wamp http rest sql web html csv json cdf hdf5 png ' +
                'twisted pyramid autobahn influxdb mosquitto grafana mongodb matplotlib ggplot ',
       packages=find_packages(),
