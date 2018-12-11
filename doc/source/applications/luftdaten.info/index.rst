@@ -14,9 +14,9 @@ luftdaten.info
 
 
 
-*****
-About
-*****
+********************
+About luftdaten.info
+********************
 `luftdaten.info`_ is a community project from Stuttgart, Germany.
 Due to its geographical location, they have high particulate matter (PM) levels on a regular basis.
 
@@ -29,9 +29,13 @@ Luftdaten.info is in the process of installing low cost, crowdfunded sensor node
 many cities in Germany to measure PM levels.
 
 
-****
+********************
+About Luftdatenpumpe
+********************
+
+
 Goal
-****
+====
 The goal is to display data from luftdaten.info using a Grafana_ dashboard for data visualization.
 Historical data should be able to be displayed by geographical location to make it a meaningful supplement
 to the `luftdaten.info map`_ with more flexible access capabilities compared to the current
@@ -41,21 +45,12 @@ and live data via `luftdaten.info API`_ (JSON format).
 
 There are two different data paths:
 
-- Read data from live json api and republish to MQTT, see :ref:`daq-mqtt`.
-- Import historical CSV data, see :ref:`CSV data acquisition <daq-http-csv>`.
+- [x] Read data from live json api and republish to MQTT, see :ref:`daq-mqtt`.
+- [o] Import historical CSV data, see :ref:`CSV data acquisition <daq-http-csv>`.
 
 
-**********
-Status quo
-**********
-
-Demo
-====
-- https://luftdaten.hiveeyes.org/grafana/particulates-trend
-- https://luftdaten.hiveeyes.org/grafana/particulates-map
-
-LuftdatenPumpe
-==============
+Description
+===========
 The main workhorse, `luftdatenpumpe`_ requests data from the live API of luftdaten.info each 10 minutes,
 enriches it with geographic location information (reverse geocoding) and republishes its results to the MQTT bus.
 Kotori picks it up from there, stores it into InfluxDB with appropriate tags as pivot points and
@@ -70,7 +65,25 @@ outlined `here <https://github.com/opendata-stuttgart/sensors-software/issues/33
     | Live data can be found here: https://api.luftdaten.info/static/v1/data.json
     | This file is updated every minute and contains all sensors and values sent to the server in the last 5 minutes.
 
-`luftdatenpumpe`_ is such a "translator" and can be used as an universal MQTT forwarder.
+`luftdatenpumpe`_ is such a translator and can be used as an universal MQTT forwarder.
+
+
+
+****
+Demo
+****
+
+Live Daten
+==========
+- https://luftdaten.hiveeyes.org/grafana/d/bEe6HJamk/feinstaub-verlauf-berlin
+- https://luftdaten.hiveeyes.org/grafana/d/000000004/feinstaub-karte-deutschland
+
+Stationslisten
+==============
+- https://weather.hiveeyes.org/grafana/d/yDbjQ7Piz/amo-ldi-stations-1-select-by-name-country-and-state
+- https://weather.hiveeyes.org/grafana/d/Oztw1OEmz/amo-ldi-stations-2-cascaded-stations
+- https://weather.hiveeyes.org/grafana/d/lT4lLcEiz/amo-ldi-stations-3-cascaded-measurements
+- https://weather.hiveeyes.org/grafana/d/kMIweoPik/amo-ldi-stations-4-select-by-sensor-type
 
 
 *************************
@@ -164,7 +177,7 @@ Activate `luftdaten.ini <https://github.com/daq-tools/kotori/blob/master/etc/exa
     systemctl restart kotori
 
 
-LuftdatenPumpe
+Luftdatenpumpe
 ==============
 `luftdatenpumpe`_ requests data from the live API of luftdaten.info,
 enriches it with geospatial information and republishes it to the MQTT bus.
@@ -243,6 +256,6 @@ Agenda
 .. _Source - theguardian.com 2017: https://www.theguardian.com/cities/2017/mar/02/stuttgart-residents-sue-mayor-bodily-harm-air-pollution
 .. _Kotori: https://getkotori.org
 .. _luftdaten.info API: https://api.luftdaten.info/static/v1/data.json
-.. _luftdatenpumpe: https://github.com/daq-tools/kotori/blob/master/kotori/vendor/luftdaten/luftdatenpumpe.py
+.. _luftdatenpumpe: https://github.com/hiveeyes/luftdatenpumpe
 .. _feinstaub-api: https://github.com/opendata-stuttgart/feinstaub-api
 

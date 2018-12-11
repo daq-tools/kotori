@@ -6,13 +6,7 @@ Changelog
 in progress
 ===========
 - [io] Add "datetime" field to list of valid timestamp fields on data ingress
-- [:ref:`vendor-luftdaten.info`] Rename "luftdaten-to-mqtt" to "luftdatenpumpe"
-- luftdatenpumpe: Filter by numeric sensor- and location-identifiers in forwarding mode
-- luftdatenpumpe: Implement "stations" subcommand
-- luftdatenpumpe: Prevent duplicate successors in address segments
-- luftdatenpumpe: Compute location name from blurred geohash
-- luftdatenpumpe: Improve robustness of location blurring
-- luftdatenpumpe: Use location id as label when name is not available
+- [:ref:`vendor-luftdaten.info`] Move Luftdatenpumpe to https://github.com/hiveeyes/luftdatenpumpe
 
 
 .. _kotori-0.21.1:
