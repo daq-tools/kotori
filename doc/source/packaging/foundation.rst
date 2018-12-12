@@ -23,14 +23,18 @@ Download packages
 ::
 
     # Download amd64 package
-    wget https://dl.influxdata.com/influxdb/releases/influxdb_1.2.2_amd64.deb
+    wget https://dl.influxdata.com/influxdb/releases/influxdb_1.6.4_amd64.deb
 
     # Download armhf packages
-    wget http://ftp.de.debian.org/debian/pool/main/i/influxdb/influxdb_1.1.1+dfsg1-4_armhf.deb
-    wget http://ftp.de.debian.org/debian/pool/main/i/influxdb/influxdb-client_1.1.1+dfsg1-4_armhf.deb
+    wget https://dl.influxdata.com/influxdb/releases/influxdb_1.6.4_armhf.deb
 
     # Upload to "incoming" directory
     scp influxdb_*.deb workbench@packages.example.org:/srv/packages/organizations/elmyra/foss/aptly/public/incoming
+
+Deprecated::
+
+    wget http://ftp.de.debian.org/debian/pool/main/i/influxdb/influxdb_1.1.1+dfsg1-4_armhf.deb
+    wget http://ftp.de.debian.org/debian/pool/main/i/influxdb/influxdb-client_1.1.1+dfsg1-4_armhf.deb
 
 
 *******
@@ -46,13 +50,20 @@ Download package
 ::
 
     # Download amd64 package
-    wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_4.2.0_amd64.deb
+    wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_5.4.1_amd64.deb
+
+    # Download armhf package
+    wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_5.4.1_armhf.deb
+
+    # Upload to "incoming" directory
+    scp grafana_*.deb workbench@packages.example.org:/srv/packages/organizations/elmyra/foss/aptly/public/incoming
+
+
+Deprecated::
 
     # Download armhf package
     wget https://github.com/fg2it/grafana-on-raspberry/releases/download/v4.2.0/grafana_4.2.0_armhf.deb
 
-    # Upload to "incoming" directory
-    scp grafana_4.2.0-beta1_*.deb workbench@packages.example.org:/srv/packages/organizations/elmyra/foss/aptly/public/incoming
 
 
 ****************
