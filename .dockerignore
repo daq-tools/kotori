@@ -1,0 +1,7 @@
+*
+!Makefile
+!setup.py
+!*.toml
+!MANIFEST.in
+!packaging
+!dist

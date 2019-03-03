@@ -3,13 +3,13 @@ import sys
 from setuptools import setup, find_packages
 
 requires_core = [
-    'Twisted[tls]==17.1.0',
-    'pyOpenSSL==16.2.0',
+    'Twisted[tls]==18.9.0',
+    'pyOpenSSL>=16.2.0',
 ]
 
 if sys.platform == 'darwin':
     requires_core = [
-        'Twisted==17.1.0',
+        'Twisted==18.9.0',
     ]
 
 requires = requires_core + [
@@ -25,11 +25,11 @@ requires = requires_core + [
     'Bunch==1.0.1',
     'appdirs==1.4.3',
     'json-store==2.1',
-    'python-dateutil==2.6.0',       # 2.7.0
+    'python-dateutil>=2.6.0',       # 2.7.0
     'arrow==0.10.0',                # 0.12.1
     'funcy==1.7.2',                 # 1.10.1
     'delegator.py==0.1.0',
-    'attrs==17.4.0',
+    'attrs==18.2.0',
 
     # Bus adapters
     #'twisted-mqtt==0.1.4',         # 0.2.1
@@ -38,13 +38,13 @@ requires = requires_core + [
     'msgpack-python==0.4.7',        # 0.5.6
 
     # Misc
-    'setuptools==22.0.5',           # 39.0.1; 34.3.3; setuptools>=18.3.1 is required by set(['crossbar'])
-    'distlib==0.2.4',               # 0.2.6
+    #'setuptools==40.8.0',
+    'distlib==0.2.8',
     'docopt==0.6.2',
 
     # More dependencies (required for running on Ubuntu 16.04)
     #'pyOpenSSL==16.2.0',
-    #'cryptography==1.3.4',
+    'cryptography>=1.3.4',
     'pyasn1>=0.2.3',                # 0.4.2
     'pycparser==2.17',              # 2.18
     'pyparsing==2.2.0',
@@ -54,7 +54,10 @@ requires = requires_core + [
 extras = {
     'daq': [
         'influxdb==4.0.0',          # 5.0.0
-        'requests==2.18.4',
+        'pytz==2018.9',
+        'requests>=2.12.4',
+        #'requests>=2.18.4,<3',
+        #'idna>=2.8,<3',
         'grafana_api_client==0.2.0',
         #'grafana-dashboard-builder==0.1.0a7',      # evaluated, but not suitable
         #'txmongo==16.3.0',
@@ -79,7 +82,7 @@ extras = {
     'export': [
         'pyinfluxql==0.0.1',
         'pandas==0.18.1',           # 0.22.2
-        'numpy>=1.8.2',             # 1.14.2
+        'numpy>=1.8.2,<2',          # 1.14.2
         'XlsxWriter==0.9.2',        # 1.0.2
     ],
 
@@ -87,7 +90,7 @@ extras = {
         #'dyplot==0.8.8',
 
         # sudo port install py27-matplotlib
-        'matplotlib>=1.4.2',        # 2.2.2
+        'matplotlib==2.0.0',        # 2.2.2
         #'cairocffi>=0.5.4',
         'bokeh==0.12.4',            # 0.12.14
         'vincent==0.4.4',
@@ -106,7 +109,7 @@ extras = {
         # NetCDF (Network Common Data Form)
         'xarray==0.7.2',            # 0.10.2
         # sudo port install netcdf
-        'netCDF4==1.2.4',           # 1.3.1
+        'netCDF4>=1.2.7',           # 1.3.1
         #'h5netcdf==0.2.2',
 
         # Algorithms
@@ -202,7 +205,6 @@ setup(name='kotori',
               'h2m-csv-udp-client  = kotori.vendor.hydro2motion.client:run_udp_client',
               'h2m-csv-udp-fuzzer  = kotori.vendor.hydro2motion.client:run_udp_fuzzer',
               'lst-message         = kotori.vendor.lst.shell:message',
-              'luftdatenpumpe      = kotori.vendor.luftdaten.luftdatenpumpe:main',
               'kotori-selftest     = kotori.vendor.selftest:run',
           ],
           'paste.app_factory': [

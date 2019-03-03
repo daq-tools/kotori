@@ -9,6 +9,7 @@ in progress
 - [:ref:`vendor-luftdaten.info`] Move Luftdatenpumpe to https://github.com/hiveeyes/luftdatenpumpe
 - Delete NaN values from ingress payload. Thanks, wtf!
 - Implement UNIX Epoch time precision detection heuristics for ingress timestamps. Thanks, wtf!
+- [package] Use Docker for Debian package building
 
 
 .. _kotori-0.21.1:
