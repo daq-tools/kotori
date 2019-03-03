@@ -52,7 +52,7 @@ when installing from source.
     make virtualenv
 
     # Activate virtualenv
-    source .venv27/bin/activate
+    source .venv2/bin/activate
 
 
 *****
@@ -61,24 +61,28 @@ Setup
 
 Install from package repository
 ===============================
+
+# Downgrade pip due to "BackendUnavailable" error with pip >= 19.0.0
+RUN $pip install pip==18.1 --upgrade --force-reinstall
+
+
 ::
 
     # Install latest Kotori release with extra feature "daq"
-    pip install kotori[daq] --extra-index-url=https://packages.elmyra.de/elmyra/foss/python/ --upgrade
+    #pip install 'https://github.com/jjmalina/pyinfluxql/tarball/d92db4ab8c#egg=pyinfluxql-0.0.1'
+    pip install --process-dependency-links kotori[daq]
+
+    # Install more extra features
+    pip install --process-dependency-links kotori[daq,export]
+
+    # Install particular version
+    pip install --process-dependency-links kotori[daq,export]==0.15.0
 
 
 Install from git repository
 ===========================
 ::
 
-    pip install --editable git+https://github.com/zerotired/kotori.git#egg=kotori[daq]
+    pip install --editable git+https://github.com/daq-tools/kotori.git#egg=kotori[daq]
 
 .. seealso:: https://pip.pypa.io/en/stable/reference/pip_install/#examples
-
-
-Install a particular source archive file
-========================================
-::
-
-    pip install https://packages.elmyra.de/elmyra/foss/python/kotori/kotori-0.15.0.tar.gz
-

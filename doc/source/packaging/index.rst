@@ -8,5 +8,6 @@ Packaging
 
     release
     build
+    build-docker
     foundation
 

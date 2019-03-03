@@ -43,20 +43,23 @@ Setup virtualenv
 ::
 
     make virtualenv
-    source .venv27/bin/activate
+    source .venv2/bin/activate
     python setup.py develop
 
 
     # Install extra features
 
     # Data acquisition base
-    pip install --editable .[daq] --process-dependency-links --verbose
+    pip install --process-dependency-links --editable .[daq] --verbose
+
+    # Data acquisition base, with export features
+    pip install --process-dependency-links --editable .[daq,export] --verbose
 
     # Data acquisition with data sink for binary payloads
-    pip install --editable .[daq_binary] --process-dependency-links --verbose
+    pip install --process-dependency-links --editable .[daq_binary] --verbose
 
     # Data storage for RDBMS databases and MongoDB
-    pip install --editable .[storage_plus] --process-dependency-links --verbose
+    pip install --process-dependency-links --editable .[storage_plus] --verbose
 
 
 

@@ -57,10 +57,10 @@ publish-sdist: sdist
 # Synopsis::
 #
 #    # amd64
-#    make debian-package flavor=full arch=amd64 version=0.21.1
+#    make debian-package flavor=full arch=amd64 version=0.22.0
 #
 #    # armhf
-#    make debian-package flavor=standard arch=armhf version=0.21.1
+#    make debian-package flavor=standard arch=armhf version=0.22.0
 #
 
 debian-package: check-flavor-options deb-build-$(flavor) publish-debian
@@ -212,8 +212,8 @@ docs-html: virtualenv
 	export SPHINXBUILD="`pwd`/.venv27/bin/sphinx-build"; cd doc; make html
 
 virtualenv:
-	@test -e .venv27/bin/python || `command -v virtualenv` --python=`command -v python` --no-site-packages .venv27
-	@.venv27/bin/pip --quiet install --requirement requirements-dev.txt
+	@test -e .venv2/bin/python || `command -v virtualenv` --python=`command -v python` --no-site-packages .venv2
+	@.venv2/bin/pip --quiet install --requirement requirements-dev.txt
 
 
 # ==========================================
