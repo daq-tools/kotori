@@ -13,6 +13,28 @@ Kotori tasks
 
 ----
 
+
+****
+2019
+****
+
+
+2019-01-09
+==========
+New Python packages for InfluxDB
+- https://github.com/jjmalina/pyinfluxql
+- https://github.com/muumlover/pyinfluxdb
+- https://pypi.org/project/influx_requests/
+- https://github.com/RPing/influx-prompt
+- https://github.com/AxiomExergy/influx-client
+- https://pypi.org/project/influx-line-protocol/
+- https://pypi.org/project/influx-nagios-plugin/
+- https://pypi.org/project/influx-content-client/
+- https://github.com/theonion/influx-trending
+-
+
+
+
 ****
 2018
 ****

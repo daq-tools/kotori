@@ -11,6 +11,27 @@ Foundation packages
 ----
 
 
+*********
+Mosquitto
+*********
+- http://repo.mosquitto.org/debian/pool/main/m/mosquitto/
+
+Download packages
+=================
+::
+
+    # Download amd64 packages
+    wget http://repo.mosquitto.org/debian/pool/main/m/mosquitto/mosquitto_1.5.6-0mosquitto1_amd64.deb
+    wget http://repo.mosquitto.org/debian/pool/main/m/mosquitto/mosquitto-clients_1.5.6-0mosquitto1_amd64.deb
+
+    # Download armhf packages
+    wget http://repo.mosquitto.org/debian/pool/main/m/mosquitto/mosquitto_1.5.6-0mosquitto1_armhf.deb
+    wget http://repo.mosquitto.org/debian/pool/main/m/mosquitto/mosquitto-clients_1.5.6-0mosquitto1_armhf.deb
+
+    # Upload to "incoming" directory
+    scp mosquitto*.deb workbench@packages.example.org:/srv/packages/organizations/elmyra/foss/aptly/public/incoming
+
+
 ********
 InfluxDB
 ********
@@ -79,8 +100,7 @@ Publish packages
     export PACKAGES_INCOMING=/srv/packages/organizations/elmyra/foss/aptly/public/incoming
 
     # Add packages to repository
-    aptly repo add -config=$APTLY_CONFIG -remove-files=true $APTLY_REPOSITORY $PACKAGES_INCOMING/influxdb*.deb $PACKAGES_INCOMING/grafana_*.deb
+    aptly repo add -config=$APTLY_CONFIG -remove-files=true $APTLY_REPOSITORY $PACKAGES_INCOMING/*.deb
 
     # Publish repository
     aptly publish update -config=$APTLY_CONFIG -gpg-key=2543A838 -passphrase=esp $APTLY_DISTRIBUTION
-
