@@ -136,7 +136,7 @@ extras = {
 }
 
 setup(name='kotori',
-      version='0.21.1',
+      version='0.22.0',
       description='Kotori is a data acquisition, routing and graphing toolkit',
       long_description='Kotori is a data acquisition, routing and graphing toolkit',
       license="AGPL 3, EUPL 1.2",
