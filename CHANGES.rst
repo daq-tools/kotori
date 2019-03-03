@@ -7,6 +7,13 @@ in progress
 ===========
 
 
+.. _kotori-0.22.1:
+
+2019-02-03 0.22.1
+=================
+- Fix setup.py re. Trove classifiers
+
+
 .. _kotori-0.22.0:
 
 2019-02-03 0.22.0
