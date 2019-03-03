@@ -136,7 +136,7 @@
 .. _LST-projects: http://sperlhome.userweb.mwn.de/
 
 .. luftdaten.info
-.. _luftdatenpumpe.py: https://github.com/zerotired/kotori/blob/master/kotori/vendor/luftdaten/luftdatenpumpe.py
+.. _luftdatenpumpe.py: https://github.com/daq-tools/kotori/blob/0.22.1/kotori/vendor/luftdaten/luftdatenpumpe.py
 
 .. Weather information
 .. _weeWX: http://www.weewx.com/

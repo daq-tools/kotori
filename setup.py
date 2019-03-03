@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
+import os
 import sys
 from setuptools import setup, find_packages
+
+here = os.path.abspath(os.path.dirname(__file__))
+README = open(os.path.join(here, 'README.rst')).read()
 
 requires_core = [
     'Twisted[tls]==18.9.0',
@@ -137,8 +141,8 @@ extras = {
 
 setup(name='kotori',
       version='0.22.1',
-      description='Kotori is a data acquisition, routing and graphing toolkit',
-      long_description='Kotori is a data acquisition, routing and graphing toolkit',
+      description='Kotori is a data acquisition, processing and graphing toolkit for humans',
+      long_description=README,
       license="AGPL 3, EUPL 1.2",
       classifiers=[
         "Programming Language :: Python",
@@ -178,8 +182,9 @@ setup(name='kotori',
       author_email='andreas@getkotori.org',
       url='https://getkotori.org/',
       keywords='data acquisition graphing export plotting daq routing engine ' +
-               'mqtt wamp http rest sql web html csv json cdf hdf5 png ' +
-               'twisted pyramid autobahn influxdb mosquitto grafana mongodb matplotlib ggplot ',
+               'mqtt http rest amqp wamp sql web html csv json cdf hdf5 png ' +
+               'twisted pyramid autobahn influxdb mosquitto grafana mongodb matplotlib ggplot ' +
+               'telemetry m2m iot',
       packages=find_packages(),
       include_package_data=True,
       package_data={

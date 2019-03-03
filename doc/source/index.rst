@@ -63,6 +63,7 @@ About
 .. toctree::
     :maxdepth: 1
 
+    README <README>
     about
 
 

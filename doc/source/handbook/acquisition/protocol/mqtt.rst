@@ -133,7 +133,7 @@ Language bindings
 
        - Examples
 
-            - The :ref:`Hiveeyes <hiveeyes>` ESP8266-based sensor node firmware `node-wifi-mqtt.ino`_.
+            - The ESP8266-based sensor node firmware `node-wifi-mqtt.ino`_ of the :ref:`Hiveeyes project`.
 
    * - Arduino/ESP8266
      - - Libraries
@@ -143,7 +143,7 @@ Language bindings
 
        - Examples
 
-            - The :ref:`Hiveeyes <hiveeyes>` Homie_-based sensor node firmware for ESP8266, "`node-wifi-mqtt-homie.ino`_".
+            - The Homie_-based sensor node firmware for ESP8266, "`node-wifi-mqtt-homie.ino`_" of the :ref:`Hiveeyes project`.
               See also :ref:`json-homie` for more documentation.
 
    * - ARMmbed

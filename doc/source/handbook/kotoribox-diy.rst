@@ -124,7 +124,7 @@ while the other one might optionally connect to an upstream internet gateway.
 
 3G/4G
 =====
-Connect to the internet using a GPRS_/UMTS_/LTE_ uplink.
+Connect to the internet using a GPRS/UMTS/LTE uplink.
 
 
 *******

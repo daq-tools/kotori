@@ -209,7 +209,7 @@ test-coverage: virtualenv
 
 docs-html: virtualenv
 	touch doc/source/index.rst
-	export SPHINXBUILD="`pwd`/.venv27/bin/sphinx-build"; cd doc; make html
+	export SPHINXBUILD="`pwd`/.venv2/bin/sphinx-build"; cd doc; make html
 
 virtualenv:
 	@test -e .venv2/bin/python || `command -v virtualenv` --python=`command -v python` --no-site-packages .venv2

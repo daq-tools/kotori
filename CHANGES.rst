@@ -5,13 +5,14 @@ Changelog
 
 in progress
 ===========
+- Improve documentation
 
 
 .. _kotori-0.22.1:
 
 2019-02-03 0.22.1
 =================
-- Fix setup.py re. Trove classifiers
+- Fix wrong Trove classifiers in ``setup.py`` blocking the upload to PyPI
 
 
 .. _kotori-0.22.0:

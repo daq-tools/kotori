@@ -52,7 +52,7 @@ Import CSV data
         }
     ]
 
-We added `commit 49256945 <https://github.com/zerotired/kotori/commit/49256945>`_
+We added `commit 49256945 <https://github.com/daq-tools/kotori/commit/49256945>`_
 to make Kotori conveniently grok the CSV format used by http://archive.luftdaten.info/::
 
     # Convenience hack to support import from http://archive.luftdaten.info/
@@ -82,7 +82,7 @@ References
 Vendor configuration
 ====================
 
-https://github.com/zerotired/kotori/blob/master/etc/examples/vendors/luftdaten.ini
+https://github.com/daq-tools/kotori/blob/0.22.1/etc/examples/vendors/luftdaten.ini
 
 Add vendor configuration to Kotori::
 
@@ -99,25 +99,27 @@ Ready
 
 Phase 1
 =======
-
 Import CSV data (see above).
-
 [29.03.17 02:18:04] Andreas Motl: ready: https://luftdaten.getkotori.org/
-
-[29.03.17 02:22:08] Andreas Motl: Voilà:
-
-    - https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-info-automatic
-    - https://luftdaten.getkotori.org/api/luftdaten/info/earth/42/data.txt?from=2017-01-01
-
 
 Phase 2
 =======
-Feed data from live data API https://api.luftdaten.info/static/v1/data.json to MQTT using
-`luftdatenpumpe.py <https://github.com/zerotired/kotori/blob/master/kotori/vendor/luftdaten/luftdatenpumpe.py>`_.
+Feed data from live data API from luftdaten.info to MQTT using
+`luftdatenpumpe.py <https://github.com/daq-tools/kotori/blob/0.22.1/kotori/vendor/luftdaten/luftdatenpumpe.py>`_.
 
 [29.03.17 16:44:09] Richard Pobering: ping. ich habe das dashboard jetzt inhaltlich nochmal ein bisschen angepasst:
 
     - https://luftdaten.getkotori.org/grafana/dashboard/db/luftdaten-testdrive-automatic
+
+Phase 3
+=======
+November 2018 - February 2019
+
+- https://weather.hiveeyes.org/grafana/dashboards/f/NFeP70fik/luft-ldi
+- https://community.hiveeyes.org/t/erneuerung-der-luftdatenpumpe/1199
+- https://community.hiveeyes.org/t/ldi-data-plane-v2/1412
+
+
 
 .. _luftdaten.info-todo:
 

@@ -160,7 +160,7 @@ Nginx
         #client_header_timeout 3m;
         client_body_timeout 5m;
         send_timeout 5m;
-}
+    }
 
 
 *******

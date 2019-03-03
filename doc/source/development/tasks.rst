@@ -107,7 +107,7 @@ New Python packages for InfluxDB
     - [o] Capability to **update** the new per-node instant dashboard with fields arriving from discrete telemetry data submissions
 
 - [o] Warning when building a release: "Dependency Links processing has been deprecated with an accelerated time schedule and will be removed in pip 1.6"
-- [o] After building on oasis: rm dist/*.deb
+- [o] After building on oasis: ``rm dist/*.deb``
 - [o] Release fresh package for arm
 - [o] Does the Grafana refresh interval tamer really run and work properly?
 - [o] Improve wording of MQTT error signalling::
@@ -168,11 +168,11 @@ New Python packages for InfluxDB
       but gradually tame the refresh interval down to "Each 5 minutes".
       At best, this would be done by checking the most recent modification timestamp
       against a configured threshold.
-- [o] Don't pipe Luftdaten through the whole Kotori incl. MQTT bus.
-      => Write it directly to InfluxDB, but using the appropriate core methods from Kotori.
-      ==> Extract this piece of code into an addon namespace to make it
-          available to *both* Kotori channels *and* standalone applications.
-      ===> Maybe use golang?
+- [o] Don't pipe Luftdaten through the whole Kotori incl. MQTT bus, but:
+      - Write it directly to InfluxDB, but using the appropriate core methods from Kotori.
+      - Extract this piece of code into an addon namespace to make it
+        available to *both* Kotori channels *and* standalone applications.
+      - Maybe use golang?
 - [o] Update Grafana dashboards in vendor/luftdaten/application
 
 
