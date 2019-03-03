@@ -41,18 +41,13 @@ In a nutshell
 About
 =====
 - Kotori is a multi-channel and multi-protocol data historian.
-
-- It's an infrastructure toolkit made of components for data acquisition, graphing and more.
-
-- The system is used for building flexible telemetry solutions in different scenarios.
-
-    - Test benches
-    - Sensor networks
-    - Environmental monitoring
-
+- It's an infrastructure toolkit made of components for data acquisition,
+  graphing and more.
+- The system is used for building flexible telemetry solutions in different
+  scenarios. People are conceiving and building test benches and different
+  kinds of sensor networks for environmental monitoring and beyond.
 - Built-in sensor adapters, flexible configuration capabilities,
   durable database storage and unattended graph visualization out of the box.
-
 - Integrates well with established hardware-, software- and
   data acquisition workflows through flexible adapter interfaces.
 
@@ -85,56 +80,39 @@ Standing on the shoulders of giants.
 ************
 Installation
 ************
-Kotori can be installed through a Debian package and from PyPI.
-Our Debian package repository also contains appropriate packages
-for Mosquitto, InfluxDB and Grafana, so this should get up the
-whole DAQ infrastructure in a few minutes.
-
-All of the packages are available for ``amd64`` and ``armhf``
-architectures to support installations on RaspberryPi, Beaglebone,
-Odroid or similar ARM-based SBC machines.
-
+Kotori can be installed through a Debian package, from the
+Python Package Index (PyPI) or from the Git repository.
 Please follow up to the corresponding installation instructions:
 
-- `Packages for Debian-based distributions <https://getkotori.org/docs/setup/debian-quickstart.html>`_
-- `Python source packages <https://getkotori.org/docs/setup/python-package.html>`_
+- `Packages for Debian-based distributions <https://getkotori.org/docs/setup/debian-quickstart.html>`_ ¹²
+- `Installing Python source package <https://getkotori.org/docs/setup/python-package.html>`_
+- `Installing from Git <https://getkotori.org/docs/development/hack.html>`_
 
 As Kotori is pretty heavy in respect to the number of software
-components it relies on, things sometimes break here.
-
+components it relies on, things sometimes break when trying to
+install its dependencies.
 In order to let us know about any problems you might encounter when
-installing Kotori, please don't hesitate to open an issue on GitHub.
+installing Kotori, please don't hesitate to
+`open an issue on GitHub <https://github.com/daq-tools/kotori/issues/new>`_.
+
+----
+
+¹ When choosing to install from the Debian package repository, you will also be
+able to receive appropriate Debian packages for Mosquitto, InfluxDB and Grafana
+through the `DaqZilla package repository <https://packages.elmyra.de/elmyra/foss/debian/>`_.
+This makes it easy to setup the complete DAQ system from a single package source.
+
+² All of the Debian packages are available for ``amd64`` and ``armhf``
+architectures to support installations on RaspberryPi, Beaglebone,
+Odroid or similar ARM-based SBC machines.
 
 
 ****************
 Acknowledgements
 ****************
-Kotori would not have been possible without many amazing people:
-
-- Glyph Lefkowitz et al. for conceiving, building and maintaining the
-  Twisted network programming framework.
-- Roger Light et al. for conceiving, building and maintaining the
-  Mosquitto MQTT broker.
-- Torkel Ödegaard and his team for creating and maintaining Grafana.
-- Paul Dix and his team for creating and maintaining InfluxDB.
-- The PostgreSQL and MongoDB developers for creating and maintaining
-  their database systems.
-- Chris McDonough and the whole Python Webdev community for creating
-  and maintaining the Pyramid and Pylons ecosystems.
-- Tobias Oberstein et al. for creating and maintaining WAMP,
-  Crossbar.io and Autobahn.
-- Countless other authors of packages from the Python
-  ecosystem and beyond for adding even more batteries
-  to put everything together.
-
-Thank you so much for providing such great infrastructure
-components and resources to the community!
-You know who you are.
-
-Last but not least, thanks to all the
-`core contributors <https://getkotori.org/docs/CONTRIBUTORS.html>`_ of Kotori
+Thanks to all the `contributors <https://getkotori.org/docs/CONTRIBUTORS.html>`_ of Kotori
 who got their hands dirty with it and helped to co-create and conceive it
-in one way or another.
+in one way or another. You know who you are.
 
 
 *******************
@@ -143,25 +121,38 @@ Project information
 
 About
 =====
-The source code of Kotori is hosted on `GitHub <https://github.com/daq-tools/kotori>`_.
-You might also want to have a look at the `documentation <https://getkotori.org/docs/>`_.
+These links will guide you to the source code of »Kotori« and its documentation.
 
-If you'd like to contribute you're most welcome!
+- `Kotori on GitHub <https://github.com/daq-tools/kotori>`_
+- `Kotori documentation <https://getkotori.org/docs/>`_
+- `Kotori on the Python Package Index (PyPI) <https://pypi.org/project/kotori/>`_
+
+Contributing
+============
+We are always happy to receive code contributions, ideas, suggestions
+and problem reports from the community.
+
+So, if you'd like to contribute you're most welcome.
 Spend some time taking a look around, locate a bug, design issue or
-spelling mistake and then send us a pull request or create an issue.
+spelling mistake and then send us a pull request or create an issue_.
 
 Thanks in advance for your efforts, we really appreciate any help or feedback.
 
-Licensing
-=========
-- The source code is primarily licensed under the terms of the
-  GNU AGPL license, see LICENSE_ file for details.
-- The program is also licensed under the terms of the
-  European Union Public Licence (EUPL 1.2, see file "eupl-1.2.txt").
-- The program also includes third-party components from different authors,
-  see "THIRD-PARTY-NOTICES.rst" for more information on that.
+Licenses
+========
+This software is copyright © 2014-2019 The Kotori Developers. All rights reserved.
 
-.. _LICENSE: https://github.com/daq-tools/kotori/blob/master/LICENSE
+It is and will always be **free and open source software**.
+
+Use of the source code included here is governed by the
+`GNU Affero General Public License <GNU-AGPL-3.0_>`_ and the
+`European Union Public License <EUPL-1.2_>`_.
+Please also have a look at the `notices about licenses of third-party components`_.
+
+.. _issue: https://github.com/daq-tools/kotori/issues/new
+.. _GNU-AGPL-3.0: https://github.com/daq-tools/kotori/blob/master/LICENSE
+.. _EUPL-1.2: https://github.com/daq-tools/kotori/blob/master/eupl-1.2.txt
+.. _notices about licenses of third-party components: https://github.com/daq-tools/kotori/blob/master/THIRD-PARTY-NOTICES.rst
 
 
 ***************
