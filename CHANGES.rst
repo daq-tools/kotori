@@ -7,6 +7,13 @@ in progress
 ===========
 
 
+.. _kotori-0.22.3:
+
+2019-02-04 0.22.3
+=================
+- Fix Debian package dependencies
+
+
 .. _kotori-0.22.2:
 
 2019-02-04 0.22.2
