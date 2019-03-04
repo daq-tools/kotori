@@ -19,6 +19,20 @@ Kotori tasks
 ****
 
 
+2019-03-04
+==========
+- Build Debian packages for ``arm64v8``
+- Build packages for mipsel/libmusl for targeting OpenWRT?
+    - https://github.com/hypn/docker-qemu-debian-mipsel
+    - https://hub.docker.com/r/asmimproved/qemu-mips/
+- Is it possible to run Kotori inside a Docker container under systemd?
+  See also:
+
+    - https://developers.redhat.com/blog/2014/05/05/running-systemd-within-docker-container/
+    - https://github.com/solita/docker-systemd
+- Improve ``kotori-selftest``
+
+
 2019-01-09
 ==========
 New Python packages for InfluxDB

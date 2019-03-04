@@ -102,6 +102,9 @@ RUN $pip install kotori[${FEATURES}]==${VERSION} --find-links=./dist --upgrade
 # ===========================
 # Create distribution package
 # ===========================
+# Todo: Decouple this task from the repository.
+#       Q: Where to place the resources from the "packaging" folder then?
+#       A: TBD.
 
 FROM install-kotori AS package-kotori
 
@@ -122,7 +125,8 @@ COPY packaging/builder/fpm-package $SOURCES/fpm-package
 
 WORKDIR $SOURCES
 
-# Counter "ValueError: bad marshal data (unknown type code)".
+# Counter "ValueError: bad marshal data (unknown type code)"
+# coming from manipulation through "virtualenv-tools"".
 RUN find ${venv} -name '*.pyc' -delete
 
 # Relocate the virtualenv by updating the python interpreter in the shebang of installed scripts.

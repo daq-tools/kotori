@@ -5,6 +5,12 @@ Changelog
 
 in progress
 ===========
+
+
+.. _kotori-0.22.2:
+
+2019-02-04 0.22.2
+=================
 - Improve documentation
 
 

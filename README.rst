@@ -14,7 +14,6 @@
 
 **Telemetry data acquisition and sensor networks for humans.**
 
-
 ######
 Kotori
 ######
@@ -140,7 +139,7 @@ Thanks in advance for your efforts, we really appreciate any help or feedback.
 
 Licenses
 ========
-This software is copyright © 2014-2019 The Kotori Developers. All rights reserved.
+This software is copyright © 2013-2019 The Kotori Developers. All rights reserved.
 
 It is and will always be **free and open source software**.
 
