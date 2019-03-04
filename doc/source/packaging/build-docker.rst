@@ -26,33 +26,39 @@ Build Kotori package::
     make debian-package flavor=standard arch=armhf version=0.22.0
 
 
+----
+
+
 ********
 Research
 ********
 
 Leverage multi-CPU architecture support
 =======================================
-> Docker images can support multiple architectures, which means that a single
-image may contain variants for different architectures, and sometimes for
-different operating systems, such as Windows.
->
-> When running an image with multi-architecture support, docker will
-automatically select an image variant which matches your OS and architecture.
->
-> Most of the official images on Docker Hub provide a variety of architectures.
-For example, the busybox image supports ``amd64``, ``arm32v5``, ``arm32v6``,
-``arm32v7``, ``arm64v8``, ``i386``, ``ppc64le`` and ``s390x``.
->
-> Docker Desktop for Mac provides ``binfmt_misc`` multi-architecture support,
-which means you can run containers for different Linux architectures such as
-``arm``, ``mips``, ``ppc64le`` and even ``s390x``.
->
-> This does not require any special configuration in the container itself as it
-uses qemu-static from the Docker for Mac VM. Because of this, you can run an
-ARM container, like the ``arm32v7`` or ``ppc64le`` variants of the busybox image.
->
-> -- https://docs.docker.com/docker-for-mac/multi-arch/
-> -- https://github.com/docker-library/official-images#architectures-other-than-amd64
+Docker brings multi-CPU architecture support:
+
+    Docker images can support multiple architectures, which means that a single
+    image may contain variants for different architectures, and sometimes for
+    different operating systems, such as Windows.
+
+    When running an image with multi-architecture support, docker will
+    automatically select an image variant which matches your OS and architecture.
+
+    Most of the official images on Docker Hub provide a variety of architectures.
+    For example, the busybox image supports ``amd64``, ``arm32v5``, ``arm32v6``,
+    ``arm32v7``, ``arm64v8``, ``i386``, ``ppc64le`` and ``s390x``.
+
+    Docker Desktop for Mac provides ``binfmt_misc`` multi-architecture support,
+    which means you can run containers for different Linux architectures such as
+    ``arm``, ``mips``, ``ppc64le`` and even ``s390x``.
+
+    This does not require any special configuration in the container itself as it
+    uses qemu-static from the Docker for Mac VM. Because of this, you can run an
+    ARM container, like the ``arm32v7`` or ``ppc64le`` variants of the busybox image.
+
+    | -- https://docs.docker.com/docker-for-mac/multi-arch/
+    | -- https://github.com/docker-library/official-images#architectures-other-than-amd64
+
 
 Hands-on
 ========
