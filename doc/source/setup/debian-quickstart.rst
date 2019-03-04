@@ -99,14 +99,6 @@ Setup the whole software stack
 ==============================
 Install Kotori as well as recommended and suggested packages::
 
-    PACKAGES=kotori
-    DEPENDENCIES=$(LANG=c apt-cache depends $PACKAGES | egrep -i 'suggests|recommends' | grep -v '<' | cut -d' ' -f4 | xargs)
-    apt install $PACKAGES $DEPENDENCIES
-
-Don't be afraid of the command here, it's just for making sure all dependencies get satisfied.
-
-Maybe it's already that easy now?::
-
     apt install --install-recommends --install-suggests kotori
 
 InfluxDB and Grafana are not always started automatically, so ensure they are running by executing::

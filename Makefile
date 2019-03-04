@@ -80,11 +80,18 @@ deb-build-full:
 
 
 deb-build: check-build-options
-	echo "$(version) $(name) $(features)"
+
+	@# https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
+	@# https://en.wikipedia.org/wiki/ANSI_escape_code
+	$(eval RED := "\033[0;31m")
+	$(eval YELLOW := \033[0;33m\033[1m)
+	$(eval NC := \033[0m)
+
+	@echo "Building package $(YELLOW)$(name)$(NC) version $(YELLOW)$(version)$(NC) with features $(YELLOW)$(features)$(NC)"
 
 	# Build Python virtualenv and Linux distribution package
-	#docker build --tag daq-tools/kotori-build-arm32v7:$(version) --build-arg VERSION=$(version) --build-arg NAME=$(name) --build-arg FEATURES=$(features) --file packaging/dockerfiles/Dockerfile.kotori.arm32v7 .
-	#docker build --tag daq-tools/kotori-build-arm32v7:$(version) --build-arg BASE_IMAGE=hiveeyes/arm32v7-baseline --build-arg VERSION=$(version) --build-arg NAME=$(name) --build-arg FEATURES=$(features) --file packaging/dockerfiles/Dockerfile.kotori.arm32v7 .
+	@#docker build --tag daq-tools/kotori-build-arm32v7:$(version) --build-arg VERSION=$(version) --build-arg NAME=$(name) --build-arg FEATURES=$(features) --file packaging/dockerfiles/Dockerfile.kotori.arm32v7 .
+	@#docker build --tag daq-tools/kotori-build-arm32v7:$(version) --build-arg BASE_IMAGE=hiveeyes/arm32v7-baseline --build-arg VERSION=$(version) --build-arg NAME=$(name) --build-arg FEATURES=$(features) --file packaging/dockerfiles/Dockerfile.kotori.arm32v7 .
 
 	docker build --tag daq-tools/kotori-build-$(arch):$(version) --build-arg BASE_IMAGE=daq-tools/$(arch)-baseline:latest --build-arg VERSION=$(version) --build-arg NAME=$(name) --build-arg FEATURES=$(features) --file packaging/dockerfiles/Dockerfile.all.kotori .
 
@@ -97,7 +104,7 @@ deb-build: check-build-options
 
 
 publish-debian:
-	# publish Debian packages
+	# Publish all Debian packages
 	rsync -auv --progress ./dist/kotori*$(version)*.deb workbench@packages.elmyra.de:/srv/packages/organizations/elmyra/foss/aptly/public/incoming/
 
 

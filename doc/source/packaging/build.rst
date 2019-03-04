@@ -71,7 +71,7 @@ Publish package
     export PACKAGES_INCOMING=/srv/packages/organizations/elmyra/foss/aptly/public/incoming
 
     # Add packages to repository
-    aptly repo add -config=$APTLY_CONFIG -remove-files=true $APTLY_REPOSITORY $PACKAGES_INCOMING/kotori_*.deb
+    aptly repo add -config=$APTLY_CONFIG -remove-files=true $APTLY_REPOSITORY $PACKAGES_INCOMING/kotori*.deb
 
     # Publish repository
     aptly publish update -config=$APTLY_CONFIG -gpg-key=2543A838 -passphrase=esp $APTLY_DISTRIBUTION

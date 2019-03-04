@@ -31,6 +31,11 @@ Kotori tasks
     - https://developers.redhat.com/blog/2014/05/05/running-systemd-within-docker-container/
     - https://github.com/solita/docker-systemd
 - Improve ``kotori-selftest``
+- Parse .deb package file name from last line of ``fpm`` output::
+
+    {:timestamp=>"2019-03-04T01:08:46.573729+0000", :message=>"Created package", :path=>"./dist/kotori_0.22.2-1_amd64.deb"}
+
+- Improve documentation about release, build, package and publish.
 
 
 2019-01-09
