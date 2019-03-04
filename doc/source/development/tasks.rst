@@ -37,6 +37,10 @@ Kotori tasks
 
 - Improve documentation about release, build, package and publish.
 
+- [x] Fix problems after switching to Twisted 18.9.0
+    - HTTP handler stopped working
+    - :0: UserWarning: You do not have a working installation of the service_identity module: 'cannot import name opentype'.  Please install it from <https://pypi.python.org/pypi/service_identity> and make sure all of its dependencies are satisfied.  Without the service_identity module, Twisted can perform only rudimentary TLS client hostname verification.  Many valid certificate/hostname mappings may be rejected.
+
 
 2019-01-09
 ==========

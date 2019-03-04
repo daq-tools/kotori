@@ -5,7 +5,14 @@ Changelog
 
 in progress
 ===========
+
+
+.. _kotori-0.22.4:
+
+2019-02-04 0.22.4
+=================
 - Fix HTTP handler after upgrade to Twisted 18.9.0
+- Add missing "service_identity" module Twisted complained about and rebalance dependencies
 
 
 .. _kotori-0.22.3:
