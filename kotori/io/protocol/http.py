@@ -111,14 +111,19 @@ class HttpChannelContainer(Resource):
     def __init__(self):
         Resource.__init__(self)
 
-        log.info('HttpChannelContainer init')
+        log.info('Initializing HttpChannelContainer')
 
-        self.database_connect()
+        # Reference to Metastore database.
+        self.metastore = None
 
-        self.router    = PathRoutingEngine()
+        # HTTP routing callbacks.
         self.callbacks = {}
 
-        self.metastore = None
+        # Connect to Metastore database.
+        self.database_connect()
+
+        # Initialize routing engine.
+        self.router    = PathRoutingEngine()
 
     def database_connect(self):
         """
@@ -132,7 +137,7 @@ class HttpChannelContainer(Resource):
             self.metastore = pymongo.MongoClient(host='localhost', port=27017, socketTimeoutMS=5000, connectTimeoutMS=5000)
 
         except Exception as ex:
-            log.failure('Could not connect to Metadata storage database: {0}'.format(ex))
+            log.failure('Could not connect to Metadata storage database: {ex}\n{log_failure}', ex=ex)
 
     def registerEndpoint(self, methods=None, path=None, callback=None):
         """

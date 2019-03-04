@@ -7,6 +7,13 @@ in progress
 ===========
 
 
+.. _kotori-0.22.6:
+
+2019-02-04 0.22.6
+=================
+- Fix Metastore database connection woes
+
+
 .. _kotori-0.22.5:
 
 2019-02-04 0.22.5
