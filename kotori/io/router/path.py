@@ -51,6 +51,5 @@ if __name__ == '__main__':
     router = PathRoutingEngine()
     pattern = '/foo/bar/{resource}'
     router.add_route(pattern, pattern)
-    print 'match:   ', router.match('/foo/bar/entity-1')
-    print 'mismatch:', router.match('/hello/world')
-
+    print 'match:   ', router.match('GET', '/foo/bar/entity-1')
+    print 'mismatch:', router.match('GET', '/hello/world')

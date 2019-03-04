@@ -27,6 +27,7 @@ from kotori.util.errors import last_error_and_traceback
 
 log = Logger()
 
+
 class LocalSite(Site):
 
     def log(self, request):
@@ -42,6 +43,7 @@ class LocalSite(Site):
         else:
             line = line.encode("utf-8")
         log.debug(line)
+
 
 class HttpServerService(Service):
     """
@@ -116,15 +118,21 @@ class HttpChannelContainer(Resource):
         self.router    = PathRoutingEngine()
         self.callbacks = {}
 
+        self.metastore = None
+
     def database_connect(self):
         """
         Connect to Metadata storage
         """
-        log.info('Connecting to Metadata storage database (MongoDB)')
-        mongodb_uri = "mongodb://localhost:27017"
+        log.info('Connecting to Metadata storage database')
 
         # TODO: Make MongoDB address configurable
-        self.metastore = pymongo.MongoClient(host='localhost', port=27017, socketTimeoutMS=5000, connectTimeoutMS=5000)
+        mongodb_uri = "mongodb://localhost:27017"
+        try:
+            self.metastore = pymongo.MongoClient(host='localhost', port=27017, socketTimeoutMS=5000, connectTimeoutMS=5000)
+
+        except Exception as ex:
+            log.failure('Could not connect to Metadata storage database: {0}'.format(ex))
 
     def registerEndpoint(self, methods=None, path=None, callback=None):
         """
@@ -139,6 +147,7 @@ class HttpChannelContainer(Resource):
 
         # TODO: Add sanity checks for protecting against collisions on "name" and "path"
         name = path
+        log.debug('Adding route: name={name}, path={path}, methods={methods}', name=name, path=path, methods=methods)
         self.router.add_route(name, path, methods=methods)
         self.callbacks[name] = callback
 
@@ -151,37 +160,47 @@ class HttpChannelContainer(Resource):
         Returns ``HttpChannelEndpoint`` instance on match.
         """
 
-        #log.info('getChild: {name}', name=name)
-        uri = urlparse(str(request.URLPath()))
+        # Read URL from request.
+        url_raw = str(request.URLPath())
+        log.debug('HttpChannelContainer.getChild: method={method}, name={name}, url={url}',
+                  method=request.method, name=name, url=url_raw)
 
-        # router v1
+        # Parse URL string.
+        uri = urlparse(url_raw)
+
+
+        # Dispatch URL to resource.
+
+        # Router v1
         """
         for endpoint in self.endpoints:
             if uri.path.startswith(endpoint.path):
                 return HttpChannelEndpoint(options=endpoint)
         """
 
-        # router v2
+        # Router v2
         #print 'Matching method=', request.method, 'uri=', uri.path
         result = self.router.match(request.method, uri.path)
-        if result:
-            #print 'route match result:'; pprint(result); pprint(result['route'].__dict__)
+        #print 'result:', result
 
-            # Obtain matched route name
+        if result:
+            #print 'route match result:'; from pprint import pprint; pprint(result); pprint(result['route'].__dict__)
+
+            # Obtain matched route name.
             route_name = result['route'].name
 
-            # Obtain appropriate callback function
+            # Obtain appropriate callback function.
             # TODO: Beware of collisions on "route_name", see above
             callback = self.callbacks[route_name]
 
-            # Wrap endpoint description into container object
+            # Wrap endpoint description into container object.
             endpoint = bunchify({'path': route_name, 'callback': callback, 'match': result['match'], 'request': request})
             #print 'endpoint:'; pprint(endpoint)
 
-            # Create leaf resource instance
+            # Create leaf resource instance.
             return HttpChannelEndpoint(options=endpoint, metastore=self.metastore)
 
-        # If nothing matched, continue traversal
+        # If nothing matched, continue traversal.
         return self
 
 
