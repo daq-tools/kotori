@@ -52,6 +52,7 @@ requires = requires_core + [
 
     #'pyasn1>=0.2.3',                # 0.4.2
     'service_identity==18.1.0',
+    'idna==2.8',
     'pyasn1==0.4.5',
     'pyasn1-modules==0.2.4',
 
@@ -66,7 +67,6 @@ extras = {
         'pytz==2018.9',
         'requests>=2.12.4',
         #'requests>=2.18.4,<3',
-        #'idna>=2.8,<3',
         'grafana_api_client==0.2.0',
         #'grafana-dashboard-builder==0.1.0a7',      # evaluated, but not suitable
         #'txmongo==16.3.0',

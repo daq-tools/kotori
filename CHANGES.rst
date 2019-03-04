@@ -7,6 +7,13 @@ in progress
 ===========
 
 
+.. _kotori-0.22.5:
+
+2019-02-04 0.22.5
+=================
+- Attempt to fix dependency woes with the "idna" package
+
+
 .. _kotori-0.22.4:
 
 2019-02-04 0.22.4
