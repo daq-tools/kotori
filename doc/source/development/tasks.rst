@@ -41,6 +41,24 @@ Kotori tasks
     - HTTP handler stopped working
     - :0: UserWarning: You do not have a working installation of the service_identity module: 'cannot import name opentype'.  Please install it from <https://pypi.python.org/pypi/service_identity> and make sure all of its dependencies are satisfied.  Without the service_identity module, Twisted can perform only rudimentary TLS client hostname verification.  Many valid certificate/hostname mappings may be rejected.
 
+- [o] Run ``git checkout ${VERSION}`` after cloning
+- [o] Use ``fpm`` option for defining systemd files
+- [o] Make ``make debian-package`` run on top of the most recent version if version is not specified
+- [o] Revert ``apt install`` docs to previous variant re. recommends && suggests
+- [o] ``RUN $pip install kotori[${FEATURES}]==${VERSION} --find-links=./dist --upgrade``
+      does not use the local sdist, but acquires the egg from PyPI.
+- [o] ::
+
+    root@elbanco:~# /opt/kotori/bin/kotori --version
+    :0: UserWarning: You do not have a working installation of the service_identity module: 'cannot import name opentype'.  Please install it from <https://pypi.python.org/pypi/service_identity> and make sure all of its dependencies are satisfied.  Without the service_identity module, Twisted can perform only rudimentary TLS client hostname verification.  Many valid certificate/hostname mappings may be rejected.
+    Kotori version 0.22.5
+
+- [o] Publish Kotori to apt repository after uploading to "incoming" directory::
+
+    offgrid:~ amo$ ssh workbench@pulp.cicer.de
+    workbench@pulp:~$ ./aptly_publish_kotori
+
+
 
 2019-01-09
 ==========
