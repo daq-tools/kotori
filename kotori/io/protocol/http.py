@@ -38,7 +38,7 @@ class LocalSite(Site):
         @type request: L{Request}
         """
         line = u'HTTP access: ' + self._logFormatter(self._logDateTime, request)
-        if self._nativeize:
+        if hasattr(self, '_nativeize') and self._nativeize:
             line = nativeString(line)
         else:
             line = line.encode("utf-8")

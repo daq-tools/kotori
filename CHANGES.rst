@@ -5,6 +5,7 @@ Changelog
 
 in progress
 ===========
+- Fix HTTP handler after upgrade to Twisted 18.9.0
 
 
 .. _kotori-0.22.3:
