@@ -158,16 +158,25 @@ class InfluxDBAdapter(object):
         for time_field in ['time', 'datetime', 'dateTime']:
             if time_field in data:
 
+                # WeeWX. TODO: Move to specific vendor configuration.
+                # Disabled in favor of precision detection heuristic.
+                #if time_field == 'dateTime':
+                #    chunk['time_precision'] = 's'
+
+                # Process timestamp field.
                 if data[time_field]:
+
+                    # Decode timestamp.
                     chunk['time'] = data[time_field]
                     if is_number(chunk['time']):
                         chunk['time'] = int(float(chunk['time']))
 
-                # WeeWX. TODO: Move to specific vendor configuration.
-                if time_field == 'dateTime':
-                    chunk['time_precision'] = 's'
+                    # Remove timestamp from data payload.
+                    del data[time_field]
 
-                del data[time_field]
+                    # If we found a timestamp field already,
+                    # don't look out for more.
+                    break
 
         # Extract geohash from data. Finally, thanks Rich!
         # TODO: Also precompute geohash with 3-4 different zoomlevels and add them as tags
