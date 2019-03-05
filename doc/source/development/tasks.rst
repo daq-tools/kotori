@@ -58,6 +58,14 @@ Kotori tasks
     offgrid:~ amo$ ssh workbench@pulp.cicer.de
     workbench@pulp:~$ ./aptly_publish_kotori
 
+- [o] Strip larger dependencies from Kotori site-packages
+
+    - 28M	bokeh
+    - 8.5M	ggplot
+    - 61M	pandas
+    - 8.1M	pip
+    - 27M	statsmodels
+    - 17M	twisted
 
 
 2019-01-09
