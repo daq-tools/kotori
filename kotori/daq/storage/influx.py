@@ -197,7 +197,7 @@ class InfluxDBAdapter(object):
             # Heuristically compute timestamp precision
             if isinstance(timestamp, int):
                 if timestamp >= 1e17 or timestamp <= -1e17:
-                    time_precision = 'ns'
+                    time_precision = 'n'
                 elif timestamp >= 1e14 or timestamp <= -1e14:
                     time_precision = 'u'
                 elif timestamp >= 1e11 or timestamp <= -1e11:

@@ -7,8 +7,15 @@ in progress
 ===========
 
 
+.. _kotori-0.22.7:
+
+2019-02-05 0.22.7
+=================
 - Slightly refactor ingress timestamp processing
 - Disable timestamp precision hack for WeeWX
+- Fix problem with time precision detection heuristics for ingress timestamps. Thanks, Richard!
+
+
 .. _kotori-0.22.6:
 
 2019-02-04 0.22.6
