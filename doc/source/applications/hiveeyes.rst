@@ -165,16 +165,9 @@ Interfaces
 ==========
 Entrypoints to the platform running on ``swarm.hiveeyes.org`` as of 2016-01-29:
 
-- Mosquitto::
-
-    uri:      mqtt://swarm.hiveeyes.org
-
-- Grafana::
-
-    uri:      https://swarm.hiveeyes.org/grafana/
-    username: hiveeyes
-    password: Efocmunk
-
+- MQTT: ``mqtt://swarm.hiveeyes.org``
+- HTTP: ``https://swarm.hiveeyes.org/api``
+- Grafana: ``https://swarm.hiveeyes.org/grafana/``
 
 
 *******************

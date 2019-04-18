@@ -185,7 +185,7 @@ setup(name='kotori',
         ],
       author='Andreas Motl',
       author_email='andreas@getkotori.org',
-      url='https://getkotori.org/',
+      url='https://github.com/daq-tools/kotori',
       keywords='data acquisition graphing export plotting daq routing engine ' +
                'mqtt http rest amqp wamp sql web html csv json cdf hdf5 png ' +
                'twisted pyramid autobahn influxdb mosquitto grafana mongodb matplotlib ggplot ' +
