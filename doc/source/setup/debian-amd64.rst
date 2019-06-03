@@ -31,7 +31,13 @@ Mosquitto
 =========
 ::
 
-    aptitude install mosquitto mosquitto-clients
+    wget --quiet -O - http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key | apt-key add -
+    echo 'deb http://repo.mosquitto.org/debian stretch main' > /etc/apt/sources.list.d/mosquitto.list
+    apt update
+
+::
+
+    apt install mosquitto mosquitto-clients
 
 
 InfluxDB
@@ -70,12 +76,12 @@ Grafana
 =======
 Install package::
 
-    aptitude install apt-transport-https curl
+    apt install apt-transport-https curl
     curl https://packagecloud.io/gpg.key | apt-key add -
     echo 'deb https://packagecloud.io/grafana/stable/debian/ wheezy main' > /etc/apt/sources.list.d/grafana.list
 
-    aptitude update
-    aptitude install grafana
+    apt update
+    apt install grafana
 
 
 Configure::
@@ -111,7 +117,7 @@ Add GPG key for checking package signatures::
 
 Add https addon for apt::
 
-    aptitude install apt-transport-https
+    apt install apt-transport-https
 
 
 Register with package repository
@@ -123,14 +129,14 @@ Add source for "testing" distribution (e.g. append to /etc/apt/sources.list)::
 
 Reindex package database::
 
-    aptitude update
+    apt update
 
 
 Install package
 ---------------
 ::
 
-    aptitude install kotori
+    apt install kotori
 
 
 .. seealso:: https://packages.elmyra.de/elmyra/foss/debian/README.txt

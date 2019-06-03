@@ -21,14 +21,14 @@ Download packages
 ::
 
     # Download amd64 packages
-    wget http://repo.mosquitto.org/debian/pool/main/m/mosquitto/mosquitto_1.5.8-0mosquitto1_amd64.deb
-    wget http://repo.mosquitto.org/debian/pool/main/m/mosquitto/mosquitto-clients_1.5.8-0mosquitto1_amd64.deb
-    wget http://repo.mosquitto.org/debian/pool/main/m/mosquitto/libmosquitto1_1.5.8-0mosquitto1_amd64.deb
+    wget http://repo.mosquitto.org/debian/pool/main/m/mosquitto/mosquitto_1.6.1-0mosquitto1_amd64.deb
+    wget http://repo.mosquitto.org/debian/pool/main/m/mosquitto/mosquitto-clients_1.6.1-0mosquitto1_amd64.deb
+    wget http://repo.mosquitto.org/debian/pool/main/m/mosquitto/libmosquitto1_1.6.1-0mosquitto1_amd64.deb
 
     # Download armhf packages
-    wget http://repo.mosquitto.org/debian/pool/main/m/mosquitto/mosquitto_1.5.8-0mosquitto1_armhf.deb
-    wget http://repo.mosquitto.org/debian/pool/main/m/mosquitto/mosquitto-clients_1.5.8-0mosquitto1_armhf.deb
-    wget http://repo.mosquitto.org/debian/pool/main/m/mosquitto/libmosquitto1_1.5.8-0mosquitto1_armhf.deb
+    wget http://repo.mosquitto.org/debian/pool/main/m/mosquitto/mosquitto_1.6.1-0mosquitto1_armhf.deb
+    wget http://repo.mosquitto.org/debian/pool/main/m/mosquitto/mosquitto-clients_1.6.1-0mosquitto1_armhf.deb
+    wget http://repo.mosquitto.org/debian/pool/main/m/mosquitto/libmosquitto1_1.6.1-0mosquitto1_armhf.deb
 
     # Upload to "incoming" directory
     scp mosquitto*.deb workbench@packages.example.org:/srv/packages/organizations/elmyra/foss/aptly/public/incoming
@@ -46,10 +46,10 @@ Download packages
 ::
 
     # Download amd64 package
-    wget https://dl.influxdata.com/influxdb/releases/influxdb_1.6.4_amd64.deb
+    wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.6_amd64.deb
 
     # Download armhf packages
-    wget https://dl.influxdata.com/influxdb/releases/influxdb_1.6.4_armhf.deb
+    wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.6_armhf.deb
 
     # Upload to "incoming" directory
     scp influxdb_*.deb workbench@packages.example.org:/srv/packages/organizations/elmyra/foss/aptly/public/incoming
@@ -73,10 +73,10 @@ Download package
 ::
 
     # Download amd64 package
-    wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_5.4.1_amd64.deb
+    wget https://dl.grafana.com/oss/release/grafana_5.4.4_amd64.deb
 
     # Download armhf package
-    wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_5.4.1_armhf.deb
+    wget https://dl.grafana.com/oss/release/grafana_5.4.4_armhf.deb
 
     # Upload to "incoming" directory
     scp grafana_*.deb workbench@packages.example.org:/srv/packages/organizations/elmyra/foss/aptly/public/incoming

@@ -2,6 +2,38 @@
 Monitoring and datalogger systems
 #################################
 
+Sensor Observation Service (SOS)
+================================
+- https://wiki.tum.de/pages/viewpage.action?pageId=29611671
+- http://istsos.org/
+- http://istsos.org/tutorial/
+- https://sourceforge.net/projects/istsos/
+- http://www.opengeospatial.org/standards/sos
+- http://schemas.opengis.net/sos/
+- https://52north.org/software/software-projects/
+- https://www.conterra.de/
+- https://github.com/52North/helgoland
+- http://sensorweb.demo.52north.org/
+- http://sensorweb.demo.52north.org/client/#/favorite
+- http://sensorweb.demo.52north.org/sensorwebtestbed/
+- https://52north.org/software/software-projects/sos/
+- http://52north.github.io/#/
+- https://github.com/52North/SOS
+- https://github.com/52North/GeologicToolbox
+- https://sospilot.readthedocs.io/
+- https://github.com/Geonovum/sospilot
+- http://istsos.org/en/trunk/doc/istsos.html
+- https://wiki.52north.org/SensorWeb/SosTutorial
+- https://plugins.qgis.org/plugins/SOSClient/
+- https://github.com/ruben-mv/SOSClient/blob/master/sos/sos.py
+- https://pypi.org/project/OWSLib/
+
+OpenSensorHub
+=============
+- https://opensensorhub.org/
+- https://github.com/opensensorhub/
+
+
 OpenMUC
 =======
 - https://www.openmuc.org/
@@ -54,3 +86,26 @@ Energy Grid
 
 
 https://iotool.io/
+
+
+Control System Studio
+=====================
+- http://cs-studio.sourceforge.net/
+- http://controlsystemstudio.org/
+- https://github.com/ControlSystemStudio/cs-studio
+
+
+Epics Control System
+====================
+- https://epics.anl.gov/
+- https://cars9.uchicago.edu/software/python/pyepics3/index.html
+- https://epics-controls.org/
+- http://epics-pvdata.sourceforge.net/
+
+
+EPICS is moving from Oracle to InfluxDB
+---------------------------------------
+- http://accelconf.web.cern.ch/AccelConf/icalepcs2017/posters/thpha032_poster.pdf
+- http://accelconf.web.cern.ch/AccelConf/icalepcs2017/papers/thpha032.pdf
+- http://www.rri.kyoto-u.ac.jp/EPICS/materials/influxdb-css.pptx
+- https://www.pasj.jp/web_publish/pasj2018/proceedings/PDF/THP0/THP099.pdf

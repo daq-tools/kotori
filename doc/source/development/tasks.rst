@@ -19,6 +19,40 @@ Kotori tasks
 ****
 
 
+2019-05-08
+==========
+Other projects
+- https://iotbytes.wordpress.com/store-mqtt-data-from-sensors-into-sql-database/
+- https://github.com/pradeesi/Store_MQTT_Data_in_Database
+
+
+2019-05-01
+==========
+
+Embedding Grafana
+-----------------
+https://grafana.com/docs/reference/sharing/#embed-panel
+
+- Use X-WEBAUTH-USER / X-WEBAUTH-NAME for authenticating with Grafana, see
+  - https://github.com/grafana/grafana/issues/3752
+- Prevent navigation
+  - https://github.com/grafana/grafana/issues/13706
+  - https://github.com/grafana/grafana/issues/11636
+- Embed entire dashboard
+  - https://github.com/grafana/grafana/issues/4757
+  - https://github.com/grafana/grafana/issues/10979
+  - https://github.com/grafana/grafana/issues/13493
+
+
+2019-04-21
+==========
+- https://github.com/bigclownlabs/bch-mqtt2influxdb
+- https://iot-relay.readthedocs.io/
+- https://github.com/eman/iotrelay-influxdb
+- https://pywws.readthedocs.io/
+- https://github.com/paulosalem/time-blender
+
+
 2019-03-04
 ==========
 - Build Debian packages for ``arm64v8``

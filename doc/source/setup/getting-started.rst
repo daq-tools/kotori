@@ -88,7 +88,7 @@ No data in Grafana I
 
         Better install ``chrony`` or use other means to keep your system times sound::
 
-            aptitude install chrony
+            apt install chrony
 
 
 No data in Grafana II

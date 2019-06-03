@@ -7,8 +7,16 @@
 .. image:: https://img.shields.io/github/tag/daq-tools/kotori.svg
     :target: https://github.com/daq-tools/kotori
 
-|
+.. image:: https://assets.okfn.org/images/ok_buttons/od_80x15_red_green.png
+    :target: https://okfn.org/opendata/
 
+.. image:: https://assets.okfn.org/images/ok_buttons/oc_80x15_blue.png
+    :target: https://okfn.org/opendata/
+
+.. image:: https://assets.okfn.org/images/ok_buttons/os_80x15_orange_grey.png
+    :target: https://okfn.org/opendata/
+
+|
 
 .. _kotori-readme:
 
@@ -20,10 +28,14 @@ Kotori
 
 Kotori is a flexible data historian based on InfluxDB, Grafana, MQTT and more. Free, open, simple.
 
-It is a telemetry data acquisition, processing and graphing toolkit
-aiming to become a fully integrated data historian.
+It is a telemetry data acquisition, `time series`_ data processing and graphing toolkit
+aiming to become a fully integrated `data historian`_.
 It is being conceived to support scientific environmental monitoring
 through distributed sensor networks and likewise scenarios.
+
+
+.. _time series: https://en.wikipedia.org/wiki/Time_series
+.. _data historian: https://en.wikipedia.org/wiki/Operational_historian
 
 
 .. contents:: Table of Contents
@@ -40,14 +52,16 @@ In a nutshell
 About
 =====
 - Kotori is a multi-channel and multi-protocol data historian.
-- It's an infrastructure toolkit made of components for data acquisition,
-  graphing and more.
+- It's an infrastructure toolkit assembled from different components
+  suitable for data-acquisition, -storage, -fusion, -graphing and more.
 - The system is used for building flexible telemetry solutions in different
-  scenarios. People are conceiving and building test benches and different
-  kinds of sensor networks for environmental monitoring and beyond.
-- Built-in sensor adapters, flexible configuration capabilities,
-  durable database storage and unattended graph visualization out of the box.
-- Integrates well with established hardware-, software- and
+  scenarios.
+- It has been used to support conceiving data logging systems, test benches,
+  sensor networks for environmental monitoring and beyond as well as other
+  data-gathering and -aggregation projects.
+- The system features a number of built-in sensor adapters, flexible configuration
+  capabilities, durable database storage and unattended graph visualization out of the box.
+- It integrates well with established hardware-, software- and
   data acquisition workflows through flexible adapter interfaces.
 
 Explore
@@ -83,7 +97,7 @@ Kotori can be installed through a Debian package, from the
 Python Package Index (PyPI) or from the Git repository.
 Please follow up to the corresponding installation instructions:
 
-- `Packages for Debian-based distributions <https://getkotori.org/docs/setup/debian-quickstart.html>`_ ¹²
+- `Packages for Debian-based distributions <https://getkotori.org/docs/setup/debian-quickstart.html>`_ ¹ ²
 - `Installing Python source package <https://getkotori.org/docs/setup/python-package.html>`_
 - `Installing from Git <https://getkotori.org/docs/development/hack.html>`_
 
