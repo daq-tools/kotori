@@ -26,6 +26,9 @@ class TopicPatterns:
 
         # WeeWX
         'loop',
+
+        # Sonoff-Tasmota
+        '/SENSOR',
     ]
 
     discrete = [

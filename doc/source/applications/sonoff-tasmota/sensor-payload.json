@@ -1,0 +1,11 @@
+{
+  "Time": "2019-06-02T22:13:07",
+  "SonoffSC": {
+    "Temperature": 25,
+    "Humidity": 15,
+    "Light": 20,
+    "Noise": 10,
+    "AirQuality": 90
+  },
+  "TempUnit": "C"
+}

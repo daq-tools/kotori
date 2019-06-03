@@ -3,6 +3,9 @@
 import re
 import time
 import json
+import types
+from collections import OrderedDict
+
 import arrow
 from bunch import Bunch
 from cornice.util import to_list
@@ -159,6 +162,16 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
             # Required for WeeWX data
             #message = convert_floats(json.loads(payload))
+
+            # Decode Sonoff-Tasmota telemetry payload.
+            # Todo: Refactor to some device-specific knowledgebase.
+            # Fixme: Currently ignores the "Time" field.
+            if 'slot' in topology and topology.slot.endswith('/SENSOR'):
+                data = OrderedDict()
+                for key, value in message.items():
+                    if isinstance(value, types.DictionaryType):
+                        data.update(value)
+                message = data
 
         # b) Discrete values
         #

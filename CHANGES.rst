@@ -7,6 +7,8 @@ in progress
 ===========
 - Fix Terkin telemetry client for PHP5 to PHP7. Thanks, Markus and Christian!
 - Fix sandbox installation
+- Add basic support for ingesting telemetry data from devices running
+  the Sonoff-Tasmota firmware. Thanks, Roh!
 
 
 .. _kotori-0.22.7:

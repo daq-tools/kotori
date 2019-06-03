@@ -79,10 +79,12 @@ class WanBusStrategy(object):
         """
 
         # Todo: Investigate using tags additionally to / instead of database.measurement
+        # Todo: Move specific stuff about WeeWX or Tasmota to some device-specific knowledgebase.
 
         # data:     Regular endpoint
         # loop:     WeeWX
-        if topology.slot.startswith('data') or topology.slot.startswith('loop'):
+        # SENSOR:   Sonoff-Tasmota
+        if topology.slot.startswith('data') or topology.slot.startswith('loop') or topology.slot.endswith('SENSOR'):
             suffix = 'sensors'
 
         elif topology.slot.startswith('event'):
