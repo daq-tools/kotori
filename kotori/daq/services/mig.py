@@ -132,7 +132,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             #log.info('Ignoring message to topic {topic}, realm={realm}', topic=topic, realm=self.channel.realm)
             return False
 
-        log.debug(u'Processing message on topic "{topic}" with payload "{payload}"', topic=topic, payload=payload)
+        log.debug(u"Processing message on topic '{topic}' with payload '{payload}'", topic=topic, payload=payload)
 
         # Compute storage address from topic
         topology = self.topic_to_topology(topic)
@@ -147,15 +147,18 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         #
         #   - data.json:        Regular
         #   - data/__json__:    Homie
-        #   - loop:             WeeWX           (TODO: Move to specific vendor configuration.)
+        #   - loop:             WeeWX
         #   - message-json:     Deprecated
         #
+        # Todo: Move specific stuff about Homie, WeeWX or Tasmota to some device-specific knowledgebase.
+
         if message_type == MessageType.DATA_CONTAINER:
 
-            # Decode message from json format
-            # Required for weeWX data
-            #message = convert_floats(json.loads(payload))
+            # Decode regular JSON container.
             message = json.loads(payload)
+
+            # Required for WeeWX data
+            #message = convert_floats(json.loads(payload))
 
         # b) Discrete values
         #
@@ -167,7 +170,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         #
         elif message_type == MessageType.DATA_DISCRETE:
 
-            # TODO: Backward compat for single readings - remove!
+            # Todo: Backward compat for single readings - refactor elsewhere.
             if 'slot' in topology and topology.slot.startswith('measure/'):
                 topology.slot = topology.slot.replace('measure/', 'data/')
 
