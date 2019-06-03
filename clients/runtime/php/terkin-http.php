@@ -1,10 +1,10 @@
 <?php
 // -*- coding: utf-8 -*-
-// (c) 2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+// (c) 2016-2019 Andreas Motl , Elmyra UG <andreas.motl@elmyra.de>
 /*
-================================
-Kotori telemetry client for PHP5
-================================
+========================================
+Kotori telemetry client for PHP5 to PHP7
+========================================
 
 Documentation
 -------------
@@ -75,10 +75,11 @@ namespace Terkin {
                     'content' => $payload
                 )
             );
-            $context  = stream_context_create($options);
-            $result = file_get_contents($this->uri, false, $context);
+
+            $result = http_get_contents($this->uri, $options);
+
             if ($result === FALSE) {
-                error_log("Could not submit telemetry data to '$uri', payload='$payload'");
+                error_log("Could not submit telemetry data to '{$this->uri}', payload='{$payload}'");
             }
 
             return $result;
@@ -109,6 +110,41 @@ namespace Terkin {
         function transmit($data) {
             return $this->client->transmit($data);
         }
+
+    }
+
+    function http_get_contents($url, $stream_options) {
+
+        $curl = curl_init($url);
+
+        $options = $stream_options['http'];
+        $ssl_options = $stream_options['ssl'];
+
+        if (isset($ssl_options['verify_peer'])) {
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, $ssl_options['verify_peer']);
+        }
+        if ($options['header']) {
+            curl_setopt($curl, CURLOPT_HTTPHEADER, explode("\r\n", $options['header']));
+        }
+        if ($options['method'] == 'POST') {
+            curl_setopt($curl, CURLOPT_POST, true);
+        }
+        if ($options['content']) {
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $options['content']);
+        }
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($curl);
+
+        // Check and output error message, if any
+        $error_message = curl_error($curl);
+        if ($error_message) {
+            trigger_error($error_message, E_USER_WARNING);
+        }
+
+        curl_close($curl);
+
+        return $response;
 
     }
 

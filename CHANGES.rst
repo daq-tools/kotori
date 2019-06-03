@@ -5,6 +5,7 @@ Changelog
 
 in progress
 ===========
+- Fix Terkin telemetry client for PHP5 to PHP7. Thanks, Markus and Christian!
 
 
 .. _kotori-0.22.7:
