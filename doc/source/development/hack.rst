@@ -46,7 +46,6 @@ Setup virtualenv
     source .venv2/bin/activate
     python setup.py develop
 
-
     # Install extra features
 
     # Data acquisition base

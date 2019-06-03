@@ -219,7 +219,7 @@ docs-html: virtualenv
 	export SPHINXBUILD="`pwd`/.venv2/bin/sphinx-build"; cd doc; make html
 
 virtualenv:
-	@test -e .venv2/bin/python || `command -v virtualenv` --python=`command -v python` --no-site-packages .venv2
+	@test -e .venv2/bin/python || `command -v virtualenv` --python=`command -v python` --no-site-packages --no-wheel .venv2
 	@.venv2/bin/pip --quiet install --requirement requirements-dev.txt
 
 

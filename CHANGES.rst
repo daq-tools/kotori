@@ -6,6 +6,7 @@ Changelog
 in progress
 ===========
 - Fix Terkin telemetry client for PHP5 to PHP7. Thanks, Markus and Christian!
+- Fix sandbox installation
 
 
 .. _kotori-0.22.7:
