@@ -10,6 +10,7 @@ in progress
 - Add basic support for ingesting SENSOR telemetry data from devices running
   the Sonoff-Tasmota firmware. Thanks, Roh!
 - Add support for ingesting STATE telemetry data from Sonoff-Tasmota devices.
+- Add documentation for the Sonoff-Tasmota Decoder
 
 
 .. _kotori-0.22.7:

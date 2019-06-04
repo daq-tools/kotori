@@ -144,6 +144,13 @@
 .. _MQTT Plugin for weeWX: http://lancet.mit.edu/mwall/projects/weather/releases/weewx-mqtt-0.15.tgz
 .. _Davis Vantage Pro2: http://www.davisnet.com/solution/vantage-pro2/
 
+.. Sonoff-Tasmota
+.. _Sonoff-Tasmota: https://github.com/arendst/Sonoff-Tasmota
+.. _Add adapter for ingesting data from devices running Sonoff-Tasmota: https://github.com/daq-tools/kotori/issues/10
+.. _Sonoff SC: https://www.itead.cc/wiki/Sonoff_SC
+.. _Sonoff SC (Product): https://www.itead.cc/sonoff-sc.html
+.. _Raumfahrtagentur: http://www.raumfahrtagentur.org/
+
 .. NEW
 .. _Funky v3: https://harizanov.com/product/funky-v3/
 .. _OpenXC: http://openxcplatform.com/

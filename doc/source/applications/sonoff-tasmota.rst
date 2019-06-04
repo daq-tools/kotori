@@ -1,6 +1,6 @@
 .. include:: ../_resources.rst
 
-.. _application-tasmota:
+.. _decoder-tasmota:
 
 #######
 Tasmota
@@ -18,8 +18,17 @@ About
 Receive telemetry data from devices running the `Sonoff-Tasmota`_ firmware.
 See also `Add adapter for ingesting data from devices running Sonoff-Tasmota`_.
 
-.. _Sonoff-Tasmota: https://github.com/arendst/Sonoff-Tasmota
-.. _Add adapter for ingesting data from devices running Sonoff-Tasmota: https://github.com/daq-tools/kotori/issues/10
+Here, we are ingesting telemetry data from a Sonoff SC device.
+The `Sonoff SC`_ (`wiki <Sonoff SC (Product)_>`_) is an ESP8266 based WiFi
+environmental monitoring device. It detects current temperature, humidity,
+light intensity, air quality (particulate) and even sound levels (noise pollution).
+
+.. figure:: https://www.itead.cc/wiki/images/thumb/3/36/Sonoff_SC_01.JPG/584px-Sonoff_SC_01.JPG
+    :target: https://www.itead.cc/wiki/images/thumb/3/36/Sonoff_SC_01.JPG/584px-Sonoff_SC_01.JPG
+    :alt: Sonoff SC environmental monitoring device
+    :width: 450px
+
+    Sonoff SC environmental monitoring device
 
 
 ****************

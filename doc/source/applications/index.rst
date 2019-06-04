@@ -154,6 +154,32 @@ LST
 ----
 
 
+*******
+Tasmota
+*******
+
+.. container:: legroom-md
+
+    .. container:: pull-left
+
+        .. figure:: https://www.itead.cc/wiki/images/thumb/3/36/Sonoff_SC_01.JPG/584px-Sonoff_SC_01.JPG
+            :alt: Sonoff SC environmental monitoring device
+            :target: https://www.itead.cc/wiki/Sonoff_SC
+
+    .. container:: pull-right basic-hero
+
+        People from `Raumfahrtagentur`_ are running the `Sonoff-Tasmota`_
+        firmware on one of their `Sonoff SC`_ devices.
+
+|clearfix|
+
+.. container:: align-center text-xx-large
+
+    :ref:`Read all about the Tasmota Decoder... <decoder-tasmota>`
+
+----
+
+
 ************
 All projects
 ************
@@ -170,6 +196,7 @@ The complete list:
     luftdaten.info/index
     weewx
     lst
+    sonoff-tasmota
     mqttkit
     forwarders/index
     firmware
