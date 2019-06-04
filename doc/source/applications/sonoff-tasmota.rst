@@ -64,3 +64,12 @@ Payload examples
       },
       "TempUnit": "C"
     }
+
+::
+
+    {
+      "Time": "2017-02-16T10:13:52",
+      "DS18B20": {
+        "Temperature": 20.6
+      }
+    }

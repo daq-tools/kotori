@@ -29,6 +29,7 @@ class TopicPatterns:
 
         # Sonoff-Tasmota
         '/SENSOR',
+        '/STATE',
     ]
 
     discrete = [

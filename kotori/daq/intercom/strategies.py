@@ -84,7 +84,8 @@ class WanBusStrategy(object):
         # data:     Regular endpoint
         # loop:     WeeWX
         # SENSOR:   Sonoff-Tasmota
-        if topology.slot.startswith('data') or topology.slot.startswith('loop') or topology.slot.endswith('SENSOR'):
+        if topology.slot.startswith('data') or topology.slot.startswith('loop') \
+                or topology.slot.endswith('SENSOR') or topology.slot.endswith('STATE'):
             suffix = 'sensors'
 
         elif topology.slot.startswith('event'):

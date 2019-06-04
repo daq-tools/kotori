@@ -1,0 +1,17 @@
+{
+  "Time": "2019-06-02T22:13:07",
+  "Uptime": "1T18:10:35",
+  "Vcc": 3.182,
+  "SleepMode": "Dynamic",
+  "Sleep": 50,
+  "LoadAvg": 19,
+  "Wifi": {
+    "AP": 1,
+    "SSId": "{redacted}",
+    "BSSId": "A0:F3:C1:{redacted}",
+    "Channel": 1,
+    "RSSI": 100,
+    "LinkCount": 1,
+    "Downtime": "0T00:00:07"
+  }
+}

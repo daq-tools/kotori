@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2015-2018 Andreas Motl <andreas@getkotori.org>
-import re
 import time
 import json
-import types
-from collections import OrderedDict
 
 import arrow
 from bunch import Bunch
@@ -15,6 +12,8 @@ from twisted.internet.task import LoopingCall
 from twisted.application.service import MultiService, Service
 from twisted.python.failure import Failure
 from twisted.python.threadpool import ThreadPool
+
+from kotori.daq.devices.tasmota import TasmotaDecoder
 from kotori.daq.services.schema import MessageType, TopicMatchers
 from kotori.daq.services import MultiServiceMixin
 from kotori.daq.intercom.mqtt import MqttAdapter
@@ -163,15 +162,14 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             # Required for WeeWX data
             #message = convert_floats(json.loads(payload))
 
-            # Decode Sonoff-Tasmota telemetry payload.
-            # Todo: Refactor to some device-specific knowledgebase.
-            # Fixme: Currently ignores the "Time" field.
-            if 'slot' in topology and topology.slot.endswith('/SENSOR'):
-                data = OrderedDict()
-                for key, value in message.items():
-                    if isinstance(value, types.DictionaryType):
-                        data.update(value)
-                message = data
+            decoders = [
+                # Decoder for Sonoff-Tasmota telemetry payload.
+                TasmotaDecoder,
+            ]
+
+            for decoder_class in decoders:
+                decoder = decoder_class(topology=topology)
+                message = decoder.decode_message(message)
 
         # b) Discrete values
         #
@@ -198,7 +196,6 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
                 name = topology.slot.replace('data/', '')
                 value = float(payload)
                 message = {name: value}
-
 
         # Set an event
         elif message_type == MessageType.EVENT:
