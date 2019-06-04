@@ -102,21 +102,21 @@ luftdaten.info
 
 
 *****
-weeWX
+WeeWX
 *****
 
 .. container:: legroom-md
 
     .. container:: pull-left basic-hero
 
-        weeWX_ is a popular, free, open source weather station data collection software.
+        WeeWX_ is a popular, free, open source weather station data collection software.
         It is written in Python and runs under most versions of Linux, as well as macOS, \*BSD, and Solaris.
         Many users are running it on the Raspberry Pi.
 
     .. container:: pull-right
 
         .. figure:: https://ptrace.getkotori.org/2017-05-05_weewx-logo.png
-            :alt: weeWX Logo
+            :alt: WeeWX Logo
             :target: http://www.weewx.com/
 
 |clearfix|
