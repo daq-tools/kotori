@@ -164,6 +164,7 @@ Tasmota
 
         .. figure:: https://www.itead.cc/wiki/images/thumb/3/36/Sonoff_SC_01.JPG/584px-Sonoff_SC_01.JPG
             :alt: Sonoff SC environmental monitoring device
+            :width: 300px
             :target: https://www.itead.cc/wiki/Sonoff_SC
 
     .. container:: pull-right basic-hero
