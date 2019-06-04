@@ -13,7 +13,7 @@ from twisted.application.service import MultiService, Service
 from twisted.python.failure import Failure
 from twisted.python.threadpool import ThreadPool
 
-from kotori.daq.devices.tasmota import TasmotaDecoder
+from kotori.daq.decoder.tasmota import TasmotaDecoder
 from kotori.daq.services.schema import MessageType, TopicMatchers
 from kotori.daq.services import MultiServiceMixin
 from kotori.daq.intercom.mqtt import MqttAdapter
