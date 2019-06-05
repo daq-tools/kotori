@@ -99,11 +99,28 @@ body, div.body {
     line-height: 1.75em;
 }
 
+.text-x-large {
+    font-size: x-large;
+    line-height: 1.50em;
+}
+
 .legroom-md {
     margin-bottom: 2em !important;
 }
+.legroom-sm {
+    margin-bottom: 1.3em !important;
+}
+.width-40 {
+    width: 40%;
+}
+.width-45 {
+    width: 45%;
+}
 .width-50 {
     width: 50%;
+}
+.width-60 {
+    width: 60%;
 }
 
 
@@ -159,4 +176,34 @@ body, div.body {
     background: #2980B9;
     border-color: #2980B9;
     color: #ffffff;
+}
+
+
+/* Outline buttons */
+/* https://fdossena.com/?p=html5cool/buttons/i.frag */
+
+.btn-outline a {
+    display: inline-block;
+    padding: 0.35em 1.2em;
+    border: 0.1em solid #343a40;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 0.12em;
+    box-sizing: border-box;
+    text-decoration: none;
+    /* font-family: 'Roboto', sans-serif; */
+    font-weight: 300;
+    color: #343a40;
+    text-align: center;
+    transition: all 0.2s;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.btn-outline a:hover {
+    color: #eeeeee;
+    background-color: #343a40;
+}
+@media all and (max-width:30em) {
+    .btn-outline a {
+        display: block;
+        margin: 0.4em auto;
+    }
 }

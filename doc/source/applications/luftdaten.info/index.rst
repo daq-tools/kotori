@@ -10,9 +10,18 @@ luftdaten.info
    :local:
    :depth: 1
 
+
+.. attention::
+
+    While this endeavor was initially conceived in March 2017, it has
+    spawned a project on its own in the meanwhile.
+    It is called Luftdatenpumpe_ these days and will assist you in acquiring
+    air quality information from `luftdaten.info`_ (LDI) and from the
+    `Belgian Interregional Environment Agency (IRCEL - CELINE)`_ (IRCELINE).
+
+    The new project is now living at https://github.com/hiveeyes/luftdatenpumpe.
+
 ----
-
-
 
 ********************
 About luftdaten.info

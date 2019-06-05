@@ -1,0 +1,214 @@
+.. include:: ../_resources.rst
+
+.. _decoder-tasmota:
+
+######################
+Sonoff-Tasmota Decoder
+######################
+
+.. contents::
+   :local:
+   :depth: 1
+
+----
+
+
+*****
+About
+*****
+Ingest telemetry data from devices running the `Sonoff-Tasmota`_ firmware using MQTT_.
+
+
+*******
+Devices
+*******
+
+.. container:: legroom-md
+
+    .. container:: pull-left
+
+        .. figure:: https://ptrace.getkotori.org/2019-06-04_Sonoff-TH10-TH16.jpg
+            :target: https://www.itead.cc/smart-home/sonoff-th.html
+            :alt: Sonoff TH: Temperature and Humidity Monitoring WiFi Smart Switch
+            :width: 350px
+
+            Sonoff TH: Temperature and Humidity Monitoring WiFi Smart Switch
+
+    .. container:: pull-right
+
+        .. figure:: https://ptrace.getkotori.org/2019-06-04_Sonoff-SC.jpg
+            :target: https://www.itead.cc/wiki/Sonoff_SC
+            :alt: Sonoff SC: Environmental monitoring device
+            :width: 350px
+
+            Sonoff SC: Environmental monitoring device
+
+|clearfix|
+
+
+Sonoff TH
+=========
+The `Sonoff TH`_ (`product page <Sonoff TH (Product)_>`_) is an environmental
+monitoring and controlling device which can measuring current temperature and
+humidity.
+
+
+Sonoff SC
+=========
+The `Sonoff SC`_ (`product page <Sonoff SC (Product)_>`_) is an environmental
+monitoring device for measuring current temperature, humidity, light intensity,
+air quality (particulates) and sound levels (noise pollution).
+
+
+
+*****************
+Grafana Dashboard
+*****************
+
+.. figure:: https://ptrace.getkotori.org/2019-06-04_Sonoff-SC-Tasmota-RFA.png
+    :alt: Grafana Dashboard for Sonoff SC environmental monitoring device
+    :target: https://ptrace.getkotori.org/2019-06-04_Sonoff-SC-Tasmota-RFA.png
+
+    Grafana Dashboard for Sonoff SC environmental monitoring device
+
+
+
+********
+Firmware
+********
+`Sonoff-Tasmota`_ is an alternative firmware for ESP8266-based devices
+like the iTead Sonoff. It features a web UI, rules and timers, OTA updates,
+custom device templates and sensor support. Allows control over MQTT, HTTP,
+Serial and KNX for integrations with smart home systems.
+
+
+************
+Device setup
+************
+By staying as close to the vanilla documentation examples as possible,
+newcomers should have an easy way getting their telemetry data ingested.
+Kotori will recognize the Tasmota device by its MQTT topic suffix like
+``SENSOR`` or ``STATE`` and will route it through the appropriate
+message decoding machinery.
+
+
+Introduction
+============
+See also `Configure MQTT for the Tasmota Firmware`_.
+
+.. figure:: https://user-images.githubusercontent.com/5904370/53048775-d3d16e00-3495-11e9-8917-70b56451ebeb.png
+    :target: https://github.com/arendst/Sonoff-Tasmota/wiki/MQTT#configure-mqtt
+    :alt: Configure MQTT using WebUI on Sonoff-Tasmota
+    :width: 200px
+
+    Configure MQTT using WebUI on Sonoff-Tasmota
+
+
+Configuration
+=============
+This section is about getting the system configured
+properly, so please read this section carefully.
+
+Settings
+--------
+While configuring the MQTT broker address is straight-forward, special
+care should be taken to configure the MQTT topic appropriately to send
+telemetry data to the data historian.
+
+:Topic: Unique identifier of your device (e.g. hallswitch, kitchen-light). Referenced elsewhere as `%topic%`.
+:Full Topic: A full topic definition where `%topic%` and `%prefix%` can be interpolated into.
+
+By example
+----------
+Let's define a communication channel address and a device identifier for
+data acquisition.
+
+:Channel: ``universe/milky-way/earth-one``
+:Device: ``node-42``
+
+The appropriate settings for Tasmota would then be
+
+:Topic: ``node-42``
+:Full Topic: ``universe/milky-way/earth-one/%topic%/%prefix%/``
+
+Reflections
+-----------
+So, the data logger device is called ``node-42`` and it will send telemetry
+data to the communication channel ``universe/milky-way/earth-one``.
+By decomposing the channel address, we can understand the purpose of each
+addressing component.
+
+:realm: ``universe``
+:owner: ``milky-way``
+:site: ``earth-one``
+:node: ``node-42``
+
+Running this configuration will yield MQTT topics like::
+
+    universe/milky-way/earth-one/node-42/tele/SENSOR
+    universe/milky-way/earth-one/node-42/tele/STATE
+
+
+***********
+Development
+***********
+See also `Add adapter for ingesting data from devices running Sonoff-Tasmota`_.
+
+Submit example payload
+======================
+.. todo:: Add example like ``http https://demo-url | mosquitto_pub -h daq.example.org -l``.
+
+
+********
+Appendix
+********
+
+Payload examples
+================
+
+``sonoffSC/tele/SENSOR``
+------------------------
+::
+
+    {
+      "Time": "2019-06-02T22:13:07",
+      "SonoffSC": {
+        "Temperature": 25,
+        "Humidity": 15,
+        "Light": 20,
+        "Noise": 10,
+        "AirQuality": 90
+      },
+      "TempUnit": "C"
+    }
+
+::
+
+    {
+      "Time": "2017-02-16T10:13:52",
+      "DS18B20": {
+        "Temperature": 20.6
+      }
+    }
+
+``sonoffSC/tele/STATE``
+-----------------------
+::
+
+    {
+      "Time": "2019-06-02T22:13:07",
+      "Uptime": "1T18:10:35",
+      "Vcc": 3.182,
+      "SleepMode": "Dynamic",
+      "Sleep": 50,
+      "LoadAvg": 19,
+      "Wifi": {
+        "AP": 1,
+        "SSId": "{redacted}",
+        "BSSId": "A0:F3:C1:{redacted}",
+        "Channel": 1,
+        "RSSI": 100,
+        "LinkCount": 1,
+        "Downtime": "0T00:00:07"
+      }
+    }

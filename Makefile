@@ -201,26 +201,30 @@ check-bump-options:
 # Miscellaneous tools:
 # Software tests, Documentation builder, Virtual environment builder
 #
-test: virtualenv
+test: dev-virtualenv
 	@# https://nose.readthedocs.org/en/latest/plugins/doctests.html
 	@# https://nose.readthedocs.org/en/latest/plugins/cover.html
 	@#export NOSE_IGNORE_FILES="c\.py";
 	nosetests --with-doctest --doctest-tests --doctest-extension=rst --verbose \
 		kotori/*.py kotori/daq/{application,graphing,services,storage} kotori/daq/intercom/{mqtt/paho.py,strategies.py,udp.py,wamp.py} kotori/firmware kotori/io kotori/vendor/hiveeyes
 
-test-coverage: virtualenv
+test-coverage: dev-virtualenv
 	nosetests \
 		--with-doctest --doctest-tests --doctest-extension=rst \
 		--with-coverage --cover-package=kotori --cover-tests \
 		--cover-html --cover-html-dir=coverage/html --cover-xml --cover-xml-file=coverage/coverage.xml
 
-docs-html: virtualenv
+docs-html: docs-virtualenv
 	touch doc/source/index.rst
-	export SPHINXBUILD="`pwd`/.venv2/bin/sphinx-build"; cd doc; make html
+	export SPHINXBUILD="`pwd`/$(sphinx)"; cd doc; make html
 
-virtualenv:
-	@test -e .venv2/bin/python || `command -v virtualenv` --python=`command -v python` --no-site-packages --no-wheel .venv2
-	@.venv2/bin/pip --quiet install --requirement requirements-dev.txt
+docs-virtualenv:
+	@test -e $(python) || `command -v virtualenv` --python=`command -v python` --no-site-packages $(venvpath)
+	@$(pip) install --requirement requirements-docs.txt
+
+dev-virtualenv:
+	@test -e $(python) || `command -v virtualenv` --python=`command -v python` --no-site-packages --no-wheel $(venvpath)
+	@$(pip) install --requirement requirements-dev.txt
 
 
 # ==========================================
@@ -232,7 +236,7 @@ virtualenv:
 ptrace_target := root@ptrace.getkotori.org:/srv/www/organizations/daq-tools/ptrace.getkotori.org/htdocs/
 ptrace_http   := https://ptrace.getkotori.org/
 ptrace: check-ptrace-options
-	$(eval prefix := $(shell date --iso-8601))
+	$(eval prefix := $(shell gdate --iso-8601))
 	$(eval name   := $(shell basename $(source)))
 	$(eval id     := $(prefix)_$(name))
 

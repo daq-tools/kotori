@@ -77,6 +77,16 @@ Applications
     applications/index
 
 
+Decoders
+--------
+
+.. toctree::
+    :maxdepth: 2
+    :glob:
+
+    decoders/index
+
+
 Handbooks
 ---------
 

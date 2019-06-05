@@ -7,7 +7,7 @@
 Applications
 ############
 
-Some example showcases where the system is used for data acquisition and -visualization.
+Some example scenarios where the system has been and is used for data acquisition and -visualization.
 
 ----
 
@@ -15,24 +15,24 @@ Some example showcases where the system is used for data acquisition and -visual
 Hydro2Motion
 ************
 
-.. container:: legroom-md
+.. container:: pull-left
 
-    .. container:: pull-left text-xx-large
+    .. figure:: https://ptrace.getkotori.org/2016-09-14_hydro2motion-logo.png
+        :alt: Hydro2Motion Logo
+        :target: http://www.hydro2motion.de/
 
-        .. figure:: https://ptrace.getkotori.org/2016-09-14_hydro2motion-logo.png
-            :alt: Hydro2Motion Logo
-            :target: http://www.hydro2motion.de/
+.. container:: pull-right width-60
 
-    .. container:: pull-right basic-hero width-50 align-right
+    .. container:: text-x-large legroom-sm
 
         The Hydro2Motion_ team used Kotori as the telemetry platform for their fuel cell powered vehicle
-        at the "`Shell Eco-marathon europe`_ 2015" in Rotterdam.
+        at the `Shell Eco-marathon europe`_ 2015 in Rotterdam.
+
+    .. container:: btn-outline text-x-large
+
+        :ref:`Read more... <vendor-hydro2motion>`
 
 |clearfix|
-
-.. container:: align-center text-xx-large
-
-    :ref:`Read more... <vendor-hydro2motion>`
 
 
 ----
@@ -41,26 +41,27 @@ Hydro2Motion
 Hiveeyes
 ********
 
-.. container:: legroom-md
 
-    .. container:: pull-left basic-hero width-50
+.. container:: pull-left width-45
+
+    .. container:: text-larger legroom-sm
 
         The people of the Hiveeyes project are developing a flexible beehive monitoring infrastructure
         platform and toolkit based on affordable hardware, wireless telemetry and modern software.
         Open source, open hardware and a friendly community.
 
-    .. container:: pull-right align-right
+    .. container:: btn-outline text-x-large
 
-        .. figure:: https://ptrace.getkotori.org/2016-10-31_hiveeyes-website.jpg
-            :alt: Hiveeyes Website
-            :width: 450px
-            :target: https://hiveeyes.org/
+        :ref:`Read all about it... <vendor-hiveeyes>`
+
+.. container:: pull-right
+
+    .. figure:: https://ptrace.getkotori.org/2016-10-31_hiveeyes-website.jpg
+        :alt: Hiveeyes Website
+        :width: 450px
+        :target: https://hiveeyes.org/
 
 |clearfix|
-
-.. container:: align-center text-xx-large
-
-    :ref:`Read all about it... <vendor-hiveeyes>`
 
 
 ----
@@ -69,15 +70,15 @@ Hiveeyes
 luftdaten.info
 **************
 
-.. container:: legroom-md
+.. container:: pull-left
 
-    .. container:: pull-left
+    .. figure:: https://ptrace.getkotori.org/2017-05-05_luftdaten-logo.png
+        :alt: luftdaten.info Website
+        :target: http://luftdaten.info/
 
-        .. figure:: https://ptrace.getkotori.org/2017-05-05_luftdaten-logo.png
-            :alt: luftdaten.info Website
-            :target: http://luftdaten.info/
+.. container:: pull-right width-60
 
-    .. container:: pull-right basic-hero
+    .. container:: text-larger legroom-sm
 
         A DIY Citizen Science air quality monitoring platform based on open source software and open hardware.
         The idea is:
@@ -88,12 +89,17 @@ luftdaten.info
             `Feinstaub-Karte <luftdaten.info map_>`_ für die gesamte Region.
             So wird Feinstaub sichtbar…
 
+    .. container::
+
+        .. cssclass:: btn-outline text-x-large display-inline
+
+            :ref:`Continue reading... <vendor-luftdaten.info>`
+
+        .. cssclass:: btn-outline text-x-large display-inline
+
+            Luftdatenpumpe_
+
 |clearfix|
-
-.. container:: align-center text-xx-large
-
-    :ref:`Continue reading... <vendor-luftdaten.info>`
-
 
 .. _luftdaten.info map: http://deutschland.maps.luftdaten.info/
 
@@ -105,15 +111,21 @@ luftdaten.info
 WeeWX
 *****
 
-.. container:: legroom-md
+.. container:: pull-left width-60
 
-    .. container:: pull-left basic-hero
+    .. container:: text-larger legroom-sm
 
         WeeWX_ is a popular, free, open source weather station data collection software.
         It is written in Python and runs under most versions of Linux, as well as macOS, \*BSD, and Solaris.
         Many users are running it on the Raspberry Pi.
 
-    .. container:: pull-right
+    .. container:: btn-outline text-x-large
+
+        :ref:`Enjoy reading... <vendor-weewx>`
+
+.. container:: pull-right
+
+    .. cssclass:: align-center
 
         .. figure:: https://ptrace.getkotori.org/2017-05-05_weewx-logo.png
             :alt: WeeWX Logo
@@ -121,84 +133,47 @@ WeeWX
 
 |clearfix|
 
-.. container:: align-center text-xx-large
-
-    :ref:`Enjoy reading... <vendor-weewx>`
 
 ----
 
 
-***
-LST
-***
+***************
+LST Mbed Binary
+***************
 
-.. container:: legroom-md
+.. container:: pull-left
 
-    .. container:: pull-left
+    .. figure:: https://ptrace.getkotori.org/2017-05-05_muas-logo.jpg
+        :alt: Munich University of Applied Sciences Website
+        :target: https://www.hm.edu/en/
 
-        .. figure:: https://ptrace.getkotori.org/2017-05-05_muas-logo.jpg
-            :alt: Munich University of Applied Sciences Website
-            :target: https://www.hm.edu/en/
+.. container:: pull-right width-60
 
-    .. container:: pull-right basic-hero
+    .. container:: text-larger legroom-sm
 
         The `Labor für Systemtechnik`_ at the `Munich University of Applied Sciences`_
         uses a binary data telemetry format based on the schema of C structs.
 
+    .. container:: btn-outline text-x-large
+
+        :ref:`Read what it's all about... <vendor-lst>`
+
 |clearfix|
 
-.. container:: align-center text-xx-large
-
-    :ref:`Read what it's all about... <vendor-lst>`
 
 ----
 
 
-*******
-Tasmota
-*******
-
-.. container:: legroom-md
-
-    .. container:: pull-left
-
-        .. figure:: https://www.itead.cc/wiki/images/thumb/3/36/Sonoff_SC_01.JPG/584px-Sonoff_SC_01.JPG
-            :alt: Sonoff SC environmental monitoring device
-            :width: 300px
-            :target: https://www.itead.cc/wiki/Sonoff_SC
-
-    .. container:: pull-right basic-hero
-
-        People from `Raumfahrtagentur`_ are running the `Sonoff-Tasmota`_
-        firmware on one of their `Sonoff SC`_ devices.
-
-|clearfix|
-
-.. container:: align-center text-xx-large
-
-    :ref:`Read all about the Tasmota Decoder... <decoder-tasmota>`
-
-----
-
-
-************
-All projects
-************
-
-The complete list:
+*****************
+More applications
+*****************
 
 .. toctree::
     :maxdepth: 1
     :glob:
 
-    ilaundry
-    hydro2motion
-    hiveeyes
-    luftdaten.info/index
-    weewx
-    lst
-    sonoff-tasmota
     mqttkit
+    ilaundry
     forwarders/index
     firmware
 
