@@ -49,8 +49,7 @@ Devices
 Sonoff TH
 =========
 The `Sonoff TH`_ (`product page <Sonoff TH (Product)_>`_) is an environmental
-monitoring and controlling device which can measuring current temperature and
-humidity.
+monitoring and controlling device for measuring current temperature and humidity.
 
 
 Sonoff SC
@@ -78,8 +77,8 @@ Firmware
 ********
 `Sonoff-Tasmota`_ is an alternative firmware for ESP8266-based devices
 like the iTead Sonoff. It features a web UI, rules and timers, OTA updates,
-custom device templates and sensor support. Allows control over MQTT, HTTP,
-Serial and KNX for integrations with smart home systems.
+custom device templates and sensor support. It can be controlled over
+MQTT, HTTP, Serial and KNX for integrations with smart home systems.
 
 
 ************
@@ -88,8 +87,8 @@ Device setup
 By staying as close to the vanilla documentation examples as possible,
 newcomers should have an easy way getting their telemetry data ingested.
 Kotori will recognize the Tasmota device by its MQTT topic suffix like
-``SENSOR`` or ``STATE`` and will route it through the appropriate
-message decoding machinery.
+``SENSOR`` or ``STATE`` and will route telemetry messages through the
+appropriate decoding machinery.
 
 
 Introduction
@@ -152,11 +151,23 @@ Running this configuration will yield MQTT topics like::
 ***********
 Development
 ***********
-See also `Add adapter for ingesting data from devices running Sonoff-Tasmota`_.
+
+Work in progress
+================
+The development of this decoder has been sparked at `Add adapter for ingesting data from devices running Sonoff-Tasmota`_.
+We are happy to receive contributions of any kind.
 
 Submit example payload
 ======================
-.. todo:: Add example like ``http https://demo-url | mosquitto_pub -h daq.example.org -l``.
+Acquire an example HTTP payload message of type ``SENSOR`` and publish it to MQTT broker on ``localhost``::
+
+    http https://raw.githubusercontent.com/daq-tools/kotori/master/doc/source/decoders/sonoff-tasmota/sensor-payload.json \
+        | mosquitto_pub -h localhost -t universe/milky-way/earth-one/node-42/tele/SENSOR -s
+
+Acquire an example HTTP payload message of type ``STATE`` and publish it to MQTT broker on ``localhost``::
+
+    http https://raw.githubusercontent.com/daq-tools/kotori/master/doc/source/decoders/sonoff-tasmota/state-payload.json \
+        | mosquitto_pub -h localhost -t universe/milky-way/earth-one/node-42/tele/STATE -s
 
 
 ********
