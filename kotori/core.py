@@ -144,6 +144,9 @@ class KotoriBootloader(object):
                 except Exception as ex:
                     log.failure(
                         'Error booting vendor environment for "{vendor}"":\n{log_failure}"', vendor=vendor)
+            else:
+                message = 'Vendor environment for "{vendor}" missing.'.format(vendor=vendor)
+                log.critical(message)
 
 
 class VendorBootloader(object):

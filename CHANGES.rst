@@ -11,6 +11,7 @@ in progress
   the Sonoff-Tasmota firmware. Thanks, Roh!
 - Add support for ingesting STATE telemetry data from Sonoff-Tasmota devices.
 - Add documentation for the Sonoff-Tasmota Decoder
+- Improve error signalling within "boot_vendors"
 
 
 .. _kotori-0.22.7:
