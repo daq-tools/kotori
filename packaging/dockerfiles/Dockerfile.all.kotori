@@ -6,7 +6,6 @@ ARG BASE_IMAGE
 FROM ${BASE_IMAGE} AS python-environment
 
 ENV TMPDIR=/var/tmp
-ENV PIP_EXTRA_INDEX_URL=https://packages.hiveeyes.org/hiveeyes/python/eggs/
 
 ARG venv=/venv
 ARG pip=${venv}/bin/pip
@@ -32,6 +31,9 @@ RUN $pip install pip==18.1 --upgrade --force-reinstall
 
 # Install "virtualenv-tools" for relocating the virtualenv
 RUN $pip install virtualenv-tools==1.0  # --upgrade --force-reinstall
+
+# Install other 3rd-party modules
+ENV PIP_EXTRA_INDEX_URL=https://packages.hiveeyes.org/hiveeyes/python/eggs/
 
 RUN $pip install pandas==0.18.1
 RUN $pip install 'https://github.com/jjmalina/pyinfluxql/tarball/d92db4ab8c#egg=pyinfluxql-0.0.1'
@@ -110,8 +112,9 @@ FROM install-kotori AS package-kotori
 
 ENV TMPDIR=/var/tmp
 
-ARG NAME
+ARG DISTRIBUTION
 ARG VERSION
+ARG NAME
 ARG FEATURES
 
 ARG SOURCES=/sources
@@ -133,4 +136,4 @@ RUN find ${venv} -name '*.pyc' -delete
 RUN ${venv}/bin/virtualenv-tools --update-path=/opt/kotori ${venv}
 
 # Build package.
-RUN ./fpm-package "${NAME}" "${VERSION}"
+RUN ./fpm-package "${NAME}" "${DISTRIBUTION}" "${VERSION}"

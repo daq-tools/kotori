@@ -123,9 +123,13 @@ Add https addon for apt::
 Register with package repository
 --------------------------------
 
-Add source for "testing" distribution (e.g. append to /etc/apt/sources.list)::
+Add package source for Debian stretch::
 
-    deb https://packages.elmyra.de/elmyra/foss/debian/ testing main
+    deb https://packages.elmyra.de/elmyra/foss/debian/ stretch main
+
+Add package source for Debian buster::
+
+    deb https://packages.elmyra.de/elmyra/foss/debian/ buster main
 
 Reindex package database::
 

@@ -57,10 +57,10 @@ publish-sdist: sdist
 # Synopsis::
 #
 #    # amd64
-#    make debian-package flavor=full arch=amd64 version=0.22.0
+#    make debian-package flavor=full dist=buster arch=amd64 version=0.22.0
 #
 #    # armhf
-#    make debian-package flavor=standard arch=armhf version=0.22.0
+#    make debian-package flavor=standard dist=buster arch=armhf version=0.22.0
 #
 
 debian-package: check-flavor-options deb-build-$(flavor) publish-debian
@@ -93,12 +93,12 @@ deb-build: check-build-options
 	@#docker build --tag daq-tools/kotori-build-arm32v7:$(version) --build-arg VERSION=$(version) --build-arg NAME=$(name) --build-arg FEATURES=$(features) --file packaging/dockerfiles/Dockerfile.kotori.arm32v7 .
 	@#docker build --tag daq-tools/kotori-build-arm32v7:$(version) --build-arg BASE_IMAGE=hiveeyes/arm32v7-baseline --build-arg VERSION=$(version) --build-arg NAME=$(name) --build-arg FEATURES=$(features) --file packaging/dockerfiles/Dockerfile.kotori.arm32v7 .
 
-	docker build --tag daq-tools/kotori-build-$(arch):$(version) --build-arg BASE_IMAGE=daq-tools/$(arch)-baseline:latest --build-arg VERSION=$(version) --build-arg NAME=$(name) --build-arg FEATURES=$(features) --file packaging/dockerfiles/Dockerfile.all.kotori .
+	docker build --tag daq-tools/kotori-build-$(arch):$(version) --build-arg BASE_IMAGE=daq-tools/$(dist)-$(arch)-baseline:latest --build-arg DISTRIBUTION=$(dist) --build-arg VERSION=$(version) --build-arg NAME=$(name) --build-arg FEATURES=$(features) --file packaging/dockerfiles/Dockerfile.all.kotori .
 
 	# Extract Debian package
 	docker container rm -f finalize; true
 	docker container create --name finalize daq-tools/kotori-build-$(arch):$(version)
-	docker container cp finalize:/sources/dist/$(name)_$(version)-1_$(arch).deb ./dist/
+	docker container cp finalize:/sources/dist/$(name)_$(version)-1~$(dist)_$(arch).deb ./dist/
 
 	docker container rm -f finalize
 
@@ -109,12 +109,21 @@ publish-debian:
 
 
 build-debian-stretch-amd64-baseline:
-	docker build --tag daq-tools/amd64-baseline:0.5.0 --build-arg BASE_IMAGE=balenalib/amd64-debian:stretch-build - < packaging/dockerfiles/Dockerfile.debian-stretch.baseline
-	docker tag daq-tools/amd64-baseline:0.5.0 daq-tools/amd64-baseline:latest
+	docker build --tag daq-tools/stretch-amd64-baseline:0.5.0 --build-arg BASE_IMAGE=balenalib/amd64-debian:stretch-build - < packaging/dockerfiles/Dockerfile.debian-stretch.baseline
+	docker tag daq-tools/stretch-amd64-baseline:0.5.0 daq-tools/stretch-amd64-baseline:latest
 
 build-debian-stretch-armhf-baseline:
-	docker build --tag daq-tools/armhf-baseline:0.5.0 --build-arg BASE_IMAGE=balenalib/armv7hf-debian:stretch-build - < packaging/dockerfiles/Dockerfile.debian-stretch.baseline
-	docker tag daq-tools/armhf-baseline:0.5.0 daq-tools/armhf-baseline:latest
+	docker build --tag daq-tools/stretch-armhf-baseline:0.5.0 --build-arg BASE_IMAGE=balenalib/armv7hf-debian:stretch-build - < packaging/dockerfiles/Dockerfile.debian-stretch.baseline
+	docker tag daq-tools/stretch-armhf-baseline:0.5.0 daq-tools/stretch-armhf-baseline:latest
+
+
+build-debian-buster-amd64-baseline:
+	docker build --tag daq-tools/buster-amd64-baseline:0.6.0 --build-arg BASE_IMAGE=balenalib/amd64-debian:buster-build - < packaging/dockerfiles/Dockerfile.debian-stretch.baseline
+	docker tag daq-tools/buster-amd64-baseline:0.6.0 daq-tools/buster-amd64-baseline:latest
+
+build-debian-buster-armhf-baseline:
+	docker build --tag daq-tools/buster-armhf-baseline:0.6.0 --build-arg BASE_IMAGE=balenalib/armv7hf-debian:buster-build - < packaging/dockerfiles/Dockerfile.debian-stretch.baseline
+	docker tag daq-tools/buster-armhf-baseline:0.6.0 daq-tools/buster-armhf-baseline:latest
 
 
 # -----
@@ -148,8 +157,8 @@ check-flavor-options:
 
 
 check-build-options:
-	@if test "$(version)" = ""; then \
-		echo "ERROR: 'version' not set"; \
+	@if test "$(dist)" = ""; then \
+		echo "ERROR: 'dist' not set"; \
 		exit 1; \
 	fi
 	@if test "$(arch)" = ""; then \
@@ -162,6 +171,10 @@ check-build-options:
 	fi
 	@if test "$(features)" = ""; then \
 		echo "ERROR: 'features' not set"; \
+		exit 1; \
+	fi
+	@if test "$(version)" = ""; then \
+		echo "ERROR: 'version' not set"; \
 		exit 1; \
 	fi
 

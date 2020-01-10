@@ -5,6 +5,7 @@ Changelog
 
 in progress
 ===========
+- Adjust packaging for Debian stretch vs. buster
 
 
 .. _kotori-0.23.0:

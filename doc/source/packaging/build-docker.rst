@@ -13,6 +13,9 @@ Prepare baseline images::
     make build-debian-stretch-amd64-baseline
     make build-debian-stretch-armhf-baseline
 
+    make build-debian-buster-amd64-baseline
+    make build-debian-buster-armhf-baseline
+
 
 ***
 Run
@@ -20,10 +23,12 @@ Run
 Build Kotori package::
 
     # amd64
-    make debian-package flavor=full arch=amd64 version=0.22.0
+    make debian-package flavor=full dist=stretch arch=amd64 version=0.22.0
+    make debian-package flavor=full dist=buster arch=amd64 version=0.22.0
 
     # armhf
-    make debian-package flavor=standard arch=armhf version=0.22.0
+    make debian-package flavor=standard dist=stretch arch=armhf version=0.22.0
+    make debian-package flavor=standard dist=buster arch=armhf version=0.22.0
 
 
 ----

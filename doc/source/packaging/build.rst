@@ -66,8 +66,8 @@ Publish package
     ssh workbench@packages.example.org
 
     export APTLY_CONFIG=/srv/packages/organizations/elmyra/foss/aptly/aptly.conf
-    export APTLY_REPOSITORY=main
-    export APTLY_DISTRIBUTION=testing
+    export APTLY_REPOSITORY=stretch-main
+    export APTLY_DISTRIBUTION=stretch
     export PACKAGES_INCOMING=/srv/packages/organizations/elmyra/foss/aptly/public/incoming
 
     # Add packages to repository

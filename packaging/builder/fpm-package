@@ -9,11 +9,12 @@
 #
 # Synopsis::
 #
-#   fpm-package kotori 0.21.1
+#   fpm-package kotori stretch 0.21.1
 #
 
 NAME=$1
-VERSION=$2
+DISTRIBUTION=$2
+VERSION=$3
 
 echo "Building package $NAME-$VERSION"
 
@@ -23,7 +24,7 @@ fpm \
     \
     --name ${NAME} \
     --version ${VERSION} \
-	--iteration 1 \
+	--iteration 1~${DISTRIBUTION} \
 	\
 	--deb-user kotori \
 	--deb-group kotori \

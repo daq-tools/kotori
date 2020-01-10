@@ -98,7 +98,7 @@ Publish packages
 
     export APTLY_CONFIG=/srv/packages/organizations/elmyra/foss/aptly/aptly.conf
     export APTLY_REPOSITORY=foundation
-    export APTLY_DISTRIBUTION=testing
+    export APTLY_DISTRIBUTION=stretch
     export PACKAGES_INCOMING=/srv/packages/organizations/elmyra/foss/aptly/public/incoming
 
     # Add packages to repository

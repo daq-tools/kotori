@@ -82,9 +82,13 @@ Add https addon for apt::
 
     apt install apt-transport-https software-properties-common
 
-Add source for "testing" distribution (will append to /etc/apt/sources.list)::
+Add package source for Debian stretch::
 
-    apt-add-repository 'deb https://packages.elmyra.de/elmyra/foss/debian/ testing main foundation'
+    apt-add-repository 'deb https://packages.elmyra.de/elmyra/foss/debian/ stretch main foundation'
+
+Add package source for Debian buster::
+
+    apt-add-repository 'deb https://packages.elmyra.de/elmyra/foss/debian/ buster main foundation'
 
 Add GPG key for checking package signatures::
 
