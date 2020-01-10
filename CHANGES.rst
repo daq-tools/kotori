@@ -5,6 +5,12 @@ Changelog
 
 in progress
 ===========
+
+
+.. _kotori-0.23.0:
+
+2020-01-10 0.23.0
+=================
 - Fix Terkin telemetry client for PHP5 to PHP7. Thanks, Markus and Christian!
 - Fix sandbox installation
 - Add basic support for ingesting SENSOR telemetry data from devices running
