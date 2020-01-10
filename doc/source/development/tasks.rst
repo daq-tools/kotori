@@ -19,6 +19,121 @@ Kotori tasks
 ****
 
 
+2019-07-28
+==========
+- https://www.kaaproject.org/
+- https://github.com/kaaproject/kaa/
+
+
+2019-07-02
+==========
+- https://forum.loraserver.io/
+
+
+2019-06-12
+==========
+- https://docs.zerynth.com/
+
+
+2019-06-08
+==========
+- https://www.predix.io/
+- https://github.com/grafana/grafana.org/blob/20190606_blog_synthetic_metrics/content/blog/2019-06-07-synthetic-metrics.md
+
+
+2019-06-08
+==========
+- https://community.grafana.com/t/mqtt-data-in-html-panel/14120
+
+
+2019-06-06
+==========
+
+Using server-sent-events (SSE) from Particle Photon and Electron
+- https://github.com/rickkas7/sse-examples
+- https://community.particle.io/t/azure-iot-hub-integration-response/49596
+
+QuantumBlack Matplotlib styles
+- https://github.com/quantumblacklabs/qbstyles
+
+Graphing energy usage in Grafana
+- https://community.home-assistant.io/t/graphing-energy-usage-in-grafana/44290/24
+- https://github.com/arendst/Sonoff-Tasmota/issues/1327#issuecomment-352670108
+
+Energy monitoring
+- https://github.com/arendst/Sonoff-Tasmota/pull/2735
+- https://github.com/arendst/Sonoff-Tasmota/issues/1151
+- https://github.com/boblemaire/IoTaWatt
+- https://iotawatt.com/
+- https://stuff.iotawatt.com/
+- https://blog.openenergymonitor.org/2017/10/iotawatt/
+- https://shop.openenergymonitor.com/iotawatt-discontinued/
+
+Home Assistant DSMR & Utility Meter
+- https://www.home-assistant.io/components/utility_meter/
+
+Decoder for Dutch Smart Meter Requirements (DSMR) telegram data
+- https://www.home-assistant.io/components/dsmr/
+- https://github.com/ndokter/dsmr_parser
+- https://www.clevercrib.net/the-easiest-way-to-get-your-daily-energy-consumption-right-in-home-assistant/
+
+
+2019-06-05
+==========
+
+Tasmota Sensors
+---------------
+- https://github.com/arendst/Sonoff-Tasmota/wiki/BME280-Temperature,-Humidity-and-Pressure-Sensor-and-Sonoff-Basic-with-Tasmota
+- https://github.com/arendst/Sonoff-Tasmota/wiki/Supported-Sensors
+- https://github.com/arendst/Sonoff-Tasmota/wiki/Wemos-D1-Mini-and-Nova-Fitness-SDS011-Laser-Dust-Sensor
+- https://github.com/arendst/Sonoff-Tasmota/wiki/DHT11-Wiring---Sonoff-Basic
+- https://docs.google.com/spreadsheets/d/e/2PACX-1vRBFqaP5QAFmT8iIYBxrn-EQp7-SrkxL6tb0OjpqtBxDEsmkiWCFei3sFyA_UXoqlbs3CqtEdOfC6Pa/pubhtml?gid=1029939700&single=true
+
+Wemos-Tasmota
+-------------
+- https://github.com/arendst/Sonoff-Tasmota/wiki/Wemos-D1-Mini
+- https://github.com/arendst/Sonoff-Tasmota/issues/975
+
+Tasmota & Grafana
+-----------------
+- https://community.home-assistant.io/t/graphing-energy-usage-in-grafana/44290
+- https://support.itead.cc/support/discussions/topics/11000012258
+- https://github.com/arendst/Sonoff-Tasmota/issues/975
+
+Tasmota Timestamps
+------------------
+Noch mehr Tasmota. Wir haben ja das Zeitstempeln noch nicht implementiert. An
+den Beispielpayloads habe ich gesehen, dass die Zeit ohne Zeitzone gesendet wird,
+z.B. "2019-06-02T22:13:07". Bei [1,2,3] geht es darum, wie/ob man (optional) die
+Zeitzone an den ISO-8601 Zeitstempel anhängen kann.
+
+[1] https://github.com/arendst/Sonoff-Tasmota/issues/3629
+[2] https://github.com/arendst/Sonoff-Tasmota/issues/4030
+[3] https://github.com/arendst/Sonoff-Tasmota/pull/3711
+
+Sonoff Pow
+----------
+- https://sonoff.itead.cc/en/products/sonoff/sonoff-pow
+- https://github.com/arendst/Sonoff-Tasmota/issues/1327
+
+OpenHab configuration
+---------------------
+::
+
+    Number Dust_Sensor_2_5 "PM 2.5 [%.2f µg/m³]" <door> (Dust) {mqtt="<[mosquitto:tele/dust/SENSOR:state:JSONPATH($.SDS0X1['PM2.5'])]"}
+    Number Dust_Sensor_10  "PM 10 [%.2f µg/m³]" <door> (Dust) {mqtt="<[mosquitto:tele/dust/SENSOR:state:JSONPATH($.SDS0X1['PM10'])]"}
+
+-- https://github.com/arendst/Sonoff-Tasmota/wiki/Wemos-D1-Mini-and-Nova-Fitness-SDS011-Laser-Dust-Sensor
+
+
+2019-06-04
+==========
+gpslogger
+- https://gpslogger.app/#usingthecustomurlfeature
+- https://github.com/mendhak/gpslogger/blob/v102/gpslogger/src/main/java/com/mendhak/gpslogger/loggers/customurl/CustomUrlLogger.java#L89-L120
+
+
+
 2019-05-08
 ==========
 Other projects

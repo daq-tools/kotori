@@ -157,6 +157,15 @@ Work in progress
 The development of this decoder has been sparked at `Add adapter for ingesting data from devices running Sonoff-Tasmota`_.
 We are happy to receive contributions of any kind.
 
+.. note::
+
+    While the decoder implementation itself is reasonably complete and we
+    recommend it to use in your own setups, we want to notice you that
+    the "Time" field submitted inside the telemetry message payload will
+    not get honored yet - all data points will be written as of "now"
+    in server time.
+
+
 Submit example payload
 ======================
 Acquire an example HTTP payload message of type ``SENSOR`` and publish it to MQTT broker on ``localhost``::

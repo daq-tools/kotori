@@ -128,7 +128,7 @@ class KotoriBootloader(object):
 
     def boot_vendors(self):
         """
-        Boot all enabled vendors
+        Boot all enabled vendors.
         """
         vendors = list(self.get_vendors())
         log.info('Enabling vendors {vendors}', vendors=vendors)
