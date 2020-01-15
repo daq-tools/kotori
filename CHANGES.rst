@@ -5,7 +5,14 @@ Changelog
 
 in progress
 ===========
+
+
+.. _kotori-0.24.0:
+
+2020-01-15 0.24.0
+=================
 - Adjust packaging for Debian stretch vs. buster
+- InfluxDB adapter: Interpret "latitude/longitude" fields as tags
 
 
 .. _kotori-0.23.0:

@@ -184,6 +184,12 @@ class InfluxDBAdapter(object):
             chunk["tags"]["geohash"] = data["geohash"]
             del data['geohash']
 
+        if "latitude" in data and "longitude" in data:
+            chunk["tags"]["latitude"] = data["latitude"]
+            chunk["tags"]["longitude"] = data["longitude"]
+            del data['latitude']
+            del data['longitude']
+
         # Extract more information specific to luftdaten.info
         for field in ['location', 'location_id', 'location_name', 'sensor_id', 'sensor_type']:
             if field in data:
