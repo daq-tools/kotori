@@ -16,7 +16,7 @@ NAME=$1
 DISTRIBUTION=$2
 VERSION=$3
 
-echo "Building package $NAME-$VERSION"
+echo "Building package $NAME-$VERSION for ${DISTRIBUTION}"
 
 # Build Debian package
 fpm \
