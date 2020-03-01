@@ -82,17 +82,17 @@ Add https addon for apt::
 
     apt install apt-transport-https software-properties-common
 
-Add package source for Debian stretch::
-
-    apt-add-repository 'deb https://packages.elmyra.de/elmyra/foss/debian/ stretch main foundation'
-
-Add package source for Debian buster::
-
-    apt-add-repository 'deb https://packages.elmyra.de/elmyra/foss/debian/ buster main foundation'
-
 Add GPG key for checking package signatures::
 
     wget -qO - https://packages.elmyra.de/elmyra/foss/debian/pubkey.txt | apt-key add -
+
+Add package source for Debian 10.x buster::
+
+    apt-add-repository 'deb https://packages.elmyra.de/elmyra/foss/debian/ buster main foundation'
+
+Add package source for Debian 9.x stretch::
+
+    apt-add-repository 'deb https://packages.elmyra.de/elmyra/foss/debian/ stretch main foundation'
 
 Reindex package database::
 
@@ -101,7 +101,11 @@ Reindex package database::
 
 Setup the whole software stack
 ==============================
-Install Kotori as well as recommended and suggested packages::
+Install Kotori with minimum set of required packages::
+
+    apt install influxdb grafana kotori
+
+Install Kotori together with all recommended and suggested packages::
 
     apt install --install-recommends --install-suggests kotori
 
