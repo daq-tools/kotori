@@ -1,4 +1,11 @@
+#
+# Build Docker image for publishing on Docker Hub.
 # https://getkotori.org/docs/setup/debian-quickstart.html
+#
+# Synopsis:
+#
+#   make build-dockerhub-image version=0.24.3
+#
 
 FROM balenalib/amd64-debian:buster
 

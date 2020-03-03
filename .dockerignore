@@ -1,7 +1,5 @@
 *
-!Makefile
-!setup.py
-!*.toml
-!MANIFEST.in
+!etc
 !packaging
-!dist
+!README.rst
+!CHANGES.rst
