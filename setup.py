@@ -89,7 +89,7 @@ extras = {
     # Data export: Basic formats
     'export': [
         'pyinfluxql==0.0.1',
-        'pandas==0.18.1',           # 0.24.4
+        'pandas==0.18.1',           # 0.24.5
         'numpy>=1.8.2,<2',          # 1.14.2
         'XlsxWriter==0.9.2',        # 1.0.2
     ],
@@ -144,7 +144,7 @@ extras = {
 }
 
 setup(name='kotori',
-      version='0.24.4',
+      version='0.24.5',
       description='Kotori is a data acquisition, processing and graphing toolkit for humans',
       long_description=README,
       license="AGPL 3, EUPL 1.2",
