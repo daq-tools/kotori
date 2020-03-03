@@ -17,18 +17,28 @@ Prepare baseline images::
     make build-debian-buster-armhf-baseline
 
 
-***
-Run
-***
+***************
+Debian packages
+***************
 Build Kotori package::
 
     # amd64
-    make debian-package flavor=full dist=stretch arch=amd64 version=0.22.0
-    make debian-package flavor=full dist=buster arch=amd64 version=0.22.0
+    make debian-package flavor=full dist=stretch arch=amd64 version=0.24.5
+    make debian-package flavor=full dist=buster arch=amd64 version=0.24.5
 
     # armhf
-    make debian-package flavor=standard dist=stretch arch=armhf version=0.22.0
-    make debian-package flavor=standard dist=buster arch=armhf version=0.22.0
+    make debian-package flavor=standard dist=stretch arch=armhf version=0.24.5
+    make debian-package flavor=standard dist=buster arch=armhf version=0.24.5
+
+
+*************
+Docker images
+*************
+::
+
+    make build-dockerhub-image version=0.24.5
+    docker login
+    docker push daqzilla/kotori
 
 
 ----

@@ -13,6 +13,7 @@ Software
     :glob:
 
     debian-quickstart
+    docker
     arch-linux
     python-package
     security
