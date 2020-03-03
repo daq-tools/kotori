@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 # (c) 2018 Andreas Motl <andreas@getkotori.org>
+import os
 import json
-import delegator
 
 def publish(topic, message):
     command = 'mosquitto_pub -h "{host}" -t "{topic}" -m \'{message}\''.format(
         host='localhost', topic=topic, message=message)
 
     print 'Running command: {}'.format(command)
-    delegator.run(command)
+    os.system(command)
 
 def all_realms():
     #realms = ['mqttkit-1', 'hiveeyes', 'luftdaten', 'weewx']

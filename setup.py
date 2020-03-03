@@ -33,7 +33,6 @@ requires = requires_core + [
     'python-dateutil>=2.6.0',       # 2.7.0
     'arrow==0.10.0',                # 0.12.1
     'funcy==1.7.2',                 # 1.10.1
-    'delegator.py==0.1.0',
     'attrs==18.2.0',
 
     # Bus adapters
@@ -57,9 +56,6 @@ requires = requires_core + [
     'pyasn1==0.4.5',
     'pyasn1-modules==0.2.4',
 
-    'pycparser==2.17',              # 2.18
-    'pyparsing==2.2.0',
-
 ]
 
 extras = {
@@ -80,6 +76,8 @@ extras = {
         'tqdm==4.19.8',             # 4.28.1
     ],
     'daq_binary': [
+        'pycparser==2.17',          # 2.18
+        'pyparsing==2.2.0',
         'pyclibrary==0.1.3',
         'tabulate==0.7.5',          # 0.8.2
         'sympy==0.7.6.1',           # 1.1.1

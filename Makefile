@@ -98,7 +98,7 @@ deb-build: check-build-options
 	# Extract Debian package
 	docker container rm -f finalize; true
 	docker container create --name finalize daq-tools/kotori-build-$(arch):$(version)
-	docker container cp finalize:/sources/dist/$(name)_$(version)-1~$(dist)_$(arch).deb ./dist/
+	docker container cp finalize:/dist/$(name)_$(version)-1~$(dist)_$(arch).deb ./dist/
 
 	docker container rm -f finalize
 

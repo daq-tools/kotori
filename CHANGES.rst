@@ -7,6 +7,13 @@ in progress
 ===========
 
 
+.. _kotori-0.24.5:
+
+2020-03-03 0.24.5
+=================
+- Adjust packaging again
+
+
 .. _kotori-0.24.4:
 
 2020-03-03 0.24.4
@@ -26,6 +33,7 @@ in progress
 2020-03-03 0.24.2
 =================
 - Prepare Docker image building for operating Kotori
+  https://hub.docker.com/orgs/daqzilla
 
 
 .. _kotori-0.24.1:

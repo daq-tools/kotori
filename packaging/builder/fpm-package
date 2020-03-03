@@ -19,6 +19,7 @@ VERSION=$3
 echo "Building package $NAME-$VERSION for ${DISTRIBUTION}"
 
 # Build Debian package
+mkdir -p ./dist
 fpm \
     -s dir -t deb \
     \
