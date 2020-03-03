@@ -7,6 +7,13 @@ in progress
 ===========
 
 
+.. _kotori-0.24.1:
+
+2020-03-03 0.24.1
+=================
+- Adjust packaging. Thanks, @RuiPinto96 and @Dewieinns!
+
+
 .. _kotori-0.24.0:
 
 2020-01-15 0.24.0

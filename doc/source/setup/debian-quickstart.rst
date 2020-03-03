@@ -80,7 +80,7 @@ Register with package repository
 ================================
 Add https addon for apt::
 
-    apt install apt-transport-https software-properties-common
+    apt install apt-transport-https software-properties-common wget gnupg
 
 Add GPG key for checking package signatures::
 
@@ -101,16 +101,14 @@ Reindex package database::
 
 Setup the whole software stack
 ==============================
-Install Kotori with minimum set of required packages::
-
-    apt install influxdb grafana kotori
-
 Install Kotori together with all recommended and suggested packages::
 
-    apt install --install-recommends --install-suggests kotori
+    apt install --install-recommends kotori
 
-InfluxDB and Grafana are not always started automatically, so ensure they are running by executing::
+InfluxDB and Grafana are not always enabled and started automatically,
+so ensure they are running by invoking::
 
+    systemctl enable influxdb grafana-server
     systemctl start influxdb grafana-server
 
 

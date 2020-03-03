@@ -13,7 +13,7 @@ ARG python=${venv}/bin/python
 
 
 # Create Python virtualenv
-RUN virtualenv --system-site-packages --always-copy --python=python ${venv}
+RUN virtualenv --system-site-packages --always-copy --python=python2.7 ${venv}
 
 # Remove superfluous "local" folder inside virtualenv
 # See also:

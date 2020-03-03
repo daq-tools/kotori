@@ -12,7 +12,8 @@ contributed to Kotori in one way or another.
 * Anne-Julia Scheuermann <annejulia@gmail.com>
 * Carolin Johannsen <caro@hiverize.org>
 * Clemens Gruber <clemens@hiveeyes.org>
-* Georges Gagliano <incognito>
+* Dewieinns <https://github.com/Dewieinns>
+* Georges Gagliano <https://github.com/ggeorges39>
 * Géraldine Farcy-Merlo <https://www.mellisphera.com/>
 * Jan Hoffmann <j.hoffmann@isarengineering.de>
 * Jens Schmelkus <jens@schmelkus.net>
@@ -23,6 +24,7 @@ contributed to Kotori in one way or another.
 * Matthias Mehldau <wetter@hiveeyes.org>
 * Richard Pobering <einsiedlerkrebs@ginnungagap.org>
 * Roh <incognito>
+* Rui Pinto <https://github.com/RuiPinto96>
 * Sebastian Donner <info@thunder-gfx.de>
 * Sebastian Henneke <s.henneke@isarengineering.de>
 * Smilie <smilie@posteo.de>

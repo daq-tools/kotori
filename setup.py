@@ -21,6 +21,7 @@ requires = requires_core + [
     # Core
     #'Twisted[tls]==17.1.0',
     #'Twisted==17.1.0',
+    'six==1.14.0',
     'pyramid==1.5.7',               # 1.9.1
     'pyramid_jinja2==2.5',          # 2.7
     'cornice==1.0.0',               # 2.4.0, 3.1.0

@@ -31,12 +31,12 @@ fpm \
 	--no-deb-use-file-permissions \
 	--no-python-obey-requirements-txt \
 	--no-python-dependencies \
-	--depends "python, systemd" \
+	--depends "python2.7, systemd" \
 	--deb-recommends "influxdb, mosquitto, mosquitto-clients, grafana, mongodb" \
 	--deb-recommends "python-requests, python-openssl, python-cryptography, python-certifi" \
-	--deb-suggests "python-numpy, python-scipy, python-matplotlib, python-tables, python-netcdf4" \
-	--deb-suggests "libatlas3-base, libopenblas-base, liblapack3, libhdf5-100, libnetcdf-c++4, libnetcdf11" \
-	--deb-suggests "liblzo2-2, libbz2-1.0, fonts-humor-sans" \
+	--deb-recommends "python-numpy, python-scipy, python-matplotlib, python-tables, python-netcdf4" \
+	--deb-recommends "libatlas3-base, libopenblas-base, liblapack3, libhdf5-100, libnetcdf-c++4, libnetcdf11" \
+	--deb-recommends "liblzo2-2, libbz2-1.0, fonts-humor-sans" \
 	--provides "kotori" \
 	--provides "${NAME}" \
 	--maintainer "andreas.motl@elmyra.de" \

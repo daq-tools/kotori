@@ -109,21 +109,21 @@ publish-debian:
 
 
 build-debian-stretch-amd64-baseline:
-	docker build --tag daq-tools/stretch-amd64-baseline:0.5.0 --build-arg BASE_IMAGE=balenalib/amd64-debian:stretch-build - < packaging/dockerfiles/Dockerfile.debian-stretch.baseline
-	docker tag daq-tools/stretch-amd64-baseline:0.5.0 daq-tools/stretch-amd64-baseline:latest
+	docker build --tag daq-tools/stretch-amd64-baseline:0.7.0 --build-arg BASE_IMAGE=balenalib/amd64-debian:stretch-build - < packaging/dockerfiles/Dockerfile.debian.baseline
+	docker tag daq-tools/stretch-amd64-baseline:0.7.0 daq-tools/stretch-amd64-baseline:latest
 
 build-debian-stretch-armhf-baseline:
-	docker build --tag daq-tools/stretch-armhf-baseline:0.5.0 --build-arg BASE_IMAGE=balenalib/armv7hf-debian:stretch-build - < packaging/dockerfiles/Dockerfile.debian-stretch.baseline
-	docker tag daq-tools/stretch-armhf-baseline:0.5.0 daq-tools/stretch-armhf-baseline:latest
+	docker build --tag daq-tools/stretch-armhf-baseline:0.7.0 --build-arg BASE_IMAGE=balenalib/armv7hf-debian:stretch-build - < packaging/dockerfiles/Dockerfile.debian.baseline
+	docker tag daq-tools/stretch-armhf-baseline:0.7.0 daq-tools/stretch-armhf-baseline:latest
 
 
 build-debian-buster-amd64-baseline:
-	docker build --tag daq-tools/buster-amd64-baseline:0.6.0 --build-arg BASE_IMAGE=balenalib/amd64-debian:buster-build - < packaging/dockerfiles/Dockerfile.debian-stretch.baseline
-	docker tag daq-tools/buster-amd64-baseline:0.6.0 daq-tools/buster-amd64-baseline:latest
+	docker build --tag daq-tools/buster-amd64-baseline:0.7.0 --build-arg BASE_IMAGE=balenalib/amd64-debian:buster-build - < packaging/dockerfiles/Dockerfile.debian.baseline
+	docker tag daq-tools/buster-amd64-baseline:0.7.0 daq-tools/buster-amd64-baseline:latest
 
 build-debian-buster-armhf-baseline:
-	docker build --tag daq-tools/buster-armhf-baseline:0.6.0 --build-arg BASE_IMAGE=balenalib/armv7hf-debian:buster-build - < packaging/dockerfiles/Dockerfile.debian-stretch.baseline
-	docker tag daq-tools/buster-armhf-baseline:0.6.0 daq-tools/buster-armhf-baseline:latest
+	docker build --tag daq-tools/buster-armhf-baseline:0.7.0 --build-arg BASE_IMAGE=balenalib/armv7hf-debian:buster-build - < packaging/dockerfiles/Dockerfile.debian.baseline
+	docker tag daq-tools/buster-armhf-baseline:0.7.0 daq-tools/buster-armhf-baseline:latest
 
 
 # -----
