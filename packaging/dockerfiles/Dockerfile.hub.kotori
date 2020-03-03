@@ -4,20 +4,41 @@
 #
 # Synopsis:
 #
-#   make build-dockerhub-image version=0.24.3
+#   make build-dockerhub-image version=0.24.5
 #
 
-FROM balenalib/amd64-debian:buster
+FROM debian:buster-slim
 
 LABEL maintainer="Andreas Motl <a.motl@elmyra.de>"
 
+ARG version
+
 #RUN timedatectl set-ntp true
-RUN apt-get update && apt-get upgrade --yes
-RUN apt-get install apt-utils
-RUN apt-get install apt-transport-https software-properties-common wget gnupg
-RUN wget -qO - https://packages.elmyra.de/elmyra/foss/debian/pubkey.txt | apt-key add -
-RUN apt-add-repository 'deb https://packages.elmyra.de/elmyra/foss/debian/ buster main foundation'
-RUN apt-get update && apt-get install --install-recommends kotori systemd- influxdb- grafana- mongodb- mosquitto- mosquitto-clients-
+
+
+# Ramping up.
+RUN \
+    apt-get update && \
+    apt-get install --yes wget && \
+\
+# Add repository key.
+# Don't use "apt-key add" for adding key.
+# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=851774
+    wget -q https://packages.elmyra.de/elmyra/foss/debian/pubkey.txt -O /etc/apt/trusted.gpg.d/daqzilla.asc && \
+\
+# Add package repository.
+# Don't use "apt-add-repository".
+    echo 'deb https://packages.elmyra.de/elmyra/foss/debian/ buster main foundation' > /etc/apt/sources.list.d/daqzilla-buster.list && \
+\
+# Install Kotori.
+    apt-get update && apt-get install --yes --install-recommends kotori=${version}* systemd- influxdb- grafana- mongodb- mosquitto- mosquitto-clients- && \
+    ln -s /opt/kotori/bin/kotori /usr/local/sbin/ && \
+\
+# Tearing down.
+    apt-get remove --purge --yes wget && \
+    apt-get remove --purge --yes build-essential gcc gcc-8 g++-8 libgcc-8-dev libstdc++-8-dev libc-dev-bin linux-libc-dev python-dev libpython-dev libexpat1-dev manpages-dev && \
+    apt-get autoremove --yes && apt-get autoclean --yes && \
+    rm -rf /var/lib/apt/lists/*
 
 EXPOSE 24642
 

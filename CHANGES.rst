@@ -5,6 +5,7 @@ Changelog
 
 in progress
 ===========
+- Improve Docker image building
 
 
 .. _kotori-0.24.5:

@@ -167,7 +167,7 @@ check-dockerbuild:
 	fi
 
 build-dockerhub-image: check-dockerbuild
-	docker build --tag daqzilla/kotori:$(version) - < packaging/dockerfiles/Dockerfile.hub.kotori
+	docker build --tag daqzilla/kotori:$(version) --build-arg version=$(version) - < packaging/dockerfiles/Dockerfile.hub.kotori
 	docker tag daqzilla/kotori:$(version) daqzilla/kotori:latest
 
 
