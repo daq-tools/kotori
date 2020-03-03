@@ -124,7 +124,10 @@ ARG pip=${venv}/bin/pip
 ARG python=${venv}/bin/python
 
 
+# Update some specific resources required for package building
 COPY packaging/builder/fpm-package $SOURCES/fpm-package
+COPY packaging/scripts/* $SOURCES/packaging/scripts/
+
 
 WORKDIR $SOURCES
 
