@@ -156,6 +156,21 @@ check-build-options:
 	fi
 
 
+# =============
+# Docker images
+# =============
+
+check-dockerbuild:
+	@if test "$(version)" = ""; then \
+		echo "ERROR: 'version' not set"; \
+		exit 1; \
+	fi
+
+build-dockerhub-image: check-dockerbuild
+	docker build --tag daqzilla/daqzilla:$(version) - < packaging/dockerfiles/Dockerfile.hub.kotori
+	docker tag daqzilla/daqzilla:$(version) daqzilla/daqzilla:latest
+
+
 
 # ===============
 # Utility targets

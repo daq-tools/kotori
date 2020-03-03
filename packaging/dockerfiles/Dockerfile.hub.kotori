@@ -1,0 +1,18 @@
+# https://getkotori.org/docs/setup/debian-quickstart.html
+
+FROM balenalib/amd64-debian:buster
+
+LABEL maintainer="Andreas Motl <a.motl@elmyra.de>"
+
+#RUN timedatectl set-ntp true
+RUN apt-get update && apt-get upgrade --yes
+RUN apt-get install apt-utils
+RUN apt-get install apt-transport-https software-properties-common wget gnupg
+RUN wget -qO - https://packages.elmyra.de/elmyra/foss/debian/pubkey.txt | apt-key add -
+RUN apt-add-repository 'deb https://packages.elmyra.de/elmyra/foss/debian/ buster main foundation'
+RUN apt-get update
+RUN apt-get install --install-recommends kotori systemd- influxdb- grafana- mongodb- mosquitto- mosquitto-clients-
+
+EXPOSE 24642
+
+CMD [ "/opt/kotori/bin/kotori" ]

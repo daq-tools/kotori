@@ -2,5 +2,8 @@
 
 chown -R kotori:kotori /opt/kotori
 
+# Invoke systemd commands only when installed.
+[ ! -e /bin/systemctl ] && exit 0
+
 systemctl reenable kotori
 systemctl restart kotori

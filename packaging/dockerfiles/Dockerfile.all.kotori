@@ -36,7 +36,7 @@ RUN $pip install virtualenv-tools==1.0  # --upgrade --force-reinstall
 ENV PIP_EXTRA_INDEX_URL=https://packages.hiveeyes.org/hiveeyes/python/eggs/
 
 RUN $pip install pandas==0.18.1
-RUN $pip install 'https://github.com/jjmalina/pyinfluxql/tarball/d92db4ab8c#egg=pyinfluxql-0.0.1'
+RUN $pip install 'https://github.com/jjmalina/pyinfluxql/tarball/d92db4ab8c#egg=pyinfluxql'
 
 
 

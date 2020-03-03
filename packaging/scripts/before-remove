@@ -1,4 +1,7 @@
 #!/bin/sh
 
+# Invoke systemd commands only when installed.
+[ ! -e /bin/systemctl ] && exit 0
+
 systemctl stop kotori
 systemctl disable kotori
