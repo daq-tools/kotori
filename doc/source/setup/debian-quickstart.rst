@@ -111,6 +111,14 @@ so ensure they are running by invoking::
     systemctl enable influxdb grafana-server
     systemctl start influxdb grafana-server
 
+Notes for ARM machines
+======================
+For using Kotori on ARM machines like the RaspberryPi or the BeagleBone,
+we prepared a lightweight package with fewer dependencies
+called ``kotori-standard``. To install it, invoke::
+
+    apt install --install-recommends kotori-standard
+
 
 *********
 Operation

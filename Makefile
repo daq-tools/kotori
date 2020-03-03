@@ -126,29 +126,6 @@ build-debian-buster-armhf-baseline:
 	docker tag daq-tools/buster-armhf-baseline:0.7.0 daq-tools/buster-armhf-baseline:latest
 
 
-# -----
-
-
-testdrive-arm:
-	docker build --tag testdrive/kotori-arm32v7:0.21.1 --build-arg KOTORI_DEB=kotori-standard_0.21.1-1_armhf.deb --file packaging/dockerfiles/Dockerfile.testdrive.arm32v7 .
-	docker run -it --rm testdrive/kotori-arm32v7:0.21.1 /bin/bash
-
-deb-pure: check-build-options
-	fpm \
-		-s python -t deb \
-		$(fpm-options) \
-		--python-scripts-executable '/usr/bin/env python' \
-		--version $(version) --iteration 1 \
-		--depends python \
-		--depends python-pip \
-		--architecture noarch \
-		--verbose \
-		--debug \
-		--force \
-		.
-
-
-
 check-flavor-options:
 	@if test "$(flavor)" = ""; then \
 		echo "ERROR: 'flavor' not set, try 'make debian-package flavor={minimal,standard,full}'"; \
