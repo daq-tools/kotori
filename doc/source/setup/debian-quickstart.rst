@@ -66,12 +66,11 @@ We are going to do telemetry data acquisition, sometimes coming from measurement
 systems which **do not** send appropriate timestamps. Thus, the timekeeping
 of your data acquisition system itself should be accurate.
 
-Timekeeping:
-   Enable the NTP feature of ``systemd``::
+So, either enable the NTP feature of ``systemd``::
 
     timedatectl set-ntp true
 
-   or install ``chrony``::
+or install ``chrony``::
 
     apt install chrony
 
@@ -87,12 +86,11 @@ Add GPG key for checking package signatures::
 
     wget -qO - https://packages.elmyra.de/elmyra/foss/debian/pubkey.txt | apt-key add -
 
-Add package source for:
-   Debian 10.x buster::
+Add package source for either Debian 10.x buster::
 
     apt-add-repository 'deb https://packages.elmyra.de/elmyra/foss/debian/ buster main foundation'
 
-   or Debian 9.x stretch::
+or Debian 9.x stretch::
 
     apt-add-repository 'deb https://packages.elmyra.de/elmyra/foss/debian/ stretch main foundation'
 
