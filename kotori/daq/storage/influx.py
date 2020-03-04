@@ -155,7 +155,7 @@ class InfluxDBAdapter(object):
 
         # Extract timestamp field from data
         chunk['time_precision'] = 'n'
-        for time_field in ['time', 'datetime', 'dateTime']:
+        for time_field in ['time', 'datetime', 'dateTime', 'timestamp']:
             if time_field in data:
 
                 # WeeWX. TODO: Move to specific vendor configuration.
