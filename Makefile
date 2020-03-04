@@ -126,6 +126,11 @@ build-debian-buster-armhf-baseline:
 	docker tag daq-tools/buster-armhf-baseline:0.7.0 daq-tools/buster-armhf-baseline:latest
 
 
+build-ubuntu-bionic-amd64-baseline:
+	docker build --tag daq-tools/bionic-amd64-baseline:0.7.0 --build-arg BASE_IMAGE=ubuntu:bionic-20200219 - < packaging/dockerfiles/Dockerfile.debian.baseline
+	docker tag daq-tools/bionic-amd64-baseline:0.7.0 daq-tools/bionic-amd64-baseline:latest
+
+
 check-flavor-options:
 	@if test "$(flavor)" = ""; then \
 		echo "ERROR: 'flavor' not set, try 'make debian-package flavor={minimal,standard,full}'"; \

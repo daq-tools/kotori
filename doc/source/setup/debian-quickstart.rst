@@ -94,6 +94,10 @@ or Debian 9.x stretch::
 
     apt-add-repository 'deb https://packages.elmyra.de/elmyra/foss/debian/ stretch main foundation'
 
+or Ubuntu 18 Bionic Beaver::
+
+    apt-add-repository 'deb https://packages.elmyra.de/elmyra/foss/debian/ bionic main foundation'
+
 Reindex package database::
 
     apt update

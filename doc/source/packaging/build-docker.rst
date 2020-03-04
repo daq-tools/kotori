@@ -16,6 +16,8 @@ Prepare baseline images::
     make build-debian-buster-amd64-baseline
     make build-debian-buster-armhf-baseline
 
+    make build-ubuntu-bionic-amd64-baseline
+
 
 ***************
 Debian packages
@@ -25,6 +27,7 @@ Build Kotori package::
     # amd64
     make debian-package flavor=full dist=stretch arch=amd64 version=0.24.5
     make debian-package flavor=full dist=buster arch=amd64 version=0.24.5
+    make debian-package flavor=full dist=bionic arch=amd64 version=0.24.5
 
     # armhf
     make debian-package flavor=standard dist=stretch arch=armhf version=0.24.5
