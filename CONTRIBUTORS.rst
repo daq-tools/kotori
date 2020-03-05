@@ -9,6 +9,7 @@ contributed to Kotori in one way or another.
 
 * Alexander Wilms <alex.wilms@adminguru.org>
 * Andreas Motl <andreas.motl@elmyra.de>
+* Andrew Barber <https://github.com/Dewieinns>
 * Anne-Julia Scheuermann <annejulia@gmail.com>
 * Carolin Johannsen <caro@hiverize.org>
 * Clemens Gruber <clemens@hiveeyes.org>
