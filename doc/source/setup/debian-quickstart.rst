@@ -76,12 +76,29 @@ or install ``chrony``::
 
 or implement any other valid equivalent to keep the system time sound.
 
-Register with package repository
-================================
-Add https addon for apt::
+For registering 3rd-party package repositories offering their packages
+through https, please invoke the following commands::
 
     apt install apt-transport-https software-properties-common wget gnupg
 
+
+Register the mosquitto package repository
+=========================================
+Add GPG key for checking package signatures::
+
+    wget -qO - https://repo.mosquitto.org/debian/mosquitto-repo.gpg.key | apt-key add -
+
+Add package source for either Debian 10.x buster or Ubuntu 18 Bionic Beaver::
+
+    apt-add-repository 'deb https://repo.mosquitto.org/debian buster main'
+
+or Debian 9.x stretch::
+
+    apt-add-repository 'deb https://repo.mosquitto.org/debian stretch main'
+
+
+Register the main package repository
+====================================
 Add GPG key for checking package signatures::
 
     wget -qO - https://packages.elmyra.de/elmyra/foss/debian/pubkey.txt | apt-key add -
@@ -90,13 +107,13 @@ Add package source for either Debian 10.x buster::
 
     apt-add-repository 'deb https://packages.elmyra.de/elmyra/foss/debian/ buster main foundation'
 
-or Debian 9.x stretch::
-
-    apt-add-repository 'deb https://packages.elmyra.de/elmyra/foss/debian/ stretch main foundation'
-
 or Ubuntu 18 Bionic Beaver::
 
     apt-add-repository 'deb https://packages.elmyra.de/elmyra/foss/debian/ bionic main foundation'
+
+or Debian 9.x stretch::
+
+    apt-add-repository 'deb https://packages.elmyra.de/elmyra/foss/debian/ stretch main foundation'
 
 Reindex package database::
 
