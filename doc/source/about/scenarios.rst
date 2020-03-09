@@ -32,10 +32,10 @@ A quick overview should get you an idea:
 - Convert and transcode measurement data from/to different payload formats
   such as CSV, JSON, XML, etc.
 - Persist measurement data into contemporary databases and storage systems
-  such as TSDB, RDBMS or NoSQL.
+  such as TSDB, RDBMS or NoSQL without further ado.
 - Rewrite and redistribute data through a variety of egress data channels.
 - Instantly display measurement values on arrival using default database dashboards.
-- Optionally, build advanced dashboards interactively.
+- Build advanced dashboards interactively using Grafana_.
 - Notify subscribed users or devices of events like above-/below-threshold or data-loss.
 
 

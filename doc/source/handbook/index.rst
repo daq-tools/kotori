@@ -33,6 +33,7 @@ Usage
     export/index
     grafana
     influxdb
+    faq
 
 
 *********
