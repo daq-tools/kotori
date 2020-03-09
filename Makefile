@@ -16,11 +16,18 @@ $(eval python       := $(venvpath)/bin/python)
 $(eval pytest       := $(venvpath)/bin/pytest)
 $(eval bumpversion  := $(venvpath)/bin/bumpversion)
 $(eval twine        := $(venvpath)/bin/twine)
-$(eval sphinx       := $(venvpath)/bin/sphinx-build)
+
+$(eval venv3        := .venv3)
+$(eval pip3         := $(venv3)/bin/pip)
+$(eval python3      := $(venv3)/bin/python)
+$(eval sphinx       := $(venv3)/bin/sphinx-build)
 
 # Setup Python virtualenv
 setup-virtualenv:
 	@test -e $(python) || `command -v virtualenv` --python=python2 --no-site-packages $(venvpath)
+
+setup-virtualenv3:
+	@test -e $(python3) || `command -v virtualenv` --python=python3 --no-site-packages $(venv3)
 
 
 # =======
@@ -228,9 +235,8 @@ docs-html: docs-virtualenv
 	touch doc/source/index.rst
 	export SPHINXBUILD="`pwd`/$(sphinx)"; cd doc; make html
 
-docs-virtualenv:
-	@test -e $(python) || `command -v virtualenv` --python=`command -v python` --no-site-packages $(venvpath)
-	@$(pip) --quiet install --requirement requirements-docs.txt
+docs-virtualenv: setup-virtualenv3
+	@$(pip3) --quiet install --requirement requirements-docs.txt
 
 dev-virtualenv:
 	@test -e $(python) || `command -v virtualenv` --python=`command -v python` --no-site-packages --no-wheel $(venvpath)
