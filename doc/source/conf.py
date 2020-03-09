@@ -115,7 +115,7 @@ todo_include_todos = True
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'sphinx_rtd_theme'
+#html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -154,6 +154,7 @@ html_static_path = ['_static']
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
 #html_last_updated_fmt = '%b %d, %Y'
+html_last_updated_fmt = ""
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
@@ -167,10 +168,10 @@ html_static_path = ['_static']
 #html_additional_pages = {}
 
 # If false, no module index is generated.
-#html_domain_indices = True
+html_domain_indices = True
 
 # If false, no index is generated.
-#html_use_index = True
+html_use_index = True
 
 # If true, the index is split into individual pages for each letter.
 #html_split_index = False
@@ -292,6 +293,61 @@ texinfo_documents = [
 
 
 # -- Custom options -------------------------------------------
+import sphinx_material
+
+html_show_sourcelink = True
+html_sidebars = {
+    "**": ["logo-text.html", "globaltoc.html", "localtoc.html", "searchbox.html"]
+}
+
+# Required theme setup
+extensions.append('sphinx_material')
+html_theme = 'sphinx_material'
+html_theme_path = sphinx_material.html_theme_path()
+html_context = sphinx_material.get_html_context()
+
+# Material theme options (see theme.conf for more information)
+html_theme_options = {
+
+    # Set the name of the project to appear in the navigation.
+    'nav_title': 'Kotori',
+
+    # Set you GA account ID to enable tracking
+    #'google_analytics_account': 'UA-XXXXX',
+
+    # Specify a base_url used to generate sitemap.xml. If not
+    # specified, then no sitemap will be built.
+    'base_url': 'https://getkotori.org/docs/',
+
+    # Set the color and the accent color
+    'color_primary': 'blue',
+    'color_accent': 'light-blue',
+
+    # Set the repo location to get a badge with stats
+    'repo_url': 'https://github.com/daq-tools/kotori/',
+    'repo_name': 'Kotori',
+
+    # Visible levels of the global TOC; -1 means unlimited
+    'globaltoc_depth': 3,
+    # If False, expand all TOC entries
+    #'globaltoc_collapse': False,
+    # If True, show hidden TOC entries
+    #'globaltoc_includehidden': False,
+
+    "master_doc": False,
+    "nav_links": [
+    ],
+
+    "heroes": {
+        "index": "A data historian based on InfluxDB, Grafana, MQTT and more.",
+        "about/index": "A data historian based on InfluxDB, Grafana, MQTT and more.",
+        "about/scenarios": "Conceived for consumers, integrators and developers.",
+        "about/technologies": "Standing on the shoulders of giants.",
+        "examples/index": "Telemetry data acquisition and sensor networks for humans.",
+        "setup/index": "Easy to install and operate.",
+    },
+}
+
 
 html_logo = '_static/img/kotori-logo.png'
 def setup(app):
@@ -333,4 +389,3 @@ from pygments.lexers.web import PhpLexer
 # Enable highlighting for PHP code not between <?php ... ?> by default
 lexers['php'] = PhpLexer(startinline=True)
 lexers['php-annotations'] = PhpLexer(startinline=True)
-

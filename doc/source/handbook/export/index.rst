@@ -9,12 +9,6 @@
 Data export
 ###########
 
-.. contents::
-   :local:
-   :depth: 1
-
-----
-
 
 ********
 Synopsis

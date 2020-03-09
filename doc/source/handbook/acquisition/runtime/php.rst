@@ -2,10 +2,11 @@
 
 .. _daq-php:
 
-#########################
-Data acquisition with PHP
-#########################
-.. highlight:: bash
+###
+PHP
+###
+
+.. highlight:: php
 
 
 *******

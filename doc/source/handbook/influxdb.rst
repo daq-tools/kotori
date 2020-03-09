@@ -6,13 +6,17 @@ InfluxDB Handbook
 
 - https://docs.influxdata.com/influxdb/v1.1/query_language/spec/
 
+::
+
+    export INFLUXDB_HOST=daq.example.org
+
 
 Authentication
 --------------
 
 Enable auth-only access by creating admin user::
 
-    $ curl --silent --get 'http://192.168.59.103:8086/query?pretty=true' --user root:root --data-urlencode 'q=CREATE USER admin WITH PASSWORD 'admin' WITH ALL PRIVILEGES'
+    $ curl --silent --get 'http://$INFLUXDB_HOST:8086/query?pretty=true' --user root:root --data-urlencode 'q=CREATE USER admin WITH PASSWORD 'admin' WITH ALL PRIVILEGES'
 
 .. seealso:: https://docs.influxdata.com/influxdb/v1.1/query_language/authentication_and_authorization/
 
@@ -22,17 +26,17 @@ Database operations
 -------------------
 Create database::
 
-    curl --silent --get 'http://192.168.59.103:8086/query?pretty=true' --user admin:admin --data-urlencode 'q=CREATE DATABASE "hiveeyes_100"'
+    curl --silent --get 'http://$INFLUXDB_HOST:8086/query?pretty=true' --user admin:admin --data-urlencode 'q=CREATE DATABASE "hiveeyes_100"'
 
 
 List databases::
 
-    curl --silent --get 'http://192.168.59.103:8086/query?pretty=true' --user admin:admin --data-urlencode 'q=SHOW DATABASES' | jq '.'
+    curl --silent --get 'http://$INFLUXDB_HOST:8086/query?pretty=true' --user admin:admin --data-urlencode 'q=SHOW DATABASES' | jq '.'
 
 
 Drop database::
 
-    curl --silent --get 'http://192.168.59.103:8086/query?pretty=true' --user admin:admin --data-urlencode 'q=DROP DATABASE "hiveeyes_100"'
+    curl --silent --get 'http://$INFLUXDB_HOST:8086/query?pretty=true' --user admin:admin --data-urlencode 'q=DROP DATABASE "hiveeyes_100"'
 
 Write data
 ----------
@@ -46,12 +50,12 @@ Query operations
 Inquire IP address from boot2docker host::
 
     boot2docker ip
-    192.168.59.103
+    $INFLUXDB_HOST
 
 Query database using curl::
 
     # pretty-print json using jq
-    curl --silent --get 'http://192.168.59.103:8086/query?pretty=true' --user admin:admin --data-urlencode 'db=hiveeyes_100' --data-urlencode 'q=select * from "1.99";' | jq '.'
+    curl --silent --get 'http://$INFLUXDB_HOST:8086/query?pretty=true' --user admin:admin --data-urlencode 'db=hiveeyes_100' --data-urlencode 'q=select * from "1.99";' | jq '.'
 
 .. seealso:: https://docs.influxdata.com/influxdb/v1.1/guides/querying_data/
 
@@ -61,7 +65,7 @@ Querying from Python
 ::
 
     from influxdb.client import InfluxDBClient
-    client = InfluxDBClient('192.168.59.103', 8086, 'root', 'root', 'kotori')
+    client = InfluxDBClient('$INFLUXDB_HOST', 8086, 'root', 'root', 'kotori')
     client.query('select * from telemetry;')
 
 .. seealso:: https://pypi.python.org/pypi/influxdb
@@ -97,3 +101,6 @@ Import::
     ./bin/csv-to-influxdb --batch-size=1 --timestamp-column=time --timestamp-format="2006-01-02 15:04:05.000000000" --server=http://localhost:8086 --database=hiveeyes_25a0e5df_9517_405b_ab14_cb5b514ac9e8 --measurement=3756782252718325761_1 ../../data/25a0e5df_9517_405b_ab14_cb5b514ac9e8_3756782252718325761_1_20160101T000000_20160705T195237.csv
     2016/07/05 21:55:15 Done (wrote 34304 points)
 
+
+- If you like Python, see https://github.com/fabio-miranda/csv-to-influxdb
+- If you like Javascript, see https://github.com/CorpGlory/csv2influx

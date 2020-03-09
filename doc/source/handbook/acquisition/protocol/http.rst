@@ -3,13 +3,9 @@
 
 .. _daq-http:
 
-##########################
-Data acquisition over HTTP
-##########################
-
-.. contents::
-   :local:
-   :depth: 1
+####
+HTTP
+####
 
 
 ************
@@ -28,8 +24,6 @@ a special field name ``time`` which is reserved for submitting data readings
 including timestamps. This is specifically important for bulk data submissions,
 see :ref:`daq-http-with-timestamp` for an example and the whole list of
 available :ref:`daq-timestamp-formats` as reference.
-
-.. seealso:: :ref:`Transmit a periodic sawtooth signal over HTTP <sawtooth-http>`
 
 
 *****
@@ -206,81 +200,10 @@ Upload the file all at once::
     cat data.csv | http POST http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/data Content-Type:text/csv
 
 
-
-Open Hive Support
-=================
-There's some support for proprietary/legacy data formats.
-Here, the service understands a custom header format starting with "Datum/Zeit" or "Date/Time", like::
-
-    echo 'Datum/Zeit,Gewicht,Aussen-Temperatur,Aussen-Feuchtigkeit,Spannung' | http POST http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/data Content-Type:text/csv
-
-Sensor readings are transmitted using local time.
-On further processing, we assume them being in Central European Time (CET).
-Example::
-
-    echo '2016/08/14 21:02:06,  58.697, 19.6, 56.1, 4.13' | http POST http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/data Content-Type:text/csv
-
-.. tip::
-
-    While this is possible, you should definitively favor using the established conventions, so please:
-
-        - send timestamps using the field name ``time``
-        - send timestamps in `ISO 8601`_ format, using UTC
-
-
 ****************************
 Periodic acquisition example
 ****************************
-
-.. _sawtooth-http:
-
-Sawtooth
-========
-The characteristics of sawtooth signals (dynamic, slowly oscillating)
-are convenient to generate measurement sensor readings and publish
-telemetry data without having any hardware in place.
-
-Infrastructure
---------------
-Let's define the basic infrastructure for hands-free, periodic dry-dock measurements::
-
-    # Connect sensor value readings with telemetry transmitter
-    measure() { sensor | transmitter; }
-
-    # A simple main loop ticking once each second
-    loop() { while true; do measure; echo -n .; sleep 1; done; }
-
-Sensor
-------
-Define an example sensor emitting a single sample of a sawtooth signal in JSON format,
-using the value of the current second::
-
-    sensor() { echo "{\"second\": $(date +%-S)}"; }
-
-Transmitter
------------
-Define a transmitter based on HTTPie_::
-
-    # Define channel address
-    export DEVICE_REALM="mqttkit-1"
-    export DEVICE_TOPIC="testdrive/area-42/clockdemo-1"
-
-    # Define transmitter
-    transmitter() { http POST http://localhost:24642/api/$DEVICE_REALM/$DEVICE_TOPIC/data; }
-
-Start publishing::
-
-    loop
-
-Result
-------
-Sawtooth signal made from oscillating value of the current second.
-
-.. raw:: html
-
-    <iframe src="https://swarm.hiveeyes.org/grafana/dashboard-solo/db/clockdemo?panelId=5&from=1464307860728&to=1464308765714" width="100%" height="425" frameborder="0"></iframe>
-
-|clearfix|
+.. seealso:: :ref:`sawtooth-http`.
 
 
 *****************
@@ -334,9 +257,9 @@ Invalid content type
 ====================
 The HTTP interface currently accepts the media types:
 
-    - ``application/json``
-    - ``application/x-www-form-urlencoded``
-    - ``text/csv``
+- ``application/json``
+- ``application/x-www-form-urlencoded``
+- ``text/csv``
 
 Sending content designated with an invalid media type, e.g. ``unknown/format``::
 

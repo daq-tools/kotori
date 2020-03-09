@@ -2,13 +2,9 @@
 
 .. _daq-mqtt:
 
-##########################
-Data acquisition over MQTT
-##########################
-
-.. contents::
-   :local:
-   :depth: 1
+####
+MQTT
+####
 
 
 ************
@@ -119,80 +115,44 @@ Language bindings
    * - Python
      - - Libraries
 
-            - `paho-mqtt`_, the MQTT Python client library of the `Eclipse Paho`_ project.
+         - `paho-mqtt`_, the MQTT Python client library of the `Eclipse Paho`_ project.
 
        - Examples
 
-            - See a :ref:`basic MQTT example in Python <daq-python-mqtt>`.
+         - See a :ref:`basic MQTT example in Python <daq-python-mqtt>`.
 
    * - Arduino
      - - Libraries
 
-            - `Arduino Client for MQTT`_ by `Nick O'Leary`_
-            - `Adafruit MQTT Library`_ from Adafruit_
+         - `Arduino Client for MQTT`_ by `Nick O'Leary`_
+         - `Adafruit MQTT Library`_ from Adafruit_
 
        - Examples
 
-            - The ESP8266-based sensor node firmware `node-wifi-mqtt.ino`_ of the :ref:`Hiveeyes project`.
+         - The ESP8266-based sensor node firmware `node-wifi-mqtt.ino`_ of the `Hiveeyes project`_.
 
    * - Arduino/ESP8266
      - - Libraries
 
-            - `esp_mqtt`_, the `Native MQTT client library for ESP8266`_ by Tuan PM
-            - `async-mqtt-client`_ by `Marvin Roger`_
+         - `esp_mqtt`_, the `Native MQTT client library for ESP8266`_ by Tuan PM
+         - `async-mqtt-client`_ by `Marvin Roger`_
 
        - Examples
 
-            - The Homie_-based sensor node firmware for ESP8266, "`node-wifi-mqtt-homie.ino`_" of the :ref:`Hiveeyes project`.
-              See also :ref:`json-homie` for more documentation.
+         - The Homie_-based sensor node firmware for ESP8266, "`node-wifi-mqtt-homie.ino`_" of the `Hiveeyes project`_.
+           See also :ref:`json-homie` for more documentation.
 
    * - ARMmbed
      - - Libraries
 
-            - The `ARMmbed MQTT library`_, a port of the `Eclipse Paho Embedded MQTT C/C++ Client Libraries`_.
+         - The `ARMmbed MQTT library`_, a port of the `Eclipse Paho Embedded MQTT C/C++ Client Libraries`_.
 
        - Examples
 
-            - `ARMmbed ESP8266 MQTT example`_
+         - `ARMmbed ESP8266 MQTT example`_
 
 
 ***************
 Troubleshooting
 ***************
-.. seealso:: Please read about general :ref:`error-signalling`.
-
-.. todo:: Add notes about no data appearing in Grafana, etc.
-
-
-----
-
-
-************
-Applications
-************
-
-.. todo:: Refactor to acquisition/examples
-
-.. _daq-mqtt-bash:
-
-Command line
-============
-.. todo::
-
-    - Add example from Hiveeyes, link here.
-    - Also add link from handbook/kotori and setup/getting-started to here.
-
-Hiveeyes
-========
-The :ref:`vendor-hiveeyes` project for collaborative beehive
-monitoring uses two different kinds of sensor nodes.
-
-- :ref:`hiveeyes-one` sensor nodes transmit data to a gateway using RF,
-  the gateway receives and decodes telemetry data from Bencode_ format,
-  then forwards it to the MQTT_ broker in JSON.
-  This is specified in :ref:`beradio-spec` and implemented
-  in Python using the serial-to-mqtt forwarder :ref:`beradio-python <beradio-python>`.
-
-- :ref:`open-hive` sensor nodes based on the *Adafruit HUZZAH ESP8266*
-  directly send telemetry data to the MQTT_ broker in JSON format.
-
+.. seealso:: Please read about general :ref:`error-signalling` and :ref:`kotori-troubleshooting`.

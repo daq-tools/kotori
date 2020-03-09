@@ -2,9 +2,9 @@
 
 .. _daq-python:
 
-############################
-Data acquisition with Python
-############################
+######
+Python
+######
 
 .. contents::
    :local:
@@ -82,17 +82,7 @@ A basic example for publishing sensor readings to MQTT::
 
 
 
-.. note::
-
-    - For a UART to MQTT gateway implementation, see :ref:`beradio-python <beradio-python>`.
-    - For an example about how to run a unique realm on your own hardware, see:
-
-        - https://github.com/Hiverize/Sensorbeuten/pull/1
-        - https://github.com/hiveeyes/Hiverize-Sensorbeuten/blob/hiveeyes-backend/backend.rst
-
-
 .. _daq-python-http:
-
 .. _daq-python-requests:
 
 ****
@@ -145,3 +135,13 @@ CSV Format
     # 2. Send readings
     requests.post(uri, data="58.697, 19.6, 56.1, 4.13", headers={'Content-Type': 'text/csv'}).json()
 
+
+
+*****************
+Real applications
+*****************
+- For a UART to MQTT gateway implementation, see :ref:`beradio-python <beradio-python>`.
+- For an example about how to run a unique realm on your own hardware, see:
+
+  - https://github.com/Hiverize/Sensorbeuten/pull/1
+  - https://github.com/hiveeyes/Hiverize-Sensorbeuten/blob/hiveeyes-backend/backend.rst

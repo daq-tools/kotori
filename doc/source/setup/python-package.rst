@@ -2,15 +2,10 @@
 
 .. _setup-python-package:
 
-##############
-Python package
-##############
+#################################
+Setup as python package from PyPI
+#################################
 
-.. contents:: Table of Contents
-   :local:
-   :depth: 2
-
-----
 
 *****
 Intro

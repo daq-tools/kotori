@@ -2,7 +2,6 @@
 body, div.body {
     background-color: #add8e6;
 }
-*/
 
 .width-800 {
     width: 800px;
@@ -17,6 +16,7 @@ body, div.body {
     margin: inherit;
     vertical-align: middle;
 }
+*/
 
 .wy-side-nav-search {
     /* background-color: #add8e6; */
@@ -135,14 +135,12 @@ body, div.body {
     width: 640px;
 }
 
-/*
 .pull-left {
     float: left;
 }
 .pull-right {
     float: right;
 }
-*/
 
 /* More colors for CSS3 Hexagon Buttons */
 
@@ -198,8 +196,7 @@ body, div.body {
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 .btn-outline a:hover {
-    color: #eeeeee;
-    background-color: #343a40;
+    background-color: #aaaaaa;
 }
 
 /* Don't apply on narrow screen widths */

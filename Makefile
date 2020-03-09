@@ -230,7 +230,7 @@ docs-html: docs-virtualenv
 
 docs-virtualenv:
 	@test -e $(python) || `command -v virtualenv` --python=`command -v python` --no-site-packages $(venvpath)
-	@$(pip) install --requirement requirements-docs.txt
+	@$(pip) --quiet install --requirement requirements-docs.txt
 
 dev-virtualenv:
 	@test -e $(python) || `command -v virtualenv` --python=`command -v python` --no-site-packages --no-wheel $(venvpath)

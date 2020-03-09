@@ -6,11 +6,6 @@
 Setup on Arch Linux
 ###################
 
-.. contents::
-   :local:
-   :depth: 2
-
-----
 
 *****
 Intro

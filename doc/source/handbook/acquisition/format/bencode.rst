@@ -1,8 +1,8 @@
 .. include:: ../../../_resources.rst
 
-###############################
-Data serialization with Bencode
-###############################
+#######
+Bencode
+#######
 
 
 ********

@@ -1,8 +1,8 @@
 .. include:: ../../../_resources.rst
 
-##################################
-Data serialization using C structs
-##################################
+###############
+Plain C structs
+###############
 .. highlight:: cpp
 
 .. seealso::

@@ -8,11 +8,6 @@
 Data acquisition
 ################
 
-.. contents::
-   :local:
-   :depth: 1
-
-----
 
 ************
 Introduction
@@ -35,18 +30,33 @@ Protocols
     protocol/udp
 
 
-***************
-Client runtimes
-***************
+*****************
+Language runtimes
+*****************
 
 .. toctree::
     :maxdepth: 1
     :glob:
 
     runtime/bash
-    runtime/python
-    runtime/php
     runtime/arduino
+    runtime/python
+    runtime/micropython
+    runtime/lua-nodemcu
+    runtime/javascript
+    runtime/php
+
+
+*******************
+Firmware frameworks
+*******************
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    runtime/homie
+    ../decoders/tasmota
 
 
 *********************
@@ -69,6 +79,7 @@ Metadata signalling
     :maxdepth: 1
     :glob:
 
+    timestamp
     error-signalling
 
 

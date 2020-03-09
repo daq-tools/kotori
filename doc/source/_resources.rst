@@ -137,7 +137,7 @@
 
 .. luftdaten.info
 .. _luftdatenpumpe.py: https://github.com/daq-tools/kotori/blob/0.22.1/kotori/vendor/luftdaten/luftdatenpumpe.py
-.. _Luftdatenpumpe: https://github.com/hiveeyes/luftdatenpumpe
+.. _Luftdatenpumpe: https://github.com/panodata/luftdatenpumpe
 .. _Belgian Interregional Environment Agency (IRCEL - CELINE): http://www.irceline.be/en
 
 .. Weather information
@@ -146,14 +146,14 @@
 .. _MQTT Plugin for weeWX: http://lancet.mit.edu/mwall/projects/weather/releases/weewx-mqtt-0.15.tgz
 .. _Davis Vantage Pro2: http://www.davisnet.com/solution/vantage-pro2/
 
-.. Sonoff-Tasmota
-.. _Sonoff-Tasmota: https://github.com/arendst/Sonoff-Tasmota
-.. _Add adapter for ingesting data from devices running Sonoff-Tasmota: https://github.com/daq-tools/kotori/issues/10
+.. Tasmota
+.. _Tasmota: https://github.com/arendst/Tasmota
+.. _Add adapter for ingesting data from devices running Tasmota: https://github.com/daq-tools/kotori/issues/10
 .. _Sonoff SC: https://www.itead.cc/wiki/Sonoff_SC
 .. _Sonoff SC (Product): https://www.itead.cc/sonoff-sc.html
 .. _Sonoff TH: https://www.itead.cc/wiki/Sonoff_TH
 .. _Sonoff TH (Product): https://www.itead.cc/smart-home/sonoff-th.html
-.. _Configure MQTT for the Tasmota Firmware: https://github.com/arendst/Sonoff-Tasmota/wiki/MQTT#configure-mqtt
+.. _Configure MQTT for the Tasmota Firmware: https://github.com/arendst/Tasmota/wiki/MQTT#configure-mqtt
 .. _Raumfahrtagentur: http://www.raumfahrtagentur.org/
 
 .. NEW

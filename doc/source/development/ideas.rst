@@ -2,9 +2,9 @@
 
 .. _kotori-ideas:
 
-############
-Kotori ideas
-############
+#####
+Ideas
+#####
 
 .. contents::
    :local:

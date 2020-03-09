@@ -7,6 +7,7 @@ in progress
 ===========
 - Improve Docker image building
 - Add packaging for Ubuntu 18 Bionic Beaver
+- Update documentation, now using "Material for Sphinx" theme
 
 
 .. _kotori-0.24.5:
