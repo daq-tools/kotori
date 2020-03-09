@@ -11,10 +11,11 @@ There are various ways of transmitting telemetry data from the command line.
 
 Depending on the desired protocol, please read how to:
 
-- MQTT: :ref:`Transmit data using mosquitto_pub <daq-mqtt-bash>`.
+- MQTT: :ref:`Transmit data using "mosquitto_pub" <basic-mqtt-example>`.
 - HTTP: How to do :ref:`daq-curl` or :ref:`daq-httpie`.
 
-See also :ref:`MQTT sawtooth signal <sawtooth-mqtt>` and
-:ref:`HTTP sawtooth signal <sawtooth-http>` for transmitting a dynamic,
-slowly oscillating sawtooth signal for getting started with a simple
-periodic measurement example.
+.. seealso::
+
+    To simulate a simple periodic measurement,
+    see how to :ref:`send a sawtooth signal <sawtooth-signal>` for
+    transmitting a dynamic, slowly oscillating sawtooth signal.

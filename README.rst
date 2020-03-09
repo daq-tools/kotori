@@ -110,12 +110,13 @@ Data acquisition is easy, both MQTT and HTTP are supported.
 
 MQTT::
 
+    CHANNEL_BROKER=daq.example.org
     CHANNEL_TOPIC=amazonas/ecuador/cuyabeno/1/data.json
-    mosquitto_pub -t $CHANNEL_TOPIC -m '{"temperature": 42.84, "humidity": 83.1}'
+    mosquitto_pub -h $CHANNEL_BROKER -t $CHANNEL_TOPIC -m '{"temperature": 42.84, "humidity": 83.1}'
 
 HTTP::
 
-    CHANNEL_URI=http://localhost:24642/api/amazonas/ecuador/cuyabeno/1/data
+    CHANNEL_URI=https://daq.example.org/api/amazonas/ecuador/cuyabeno/1/data
     echo '{"temperature": 42.84, "humidity": 83.1}' | curl --request POST --header 'Content-Type: application/json' --data @- $CHANNEL_URI
 
 
