@@ -8,7 +8,7 @@ class MessageType:
     DATA_DISCRETE = 1
     DATA_CONTAINER = 2
     EVENT = 3
-    ERROR = 3
+    ERROR = 4
 
 
 class TopicPatterns:
