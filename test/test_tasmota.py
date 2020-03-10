@@ -11,12 +11,20 @@ from test.util import mqtt_sensor, sleep
 logger = logging.getLogger(__name__)
 
 
+tasmota_sensor_topic = 'mqttkit-1/itest/foo/bar/tele/SENSOR'
+tasmota_state_topic = 'mqttkit-1/itest/foo/bar/tele/STATE'
+
+
 @pytest_twisted.inlineCallbacks
 @pytest.mark.tasmota
 def test_tasmota_sonoff_sc(machinery, create_influxdb, reset_influxdb):
+    """
+    Publish a single SENSOR reading in Tasmota/JSON format
+    to MQTT broker, including a timestamp.
+    Proof that the reading is processed and stored correctly.
 
-    # https://getkotori.org/docs/handbook/decoders/tasmota.html#submit-example-payload
-    tasmota_topic = 'mqttkit-1/itest/foo/bar/tele/SENSOR'
+    https://getkotori.org/docs/handbook/decoders/tasmota.html#submit-example-payload
+    """
 
     # Submit a single measurement.
     data = {
@@ -30,7 +38,7 @@ def test_tasmota_sonoff_sc(machinery, create_influxdb, reset_influxdb):
       },
       "TempUnit": "C"
     }
-    yield mqtt_sensor(tasmota_topic, data)
+    yield mqtt_sensor(tasmota_sensor_topic, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY)
@@ -54,9 +62,13 @@ def test_tasmota_sonoff_sc(machinery, create_influxdb, reset_influxdb):
 @pytest_twisted.inlineCallbacks
 @pytest.mark.tasmota
 def test_tasmota_ds18b20(machinery, create_influxdb, reset_influxdb):
+    """
+    Publish another single SENSOR reading in Tasmota/JSON format
+    to MQTT broker, including a timestamp.
+    Proof that the reading is processed and stored correctly.
 
-    # https://getkotori.org/docs/handbook/decoders/tasmota.html#submit-example-payload
-    tasmota_topic = 'mqttkit-1/itest/foo/bar/tele/SENSOR'
+    https://getkotori.org/docs/handbook/decoders/tasmota.html#submit-example-payload
+    """
 
     # Submit a single measurement.
     data = {
@@ -65,7 +77,7 @@ def test_tasmota_ds18b20(machinery, create_influxdb, reset_influxdb):
         "Temperature": 20.6
       }
     }
-    yield mqtt_sensor(tasmota_topic, data)
+    yield mqtt_sensor(tasmota_sensor_topic, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY)
@@ -85,9 +97,13 @@ def test_tasmota_ds18b20(machinery, create_influxdb, reset_influxdb):
 @pytest_twisted.inlineCallbacks
 @pytest.mark.tasmota
 def test_tasmota_state(machinery, create_influxdb, reset_influxdb):
+    """
+    Publish a single STATE reading in Tasmota/JSON format
+    to MQTT broker, including a timestamp.
+    Proof that the reading is processed and stored correctly.
 
-    # https://getkotori.org/docs/handbook/decoders/tasmota.html#submit-example-payload
-    tasmota_topic = 'mqttkit-1/itest/foo/bar/tele/STATE'
+    https://getkotori.org/docs/handbook/decoders/tasmota.html#submit-example-payload
+    """
 
     # Submit a single measurement.
     data = {
@@ -107,7 +123,7 @@ def test_tasmota_state(machinery, create_influxdb, reset_influxdb):
         "Downtime": "0T00:00:07"
       }
     }
-    yield mqtt_sensor(tasmota_topic, data)
+    yield mqtt_sensor(tasmota_state_topic, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY)

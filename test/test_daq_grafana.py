@@ -15,8 +15,8 @@ logger = logging.getLogger(__name__)
 @pytest_twisted.inlineCallbacks
 def test_mqtt_to_grafana(machinery, create_influxdb, reset_influxdb, reset_grafana):
     """
-    Acquire a single reading from MQTT in JSON format and
-    proof it created a datasource and a dashboard in Grafana.
+    Publish single reading in JSON format to MQTT broker and proof
+    that a corresponding datasource and a dashboard was created in Grafana.
     """
 
     # Submit a single measurement, without timestamp.

@@ -3,6 +3,7 @@
 import logging
 
 import pytest_twisted
+from twisted.internet import threads
 
 from test.resources import settings, influx, PROCESS_DELAY
 from test.util import mqtt_sensor, sleep
@@ -13,7 +14,7 @@ logger = logging.getLogger(__name__)
 @pytest_twisted.inlineCallbacks
 def test_mqtt_to_influxdb(machinery, create_influxdb, reset_influxdb):
     """
-    Acquire a single reading from MQTT in JSON format
+    Publish single reading in JSON format to MQTT broker
     and proof it is stored in the InfluxDB database.
     """
 
@@ -22,7 +23,7 @@ def test_mqtt_to_influxdb(machinery, create_influxdb, reset_influxdb):
         'temperature': 42.84,
         'humidity': 83.1,
     }
-    yield mqtt_sensor(settings.mqtt_topic, data)
+    yield threads.deferToThread(mqtt_sensor, settings.mqtt_topic, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY)

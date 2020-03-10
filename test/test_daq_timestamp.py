@@ -11,6 +11,11 @@ logger = logging.getLogger(__name__)
 
 @pytest_twisted.inlineCallbacks
 def test_timestamp_rfc3339(machinery, create_influxdb, reset_influxdb):
+    """
+    Publish single reading in JSON format to MQTT broker,
+    using a timestamp in RFC3339 format.
+    Proof that the timestamp is processed and stored correctly.
+    """
 
     # Submit a single measurement, with timestamp.
     data = {
@@ -31,6 +36,11 @@ def test_timestamp_rfc3339(machinery, create_influxdb, reset_influxdb):
 
 @pytest_twisted.inlineCallbacks
 def test_timestamp_seconds(machinery, create_influxdb, reset_influxdb):
+    """
+    Publish single reading in JSON format to MQTT broker,
+    using a timestamp as Unix Epoch in seconds.
+    Proof that the timestamp is processed and stored correctly.
+    """
 
     # Submit a single measurement, with timestamp.
     data = {
@@ -51,6 +61,11 @@ def test_timestamp_seconds(machinery, create_influxdb, reset_influxdb):
 
 @pytest_twisted.inlineCallbacks
 def test_timestamp_milliseconds(machinery, create_influxdb, reset_influxdb):
+    """
+    Publish single reading in JSON format to MQTT broker,
+    using a timestamp as Unix Epoch in milliseconds.
+    Proof that the timestamp is processed and stored correctly.
+    """
 
     # Submit a single measurement, with timestamp.
     data = {
@@ -71,6 +86,11 @@ def test_timestamp_milliseconds(machinery, create_influxdb, reset_influxdb):
 
 @pytest_twisted.inlineCallbacks
 def test_timestamp_microseconds(machinery, create_influxdb, reset_influxdb):
+    """
+    Publish single reading in JSON format to MQTT broker,
+    using a timestamp as Unix Epoch in microseconds.
+    Proof that the timestamp is processed and stored correctly.
+    """
 
     # Submit a single measurement, with timestamp.
     data = {
@@ -91,6 +111,11 @@ def test_timestamp_microseconds(machinery, create_influxdb, reset_influxdb):
 
 @pytest_twisted.inlineCallbacks
 def test_timestamp_nanoseconds(machinery, create_influxdb, reset_influxdb):
+    """
+    Publish single reading in JSON format to MQTT broker,
+    using a timestamp as Unix Epoch in nanoseconds.
+    Proof that the timestamp is processed and stored correctly.
+    """
 
     # Submit a single measurement, with timestamp.
     data = {

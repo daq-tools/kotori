@@ -35,9 +35,9 @@ reset_grafana_hiveeyes = grafana.make_reset()
 @pytest.mark.hiveeyes
 def test_mqtt_to_grafana(machinery_hiveeyes, create_influxdb_hiveeyes, reset_influxdb_hiveeyes, reset_grafana_hiveeyes):
     """
-    Acquire a single reading from MQTT in JSON format and proof it
-    - is stored in the InfluxDB database.
-    - created a datasource and a dashboard in Grafana.
+    Publish a single reading in JSON format to MQTT and proof
+    - it is stored in the InfluxDB database.
+    - a corresponding datasource and dashboards have been created in Grafana.
     """
 
     # Submit a single measurement, without timestamp.
