@@ -3,6 +3,8 @@
 import os
 import json
 import logging
+import random
+import string
 
 import pytest
 import requests
@@ -162,3 +164,24 @@ def http_csv_sensor(topic, data):
     body += '## {}\n'.format(','.join(map(str, data.keys())))
     body += '{}\n'.format(','.join(map(str, data.values())))
     requests.post(uri, data=body, headers={'Content-Type': 'text/csv'})
+
+
+def http_get_data(topic, format='csv'):
+    uri = 'http://localhost:24642/api{topic}.{format}'.format(topic=topic, format=format)
+    logger.info('HTTP: Exporting data from {} using format "{}"'.format(uri, format))
+    return requests.get(uri).content
+
+
+def idgen(size=6, chars=string.ascii_uppercase + string.digits):
+    """
+    ========
+    Synopsis
+    ========
+    ```
+    >>> idgen()
+    'G5G74W'
+    ```
+
+    - https://stackoverflow.com/questions/2257441/random-string-generation-with-upper-case-letters-and-digits/2257449#2257449
+    """
+    return ''.join(random.choice(chars) for _ in range(size))

@@ -155,6 +155,7 @@ class InfluxDBAdapter(object):
 
         # Extract timestamp field from data
         chunk['time_precision'] = 'n'
+        # FIXME: Unify with ``kotori.io.protocol.http.data_acquisition()``.
         for time_field in ['time', 'Time', 'datetime', 'dateTime', 'timestamp']:
             if time_field in data:
 

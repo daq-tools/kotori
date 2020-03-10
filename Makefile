@@ -36,6 +36,7 @@ docs-virtualenv: setup-virtualenv3
 dev-virtualenv:
 	@test -e $(python) || `command -v virtualenv` --python=`command -v python` --no-site-packages --no-wheel $(venvpath)
 	@$(pip) install --upgrade --requirement requirements-dev.txt
+	@$(pip) install --upgrade --requirement requirements-test.txt
 	@$(pip) install --upgrade -e.[daq,daq_geospatial,export,firmware]
 
 

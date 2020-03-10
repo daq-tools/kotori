@@ -7,6 +7,7 @@ from kotori.daq.storage.influx import InfluxDBAdapter
 
 log = Logger()
 
+
 class DataFrameQuery(object):
     """
     Query InfluxDB, massage result and return as DataFrame.
@@ -24,8 +25,8 @@ class DataFrameQuery(object):
         # Get an InfluxDB adapter object
         # TODO: Pool these, keyed by database.
         influx = InfluxDBAdapter(
-            settings = self.settings.influxdb,
-            database = bucket.tdata.database)
+            settings=self.settings.influxdb,
+            database=bucket.tdata.database)
 
         # Get query expression from transformation dictionary
         expression = bucket.tdata.expression
@@ -64,6 +65,7 @@ def flatten(l):
 
     See also: https://stackoverflow.com/questions/21461140/flatten-an-irregular-list-of-lists-in-python-respecting-pandas-dataframes
     """
+    import pandas
     for el in l:
         if isinstance(el, collections.Iterable) and not isinstance(el, (basestring, pandas.DataFrame, types.DictionaryType)):
             for sub in flatten(el):

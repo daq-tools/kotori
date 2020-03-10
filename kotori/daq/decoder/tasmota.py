@@ -1,16 +1,31 @@
 # -*- coding: utf-8 -*-
-# (c) 2019 Andreas Motl <andreas@getkotori.org>
+# (c) 2019-2020 Andreas Motl <andreas@getkotori.org>
 import types
 from collections import OrderedDict
 
 
 class TasmotaDecoder:
+    """
+    Decode MQTT/JSON payloads in Tasmota format.
+
+    This decoder heuristically detects whether it is applicable by looking
+    at the MQTT topic suffix for the keywords "SENSOR" and "STATE".
+
+    Documentation
+    =============
+    - https://getkotori.org/docs/handbook/decoders/tasmota.html
+
+    Resources
+    =========
+    - https://github.com/arendst/tasmota
+    - https://github.com/arendst/tasmota/wiki/MQTT
+    - https://tasmota.github.io/docs/#/MQTT
+    """
 
     def __init__(self, topology):
         self.topology = topology
 
     def decode_message(self, message):
-        # Fixme: Currently ignores the "Time" field.
         if 'slot' in self.topology and self.topology.slot.endswith('SENSOR'):
             message = self.decode_sensor_message(message)
         if 'slot' in self.topology and self.topology.slot.endswith('STATE'):
@@ -40,11 +55,16 @@ class TasmotaDecoder:
 
         """
         data = OrderedDict()
+
+        # Transfer timestamp field.
+        if 'Time' in message:
+            data['Time'] = message['Time']
+
+        # Transfer measurement fields.
         for key, value in message.items():
             if isinstance(value, types.DictionaryType):
                 data.update(value)
-        if 'Time' in message:
-            data['Time'] = message['Time']
+
         return data
 
     def decode_state_message(self, message):

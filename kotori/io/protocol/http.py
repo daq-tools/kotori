@@ -370,8 +370,9 @@ class HttpChannelEndpoint(Resource):
                         data_lines.pop(0)
 
                     if header_line:
-                        # Streamline various differences for even more convenience
+                        # Streamline various differences for even more convenience.
                         header_line = header_line.replace(';', ',')
+                        # FIXME: Unify with ``kotori.daq.storage.influx.format_chunk()``.
                         date_fields = ['Date/Time', 'Date', 'Datum/Zeit', 'timestamp']
                         for date_field in date_fields:
                             header_line = header_line.replace(date_field, 'time')
