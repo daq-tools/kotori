@@ -37,3 +37,7 @@ or::
 
     make pytest
     make nosetest
+
+or run a specific test with maximum verbosity::
+
+    pytest test -k test_tasmota --verbose --log-level DEBUG --log-cli-level DEBUG --capture=no

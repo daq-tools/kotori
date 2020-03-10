@@ -3,7 +3,7 @@
 import logging
 import pytest_twisted
 
-from test.resources import influx, mqtt_topic, PROCESS_DELAY
+from test.resources import settings, influx, PROCESS_DELAY
 from test.util import mqtt_sensor, sleep
 
 logger = logging.getLogger(__name__)
@@ -18,7 +18,7 @@ def test_timestamp_rfc3339(machinery, create_influxdb, reset_influxdb):
         'humidity': 83.1,
         'timestamp': '2020-03-10 03:38:37.937059000+01:00'
     }
-    yield mqtt_sensor(mqtt_topic, data)
+    yield mqtt_sensor(settings.mqtt_topic, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY)
@@ -38,7 +38,7 @@ def test_timestamp_seconds(machinery, create_influxdb, reset_influxdb):
         'humidity': 83.1,
         'timestamp': 1583810982
     }
-    yield mqtt_sensor(mqtt_topic, data)
+    yield mqtt_sensor(settings.mqtt_topic, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY)
@@ -58,7 +58,7 @@ def test_timestamp_milliseconds(machinery, create_influxdb, reset_influxdb):
         'humidity': 83.1,
         'timestamp': 1583810982123
     }
-    yield mqtt_sensor(mqtt_topic, data)
+    yield mqtt_sensor(settings.mqtt_topic, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY)
@@ -78,7 +78,7 @@ def test_timestamp_microseconds(machinery, create_influxdb, reset_influxdb):
         'humidity': 83.1,
         'timestamp': 1583810982123456
     }
-    yield mqtt_sensor(mqtt_topic, data)
+    yield mqtt_sensor(settings.mqtt_topic, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY)
@@ -98,7 +98,7 @@ def test_timestamp_nanoseconds(machinery, create_influxdb, reset_influxdb):
         'humidity': 83.1,
         'timestamp': 1583810982123456789
     }
-    yield mqtt_sensor(mqtt_topic, data)
+    yield mqtt_sensor(settings.mqtt_topic, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY)

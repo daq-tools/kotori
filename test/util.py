@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 def boot_kotori():
     options = {
-        '--config': './etc/test-mqttkit.ini',
+        '--config': './etc/test/mqttkit.ini',
         '--debug': True,
         '--debug-mqtt': True,
     }

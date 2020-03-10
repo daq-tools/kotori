@@ -4,7 +4,7 @@ import logging
 
 import pytest_twisted
 
-from test.resources import influx, mqtt_topic, PROCESS_DELAY
+from test.resources import influx, PROCESS_DELAY
 from test.util import mqtt_sensor, sleep
 
 logger = logging.getLogger(__name__)
