@@ -1,16 +1,24 @@
-.. include:: ../../../_resources.rst
+.. include:: ../_resources.rst
 
 .. _json-homie:
 
-*****
+#####
 Homie
-*****
+#####
 .. highlight:: cpp
 
+
+************
+Introduction
+************
 Homie_ is an MQTT convention for the IoT. `homie-esp8266`_ is the corresponding ESP8266 framework implementation.
 This section tries to give a short introduction about how to publish
 telemetry data from a Homie-based firmware in JSON format to the MQTT bus.
 
+
+*******
+Details
+*******
 1. Use a configuration like::
 
     {
@@ -43,3 +51,9 @@ telemetry data from a Homie-based firmware in JSON format to the MQTT bus.
     This will make up the suffix part ``data/__json__`` of an
     appropriate recognized MQTT topic string.
 
+
+*****************
+Real applications
+*****************
+- The Homie_-based sensor node firmware for ESP8266, "`node-wifi-mqtt-homie.ino`_" of the `Hiveeyes project`_.
+  See also :ref:`json-homie` for more documentation.

@@ -1,10 +1,14 @@
-.. include:: ../_resources.rst
+.. include:: ../../_resources.rst
 
 .. _grafana-handbook:
 
-################
-Grafana Handbook
-################
+#######
+Grafana
+#######
+
+.. admonition:: Please note
+
+    This page is just a stub.
 
 
 *********************

@@ -1,4 +1,4 @@
-.. include:: ../../../_resources.rst
+.. include:: ../_resources.rst
 
 .. _daq-lua-nodemcu:
 
@@ -57,6 +57,11 @@ Synopsis
     wifi.start()
     wifi.sta.config({ssid=WIFI_SSID, pwd=WIFI_PASSWORD, auto=true}, true)
 
+    -- Define telemetry data.
+    data = {
+        temperature = 42.84,
+        humidity = 51.08,
+    }
 
     -- Create JSON payload.
     -- https://nodemcu.readthedocs.io/en/master/modules/sjson/
@@ -107,8 +112,7 @@ Synopsis
     headers = {
       ["Content-Type"] = "application/json",
     }
-    body = json
-    http.post(CHANNEL_URI, { headers = headers }, body,
+    http.post(CHANNEL_URI, { headers = headers }, json,
       function(code, data)
         if (code < 0) then
           print("HTTP request failed")

@@ -7,17 +7,17 @@ Unsorted links
 - https://pimatic.org/
 - http://www.freedomotic.com/
 
-- | Very Simple Control Protocol
-  | An open and free framework/protocol for IoT/m2m automation tasks
-  | http://www.vscp.org/
+- Very Simple Control Protocol
+  An open and free framework/protocol for IoT/m2m automation tasks
+  http://www.vscp.org/
 
-- | Gweet: Messaging for your things
-  | https://www.stavros.io/posts/messaging-for-your-things/
-  | https://github.com/skorokithakis/gweet
+- Gweet: Messaging for your things
+  https://www.stavros.io/posts/messaging-for-your-things/
+  https://github.com/skorokithakis/gweet
 
 - http://dweet.io/
-- | A Simple Python client for Dweet.io
-  | https://github.com/paddycarey/dweepy
+- A Simple Python client for Dweet.io
+  https://github.com/paddycarey/dweepy
 
 - http://buglabs.net/
 - https://freeboard.io/

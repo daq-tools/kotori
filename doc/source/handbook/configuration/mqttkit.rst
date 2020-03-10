@@ -1,4 +1,4 @@
-.. include:: ../_resources.rst
+.. include:: ../../_resources.rst
 
 .. _application-mqttkit:
 
@@ -61,10 +61,10 @@ Configuration
 *************
 .. highlight:: ini
 
-Take a look at :download:`etc/examples/mqttkit.ini <../_static/content/etc/examples/mqttkit.ini>`
+Take a look at :download:`etc/examples/mqttkit.ini <../../_static/content/etc/examples/mqttkit.ini>`
 as a configuration blueprint.
 
-.. literalinclude:: ../_static/content/etc/examples/mqttkit.ini
+.. literalinclude:: ../../_static/content/etc/examples/mqttkit.ini
     :language: ini
     :linenos:
     :lines: 1-16

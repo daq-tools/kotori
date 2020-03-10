@@ -1,4 +1,4 @@
-.. include:: ../../../_resources.rst
+.. include:: ../_resources.rst
 
 .. _daq-python:
 
@@ -6,11 +6,6 @@
 Python
 ######
 
-.. contents::
-   :local:
-   :depth: 1
-
-----
 
 .. _daq-python-mqtt:
 

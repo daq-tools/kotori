@@ -6,9 +6,9 @@
 Forwarding HTTP to InfluxDB
 ###########################
 
-*****
-Intro
-*****
+************
+Introduction
+************
 For enabling :ref:`data-export` via HTTP, just forward GET requests to
 InfluxDB and let the transformation machinery handle all the rest.
 

@@ -1,0 +1,41 @@
+#######
+Clients
+#######
+
+
+*********
+Libraries
+*********
+
+.. toctree::
+    :maxdepth: 1
+
+    mqtt
+    http
+
+
+*****************
+Framework support
+*****************
+
+.. toctree::
+    :maxdepth: 1
+
+    homie
+    Tasmota <../handbook/decoders/tasmota>
+
+
+*************
+Full examples
+*************
+
+.. toctree::
+    :maxdepth: 1
+
+    bash
+    arduino-esp8266
+    python
+    micropython
+    lua-nodemcu
+    javascript
+    php

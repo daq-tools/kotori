@@ -13,6 +13,7 @@
 
     about/index
     gallery/index
+    clients/index
     faq/index
     setup/index
     getting-started/index

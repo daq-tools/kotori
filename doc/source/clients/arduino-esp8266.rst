@@ -1,6 +1,7 @@
-.. include:: ../../../_resources.rst
+.. include:: ../_resources.rst
 
 .. _daq-arduino:
+.. _daq-arduino-esp8266:
 
 #####################
 C++ (Arduino/ESP8266)
@@ -114,5 +115,8 @@ Example
 *****************
 Real applications
 *****************
-- https://hiveeyes.org/docs/arduino/firmware/node-wifi-mqtt/README.html
-- https://git.cicer.de/autonome-zelle/autonome-zelle-sfwv
+- The ESP8266-based sensor node firmware `node-wifi-mqtt.ino`_ of the `Hiveeyes project`_, see
+  `Basic WiFi/MQTT sensor node <https://hiveeyes.org/docs/arduino/firmware/node-wifi-mqtt/README.html>`_.
+- Autonome Zelle - Solar-Feinstaub-Wetter-Vergleichsding
+    - https://git.cicer.de/autonome-zelle/autonome-zelle-sfwv
+    - https://community.hiveeyes.org/t/versuchsaufbau-autonome-zelle-solar-feinstaub-wetter-vergleichsding/1373

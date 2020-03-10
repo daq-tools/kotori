@@ -1,4 +1,4 @@
-.. include:: ../../../_resources.rst
+.. include:: ../_resources.rst
 
 .. _daq-micropython:
 
@@ -8,11 +8,6 @@ MicroPython
 
 .. highlight:: python
 
-.. contents::
-   :local:
-   :depth: 1
-
-----
 
 .. _daq-micropython-mqtt:
 
@@ -32,7 +27,7 @@ Synopsis
     import json
 
     # MicroPython MQTT library.
-    from mqtt import MQTTClient
+    from umqtt.simple import MQTTClient
 
     # Define data channel.
     channel_broker = "daq.example.org"

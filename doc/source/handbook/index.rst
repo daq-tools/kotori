@@ -8,17 +8,26 @@ Handbook
 ########
 
 
-********
-Overview
-********
+***
+API
+***
+.. toctree::
+    :maxdepth: 1
+
+    acquisition/index
+    export/index
+
+
+*************
+Configuration
+*************
 
 .. toctree::
     :maxdepth: 1
-    :glob:
 
     configuration/file
+    configuration/mqttkit
     configuration/application
-    mqttkit
     forwarders/index
     decoders/index
 
@@ -29,10 +38,7 @@ Usage
 
 .. toctree::
     :maxdepth: 1
-    :glob:
 
-    running
-    acquisition/index
-    export/index
-    grafana
-    influxdb
+    usage/kotori
+    usage/grafana
+    usage/influxdb

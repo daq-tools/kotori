@@ -112,25 +112,6 @@ Example::
 See also the whole list of :ref:`daq-timestamp-formats`.
 
 
-.. _daq-http-annotation:
-
-Annotations
-===========
-`Grafana Annotations`_ can be created through the HTTP interface at the ``/event`` endpoint.
-While arbitrary fields can be submitted, Grafana_ evaluates the fields ``title``, ``text`` and ``tags``.
-It is possible to use HTML inside the ``text`` field, for example to link this event to another web application.
-
-The synopsis is::
-
-    http POST http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/event title='Some event' text='<a href="https://somewhere.example.org/events?reference=482a38ce-791e-11e6-b152-7cd1c55000be">see also</a>' tags='event,alert,important' reference='482a38ce-791e-11e6-b152-7cd1c55000be'
-
-Annotations can also be submitted retroactively, just add a ``time`` field::
-
-    http POST http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/event time=2016-12-07T17:30:15.842428Z title='Some event in the past'
-
-See also the whole list of :ref:`daq-timestamp-formats`.
-
-
 .. _daq-http-csv:
 
 **********
@@ -209,20 +190,8 @@ Periodic acquisition example
 *****************
 Language bindings
 *****************
+See :ref:`http-libraries`.
 
-.. list-table:: List of Kotori HTTP clients
-   :widths: 10 40
-   :header-rows: 1
-   :class: table-generous
-
-   * - Name
-     - Description
-
-   * - Python
-     - See :ref:`transmit from Python <daq-python-http>` using the fine Requests_ http library.
-
-   * - PHP
-     - Visit :ref:`daq-php` for a library and and an example how to transmit telemetry data from PHP.
 
 
 ***************

@@ -7,7 +7,7 @@ in progress
 ===========
 
 Breaking changes
----------------
+----------------
 1. The updated :ref:`tasmota-decoder` introduces a breaking change as the
    database field names emitted by the decoder will change.
 

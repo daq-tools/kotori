@@ -1,8 +1,13 @@
 .. _influxdb-handbook:
 
-=================
-InfluxDB Handbook
-=================
+========
+InfluxDB
+========
+
+.. admonition:: Please note
+
+    This page is just a stub.
+
 
 - https://docs.influxdata.com/influxdb/v1.1/query_language/spec/
 

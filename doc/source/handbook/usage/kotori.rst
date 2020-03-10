@@ -1,10 +1,10 @@
-.. include:: ../_resources.rst
+.. include:: ../../_resources.rst
 
 .. _running-kotori:
 
-###################
-Running the service
-###################
+######
+Kotori
+######
 
 *****
 Intro

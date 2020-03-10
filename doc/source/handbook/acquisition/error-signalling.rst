@@ -3,9 +3,9 @@
 
 .. _error-signalling:
 
-################
-Error signalling
-################
+#####################
+MQTT error signalling
+#####################
 .. highlight:: bash
 
 
