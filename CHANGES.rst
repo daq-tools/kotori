@@ -48,7 +48,7 @@ Tests
 - Add tests for InfluxDB tag heuristics
 - Add test for publishing discrete values to MQTT
 - Add tests for publishing events using MQTT and HTTP
-
+- Add test covering telemetry from Homie
 
 
 .. _kotori-0.24.5:
