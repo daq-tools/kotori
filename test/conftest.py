@@ -22,7 +22,6 @@ def create_machinery(config, scope="package"):
     @pytest.fixture(scope=scope)
     def machinery():
 
-
         # Invoke the machinery.
         logger.info('Spinning up machinery')
 

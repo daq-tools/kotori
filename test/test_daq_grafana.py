@@ -7,7 +7,7 @@ import pytest_twisted
 from grafana_api_client import GrafanaClientError
 
 from test.resources import settings, grafana, PROCESS_DELAY
-from test.util import mqtt_sensor, sleep
+from test.util import mqtt_json_sensor, sleep
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ def test_mqtt_to_grafana(machinery, create_influxdb, reset_influxdb, reset_grafa
         'temperature': 42.84,
         'humidity': 83.1,
     }
-    yield mqtt_sensor(settings.mqtt_topic, data)
+    yield mqtt_json_sensor(settings.mqtt_topic_json, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY)

@@ -101,7 +101,7 @@ class InfluxWrapper:
 
         # One record.
         records = list(result[self.measurement])
-        assert len(records) == 1
+        assert len(records) >= 1
 
         # Check record.
         record = records[index]
@@ -137,9 +137,13 @@ def sleep(secs):
     return deferLater(reactor, secs, lambda: None)
 
 
-def mqtt_sensor(topic, data):
-    logger.info('MQTT: Submitting reading')
+def mqtt_json_sensor(topic, data):
     payload = json.dumps(data)
+    return mqtt_sensor(topic, payload)
+
+
+def mqtt_sensor(topic, payload):
+    logger.info('MQTT: Submitting reading')
     command = "mosquitto_pub -h localhost -t '{topic}' -m '{payload}'".format(topic=topic, payload=payload)
     logger.info('Running command {}'.format(command))
     os.system(command)

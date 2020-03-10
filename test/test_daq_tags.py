@@ -8,7 +8,7 @@ import pytest_twisted
 from twisted.internet import threads
 
 from test.resources import settings, influx, PROCESS_DELAY
-from test.util import mqtt_sensor, sleep, idgen
+from test.util import mqtt_json_sensor, sleep, idgen
 
 logger = logging.getLogger(__name__)
 
@@ -39,7 +39,7 @@ def test_influxdb_tags(machinery, create_influxdb, reset_influxdb):
     for field in tag_fields_more:
         data[field] = idgen()
 
-    yield threads.deferToThread(mqtt_sensor, settings.mqtt_topic, data)
+    yield threads.deferToThread(mqtt_json_sensor, settings.mqtt_topic_json, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY)

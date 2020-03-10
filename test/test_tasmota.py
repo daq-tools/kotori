@@ -6,7 +6,7 @@ import pytest
 import pytest_twisted
 
 from test.resources import influx, PROCESS_DELAY
-from test.util import mqtt_sensor, sleep
+from test.util import mqtt_json_sensor, sleep
 
 logger = logging.getLogger(__name__)
 
@@ -38,7 +38,7 @@ def test_tasmota_sonoff_sc(machinery, create_influxdb, reset_influxdb):
       },
       "TempUnit": "C"
     }
-    yield mqtt_sensor(tasmota_sensor_topic, data)
+    yield mqtt_json_sensor(tasmota_sensor_topic, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY)
@@ -77,7 +77,7 @@ def test_tasmota_ds18b20(machinery, create_influxdb, reset_influxdb):
         "Temperature": 20.6
       }
     }
-    yield mqtt_sensor(tasmota_sensor_topic, data)
+    yield mqtt_json_sensor(tasmota_sensor_topic, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY)
@@ -123,7 +123,7 @@ def test_tasmota_state(machinery, create_influxdb, reset_influxdb):
         "Downtime": "0T00:00:07"
       }
     }
-    yield mqtt_sensor(tasmota_state_topic, data)
+    yield mqtt_json_sensor(tasmota_state_topic, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY)
@@ -143,3 +143,6 @@ def test_tasmota_state(machinery, create_influxdb, reset_influxdb):
     record = influx.get_first_record()
     assert record == reference
     yield record
+
+
+# TODO: WEMOS
