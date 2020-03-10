@@ -1,0 +1,8 @@
+{
+  "Time": "2017-10-05T22:39:55",
+  "DHT22": {
+    "Temperature": 25.4,
+    "Humidity": 45
+  },
+  "TempUnit": "C"
+}

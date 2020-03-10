@@ -1,5 +1,6 @@
 .. include:: ../../_resources.rst
 
+.. _tasmota-decoder:
 .. _decoder-tasmota:
 
 ###############

@@ -1,0 +1,25 @@
+{
+  "Time": "2017-10-05T22:39:45",
+  "DS18x20": {
+    "DS1": {
+      "Type": "DS18B20",
+      "Address": "28FF4CBFA41604C4",
+      "Temperature": 25.37
+    },
+    "DS2": {
+      "Type": "DS18B20",
+      "Address": "28FF1E7FA116035D",
+      "Temperature": 30.44
+    },
+    "DS3": {
+      "Type": "DS18B20",
+      "Address": "28FF1597A41604CE",
+      "Temperature": 25.81
+    }
+  },
+  "DHT22": {
+    "Temperature": 33.2,
+    "Humidity": 30
+  },
+  "TempUnit": "C"
+}

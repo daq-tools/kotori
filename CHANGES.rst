@@ -6,6 +6,17 @@ Changelog
 in progress
 ===========
 
+Breaking changes
+---------------
+1. The updated :ref:`tasmota-decoder` introduces a breaking change as the
+   database field names emitted by the decoder will change.
+
+   For example, ``AirQuality`` will now be ``SonoffSC.AirQuality``,
+   ``Temperature`` might be called ``DS18B20.Temperature`` and so on.
+
+   We have been too lazy in the past. Sorry.
+
+
 Packaging
 ---------
 - Improve Docker image building
@@ -19,6 +30,7 @@ Documentation
 Features & Bugfixes
 -------------------
 - Honor "Time" field submitted by devices running Tasmota
+- Make Tasmota decoder grok double-nested payloads from Wemos devices
 - Fix logger
 
 Tests
@@ -33,6 +45,7 @@ Tests
 - Add tests for InfluxDB tag heuristics
 - Add test for publishing discrete values to MQTT
 - Add test for publishing events to MQTT
+
 
 
 .. _kotori-0.24.5:

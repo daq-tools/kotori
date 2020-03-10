@@ -2,6 +2,7 @@
 # (c) 2019-2020 Andreas Motl <andreas@getkotori.org>
 import types
 from collections import OrderedDict
+from copy import deepcopy
 
 
 class TasmotaDecoder:
@@ -34,24 +35,56 @@ class TasmotaDecoder:
 
     def decode_sensor_message(self, message):
         """
-        {
-          "Time": "2019-06-02T22:13:07",
-          "SonoffSC": {
-            "Temperature": 25,
-            "Humidity": 15,
-            "Light": 20,
-            "Noise": 10,
-            "AirQuality": 90
-          },
-          "TempUnit": "C"
-        }
+        SonoffSC::
 
-        {
-          "Time": "2017-02-16T10:13:52",
-          "DS18B20": {
-            "Temperature": 20.6
-          }
-        }
+            {
+              "Time": "2019-06-02T22:13:07",
+              "SonoffSC": {
+                "Temperature": 25,
+                "Humidity": 15,
+                "Light": 20,
+                "Noise": 10,
+                "AirQuality": 90
+              },
+              "TempUnit": "C"
+            }
+
+        Sonoff DS18B20::
+
+            {
+              "Time": "2017-02-16T10:13:52",
+              "DS18B20": {
+                "Temperature": 20.6
+              }
+            }
+
+        Wemos Multi::
+
+            {
+              "Time": "2017-10-05T22:39:45",
+              "DS18x20": {
+                "DS1": {
+                  "Type": "DS18B20",
+                  "Address": "28FF4CBFA41604C4",
+                  "Temperature": 25.37
+                },
+                "DS2": {
+                  "Type": "DS18B20",
+                  "Address": "28FF1E7FA116035D",
+                  "Temperature": 30.44
+                },
+                "DS3": {
+                  "Type": "DS18B20",
+                  "Address": "28FF1597A41604CE",
+                  "Temperature": 25.81
+                }
+              },
+              "DHT22": {
+                "Temperature": 33.2,
+                "Humidity": 30
+              },
+              "TempUnit": "C"
+            }
 
         """
         data = OrderedDict()
@@ -61,10 +94,28 @@ class TasmotaDecoder:
             data['Time'] = message['Time']
 
         # Transfer measurement fields.
+        path = []
         for key, value in message.items():
+            path.append(key)
             if isinstance(value, types.DictionaryType):
-                data.update(value)
+                for dkey, dvalue in value.items():
+                    path.append(dkey)
+                    if isinstance(dvalue, types.DictionaryType):
+                        if 'Type' in dvalue:
+                            subdata = deepcopy(dvalue)
+                            del subdata['Type']
+                            del subdata['Address']
+                            for dskey, dsvalue in subdata.items():
+                                path.append(dskey)
+                                effective_key = '.'.join(path)
+                                data[effective_key] = dsvalue
+                                path.pop()
+                    else:
+                        effective_key = '.'.join(path)
+                        data[effective_key] = dvalue
+                    path.pop()
 
+            path.pop()
         return data
 
     def decode_state_message(self, message):
