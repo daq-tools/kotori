@@ -1,9 +1,10 @@
 .. include:: ../_resources.rst
 
+.. _data-acquisition-in-a-nutshell:
 
-###################
-How to acquire data
-###################
+##############################
+Data acquisition in a nutshell
+##############################
 
 
 ********

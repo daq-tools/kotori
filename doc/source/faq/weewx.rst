@@ -1,5 +1,6 @@
 .. include:: ../_resources.rst
 
+.. _weewx-mqtt-faq:
 
 ############################################
 Ingesting weather data from WeeWX using MQTT

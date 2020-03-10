@@ -1,5 +1,6 @@
 .. include:: ../_resources.rst
 
+.. _grafana-vs-export:
 
 #######################
 Grafana vs. data export

@@ -26,6 +26,8 @@ Documentation
 -------------
 - Update documentation, now using "Material for Sphinx" theme
 - Add :ref:`kotori-faq` section
+- Add FAQ sections about :ref:`data-acquisition-in-a-nutshell`,
+  :ref:`grafana-vs-export` and :ref:`weewx-mqtt-faq`.
 - Add FAQ section about :ref:`processing-tags`
 
 Features & Bugfixes
