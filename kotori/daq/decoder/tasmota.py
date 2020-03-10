@@ -43,6 +43,8 @@ class TasmotaDecoder:
         for key, value in message.items():
             if isinstance(value, types.DictionaryType):
                 data.update(value)
+        if 'Time' in message:
+            data['Time'] = message['Time']
         return data
 
     def decode_state_message(self, message):
@@ -66,6 +68,7 @@ class TasmotaDecoder:
         }
         """
         data = OrderedDict()
+        data['Time'] = message.get('Time')
         data['Device.Vcc'] = message.get('Vcc')
         data['Device.Sleep'] = message.get('Sleep')
         data['Device.LoadAvg'] = message.get('LoadAvg')

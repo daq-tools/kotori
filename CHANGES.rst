@@ -11,6 +11,7 @@ in progress
 - Add InfluxDB integration tests
 - Add Grafana integration tests
 - Add tests covering all timestamp formats/units
+- Honor "Time" field submitted by devices running Tasmota
 
 
 .. _kotori-0.24.5:

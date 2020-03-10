@@ -157,16 +157,8 @@ Work in progress
 The development of this decoder has been sparked at `Add adapter for ingesting data from devices running Tasmota`_.
 We are happy to receive contributions of any kind.
 
-https://github.com/arendst/Tasmota/issues/975
-https://github.com/arendst/Tasmota/issues/1430
-
-.. note::
-
-    While the decoder implementation itself is reasonably complete and we
-    recommend it to use in your own setups, we want to notice you that
-    the "Time" field submitted inside the telemetry message payload will
-    not get honored yet - all data points will be written as of "now"
-    in server time.
+- https://github.com/arendst/Tasmota/issues/975
+- https://github.com/arendst/Tasmota/issues/1430
 
 
 Submit example payload
