@@ -63,13 +63,13 @@ def formatLogEvent(event, formatTime=formatTime):
 
     system = event.get("log_system", None)
 
-    if system is None:
-        level = event.get("log_level", None)
-        if level is None:
-            levelName = u"-"
-        else:
-            levelName = level.name
+    level = event.get("log_level", None)
+    if level is None:
+        levelName = u"-"
+    else:
+        levelName = level.name
 
+    if system is None:
         system = u"{namespace}".format(
             namespace=event.get("log_namespace", u"-"),
         )

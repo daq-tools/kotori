@@ -14,6 +14,7 @@ in progress
 - Honor "Time" field submitted by devices running Tasmota
 - Add tests covering the Tasmota decoder
 - Add test for vendor "hiveeyes"
+- Fix logger
 
 
 .. _kotori-0.24.5:
