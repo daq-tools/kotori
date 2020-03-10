@@ -16,6 +16,7 @@ in progress
 - Add test for vendor "hiveeyes"
 - Fix logger
 - Add MQTT/HTTP integration tests for HTTP data acquisition
+- Add tests for HTTP API export features
 
 
 .. _kotori-0.24.5:
