@@ -5,19 +5,33 @@ Changelog
 
 in progress
 ===========
+
+Packaging
+---------
 - Improve Docker image building
 - Add packaging for Ubuntu 18 Bionic Beaver
+
+Documentation
+-------------
 - Update documentation, now using "Material for Sphinx" theme
+- Add :ref:`kotori-faq` section
+
+Features & Bugfixes
+-------------------
+- Honor "Time" field submitted by devices running Tasmota
+- Fix logger
+
+Tests
+-----
 - Add MQTT/InfluxDB integration tests
 - Add MQTT/Grafana integration tests
 - Add tests covering all timestamp formats/units
-- Honor "Time" field submitted by devices running Tasmota
 - Add tests covering the Tasmota decoder
 - Add test for vendor "hiveeyes"
-- Fix logger
 - Add MQTT/HTTP integration tests for HTTP data acquisition
 - Add tests for HTTP API export features
 - Add tests for InfluxDB tag heuristics
+
 
 
 .. _kotori-0.24.5:
