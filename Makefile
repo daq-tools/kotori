@@ -22,12 +22,21 @@ $(eval pip3         := $(venv3)/bin/pip)
 $(eval python3      := $(venv3)/bin/python)
 $(eval sphinx       := $(venv3)/bin/sphinx-build)
 
+
 # Setup Python virtualenv
 setup-virtualenv:
 	@test -e $(python) || `command -v virtualenv` --python=python2 --no-site-packages $(venvpath)
 
 setup-virtualenv3:
 	@test -e $(python3) || `command -v virtualenv` --python=python3 --no-site-packages $(venv3)
+
+docs-virtualenv: setup-virtualenv3
+	@$(pip3) --quiet install --requirement requirements-docs.txt
+
+dev-virtualenv:
+	@test -e $(python) || `command -v virtualenv` --python=`command -v python` --no-site-packages --no-wheel $(venvpath)
+	@$(pip) install --upgrade --requirement requirements-dev.txt
+	@$(pip) install --upgrade -e.[daq,daq_geospatial,export,firmware]
 
 
 # =======
@@ -245,14 +254,6 @@ test-coverage:
 docs-html: docs-virtualenv
 	touch doc/source/index.rst
 	export SPHINXBUILD="`pwd`/$(sphinx)"; cd doc; make html
-
-docs-virtualenv: setup-virtualenv3
-	@$(pip3) --quiet install --requirement requirements-docs.txt
-
-dev-virtualenv:
-	@test -e $(python) || `command -v virtualenv` --python=`command -v python` --no-site-packages --no-wheel $(venvpath)
-	@$(pip) install --upgrade -e.[daq,daq_geospatial,export,firmware]
-	@$(pip) install --upgrade --requirement requirements-dev.txt
 
 
 # ==========================================

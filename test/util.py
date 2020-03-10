@@ -8,6 +8,7 @@ import pytest
 from influxdb import InfluxDBClient
 from influxdb.exceptions import InfluxDBClientError
 from pyinfluxql import Query
+from grafana_api_client import GrafanaClient
 from twisted.internet import threads, reactor
 from twisted.internet.task import deferLater
 
@@ -25,6 +26,19 @@ def boot_kotori():
     }
     loader = kotori.boot(options)
     return loader
+
+
+class GrafanaWrapper:
+
+    def __init__(self, username, password, database, measurement):
+        self.username = username
+        self.password = password
+        self.database = database
+        self.measurement = measurement
+        self.client = self.get_client()
+
+    def get_client(self):
+        return GrafanaClient((self.username, self.password), host='localhost', port=3000)
 
 
 class InfluxWrapper:
@@ -93,13 +107,9 @@ class InfluxWrapper:
         return reset_measurement
 
 
-
 def sleep(secs):
     # https://gist.github.com/jhorman/891717
     return deferLater(reactor, secs, lambda: None)
-
-
-
 
 
 def mqtt_sensor(topic, data):
