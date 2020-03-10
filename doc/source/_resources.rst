@@ -153,6 +153,7 @@
 
 .. Tasmota
 .. _Tasmota: https://github.com/arendst/Tasmota
+.. _Tasmota documentation: https://tasmota.github.io/docs/#/Home
 .. _Add adapter for ingesting data from devices running Tasmota: https://github.com/daq-tools/kotori/issues/10
 .. _Sonoff SC: https://www.itead.cc/wiki/Sonoff_SC
 .. _Sonoff SC (Product): https://www.itead.cc/sonoff-sc.html

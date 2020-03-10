@@ -2,21 +2,22 @@
 
 .. _decoder-tasmota:
 
-#######
-Tasmota
-#######
+###############
+Tasmota decoder
+###############
 
-.. contents::
-   :local:
-   :depth: 1
-
-----
 
 
 *****
 About
 *****
 Ingest telemetry data from devices running the Tasmota_ firmware using MQTT_.
+
+Tasmota_ is an alternative firmware for ESP8266-based devices
+like the iTead Sonoff. It features a web UI, rules and timers, OTA updates,
+custom device templates and sensor support. It can be controlled over
+MQTT, HTTP, Serial and KNX for integrations with smart home systems.
+See also the fine `Tasmota documentation`_.
 
 
 *******
@@ -70,15 +71,6 @@ Grafana Dashboard
 
     Grafana Dashboard for Sonoff SC environmental monitoring device
 
-
-
-********
-Firmware
-********
-Tasmota_ is an alternative firmware for ESP8266-based devices
-like the iTead Sonoff. It features a web UI, rules and timers, OTA updates,
-custom device templates and sensor support. It can be controlled over
-MQTT, HTTP, Serial and KNX for integrations with smart home systems.
 
 
 ************
@@ -148,21 +140,12 @@ Running this configuration will yield MQTT topics like::
     universe/milky-way/earth-one/node-42/tele/STATE
 
 
-***********
-Development
-***********
+****************
+Payload examples
+****************
 
-Work in progress
-================
-The development of this decoder has been sparked at `Add adapter for ingesting data from devices running Tasmota`_.
-We are happy to receive contributions of any kind.
-
-- https://github.com/arendst/Tasmota/issues/975
-- https://github.com/arendst/Tasmota/issues/1430
-
-
-Submit example payload
-======================
+Submit
+======
 Acquire an example HTTP payload message of type ``SENSOR`` and publish it to MQTT broker on ``localhost``::
 
     http https://raw.githubusercontent.com/daq-tools/kotori/master/doc/source/handbook/decoders/tasmota/sensor-payload.json \
@@ -174,12 +157,8 @@ Acquire an example HTTP payload message of type ``STATE`` and publish it to MQTT
         | mosquitto_pub -h localhost -t universe/milky-way/earth-one/node-42/tele/STATE -s
 
 
-********
-Appendix
-********
-
-Payload examples
-================
+Gallery
+=======
 
 ``sonoffSC/tele/SENSOR``
 ------------------------
@@ -227,3 +206,13 @@ Payload examples
         "Downtime": "0T00:00:07"
       }
     }
+
+
+*********
+Resources
+*********
+Some resources from development.
+
+- `Add adapter for ingesting data from devices running Tasmota`_
+- https://github.com/arendst/Tasmota/issues/975
+- https://github.com/arendst/Tasmota/issues/1430
