@@ -26,6 +26,7 @@ Documentation
 -------------
 - Update documentation, now using "Material for Sphinx" theme
 - Add :ref:`kotori-faq` section
+- Add FAQ section about :ref:`processing-tags`
 
 Features & Bugfixes
 -------------------

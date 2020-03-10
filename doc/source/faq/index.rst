@@ -11,6 +11,6 @@ FAQ
 
     acquisition
     grafana-vs-export
-    ingesting-tags
+    processing-tags
     payload-format
     weewx
