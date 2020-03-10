@@ -10,7 +10,7 @@
 # Configuration
 # -------------
 
-$(eval venvpath     := .venv_util)
+$(eval venvpath     := .venv2)
 $(eval pip          := $(venvpath)/bin/pip)
 $(eval python       := $(venvpath)/bin/python)
 $(eval pytest       := $(venvpath)/bin/pytest)
@@ -218,15 +218,26 @@ check-bump-options:
 # Miscellaneous tools:
 # Software tests, Documentation builder, Virtual environment builder
 #
-test: dev-virtualenv
+
+.PHONY: test
+pytest:
+
+	# Run pytest.
+	$(venvpath)/bin/pytest kotori test --verbose --log-level DEBUG --log-cli-level DEBUG --log-format='%(asctime)-15s [%(name)-35s] %(levelname)-8s: %(message)s' --log-date-format='%Y-%m-%dT%H:%M:%S%z'
+
+nosetest:
+
+	# Run nosetest.
 	@# https://nose.readthedocs.org/en/latest/plugins/doctests.html
 	@# https://nose.readthedocs.org/en/latest/plugins/cover.html
-	@#export NOSE_IGNORE_FILES="c\.py";
-	nosetests --with-doctest --doctest-tests --doctest-extension=rst --verbose \
+	export NOSE_IGNORE_FILES="test_.*\.py"; \
+	$(venvpath)/bin/nosetests --with-doctest --doctest-tests --doctest-extension=rst --verbose \
 		kotori/*.py kotori/daq/{application,graphing,services,storage} kotori/daq/intercom/{mqtt/paho.py,strategies.py,udp.py,wamp.py} kotori/firmware kotori/io kotori/vendor/hiveeyes
 
-test-coverage: dev-virtualenv
-	nosetests \
+test: pytest nosetest
+
+test-coverage:
+	$(venvpath)/bin/nosetests \
 		--with-doctest --doctest-tests --doctest-extension=rst \
 		--with-coverage --cover-package=kotori --cover-tests \
 		--cover-html --cover-html-dir=coverage/html --cover-xml --cover-xml-file=coverage/coverage.xml
@@ -240,7 +251,8 @@ docs-virtualenv: setup-virtualenv3
 
 dev-virtualenv:
 	@test -e $(python) || `command -v virtualenv` --python=`command -v python` --no-site-packages --no-wheel $(venvpath)
-	@$(pip) install --requirement requirements-dev.txt
+	@$(pip) install --upgrade -e.[daq,daq_geospatial,export,firmware]
+	@$(pip) install --upgrade --requirement requirements-dev.txt
 
 
 # ==========================================

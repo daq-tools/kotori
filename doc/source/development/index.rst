@@ -9,6 +9,7 @@ Development
     :maxdepth: 1
 
     ../setup/sandbox
+    tests
     releasing/index
 
 

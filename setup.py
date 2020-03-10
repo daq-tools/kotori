@@ -33,13 +33,14 @@ requires = requires_core + [
     'python-dateutil>=2.6.0',       # 2.7.0
     'arrow==0.10.0',                # 0.12.1
     'funcy==1.7.2',                 # 1.10.1
-    'attrs==18.2.0',
+    'attrs==19.2.0',
 
     # Bus adapters
     #'twisted-mqtt==0.1.4',         # 0.2.1
     'paho-mqtt==1.2',               # 1.4.0
     'autobahn[twisted]==0.13.0',    # 18.3.1
     'msgpack-python==0.4.7',        # 0.5.6
+    'PyTrie==0.3.1',
 
     # Misc
     #'setuptools==40.8.0',

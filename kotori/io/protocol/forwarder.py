@@ -14,6 +14,7 @@ from kotori.io.protocol.target import ForwarderTargetService
 
 log = Logger()
 
+
 class ProtocolForwarderApplication(RootService):
     """
     Application service container root object

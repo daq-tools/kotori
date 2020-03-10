@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2016-2017 Andreas Motl <andreas@getkotori.org>
 import types
-import pandas
 import collections
 from twisted.logger import Logger
 from kotori.daq.storage.influx import InfluxDBAdapter
@@ -50,6 +49,7 @@ class DataFrameQuery(object):
             columns.insert(0, 'time')
 
         # Make pandas DataFrame from database results
+        import pandas
         df = pandas.DataFrame(entries, columns=columns)
 
         # Convert "time" column to datetime format

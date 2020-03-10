@@ -1,4 +1,7 @@
+pytest==4.6.9
+pytest-twisted==1.12
 nose==1.3.7
 #nose-exclude==0.4.1
 coverage==4.0.1
 Fabric==1.11.1
+-e git://github.com/jjmalina/pyinfluxql.git@d92db4ab8c#egg=pyinfluxql

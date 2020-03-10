@@ -52,14 +52,18 @@ Options:
 
 log = Logger()
 
-def run():
+
+def boot(options=None):
+
+    options = options or {}
+    options.setdefault('--debug', False)
+    options.setdefault('--debug_mqtt', False)
+    options.setdefault('--debug_mqtt_driver', False)
+    options.setdefault('--debug_io', False)
+    options.setdefault('--debug_influx', False)
 
     setup_logging()
     log.info(u'Starting ' + APP_NAME)
-
-    # Read commandline options
-    # TODO: Do it the Twisted way
-    options = docopt(__doc__, version=APP_NAME)
 
     # Read settings from configuration file
     configfile = get_configuration_file(options['--config'])
@@ -90,6 +94,18 @@ def run():
     # Boot web configuration GUI
     if 'config-web' in settings:
         boot_frontend(settings, debug=settings.options.debug)
+
+    return loader
+
+
+def run():
+
+    # Read commandline options
+    # TODO: Do it the Twisted way
+    options = docopt(__doc__, version=APP_NAME)
+
+    # Bootstrap the service.
+    boot(options)
 
     # Enter Twisted reactor loop
     reactor.run()

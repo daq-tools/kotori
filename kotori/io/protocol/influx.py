@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 # (c) 2016-2017 Andreas Motl <andreas@getkotori.org>
 import arrow
-import pandas
 from arrow.parser import DateTimeParser
 from datetime import datetime, timedelta
-from pyinfluxql import Query
-from pyinfluxql.functions import Mean
 from twisted.logger import Logger
 from kotori.io.protocol.util import is_number
 from kotori.util.common import tdelta
 
 log = Logger()
+
 
 class QueryTransformer(object):
 
@@ -20,6 +18,9 @@ class QueryTransformer(object):
         Compute InfluxDB query expression from data in transformation dictionary.
         Also compute date range from query parameters "from" and "to".
         """
+
+        from pyinfluxql import Query
+        from pyinfluxql.functions import Mean
 
         measurement = data.measurement
 
@@ -99,6 +100,7 @@ def compute_daterange(raw_begin, raw_end):
         time_end += offset_endofday
 
     return time_begin, time_end
+
 
 def grok_datetime(dstring):
     more_formats = ['YYYYMMDDTHHmmss', 'YYYYMMDDTHHmmssZ', 'YYYYMMDD']
