@@ -10,6 +10,7 @@ in progress
 - Update documentation, now using "Material for Sphinx" theme
 - Add InfluxDB integration tests
 - Add Grafana integration tests
+- Add tests covering all timestamp formats/units
 
 
 .. _kotori-0.24.5:
