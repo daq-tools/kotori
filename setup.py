@@ -190,7 +190,7 @@ setup(name='kotori',
         "Operating System :: MacOS"
         ],
       author='Andreas Motl',
-      author_email='andreas@getkotori.org',
+      author_email='andreas.motl@getkotori.org',
       url='https://github.com/daq-tools/kotori',
       keywords='data acquisition graphing export plotting daq routing engine ' +
                'mqtt http rest amqp wamp sql web html csv json cdf hdf5 png ' +

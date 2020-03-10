@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2016-2018 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2016-2018 Andreas Motl <andreas.motl@getkotori.org>
 # https://pypi.python.org/pypi/paho-mqtt/
 from __future__ import absolute_import
 import os

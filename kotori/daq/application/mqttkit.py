@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2015-2016 Andreas Motl <andreas.motl@getkotori.org>
 from bunch import Bunch
 from twisted.logger import Logger
 from kotori.daq.services import RootService

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2014-2019 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2014-2020 Andreas Motl <andreas.motl@getkotori.org>
 
 # ============
 # Main targets
@@ -24,7 +24,7 @@ $(eval sphinx       := $(venv3)/bin/sphinx-build)
 
 
 # Setup Python virtualenv
-setup-virtualenv:
+setup-virtualenv2:
 	@test -e $(python) || `command -v virtualenv` --python=python2 --no-site-packages $(venvpath)
 
 setup-virtualenv3:
@@ -33,8 +33,7 @@ setup-virtualenv3:
 docs-virtualenv: setup-virtualenv3
 	@$(pip3) --quiet install --requirement requirements-docs.txt
 
-dev-virtualenv:
-	@test -e $(python) || `command -v virtualenv` --python=`command -v python` --no-site-packages --no-wheel $(venvpath)
+dev-virtualenv: setup-virtualenv2
 	@$(pip) install --upgrade --requirement requirements-dev.txt
 	@$(pip) install --upgrade --requirement requirements-test.txt
 	@$(pip) install --upgrade -e.[daq,daq_geospatial,export,firmware]
@@ -209,7 +208,7 @@ sdist:
 pypi-upload: install-releasetools
 	twine upload --skip-existing --verbose dist/*.tar.gz
 
-install-releasetools: setup-virtualenv
+install-releasetools: setup-virtualenv2
 	@$(pip) install --quiet --requirement requirements-release.txt --upgrade
 
 

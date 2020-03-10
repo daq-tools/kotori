@@ -1,6 +1,6 @@
 <?php
 // -*- coding: utf-8 -*-
-// (c) 2016-2019 Andreas Motl , Elmyra UG <andreas.motl@elmyra.de>
+// (c) 2016-2019 Andreas Motl <andreas.motl@getkotori.org>
 /*
 ========================================
 Kotori telemetry client for PHP5 to PHP7

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2018 Andreas Motl <andreas@getkotori.org>
+# (c) 2018 Andreas Motl <andreas.motl@getkotori.org>
 from __future__ import absolute_import
 from twisted.logger import Logger
 from twisted.internet.task import LoopingCall

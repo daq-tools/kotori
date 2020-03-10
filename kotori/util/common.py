@@ -44,7 +44,7 @@ class ConfigStoreShelve(dict):
     def __init__(self):
         if not ConfigStore.store:
             print "ConfigStoreShelve.__init__"
-            self.app_data_dir = user_data_dir('kotori', 'elmyra')
+            self.app_data_dir = user_data_dir('kotori', 'daqzilla')
             if not os.path.exists(self.app_data_dir):
                 os.makedirs(self.app_data_dir)
             self.config_file = os.path.join(self.app_data_dir, 'config')
@@ -70,7 +70,7 @@ class ConfigStoreJson(dict):
     def __init__(self):
         if not ConfigStoreJson.store:
             #print "ConfigStoreJson.__init__"
-            self.app_data_dir = user_data_dir('kotori-daq', 'Elmyra')
+            self.app_data_dir = user_data_dir('kotori', 'daqzilla')
             logger.debug("ConfigStoreJson app_data_dir: {}".format(self.app_data_dir))
             if not os.path.exists(self.app_data_dir):
                 os.makedirs(self.app_data_dir)

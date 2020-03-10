@@ -16,6 +16,18 @@ Backlog
 
 
 ****
+2020
+****
+
+
+2020-03-10
+==========
+- Tests: Bulk upload via CSV.
+- Tests: Time filtering and more for HTTP API export.
+- New: Bulk upload via InfluxDB line protocol.
+
+
+****
 2019
 ****
 
