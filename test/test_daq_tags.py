@@ -56,11 +56,11 @@ def test_influxdb_tags(machinery, create_influxdb, reset_influxdb):
     yield record
 
     # Proof that data all special fields have been converged to tags.
-    resultset = influx.client.query('SHOW TAG KEYS FROM {measurement};'.format(measurement=settings.influx_measurement))
+    resultset = influx.client.query('SHOW TAG KEYS FROM {measurement};'.format(measurement=settings.influx_measurement_sensors))
     yield resultset
 
     tag_names = []
-    for item in resultset[settings.influx_measurement]:
+    for item in resultset[settings.influx_measurement_sensors]:
         tag_names.append(item['tagKey'])
 
     assert set(tag_names) == set(tag_fields_main + tag_fields_more)

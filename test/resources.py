@@ -10,16 +10,20 @@ class TestSettings:
 
     # InfluxDB settings.
     influx_database = 'mqttkit_1_itest'
-    influx_measurement = 'foo_bar_sensors'
+    influx_measurement_sensors = 'foo_bar_sensors'
+    influx_measurement_events = 'foo_bar_events'
 
     # Grafana settings.
     grafana_username = 'admin'
     grafana_password = 'admin'
     grafana_dashboards = ['mqttkit-1-itest']
 
-    # Channel settings.
-    mqtt_topic_json = 'mqttkit-1/itest/foo/bar/data.json'
+    # MQTT channel settings.
     mqtt_topic_single = 'mqttkit-1/itest/foo/bar/data'
+    mqtt_topic_json   = 'mqttkit-1/itest/foo/bar/data.json'
+    mqtt_topic_event  = 'mqttkit-1/itest/foo/bar/event.json'
+
+    # HTTP channel settings.
     channel_path = '/mqttkit-1/itest/foo/bar/data'
 
     def __init__(self):
@@ -28,5 +32,6 @@ class TestSettings:
 
 settings = TestSettings()
 
-influx = InfluxWrapper(database=settings.influx_database, measurement=settings.influx_measurement)
+influx = InfluxWrapper(database=settings.influx_database, measurement=settings.influx_measurement_sensors)
+influx_events = InfluxWrapper(database=settings.influx_database, measurement=settings.influx_measurement_events)
 grafana = GrafanaWrapper(settings=settings)

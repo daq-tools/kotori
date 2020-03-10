@@ -90,9 +90,6 @@ class InfluxWrapper:
         result = influx_client.query(expression)
         return result
 
-    def get_first_record(self):
-        return self.get_record(index=0)
-
     def get_record(self, index=None):
         result = self.query()
 
@@ -107,6 +104,9 @@ class InfluxWrapper:
         record = records[index]
 
         return record
+
+    def get_first_record(self):
+        return self.get_record(index=0)
 
     def make_create_db(self):
         @pytest.fixture(scope="package")
