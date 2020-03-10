@@ -12,6 +12,7 @@ in progress
 - Add Grafana integration tests
 - Add tests covering all timestamp formats/units
 - Honor "Time" field submitted by devices running Tasmota
+- Add tests covering the Tasmota decoder
 
 
 .. _kotori-0.24.5:
