@@ -10,6 +10,7 @@ settings = Bunch(
     influx_database='mqttkit_1_itest',
     influx_measurement='foo_bar_sensors',
     mqtt_topic='mqttkit-1/itest/foo/bar/data.json',
+    channel_path='/mqttkit-1/itest/foo/bar/data',
     grafana_username='admin',
     grafana_password='admin',
     grafana_dashboards=['mqttkit-1-itest'],

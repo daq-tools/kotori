@@ -5,6 +5,7 @@ import json
 import logging
 
 import pytest
+import requests
 from influxdb import InfluxDBClient
 from influxdb.exceptions import InfluxDBClientError
 from pyinfluxql import Query
@@ -135,8 +136,29 @@ def sleep(secs):
 
 
 def mqtt_sensor(topic, data):
-    logger.info('MQTT: Submitting measurement')
+    logger.info('MQTT: Submitting reading')
     payload = json.dumps(data)
     command = "mosquitto_pub -h localhost -t '{topic}' -m '{payload}'".format(topic=topic, payload=payload)
     logger.info('Running command {}'.format(command))
     os.system(command)
+
+
+def http_json_sensor(topic, data):
+    uri = 'http://localhost:24642/api{}'.format(topic)
+    logger.info('HTTP: Submitting reading to {} using JSON'.format(uri))
+    requests.post(uri, json=data)
+
+
+def http_form_sensor(topic, data):
+    uri = 'http://localhost:24642/api{}'.format(topic)
+    logger.info('HTTP: Submitting reading to {} using x-www-form-urlencoded'.format(uri))
+    requests.post(uri, data=data)
+
+
+def http_csv_sensor(topic, data):
+    uri = 'http://localhost:24642/api{}'.format(topic)
+    logger.info('HTTP: Submitting reading to {} using CSV'.format(uri))
+    body = ''
+    body += '## {}\n'.format(','.join(map(str, data.keys())))
+    body += '{}\n'.format(','.join(map(str, data.values())))
+    requests.post(uri, data=body, headers={'Content-Type': 'text/csv'})

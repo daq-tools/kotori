@@ -49,9 +49,19 @@ Setup Grafana Map Panel::
     docker restart grafana
 
 
+Run MongoDB::
+
+    docker run \
+        --name=mongodb \
+        --detach=true \
+        --publish 27017:27017 \
+        --volume="$(pwd)/var/lib/mongodb":/var/lib/mongodb \
+        mongo:4.2.3
+
+
 After provisioning, these instances can be spinned up again by invoking::
 
-    docker start mosquitto influxdb grafana
+    docker start mosquitto influxdb grafana mongodb
 
 
 ******
@@ -71,6 +81,7 @@ Invoke Kotori container linked to the other containers::
         --link mosquitto:mosquitto \
         --link influxdb:influxdb \
         --link grafana:grafana \
+        --link mongodb:mongodb \
         -it --rm daqzilla/kotori \
         kotori --config /etc/kotori/docker-mqttkit.ini
 

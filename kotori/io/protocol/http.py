@@ -131,7 +131,7 @@ class HttpChannelContainer(Resource):
         """
         log.info('Connecting to Metadata storage database')
 
-        # TODO: Make MongoDB address configurable
+        # FIXME: Make MongoDB address configurable!
         mongodb_uri = "mongodb://localhost:27017"
         try:
             self.metastore = pymongo.MongoClient(host='localhost', port=27017, socketTimeoutMS=5000, connectTimeoutMS=5000)
