@@ -17,6 +17,7 @@ in progress
 - Fix logger
 - Add MQTT/HTTP integration tests for HTTP data acquisition
 - Add tests for HTTP API export features
+- Add tests for InfluxDB tag heuristics
 
 
 .. _kotori-0.24.5:
