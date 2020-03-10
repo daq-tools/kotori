@@ -8,7 +8,7 @@ import pytest
 from influxdb import InfluxDBClient
 from influxdb.exceptions import InfluxDBClientError
 from pyinfluxql import Query
-from grafana_api_client import GrafanaClient
+from grafana_api_client import GrafanaClient, GrafanaClientError
 from twisted.internet import threads, reactor
 from twisted.internet.task import deferLater
 
@@ -18,9 +18,9 @@ import kotori
 logger = logging.getLogger(__name__)
 
 
-def boot_kotori():
+def boot_kotori(config):
     options = {
-        '--config': './etc/test/mqttkit.ini',
+        '--config': config,
         '--debug': True,
         '--debug-mqtt': True,
     }
@@ -30,15 +30,37 @@ def boot_kotori():
 
 class GrafanaWrapper:
 
-    def __init__(self, username, password, database, measurement):
-        self.username = username
-        self.password = password
-        self.database = database
-        self.measurement = measurement
+    def __init__(self, settings):
+        self.settings = settings
         self.client = self.get_client()
 
     def get_client(self):
-        return GrafanaClient((self.username, self.password), host='localhost', port=3000)
+        return GrafanaClient((self.settings.grafana_username, self.settings.grafana_password), host='localhost', port=3000)
+
+    def make_reset(self):
+
+        @pytest.fixture(scope="function")
+        def reset_grafana():
+            """
+            Fixture to delete the Grafana datasource and dashboard.
+            """
+
+            logger.info('Grafana: Resetting artefacts')
+
+            for datasource in self.client.datasources.get():
+                if datasource['name'] == self.settings.influx_database:
+                    datasource_id = datasource['id']
+                    self.client.datasources[datasource_id].delete()
+                    break
+
+            for dashboard_name in self.settings.grafana_dashboards:
+                try:
+                    self.client.dashboards.db[dashboard_name].delete()
+                except GrafanaClientError as ex:
+                    if '404' not in ex.message:
+                        raise
+
+        return reset_grafana
 
 
 class InfluxWrapper:

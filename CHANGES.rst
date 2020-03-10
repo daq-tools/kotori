@@ -13,6 +13,7 @@ in progress
 - Add tests covering all timestamp formats/units
 - Honor "Time" field submitted by devices running Tasmota
 - Add tests covering the Tasmota decoder
+- Add test for vendor "hiveeyes"
 
 
 .. _kotori-0.24.5:

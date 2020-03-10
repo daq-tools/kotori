@@ -38,6 +38,12 @@ or::
     make pytest
     make nosetest
 
-or run a specific test with maximum verbosity::
+or run specific tests with maximum verbosity::
 
-    pytest test -k test_tasmota --verbose --log-level DEBUG --log-cli-level DEBUG --capture=no
+    export PYTEST_OPTIONS="--verbose --log-level DEBUG --log-cli-level DEBUG --capture=no"
+
+    # Run all tests starting with "test_tasmota".
+    pytest test ${PYTEST_OPTIONS} -k test_tasmota
+
+    # Run all tests marked with "hiveeyes".
+    pytest test ${PYTEST_OPTIONS} -m hiveeyes

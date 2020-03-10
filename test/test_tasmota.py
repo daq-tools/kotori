@@ -2,6 +2,7 @@
 # (c) 2020 Andreas Motl <andreas@getkotori.org>
 import logging
 
+import pytest
 import pytest_twisted
 
 from test.resources import influx, PROCESS_DELAY
@@ -11,6 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 @pytest_twisted.inlineCallbacks
+@pytest.mark.tasmota
 def test_tasmota_sonoff_sc(machinery, create_influxdb, reset_influxdb):
 
     # https://getkotori.org/docs/handbook/decoders/tasmota.html#submit-example-payload
@@ -50,6 +52,7 @@ def test_tasmota_sonoff_sc(machinery, create_influxdb, reset_influxdb):
 
 
 @pytest_twisted.inlineCallbacks
+@pytest.mark.tasmota
 def test_tasmota_ds18b20(machinery, create_influxdb, reset_influxdb):
 
     # https://getkotori.org/docs/handbook/decoders/tasmota.html#submit-example-payload
@@ -80,6 +83,7 @@ def test_tasmota_ds18b20(machinery, create_influxdb, reset_influxdb):
 
 
 @pytest_twisted.inlineCallbacks
+@pytest.mark.tasmota
 def test_tasmota_state(machinery, create_influxdb, reset_influxdb):
 
     # https://getkotori.org/docs/handbook/decoders/tasmota.html#submit-example-payload

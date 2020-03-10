@@ -12,9 +12,8 @@ settings = Bunch(
     mqtt_topic='mqttkit-1/itest/foo/bar/data.json',
     grafana_username='admin',
     grafana_password='admin',
-    grafana_dashboard='mqttkit-1-itest',
+    grafana_dashboards=['mqttkit-1-itest'],
 )
 
 influx = InfluxWrapper(database=settings.influx_database, measurement=settings.influx_measurement)
-grafana = GrafanaWrapper(username=settings.grafana_username, password=settings.grafana_password,
-                         database=settings.influx_database, measurement=settings.influx_measurement)
+grafana = GrafanaWrapper(settings=settings)
