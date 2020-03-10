@@ -3,10 +3,11 @@
 
 .. _kotori-applications:
 .. _kotori-examples:
+.. _kotori-gallery:
 
-########
-Examples
-########
+#######
+Gallery
+#######
 
 Some example scenarios where the system has been and is used for data acquisition and -visualization.
 
@@ -52,7 +53,7 @@ Open Hive
 
     .. container:: btn-outline text-x-large
 
-        :ref:`Read all about it... <vendor-openhive>`
+        :ref:`Read more... <vendor-openhive>`
 
 .. container:: pull-right
 
@@ -81,7 +82,7 @@ Hiveeyes
 
     .. container:: btn-outline text-x-large
 
-        :ref:`Read all about it... <vendor-hiveeyes>`
+        :ref:`Read more... <vendor-hiveeyes>`
 
 .. container:: pull-right
 
@@ -123,7 +124,7 @@ luftdaten.info
 
         .. cssclass:: btn-outline text-x-large display-inline
 
-            :ref:`Continue reading... <vendor-luftdaten.info>`
+            :ref:`Read more... <vendor-luftdaten.info>`
 
         .. cssclass:: btn-outline text-x-large display-inline
 
@@ -151,7 +152,7 @@ WeeWX
 
     .. container:: btn-outline text-x-large
 
-        :ref:`Enjoy reading... <vendor-weewx>`
+        :ref:`Read more... <vendor-weewx>`
 
 .. container:: pull-right
 
@@ -186,7 +187,7 @@ LST Mbed Binary
 
     .. container:: btn-outline text-x-large
 
-        :ref:`Read what it's all about... <vendor-lst>`
+        :ref:`Read more... <vendor-lst>`
 
 |clearfix|
 

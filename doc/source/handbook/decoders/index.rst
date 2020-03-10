@@ -3,9 +3,9 @@
 
 .. _kotori-decoders:
 
-########
-Decoders
-########
+################
+Channel decoders
+################
 
 Decoders will know about device- or platform-specific payload formats
 and will decode telemetry messages appropriately.

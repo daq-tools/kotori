@@ -266,6 +266,5 @@ Agenda
 .. _code for germany: https://codefor.de/
 .. _open knowledge foundation: https://okfn.de/
 .. _Source - theguardian.com 2017: https://www.theguardian.com/cities/2017/mar/02/stuttgart-residents-sue-mayor-bodily-harm-air-pollution
-.. _Kotori: https://getkotori.org
 .. _luftdaten.info API: https://api.luftdaten.info/static/v1/data.json
 .. _feinstaub-api: https://github.com/opendata-stuttgart/feinstaub-api

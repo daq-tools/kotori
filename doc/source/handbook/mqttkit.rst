@@ -2,23 +2,23 @@
 
 .. _application-mqttkit:
 
-###################
-MQTTKit application
-###################
+#######################
+The MQTTKit application
+#######################
 
 
 *****
 About
 *****
 
-    | Kotori MQTTKit bundles services for operating an instant-on, generic
-    | telemetry data sink for collecting sensor data in different scenarios.
-    |
-    | It uses MQTT as communication protocol
-    | and JSON as data serialization format.
-    |
-    | MQTTKit specifically addresses data collection in multi-node, multi-sensor
-    | environments as its design is directly derived from vendor :ref:`vendor-hiveeyes`.
+| Kotori MQTTKit bundles services for operating an instant-on, generic
+| telemetry data sink for collecting sensor data in different scenarios.
+|
+| The design of MQTTKit specifically addresses data collection in multi-node,
+| multi-sensor, environments ¹.
+|
+| It emphasizes MQTT as communication protocol and JSON as data serialization
+| format but implements different other protocols and formats.
 
 
 **********
@@ -117,3 +117,8 @@ Advanced
 - Also have a look at :ref:`forward-http-to-mqtt` about how to configure
   a HTTP endpoint for your :ref:`application-mqttkit` application and see
   :ref:`daq-http` for transmitting telemetry data over HTTP.
+
+
+----
+
+| ¹ The design of MQTTKit is derived from vendor :ref:`vendor-hiveeyes`.

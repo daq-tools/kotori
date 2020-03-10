@@ -2,10 +2,10 @@
 
 .. _protocol-forwarders:
 
-###################
-Protocol forwarders
-###################
-Protocol forwarder applications have an important
+##################
+Channel forwarders
+##################
+Channel forwarder applications have an important
 role inside the modular Kotori toolkit.
 
 They can be used for data acquisition through POST/PUT requests to

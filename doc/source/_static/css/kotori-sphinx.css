@@ -190,13 +190,15 @@ body, div.body {
     text-decoration: none;
     /* font-family: 'Roboto', sans-serif; */
     font-weight: 300;
-    color: #343a40;
+    color: black !important;
+    background-color: white !important;
     text-align: center;
     transition: all 0.2s;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 .btn-outline a:hover {
-    background-color: #aaaaaa;
+    color: white !important;
+    background-color: #343a40 !important;
 }
 
 /* Don't apply on narrow screen widths */

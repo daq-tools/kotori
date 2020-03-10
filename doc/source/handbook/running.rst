@@ -2,9 +2,9 @@
 
 .. _running-kotori:
 
-#######
-Running
-#######
+###################
+Running the service
+###################
 
 *****
 Intro

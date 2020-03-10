@@ -31,6 +31,10 @@ Python Package Index (PyPI) or from the Git repository.
     :maxdepth: 1
 
     sandbox
+    troubleshooting
+
+
+----
 
 
 ¹ When choosing to install from the Debian package repository, you will also be

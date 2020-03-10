@@ -3,7 +3,7 @@
 .. _vendor-weewx:
 
 =====
-weeWX
+WeeWX
 =====
 
 .. highlight:: bash
@@ -11,11 +11,11 @@ weeWX
 *****
 About
 *****
-weeWX_ is a free, open source weather station data collection software written in Python.
+WeeWX_ is a free, open source weather station data collection software written in Python.
 It supports `many popular weather stations <http://www.weewx.com/hardware.html>`_.
 
 To store all data in InfluxDB_ and display it in Grafana_, we connected a `Davis Vantage Pro2`_ weather station,
-added the `MQTT Plugin for weeWX`_ into the mix - and voilà ...
+added the `MQTT Plugin for WeeWX`_ into the mix - and voilà ...
 
 Live data:
 https://swarm.hiveeyes.org/grafana/dashboard/db/weather-leoni
@@ -32,7 +32,7 @@ Embedded view:
 
     - `Grafana Dashboard <https://swarm.hiveeyes.org/grafana/dashboard/db/weather-leoni>`_
     - `AmatYr Dashboard <http://wetter.simmerding.nshare.de/>`_
-    - `weeWX Dashboard <http://simmerding.de/webcam-wetter.htm#WETTER>`_
+    - `WeeWX Dashboard <http://simmerding.de/webcam-wetter.htm#WETTER>`_
     - `Raw data <https://swarm.hiveeyes.org/api/weewx/097287c4-6fb0-4aeb-a095-00d65ecb15f7/Leoni/VantagePro2/data.txt>`_
 
 
@@ -41,9 +41,9 @@ Environment
 ***********
 Let's have a look at the environment:
 
-- weeWX_ is a popular program able to read data from a variety of weather stations.
+- WeeWX_ is a popular program able to read data from a variety of weather stations.
 - MQTT_ is a machine-to-machine (M2M)/"Internet of Things" connectivity protocol.
-- Telemetry data is transmitted from weeWX_ to the MQTT_ broker using the `MQTT Plugin for weeWX`_.
+- Telemetry data is transmitted from WeeWX_ to the MQTT_ broker using the `MQTT Plugin for WeeWX`_.
   An example JSON payload published from this plugin to the MQTT bus is::
 
     weewx/097287c4-6fb0-4aeb-a095-00d65ecb15f7/Leoni/VantagePro2/loop
@@ -126,8 +126,8 @@ System overview
 
 .. graphviz:: weewx.dot
 
-- Receive weather information from digital weather stations using weeWX.
-- Publish them to the MQTT bus using the `MQTT Plugin for weeWX`_.
+- Receive weather information from digital weather stations using WeeWX.
+- Publish them to the MQTT bus using the `MQTT Plugin for WeeWX`_.
 - Store measurements to the InfluxDB_ timeseries database.
 - Automatically create Grafana_ panels for instant telemetry data visualization.
 
@@ -148,11 +148,11 @@ Setup
 This section is about running the whole platform on your own hardware.
 For full installation of the InfluxDB_/Grafana_/Mosquitto_/Kotori_ stack, please have a look at the :ref:`kotori-setup` page.
 
-weeWX
+WeeWX
 =====
-For setting up weeWX, see also http://www.weewx.com/docs.html.
+For setting up WeeWX, see also http://www.weewx.com/docs.html.
 
-Setup weeWX MQTT plugin
+Setup WeeWX MQTT plugin
 =======================
 Install the MQTT python bindings::
 
@@ -199,9 +199,9 @@ Go to ``https://grafana.example.org/grafana/dashboard/db/weewx-097287c4-6fb0-4ae
 *******
 Credits
 *******
-- Matthew Wall, Tom Keffer and all the other contributors for weeWX_.
+- Matthew Wall, Tom Keffer and all the other contributors for WeeWX_.
 - Tor Hveem for AmatYr_.
-- Jan Hoffmann for operating a weeWX_ installation with a `Davis Vantage Pro2`_ which is
+- Jan Hoffmann for operating a WeeWX_ installation with a `Davis Vantage Pro2`_ which is
   delivering interesting data from the shore of Lake Starnberg and for sharing it with us.
 
 

@@ -3,9 +3,11 @@
 .. Links to external resources
 
 .. Kotori service
-.. _SymPy: http://www.sympy.org/
-.. _SymPy Features: http://www.sympy.org/en/features.html
-.. _Autobahn: http://autobahn.ws/
+.. _Kotori: http://www.getkotori.org/
+.. _MqttInfluxGrafanaService: https://github.com/daq-tools/kotori/blob/0.24.5/kotori/daq/services/mig.py
+.. _WanBusStrategy: https://github.com/daq-tools/kotori/blob/0.24.5/kotori/daq/intercom/strategies.py
+.. _MQTTKit communication flavor: https://getkotori.org/docs/handbook/mqttkit.html
+.. _MQTTKit addressing scheme: https://getkotori.org/docs/handbook/mqttkit.html#addressing
 
 
 .. Kotori development
@@ -25,6 +27,9 @@
 .. _WAMP: http://wamp.ws/
 .. _MQTT: http://mqtt.org/
 .. _Mosquitto: https://mosquitto.org/
+.. _SymPy: http://www.sympy.org/
+.. _SymPy Features: http://www.sympy.org/en/features.html
+.. _Autobahn: http://autobahn.ws/
 
 .. Foundation SC
 .. _Node-RED: http://nodered.org/
@@ -141,9 +146,9 @@
 .. _Belgian Interregional Environment Agency (IRCEL - CELINE): http://www.irceline.be/en
 
 .. Weather information
-.. _weeWX: http://www.weewx.com/
+.. _WeeWX: http://www.weewx.com/
 .. _AmatYr: https://github.com/torhve/Amatyr
-.. _MQTT Plugin for weeWX: http://lancet.mit.edu/mwall/projects/weather/releases/weewx-mqtt-0.15.tgz
+.. _MQTT Plugin for WeeWX: http://lancet.mit.edu/mwall/projects/weather/releases/weewx-mqtt-0.15.tgz
 .. _Davis Vantage Pro2: http://www.davisnet.com/solution/vantage-pro2/
 
 .. Tasmota

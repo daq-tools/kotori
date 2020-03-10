@@ -41,7 +41,7 @@ or::
 
 or run specific tests with maximum verbosity::
 
-    export PYTEST_OPTIONS="--verbose --log-level DEBUG --log-cli-level DEBUG --capture=no"
+    export PYTEST_OPTIONS="--verbose --verbose --log-level DEBUG --log-cli-level DEBUG --capture=no"
 
     # Run all tests starting with "test_tasmota".
     pytest test ${PYTEST_OPTIONS} -k test_tasmota

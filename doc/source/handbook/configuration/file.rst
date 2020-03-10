@@ -1,14 +1,14 @@
-.. include:: ../_resources.rst
+.. include:: ../../_resources.rst
 
-*************
-Configuration
-*************
+**********************
+The configuration file
+**********************
 
 The configuration file is either ``/etc/kotori/kotori.ini``
 or at any other location you want to put the configuration at.
 A blueprint is:
 
-.. literalinclude:: ../_static/content/kotori.ini
+.. literalinclude:: ../../_static/content/kotori.ini
     :language: ini
 
 .. hint::

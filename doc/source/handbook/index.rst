@@ -8,17 +8,19 @@ Handbook
 ########
 
 
-*********
-Operation
-*********
+********
+Overview
+********
 
 .. toctree::
     :maxdepth: 1
     :glob:
 
-    configuration
+    configuration/file
+    configuration/application
     mqttkit
-    running
+    forwarders/index
+    decoders/index
 
 
 *****
@@ -29,20 +31,8 @@ Usage
     :maxdepth: 1
     :glob:
 
+    running
     acquisition/index
     export/index
     grafana
     influxdb
-    faq
-
-
-*********
-Machinery
-*********
-
-.. toctree::
-    :maxdepth: 1
-    :glob:
-
-    forwarders/index
-    decoders/index

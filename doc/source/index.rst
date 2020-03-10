@@ -12,7 +12,7 @@
     :hidden:
 
     about/index
-    examples/index
+    gallery/index
     setup/index
     getting-started/index
     handbook/index
