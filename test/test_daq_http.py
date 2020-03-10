@@ -7,7 +7,7 @@ import pytest_twisted
 from twisted.internet import threads
 
 from test.resources import settings, influx, PROCESS_DELAY
-from test.util import mqtt_json_sensor, sleep, http_json_sensor, http_form_sensor, http_csv_sensor
+from test.util import http_json_sensor, http_form_sensor, http_csv_sensor, sleep
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +25,7 @@ def test_http_json(machinery, create_influxdb, reset_influxdb):
         'temperature': 25.26,
         'humidity': 51.8,
     }
-    yield threads.deferToThread(http_json_sensor, settings.channel_path, data)
+    yield threads.deferToThread(http_json_sensor, settings.channel_path_data, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY)
@@ -50,7 +50,7 @@ def test_http_urlencoded(machinery, create_influxdb, reset_influxdb):
         'temperature': 25.26,
         'humidity': 51.8,
     }
-    yield threads.deferToThread(http_form_sensor, settings.channel_path, data)
+    yield threads.deferToThread(http_form_sensor, settings.channel_path_data, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY)
@@ -76,7 +76,7 @@ def test_http_csv(machinery, create_influxdb, reset_influxdb):
         'temperature': 25.26,
         'humidity': 51.8,
     }
-    yield threads.deferToThread(http_csv_sensor, settings.channel_path, data)
+    yield threads.deferToThread(http_csv_sensor, settings.channel_path_data, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY)

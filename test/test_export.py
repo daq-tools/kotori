@@ -27,7 +27,7 @@ def test_export_csv(machinery, create_influxdb, reset_influxdb):
         'temperature': 25.26,
         'humidity': 51.8,
     }
-    yield threads.deferToThread(http_json_sensor, settings.channel_path, data)
+    yield threads.deferToThread(http_json_sensor, settings.channel_path_data, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY)
@@ -35,27 +35,27 @@ def test_export_csv(machinery, create_influxdb, reset_influxdb):
     # Proof that data is available via HTTP API.
 
     # CSV format.
-    deferred = threads.deferToThread(http_get_data, settings.channel_path, format='csv')
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='csv')
     yield deferred
     assert deferred.result == 'time,humidity,temperature\n2020-03-10T03:29:42.000000Z,51.8,25.26\n'
 
     # TXT format (same as CSV).
-    deferred = threads.deferToThread(http_get_data, settings.channel_path, format='txt')
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='txt')
     yield deferred
     assert deferred.result == 'time,humidity,temperature\n2020-03-10T03:29:42.000000Z,51.8,25.26\n'
 
     # JSON format.
-    deferred = threads.deferToThread(http_get_data, settings.channel_path, format='json')
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='json')
     yield deferred
     assert deferred.result == '[{"time":"2020-03-10T03:29:42.000Z","humidity":51.8,"temperature":25.26}]'
 
     # XLSX format.
-    deferred = threads.deferToThread(http_get_data, settings.channel_path, format='xlsx')
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='xlsx')
     yield deferred
     assert deferred.result.startswith(b'PK\x03\x04\x14\x00\x00\x00\x08\x00')
 
     # HTML format.
-    deferred = threads.deferToThread(http_get_data, settings.channel_path, format='html')
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='html')
     yield deferred
     assert \
         '<html>' in deferred.result and \

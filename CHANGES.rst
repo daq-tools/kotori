@@ -47,7 +47,7 @@ Tests
 - Add tests for HTTP API export features
 - Add tests for InfluxDB tag heuristics
 - Add test for publishing discrete values to MQTT
-- Add test for publishing events to MQTT
+- Add tests for publishing events using MQTT and HTTP
 
 
 
