@@ -51,6 +51,7 @@ Tests
 - Add tests for publishing events using MQTT and HTTP
 - Add test covering telemetry from Homie
 - Add test for WeeWX integration
+- Add test for legacy MQTT topic suffix
 
 
 .. _kotori-0.24.5:

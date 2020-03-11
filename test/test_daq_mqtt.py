@@ -39,6 +39,30 @@ def test_mqtt_to_influxdb_json(machinery, create_influxdb, reset_influxdb):
 
 @pytest_twisted.inlineCallbacks
 @pytest.mark.mqtt
+@pytest.mark.legacy
+def test_mqtt_legacy(machinery, create_influxdb, reset_influxdb):
+    """
+    Publish single reading in JSON format to MQTT broker on legacy suffix
+    and proof it is stored in the InfluxDB database.
+    """
+
+    # Submit a single measurement, without timestamp.
+    data = {
+        'temperature': 42.84,
+        'humidity': 83.1,
+    }
+    yield threads.deferToThread(mqtt_json_sensor, settings.mqtt_topic_json_legacy, data)
+
+    # Wait for some time to process the message.
+    yield sleep(PROCESS_DELAY)
+
+    # Proof that data arrived in InfluxDB.
+    record = influx.get_first_record()
+    assert 'temperature' in record or 'humidity' in record
+
+
+@pytest_twisted.inlineCallbacks
+@pytest.mark.mqtt
 def test_mqtt_to_influxdb_single(machinery, create_influxdb, reset_influxdb):
     """
     Publish discrete values to the MQTT broker and
