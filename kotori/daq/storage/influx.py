@@ -153,10 +153,19 @@ class InfluxDBAdapter(object):
             chunk["tags"]["node"]    = meta["node"]
         """
 
+        # TODO: Refactor to some knowledgebase component.
+        time_field_candidates = [
+            'time',         # Vanilla
+            'datetime',     # Vanilla
+            'Time',         # Tasmota
+            'dateTime',     # WeeWX
+            'timestamp',    # Contrib
+        ]
+
         # Extract timestamp field from data
         chunk['time_precision'] = 'n'
         # FIXME: Unify with ``kotori.io.protocol.http.data_acquisition()``.
-        for time_field in ['time', 'Time', 'datetime', 'dateTime', 'timestamp']:
+        for time_field in time_field_candidates:
             if time_field in data:
 
                 # WeeWX. TODO: Move to specific vendor configuration.
