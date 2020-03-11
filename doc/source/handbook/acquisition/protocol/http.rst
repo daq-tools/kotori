@@ -112,6 +112,14 @@ Example::
 See also the whole list of :ref:`daq-timestamp-formats`.
 
 
+Events
+======
+Events can be submitted to HTTP at the endpoint URI suffix ``/event``.
+`Grafana Annotations`_ will be created automatically. Read more
+about it at :ref:`daq-http-events`.
+
+
+
 .. _daq-http-csv:
 
 **********

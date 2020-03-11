@@ -25,6 +25,48 @@ Backlog
 - Tests: Bulk upload via CSV.
 - Tests: Time filtering and more for HTTP API export.
 - New: Bulk upload via InfluxDB line protocol.
+- Add support for Homie 2.x::
+
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/$homie 2.0.1
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/$name hive-teststand
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/$mac 84:F3:EB:B2:FB:1A
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/$localip 192.168.178.61
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/$nodes temperature0,temperature1,temperature2,temperature3,weight,battery,data
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/$stats/interval 0
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/$stats/signal 62
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/$stats/uptime 66
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/$fw/name node-wifi-mqtt-homie
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/$fw/version 0.10.0
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/$fw/checksum 98816d2088bead73b35c38a4db28acb4
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/$implementation esp8266
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/$implementation/config {"wifi":{"ssid":"Ponyhof"},"mqtt":{"host":"swarm.hiveeyes.org","port":1883,"base_topic":"hiveeyes/testdrive/area-42/node-1/message-json","auth":false},"name":"hive-teststand","ota":{"enabled":true},"device_id":"hive-teststand","settings":{"sendInterval":60,"weightOffset":33840,"kilogramDivider":20.85,"vccAdjust":0,"tempsensorsAmount":4}}
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/$implementation/version 2.0.0
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/$implementation/ota/enabled true
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/temperature0/$type temperature
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/temperature0/$properties unit,degrees
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/temperature0/unit C
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/temperature1/$type temperature
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/temperature1/$properties unit,degrees
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/temperature1/unit C
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/temperature2/$type temperature
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/temperature2/$properties unit,degrees
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/temperature3/$type temperature
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/temperature3/$properties unit,degrees
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/weight/$type weight
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/weight/$properties unit,kilogram
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/battery/$type battery
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/battery/$properties unit,volt
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/battery/volt 3.02
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/data/$type __json__
+    hiveeyes/testdrive/area-42/node-1/message-jsonhive-teststand/$online true
+
+- Support batch readings (jsonl?)
+  https://community.hiveeyes.org/t/more-data-acquisition-payload-formats-for-kotori/1421/3
+
+- Investigate switching to Klein
+  - https://stackoverflow.com/questions/33283869/match-an-arbitrary-path-or-the-empty-string-without-adding-multiple-flask-rout/33296155#33296155
+  - https://github.com/twisted/klein/blob/master/src/klein/_app.py#L84-L85
+
 
 
 ****

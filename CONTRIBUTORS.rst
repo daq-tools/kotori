@@ -13,7 +13,6 @@ contributed to Kotori in one way or another.
 * Anne-Julia Scheuermann <annejulia@gmail.com>
 * Carolin Johannsen <caro@hiverize.org>
 * Clemens Gruber <clemens@hiveeyes.org>
-* Dewieinns <https://github.com/Dewieinns>
 * Georges Gagliano <https://github.com/ggeorges39>
 * Géraldine Farcy-Merlo <https://www.mellisphera.com/>
 * Jan Hoffmann <j.hoffmann@isarengineering.de>

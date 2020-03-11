@@ -8,9 +8,10 @@ Events API
 
 
 .. _daq-mqtt-annotation:
+.. _daq-mqtt-events:
 
-MQTT annotations
-================
+MQTT events
+===========
 `Grafana Annotations`_ can be created through MQTT at the ``/event.json`` topic suffix.
 While arbitrary fields can be submitted, Grafana_ evaluates the fields ``title``, ``text`` and ``tags``.
 It is possible to use HTML inside the ``text`` field, for example to link this event to another web application.
@@ -32,11 +33,11 @@ Annotations can also be submitted retroactively, just add a ``time`` field::
 See also the whole list of :ref:`daq-timestamp-formats`.
 
 
-
 .. _daq-http-annotation:
+.. _daq-http-events:
 
-HTTP annotations
-================
+HTTP events
+===========
 `Grafana Annotations`_ can be created through the HTTP interface at the ``/event`` endpoint.
 While arbitrary fields can be submitted, Grafana_ evaluates the fields ``title``, ``text`` and ``tags``.
 It is possible to use HTML inside the ``text`` field, for example to link this event to another web application.

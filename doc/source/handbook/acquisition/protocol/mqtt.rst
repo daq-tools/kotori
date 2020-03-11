@@ -59,6 +59,14 @@ Publish sensor reading with timestamp in `ISO 8601`_ format::
 See also the whole list of :ref:`daq-timestamp-formats`.
 
 
+Events
+======
+Events can be published to the MQTT topic suffix ``/event.json``.
+`Grafana Annotations`_ will be created automatically. Read more
+about it at :ref:`daq-mqtt-events`.
+
+
+
 .. _daq-mqtt-csv:
 
 **********

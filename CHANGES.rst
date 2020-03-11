@@ -17,10 +17,12 @@ Breaking changes
    We have been too lazy in the past. Sorry.
 
 
-Packaging
----------
-- Improve Docker image building
-- Add packaging for Ubuntu 18 Bionic Beaver
+Features & Bugfixes
+-------------------
+- Honor "Time" field submitted by devices running Tasmota
+- Make Tasmota decoder grok double-nested payloads from Wemos devices
+- Fix logger
+- Refactor decoder subsystem
 
 Documentation
 -------------
@@ -30,12 +32,10 @@ Documentation
   :ref:`grafana-vs-export` and :ref:`weewx-mqtt-faq`.
 - Add FAQ section about :ref:`processing-tags`
 
-Features & Bugfixes
--------------------
-- Honor "Time" field submitted by devices running Tasmota
-- Make Tasmota decoder grok double-nested payloads from Wemos devices
-- Fix logger
-- Refactor decoder subsystem
+Packaging
+---------
+- Improve Docker image building
+- Add packaging for Ubuntu 18 Bionic Beaver
 
 Tests
 -----

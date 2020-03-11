@@ -43,11 +43,15 @@ or run specific tests with maximum verbosity::
 
     export PYTEST_OPTIONS="--verbose --verbose --log-level DEBUG --log-cli-level DEBUG --capture=no"
 
-    # Run all tests starting with "test_tasmota".
+    # Run tests starting with "test_tasmota".
     pytest test ${PYTEST_OPTIONS} -k test_tasmota
 
-    # Run all tests marked with "hiveeyes".
-    pytest test ${PYTEST_OPTIONS} -m hiveeyes
+    # Run tests marked with "mqtt".
+    pytest test ${PYTEST_OPTIONS} -m mqtt
+
+    # Run tests marked with "tasmota", "homie" or "airrohr".
+    pytest test ${PYTEST_OPTIONS} -m 'tasmota or homie or airrohr'
+
 
 To see available markers, type::
 

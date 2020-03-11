@@ -108,16 +108,23 @@ Examples
 ********
 Data acquisition is easy, both MQTT and HTTP are supported.
 
+First, let's define a data acquisition channel::
+
+    CHANNEL=amazonas/ecuador/cuyabeno/1
+
+and some data to submit::
+
+    DATA='{"temperature": 42.84, "humidity": 83.1}'
+
 MQTT::
 
-    CHANNEL_BROKER=daq.example.org
-    CHANNEL_TOPIC=amazonas/ecuador/cuyabeno/1/data.json
-    mosquitto_pub -h $CHANNEL_BROKER -t $CHANNEL_TOPIC -m '{"temperature": 42.84, "humidity": 83.1}'
+    MQTT_BROKER=daq.example.org
+    echo "$DATA" | mosquitto_pub -h $MQTT_BROKER -t $CHANNEL/data.json -l
 
 HTTP::
 
-    CHANNEL_URI=https://daq.example.org/api/amazonas/ecuador/cuyabeno/1/data
-    echo '{"temperature": 42.84, "humidity": 83.1}' | curl --request POST --header 'Content-Type: application/json' --data @- $CHANNEL_URI
+    HTTP_URI=https://daq.example.org/api/
+    echo "$DATA" | curl --request POST --header 'Content-Type: application/json' --data @- $HTTP_URI/$CHANNEL/data
 
 
 ****************
