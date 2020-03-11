@@ -7,18 +7,17 @@ import arrow
 from bunch import Bunch
 from cornice.util import to_list
 from twisted.logger import Logger, LogLevel
-from twisted.internet import reactor, threads
+from twisted.internet import reactor
 from twisted.internet.task import LoopingCall
 from twisted.application.service import MultiService, Service
 from twisted.python.failure import Failure
 from twisted.python.threadpool import ThreadPool
 
-from kotori.daq.decoder.tasmota import TasmotaDecoder
-from kotori.daq.services.schema import MessageType, TopicMatchers
+from kotori.daq.decoder import DecoderManager
+from kotori.daq.decoder.schema import MessageType, TopicMatchers
 from kotori.daq.services import MultiServiceMixin
 from kotori.daq.intercom.mqtt import MqttAdapter
 from kotori.daq.storage.influx import InfluxDBAdapter
-from kotori.io.protocol.util import convert_floats
 from kotori.util.configuration import read_list
 from kotori.util.thimble import Thimble
 
@@ -87,12 +86,6 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         level(u'{prefix} {class_name}. name={name}, channel={channel}',
             prefix=prefix, class_name=self.__class__.__name__, name=self.name, channel=dict(self.channel))
 
-    def topic_to_topology(self, topic):
-        return self.strategy.topic_to_topology(topic)
-
-    def topology_to_storage(self, topology):
-        return self.strategy.topology_to_storage(topology)
-
     def get_basetopic(self, topic):
         topic = TopicMatchers.data.sub('', topic)
         topic = TopicMatchers.event.sub('', topic)
@@ -122,6 +115,93 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         except Exception:
             log.failure(u'Processing MQTT message failed. topic={topic}, payload={payload}', topic=topic, payload=payload)
 
+    def decode_message(self, topic, payload):
+
+        # Compute topology information from channel topic.
+        topology = self.strategy.topic_to_topology(topic)
+        log.debug(u'Topology address: {topology}', topology=dict(topology))
+
+        message = DecodedMessage()
+        message.topology = topology
+
+        # Message can be handled by one of the device-specific decoders.
+        decoder_manager = DecoderManager(topology)
+        if decoder_manager.probe():
+            message.type = decoder_manager.info.message_type
+            message.data = decoder_manager.info.decoder.decode(payload)
+            return message
+
+        # Otherwise, try to classify the channel topic by other means.
+        message.type = self.classify_topic(topic)
+
+        # a) En bloc: Multiple measurements in JSON object
+        #
+        # The suffixes are:
+        #
+        #   - data.json:        Regular
+        #   - data/__json__:    Homie
+        #   - loop:             WeeWX
+        #   - message-json:     Deprecated
+        #
+        # Todo: Move specific stuff about Homie, WeeWX or Tasmota to some device-specific knowledgebase.
+
+        if message.type == MessageType.DATA_CONTAINER:
+
+            # Decode regular JSON container.
+            message.data = json.loads(payload)
+
+            # Required for WeeWX data
+            # message.data = convert_floats(json.loads(payload))
+
+
+        # b) Discrete values
+        #
+        # The suffixes are:
+        #
+        #   - data/temperature
+        #   - data/humidity
+        #   - ...
+        #
+        elif message.type == MessageType.DATA_DISCRETE:
+
+            # Todo: Backward compat for single readings - refactor elsewhere.
+            if 'slot' in topology and topology.slot.startswith('measure/'):
+                topology.slot = topology.slot.replace('measure/', 'data/')
+
+            # Single measurement as plain value; assume float
+            # Convert to MessageType.DATA_CONTAINER
+            if 'slot' in topology and topology.slot.startswith('data/'):
+                # This is sensor data
+                message.type = MessageType.DATA_CONTAINER
+
+                # Amend topic and compute storage message from single scalar value
+                name = topology.slot.replace('data/', '')
+                value = float(payload)
+                message.data = {name: value}
+
+        # Set an event
+        elif message.type == MessageType.EVENT:
+
+            # This is an event
+            message.type = MessageType.EVENT
+
+            # Decode message from json format
+            message.data = json.loads(payload)
+
+        # Catch an error message
+        # TODO: Signal via MQTT
+        elif message.type == MessageType.ERROR:
+            log.warn(u'Ignoring error message from MQTT, "{topic}" with payload "{payload}"', topic=topic,
+                     payload=payload)
+            return
+
+        else:
+            log.warn(u'Unknown message type on topic "{topic}" with payload "{payload}", ignoring.', topic=topic,
+                     payload=payload)
+            return
+
+        return message
+
     def process_message(self, topic, payload, **kwargs):
 
         payload = payload.decode('utf-8')
@@ -136,85 +216,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
         log.debug(u"Processing message on topic '{topic}' with payload '{payload}'", topic=topic, payload=payload)
 
-        # Compute storage address from topic
-        topology = self.topic_to_topology(topic)
-        log.debug(u'Topology address: {topology}', topology=dict(topology))
-
-        message_type = self.classify_topic(topic)
-        message = None
-
-        # a) En bloc: Multiple measurements in JSON object
-        #
-        # The suffixes are:
-        #
-        #   - data.json:        Regular
-        #   - data/__json__:    Homie
-        #   - loop:             WeeWX
-        #   - message-json:     Deprecated
-        #
-        # Todo: Move specific stuff about Homie, WeeWX or Tasmota to some device-specific knowledgebase.
-
-        if message_type == MessageType.DATA_CONTAINER:
-
-            # Decode regular JSON container.
-            message = json.loads(payload)
-
-            # Required for WeeWX data
-            #message = convert_floats(json.loads(payload))
-
-            decoders = [
-                # Decoder for Sonoff-Tasmota telemetry payload.
-                TasmotaDecoder,
-            ]
-
-            for decoder_class in decoders:
-                decoder = decoder_class(topology=topology)
-                message = decoder.decode_message(message)
-
-        # b) Discrete values
-        #
-        # The suffixes are:
-        #
-        #   - data/temperature
-        #   - data/humidity
-        #   - ...
-        #
-        elif message_type == MessageType.DATA_DISCRETE:
-
-            # Todo: Backward compat for single readings - refactor elsewhere.
-            if 'slot' in topology and topology.slot.startswith('measure/'):
-                topology.slot = topology.slot.replace('measure/', 'data/')
-
-            # Single measurement as plain value; assume float
-            # Convert to MessageType.DATA_CONTAINER
-            if 'slot' in topology and topology.slot.startswith('data/'):
-
-                # This is sensor data
-                message_type = MessageType.DATA_CONTAINER
-
-                # Amend topic and compute storage message from single scalar value
-                name = topology.slot.replace('data/', '')
-                value = float(payload)
-                message = {name: value}
-
-        # Set an event
-        elif message_type == MessageType.EVENT:
-
-            # This is an event
-            message_type = MessageType.EVENT
-
-            # Decode message from json format
-            message = json.loads(payload)
-
-        # Catch an error message
-        # TODO: Signal via MQTT
-        elif message_type == MessageType.ERROR:
-            log.debug(u'Ignoring error message from MQTT, "{topic}" with payload "{payload}"', topic=topic, payload=payload)
-            return
-
-        else:
-            log.debug(u'Unknown message type on topic "{topic}" with payload "{payload}", ignoring.', topic=topic, payload=payload)
-            return
+        message = self.decode_message(topic, payload)
 
         # count transaction
         self.metrics.tx_count += 1
@@ -243,16 +245,16 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         # Sane order for Grafana template variables:
         # continent, country_code (upper), q-region, city, q-hood, road, (compound)
 
-        # Compute storage location
-        storage_location = self.topology_to_storage(topology)
+        # Compute storage location from topology information.
+        storage_location = self.strategy.topology_to_storage(message.topology, message_type=message.type)
         log.debug(u'Storage location: {storage}', storage=dict(storage_location))
 
-        # Store data or event
-        if message_type in (MessageType.DATA_CONTAINER, MessageType.EVENT):
-            self.store_message(storage_location, message)
+        # Store data or event.
+        if message.type in (MessageType.DATA_CONTAINER, MessageType.EVENT):
+            self.store_message(storage_location, message.data)
 
-        # Provision graphing subsystem
-        if message_type == MessageType.DATA_CONTAINER:
+        # Provision graphing subsystem.
+        if message.type == MessageType.DATA_CONTAINER:
             # TODO: Purge message from fields to be used as tags
             # Namely:
             # 'geohash',
@@ -266,11 +268,11 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
                 subsystem_name = graphing_subsystem.__class__.__name__
                 log.debug(u'Provisioning Grafana with {name}', name=subsystem_name)
                 try:
-                    graphing_subsystem.provision(storage_location, message, topology=topology)
+                    graphing_subsystem.provision(storage_location, message.data, topology=message.topology)
 
                 except Exception as ex:
                     log.failure(u'Grafana provisioning failed for storage={storage}, message={message}:\n{log_failure}',
-                                storage=storage_location.dump(), message=message,
+                                storage=storage_location.dump(), message=message.data,
                                 level=LogLevel.error)
 
                     # MQTT error signalling
@@ -380,3 +382,10 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         metrics_info = ', '.join(metrics)
 
         log.info('[{realm:12s}] {metrics_info}', realm=self.channel.realm, metrics_info=metrics_info)
+
+
+class DecodedMessage:
+    def __init__(self):
+        self.topology = None
+        self.type = None
+        self.data = None

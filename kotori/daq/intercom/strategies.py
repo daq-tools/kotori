@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # (c) 2015-2018 Andreas Motl, <andreas@getkotori.org>
 import re
+
+from kotori.daq.decoder.schema import MessageType
 from kotori.util.common import SmartBunch
 
 
@@ -60,7 +62,7 @@ class WanBusStrategy(object):
 
 
     @classmethod
-    def topology_to_storage(self, topology):
+    def topology_to_storage(self, topology, message_type=None):
         """
         Encode topology segment identifiers to database address.
 
@@ -69,35 +71,28 @@ class WanBusStrategy(object):
         they might be named differently, but the concept in general
         is the same.
 
-        When mapping the topology quadruple (realm, network, gateway, node) in the form of:
+        The topology quadruple (realm, network, gateway, node) will
+        get mapped to the database name and measurement name to
+        compute the storage location for measurements.
 
             - realm + network = database name
             - gateway + node  = table name
 
-        We have a perfect fit for computing the slot where to store the measurements.
-
         """
 
-        # Todo: Investigate using tags additionally to / instead of database.measurement
-        # Todo: Move specific stuff about WeeWX or Tasmota to some device-specific knowledgebase.
-
-        # data:     Regular endpoint
-        # loop:     WeeWX
-        # SENSOR:   Sonoff-Tasmota
-        if topology.slot.startswith('data') or topology.slot.startswith('loop') \
-                or topology.slot.endswith('SENSOR') or topology.slot.endswith('STATE'):
+        # Derive database table suffix from message type.
+        if message_type in (MessageType.DATA_CONTAINER, MessageType.DATA_DISCRETE) or topology.slot.startswith('data'):
             suffix = 'sensors'
-
-        elif topology.slot.startswith('event'):
+        elif message_type == MessageType.EVENT or topology.slot.startswith('event'):
             suffix = 'events'
-
         else:
             suffix = 'unknown'
 
-        # Use topology information as blueprint for storage address
+        # Use topology information as blueprint for storage address.
         storage = SmartBunch(topology)
 
-        # Format and sanitize all input parameters used for database addressing
+        # Format and sanitize all input parameters used for database addressing.
+        # Todo: Investigate using tags additionally to / instead of only "storage.measurement".
         sanitize = self.sanitize_db_identifier
         storage.label       = sanitize('{}-{}'.format(storage.gateway, storage.node))
         storage.database    = sanitize('{}_{}'.format(storage.realm, storage.network))

@@ -1,39 +1,29 @@
 # -*- coding: utf-8 -*-
 # (c) 2019-2020 Andreas Motl <andreas@getkotori.org>
+"""
+Decode JSON payloads in Tasmota format.
+
+Documentation
+=============
+- https://getkotori.org/docs/handbook/decoders/tasmota.html
+
+Resources
+=========
+- https://github.com/arendst/tasmota
+- https://github.com/arendst/tasmota/wiki/MQTT
+- https://tasmota.github.io/docs/#/MQTT
+"""
+
+import json
 import types
 from collections import OrderedDict
 from copy import deepcopy
 
 
-class TasmotaDecoder:
-    """
-    Decode MQTT/JSON payloads in Tasmota format.
+class TasmotaSensorDecoder:
 
-    This decoder heuristically detects whether it is applicable by looking
-    at the MQTT topic suffix for the keywords "SENSOR" and "STATE".
-
-    Documentation
-    =============
-    - https://getkotori.org/docs/handbook/decoders/tasmota.html
-
-    Resources
-    =========
-    - https://github.com/arendst/tasmota
-    - https://github.com/arendst/tasmota/wiki/MQTT
-    - https://tasmota.github.io/docs/#/MQTT
-    """
-
-    def __init__(self, topology):
-        self.topology = topology
-
-    def decode_message(self, message):
-        if 'slot' in self.topology and self.topology.slot.endswith('SENSOR'):
-            message = self.decode_sensor_message(message)
-        if 'slot' in self.topology and self.topology.slot.endswith('STATE'):
-            message = self.decode_state_message(message)
-        return message
-
-    def decode_sensor_message(self, message):
+    @staticmethod
+    def decode(payload):
         """
         SonoffSC::
 
@@ -87,6 +77,11 @@ class TasmotaDecoder:
             }
 
         """
+
+        # Decode from JSON.
+        message = json.loads(payload)
+
+        # Decode message format.
         data = OrderedDict()
 
         # Transfer timestamp field.
@@ -118,7 +113,11 @@ class TasmotaDecoder:
             path.pop()
         return data
 
-    def decode_state_message(self, message):
+
+class TasmotaStateDecoder:
+
+    @staticmethod
+    def decode(payload):
         """
         {
           "Time": "2019-06-02T22:13:07",
@@ -138,6 +137,11 @@ class TasmotaDecoder:
           }
         }
         """
+
+        # Decode from JSON.
+        message = json.loads(payload)
+
+        # Decode message format.
         data = OrderedDict()
         data['Time'] = message.get('Time')
         data['Device.Vcc'] = message.get('Vcc')

@@ -27,9 +27,6 @@ class TopicPatterns:
         # WeeWX
         'loop',
 
-        # Sonoff-Tasmota
-        '/SENSOR',
-        '/STATE',
     ]
 
     discrete = [
@@ -46,7 +43,6 @@ class TopicPatterns:
         # Homie support
         'event/__json__',
     ]
-
 
     error = [
 

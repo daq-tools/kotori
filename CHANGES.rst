@@ -35,6 +35,7 @@ Features & Bugfixes
 - Honor "Time" field submitted by devices running Tasmota
 - Make Tasmota decoder grok double-nested payloads from Wemos devices
 - Fix logger
+- Refactor decoder subsystem
 
 Tests
 -----
