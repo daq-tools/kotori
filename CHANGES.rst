@@ -50,6 +50,7 @@ Tests
 - Add test for publishing discrete values to MQTT
 - Add tests for publishing events using MQTT and HTTP
 - Add test covering telemetry from Homie
+- Add test for WeeWX integration
 
 
 .. _kotori-0.24.5:
