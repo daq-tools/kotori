@@ -115,6 +115,59 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         except Exception:
             log.failure(u'Processing MQTT message failed. topic={topic}, payload={payload}', topic=topic, payload=payload)
 
+    def process_message(self, topic, payload, **kwargs):
+
+        payload = payload.decode('utf-8')
+
+        # Ignore MQTT error signalling messages.
+        if topic.endswith('error.json'):
+            return
+
+        # Sanity checks: Only accept messages for the realm we are responsible for.
+        if self.channel.realm and not topic.startswith(self.channel.realm):
+            # log.info('Ignoring message to topic {topic}, realm={realm}', topic=topic, realm=self.channel.realm)
+            return False
+
+        # Reporting.
+        log.debug(u"Processing message on topic '{topic}' with payload '{payload}'", topic=topic, payload=payload)
+
+        # Run the decoder subsystem.
+        message = self.decode_message(topic, payload)
+
+        # count transaction
+        self.metrics.tx_count += 1
+
+        # TODO: Re-enable for measuring packet ingress frequency.
+        # Currently turned off since sending timestamps from data acquisition.
+        """
+        if 'time' in message:
+            self.metrics.packet_time = message['time']
+        else:
+            self.metrics.packet_time = None
+        """
+
+        # TODO: Data enrichment machinery, e.g. for geospatial data
+        # latitude/lat, longitude/long/lon/lng
+        # 1. geohash => lat/lon
+        # 2. postcode/city => lat/lon (forward geocoder)
+        # 3. lat/lon => geohash if not geohash
+        # 4. lat/lon => reverse geocoder (address information)
+        # The outcome can provide additional meta information to be used by the tagging machinery below,
+        # e.g. create tags from homogenized Nomatim address modulo "house_number" etc.
+
+        # TODO: Already do the tagging enrichment machinery here(!) to
+        # establish additional metadata schema for further processing, e.g. Grafana.
+        # So, move the schwumms from storage handler here!
+        # Sane order for Grafana template variables:
+        # continent, country_code (upper), q-region, city, q-hood, road, (compound)
+
+        # Signal the message to the downstream subsystems, e.g. InfluxDB and Grafana.
+        response = self.emit_message(message)
+
+        # MQTT error signalling
+        if isinstance(response, Failure):
+            self.mqtt_publish_error(response, topic, payload)
+
     def decode_message(self, topic, payload):
 
         # Compute topology information from channel topic.
@@ -191,59 +244,18 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         # Catch an error message
         # TODO: Signal via MQTT
         elif message.type == MessageType.ERROR:
-            log.warn(u'Ignoring error message from MQTT, "{topic}" with payload "{payload}"', topic=topic,
-                     payload=payload)
+            log.warn(u'Ignoring error message from MQTT, "{topic}" with payload "{payload}"',
+                     topic=topic, payload=payload)
             return
 
         else:
-            log.warn(u'Unknown message type on topic "{topic}" with payload "{payload}", ignoring.', topic=topic,
-                     payload=payload)
+            log.debug(u'Unknown message type on topic "{topic}" with payload "{payload}", ignoring.',
+                      topic=topic, payload=payload)
             return
 
         return message
 
-    def process_message(self, topic, payload, **kwargs):
-
-        payload = payload.decode('utf-8')
-
-        # Ignore MQTT error signalling messages
-        if topic.endswith('error.json'):
-            return
-
-        if self.channel.realm and not topic.startswith(self.channel.realm):
-            #log.info('Ignoring message to topic {topic}, realm={realm}', topic=topic, realm=self.channel.realm)
-            return False
-
-        log.debug(u"Processing message on topic '{topic}' with payload '{payload}'", topic=topic, payload=payload)
-
-        message = self.decode_message(topic, payload)
-
-        # count transaction
-        self.metrics.tx_count += 1
-
-        # TODO: Re-enable for measuring packet ingress frequency.
-        # Currently turned off since sending timestamps from data acquisition.
-        """
-        if 'time' in message:
-            self.metrics.packet_time = message['time']
-        else:
-            self.metrics.packet_time = None
-        """
-
-        # TODO: Data enrichment machinery, e.g. for geospatial data
-        # latitude/lat, longitude/long/lon/lng
-        # 1. geohash => lat/lon
-        # 2. postcode/city => lat/lon (forward geocoder)
-        # 3. lat/lon => geohash if not geohash
-        # 4. lat/lon => reverse geocoder (address information)
-        # The outcome can provide additional meta information to be used by the tagging machinery below,
-        # e.g. create tags from homogenized Nomatim address modulo "house_number" etc.
-
-        # TODO: Already do the tagging enrichment machinery here(!) to
-        # establish additional metadata schema for further processing, e.g. Grafana.
-        # So, move the schwumms from storage handler here!
-        # Sane order for Grafana template variables:
-        # continent, country_code (upper), q-region, city, q-hood, road, (compound)
+    def emit_message(self, message):
 
         # Compute storage location from topology information.
         storage_location = self.strategy.topology_to_storage(message.topology, message_type=message.type)
@@ -275,9 +287,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
                                 storage=storage_location.dump(), message=message.data,
                                 level=LogLevel.error)
 
-                    # MQTT error signalling
-                    failure = Failure()
-                    self.mqtt_publish_error(failure, topic, payload)
+                    return Failure('Grafana provisioning failed')
 
         return True
 

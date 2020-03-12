@@ -24,7 +24,7 @@ Setup
 *****
 ::
 
-    make dev-virtualenv
+    make virtualenv-dev
 
 
 ***

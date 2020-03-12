@@ -7,7 +7,7 @@ Sometimes, things go south.
 
 When installing the development sandbox by typing::
 
-    make dev-virtualenv
+    make virtualenv-dev
 
 Building wheels for collected packages: pycrypto::
 
@@ -16,8 +16,8 @@ Building wheels for collected packages: pycrypto::
               ^~~~~~~
     197 warnings and 1 error generated.
 
-::
+Solution::
 
     export CPPFLAGS=-I/usr/local/opt/gmp/include
     export LDFLAGS=-L/usr/local/opt/gmp/lib
-    make dev-virtualenv
+    make virtualenv-dev

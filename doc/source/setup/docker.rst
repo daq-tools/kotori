@@ -92,3 +92,10 @@ Submit single reading::
         --link mosquitto:mosquitto \
         -it --rm eclipse-mosquitto:1.6.8 \
         mosquitto_pub -h mosquitto -t $CHANNEL_TOPIC -m '{"temperature": 42.84, "humidity": 83.1}'
+
+Check if reading has been stored in InfluxDB::
+
+    docker run \
+        --link influxdb:influxdb \
+        -it --rm influxdb:1.7.10 \
+        influx -precision=rfc3339 -host=influxdb -database=mqttkit_1_foo -execute='SELECT * FROM bar_1_sensors'

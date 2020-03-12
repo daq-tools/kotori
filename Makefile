@@ -30,10 +30,10 @@ setup-virtualenv2:
 setup-virtualenv3:
 	@test -e $(python3) || `command -v virtualenv` --python=python3 --no-site-packages $(venv3)
 
-docs-virtualenv: setup-virtualenv3
+virtualenv-docs: setup-virtualenv3
 	@$(pip3) --quiet install --requirement requirements-docs.txt
 
-dev-virtualenv: setup-virtualenv2
+virtualenv-dev: setup-virtualenv2
 	@$(pip) install --upgrade --requirement requirements-dev.txt
 	@$(pip) install --upgrade --requirement requirements-test.txt
 	@$(pip) install --upgrade -e.[daq,daq_geospatial,export,firmware]
@@ -251,7 +251,7 @@ test-coverage:
 		--with-coverage --cover-package=kotori --cover-tests \
 		--cover-html --cover-html-dir=coverage/html --cover-xml --cover-xml-file=coverage/coverage.xml
 
-docs-html: docs-virtualenv
+docs-html: virtualenv-docs
 	touch doc/source/index.rst
 	export SPHINXBUILD="`pwd`/$(sphinx)"; cd doc; make html
 
