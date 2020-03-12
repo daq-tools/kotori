@@ -85,6 +85,12 @@ Invoke Kotori container linked to the other containers::
         -it --rm daqzilla/kotori \
         kotori --config /etc/kotori/docker-mqttkit.ini
 
+
+*********
+Testdrive
+*********
+This is a basic test to check if data is flowing correctly between the subsystems.
+
 Submit single reading::
 
     export CHANNEL_TOPIC=mqttkit-1/foo/bar/1/data.json
@@ -99,3 +105,7 @@ Check if reading has been stored in InfluxDB::
         --link influxdb:influxdb \
         -it --rm influxdb:1.7.10 \
         influx -precision=rfc3339 -host=influxdb -database=mqttkit_1_foo -execute='SELECT * FROM bar_1_sensors'
+
+Go to Grafana::
+
+    open http://localhost:3000/
