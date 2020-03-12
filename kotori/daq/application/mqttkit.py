@@ -4,7 +4,7 @@ from bunch import Bunch
 from twisted.logger import Logger
 from kotori.daq.services import RootService
 from kotori.daq.services.mig import MqttInfluxGrafanaService
-from kotori.daq.intercom.strategies import WanBusStrategy
+from kotori.daq.strategy.wan import WanBusStrategy
 from kotori.daq.graphing.grafana.manager import GrafanaManager
 
 log = Logger()
@@ -27,8 +27,8 @@ class MqttKitApplication(RootService):
         service = MqttInfluxGrafanaService(
             channel  = self.channel,
             # Data processing strategy and graphing components
-            strategy = WanBusStrategy(),
-            graphing = GrafanaManager(settings=global_settings, channel=self.channel)
+            strategy=WanBusStrategy(),
+            graphing=GrafanaManager(settings=global_settings, channel=self.channel)
             )
 
         # Register service component with its container

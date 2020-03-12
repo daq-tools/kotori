@@ -13,7 +13,7 @@ from jinja2 import Template
 from twisted.logger import Logger
 from kotori.daq.services import RootService
 from kotori.daq.services.mig import MqttInfluxGrafanaService
-from kotori.daq.intercom.strategies import WanBusStrategy
+from kotori.daq.strategy.wan import WanBusStrategy
 from kotori.daq.graphing.grafana.manager import GrafanaManager
 from kotori.util.common import SmartBunch
 

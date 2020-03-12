@@ -23,6 +23,7 @@ Features & Bugfixes
 - Make Tasmota decoder grok double-nested payloads from Wemos devices
 - Fix logger
 - Refactor decoder subsystem
+- Refactor module namespace of "strategy" components
 
 Documentation
 -------------

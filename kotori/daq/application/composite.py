@@ -43,9 +43,9 @@ class CompositeApplication(RootService):
             # TODO: Bundle all arguments into yet another wrapper object for an universal object factory
 
             service = service_factory(
-                channel  = self.channel,
-                strategy = strategy_factory(settings=global_settings),
-                graphing = graphing_factory(settings=global_settings, channel=self.channel)
+                channel=self.channel,
+                strategy=strategy_factory(settings=global_settings),
+                graphing=graphing_factory(settings=global_settings, channel=self.channel)
                 )
 
             # Register service component with its container
