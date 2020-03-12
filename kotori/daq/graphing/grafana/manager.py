@@ -92,13 +92,17 @@ class GrafanaManager(MultiService, MultiServiceMixin):
         # Compute effective topology information
         topology = topology or {}
         realm = topology.get('realm', 'default')
-        network = topology.get('network', storage_location.database)
+
+        if 'network' in topology:
+            name = topology.network
+        else:
+            name = topology.node
 
         # Derive dashboard uid and name from topology information
         identity = SmartBunch(
-            #uid=u'{realm}-{network}-instant'.format(realm=realm, network=network),
-            name=u'{realm}-{network}'.format(realm=realm, network=network),
-            title=u'{realm}-{network}'.format(realm=realm, network=network),
+            #uid=u'{realm}-{name}-instant'.format(realm=realm, name=name),
+            name=u'{realm}-{name}'.format(realm=realm, name=name),
+            title=u'{realm}-{name}'.format(realm=realm, name=name),
             # TODO: Use real title after fully upgrading to new Grafana API (i.e. don't use get-by-slug anymore!)
             #title=u'Raw data for realm={realm} network={network}'.format(realm=realm, network=network),
         )
@@ -113,7 +117,12 @@ class GrafanaManager(MultiService, MultiServiceMixin):
 
         # The identity information of this provisioning process
         dashboard_identity = self.get_dashboard_identity(storage_location, topology)
-        signature = (storage_location.database, storage_location.gateway, storage_location.node, data)
+
+        signature = [storage_location.database]
+        if 'gateway' in storage_location:
+            signature += storage_location.gateway
+        signature += [storage_location.node, data]
+
         whoami = u'dashboard "{dashboard_name}" for database "{database}" and measurement "{measurement}"'.format(
             dashboard_name=dashboard_identity.name, database=storage_location.database, measurement=storage_location.measurement)
 

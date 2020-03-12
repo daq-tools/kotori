@@ -23,7 +23,9 @@ Features & Bugfixes
 - Make Tasmota decoder grok double-nested payloads from Wemos devices
 - Fix logger
 - Refactor decoder subsystem
-- Refactor module namespace of "strategy" components
+- Add "lan" strategy and "basic" application
+  This implements a flat MQTT topic namespace for simplifying
+  addressing and getting started documentation.
 
 Documentation
 -------------

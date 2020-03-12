@@ -184,7 +184,10 @@ class GrafanaDashboardBuilder(object):
             log.info('No missing panels to add')
 
     def row_title(self):
-        return self.topology.network
+        if 'network' in self.topology:
+            return self.topology.network
+        else:
+            return 'default'
 
     def panel_title_human(self):
         parts = []

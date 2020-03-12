@@ -6,20 +6,20 @@ from kotori.daq.strategy import StrategyBase
 from kotori.util.common import SmartBunch
 
 
-class WanBusStrategy(StrategyBase):
+class LanStrategy(StrategyBase):
 
     # Regular expression pattern for decoding MQTT topic address segments.
-    pattern = r'^(?P<realm>.+?)/(?P<network>.+?)/(?P<gateway>.+?)/(?P<node>.+?)(?:/(?P<slot>.+?))?$'
+    pattern = r'^(?P<realm>.+?)/(?P<node>.+?)(?:/(?P<slot>.+?))?$'
     matcher = re.compile(pattern)
 
     def topic_to_topology(self, topic):
         """
-        Decode MQTT topic segments implementing the »quadruple hierarchy strategy«.
+        Decode MQTT topic segments implementing the »basic strategy«.
 
         The topology hierarchy is directly specified by the MQTT topic and is
-        made up of a minimum of four identifiers describing the core structure::
+        made up of a two path segments::
 
-            realm / network / gateway / node
+            realm / node
 
         The topology identifiers are specified as:
 
@@ -27,22 +27,11 @@ class WanBusStrategy(StrategyBase):
               with this label when opting in for all features of the telemetry platform.
               For other purposes, feel free to publish to any MQTT topic you like.
 
-            - "network" is your personal realm. Choose anything you like or use an
-              `Online GUID Generator <https://www.guidgenerator.com/>`_ to gain
-              maximum uniqueness.
-
-            - "gateway" is your gateway identifier. Choose anything you like.
-              This does not have to be very unique, so you might use labels
-              having the names of sites. While you are the owner of this
-              namespace hierarchy, remember these labels might be visible on
-              the collaborative ether, though. You might want to assign nicknames
-              to your sites to not identify their location.
-
             - "node" is the node identifier. Choose anything you like. This usually
               gets transmitted from an embedded device node.
         """
 
-        # Decode the topic.
+        # decode the topic
         m = self.matcher.match(topic)
         if m:
             address = SmartBunch(m.groupdict())
@@ -61,12 +50,12 @@ class WanBusStrategy(StrategyBase):
         they might be named differently, but the concept in general
         is the same.
 
-        The topology quadruple (realm, network, gateway, node) will
+        The topology information (realm, node) will
         get mapped to the database name and measurement name to
         compute the storage location for measurements.
 
-            - realm + network = database name
-            - gateway + node  = table name
+            - realm + node     = database name
+            - sensors | events = table name
 
         """
 
@@ -79,24 +68,13 @@ class WanBusStrategy(StrategyBase):
         # Format and sanitize all input parameters used for database addressing.
         # Todo: Investigate using tags additionally to / instead of only "storage.measurement".
         sanitize = self.sanitize_db_identifier
-        storage.label       = sanitize('{}-{}'.format(storage.gateway, storage.node))
-        storage.database    = sanitize('{}_{}'.format(storage.realm, storage.network))
-        storage.measurement = sanitize('{}_{}_{}'.format(storage.gateway, storage.node, table_suffix))
-        storage.measurement_events = sanitize('{}_{}_{}'.format(storage.gateway, storage.node, 'events'))
+        storage.label       = sanitize('{}'.format(storage.node))
+        storage.database    = sanitize('{}_{}'.format(storage.realm, storage.node))
+        storage.measurement = sanitize('{}'.format(table_suffix))
+        storage.measurement_events = sanitize('{}'.format('events'))
 
         return storage
 
     @classmethod
     def topology_to_label(cls, topology):
-        return '{}-{}-{}-{}'.format(topology.realm, topology.network, topology.gateway, topology.node)
-
-    @staticmethod
-    def sanitize_db_identifier(value):
-        """
-        Different databases accept different special
-        characters as database- or table names.
-
-        Better safe than sorry, let's strip them all.
-        """
-        value = value.replace('/', '_').replace('.', '_').replace('-', '_').lower()
-        return value
+        return '{}-{}'.format(topology.realm, topology.node)
