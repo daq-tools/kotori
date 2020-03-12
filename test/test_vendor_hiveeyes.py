@@ -7,7 +7,7 @@ import pytest_twisted
 from bunch import Bunch
 
 from test.conftest import create_machinery
-from test.resources import PROCESS_DELAY
+from test.settings.mqttkit import PROCESS_DELAY
 from test.util import mqtt_json_sensor, sleep, InfluxWrapper, GrafanaWrapper
 
 logger = logging.getLogger(__name__)

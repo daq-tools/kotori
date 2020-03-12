@@ -6,7 +6,7 @@ import pytest
 import pytest_twisted
 from twisted.internet import threads
 
-from test.resources import settings, influx, PROCESS_DELAY
+from test.settings.mqttkit import settings, influx_sensors, PROCESS_DELAY
 from test.util import http_json_sensor, http_form_sensor, http_csv_sensor, sleep
 
 logger = logging.getLogger(__name__)
@@ -31,7 +31,7 @@ def test_http_json(machinery, create_influxdb, reset_influxdb):
     yield sleep(PROCESS_DELAY)
 
     # Proof that data arrived in InfluxDB.
-    record = influx.get_first_record()
+    record = influx_sensors.get_first_record()
     del record['time']
     assert record == {u'temperature': 25.26, u'humidity': 51.8}
     yield record
@@ -56,7 +56,7 @@ def test_http_urlencoded(machinery, create_influxdb, reset_influxdb):
     yield sleep(PROCESS_DELAY)
 
     # Proof that data arrived in InfluxDB.
-    record = influx.get_first_record()
+    record = influx_sensors.get_first_record()
     del record['time']
     assert record == {u'temperature': 25.26, u'humidity': 51.8}
     yield record
@@ -82,7 +82,7 @@ def test_http_csv(machinery, create_influxdb, reset_influxdb):
     yield sleep(PROCESS_DELAY)
 
     # Proof that data arrived in InfluxDB.
-    record = influx.get_first_record()
+    record = influx_sensors.get_first_record()
     del record['time']
     assert record == {u'temperature': 25.26, u'humidity': 51.8}
     yield record

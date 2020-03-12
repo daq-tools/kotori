@@ -5,15 +5,16 @@ import logging
 import pytest
 import pytest_twisted
 
-from test.settings.mqttkit import settings, grafana, PROCESS_DELAY
+from test.settings.basic import settings, influx_sensors, grafana, create_influxdb, reset_influxdb, reset_grafana, PROCESS_DELAY
 from test.util import mqtt_json_sensor, sleep
 
 logger = logging.getLogger(__name__)
 
 
 @pytest_twisted.inlineCallbacks
+@pytest.mark.mqtt
 @pytest.mark.grafana
-def test_mqtt_to_grafana(machinery, create_influxdb, reset_influxdb, reset_grafana):
+def test_mqtt_strategy_lan(machinery, create_influxdb, reset_influxdb, reset_grafana):
     """
     Publish single reading in JSON format to MQTT broker and proof
     that a corresponding datasource and a dashboard was created in Grafana.
@@ -30,6 +31,12 @@ def test_mqtt_to_grafana(machinery, create_influxdb, reset_influxdb, reset_grafa
     yield sleep(PROCESS_DELAY)
     yield sleep(PROCESS_DELAY)
     yield sleep(PROCESS_DELAY)
+
+    # Proof that data arrived in InfluxDB.
+    record = influx_sensors.get_first_record()
+    del record['time']
+    assert record == {u'humidity': 83.1, u'temperature': 42.84}
+    yield record
 
     # Proof that Grafana is well provisioned.
     logger.info('Grafana: Checking datasource')

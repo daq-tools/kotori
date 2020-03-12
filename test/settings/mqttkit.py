@@ -28,10 +28,11 @@ class TestSettings:
     # HTTP channel settings.
     channel_path_data    = '/mqttkit-1/itest/foo/bar/data'
     channel_path_event   = '/mqttkit-1/itest/foo/bar/event'
+    channel_path_airrohr = '/mqttkit-1/itest/foo/bar/custom/airrohr'
 
 
 settings = TestSettings
 
-influx = InfluxWrapper(database=settings.influx_database, measurement=settings.influx_measurement_sensors)
+influx_sensors = InfluxWrapper(database=settings.influx_database, measurement=settings.influx_measurement_sensors)
 influx_events = InfluxWrapper(database=settings.influx_database, measurement=settings.influx_measurement_events)
 grafana = GrafanaWrapper(settings=settings)

@@ -11,7 +11,7 @@ import pytest_twisted
 
 from kotori import KotoriBootloader
 from test.util import boot_kotori
-from test.resources import influx, influx_events, grafana
+from test.settings.mqttkit import influx_sensors, influx_events, grafana
 
 logger = logging.getLogger(__name__)
 
@@ -35,9 +35,9 @@ def create_machinery(config, scope="package"):
     return machinery
 
 
-machinery = create_machinery('./etc/test/mqttkit.ini')
-create_influxdb = influx.make_create_db()
-reset_influxdb = influx.make_reset_measurement()
+machinery = create_machinery('./etc/test/main.ini')
+create_influxdb = influx_sensors.make_create_db()
+reset_influxdb = influx_sensors.make_reset_measurement()
 reset_grafana = grafana.make_reset()
 
 reset_influxdb_events = influx_events.make_reset_measurement()

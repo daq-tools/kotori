@@ -6,7 +6,7 @@ import pytest
 import pytest_twisted
 from twisted.internet import threads
 
-from test.resources import settings, influx, PROCESS_DELAY
+from test.settings.mqttkit import settings, influx_sensors, PROCESS_DELAY
 from test.util import mqtt_json_sensor, sleep
 
 logger = logging.getLogger(__name__)
@@ -32,7 +32,7 @@ def test_mqtt_homie(machinery, create_influxdb, reset_influxdb):
     yield sleep(PROCESS_DELAY)
 
     # Proof that data arrived in InfluxDB.
-    record = influx.get_first_record()
+    record = influx_sensors.get_first_record()
     del record['time']
     assert record == {u'humidity': 83.1, u'temperature': 42.84}
     yield record

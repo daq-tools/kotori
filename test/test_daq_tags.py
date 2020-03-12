@@ -7,7 +7,7 @@ import pytest
 import pytest_twisted
 from twisted.internet import threads
 
-from test.resources import settings, influx, PROCESS_DELAY
+from test.settings.mqttkit import settings, influx_sensors, PROCESS_DELAY
 from test.util import mqtt_json_sensor, sleep, idgen
 
 logger = logging.getLogger(__name__)
@@ -50,13 +50,13 @@ def test_influxdb_tags(machinery, create_influxdb, reset_influxdb):
     reference['longitude'] = str(reference['longitude'])
 
     # Proof that data arrived in InfluxDB.
-    record = influx.get_first_record()
+    record = influx_sensors.get_first_record()
     del record['time']
     assert record == reference
     yield record
 
     # Proof that data all special fields have been converged to tags.
-    resultset = influx.client.query('SHOW TAG KEYS FROM {measurement};'.format(measurement=settings.influx_measurement_sensors))
+    resultset = influx_sensors.client.query('SHOW TAG KEYS FROM {measurement};'.format(measurement=settings.influx_measurement_sensors))
     yield resultset
 
     tag_names = []

@@ -3,7 +3,7 @@
 import logging
 import pytest_twisted
 
-from test.resources import settings, influx, PROCESS_DELAY
+from test.settings.mqttkit import settings, influx_sensors, PROCESS_DELAY
 from test.util import mqtt_json_sensor, sleep
 
 logger = logging.getLogger(__name__)
@@ -29,7 +29,7 @@ def test_timestamp_rfc3339(machinery, create_influxdb, reset_influxdb):
     yield sleep(PROCESS_DELAY)
 
     # Proof that data arrived in InfluxDB.
-    record = influx.get_first_record()
+    record = influx_sensors.get_first_record()
     assert record == {u'time': u'2020-03-10T02:38:37.937058816Z', u'humidity': 83.1, u'temperature': 42.84}
     yield record
 
@@ -54,7 +54,7 @@ def test_timestamp_seconds(machinery, create_influxdb, reset_influxdb):
     yield sleep(PROCESS_DELAY)
 
     # Proof that data arrived in InfluxDB.
-    record = influx.get_first_record()
+    record = influx_sensors.get_first_record()
     assert record == {u'time': u'2020-03-10T03:29:42Z', u'humidity': 83.1, u'temperature': 42.84}
     yield record
 
@@ -79,7 +79,7 @@ def test_timestamp_milliseconds(machinery, create_influxdb, reset_influxdb):
     yield sleep(PROCESS_DELAY)
 
     # Proof that data arrived in InfluxDB.
-    record = influx.get_first_record()
+    record = influx_sensors.get_first_record()
     assert record == {u'time': u'2020-03-10T03:29:42.123Z', u'humidity': 83.1, u'temperature': 42.84}
     yield record
 
@@ -104,7 +104,7 @@ def test_timestamp_microseconds(machinery, create_influxdb, reset_influxdb):
     yield sleep(PROCESS_DELAY)
 
     # Proof that data arrived in InfluxDB.
-    record = influx.get_first_record()
+    record = influx_sensors.get_first_record()
     assert record == {u'time': u'2020-03-10T03:29:42.123456Z', u'humidity': 83.1, u'temperature': 42.84}
     yield record
 
@@ -129,6 +129,6 @@ def test_timestamp_nanoseconds(machinery, create_influxdb, reset_influxdb):
     yield sleep(PROCESS_DELAY)
 
     # Proof that data arrived in InfluxDB.
-    record = influx.get_first_record()
+    record = influx_sensors.get_first_record()
     assert record == {u'time': u'2020-03-10T03:29:42.123456768Z', u'humidity': 83.1, u'temperature': 42.84}
     yield record

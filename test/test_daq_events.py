@@ -6,7 +6,7 @@ import pytest
 import pytest_twisted
 from twisted.internet import threads
 
-from test.resources import settings, influx_events, PROCESS_DELAY
+from test.settings.mqttkit import settings, influx_events, PROCESS_DELAY
 from test.util import mqtt_json_sensor, sleep, http_json_sensor, http_form_sensor
 
 logger = logging.getLogger(__name__)

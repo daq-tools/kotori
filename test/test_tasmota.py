@@ -6,7 +6,7 @@ import logging
 import pytest
 import pytest_twisted
 
-from test.resources import influx, PROCESS_DELAY
+from test.settings.mqttkit import influx_sensors, PROCESS_DELAY
 from test.util import mqtt_json_sensor, sleep
 
 logger = logging.getLogger(__name__)
@@ -55,7 +55,7 @@ def test_tasmota_sonoff_sc(machinery, create_influxdb, reset_influxdb):
     }
 
     # Proof that data arrived in InfluxDB.
-    record = influx.get_first_record()
+    record = influx_sensors.get_first_record()
     assert record == reference
     yield record
 
@@ -90,7 +90,7 @@ def test_tasmota_ds18b20(machinery, create_influxdb, reset_influxdb):
     }
 
     # Proof that data arrived in InfluxDB.
-    record = influx.get_first_record()
+    record = influx_sensors.get_first_record()
     assert record == reference
     yield record
 
@@ -126,7 +126,7 @@ def test_tasmota_wemos_dht22(machinery, create_influxdb, reset_influxdb):
     }
 
     # Proof that data arrived in InfluxDB.
-    record = influx.get_first_record()
+    record = influx_sensors.get_first_record()
     assert record == reference
     yield record
 
@@ -182,7 +182,7 @@ def test_tasmota_wemos_multi(machinery, create_influxdb, reset_influxdb):
     }
 
     # Proof that data arrived in InfluxDB.
-    record = influx.get_first_record()
+    record = influx_sensors.get_first_record()
     logger.info('record: %s', json.dumps(record))
     assert record == reference
     yield record
@@ -234,6 +234,6 @@ def test_tasmota_state(machinery, create_influxdb, reset_influxdb):
     }
 
     # Proof that data arrived in InfluxDB.
-    record = influx.get_first_record()
+    record = influx_sensors.get_first_record()
     assert record == reference
     yield record
