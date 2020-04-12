@@ -134,6 +134,9 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         # Run the decoder subsystem.
         message = self.decode_message(topic, payload)
 
+        if not message:
+            return
+
         # count transaction
         self.metrics.tx_count += 1
 
@@ -287,7 +290,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
                                 storage=storage_location.dump(), message=message.data,
                                 level=LogLevel.error)
 
-                    return Failure('Grafana provisioning failed')
+                    return Failure(Exception('Grafana provisioning failed'))
 
         return True
 
