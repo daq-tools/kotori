@@ -19,6 +19,12 @@ Backlog
 2020
 ****
 
+2020-03-17
+==========
+- Update "Homie" documentation
+  - Vielleicht den kanonischen Link zu "Homie" von https://homie-esp8266.readme.io/ auf https://homieiot.github.io/ aktualisieren?
+  - Und dann noch den Link auf die spezifische "homie-esp8266"-Implementierung auf https://homieiot.github.io/homie-esp8266/docs/3.0.0/ aktualisieren?
+
 
 2020-03-10
 ==========

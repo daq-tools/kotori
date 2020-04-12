@@ -26,8 +26,17 @@ Configuration
     :maxdepth: 1
 
     configuration/file
+    configuration/basic
     configuration/mqttkit
-    configuration/application
+
+
+**********
+Components
+**********
+
+.. toctree::
+    :maxdepth: 1
+
     forwarders/index
     decoders/index
 

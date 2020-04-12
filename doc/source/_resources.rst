@@ -141,6 +141,9 @@
 .. _LST-projects: http://sperlhome.userweb.mwn.de/
 
 .. luftdaten.info
+.. _Luftdaten.Info: https://luftdaten.info/
+.. _Sensor.Community: https://sensor.community/
+.. _Airrohr Firmware: https://github.com/opendata-stuttgart/sensors-software/tree/master/airrohr-firmware
 .. _luftdatenpumpe.py: https://github.com/daq-tools/kotori/blob/0.22.1/kotori/vendor/luftdaten/luftdatenpumpe.py
 .. _Luftdatenpumpe: https://github.com/panodata/luftdatenpumpe
 .. _Belgian Interregional Environment Agency (IRCEL - CELINE): http://www.irceline.be/en

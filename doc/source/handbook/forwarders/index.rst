@@ -17,8 +17,8 @@ telemetry data to the WAMP bus.
     :maxdepth: 1
     :glob:
 
-    http-to-mqtt
-    http-to-influx
+    http-api-acquire
+    http-api-export
 
 .. todo::
 

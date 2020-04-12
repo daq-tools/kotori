@@ -1,10 +1,11 @@
 .. include:: ../../_resources.rst
 
+.. _http-api-export:
 .. _forward-http-to-influx:
 
-###########################
-Forwarding HTTP to InfluxDB
-###########################
+#############################
+HTTP export API configuration
+#############################
 
 ************
 Introduction
@@ -21,7 +22,7 @@ Setup
 This can be achieved by configuring a generic HTTP-to-InfluxDB
 forwarder application:
 
-.. literalinclude:: ../../_static/content/etc/examples/forwarders/http-to-influx.ini
+.. literalinclude:: ../../_static/content/etc/examples/forwarders/http-api-export.ini
     :language: ini
     :linenos:
     :emphasize-lines: 43-53

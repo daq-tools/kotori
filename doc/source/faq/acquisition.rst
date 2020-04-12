@@ -39,5 +39,17 @@ Resources
 *********
 Please follow the documentation to read more details about data acquisition through MQTT and HTTP.
 
-- `Data acquisition using MQTT <https://getkotori.org/docs/handbook/acquisition/protocol/mqtt.html>`_
-- `Data acquisition using HTTP <https://getkotori.org/docs/handbook/acquisition/protocol/http.html>`_
+- :ref:`Data acquisition using MQTT <daq-mqtt>` for transmitting
+  telemetry data over MQTT from other environments (Python, Arduino, mbed).
+- :ref:`Data acquisition using HTTP <daq-http>` for transmitting
+  telemetry data over HTTP.
+
+
+********
+Examples
+********
+- See :ref:`basic-mqtt-example` for submitting measurement values /
+  telemetry data from the command line.
+
+- For sending a simple oscillating signal to Kotori from the command line,
+  please have a look at the :ref:`sawtooth-signal` page.

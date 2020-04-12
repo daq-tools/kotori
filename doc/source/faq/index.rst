@@ -10,6 +10,7 @@ FAQ
     :maxdepth: 1
 
     acquisition
+    mqttkit-application
     grafana-vs-export
     processing-tags
     payload-format

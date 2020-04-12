@@ -2,23 +2,39 @@
 
 .. _application-mqttkit:
 
-#######################
-The MQTTKit application
-#######################
+###################
+MQTTKit application
+###################
 
 
 *****
 About
 *****
+A generic distributed monitoring platform for
+collecting sensor data in wide area network setups
+and multi-node, multi-sensor environments ¹.
 
-| Kotori MQTTKit bundles services for operating an instant-on, generic
-| telemetry data sink for collecting sensor data in different scenarios.
-|
-| The design of MQTTKit specifically addresses data collection in multi-node,
-| multi-sensor, environments ¹.
-|
-| It emphasizes MQTT as communication protocol and JSON as data serialization
-| format but implements different other protocols and formats.
+It emphasizes MQTT as communication protocol and JSON as data serialization
+format but implements different other protocols and formats.
+
+
+*************
+Configuration
+*************
+.. highlight:: ini
+
+The core of each data acquisition application is its configuration object.
+The file :download:`etc/examples/mqttkit.ini <../../_static/content/etc/examples/mqttkit.ini>`
+can be used as a configuration blueprint.
+
+This configuration snippet will create an
+application object defined as ``[mqttkit-1]``.
+
+.. literalinclude:: ../../_static/content/etc/examples/mqttkit.ini
+    :language: ini
+    :linenos:
+    :lines: 1-16
+    :emphasize-lines: 10-15
 
 
 **********
@@ -33,7 +49,7 @@ The topology hierarchy is made up of four identifiers::
 
 The ``realm`` will be configured within the server configuration file
 while all other parameters designate the data acquisition channel and
-can be used freely by the user.
+can be assigned by the user.
 
 The topology identifiers are specified as:
 
@@ -56,30 +72,22 @@ In the following examples, this topology address will be encoded into the variab
 
 
 
-*************
-Configuration
-*************
-.. highlight:: ini
-
-Take a look at :download:`etc/examples/mqttkit.ini <../../_static/content/etc/examples/mqttkit.ini>`
-as a configuration blueprint.
-
-.. literalinclude:: ../../_static/content/etc/examples/mqttkit.ini
-    :language: ini
-    :linenos:
-    :lines: 1-16
-    :emphasize-lines: 11-16
-
-
-
 ************
 Sending data
 ************
+In the following examples, the topology address
+will be encoded into the variable ``CHANNEL``.
+
 .. highlight:: bash
 
 ::
 
-    mosquitto_pub -t mqttkit-1/testdrive/foobar/42/data.json -m '{"temperature": 42.84, "humidity": 83.1}'
+    # Define channel and data.
+    CHANNEL=mqttkit-1/testdrive/foobar/42
+    DATA='{"temperature": 42.84, "humidity": 83.1}'
+
+    # Publish telemetry data to MQTT topic.
+    echo "$DATA" | mosquitto_pub -t $CHANNEL/data.json -l
 
 
 **************
@@ -91,32 +99,6 @@ Receiving data
 
     # Receive telemetry data by subscribing to MQTT topic
     mosquitto_sub -t mqttkit-1/#
-
-
-****************
-Data acquisition
-****************
-It is really easy to transmit telemetry data to
-:ref:`Kotori` in different ways over the MQTT bus.
-
-
-Basic
-=====
-- See :ref:`basic-mqtt-example` for submitting measurement values /
-  telemetry data from the command line.
-
-
-Advanced
-========
-- For sending a simple oscillating signal to Kotori from the command line,
-  please have a look at the :ref:`sawtooth-signal` page.
-
-- Please follow up at :ref:`daq-mqtt` for transmitting telemetry data
-  over MQTT from other environments (Python, Arduino, mbed).
-
-- Also have a look at :ref:`forward-http-to-mqtt` about how to configure
-  a HTTP endpoint for your :ref:`application-mqttkit` application and see
-  :ref:`daq-http` for transmitting telemetry data over HTTP.
 
 
 ----

@@ -26,10 +26,10 @@ Configure Kotori application
 
 .. highlight:: ini
 
-Take a look at :download:`etc/examples/forwarders/http-to-mqtt.ini <../_static/content/etc/examples/forwarders/http-to-mqtt.ini>`
+Take a look at :download:`etc/examples/forwarders/http-api-generic.ini <../_static/content/etc/examples/forwarders/http-api-generic.ini>`
 as a configuration blueprint.
 
-.. literalinclude:: ../_static/content/etc/examples/forwarders/http-to-mqtt.ini
+.. literalinclude:: ../_static/content/etc/examples/forwarders/http-api-generic.ini
     :language: ini
     :linenos:
     :lines: 1-42

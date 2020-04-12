@@ -1,6 +1,6 @@
-.. include:: ../../_resources.rst
+.. include:: ../_resources.rst
 
-.. _application-object:
+.. _faq-application-object:
 
 #########################
 Application configuration

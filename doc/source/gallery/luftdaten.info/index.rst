@@ -259,7 +259,6 @@ Agenda
 
 
 
-.. _luftdaten.info: http://luftdaten.info
 .. _luftdaten.info map: http://deutschland.maps.luftdaten.info/
 .. _luftdaten.info Archive: http://archive.luftdaten.info
 .. _OK Lab Stuttgart: https://codefor.de/stuttgart/

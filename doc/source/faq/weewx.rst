@@ -73,7 +73,7 @@ for spawing an application.
 
 For further details, see also
 `mqttkit_application <https://github.com/daq-tools/kotori/blob/0.24.5/kotori/daq/application/mqttkit.py#L38-L40>`_
-and the documentation section about the :ref:`application-object`.
+and the documentation section about the :ref:`faq-application-object`.
 
 
 ----
@@ -104,7 +104,7 @@ configuration file. My question is about the ``source``, ``target`` and
     ; ----------------------------------------------------------------------
     ; Data export
     ; https://getkotori.org/docs/handbook/export/
-    ; https://getkotori.org/docs/applications/forwarders/http-to-influx.html
+    ; https://getkotori.org/docs/handbook/forwarders/http-api-export.html
     ; ----------------------------------------------------------------------
     [weewx.data-export]
     enable          = true
