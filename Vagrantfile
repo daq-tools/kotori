@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
 
     machine.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-      v.customize ["modifyvm", :id, "--memory", 512]
+      v.customize ["modifyvm", :id, "--memory", 2048]
       v.customize ["modifyvm", :id, "--name", "daqzilla-ubuntu18"]
     end
 
