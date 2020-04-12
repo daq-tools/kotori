@@ -7,9 +7,9 @@ Contributors
 This is an alphabetically-ordered list of the people who directly
 contributed to Kotori in one way or another.
 
-* Adrián López <adrianlzt@gmail.com>
+* Adrián López <https://github.com/adrianlzt>
 * Alexander Wilms <alex.wilms@adminguru.org>
-* Andreas Motl <andreas.motl@elmyra.de>
+* Andreas Motl <andreas.motl@getkotori.org>
 * Andrew Barber <https://github.com/Dewieinns>
 * Anne-Julia Scheuermann <annejulia@gmail.com>
 * Carolin Johannsen <caro@hiverize.org>
