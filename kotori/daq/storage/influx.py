@@ -24,6 +24,7 @@ class InfluxDBAdapter(object):
         settings.setdefault('username', u'root')
         settings.setdefault('password', u'root')
         settings.setdefault('database', database)
+        settings.setdefault('pool_size', 10)
 
         settings.setdefault('use_udp', False)
         settings.setdefault('udp_port', u'4444')
@@ -43,11 +44,11 @@ class InfluxDBAdapter(object):
         ]
         self.host_uri = u'influxdb://{host}:{port}'.format(**self.__dict__)
 
-        log.info(u'Storage target is {uri}', uri=self.host_uri)
+        log.info(u'Storage target is {uri}, pool size is {pool_size}', uri=self.host_uri, pool_size=self.pool_size)
         self.influx_client = InfluxDBClient(
             host=self.host, port=self.port,
             username=self.username, password=self.password,
-            database=self.database,
+            database=self.database, pool_size=self.pool_size,
             timeout=10)
 
         # TODO: Hold references to multiple UDP databases using mapping "self.udp_databases".

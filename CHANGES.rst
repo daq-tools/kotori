@@ -18,10 +18,11 @@ Breaking changes
 
 
 Features
--------------------
+--------
 - Honor "Time" field submitted by devices running Tasmota
 - Make Tasmota decoder grok double-nested payloads from Wemos devices
 - Add decoder for message payloads from Airrohr devices
+- Add ``pool_size`` option to ``[influxdb]`` configuration section. Thanks, @adrianlzt!
 
 Bugfixes
 --------
