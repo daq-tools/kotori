@@ -26,6 +26,7 @@ Features & Bugfixes
 - Add "lan" strategy and "basic" application
   This implements a flat MQTT topic namespace for simplifying
   addressing and getting started documentation.
+- Upgrade to influxdb==5.3.0 module and fix tests
 
 Documentation
 -------------
@@ -34,6 +35,7 @@ Documentation
 - Add FAQ sections about :ref:`data-acquisition-in-a-nutshell`,
   :ref:`grafana-vs-export` and :ref:`weewx-mqtt-faq`.
 - Add FAQ section about :ref:`processing-tags`
+- Update example configuration and documentation
 
 Packaging
 ---------

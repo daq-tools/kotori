@@ -19,26 +19,29 @@ Kotori
 
     .. figure:: https://ptrace.getkotori.org/2016-05-23_chart-recorder.png
         :alt: Chart recorder
-        :width: 300px
+        :width: 200px
 
     *Telemetry data acquisition and sensor networks for humans.*
 
 ----
 
-**Documentation**: https://getkotori.org/
+- **Documentation**: https://getkotori.org/
 
-**Source Code**: https://github.com/daq-tools/kotori/
+- **Source Code**: https://github.com/daq-tools/kotori
 
-**Status**:
+- **PyPI**: https://pypi.org/project/kotori/
 
-.. image:: https://img.shields.io/badge/Python-2.7-green.svg
-    :target: https://github.com/daq-tools/kotori
+- **Status**:
 
-.. image:: https://img.shields.io/pypi/v/kotori.svg
-    :target: https://pypi.org/project/kotori/
+  .. image:: https://img.shields.io/badge/Python-2.7-green.svg
 
-.. image:: https://img.shields.io/github/tag/daq-tools/kotori.svg
-    :target: https://github.com/daq-tools/kotori
+  .. image:: https://img.shields.io/pypi/status/kotori.svg
+
+  .. image:: https://img.shields.io/pypi/v/kotori.svg
+
+  .. image:: https://img.shields.io/pypi/l/kotori.svg
+
+  .. image:: https://img.shields.io/pypi/dm/kotori.svg
 
 
 ----
