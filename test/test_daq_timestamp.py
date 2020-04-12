@@ -30,7 +30,7 @@ def test_timestamp_rfc3339(machinery, create_influxdb, reset_influxdb):
 
     # Proof that data arrived in InfluxDB.
     record = influx_sensors.get_first_record()
-    assert record == {u'time': u'2020-03-10T02:38:37.937058816Z', u'humidity': 83.1, u'temperature': 42.84}
+    assert record == {u'time': u'2020-03-10T02:38:37.937059Z', u'humidity': 83.1, u'temperature': 42.84}
     yield record
 
 
@@ -80,7 +80,7 @@ def test_timestamp_milliseconds(machinery, create_influxdb, reset_influxdb):
 
     # Proof that data arrived in InfluxDB.
     record = influx_sensors.get_first_record()
-    assert record == {u'time': u'2020-03-10T03:29:42.123Z', u'humidity': 83.1, u'temperature': 42.84}
+    assert record == {u'time': u'2020-03-10T03:29:42.123000Z', u'humidity': 83.1, u'temperature': 42.84}
     yield record
 
 
@@ -130,5 +130,5 @@ def test_timestamp_nanoseconds(machinery, create_influxdb, reset_influxdb):
 
     # Proof that data arrived in InfluxDB.
     record = influx_sensors.get_first_record()
-    assert record == {u'time': u'2020-03-10T03:29:42.123456768Z', u'humidity': 83.1, u'temperature': 42.84}
+    assert record == {u'time': u'2020-03-10T03:29:42.123457Z', u'humidity': 83.1, u'temperature': 42.84}
     yield record

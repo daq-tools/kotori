@@ -87,7 +87,7 @@ class InfluxWrapper:
         logger.info('InfluxDB: Querying database')
         expression = Query('*').from_(self.measurement) # .where(time__gte=time_begin, time__lte=time_end, **tags)
         influx_client = self.get_client()
-        result = influx_client.query(expression)
+        result = influx_client.query(str(expression))
         return result
 
     def get_record(self, index=None):
@@ -170,8 +170,9 @@ def http_csv_sensor(topic, data):
     requests.post(uri, data=body, headers={'Content-Type': 'text/csv'})
 
 
-def http_get_data(topic, format='csv'):
-    uri = 'http://localhost:24642/api{topic}.{format}'.format(topic=topic, format=format)
+def http_get_data(topic=None, format='csv', ts_from=None, ts_to=None):
+    uri = 'http://localhost:24642/api{topic}.{format}?from={ts_from}&to={ts_to}'.format(
+        topic=topic, format=format, ts_from=ts_from, ts_to=ts_to)
     logger.info('HTTP: Exporting data from {} using format "{}"'.format(uri, format))
     return requests.get(uri).content
 

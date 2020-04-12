@@ -241,7 +241,7 @@ nosetest:
 	@# https://nose.readthedocs.org/en/latest/plugins/cover.html
 	export NOSE_IGNORE_FILES="test_.*\.py"; \
 	$(venvpath)/bin/nosetests --with-doctest --doctest-tests --doctest-extension=rst --verbose \
-		kotori/*.py kotori/daq/{application,graphing,services,storage} kotori/daq/intercom/{mqtt/paho.py,strategies.py,udp.py,wamp.py} kotori/firmware kotori/io kotori/vendor/hiveeyes
+		kotori/*.py kotori/daq/{application,graphing,services,storage,strategy} kotori/daq/intercom/{mqtt/paho.py,udp.py,wamp.py} kotori/firmware kotori/io kotori/vendor/hiveeyes
 
 test: pytest nosetest
 

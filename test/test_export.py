@@ -33,29 +33,31 @@ def test_export_csv(machinery, create_influxdb, reset_influxdb):
     yield sleep(PROCESS_DELAY)
 
     # Proof that data is available via HTTP API.
+    ts_from = '2020-03-10T00:00:00.000Z'
+    ts_to = '2020-03-10T23:59:59.000Z'
 
     # CSV format.
-    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='csv')
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='csv', ts_from=ts_from, ts_to=ts_to)
     yield deferred
     assert deferred.result == 'time,humidity,temperature\n2020-03-10T03:29:42.000000Z,51.8,25.26\n'
 
     # TXT format (same as CSV).
-    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='txt')
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='txt', ts_from=ts_from, ts_to=ts_to)
     yield deferred
     assert deferred.result == 'time,humidity,temperature\n2020-03-10T03:29:42.000000Z,51.8,25.26\n'
 
     # JSON format.
-    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='json')
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='json', ts_from=ts_from, ts_to=ts_to)
     yield deferred
     assert deferred.result == '[{"time":"2020-03-10T03:29:42.000Z","humidity":51.8,"temperature":25.26}]'
 
     # XLSX format.
-    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='xlsx')
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='xlsx', ts_from=ts_from, ts_to=ts_to)
     yield deferred
     assert deferred.result.startswith(b'PK\x03\x04\x14\x00\x00\x00\x08\x00')
 
     # HTML format.
-    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='html')
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='html', ts_from=ts_from, ts_to=ts_to)
     yield deferred
     assert \
         '<html>' in deferred.result and \

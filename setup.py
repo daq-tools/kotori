@@ -61,7 +61,7 @@ requires = requires_core + [
 
 extras = {
     'daq': [
-        'influxdb==4.0.0',          # 5.0.0
+        'influxdb==5.3.0',
         'pytz==2018.9',
         'requests>=2.12.4',
         #'requests>=2.18.4,<3',
@@ -154,7 +154,7 @@ setup(name='kotori',
         "Programming Language :: Python :: 2",
         "License :: OSI Approved :: GNU Affero General Public License v3",
         "License :: OSI Approved :: European Union Public Licence 1.2 (EUPL 1.2)",
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
         "Environment :: Web Environment",
         "Framework :: Pyramid",
