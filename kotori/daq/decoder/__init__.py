@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2019-2020 Andreas Motl <andreas@getkotori.org>
+from kotori.daq.decoder.airrohr import AirrohrDecoder
 from kotori.daq.decoder.tasmota import TasmotaSensorDecoder, TasmotaStateDecoder
 from kotori.daq.decoder.schema import MessageType
 
@@ -21,6 +22,12 @@ class DecoderManager:
 
         if 'slot' not in self.topology:
             return False
+
+        # Airrohr
+        if self.topology.slot.endswith('airrohr.json'):
+            self.info.message_type = MessageType.DATA_CONTAINER
+            self.info.decoder = AirrohrDecoder
+            return True
 
         # Tasmota Sensor
         if self.topology.slot.endswith('SENSOR'):

@@ -20,3 +20,4 @@ shipped with Kotori.
     :glob:
 
     tasmota
+    airrohr

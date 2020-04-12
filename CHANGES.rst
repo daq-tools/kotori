@@ -17,10 +17,14 @@ Breaking changes
    We have been too lazy in the past. Sorry.
 
 
-Features & Bugfixes
+Features
 -------------------
 - Honor "Time" field submitted by devices running Tasmota
 - Make Tasmota decoder grok double-nested payloads from Wemos devices
+- Add decoder for message payloads from Airrohr devices
+
+Bugfixes
+--------
 - Fix logger
 - Refactor decoder subsystem
 - Add "lan" strategy and "basic" application
