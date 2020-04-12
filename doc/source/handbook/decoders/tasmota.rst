@@ -98,8 +98,8 @@ See also `Configure MQTT for the Tasmota Firmware`_.
 
 Configuration
 =============
-This section is about getting the system configured
-properly, so please read this section carefully.
+This is about getting the system configured properly,
+so please read this section carefully.
 
 Settings
 --------
@@ -107,33 +107,21 @@ While configuring the MQTT broker address is straight-forward, special
 care should be taken to configure the MQTT topic appropriately to send
 telemetry data to the data historian.
 
-:Topic: Unique identifier of your device (e.g. hallswitch, kitchen-light). Referenced elsewhere as `%topic%`.
-:Full Topic: A full topic definition where `%topic%` and `%prefix%` can be interpolated into.
+| **Topic**: Unique identifier of your device (e.g. hallswitch, kitchen-light). Referenced elsewhere as `%topic%`.
+| **Full Topic**: A full topic definition where `%topic%` and `%prefix%` can be interpolated into.
 
 By example
 ----------
 Let's define a communication channel address and a device identifier for
 data acquisition.
 
-:Channel: ``universe/milky-way/earth-one``
-:Device: ``node-42``
+| **Channel**: ``universe/milky-way/earth-one``
+| **Device**: ``node-42``
 
 The appropriate settings for Tasmota would then be
 
-:Topic: ``node-42``
-:Full Topic: ``universe/milky-way/earth-one/%topic%/%prefix%/``
-
-Reflections
------------
-So, the data logger device is called ``node-42`` and it will send telemetry
-data to the communication channel ``universe/milky-way/earth-one``.
-By decomposing the channel address, we can understand the purpose of each
-addressing component.
-
-:realm: ``universe``
-:owner: ``milky-way``
-:site: ``earth-one``
-:node: ``node-42``
+| **Topic**: ``node-42``
+| **Full Topic**: ``universe/milky-way/earth-one/%topic%/%prefix%/``
 
 Running this configuration will yield MQTT topics like::
 

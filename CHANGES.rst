@@ -41,6 +41,7 @@ Documentation
   :ref:`grafana-vs-export` and :ref:`weewx-mqtt-faq`.
 - Add FAQ section about :ref:`processing-tags`
 - Update example configuration and documentation
+- Improve Tasmota decoder documentation
 
 Packaging
 ---------
