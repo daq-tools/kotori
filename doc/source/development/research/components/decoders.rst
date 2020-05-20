@@ -45,3 +45,9 @@ Interfacing with C/C++
 ======================
 - https://github.com/wjakob/pybind11
 - https://pybind11.readthedocs.org/
+
+
+Embedding JavaScript
+====================
+- https://blog.sqreen.com/embedding-javascript-into-python/
+- https://github.com/sony/v8eval

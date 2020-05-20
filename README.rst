@@ -34,14 +34,22 @@ Kotori
 - **Status**:
 
   .. image:: https://img.shields.io/badge/Python-2.7-green.svg
+        :target: https://python.org
+
+  .. image:: https://img.shields.io/github/tag/hiveeyes/terkin-datalogger.svg
+        :target: https://github.com/daq-tools/kotori
 
   .. image:: https://img.shields.io/pypi/status/kotori.svg
+        :target: https://pypi.org/project/kotori/
 
   .. image:: https://img.shields.io/pypi/v/kotori.svg
+        :target: https://pypi.org/project/kotori/
 
   .. image:: https://img.shields.io/pypi/l/kotori.svg
+        :target: https://pypi.org/project/kotori/
 
   .. image:: https://img.shields.io/pypi/dm/kotori.svg
+        :target: https://pypi.org/project/kotori/
 
 
 ----
