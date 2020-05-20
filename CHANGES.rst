@@ -64,6 +64,10 @@ Tests
 - Add test for WeeWX integration
 - Add test for legacy MQTT topic suffix
 
+Clients
+-------
+- Add basic data export example for Arduino/HTTP
+
 
 .. _kotori-0.24.5:
 
