@@ -21,14 +21,17 @@ bool decode_data(WiFiClient& json) {
   }
 
   // Convert to JsonObject.
-  JsonObject root = doc.as<JsonObject>();
+  //JsonObject root = doc.as<JsonObject>();
+
+  // Get the first element of the array.
+  JsonObject first = doc[0];
 
   // Decode data.
-  hive_data[0].temperature_outside    = root["temperature.0x77.i2c:0"];
-  hive_data[0].humidity_outside       = root["humidity.0x77.i2c:0"];
-  hive_data[0].temperature_inside_1   = root["temperature.28ff641d8fc3944f.onewire:0"];
-  hive_data[0].temperature_inside_2   = root["temperature.28ff641d8fdf18c1.onewire:0"];
-  hive_data[0].weight                 = root["weight.0"];
+  hive_data[0].temperature_outside    = first["temperature.0x77.i2c:0"];
+  hive_data[0].humidity_outside       = first["humidity.0x77.i2c:0"];
+  hive_data[0].temperature_inside_1   = first["temperature.28ff641d8fc3944f.onewire:0"];
+  hive_data[0].temperature_inside_2   = first["temperature.28ff641d8fdf18c1.onewire:0"];
+  hive_data[0].weight                 = first["weight.0"];
 
   return true;
 }
