@@ -57,7 +57,7 @@ Watch telemetry data
 ====================
 - Access Grafana by navigating to http://kotori.example.org:3000/ and logging in with ``admin/admin``.
 - Navigate to the dashboard just created by submitting telemetry data
-  http://kotori.example.org:3000/dashboard/db/ecuador.
+  http://kotori.example.org:3000/dashboard/db/amazonas-ecuador.
 
 
 Troubleshooting
