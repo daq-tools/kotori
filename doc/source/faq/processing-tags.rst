@@ -88,8 +88,8 @@ Question
 ******
 Answer
 ******
-When installing Kotori from the Debian package,
-it will unfold at ``/opt/kotori/lib/python2.7/site-packages/kotori``.
+When installing Kotori from the Debian package, it will unfold
+at e.g. ``/opt/kotori/lib/python3.8/site-packages/kotori``.
 
 .. attention::
 
