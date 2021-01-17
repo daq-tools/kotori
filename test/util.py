@@ -5,6 +5,7 @@ import json
 import logging
 import random
 import string
+import sys
 
 import pytest
 import requests
@@ -25,9 +26,9 @@ def boot_kotori(config):
     options = {
         '--config': config,
         '--debug': True,
-        '--debug-io': True,
-        '--debug-mqtt': True,
-        '--debug-influx': True,
+        '--debug_io': True,
+        '--debug_mqtt': True,
+        '--debug_influx': True,
     }
     loader = kotori.boot(options)
     return loader
@@ -145,10 +146,26 @@ def mqtt_json_sensor(topic, data):
 
 
 def mqtt_sensor(topic, payload):
+
     logger.info('MQTT: Submitting reading')
-    command = "mosquitto_pub -h localhost -t '{topic}' -m '{payload}'".format(topic=topic, payload=payload)
+
+    # When running on CI (GHA), run ``mosquitto_pub`` from Docker image.
+    # https://stackoverflow.com/questions/24319662
+    if os.environ.get("CI"):
+        if sys.platform == "linux":
+            mosquitto_pub = "docker run --rm --network=host eclipse-mosquitto:1.6.12 mosquitto_pub -h localhost"
+        elif sys.platform == "darwin":
+            mosquitto_pub = "docker run --rm eclipse-mosquitto:1.6.12 mosquitto_pub -h host.docker.internal"
+        else:
+            raise NotImplementedError(f"Invoking 'mosquitto_pub' through Docker on '{sys.platform}' not supported yet")
+    else:
+        mosquitto_pub = "mosquitto_pub -h localhost"
+    command = f"{mosquitto_pub} -t '{topic}' -m '{payload}'"
+
     logger.info('Running command {}'.format(command))
-    os.system(command)
+    exitcode = os.system(command)
+    if exitcode != 0:
+        raise ChildProcessError(f"Invoking command failed: {command}. Exit code: {exitcode}")
 
 
 def http_json_sensor(topic, data):
