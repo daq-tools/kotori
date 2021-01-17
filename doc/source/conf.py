@@ -360,8 +360,8 @@ def setup(app):
     app.add_css_file("assets/css/font-entypo.css")
     app.add_css_file("assets/css/hexagons.min.css")
     # jQuery 2.1.0 conflicts with jQuery 1.11.1 from Sphinx
-    #app.add_javascript("assets/js/jquery-2.1.0.min.js")
-    app.add_javascript("assets/js/hexagons.min.js")
+    #app.add_js_file("assets/js/jquery-2.1.0.min.js")
+    app.add_js_file("assets/js/hexagons.min.js")
 
     # application
     #app.add_javascript("custom.js")
