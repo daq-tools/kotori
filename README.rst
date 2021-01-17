@@ -33,6 +33,9 @@ Kotori
 
 - **Status**:
 
+  .. image:: https://github.com/daq-tools/kotori/workflows/Tests/badge.svg
+        :target: https://github.com/daq-tools/kotori/actions?workflow=Tests
+
   .. image:: https://img.shields.io/pypi/pyversions/kotori.svg
         :target: https://python.org
 
