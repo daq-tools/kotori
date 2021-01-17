@@ -20,6 +20,9 @@ Backlog
 ****
 - Unlock Python 3.9 (needs PyTables)
 - Run black and isort
+- Add CI testing on GHA
+- Logrotate configuration for kotori.log
+- Completely replace Bunch with Munch
 
 
 ****
