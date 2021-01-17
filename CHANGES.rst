@@ -5,6 +5,12 @@ Changelog
 
 in progress
 ===========
+
+
+.. _kotori-0.25.0:
+
+2021-01-18 0.25.0
+=================
 - Upgrade to Python 3
 
 
