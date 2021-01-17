@@ -5,7 +5,8 @@
 import sys
 import datetime
 from copy import deepcopy
-from urlparse import urlparse, parse_qs
+from urllib.parse import urlparse, parse_qs
+
 from autobahn.twisted.wamp import ApplicationRunner, ApplicationSession
 from autobahn.twisted.websocket import WampWebSocketClientProtocol, WampWebSocketClientFactory
 from autobahn.twisted.websocket import WampWebSocketServerProtocol, WampWebSocketServerFactory
@@ -29,7 +30,7 @@ class NodeRegistry(object):
         #print '======================', self.nodes
 
     def persist(self):
-        print "============= persist", self.nodes
+        print("============= persist", self.nodes)
         #self.config['nodes'].update(self.nodes)
         #del self.config['nodes']
         self.config['nodes'] = {'haha': {'hehe': 'dscsdcsdcsdcc'}}
@@ -42,13 +43,13 @@ class NodeRegistry(object):
         #self.config['ghi']['jkl'] = 'defunct'
 
     def register(self, node_id, hostname=None):
-        print "NodeRegistry.register:", node_id
+        print("NodeRegistry.register:", node_id)
         self.nodes[node_id] = {'hostname': hostname}
         self.persist()
         client.publish('http://kotori.elmyra.de/dashboard#update', None)
 
     def unregister(self, node_id):
-        print "NodeRegistry.unregister:", node_id
+        print("NodeRegistry.unregister:", node_id)
         try:
             del self.nodes[node_id]
             self.persist()
@@ -58,14 +59,14 @@ class NodeRegistry(object):
 
     #@exportRpc
     def get_nodes(self):
-        print "NodeRegistry.get_nodes:", self.nodes
+        print("NodeRegistry.get_nodes:", self.nodes)
         return self.nodes
 
     #@exportRpc
     def set_node_label(self, node_id, label):
-        print "NodeRegistry.set_node_label:", node_id, label
+        print("NodeRegistry.set_node_label:", node_id, label)
         self.nodes.setdefault(node_id, {})['label'] = label
-        print self.nodes[node_id]
+        print(self.nodes[node_id])
         self.persist()
 
 #registry = NodeRegistry()
@@ -91,7 +92,7 @@ class MasterServerFactory(WampWebSocketServerFactory):
         self.setProtocolOptions(allowHixie76 = True)
 
     def onClientSubscribed(self, proto, topic):
-        print "subscribed:  ", proto, topic
+        print("subscribed:  ", proto, topic)
         uri = urlparse(topic)
         if uri.path == '/presence':
             params = parse_qs(uri.query)
@@ -100,7 +101,7 @@ class MasterServerFactory(WampWebSocketServerFactory):
             registry.register(node_id, hostname)
 
     def onClientUnsubscribed(self, proto, topic):
-        print "unsubscribed:", proto, topic
+        print("unsubscribed:", proto, topic)
         uri = urlparse(topic)
         if uri.path == '/presence':
             params = parse_qs(uri.query)
@@ -134,7 +135,7 @@ class Component(ApplicationSession):
 
 def boot_master(websocket_uri, debug=False, trace=False):
 
-    print 'INFO: Starting WebSocket master service on', websocket_uri
+    print('INFO: Starting WebSocket master service on', websocket_uri)
     """
     factory = MasterServerFactory(websocket_uri, debugWamp = True)
     websocket.listenWS(factory)

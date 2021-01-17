@@ -98,6 +98,9 @@ Miscellaneous
   | DEWESoft produces hardware and software for test measurement, data aquisition, and storage.
   | https://github.com/costerwi/dwdatareader
 
+- | Pythonic access to National Instruments NI DAQmx hardware
+  | https://github.com/slightlynybbled/daqmx
+
 
 
 *****

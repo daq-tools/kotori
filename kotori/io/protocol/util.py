@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-# (c) 2016 Andreas Motl <andreas.motl@elmyra.de>
+# (c) 2016-2021 Andreas Motl <andreas.motl@elmyra.de>
 import math
 import arrow
-import types
 import datetime
 from six import text_type
 from dateutil.tz import gettz
@@ -15,6 +14,7 @@ from twisted.python.failure import Failure
 from twisted.web.error import Error
 
 log = Logger()
+
 
 def get_data_uri(bucket, sibling=None, more_params=None):
     """
@@ -34,36 +34,38 @@ def get_data_uri(bucket, sibling=None, more_params=None):
     url = URL()
     for param in forward_parameters:
         if param in bucket.tdata:
-            url = url.add(unicode(param), unicode(bucket.tdata[param]))
+            url = url.add(str(param), str(bucket.tdata[param]))
 
-    for param, value in more_params.iteritems():
+    for param, value in more_params.items():
 
         # Special rule: Don't add any of "pad" or "backfill", if "interpolate" is true
         do_interpolate = 'interpolate' in bucket.tdata and asbool(bucket.tdata.interpolate)
         if do_interpolate and param in ['pad', 'backfill']:
             continue
 
-        url = url.add(unicode(param), unicode(value))
+        url = url.add(str(param), str(value))
 
-    data_uri = str(request.URLPath().sibling(sibling).click(url.asText()))
+    data_uri = str(request.URLPath().sibling(sibling.encode()).click(url._to_bytes()))
     return data_uri
+
 
 def twisted_honor_reverse_proxy(request):
     # Honor X-Forwarded-Proto request header if behind SSL-terminating HTTP proxy
     # See also: https://twistedmatrix.com/trac/ticket/5807
     hostname, port = twisted_hostname_port(request)
     is_ssl = twisted_is_secure(request)
-    request.setHost(hostname, port, is_ssl)
+    request.setHost(hostname.encode(), port, is_ssl)
+
 
 def twisted_hostname_port(request):
     """
     Conveniently get (host, port) tuple of current request,
     either from "Host" header or from the request object itself.
     """
-    host_header = request.getHeader(b'Host')
+    host_header = request.getHeader('Host')
     if host_header:
         if ':' in host_header:
-            hostname, port = host_header.split(b':')
+            hostname, port = host_header.split(':')
         else:
             is_ssl = twisted_is_secure(request)
             hostname, port = host_header, is_ssl and 443 or 80
@@ -73,17 +75,21 @@ def twisted_hostname_port(request):
 
     return hostname, int(port)
 
+
 def twisted_is_secure(request):
     return request.isSecure() or request.getHeader('X-Forwarded-Proto') == 'https'
+
 
 def flatten_request_args(args):
     """
     Flatten Twisted request query parameters.
     """
     result = {}
-    for key, value in args.iteritems():
-        result[key] = ','.join(value)
+    for key, value in args.items():
+        key = key.decode()
+        result[key] = ','.join(map(lambda x: x.decode(), value))
     return result
+
 
 def convert_floats(data, integers=None):
     """
@@ -91,7 +97,7 @@ def convert_floats(data, integers=None):
     """
     integers = integers or []
     delete_keys = []
-    for key, value in data.iteritems():
+    for key, value in data.items():
         try:
             if isinstance(value, datetime.datetime):
                 continue
@@ -109,6 +115,7 @@ def convert_floats(data, integers=None):
         del data[key]
 
     return data
+
 
 def is_number(s):
     """
@@ -130,6 +137,7 @@ def is_number(s):
 
     return False
 
+
 def handleFailure(f, request=None):
     """
     Handle failure in callback chain, log and respond with traceback.
@@ -147,7 +155,7 @@ def handleFailure(f, request=None):
         msg = None
         if isinstance(f.value.response, Failure):
             msg = f.value.response.getErrorMessage()
-        elif type(f.value.response) in types.StringTypes:
+        elif type(f.value.response) in (str,):
             msg = f.value.response
         request.messages.append({'type': 'error', 'message': msg})
 

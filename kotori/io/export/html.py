@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-# (c) 2016 Andreas Motl <andreas.motl@elmyra.de>
+# (c) 2016-2021 Andreas Motl <andreas.motl@elmyra.de>
 from twisted.web.template import XMLString, Element, renderer, tags, CDATA
 #from dyplot.dygraphs import Dygraphs
+
 
 class GenericPage(Element):
     """
@@ -174,4 +175,3 @@ class DatatablesPage(GenericPage):
     def __init__(self, data_uri=None, bucket=None):
         self.data_uri = data_uri
         self.bucket = bucket
-

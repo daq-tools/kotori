@@ -5,7 +5,8 @@ import sys
 import socket
 import logging
 from binascii import unhexlify
-from urlparse import urlparse
+from urllib.parse import urlparse
+
 from tabulate import tabulate
 from collections import OrderedDict
 from kotori.util.configuration import read_list
@@ -14,11 +15,14 @@ logger = logging.getLogger(__name__)
 
 CONFIG_CHANNEL_PREFIX = 'lst-'
 
+
 def sanitize_channel_label(label):
     return label.replace(CONFIG_CHANNEL_PREFIX, '')
 
+
 def compute_channel_label(name):
     return CONFIG_CHANNEL_PREFIX + name
+
 
 def lst_channels(config):
     channel_labels = read_list(config['lst']['channels'])
@@ -27,7 +31,8 @@ def lst_channels(config):
         channel_settings = config[channel_label]
         channel_info = get_channel_info(channel_label, channel_settings)
         channel_infos.append(channel_info)
-    print tabulate(channel_infos, headers='keys')
+    print(tabulate(channel_infos, headers='keys'))
+
 
 def get_channel_info(channel_label, channel_settings):
     channel = OrderedDict()
@@ -39,6 +44,7 @@ def get_channel_info(channel_label, channel_settings):
     channel['path']         = os.path.abspath(channel_settings['include_path'])
     return channel
 
+
 def lst_message(channel, adapter, options):
 
     target = options.get('--target')
@@ -46,7 +52,7 @@ def lst_message(channel, adapter, options):
     payload_ascii = options.get('<payload>')
 
     if options.get('info'):
-        print
+        print()
         if struct_name:
             try:
                 struct_adapter = adapter.struct_registry.get(struct_name)
@@ -59,12 +65,12 @@ def lst_message(channel, adapter, options):
             channel_info = get_channel_info(channel.label, channel.settings)
             struct_infos = adapter.struct_registry.get_metadata()
 
-            print 'Channel information'; print
-            print tabulate(zip(channel_info.keys(), channel_info.values()))
-            print; print
+            print('Channel information'); print()
+            print(tabulate(list(zip(list(channel_info.keys()), list(channel_info.values())))))
+            print(); print()
 
-            print 'Struct information in "{}"'.format(channel.settings.header_files); print
-            print tabulate(struct_infos, headers='keys')
+            print('Struct information in "{}"'.format(channel.settings.header_files)); print()
+            print(tabulate(struct_infos, headers='keys'))
 
     elif options.get('decode'):
         try:

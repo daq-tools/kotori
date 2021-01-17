@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2018 Andreas Motl <andreas@getkotori.org>
+# (c) 2015-2021 Andreas Motl <andreas@getkotori.org>
 import re
 
 
@@ -52,7 +52,7 @@ class TopicPatterns:
 
     @classmethod
     def compile_patterns(cls, patterns):
-        matcher = re.compile('({parts})'.format(parts='|'.join(map(lambda x: x + '$', patterns))))
+        matcher = re.compile('({parts})'.format(parts='|'.join([x + '$' for x in patterns])))
         return matcher
 
 

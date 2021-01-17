@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2018 Andreas Motl <andreas@getkotori.org>
+# (c) 2015-2021 Andreas Motl <andreas@getkotori.org>
 import time
 import json
 
@@ -38,7 +38,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         self.graphing = to_list(graphing)
         self.strategy = strategy
 
-        self.name = u'service-mig-' + self.channel.get('realm', unicode(id(self)))
+        self.name = u'service-mig-' + self.channel.get('realm', str(id(self)))
 
     def setupService(self):
 
@@ -339,7 +339,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
         #
         error = {
-            'type': unicode(failure.type),
+            'type': str(failure.type),
             'message': failure.getErrorMessage(),
             'description': u'Error processing MQTT message "{payload}" from topic "{topic}".'.format(topic=topic, payload=payload),
             'timestamp': arrow.utcnow().format('YYYY-MM-DDTHH:mm:ssZZ'),

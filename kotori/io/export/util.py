@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2016 Andreas Motl <andreas.motl@elmyra.de>
+# (c) 2016-2021 Andreas Motl <andreas.motl@elmyra.de>
 from twisted.logger import Logger, LogLevel
 log = Logger()
 
@@ -19,6 +19,7 @@ def dataframe_index_to_column(df, column):
     #df.reset_index(drop=True, inplace=True)
     return df
 
+
 def dataframe_wide_to_long_indexed(df, column):
     """
     Convert DataFrame from wide to long format using specified column as index column,
@@ -33,6 +34,7 @@ def dataframe_wide_to_long_indexed(df, column):
     df = dataframe_index_and_sort(df, column)
     return df
 
+
 def dataframe_index_and_sort(df, column):
     """
     Index and sort DataFrame on specified column.
@@ -40,6 +42,7 @@ def dataframe_index_and_sort(df, column):
     df = df.set_index([column])
     df = df.sort_index()
     return df
+
 
 def matplotlib_locator_formatter(timedelta, span=1):
     """
@@ -80,3 +83,14 @@ def matplotlib_locator_formatter(timedelta, span=1):
 
     return locator, formatter
 
+
+def make_timezone_unaware(df):
+    # Please ensure that datetimes are timezone unaware before writing to Excel.
+    # https://github.com/pandas-dev/pandas/pull/27129
+    # https://github.com/pandas-dev/pandas/issues/28921
+    # https://stackoverflow.com/questions/61802080/excelwriter-valueerror-excel-does-not-support-datetime-with-timezone-when-savin
+    # https://github.com/pandas-dev/pandas/issues/7056
+    df['time'] = pandas.to_datetime(
+        df['time'], utc=True) \
+        .dt.tz_convert('UTC') \
+        .dt.tz_localize(None)

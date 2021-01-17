@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2020 Andreas Motl <andreas@getkotori.org>
+# (c) 2020-2021 Andreas Motl <andreas@getkotori.org>
 import logging
 
 import pytest
@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 @pytest_twisted.inlineCallbacks
 @pytest.mark.http
 @pytest.mark.export
-def test_export_csv(machinery, create_influxdb, reset_influxdb):
+def test_export(machinery, create_influxdb, reset_influxdb):
     """
     Submit single reading in JSON format to HTTP API and proof
     it can be retrieved back from the HTTP API in different formats.
@@ -63,3 +63,31 @@ def test_export_csv(machinery, create_influxdb, reset_influxdb):
         '<html>' in deferred.result and \
         '<th>temperature</th>' in deferred.result and \
         '<td>25.26</td>' in deferred.result
+
+    # HDF5 format.
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='hdf5', ts_from=ts_from, ts_to=ts_to)
+    yield deferred
+    assert deferred.result.startswith(b'\x89HDF\r\n\x1a\n\x00\x00\x00\x00\x00')
+
+    import h5py
+    from io import BytesIO
+    from pandas import array
+    hdf = h5py.File(BytesIO(deferred.result), "r")
+    assert hdf["/itest_foo_bar/table"].attrs.get("NROWS") == 1
+    assert hdf["/itest_foo_bar/table"].attrs.get("index_kind") == b"datetime64"
+    assert hdf["/itest_foo_bar/table"].attrs.get("humidity_dtype") == b"float64"
+    assert hdf["/itest_foo_bar/table"].attrs.get("temperature_dtype") == b"float64"
+    assert hdf["/itest_foo_bar/table"].shape == (1,)
+    assert hdf["/itest_foo_bar/table"][()] == array(
+        [(1583810982000000000, 51.8, 25.26)],
+        dtype=[('index', '<i8'), ('humidity', '<f8'), ('temperature', '<f8')])
+
+    # NetCDF format.
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='nc', ts_from=ts_from, ts_to=ts_to)
+    yield deferred
+    assert deferred.result.startswith(b'\x89HDF\r\n\x1a\n\x00\x00\x00\x00\x00')
+
+    # Datatables HTML.
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='dt', ts_from=ts_from, ts_to=ts_to)
+    yield deferred
+    assert b"cdn.datatables.net" in deferred.result

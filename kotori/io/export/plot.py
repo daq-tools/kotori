@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2016 Andreas Motl <andreas.motl@elmyra.de>
-import types
+# (c) 2016-2021 Andreas Motl <andreas.motl@elmyra.de>
 import tempfile
 from pprint import pprint
 from string import Template
@@ -13,6 +12,7 @@ from kotori.io.export.util import dataframe_index_to_column, dataframe_wide_to_l
 from kotori.io.export.util import matplotlib_locator_formatter
 
 log = Logger()
+
 
 class UniversalPlotter(object):
     """
@@ -211,7 +211,7 @@ class UniversalPlotter(object):
             theme_name = bucket.tdata.get('theme')
             # TODO: Switching themes will leak some matplotlib/pyplot properties, postpone to future versions
             if theme_name:
-                if type(theme_name) is types.FloatType:
+                if isinstance(theme_name, float):
                     theme_name = str(int(theme_name))
                 try:
                     theme = eval('theme_' + theme_name)
@@ -354,4 +354,3 @@ class UniversalPlotter(object):
 
             bucket.request.setHeader('Content-Type', 'application/json')
             return vis.to_json()
-

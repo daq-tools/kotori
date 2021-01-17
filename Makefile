@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2014-2020 Andreas Motl <andreas.motl@getkotori.org>
+# (c) 2014-2021 Andreas Motl <andreas.motl@getkotori.org>
 
 # ============
 # Main targets
@@ -10,33 +10,27 @@
 # Configuration
 # -------------
 
-$(eval venvpath     := .venv2)
-$(eval pip          := $(venvpath)/bin/pip)
-$(eval python       := $(venvpath)/bin/python)
-$(eval pytest       := $(venvpath)/bin/pytest)
-$(eval bumpversion  := $(venvpath)/bin/bumpversion)
-$(eval twine        := $(venvpath)/bin/twine)
-
-$(eval venv3        := .venv3)
-$(eval pip3         := $(venv3)/bin/pip)
-$(eval python3      := $(venv3)/bin/python)
-$(eval sphinx       := $(venv3)/bin/sphinx-build)
+$(eval venv         := .venv)
+$(eval pip          := $(venv)/bin/pip)
+$(eval python       := $(venv)/bin/python)
+$(eval pytest       := $(venv)/bin/pytest)
+$(eval nosetests    := $(venv)/bin/nosetests)
+$(eval bumpversion  := $(venv)/bin/bumpversion)
+$(eval twine        := $(venv)/bin/twine)
+$(eval sphinx       := $(venv)/bin/sphinx-build)
 
 
 # Setup Python virtualenv
-setup-virtualenv2:
-	@test -e $(python) || `command -v virtualenv` --python=python2 --no-site-packages $(venvpath)
+setup-virtualenv:
+	@test -e $(python) || python3 -mvenv $(venv)
 
-setup-virtualenv3:
-	@test -e $(python3) || `command -v virtualenv` --python=python3 --no-site-packages $(venv3)
+virtualenv-docs: setup-virtualenv
+	@$(pip) --quiet install --requirement requirements-docs.txt
 
-virtualenv-docs: setup-virtualenv3
-	@$(pip3) --quiet install --requirement requirements-docs.txt
-
-virtualenv-dev: setup-virtualenv2
+virtualenv-dev: setup-virtualenv
 	@$(pip) install --upgrade --requirement requirements-dev.txt
 	@$(pip) install --upgrade --requirement requirements-test.txt
-	@$(pip) install --upgrade -e.[daq,daq_geospatial,export,firmware]
+	@$(pip) install --upgrade -e.[daq,daq_geospatial,export,scientific,firmware]
 
 
 # =======
@@ -208,7 +202,7 @@ sdist:
 pypi-upload: install-releasetools
 	twine upload --skip-existing --verbose dist/*.tar.gz
 
-install-releasetools: setup-virtualenv2
+install-releasetools: setup-virtualenv
 	@$(pip) install --quiet --requirement requirements-release.txt --upgrade
 
 
@@ -229,24 +223,24 @@ check-bump-options:
 #
 
 .PHONY: test
-pytest:
+pytest: virtualenv-dev
 
 	# Run pytest.
-	$(venvpath)/bin/pytest kotori test --verbose --log-level DEBUG --log-cli-level DEBUG --log-format='%(asctime)-15s [%(name)-35s] %(levelname)-8s: %(message)s' --log-date-format='%Y-%m-%dT%H:%M:%S%z'
+	$(pytest) kotori test --verbose --log-level DEBUG --log-cli-level DEBUG --log-format='%(asctime)-15s [%(name)-35s] %(levelname)-8s: %(message)s' --log-date-format='%Y-%m-%dT%H:%M:%S%z'
 
-nosetest:
+nosetest: virtualenv-dev
 
 	# Run nosetest.
 	@# https://nose.readthedocs.org/en/latest/plugins/doctests.html
 	@# https://nose.readthedocs.org/en/latest/plugins/cover.html
 	export NOSE_IGNORE_FILES="test_.*\.py"; \
-	$(venvpath)/bin/nosetests --with-doctest --doctest-tests --doctest-extension=rst --verbose \
+	$(nosetests) --with-doctest --doctest-tests --doctest-extension=rst --verbose \
 		kotori/*.py kotori/daq/{application,graphing,services,storage,strategy} kotori/daq/intercom/{mqtt/paho.py,udp.py,wamp.py} kotori/firmware kotori/io kotori/vendor/hiveeyes
 
 test: pytest nosetest
 
-test-coverage:
-	$(venvpath)/bin/nosetests \
+test-coverage: virtualenv-dev
+	$(nosetests) \
 		--with-doctest --doctest-tests --doctest-extension=rst \
 		--with-coverage --cover-package=kotori --cover-tests \
 		--cover-html --cover-html-dir=coverage/html --cover-xml --cover-xml-file=coverage/coverage.xml

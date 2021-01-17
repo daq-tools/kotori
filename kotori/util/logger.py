@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-# (c) 2015 Andreas Motl, <andreas@getkotori.org>
-from __future__ import absolute_import
-
+# (c) 2015-2021 Andreas Motl, <andreas@getkotori.org>
 from twisted.logger import (
     LogLevel, globalLogBeginner,
     FileLogObserver, FilteringLogObserver, LogLevelFilterPredicate,
     formatTime, timeFormatRFC3339, formatEvent)
 
 # from mqtt.logger
+
 
 predicate = None
 def startLogging(settings, stream=None, level=LogLevel.debug):
@@ -37,6 +36,7 @@ def startLogging(settings, stream=None, level=LogLevel.debug):
 
     observers    = [ FilteringLogObserver(observer=fileObserver, predicates=[predicate]) ]
     globalLogBeginner.beginLoggingTo(observers)
+
 
 def changeLogLevel(namespace, loglevel=LogLevel.info):
     predicate.setLogLevelForNamespace(namespace, loglevel)
@@ -75,7 +75,7 @@ def formatLogEvent(event, formatTime=formatTime):
         )
     else:
         try:
-            system = unicode(system)
+            system = str(system)
         except Exception:
             system = u"UNFORMATTABLE"
 

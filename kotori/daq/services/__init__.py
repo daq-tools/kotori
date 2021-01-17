@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2018 Andreas Motl <andreas@getkotori.org>
+# (c) 2015-2021 Andreas Motl <andreas@getkotori.org>
 from copy import deepcopy
 
 from bunch import Bunch
 from twisted.application.service import MultiService
+
 
 class MultiServiceMixin(object):
 
@@ -40,6 +41,7 @@ class MultiServiceMixin(object):
     def log(self, level, prefix):
         level('{prefix} {class_name}. name={name}, channel={channel}',
             prefix=prefix, class_name=self.__class__.__name__, name=self.name, channel=dict(self.channel))
+
 
 class RootService(MultiService, MultiServiceMixin):
 

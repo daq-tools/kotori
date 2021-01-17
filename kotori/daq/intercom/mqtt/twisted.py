@@ -12,6 +12,7 @@ from mqtt.client.factory import MQTTFactory
 
 log = Logger()
 
+
 class TwistedMqttAdapter(BaseMqttAdapter, Service):
 
     def connect(self):
@@ -31,7 +32,6 @@ class TwistedMqttAdapter(BaseMqttAdapter, Service):
         #reactor.callLater(random.randint(2, 7), later)
         #reactor.callInThread(later)
 
-
     def subscribe(self, *args):
         #d = self.protocol.subscribe("foo/bar/baz", 0)
         log.info(u"Subscribing to topics {subscriptions}. protocol={protocol}", subscriptions=self.subscriptions, protocol=self.protocol)
@@ -48,7 +48,6 @@ class TwistedMqttAdapter(BaseMqttAdapter, Service):
             return reactor.callFromThread(self.callback, *args, **kwargs)
         self.protocol.setPublishHandler(cb)
         """
-
 
     def on_message_twisted(self, topic, payload, *args):
         # former def on_message(self, topic, payload, qos, dup, retain, msgId):

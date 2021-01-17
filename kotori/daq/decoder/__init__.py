@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2019-2020 Andreas Motl <andreas@getkotori.org>
+# (c) 2019-2021 Andreas Motl <andreas@getkotori.org>
 from kotori.daq.decoder.airrohr import AirrohrDecoder
 from kotori.daq.decoder.tasmota import TasmotaSensorDecoder, TasmotaStateDecoder
 from kotori.daq.decoder.schema import MessageType

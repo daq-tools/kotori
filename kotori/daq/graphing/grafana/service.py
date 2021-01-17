@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2018 Andreas Motl <andreas@getkotori.org>
+# (c) 2018-2021 Andreas Motl <andreas@getkotori.org>
 from bunch import Bunch
 from twisted.application.service import MultiService
 from twisted.logger import Logger

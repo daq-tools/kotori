@@ -12,7 +12,7 @@ Python Package Index (PyPI) or from the Git repository.
     :maxdepth: 1
 
     debian
-    macosx
+    macos
     arch-linux
     docker
     python-package

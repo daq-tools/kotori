@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2020 Andreas Motl, <andreas@getkotori.org>
+# (c) 2015-2021 Andreas Motl, <andreas@getkotori.org>
 import re
 
 from kotori.daq.strategy import StrategyBase

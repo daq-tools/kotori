@@ -9,11 +9,12 @@ from twisted.python import log
 from twisted.internet import reactor
 from autobahn.twisted.websocket import connectWS, WampWebSocketClientProtocol, WampWebSocketClientFactory
 from kotori.util.common import NodeId, get_hostname
-from kotori.io.node.util import tts_say
+from kotori.vendor.ilaundry.node.util import tts_say
 
 node_manager = None
 NODE_ID = str(NodeId())
 NODE_HOSTNAME = get_hostname()
+
 
 class NodeProtocol(WampWebSocketClientProtocol):
     """
@@ -43,7 +44,7 @@ class NodeProtocol(WampWebSocketClientProtocol):
         self.subscribe("node:say", self.dump_event)
         self.subscribe("node:say", self.say)
 
-        print "INFO:   -> Node successfully connected to master"
+        print("INFO:   -> Node successfully connected to master")
 
         self.heartbeat()
 
@@ -51,11 +52,11 @@ class NodeProtocol(WampWebSocketClientProtocol):
 
 
     def connectionLost(self, reason):
-        print "ERROR: Connection lost, reason:", reason
+        print("ERROR: Connection lost, reason:", reason)
         #reactor.callLater(2, node_manager.connect)
 
     def dump_event(self, topic, event):
-        print "dump_event:", topic, event
+        print("dump_event:", topic, event)
 
 
 class NodeClientFactory(WampWebSocketClientFactory):
@@ -67,13 +68,13 @@ class NodeClientFactory(WampWebSocketClientFactory):
         return WampWebSocketClientFactory.__init__(self, url, **kwargs)
 
     def clientConnectionFailed(self, connector, reason):
-        print 'NodeClientFactory.clientConnectionFailed:', reason
+        print('NodeClientFactory.clientConnectionFailed:', reason)
 
     def clientConnectionLost(self, connector, reason):
-        print 'NodeClientFactory.clientConnectionLost:', reason
+        print('NodeClientFactory.clientConnectionLost:', reason)
 
     def stopFactory(self):
-        print 'NodeClientFactory.stopFactory'
+        print('NodeClientFactory.stopFactory')
         WampClientFactory.stopFactory(self)
         # FIXME: make this configurable as "reconnect interval"
         reactor.callLater(2, node_manager.master_connect)
@@ -91,7 +92,7 @@ class NodeManager(object):
 
     def start_features(self, protocol):
 
-        from kotori.io.node.feature import FeatureSet
+        from kotori.vendor.ilaundry.node.feature import FeatureSet
         features = FeatureSet(NODE_ID, protocol)
 
         #actor = GpioOutput('P8_13')
@@ -122,9 +123,9 @@ class KotoriNode(ApplicationSession):
         try:
             now = yield self.call('com.timeservice.now')
         except Exception as e:
-            print("Error: {}".format(e))
+            print(("Error: {}".format(e)))
         else:
-            print("Current time from time service: {}".format(now))
+            print(("Current time from time service: {}".format(now)))
 
 
         yield self.publish(u'de.elmyra.kotori.telemetry.data', 'hello world')
@@ -155,13 +156,13 @@ class KotoriNode(ApplicationSession):
 
 
     def dump_event(self, *args, **kwargs):
-        print "dump_event:", {'args': args, 'kwargs': kwargs}
+        print("dump_event:", {'args': args, 'kwargs': kwargs})
         #print self, dir(self)
 
 
 def boot_node(websocket_uri, debug=False, trace=False):
 
-    print 'INFO: Starting node service, connecting to', websocket_uri
+    print('INFO: Starting node service, connecting to', websocket_uri)
 
     # connect to master service
     """
@@ -193,6 +194,7 @@ def run():
     boot_node(WEBSOCKET_URI, debug)
 
     reactor.run()
+
 
 if __name__ == '__main__':
     run()

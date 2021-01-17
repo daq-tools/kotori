@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2020 Andreas Motl <andreas@getkotori.org>
+# (c) 2020-2021 Andreas Motl <andreas@getkotori.org>
 import logging
 from copy import deepcopy
 

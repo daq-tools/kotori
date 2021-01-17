@@ -5,6 +5,7 @@ from collections import OrderedDict
 
 logger = logging.getLogger(__name__)
 
+
 class BinaryMessageAdapter(object):
 
     def __init__(self, struct_registry):
@@ -58,7 +59,7 @@ class BinaryMessageAdapter(object):
 
         # apply transformation rules, keep item order
         data_new = OrderedDict()
-        for key, value in data.iteritems():
+        for key, value in data.items():
 
             # get transformation rule
             rule = annotations.get_struct_rule(struct_schema.name, key)

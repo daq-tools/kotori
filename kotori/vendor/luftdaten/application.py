@@ -20,7 +20,7 @@ class LuftdatenGrafanaManager(GrafanaManager):
         self.tpl_dashboard_location = self.get_template('grafana-by-location.json')
 
     def get_template(self, filename):
-        return Template(file(resource_filename('kotori.vendor.luftdaten', filename)).read().decode('utf-8'))
+        return Template(open(resource_filename('kotori.vendor.luftdaten', filename)).read().decode('utf-8'))
 
     def provision(self, storage_location, message, topology):
 

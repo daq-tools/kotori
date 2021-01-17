@@ -16,7 +16,7 @@ Run Mosquitto::
         --name=mosquitto \
         --detach=true \
         -tip 1883:1883 -p 9001:9001 \
-        eclipse-mosquitto:1.6.8
+        eclipse-mosquitto:1.6.12
 
 Run InfluxDB::
 
@@ -25,7 +25,7 @@ Run InfluxDB::
         --detach=true \
         --publish 8083:8083 --publish 8086:8086 \
         --volume="$(pwd)/var/lib/influxdb":/var/lib/influxdb \
-        influxdb:1.7.10
+        influxdb:1.8.3
 
 Run Grafana::
 
@@ -36,14 +36,14 @@ Run Grafana::
         --link influxdb:influxdb \
         --volume="$(pwd)/var/lib/grafana":/var/lib/grafana \
         --env='GF_SECURITY_ADMIN_PASSWORD=admin' \
-        grafana/grafana:6.6.2
+        grafana/grafana:7.3.3
 
         #--volume=/etc/grafana:/etc/grafana \
 
 Setup Grafana Map Panel::
 
     docker exec -i grafana grafana-cli \
-        --pluginUrl https://packages.hiveeyes.org/grafana/grafana-map-panel/grafana-map-panel-0.9.0.zip \
+        --pluginUrl https://github.com/panodata/grafana-map-panel/releases/download/0.15.0/grafana-map-panel-0.15.0.zip \
         plugins install grafana-map-panel
 
     docker restart grafana
@@ -56,7 +56,7 @@ Run MongoDB::
         --detach=true \
         --publish 27017:27017 \
         --volume="$(pwd)/var/lib/mongodb":/var/lib/mongodb \
-        mongo:4.2.3
+        mongo:4.4.3
 
 
 After provisioning, these instances can be spinned up again by invoking::

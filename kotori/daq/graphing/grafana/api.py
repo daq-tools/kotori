@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2018 Andreas Motl, <andreas@getkotori.org>
+# (c) 2015-2021 Andreas Motl, <andreas@getkotori.org>
 from twisted.logger import Logger
 from grafana_api_client import GrafanaClient, GrafanaServerError, GrafanaPreconditionFailedError, GrafanaClientError
 
@@ -43,8 +43,8 @@ class GrafanaApi(object):
             return self.get_folder(uid=uid)
 
         except GrafanaClientError as ex:
-
-            if '404' in ex.message or 'not-found' in ex.message or 'Folder not found' in ex.message:
+            message = str(ex)
+            if '404' in message or 'not-found' in message or 'Folder not found' in message:
                 log.debug(u'Folder with uid="{uid}" not found, creating', uid=uid)
                 try:
                     return self.create_folder(uid=uid, title=title)
@@ -56,7 +56,6 @@ class GrafanaApi(object):
                 log.warn(u'Problem getting folder uid="{uid}"": {ex}', uid=uid, ex=ex)
                 raise
 
-
     def create_folder(self, uid=None, title=None):
         log.info(u'Creating folder with uid="{uid}" and title="{title}"', uid=uid, title=title)
         data = {}
@@ -66,10 +65,11 @@ class GrafanaApi(object):
             return self.grafana_client.folders.create(**data)
 
         except GrafanaPreconditionFailedError as ex:
+            message = str(ex)
             # Ignore modifications from other users while doing our own
             # TODO: Add some locking mechanisms to protect against these issues
-            if 'version-mismatch' in ex.message or 'The folder has been changed by someone else' in ex.message:
-                #log.warn('{message}', message=ex.message)
+            if 'version-mismatch' in message or 'The folder has been changed by someone else' in message:
+                #log.warn('{message}', message=message)
                 pass
             else:
                 raise
@@ -104,12 +104,15 @@ class GrafanaApi(object):
             response = self.grafana_client.datasources.create(**data)
             log.info('response: {response}', response=response)
         except GrafanaServerError as ex:
-            if 'Failed to add datasource' in ex.message:
+            message = str(ex)
+            if 'Failed to add datasource' in message:
                 pass
             else:
                 raise
         except GrafanaClientError as ex:
-            if 'Data source with same name already exists' in ex.message:
+            message = str(ex)
+            if 'Data source with same name already exists' in message or \
+               'Data source with the same name already exists' in message:
                 pass
             else:
                 raise
@@ -131,8 +134,9 @@ class GrafanaApi(object):
                 log.info(u'Grafana response: {response}', response=response)
 
             except GrafanaClientError as ex:
-                if '404' in ex.message or 'Dashboard not found' in ex.message:
-                    log.warn(u'{message}', message=ex.message)
+                message = str(ex)
+                if '404' in message or 'Dashboard not found' in message:
+                    log.warn(u'{message}', message=message)
                 else:
                     raise
 
@@ -143,8 +147,9 @@ class GrafanaApi(object):
             log.info(u'Grafana response: {response}', response=response)
 
         except GrafanaPreconditionFailedError as ex:
-            if 'name-exists' in ex.message or 'A dashboard with the same name already exists' in ex.message:
-                log.warn(u'{message}', message=ex.message)
+            message = str(ex)
+            if 'name-exists' in message or 'A dashboard with the same name already exists' in message:
+                log.warn(u'{message}', message=message)
             else:
                 raise
 
@@ -152,8 +157,9 @@ class GrafanaApi(object):
             log.info(u'Checking dashboard "{}"'.format(name))
             dashboard = self.grafana_client.dashboards.db[name].get()
         except GrafanaClientError as ex:
-            if '404' in ex.message or 'Dashboard not found' in ex.message:
-                log.warn(u'{message}', message=ex.message)
+            message = str(ex)
+            if '404' in message or 'Dashboard not found' in message:
+                log.warn(u'{message}', message=message)
             else:
                 raise
 
@@ -164,8 +170,9 @@ class GrafanaApi(object):
             dashboard = self.grafana_client.dashboards.db[name].get()
             return dashboard['dashboard']
         except GrafanaClientError as ex:
-            if '404' in ex.message or 'Dashboard not found' in ex.message:
-                log.info(u'{message}', message=ex.message)
+            message = str(ex)
+            if '404' in message or 'Dashboard not found' in message:
+                log.info(u'{message}', message=message)
             else:
                 raise
 
@@ -183,7 +190,7 @@ class GrafanaApi(object):
         return name.replace(' ', '-')
 
     def demo(self):
-        print grafana.org()
+        print(grafana.org())
         #    {"id":1,"name":"Main Org."}
         #client.org.replace(name="Your Org Ltd.")
         #    {"id":1,"name":"Your Org Ltd."}

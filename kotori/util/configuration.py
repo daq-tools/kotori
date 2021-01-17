@@ -1,24 +1,28 @@
 # -*- coding: utf-8 -*-
-# (c) 2014-2017 Andreas Motl, <andreas@getkotori.org>
+# (c) 2014-2021 Andreas Motl, <andreas@getkotori.org>
 import os
 import logging
+from configparser import ConfigParser
 from glob import glob
 from bunch import Bunch
 from cornice.util import to_list
-from ConfigParser import ConfigParser
 
 log = logging.getLogger()
 
+
 def get_configuration_file(configfile=None):
-    # compute configuration file
+
+    # Compute path to configuration file.
     if not configfile:
         configfile = os.environ.get('KOTORI_CONFIG')
 
     if not configfile:
-        raise ValueError('No configuration file, either use --config=/path/to/kotori.ini or set KOTORI_CONFIG environment variable')
+        raise ValueError('No configuration file given, '
+                         'either use --config=/path/to/kotori.ini or set KOTORI_CONFIG environment variable')
 
     log.info('Root configuration file is {}'.format(configfile))
     return configfile
+
 
 def get_configuration(*args):
     config_files = []
@@ -44,12 +48,14 @@ def get_configuration(*args):
         log.critical(msg)
         raise ValueError(msg)
 
+
 def read_config(configfiles, kind=None):
     configfiles_requested = to_list(configfiles)
     config = ConfigParser()
     configfiles_used = config.read(configfiles_requested)
     settings = convert_config(config, kind=kind)
     return settings, configfiles_used
+
 
 def convert_config(config, kind=None):
     """
@@ -65,11 +71,13 @@ def convert_config(config, kind=None):
     else:
         return config
 
+
 def read_list(string, separator=u',', empty_elements=True):
-    data = map(unicode.strip, string.split(separator))
+    data = list(map(str.strip, string.split(separator)))
     if empty_elements == False:
-        data = filter(lambda x: bool(x), data)
+        data = [x for x in data if bool(x)]
     return data
+
 
 def make_list(items, separator=u', '):
     return separator.join(items)

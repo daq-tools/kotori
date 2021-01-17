@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-# (c) 2014-2018 Andreas Motl <andreas@getkotori.org>
+# (c) 2014-2021 Andreas Motl <andreas@getkotori.org>
 import re
 import os
 import sys
 import shelve
 import socket
 import logging
-import types
 
 import json_store
 from uuid import uuid4
@@ -20,7 +19,7 @@ logger = logging.getLogger()
 
 def slm(message):
     """sanitize log message"""
-    return unicode(message).replace('{', '{{').replace('}', '}}')
+    return str(message).replace('{', '{{').replace('}', '}}')
 
 
 class Singleton(object):
@@ -43,7 +42,7 @@ class ConfigStoreShelve(dict):
 
     def __init__(self):
         if not ConfigStore.store:
-            print "ConfigStoreShelve.__init__"
+            print("ConfigStoreShelve.__init__")
             self.app_data_dir = user_data_dir('kotori', 'daqzilla')
             if not os.path.exists(self.app_data_dir):
                 os.makedirs(self.app_data_dir)
@@ -51,14 +50,14 @@ class ConfigStoreShelve(dict):
             ConfigStore.store = shelve.open(self.config_file, writeback=True)
 
     def has_key(self, key):
-        return ConfigStore.store.has_key(key)
+        return key in ConfigStore.store
 
     def __getitem__(self, key):
-        print 'ConfigStoreShelve.__getitem__'
+        print('ConfigStoreShelve.__getitem__')
         return ConfigStore.store[key]
 
     def __setitem__(self, key, value):
-        print 'ConfigStoreShelve.__setitem__', key, value
+        print('ConfigStoreShelve.__setitem__', key, value)
         ConfigStore.store[key] = value
         ConfigStore.store.sync()
 
@@ -78,7 +77,7 @@ class ConfigStoreJson(dict):
             ConfigStoreJson.store = json_store.open(self.config_file)
 
     def has_key(self, key):
-        return ConfigStoreJson.store.has_key(key)
+        return key in ConfigStoreJson.store
 
     def __getitem__(self, key):
         #print 'ConfigStoreJson.__getitem__'
@@ -98,7 +97,7 @@ class NodeId(Singleton):
     def __init__(self):
         if not self.config:
             self.config = ConfigStoreJson()
-        if not self.config.has_key('uuid'):
+        if 'uuid' not in self.config:
             self.config['uuid'] = str(uuid4())
         self.NODE_ID = self.config['uuid']
         logger.debug("NODE ID: {}".format(self.NODE_ID))
@@ -151,9 +150,9 @@ class SmartBunch(Bunch):
         Generic "bunchify", also works with descendants of Bunch.
         """
         if isinstance(x, dict):
-            return cls( (k, cls.bunchify(v)) for k,v in x.iteritems() )
+            return cls((k, cls.bunchify(v)) for k, v in x.items())
         elif isinstance(x, (list, tuple)):
-            return type(x)( cls.bunchify(v) for v in x )
+            return type(x)(cls.bunchify(v) for v in x)
         else:
             return x
 
@@ -168,10 +167,10 @@ class KeyCache(object):
     def _get_skip_key(self, *args):
         key_parts = []
         for arg in args:
-            if isinstance(arg, types.StringTypes):
+            if isinstance(arg, (str,)):
                 key_parts.append(arg)
-            elif isinstance(arg, types.DictionaryType):
-                key_parts.append(','.join(arg.keys()))
+            elif isinstance(arg, dict):
+                key_parts.append(','.join(list(arg.keys())))
         skip_key = '-'.join(key_parts)
         return skip_key
 

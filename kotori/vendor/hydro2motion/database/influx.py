@@ -7,6 +7,7 @@ from kotori.daq.storage.influx import InfluxDBAdapter
 
 log = Logger()
 
+
 class InfluxDatabaseService(WampSessionMixin, ApplicationSession):
     """An application component for logging telemetry data to InfluxDB databases"""
 
@@ -103,7 +104,7 @@ class InfluxDatabaseService(WampSessionMixin, ApplicationSession):
 
 def h2m_boot_influx_database(settings, debug=False, trace=False):
 
-    websocket_uri = unicode(settings.wamp.uri)
+    websocket_uri = str(settings.wamp.uri)
 
     log.info(u'Starting InfluxDB database service, connecting to WAMP broker "{}"'.format(websocket_uri))
 

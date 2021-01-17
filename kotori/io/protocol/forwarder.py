@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-# (c) 2016-2017 Andreas Motl <andreas@getkotori.org>
+# (c) 2016-2021 Andreas Motl <andreas@getkotori.org>
 import re
-from copy import deepcopy
-from urlparse import urlparse
-from bunch import Bunch, bunchify
+
+from munch import munchify, Munch
+from six.moves.urllib.parse import urlparse
 from twisted.logger import Logger
 from twisted.application.service import MultiService
 from kotori.util.configuration import read_list
@@ -53,7 +53,7 @@ class ProtocolForwarderService(MultiServiceMixin, MultiService):
     """
 
     def __init__(self, channel=None):
-        self.channel = channel or Bunch(realm=None, subscriptions=[])
+        self.channel = channel or Munch(realm=None, subscriptions=[])
         MultiServiceMixin.__init__(self, name=self.channel.name + '-forwarder')
 
     def setupService(self):
@@ -63,7 +63,7 @@ class ProtocolForwarderService(MultiServiceMixin, MultiService):
         self.settings = self.parent.settings
 
         # Configure metrics to be collected each X seconds
-        #self.metrics = Bunch(tx_count=0, starttime=time.time(), interval=2)
+        #self.metrics = Munch(tx_count=0, starttime=time.time(), interval=2)
 
         log.info('Forwarding payloads from {source} to {target}', **self.channel)
         self.setupSource()
@@ -133,12 +133,12 @@ class ProtocolForwarderService(MultiServiceMixin, MultiService):
         target_uri = target_uri_tpl.format(**bucket.tdata)
 
         # Enrich bucket by putting source and target addresses into it
-        bucket.address = Bunch(source=self.source_address, target=self.target_address)
+        bucket.address = Munch(source=self.source_address, target=self.target_address)
 
         # 2. Reporting
-        bucket_logging = Bunch(bucket)
+        bucket_logging = Munch(bucket)
         if 'body' in bucket_logging and len(bucket_logging.body) > 100:
-            bucket_logging.body = bucket_logging.body[:100] + ' [...]'
+            bucket_logging.body = bucket_logging.body[:100] + b' [...]'
         log.debug('Forwarding bucket to {target} with bucket={bucket}. Effective target uri is {target_uri}',
             target=self.channel.target, target_uri=target_uri, bucket=dict(bucket_logging))
 
@@ -164,13 +164,13 @@ class ForwarderAddress(object):
     >>> address = ForwarderAddress(u'http:/api/mqttkit-1/{address:.*}/data [POST]')
 
     >>> address.uri.scheme
-    u'http'
+    'http'
 
     >>> address.uri.path
-    u'/api/mqttkit-1/{address:.*}/data'
+    '/api/mqttkit-1/{address:.*}/data'
 
     >>> address.predicates
-    [u'POST']
+    ['POST']
     """
 
     address_pattern = re.compile('^(?P<uri>.*?)(?: \[(?P<predicates>.+)\])?$')
@@ -192,7 +192,8 @@ class ForwarderAddress(object):
             self.raw_predicates = match['predicates']
 
             self.parsed_uri = urlparse(self.raw_uri)
-            self.uri = bunchify(self.parsed_uri._asdict())
+            #print("asdict:", munchify(self.parsed_uri._asdict()))
+            self.uri = munchify(self.parsed_uri._asdict())
             if self.raw_predicates:
                 self.predicates = read_list(self.raw_predicates)
 

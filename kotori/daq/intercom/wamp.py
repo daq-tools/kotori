@@ -8,6 +8,7 @@ from kotori.util.logger import startLogging
 
 log = Logger()
 
+
 class WampSession(ApplicationSession):
     """
     Simple message publishing with Autobahn WebSockets.

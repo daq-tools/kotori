@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2018 The Hiveeyes Developers <hello@hiveeyes.org>
+# (c) 2015-2021 The Hiveeyes Developers <hello@hiveeyes.org>
 import re
 import json
 
@@ -18,6 +18,7 @@ from kotori.daq.graphing.grafana.manager import GrafanaManager
 from kotori.util.common import SmartBunch
 
 log = Logger()
+
 
 class HiveeyesGenericGrafanaManager(GrafanaManager):
 
@@ -79,7 +80,7 @@ class HiveeyesGenericGrafanaManager(GrafanaManager):
         """
 
         prefixes = OrderedDict()
-        fields_given = data.keys()
+        fields_given = list(data.keys())
         fields_used = []
         for rule in self.knowledge:
             for prefix in rule['prefixes']:
@@ -102,7 +103,7 @@ class HiveeyesGenericGrafanaManager(GrafanaManager):
         if fields_unused:
             prefixes['misc'] = fields_unused
 
-        return prefixes.values()
+        return list(prefixes.values())
 
     def panel_generator(self, storage_location, data, topology):
         """
@@ -127,7 +128,7 @@ class HiveeyesBeehiveGrafanaManager(GrafanaManager):
         self.tpl_dashboard_weef = self.get_template('grafana-dashboard-weef-de.json')
 
     def get_template(self, filename):
-        return Template(file(resource_filename('kotori.vendor.hiveeyes', filename)).read().decode('utf-8'))
+        return Template(open(resource_filename('kotori.vendor.hiveeyes', filename), "rb").read().decode('utf-8'))
 
     def get_dashboard_identity(self, storage_location, topology=None):
 
@@ -207,13 +208,15 @@ class HiveeyesBeehiveGrafanaManager(GrafanaManager):
                 log.info(u'Grafana response: {response}', response=json.dumps(response))
 
             except GrafanaPreconditionFailedError as ex:
-                if 'name-exists' in ex.message or 'A dashboard with the same name already exists' in ex.message:
-                    log.warn(ex.message)
+                message = str(ex)
+                if 'name-exists' in message or 'A dashboard with the same name already exists' in message:
+                    log.warn(message)
                 else:
-                    log.error('GrafanaPreconditionFailedError: {ex}', ex=ex.message)
+                    log.error('GrafanaPreconditionFailedError: {ex}', ex=message)
 
             except GrafanaClientError as ex:
-                log.error('GrafanaClientError: {ex}', ex=ex.message)
+                message = str(ex)
+                log.error('GrafanaClientError: {ex}', ex=message)
 
         # Remember dashboard/panel creation for this kind of data inflow
         self.keycache.set(storage_location.database, storage_location.measurement)
@@ -289,7 +292,6 @@ class BeekeeperFields(object):
             for fieldname in self.fieldnames:
                 if matcher.search(fieldname):
                     return fieldname
-
 
 
 def hiveeyes_boot(settings, debug=False):

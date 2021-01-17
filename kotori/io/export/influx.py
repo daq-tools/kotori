@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2016-2017 Andreas Motl <andreas@getkotori.org>
-import types
+# (c) 2016-2021 Andreas Motl <andreas@getkotori.org>
 import collections
 from twisted.logger import Logger
 from kotori.daq.storage.influx import InfluxDBAdapter
@@ -44,7 +43,7 @@ class DataFrameQuery(object):
             return
 
         # Bring column names in order, "time" should be the first column
-        columns = entries[0].keys()
+        columns = list(entries[0].keys())
         if 'time' in columns:
             columns.remove('time')
             columns.insert(0, 'time')
@@ -67,7 +66,7 @@ def flatten(l):
     """
     import pandas
     for el in l:
-        if isinstance(el, collections.Iterable) and not isinstance(el, (basestring, pandas.DataFrame, types.DictionaryType)):
+        if isinstance(el, collections.Iterable) and not isinstance(el, (str, pandas.DataFrame, dict)):
             for sub in flatten(el):
                 yield sub
         else:

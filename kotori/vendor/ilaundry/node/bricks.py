@@ -2,7 +2,9 @@
 # (c) 2014 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 from twisted.internet import reactor
 from twisted.internet.task import LoopingCall
-from kotori.io.node.gpio import GpioInput, GpioOutput
+
+from kotori.vendor.ilaundry.node.gpio import GpioInput, GpioOutput
+
 
 class BinaryInputPort(object):
 
@@ -14,7 +16,7 @@ class BinaryInputPort(object):
         self.gpio = GpioInput(self.portname, self.sensor_on)
 
     def sensor_on(self, port):
-        print "DEBUG: Port {0} EVENT".format(self.portname)
+        print("DEBUG: Port {0} EVENT".format(self.portname))
 
         # signal sensor-on
         if self.signal:
@@ -47,7 +49,7 @@ class BinaryOutputPort(object):
         #self.modifier = modifier
 
     def set(self, *args, **kwargs):
-        print "DEBUG: Port {0} ON".format(self.portname)
+        print("DEBUG: Port {0} ON".format(self.portname))
         self.gpio.on()
 
         # signal gpio port
@@ -55,13 +57,12 @@ class BinaryOutputPort(object):
         #elif self.flavor == self.BLINK:
 
     def unset(self):
-        print "DEBUG: Port {0} OFF".format(self.portname)
+        print("DEBUG: Port {0} OFF".format(self.portname))
 
         #self.transition_stop()
 
         # signal gpio port
         self.gpio.off()
-
 
 
 class Blinker(object):

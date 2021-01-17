@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2016-2017 Andreas Motl <andreas@getkotori.org>
+# (c) 2016-2021 Andreas Motl <andreas@getkotori.org>
 import arrow
 from arrow.parser import DateTimeParser
 from datetime import datetime, timedelta

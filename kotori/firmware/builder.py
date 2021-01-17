@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
-# (c) 2016-2017 Andreas Motl <andreas@getkotori.org>
+# (c) 2016-2020 Andreas Motl <andreas@getkotori.org>
 import os
 import re
 import sys
 import logging
-import StringIO
 import uuid
+from io import StringIO
+
 import arrow
 from bunch import Bunch
 from appdirs import user_cache_dir
 from tempfile import NamedTemporaryFile
 from contextlib import contextmanager
-from pprint import pprint, pformat
+from pprint import pformat
 from cornice.util import to_list
 from git import Repo
 from git import RemoteProgress
@@ -67,7 +68,7 @@ class ProgressPrinter(RemoteProgress):
             return
 
         parts = (op_code, cur_count, max_count, cur_count / (max_count or 100.0), message or u"NO MESSAGE")
-        parts = map(unicode, parts)
+        parts = list(map(str, parts))
         message = u' '.join(parts)
         padding = u' ' * 120
 
@@ -197,11 +198,11 @@ class FirmwareBuilder(object):
         log.info('Patching file {filepath}'.format(**locals()))
 
         # Read file
-        payload = file(filepath, 'r').read()
+        payload = open(filepath, 'r').read()
 
         # Machinery for computing replacements
         replacements = []
-        for name, value in data.iteritems():
+        for name, value in data.items():
             for match in self.find_variable(payload, name, multiline=True):
 
                 value_before = match['value']
@@ -224,7 +225,7 @@ class FirmwareBuilder(object):
             payload = payload.replace(replacement['line-before'], replacement['line-after'])
 
         # Write file
-        file(filepath, 'w').write(payload)
+        open(filepath, 'w').write(payload)
 
     def find_variable(self, payload, name, multiline=False):
         for pattern_template in self.variable_patterns:
@@ -300,14 +301,14 @@ class FirmwareBuilder(object):
             target_elf = os.path.abspath(os.path.join(self.build_result['build_path'], self.build_result['TARGET_ELF']))
 
             artefact.name = os.path.splitext(os.path.basename(target_hex))[0]
-            artefact.binary.hex = file(target_hex, 'rb').read()
-            artefact.binary.elf = file(target_elf, 'rb').read()
+            artefact.binary.hex = open(target_hex, 'rb').read()
+            artefact.binary.elf = open(target_elf, 'rb').read()
 
         # ESP
         elif self.architecture == 'esp':
             target_bin = os.path.abspath(self.build_result['TARGET_BIN'])
             artefact.name = os.path.splitext(os.path.basename(target_bin))[0]
-            artefact.binary.bin = file(target_bin, 'rb').read()
+            artefact.binary.bin = open(target_bin, 'rb').read()
 
         return artefact
 
@@ -348,31 +349,31 @@ class FirmwareBuilder(object):
     def error_message(self):
 
         result = self.build_result['capture']
-        buf = StringIO.StringIO()
+        buf = StringIO()
         width = 80
 
-        print >>buf, u'=' * width
-        print >>buf, u'INFO'.center(width)
-        print >>buf, u'=' * width
-        print >>buf
-        print >>buf, 'Repository:'
-        print >>buf, pformat(self.repo_info, indent=12)
-        print >>buf
-        print >>buf, 'Directory: ', self.workingdir
-        print >>buf
+        print(u'=' * width, file=buf)
+        print(u'INFO'.center(width), file=buf)
+        print(u'=' * width, file=buf)
+        print(file=buf)
+        print('Repository:', file=buf)
+        print(pformat(self.repo_info, indent=12), file=buf)
+        print(file=buf)
+        print('Directory: ', self.workingdir, file=buf)
+        print(file=buf)
 
-        print >>buf, u'=' * width
-        print >>buf, u'ERROR'.center(width)
-        print >>buf, u'=' * width
-        print >>buf
-        print >>buf, result.error.decode('utf-8')
-        print >>buf
+        print(u'=' * width, file=buf)
+        print(u'ERROR'.center(width), file=buf)
+        print(u'=' * width, file=buf)
+        print(file=buf)
+        print(result.error.decode('utf-8'), file=buf)
+        print(file=buf)
 
-        print >>buf, u'=' * width
-        print >>buf, u'OUTPUT'.center(width)
-        print >>buf, u'=' * width
-        print >>buf
-        print >>buf, result.output.decode('utf-8')
+        print(u'=' * width, file=buf)
+        print(u'OUTPUT'.center(width), file=buf)
+        print(u'=' * width, file=buf)
+        print(file=buf)
+        print(result.output.decode('utf-8'), file=buf)
 
         return buf.getvalue()
 
@@ -490,7 +491,7 @@ def capture_example():
     with fb.capture() as result:
         artefact = example_recipe(fb)
 
-    print fb.build_result.keys()
+    print(list(fb.build_result.keys()))
 
     if result.success:
         log.info(u'Build succeeded, artefact: {}'.format(artefact))
@@ -504,5 +505,5 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG, stream=sys.stderr)
     #run_example()
     result = capture_example()
-    print result.output
+    print(result.output)
 

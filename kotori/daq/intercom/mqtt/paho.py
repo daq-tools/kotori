@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2016-2018 Andreas Motl <andreas.motl@getkotori.org>
+# (c) 2016-2021 Andreas Motl <andreas.motl@getkotori.org>
 # https://pypi.python.org/pypi/paho-mqtt/
 from __future__ import absolute_import
 import os
@@ -11,6 +11,7 @@ from twisted.application.service import Service
 from kotori.daq.intercom.mqtt.base import BaseMqttAdapter
 
 log = Logger()
+
 
 class PahoMqttAdapter(BaseMqttAdapter, Service):
 
@@ -103,14 +104,20 @@ class PahoMqttAdapter(BaseMqttAdapter, Service):
         topic = message.topic
         payload = message.payload
 
-        # Make metadata dictionary to be passed as kwargs later
+        # Make metadata dictionary to be passed as kwargs later.
 
-        # Mungle topic and payload out of metadata
-        metadata = message.__dict__.copy()
-        del metadata['topic']
+        # Mungle topic and payload out of metadata.
+        metadata = {}
+        for name in message.__slots__:
+            try:
+                metadata[name] = getattr(message, name)
+            except AttributeError:
+                pass
+
+        del metadata['_topic']
         del metadata['payload']
 
-        # Mungle userdata into message
+        # Mungle userdata into message.
         metadata['userdata'] = userdata
 
         if not topic.endswith('error.json'):

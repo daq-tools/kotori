@@ -93,7 +93,7 @@ to distinguish different build artifacts from each other.
     How to program the firmware (e.g. using avrdude)?
 
     - Windows: http://m8051.blogspot.de/2015/01/avrdude-on-windows-long-time-after.html
-    - Mac OS X: https://www.pololu.com/docs/0J36/5.c, https://www.obdev.at/products/crosspack/
+    - macOS: https://www.pololu.com/docs/0J36/5.c, https://www.obdev.at/products/crosspack/
 
 
 *******

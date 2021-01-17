@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-# (c) 2016 Andreas Motl <andreas.motl@elmyra.de>
+# (c) 2016-2021 Andreas Motl <andreas.motl@elmyra.de>
 import tempfile
-from pprint import pprint
 from twisted.logger import Logger, LogLevel
 from twisted.web.template import renderElement
 from kotori.io.export.html import DatatablesPage
 from kotori.io.protocol.util import get_data_uri
-from kotori.io.export.util import dataframe_index_and_sort
+from kotori.io.export.util import dataframe_index_and_sort, make_timezone_unaware
 
 log = Logger()
 
@@ -14,6 +13,7 @@ try:
     import pandas
 except ImportError:
     log.failure('Tabular export not available, please install "pandas".', level=LogLevel.warn)
+
 
 class UniversalTabularExporter(object):
     """
@@ -39,6 +39,10 @@ class UniversalTabularExporter(object):
         group_name = bucket.title.short
 
         if format == 'xlsx':
+
+            # Ensure that datetimes are timezone unaware before writing to Excel.
+            make_timezone_unaware(df)
+
             # http://pandas.pydata.org/pandas-docs/stable/io.html#io-excel-writer
             # https://stackoverflow.com/questions/28058563/write-to-stringio-object-using-pandas-excelwriter
             with pandas.ExcelWriter('temp.xlsx', engine='xlsxwriter') as excel_writer:
@@ -84,4 +88,3 @@ class UniversalTabularExporter(object):
             page = DatatablesPage(data_uri=data_uri, bucket=bucket)
             bucket.request.setHeader('Content-Type', 'text/html; charset=utf-8')
             return renderElement(bucket.request, page)
-

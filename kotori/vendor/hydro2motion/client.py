@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2014-2015 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
+# (c) 2014-2021 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import sys
 import time
 import random
@@ -23,7 +23,6 @@ def run_udp_client():
     sock.sendto(data, ('127.0.0.1', 7777))
 
 
-
 def generate_packet():
     packet_tpl = "24000;{};{};{};{};{};{};{};{};{};0;0;0;0;0;1;0;12;0;0;0;-18;0;4011;417633984;85402624;472851424;0;12242;43;42;0;0"
     values = []
@@ -34,6 +33,7 @@ def generate_packet():
     packet = packet_tpl.format(*values)
     return packet
 
+
 def run_udp_fuzzer():
     log.startLogging(sys.stdout)
 
@@ -42,7 +42,7 @@ def run_udp_fuzzer():
 
     while True:
         data = generate_packet()
-        print 'packet:', data
+        print('packet:', data)
 
         sock.sendto(data, ('127.0.0.1', 7777))
         time.sleep(0.25)

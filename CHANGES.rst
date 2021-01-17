@@ -5,6 +5,8 @@ Changelog
 
 in progress
 ===========
+- Upgrade to Python 3
+
 
 Breaking changes
 ----------------
@@ -248,7 +250,7 @@ Clients
     - Use ptrace.getkotori.org for documentation media assets
     - Correct GitHub repository url
     - Add documentation about Nginx reverse proxy setup
-    - Add installation instructions for Mac OS X
+    - Add installation instructions for macOS
 
 
 

@@ -7,4 +7,4 @@
 # Please update your links and bookmarks.
 
 if __name__ == '__main__':
-    print('This program has moved to https://github.com/hiveeyes/luftdatenpumpe')
+    print('This program has moved to https://github.com/earthobservations/luftdatenpumpe')

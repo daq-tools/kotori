@@ -9,6 +9,7 @@ from autobahn.twisted.wamp import ApplicationRunner, ApplicationSession
 from twisted.internet import reactor
 from twisted.internet.defer import inlineCallbacks
 
+
 class SqlDatabaseService(ApplicationSession):
     """An application component for logging telemetry data to sql databases"""
 
@@ -163,7 +164,7 @@ class SqlDatabaseService(ApplicationSession):
 
 def boot_sql_database(websocket_uri, debug=False, trace=False):
 
-    print 'INFO: Starting sql database service, connecting to broker', websocket_uri
+    print('INFO: Starting sql database service, connecting to broker', websocket_uri)
 
     runner = ApplicationRunner(websocket_uri, u'kotori-realm', debug=trace, debug_wamp=debug, debug_app=debug)
     runner.run(SqlDatabaseService, start_reactor=False)

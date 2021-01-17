@@ -15,14 +15,16 @@ log = Logger()
 class CustomTemplate(Template):
     delimiter = '$$'
 
+
 class WebDashboard(Resource):
     def getChild(self, name, request):
-        print 'getChild:', name
+        print('getChild:', name)
         if name == '':
             return WebDashboardIndex()
         else:
             document_root = resource_filename('kotori.web', '')
             return File(document_root)
+
 
 class WebDashboardIndex(Resource):
 
@@ -33,7 +35,7 @@ class WebDashboardIndex(Resource):
 
     def render_GET(self, request):
         index = resource_filename('kotori.vendor.hydro2motion.web', self.filename)
-        tpl = CustomTemplate(file(index).read())
+        tpl = CustomTemplate(open(index).read())
         response = tpl.substitute({
             'websocket_uri': self.websocket_uri,
             'node_id': str(NodeId()),
@@ -41,10 +43,11 @@ class WebDashboardIndex(Resource):
         })
         return response.encode('utf-8')
 
+
 def boot_web(settings, debug=False):
 
     http_port = int(settings.hydro2motion.http_port)
-    websocket_uri = unicode(settings.wamp.uri)
+    websocket_uri = str(settings.wamp.uri)
 
     dashboard = Resource()
     dashboard.putChild('', WebDashboardIndex(websocket_uri=websocket_uri, filename='index.html'))

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2016-2017 Andreas Motl <andreas@getkotori.org>
+# (c) 2016-2021 Andreas Motl <andreas@getkotori.org>
 from pyramid.settings import asbool
 from twisted.internet import threads
 from twisted.web import http, server
@@ -18,6 +18,7 @@ try:
     from kotori.io.export.influx import DataFrameQuery
 except ImportError:
     log.failure('InfluxDB export not available, please install "pandas".', level=LogLevel.warn)
+
 
 class ForwarderTargetService(MultiServiceMixin, MultiService):
     """
@@ -180,4 +181,3 @@ class ForwarderTargetService(MultiServiceMixin, MultiService):
         bucket.request.setResponseCode(http.NOT_FOUND)
         bucket.request.setHeader('Content-Type', 'text/plain; charset=utf-8')
         return error_message.encode('utf-8')
-
