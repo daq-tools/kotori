@@ -25,12 +25,12 @@ setup-virtualenv:
 	@test -e $(python) || python3 -mvenv $(venv)
 
 virtualenv-docs: setup-virtualenv
-	@$(pip) --quiet install --requirement requirements-docs.txt
+	@$(pip) --quiet install --requirement=requirements-docs.txt
 
 virtualenv-dev: setup-virtualenv
-	@$(pip) install --upgrade --requirement requirements-dev.txt
-	@$(pip) install --upgrade --requirement requirements-test.txt
-	@$(pip) install --upgrade -e.[daq,daq_geospatial,export,scientific,firmware]
+	@$(pip) install --upgrade --requirement=requirements-dev.txt
+	@$(pip) install --upgrade --requirement=requirements-test.txt
+	@$(pip) install --upgrade --editable=.[daq,daq_geospatial,export,scientific,firmware]
 
 
 # =======
@@ -247,7 +247,7 @@ test-coverage: virtualenv-dev
 
 docs-html: virtualenv-docs
 	touch doc/source/index.rst
-	export SPHINXBUILD="`pwd`/$(sphinx)"; cd doc; make html
+	SPHINXBUILD="`pwd`/$(sphinx)" SPHINXOPTS="-j auto" make --directory=doc html
 
 
 # ==========================================
