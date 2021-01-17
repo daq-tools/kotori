@@ -2,12 +2,10 @@
 # (c) 2016-2017 Andreas Motl <andreas@getkotori.org>
 import threading
 from copy import deepcopy
-from urlparse import urlparse
 from bunch import Bunch, bunchify
 from collections import defaultdict
 from pyramid.settings import asbool
-from twisted.internet import threads
-from twisted.web import http, server
+from twisted.web import http
 from twisted.logger import Logger
 from twisted.application.service import MultiService
 from kotori.util.configuration import read_list
@@ -58,7 +56,7 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
 
         self.channel = channel or Bunch(realm=None, subscriptions=[])
 
-        self.name = u'service-fb-' + self.channel.get('realm', unicode(id(self)))
+        self.name = u'service-fb-' + self.channel.get('realm', str(id(self)))
 
         # A bunch of locks for constraining concurrent
         # make processes on the same directory.

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2020 Andreas Motl <andreas@getkotori.org>
+# (c) 2020-2021 Andreas Motl <andreas@getkotori.org>
 import os
 import json
 import logging
@@ -12,7 +12,7 @@ from influxdb import InfluxDBClient
 from influxdb.exceptions import InfluxDBClientError
 from pyinfluxql import Query
 from grafana_api_client import GrafanaClient, GrafanaClientError
-from twisted.internet import threads, reactor
+from twisted.internet import reactor
 from twisted.internet.task import deferLater
 
 import kotori
@@ -25,7 +25,9 @@ def boot_kotori(config):
     options = {
         '--config': config,
         '--debug': True,
+        '--debug-io': True,
         '--debug-mqtt': True,
+        '--debug-influx': True,
     }
     loader = kotori.boot(options)
     return loader
@@ -60,7 +62,7 @@ class GrafanaWrapper:
                 try:
                     self.client.dashboards.db[dashboard_name].delete()
                 except GrafanaClientError as ex:
-                    if '404' not in ex.message:
+                    if '404' not in str(ex):
                         raise
 
         return reset_grafana
@@ -165,8 +167,8 @@ def http_csv_sensor(topic, data):
     uri = 'http://localhost:24642/api{}'.format(topic)
     logger.info('HTTP: Submitting reading to {} using CSV'.format(uri))
     body = ''
-    body += '## {}\n'.format(','.join(map(str, data.keys())))
-    body += '{}\n'.format(','.join(map(str, data.values())))
+    body += '## {}\n'.format(','.join(map(str, list(data.keys()))))
+    body += '{}\n'.format(','.join(map(str, list(data.values()))))
     requests.post(uri, data=body, headers={'Content-Type': 'text/csv'})
 
 
@@ -174,7 +176,10 @@ def http_get_data(topic=None, format='csv', ts_from=None, ts_to=None):
     uri = 'http://localhost:24642/api{topic}.{format}?from={ts_from}&to={ts_to}'.format(
         topic=topic, format=format, ts_from=ts_from, ts_to=ts_to)
     logger.info('HTTP: Exporting data from {} using format "{}"'.format(uri, format))
-    return requests.get(uri).content
+    payload = requests.get(uri).content
+    if format in ["csv", "txt", "json", "html"]:
+        payload = payload.decode()
+    return payload
 
 
 def idgen(size=6, chars=string.ascii_uppercase + string.digits):

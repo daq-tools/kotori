@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Kotori is a data acquisition, routing and graphing toolkit
-Copyright (C) 2014-2019 Andreas Motl, <andreas@getkotori.org>
+Copyright (C) 2014-2021 Andreas Motl, <andreas@getkotori.org>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published
@@ -99,7 +99,7 @@ class KotoriBootloader(object):
 
         # Load entrypoint
         try:
-            thing = entrypoint.load(require=False)
+            thing = entrypoint.resolve()
         except:
             log.failure('Error loading entrypoint "{reference}"', reference=reference)
             if onerror == 'raise':
@@ -115,13 +115,13 @@ class KotoriBootloader(object):
         pass
 
     def get_vendors(self):
-        for name, config_object in self.settings.iteritems():
+        for name, config_object in self.settings.items():
             if 'type' in config_object and config_object.type == 'vendor':
                 if 'enable' not in config_object or asbool(config_object['enable']):
                     yield name
 
     def get_applications(self):
-        for name, config_object in self.settings.iteritems():
+        for name, config_object in self.settings.items():
             if 'type' in config_object and config_object.type == 'application':
                 if 'enable' not in config_object or asbool(config_object['enable']):
                     yield name

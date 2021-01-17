@@ -12,6 +12,7 @@ log = Logger()
 
 app_session = None
 
+
 class UdpPublisher(ApplicationSession):
     """
     Simple message publishing with Autobahn WebSockets.
@@ -28,17 +29,16 @@ class UdpPublisher(ApplicationSession):
         global app_session
         app_session = self
 
-
     def onDisconnect(self):
         log.info("UdpPublisher disconnected from WAMP bus")
-
 
 
 class UdpAdapter(DatagramProtocol):
     # https://twistedmatrix.com/documents/15.0.0/core/howto/udp.html
 
     @inlineCallbacks
-    def datagramReceived(self, data, (host, port)):
+    def datagramReceived(self, data, addr):
+        (host, port) = addr
         log.info("Received via UDP from %s:%d: %r " % (host, port, data))
 
         try:
@@ -77,7 +77,7 @@ def listen_udp(udp_port):
 
 def h2m_boot_udp_adapter(settings, debug=False):
 
-    websocket_uri = unicode(settings.wamp.uri)
+    websocket_uri = str(settings.wamp.uri)
     udp_port = int(settings.hydro2motion.udp_port)
 
     wamp_bus = WampBus(uri=websocket_uri, session_factory=UdpPublisher)

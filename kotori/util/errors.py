@@ -1,18 +1,20 @@
 # -*- coding: utf-8 -*-
-# (c) 2014-2015 Andreas Motl, <andreas@getkotori.org>
+# (c) 2014-2021 Andreas Motl, <andreas@getkotori.org>
 import sys
 import traceback
-from StringIO import StringIO
+from io import StringIO
+
 
 def traceback_get_exception(num = -1):
 
-    # build error message
-    exception_string = ''.join(traceback.format_exception_only(sys.exc_type, hasattr(sys, 'exc_value') and sys.exc_value or 'Unknown'))
+    # Build error message.
+    exc_info = sys.exc_info()
+    exception_string = ''.join(traceback.format_exception_only(exc_info[0], exc_info[1]))
 
-    # extract error location from traceback
-    if hasattr(sys, 'exc_traceback'):
-        (filename, line_number, function_name, text) = traceback.extract_tb(sys.exc_traceback)[num]
-    else:
+    # Extract error details from traceback.
+    try:
+        (filename, line_number, function_name, text) = traceback.extract_tb(exc_info[2])[num]
+    except:
         (filename, line_number, function_name, text) = ('-', '-', '-', '-')
 
     error = {
@@ -26,6 +28,7 @@ def traceback_get_exception(num = -1):
     }
 
     return error
+
 
 def format_exception_location(error, prefix=''):
     if prefix:
@@ -51,4 +54,3 @@ def last_error_and_traceback():
     payload += '\n' + buffer.read()
 
     return payload
-

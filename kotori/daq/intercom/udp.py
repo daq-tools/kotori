@@ -6,6 +6,7 @@ from twisted.logger import Logger
 from twisted.internet.protocol import DatagramProtocol
 from twisted.internet.defer import inlineCallbacks
 
+
 class UdpBusForwarder(DatagramProtocol):
     # https://twistedmatrix.com/documents/15.0.0/core/howto/udp.html
 
@@ -18,7 +19,10 @@ class UdpBusForwarder(DatagramProtocol):
         # TODO sanity checks
 
     @inlineCallbacks
-    def datagramReceived(self, data, (host, port)):
+    def datagramReceived(self, data, addr):
+
+        (host, port) = addr
+
         self.log.debug(u"Received via UDP from {host}:{port}: {data}", host=host, port=port, data=hexlify(data))
 
         # ECHO

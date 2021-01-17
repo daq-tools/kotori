@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2019-2020 Andreas Motl <andreas@getkotori.org>
+# (c) 2019-2021 Andreas Motl <andreas@getkotori.org>
 """
 Decode JSON payloads in Tasmota format.
 
@@ -13,9 +13,7 @@ Resources
 - https://github.com/arendst/tasmota/wiki/MQTT
 - https://tasmota.github.io/docs/#/MQTT
 """
-
 import json
-import types
 from collections import OrderedDict
 from copy import deepcopy
 
@@ -92,10 +90,10 @@ class TasmotaSensorDecoder:
         path = []
         for key, value in message.items():
             path.append(key)
-            if isinstance(value, types.DictionaryType):
+            if isinstance(value, dict):
                 for dkey, dvalue in value.items():
                     path.append(dkey)
-                    if isinstance(dvalue, types.DictionaryType):
+                    if isinstance(dvalue, dict):
                         if 'Type' in dvalue:
                             subdata = deepcopy(dvalue)
                             del subdata['Type']

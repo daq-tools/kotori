@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
-# (c) 2016-2017 Andreas Motl <andreas@getkotori.org>
+# (c) 2016-2021 Andreas Motl <andreas@getkotori.org>
 import re
 import json
-import types
 import mimetypes
+from io import TextIOWrapper
+
 import pymongo
+from munch import munchify, Munch
 from six import BytesIO
 from copy import deepcopy
-from urlparse import urlparse
-from bunch import bunchify, Bunch
+from six.moves.urllib.parse import urlparse
 from collections import OrderedDict
 from twisted.application.service import Service
 from twisted.internet import reactor, threads
@@ -29,6 +30,8 @@ log = Logger()
 
 
 class LocalSite(Site):
+
+    displayTracebacks = True
 
     def log(self, request):
         """
@@ -184,12 +187,9 @@ class HttpChannelContainer(Resource):
         """
 
         # Router v2
-        #print 'Matching method=', request.method, 'uri=', uri.path
-        result = self.router.match(request.method, uri.path)
-        #print 'result:', result
+        result = self.router.match(request.method.decode(), uri.path)
 
         if result:
-            #print 'route match result:'; from pprint import pprint; pprint(result); pprint(result['route'].__dict__)
 
             # Obtain matched route name.
             route_name = result['route'].name
@@ -199,8 +199,7 @@ class HttpChannelContainer(Resource):
             callback = self.callbacks[route_name]
 
             # Wrap endpoint description into container object.
-            endpoint = bunchify({'path': route_name, 'callback': callback, 'match': result['match'], 'request': request})
-            #print 'endpoint:'; pprint(endpoint)
+            endpoint = munchify({'path': route_name, 'callback': callback, 'match': result['match'], 'request': request})
 
             # Create leaf resource instance.
             return HttpChannelEndpoint(options=endpoint, metastore=self.metastore)
@@ -230,11 +229,15 @@ class HttpChannelEndpoint(Resource):
         overridden to provide custom logic.
         """
 
+        request.method = request.method.decode()
+        request.path = request.path.decode()
+
         # Pluck ``error_response`` method to request object
         request.error_response = self.error_response
 
         # Pluck ``channel_identifier`` attribute to request object
-        request.channel_identifier = re.sub('/data.*$', '', request.path.replace('/api', ''))
+        channel = re.sub('/data.*$', '', request.path.replace('/api', ''))
+        request.channel_identifier = channel
 
         # Pluck response messages object to request object
         request.messages = []
@@ -243,9 +246,12 @@ class HttpChannelEndpoint(Resource):
         request.setHeader('Channel-Id', request.channel_identifier)
 
         # Main bucket data container object serving the whole downstream processing chain
-        bucket = Bunch(path=request.path, request=request)
+        bucket = Munch(path=request.path, request=request)
 
-        # Request processing chain, worker-threaded
+        # Synchronous.
+        return self.dispatch(request, bucket)
+
+        # Asynchronous. Request processing chain, worker-threaded
         deferred = threads.deferToThread(self.dispatch, request, bucket)
         deferred.addErrback(handleFailure, request)
         deferred.addBoth(self.render_messages, request)
@@ -326,10 +332,12 @@ class HttpChannelEndpoint(Resource):
                 # TODO: Honor charset when receiving "application/x-www-form-urlencoded; charset=utf-8"
                 payload = parse_qs(body, 1)
                 # TODO: Decapsulate multiple values of same reading into "{name}-{N}", where N=1...
-                for key, value in payload.iteritems():
-                    if type(value) is types.ListType:
-                        payload[key] = value[0]
-                return payload
+                decoded = {}
+                for key, value in payload.items():
+                    key = key.decode()
+                    if type(value) is list:
+                        decoded[key] = value[0].decode()
+                return decoded
 
             # Decode data from CSV format
             elif content_type.startswith('text/csv'):
@@ -339,7 +347,6 @@ class HttpChannelEndpoint(Resource):
 
                 # Prepare alias for metastore table
                 csv_header_store = self.metastore.kotori['channel-csv-headers']
-                #print 'csv_header_store:', csv_header_store
 
                 # 1. Decode CSV header like '## weight,temperature, humidity' and remember for upcoming data readings
                 def parse_header(channel_info, data_lines):
@@ -376,7 +383,7 @@ class HttpChannelEndpoint(Resource):
                         date_fields = ['Date/Time', 'Date', 'Datum/Zeit', 'timestamp']
                         for date_field in date_fields:
                             header_line = header_line.replace(date_field, 'time')
-                        header_fields = map(str.strip, header_line.split(','))
+                        header_fields = list(map(str.strip, header_line.split(',')))
                         msg = u'CSV Header: fields={fields}, key={key}'.format(fields=header_fields, key=request.channel_identifier)
                         log.info(msg)
 
@@ -390,27 +397,28 @@ class HttpChannelEndpoint(Resource):
                         channel_info['header_fields'] = header_fields
                         channel_info['options'] = options
 
-                    #print 'header_fields, data_lines:', header_fields, data_lines
+                    #print('header_fields, data_lines:', header_fields, data_lines)
                     #return header_fields, data_lines
 
                 # 2. Decode data, map to full-qualified payload container
                 def parse_data(channel_info):
                     channel_info = channel_info or {}
-                    data_raw = body.strip()
-                    data_lines = map(str.strip, data_raw.split('\n'))
+                    data_raw = body.decode().strip()
+                    data_lines = list(map(str.strip, data_raw.split('\n')))
                     parse_header(channel_info, data_lines)
                     header_fields = channel_info.get('header_fields')
                     if not header_fields:
                         raise Error(http.BAD_REQUEST,
-                            response='Could not process data, please supply field names via CSV header before sending readings')
+                                    response=b'Could not process data, please supply field names '
+                                             b'via CSV header before sending readings')
 
-                    #print 'data_lines:', data_lines; pprint(data_lines)
+                    #print('data_lines:', data_lines; pprint(data_lines))
 
                     data_list = []
                     for data_line in data_lines:
-                        data_fields = map(str.strip, data_line.replace(';', ',').split(','))
+                        data_fields = list(map(str.strip, data_line.replace(';', ',').split(',')))
                         #print 'header_fields, data_fields:', header_fields, data_fields
-                        data = OrderedDict(zip(header_fields, data_fields))
+                        data = OrderedDict(list(zip(header_fields, data_fields)))
                         self.manipulate_data(data, channel_info)
                         data_list.append(data)
 
@@ -421,7 +429,7 @@ class HttpChannelEndpoint(Resource):
                 except Exception as ex:
                     log.failure('Could not process CSV data, unknown database error: {0}'.format(ex))
                     raise Error(http.INTERNAL_SERVER_ERROR,
-                        response='Could not process CSV data, unknown database error: {0}'.format(ex))
+                                response=b'Could not process CSV data, unknown database error: {0}'.format(ex))
 
                 return parse_data(channel_info)
 
@@ -457,11 +465,10 @@ class HttpChannelEndpoint(Resource):
                     target = rule['target']
                     data[target] = fused
 
-
     def process_data(self, data, bucket):
 
         # Main transformation data container
-        bucket.tdata = Bunch()
+        bucket.tdata = Munch()
 
         # Merge request parameters (GET and POST) and url matches, in this order
         bucket.tdata.update(flatten_request_args(bucket.request.args))
@@ -477,7 +484,7 @@ class HttpChannelEndpoint(Resource):
         if data is None:
             return self.options.callback(bucket)
 
-        if type(data) is not types.ListType:
+        if type(data) is not list:
             data = [data]
 
         for item in data:
@@ -578,7 +585,7 @@ class HttpDataFrameResponse(object):
         })
 
         # Compute some names and titles and pluck into ``bucket``
-        bucket.title = Bunch(
+        bucket.title = Munch(
             compact = u'{gateway}_{node}'.format(**dict(tdata)).replace('-', '_'),
             short = u'{network}_{gateway}_{node}'.format(**dict(tdata)).replace('-', '_'),
             full  = u'{network}_{gateway}_{node}_{time_begin}-{time_end}'.format(**dict(tdata)).replace('-', '_'),
@@ -586,12 +593,12 @@ class HttpDataFrameResponse(object):
         )
 
 
-        # Buffer object most output handlers write their content to
+        # Buffer object most output handlers write their content to.
         buffer = BytesIO()
         charset = None
 
 
-        # Dispatch to appropriate output handler
+        # Dispatch to appropriate output handler.
         # TODO: XML, SQL, GBQ (Google BigQuery table), MsgPack?, Thrift?
         # TODO: jsonline using Odo, see http://odo.pydata.org/en/latest/json.html
         # TODO: Refactor "if response: return response" cruft
@@ -599,24 +606,36 @@ class HttpDataFrameResponse(object):
 
         if suffix in ['csv', 'txt']:
             # http://pandas.pydata.org/pandas-docs/stable/io.html#io-store-in-csv
-            df.to_csv(buffer, header=True, index=False, encoding='utf-8', date_format='%Y-%m-%dT%H:%M:%S.%fZ')
+            wrapper = TextIOWrapper(buffer)
+            df.to_csv(wrapper, header=True, index=False, encoding='utf-8', date_format='%Y-%m-%dT%H:%M:%S.%fZ')
+            # Make sure that TextIOWrapper writes the content to buffer.
+            wrapper.flush()
             charset = 'utf-8'
 
         elif suffix == 'tsv':
-            df.to_csv(buffer, header=True, index=False, encoding='utf-8', date_format='%Y-%m-%dT%H:%M:%S.%fZ', sep='\t')
+            wrapper = TextIOWrapper(buffer)
+            df.to_csv(wrapper, header=True, index=False, encoding='utf-8', date_format='%Y-%m-%dT%H:%M:%S.%fZ', sep='\t')
+            # Make sure that TextIOWrapper writes the content to buffer.
+            wrapper.flush()
             charset = 'utf-8'
 
         elif suffix == 'json':
             # http://pandas.pydata.org/pandas-docs/stable/io.html#io-json-writer
-            df.to_json(buffer, orient='records', date_format='iso')
+            wrapper = TextIOWrapper(buffer)
+            df.to_json(wrapper, orient='records', date_format='iso')
+            # Make sure that TextIOWrapper writes the content to buffer.
+            wrapper.flush()
             charset = 'utf-8'
 
         elif suffix == 'html':
             # http://pandas.pydata.org/pandas-docs/stable/io.html#io-html
-            buffer.write('<html>\n')
-            #buffer.write('<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n')
-            df.to_html(buffer, index=False, justify='center')
-            buffer.write('\n</html>')
+            wrapper = TextIOWrapper(buffer)
+            buffer.write(b'<html>\n')
+            #buffer.write(b'<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n')
+            df.to_html(wrapper, index=False, justify='center')
+            # Make sure that TextIOWrapper writes the content to buffer.
+            wrapper.flush()
+            buffer.write(b'\n</html>')
             charset = 'utf-8'
 
         elif suffix == 'xlsx':
@@ -703,9 +722,4 @@ class HttpDataFrameResponse(object):
         bucket.request.setHeader('Content-Disposition', '{disposition}; filename={filename}'.format(
             disposition=disposition, filename=filename))
 
-        # Optionally encode to UTF-8 when serving HTML
-        if mimetype == 'text/html':
-            payload = payload.encode('utf-8')
-
         return payload
-

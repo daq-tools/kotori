@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import types
 import pyclibrary
 import ctypes
 from ctypes import Union, Structure
@@ -20,7 +19,7 @@ class StructureWithDefaults(Structure):
 
         # sanity checks
         defaults = type(self)._defaults_
-        assert type(defaults) is types.DictionaryType
+        assert type(defaults) is dict
 
         # use defaults, but override with keyword arguments, if any
         values = defaults.copy()

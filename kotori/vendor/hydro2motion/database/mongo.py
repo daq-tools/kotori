@@ -7,6 +7,7 @@ from twisted.internet.interfaces import ILoggingContext
 from twisted.python import log
 from zope.interface.declarations import implementer
 
+
 @implementer(ILoggingContext)
 class MongoDatabaseService(ApplicationSession):
     """An application component for logging telemetry data to MongoDB databases"""
@@ -98,7 +99,7 @@ class MongoDatabaseService(ApplicationSession):
 
 def boot_mongo_database(websocket_uri, debug=False, trace=False):
 
-    print 'INFO: Starting mongo database service, connecting to broker', websocket_uri
+    print('INFO: Starting mongo database service, connecting to broker', websocket_uri)
 
     runner = ApplicationRunner(websocket_uri, u'kotori-realm', debug=trace, debug_wamp=debug, debug_app=debug)
     runner.run(MongoDatabaseService, start_reactor=False)

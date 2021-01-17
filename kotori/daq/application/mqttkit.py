@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2016 Andreas Motl <andreas.motl@getkotori.org>
+# (c) 2015-2021 Andreas Motl <andreas.motl@getkotori.org>
 from bunch import Bunch
 from twisted.logger import Logger
 from kotori.daq.services import RootService
@@ -8,6 +8,7 @@ from kotori.daq.strategy.wan import WanBusStrategy
 from kotori.daq.graphing.grafana.manager import GrafanaManager
 
 log = Logger()
+
 
 class MqttKitApplication(RootService):
     """

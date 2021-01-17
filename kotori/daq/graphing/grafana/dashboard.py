@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2018 Andreas Motl, <andreas@getkotori.org>
+# (c) 2015-2021 Andreas Motl, <andreas@getkotori.org>
 import os
 import json
 
@@ -283,7 +283,7 @@ class GrafanaDashboardBuilder(object):
             if prefixes is None:
                 fields.append(field)
 
-            elif isinstance(prefixes, types.ListType):
+            elif isinstance(prefixes, list):
                 for prefix in prefixes:
                     if field.startswith(prefix) or field.endswith(prefix):
                         fields.append(field)
@@ -353,7 +353,7 @@ class GrafanaDashboard(object):
 
     def get_template(self, filename):
         filename = os.path.join('resources', filename)
-        return Template(file(resource_filename('kotori.daq.graphing.grafana', filename)).read())
+        return Template(open(resource_filename('kotori.daq.graphing.grafana', filename)).read())
 
     def build(self, measurement, row_title='default', panels=None):
 
@@ -474,7 +474,7 @@ class GrafanaDashboard(object):
         ],
         """
         tag_list = []
-        for key, value in tags.iteritems():
+        for key, value in tags.items():
             tag_entry = {
                 "condition": "AND",
                 "key": key,
@@ -498,5 +498,5 @@ class GrafanaDashboard(object):
 
     @staticmethod
     def setdefaults(adict, bdict):
-        for key, value in bdict.iteritems():
+        for key, value in bdict.items():
             adict.setdefault(key, value)

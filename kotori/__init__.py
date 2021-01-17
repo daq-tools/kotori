@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Kotori is a data acquisition, routing and graphing toolkit
-Copyright (C) 2014-2019 Andreas Motl, <andreas@getkotori.org>
+Copyright (C) 2014-2021 Andreas Motl, <andreas@getkotori.org>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published
@@ -75,7 +75,7 @@ def boot(options=None):
 
     # Merge command line options into settings
     settings.setdefault('options', Bunch())
-    for key, value in options.iteritems():
+    for key, value in options.items():
         key = key.lstrip(u'--')
         key = key.replace(u'-', u'_')
         settings.options[key] = value

@@ -3,12 +3,14 @@
 import os
 import json
 
+
 def publish(topic, message):
     command = 'mosquitto_pub -h "{host}" -t "{topic}" -m \'{message}\''.format(
         host='localhost', topic=topic, message=message)
 
-    print 'Running command: {}'.format(command)
+    print('Running command: {}'.format(command))
     os.system(command)
+
 
 def all_realms():
     #realms = ['mqttkit-1', 'hiveeyes', 'luftdaten', 'weewx']
@@ -17,6 +19,7 @@ def all_realms():
     for realm in realms:
         topic = '{}/testdrive/area-42/node-1/data.json'.format(realm)
         publish(topic, json.dumps(measurements))
+
 
 def hiveeyes_testcases():
 

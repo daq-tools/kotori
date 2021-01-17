@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2014 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
-from kotori.io.node.bricks import BinaryInputPort, BinaryOutputPort, TimedBinarySemaphore, Blinker, BinaryTopicSignal
+from kotori.vendor.ilaundry.node.bricks import BinaryInputPort, BinaryOutputPort, TimedBinarySemaphore, Blinker, BinaryTopicSignal
 
 PirMotionDetector = BinaryInputPort
 PrivacyButton = BinaryInputPort
@@ -62,7 +62,7 @@ class ActivityMonitor(FeatureBase):
 
         state = self.run_filters(state)
 
-        print "INFO: Activity is", self.state_for_display(state)
+        print("INFO: Activity is", self.state_for_display(state))
 
         # turn led on/off
         if state:
@@ -101,7 +101,7 @@ class PrivacyMonitor(FeatureBase):
 
         state = self.run_filters(state)
 
-        print "INFO: Privacy is", self.state_for_display(state)
+        print("INFO: Privacy is", self.state_for_display(state))
 
         # turn led on/off and set/clear internal privacy state
         if state:
@@ -128,7 +128,7 @@ class FeatureSet(FeatureBase):
             self.activity_monitor.start(holdtime=5)
             self.show_operator_presence()
         except Exception as ex:
-            print "ERROR: Feature start failed:", ex
+            print("ERROR: Feature start failed:", ex)
 
 
     def privacy_filter(self, state):
@@ -139,7 +139,7 @@ class FeatureSet(FeatureBase):
     def activity_filter(self, state):
         # skip further actions if privacy mode is enabled
         if state and self.privacy_enabled:
-            print "INFO: Will signal no activity due to privacy mode being enabled"
+            print("INFO: Will signal no activity due to privacy mode being enabled")
             state = False
         return state
 

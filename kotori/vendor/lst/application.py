@@ -7,15 +7,17 @@ from copy import deepcopy
 from pkg_resources import resource_filename
 from twisted.logger import Logger
 from twisted.internet import reactor
+
 from kotori.util.configuration import read_list
 from kotori.daq.intercom.c import LibraryAdapter, StructRegistryByID
 from kotori.daq.intercom.wamp import WampApplication, WampSession
 from kotori.daq.intercom.udp import UdpBusForwarder
 from kotori.daq.storage.influx import BusInfluxForwarder
-from kotori.daq.graphing.grafana import GrafanaManager
+from kotori.daq.graphing.grafana.manager import GrafanaManager
 from kotori.vendor.lst.message import BinaryMessageAdapter
 
 log = Logger()
+
 
 class UDPReceiver(object):
     """
@@ -45,7 +47,7 @@ class UDPReceiver(object):
         Run forwarding component, which actually moves data between UDP and the software bus
         """
         udp_port = int(self.config['_active_']['udp_port'])
-        topic = unicode(self.config['_active_']['wamp_topic'])
+        topic = str(self.config['_active_']['wamp_topic'])
 
         log.info('Starting udp adapter on port "{}", publishing to topic "{}"'.format(udp_port, topic))
         reactor.listenUDP(
@@ -80,7 +82,7 @@ class UDPReceiver(object):
         data['_name_'] = struct._name_()
         data['_hex_'] = hexlify(struct._dump_())
         # bus message should be a list of tuples to keep field order
-        data_bus = data.items()
+        data_bus = list(data.items())
         return data_bus
 
 
@@ -141,7 +143,7 @@ class StorageAdapter(object):
         self.config = config
         log.info('Starting InfluxStorage')
         # TODO: Refactor the _active_ mechanics
-        topic = unicode(self.config['_active_']['wamp_topic'])
+        topic = str(self.config['_active_']['wamp_topic'])
         channel = Bunch(
             settings = self.config['_active_']
         )
@@ -151,6 +153,7 @@ class StorageAdapter(object):
 
 class UdpSession(WampSession):
     component = UDPReceiver
+
 
 class StorageSession(WampSession):
     component = StorageAdapter
@@ -182,7 +185,7 @@ def setup_binary_message_adapter(config):
 def lst_boot(config, debug=False):
     # TODO: refactor towards OO; e.g. BinaryMessageApplicationFactory
 
-    wamp_uri = unicode(config.wamp.uri)
+    wamp_uri = str(config.wamp.uri)
 
     # activate/mount multiple "lst" applications
     for channel_name in read_list(config['lst']['channels']):

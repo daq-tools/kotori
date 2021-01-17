@@ -15,5 +15,5 @@ while True:
     os.system('clear')
     for port in hwports():
         value = GPIO.input(port)
-        print port, value
+        print(port, value)
     time.sleep(0.2)

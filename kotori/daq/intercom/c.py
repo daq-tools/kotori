@@ -100,7 +100,7 @@ class LibraryAdapter(object):
         self.clib = CLibrary(self.library_file, self.parser, prefix='Lib_', lock_calls=False, convention='cdll', backend='ctypes')
 
     def struct_names(self):
-        return self.parser.defs['structs'].keys()
+        return list(self.parser.defs['structs'].keys())
 
     @classmethod
     def from_header(cls, include_path=None, header_files=None):
@@ -175,7 +175,7 @@ class LibraryAdapter(object):
             source_payload = cls.augment_source(source_file)
 
             # write augmented file
-            file(source_file_augmented, 'w').write(source_payload)
+            open(source_file_augmented, 'w').write(source_payload)
             source_files_augmented.append(source_file_augmented)
 
         return source_files_augmented
@@ -186,7 +186,7 @@ class LibraryAdapter(object):
         No matter if there's a ``#include "mbed.h"``, make sure it gets removed.
         Also make sure that there is a single ``#include "stdint.h"``.
         """
-        payload = file(source_file).read()
+        payload = open(source_file).read()
         if re.search('^#include "stdint.h"', payload, re.MULTILINE):
             amendment = ''
         else:
@@ -232,7 +232,7 @@ class AnnotationParser(object):
         for source_file in self.source_files:
 
             struct_name = None
-            with file(source_file) as f:
+            with open(source_file) as f:
                 for line in f.readlines():
                     line = line.strip()
 
@@ -325,7 +325,7 @@ class StructAdapter(object):
         Obviously, this will only work for singletons, where each struct used is instantiated only once.
         You have been warned.
         """
-        for key, value in self.parser.defs['variables'].iteritems():
+        for key, value in self.parser.defs['variables'].items():
             data, type = value
             type_spec = 'struct ' + self.name
             if type_spec == type.type_spec:
@@ -341,32 +341,32 @@ class StructAdapter(object):
         width = 84
 
         def print_header(text):
-            print '-' * width
-            print text.center(width)
-            print '-' * width
-            print
+            print('-' * width)
+            print(text.center(width))
+            print('-' * width)
+            print()
 
         print_header('struct "{}"'.format(self.name))
 
-        print 'Header information'
-        print
-        print tabulate(self.ast_members_repr(), headers=['name', 'type', 'default', 'bitfield'])
-        print; print
+        print('Header information')
+        print()
+        print(tabulate(self.ast_members_repr(), headers=['name', 'type', 'default', 'bitfield']))
+        print(); print()
 
-        print 'Library information'
-        print
-        print tabulate(self.lib_fields_repr(), headers=['name', 'type', 'symbol', 'field', 'bitfield'])
-        print; print
+        print('Library information')
+        print()
+        print(tabulate(self.lib_fields_repr(), headers=['name', 'type', 'symbol', 'field', 'bitfield']))
+        print(); print()
 
-        print 'Transformation rules'
-        print
-        print tabulate(self.annotations_repr(), headers=['name-real', 'name-human', 'expression', 'expression-sympy', 'unit'])
-        print; print
+        print('Transformation rules')
+        print()
+        print(tabulate(self.annotations_repr(), headers=['name-real', 'name-human', 'expression', 'expression-sympy', 'unit']))
+        print(); print()
 
-        print 'Representations'
-        print
-        print tabulate(self.lib_binary_repr(), headers=['kind', 'representation'])
-        print; print
+        print('Representations')
+        print()
+        print(tabulate(self.lib_binary_repr(), headers=['kind', 'representation']))
+        print(); print()
 
     def ast_members_repr(self):
 
@@ -428,7 +428,7 @@ class StructAdapter(object):
         entries = []
         annos = self.annotations.get_struct_rules(self.name)
         if annos:
-            for fieldname, rule in annos.iteritems():
+            for fieldname, rule in annos.items():
                 entry = (fieldname, rule['name'], rule['expression'], rule['expression_sympy'], rule['unit'])
                 entries.append(entry)
         return entries
@@ -437,7 +437,7 @@ class StructAdapter(object):
     def binary_reprs(payload):
         reprs = [
             ('hex',     '0x' + hexlify(payload)),
-            ('decimal', map(ord, payload)),
+            ('decimal', list(map(ord, payload))),
             ('bytes',   repr(payload)),
         ]
         return reprs
@@ -499,8 +499,8 @@ class StructRegistry(object):
             payload_data = list(cls.to_dict(struct).items())
 
         if format == 'pprint':
-            print 'name:', name
-            print 'hex: ', payload_hex
+            print('name:', name)
+            print('hex: ', payload_hex)
             pprint(payload_data, indent=4, width=42)
 
         elif format == 'tabulate-plain':
@@ -513,7 +513,7 @@ class StructRegistry(object):
             output += StructAdapter.binary_reprs(payload)
             output += [separator]
             output += payload_data
-            print tabulate(output, tablefmt='plain')
+            print(tabulate(output, tablefmt='plain'))
 
             #print tabulate(list(meta.items()), tablefmt='plain')
             #print tabulate(payload_data, missingval='n/a', tablefmt='simple')
@@ -538,7 +538,7 @@ class StructRegistryByID(StructRegistry):
 
         # store adapter object by id
         struct_id = adapter.create().ID
-        if self.structs_by_id.has_key(struct_id):
+        if struct_id in self.structs_by_id:
             o_a = self.structs_by_id[struct_id]
             name_owner = o_a.name
             logger.warn('Struct "{}" has ID "{}", but this ID is already mapped to struct "{}", '\

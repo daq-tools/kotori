@@ -54,7 +54,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Kotori'
-copyright = u'2013-2020, The Kotori Developers'
+copyright = u'2013-2021, The Kotori Developers'
 author = u'The Kotori Developers'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -355,17 +355,17 @@ def setup(app):
 
     # foundation
     # Bootstrap conflicts with Sphinx
-    #app.add_stylesheet("assets/css/bootstrap.min.css")
-    app.add_stylesheet("assets/css/font-awesome.min.css")
-    app.add_stylesheet("assets/css/font-entypo.css")
-    app.add_stylesheet("assets/css/hexagons.min.css")
+    #app.add_css_file("assets/css/bootstrap.min.css")
+    app.add_css_file("assets/css/font-awesome.min.css")
+    app.add_css_file("assets/css/font-entypo.css")
+    app.add_css_file("assets/css/hexagons.min.css")
     # jQuery 2.1.0 conflicts with jQuery 1.11.1 from Sphinx
     #app.add_javascript("assets/js/jquery-2.1.0.min.js")
     app.add_javascript("assets/js/hexagons.min.js")
 
     # application
     #app.add_javascript("custom.js")
-    app.add_stylesheet("css/kotori-sphinx.css")
+    app.add_css_file("css/kotori-sphinx.css")
 
 # Link with BERadio and Hiveeyes projects
 intersphinx_mapping = {

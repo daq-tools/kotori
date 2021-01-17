@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2018 Andreas Motl <andreas@getkotori.org>
-import types
+# (c) 2015-2021 Andreas Motl <andreas@getkotori.org>
 import requests
-import datetime
-from sets import Set
 from copy import deepcopy
 from funcy import project
 from collections import OrderedDict
@@ -35,7 +32,7 @@ class InfluxDBAdapter(object):
         self.__dict__.update(**settings)
 
         # Bookeeping for all databases having been touched already
-        self.databases_written_once = Set()
+        self.databases_written_once = set()
 
         # Knowledge about all databases to be accessed using UDP
         # TODO: Refactor to configuration setting
@@ -250,10 +247,10 @@ class InfluxDBAdapter(object):
     def data_to_float(self, data):
         return convert_floats(data)
 
-        for key, value in data.iteritems():
+        for key, value in data.items():
 
             # Sanity checks
-            if type(value) in types.StringTypes:
+            if isinstance(value, str):
                 continue
 
             if value is None:
@@ -288,7 +285,7 @@ class BusInfluxForwarder(object):
 
     @staticmethod
     def sanitize_db_identifier(value):
-        value = unicode(value).replace('/', '_').replace('.', '_').replace('-', '_')
+        value = str(value).replace('/', '_').replace('.', '_').replace('-', '_')
         return value
 
     def bus_receive(self, payload):
@@ -304,9 +301,9 @@ class BusInfluxForwarder(object):
         # TODO: filter by realm/topic
 
         # decode message
-        if type(payload) is types.DictionaryType:
+        if isinstance(payload, dict):
             message = payload.copy()
-        elif type(payload) is types.ListType:
+        elif isinstance(payload, list):
             message = OrderedDict(payload)
         else:
             raise TypeError('Unable to handle data type "{}" from bus'.format(type(payload)))
@@ -317,7 +314,6 @@ class BusInfluxForwarder(object):
 
         # store data
         self.store_message(storage_location, message)
-
 
     def storage_location(self, data):
         raise NotImplementedError()

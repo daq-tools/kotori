@@ -16,6 +16,13 @@ Backlog
 
 
 ****
+2021
+****
+- Unlock Python 3.9 (needs PyTables)
+- Run black and isort
+
+
+****
 2020
 ****
 

@@ -4,7 +4,8 @@ from twisted.internet import reactor
 try:
     import Adafruit_BBIO.GPIO as GPIO
 except Exception as ex:
-    print "ERROR: No Adafruit_BBIO module installed:", ex
+    print("ERROR: No Adafruit_BBIO module installed:", ex)
+
 
 class GpioInput(object):
 
@@ -14,7 +15,7 @@ class GpioInput(object):
 
         GPIO.setup(self.port, GPIO.IN)
 
-        print "DETECT EVENTS:", self.port
+        print("DETECT EVENTS:", self.port)
 
         # GPIO.RISING, GPIO.FALLING, GPIO.BOTH
         GPIO.remove_event_detect(self.port)
@@ -35,7 +36,6 @@ class GpioInput(object):
             #self.callback(port)
             print "================= FALLING"
     """
-
 
 
 class GpioOutput(object):

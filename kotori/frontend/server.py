@@ -13,7 +13,7 @@ def boot_frontend(config, debug=False):
     """
 
     http_port = int(config.get('config-web', 'http_port'))
-    websocket_uri = unicode(config.get('wamp', 'listen'))
+    websocket_uri = str(config.get('wamp', 'listen'))
 
     # https://stackoverflow.com/questions/13122519/serving-pyramid-application-using-twistd/13138610#13138610
     config = resource_filename('kotori.frontend', 'development.ini')

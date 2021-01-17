@@ -32,7 +32,7 @@ fpm \
 	--no-deb-use-file-permissions \
 	--no-python-obey-requirements-txt \
 	--no-python-dependencies \
-	--depends "python2.7" \
+	--depends "python3" \
 	--deb-recommends "influxdb, mosquitto, mosquitto-clients, grafana, mongodb" \
 	--deb-recommends "python-requests, python-openssl, python-cryptography, python-certifi" \
 	--deb-recommends "python-numpy, python-scipy, python-matplotlib, python-tables, python-netcdf4" \
