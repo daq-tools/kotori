@@ -34,8 +34,9 @@ def startLogging(settings, stream=None, level=LogLevel.debug):
     if settings.options.debug_io:
         predicate.setLogLevelForNamespace('kotori.io', LogLevel.debug)
 
-    observers    = [ FilteringLogObserver(observer=fileObserver, predicates=[predicate]) ]
-    globalLogBeginner.beginLoggingTo(observers)
+    if globalLogBeginner._temporaryObserver is not None:
+        observers = [FilteringLogObserver(observer=fileObserver, predicates=[predicate])]
+        globalLogBeginner.beginLoggingTo(observers)
 
 
 def changeLogLevel(namespace, loglevel=LogLevel.info):
