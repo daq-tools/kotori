@@ -6,6 +6,13 @@
 Make a new release
 ##################
 
+
+Update changelog
+================
+Reflect the upcoming release within the ``CHANGES.rst`` file in the
+root directory of the repository. Then, commit the changes to this file.
+
+
 Cut release
 ===========
 Bump version number in various files, commit them, add tag reflecting

@@ -23,6 +23,20 @@ Backlog
 - Add CI testing on GHA
 - Logrotate configuration for kotori.log
 - Completely replace Bunch with Munch
+- Measure and increase code coverage on testing
+- Inline or publish https://github.com/jjmalina/pyinfluxql
+- Improve message when invoking Kotori w/o configuration file.
+  It maybe should not display a traceback and also point to the documentation.
+- Add documentation about Caddy reverse proxy
+  https://github.com/daq-tools/kotori/issues/36
+- Mint packages for ARM64
+  https://github.com/daq-tools/kotori/issues/34
+- Provide Docker images for ARM
+  https://github.com/daq-tools/kotori/issues/33
+- Add names of all timestamp fields.
+  - https://github.com/daq-tools/kotori/issues/39
+  - https://getkotori.org/docs/handbook/acquisition/timestamp.html
+  - https://getkotori.org/docs/faq/payload-format.html
 
 
 ****
