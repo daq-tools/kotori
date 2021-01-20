@@ -36,7 +36,7 @@ Run Grafana::
         --link influxdb:influxdb \
         --volume="$(pwd)/var/lib/grafana":/var/lib/grafana \
         --env='GF_SECURITY_ADMIN_PASSWORD=admin' \
-        grafana/grafana:7.3.3
+        grafana/grafana:7.4.0-beta1
 
         #--volume=/etc/grafana:/etc/grafana \
 

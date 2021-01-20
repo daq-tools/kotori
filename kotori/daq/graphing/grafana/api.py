@@ -112,7 +112,7 @@ class GrafanaApi(object):
         except GrafanaClientError as ex:
             message = str(ex)
             if 'Data source with same name already exists' in message or \
-               'Data source with the same name already exists' in message:
+               'data source with the same name already exists' in message.lower():
                 log.info("{message}", message=message)
             else:
                 raise
