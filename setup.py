@@ -75,7 +75,7 @@ extras = {
 
     # Data export: Basic formats
     'export': [
-        'pyinfluxql==0.0.1',
+        'pyinfluxql>=0.0.1,<1',
         'pandas>=1.1.5,<1.3',
         'numpy>=1.19.2,<1.20',
         'XlsxWriter>=1.3.6,<1.4',
@@ -198,9 +198,6 @@ setup(name='kotori',
       test_suite='kotori.test',
       install_requires=requires,
       extras_require=extras,
-      dependency_links=[
-          'https://github.com/jjmalina/pyinfluxql/tarball/d92db4ab8c#egg=pyinfluxql-0.0.1',
-      ],
       entry_points={
           'console_scripts': [
               'kotori              = kotori:run',

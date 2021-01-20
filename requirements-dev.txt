@@ -1,1 +1,0 @@
--e git://github.com/jjmalina/pyinfluxql.git@d92db4ab8cf650cff7aeae381dbb538f2649e104#egg=pyinfluxql

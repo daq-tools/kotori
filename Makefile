@@ -28,7 +28,6 @@ virtualenv-docs: setup-virtualenv
 	@$(pip) --quiet install --requirement=requirements-docs.txt
 
 virtualenv-dev: setup-virtualenv
-	@$(pip) install --upgrade --requirement=requirements-dev.txt
 	@$(pip) install --upgrade --requirement=requirements-test.txt
 	@$(pip) install --upgrade --editable=.[daq,daq_geospatial,export,scientific,firmware]
 
@@ -203,7 +202,7 @@ pypi-upload: install-releasetools
 	twine upload --skip-existing --verbose dist/*.tar.gz
 
 install-releasetools: setup-virtualenv
-	@$(pip) install --quiet --requirement requirements-release.txt --upgrade
+	@$(pip) install --quiet --requirement=requirements-release.txt --upgrade
 
 
 check-bump-options:

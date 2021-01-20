@@ -69,13 +69,12 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ matrix.path }}
-          key: ${{ runner.os }}-pip-${{ hashFiles('setup.py', 'requirements-dev.txt', 'requirements-test.txt', 'requirements-docs.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('setup.py', 'requirements-test.txt', 'requirements-docs.txt') }}
           restore-keys: |
            ${{ runner.os }}-pip-
 
       - name: Install program
         run: |
-          pip install --requirement=requirements-dev.txt
           pip install --requirement=requirements-test.txt
           pip install --editable=.[daq,daq_geospatial,export,scientific,firmware]
 
