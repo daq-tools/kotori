@@ -5,6 +5,7 @@ Changelog
 
 in progress
 ===========
+- Improve logging for Grafana Api Client
 
 
 .. _kotori-0.25.0:

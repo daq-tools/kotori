@@ -106,14 +106,14 @@ class GrafanaApi(object):
         except GrafanaServerError as ex:
             message = str(ex)
             if 'Failed to add datasource' in message:
-                pass
+                log.error("{message}", message=message)
             else:
                 raise
         except GrafanaClientError as ex:
             message = str(ex)
             if 'Data source with same name already exists' in message or \
                'Data source with the same name already exists' in message:
-                pass
+                log.info("{message}", message=message)
             else:
                 raise
 
