@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 @pytest_twisted.inlineCallbacks
 @pytest.mark.mqtt
-def test_mqtt_to_influxdb_json(machinery, create_influxdb, reset_influxdb):
+def test_mqtt_to_influxdb_json_single(machinery, create_influxdb, reset_influxdb):
     """
     Publish single reading in JSON format to MQTT broker
     and proof it is stored in the InfluxDB database.
@@ -40,7 +40,7 @@ def test_mqtt_to_influxdb_json(machinery, create_influxdb, reset_influxdb):
 @pytest_twisted.inlineCallbacks
 @pytest.mark.mqtt
 @pytest.mark.legacy
-def test_mqtt_legacy(machinery, create_influxdb, reset_influxdb):
+def test_mqtt_to_influxdb_json_legacy_topic(machinery, create_influxdb, reset_influxdb):
     """
     Publish single reading in JSON format to MQTT broker on legacy suffix
     and proof it is stored in the InfluxDB database.
@@ -63,9 +63,9 @@ def test_mqtt_legacy(machinery, create_influxdb, reset_influxdb):
 
 @pytest_twisted.inlineCallbacks
 @pytest.mark.mqtt
-def test_mqtt_to_influxdb_single(machinery, create_influxdb, reset_influxdb):
+def test_mqtt_to_influxdb_discrete(machinery, create_influxdb, reset_influxdb):
     """
-    Publish discrete values to the MQTT broker and
+    Publish discrete values to the MQTT broker
     and proof they are stored in the InfluxDB database.
     """
 
