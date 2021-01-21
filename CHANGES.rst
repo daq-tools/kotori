@@ -6,6 +6,8 @@ Changelog
 in progress
 ===========
 - **InfluxDB:** Added capability to acquire bulk readings in JSON format
+- **MQTT:** Added capability to acquire bulk readings in compact JSON format,
+  with timestamps as keys
 
 .. _kotori-0.28.0:
 
