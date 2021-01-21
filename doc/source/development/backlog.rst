@@ -33,10 +33,11 @@ Backlog
   https://github.com/daq-tools/kotori/issues/34
 - Provide Docker images for ARM
   https://github.com/daq-tools/kotori/issues/33
-- Add names of all timestamp fields.
+- Improve documentation for timestamped data acquisition wrt. to all timestamp fields available.
   - https://github.com/daq-tools/kotori/issues/39
   - https://getkotori.org/docs/handbook/acquisition/timestamp.html
   - https://getkotori.org/docs/faq/payload-format.html
+- Implement bulk readings
 
 
 ****
