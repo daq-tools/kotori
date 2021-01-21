@@ -5,10 +5,10 @@ Changelog
 
 in progress
 ===========
-- Expand CI to run tests against different versions of Mosquitto, InfluxDB and Grafana
-
-- Stop running tests for Python 3.5 on CI
-- Improve tests on HTTP API for data acquisition
+- CI: Stop running tests for Python 3.5 on CI
+- QA: Improve tests on HTTP API for data acquisition
+- CI: Add testing against Python 3.9
+- CI: Run tests against different versions of Mosquitto, InfluxDB and Grafana
 
 
 .. _kotori-0.26.8:
