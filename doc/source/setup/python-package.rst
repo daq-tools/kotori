@@ -2,9 +2,9 @@
 
 .. _setup-python-package:
 
-#################################
-Setup as python package from PyPI
-#################################
+####################################
+Setup using Python package from PyPI
+####################################
 
 
 *****
@@ -64,20 +64,16 @@ Setup
 Install from package repository
 ===============================
 
-Downgrade pip due to "BackendUnavailable" error with pip >= 19.0.0::
-
-    pip install pip==18.1 --upgrade --force-reinstall
-
 Install Kotori::
 
     # Install latest Kotori release with extra feature "daq"
-    pip install --process-dependency-links kotori[daq]
+    pip install kotori[daq]
 
     # Install more extra features
-    pip install --process-dependency-links kotori[daq,export]
+    pip install kotori[daq,daq_geospatial,export,plotting,scientific]
 
     # Install particular version
-    pip install --process-dependency-links kotori[daq,export]==0.15.0
+    pip install kotori[daq,export]==0.15.0
 
 
 Install directly from git repository

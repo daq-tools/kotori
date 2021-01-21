@@ -47,20 +47,22 @@ Setup virtualenv
     # Install extra features
 
     # Data acquisition base
-    pip install --process-dependency-links --editable .[daq] --verbose
+    pip install --editable=.[daq]
 
     # Data acquisition base, with export features
-    pip install --process-dependency-links --editable .[daq,export] --verbose
+    pip install --editable=.[daq,export]
 
     # Data acquisition with data sink for binary payloads
-    pip install --process-dependency-links --editable .[daq_binary] --verbose
+    pip install --editable=.[daq_binary]
 
     # Data storage for RDBMS databases and MongoDB
-    pip install --process-dependency-links --editable .[storage_plus] --verbose
+    pip install --editable=.[storage_plus]
 
 
+.. note::
 
-Please follow :ref:`setup-python-virtualenv`.
+    See also :ref:`setup-python-package`.
+
 
 .. _run-on-pypy:
 
@@ -90,9 +92,6 @@ There's a Free Community edition of PyCharm_, you should really give it a try.
 
 Run as service
 ==============
-When having the desire to run the application
-as system service even while being in development mode,
-have a look at :ref:`systemd-development-mode`.
-We actively use this scenario for integration
-scenarios, testing and debugging.
-
+When having the need to run the application as system service even while being
+in development mode, have a look at :ref:`systemd-development-mode`.
+We actively use this scenario for integration scenarios, testing and debugging.
