@@ -281,8 +281,19 @@ class GrafanaDashboardBuilder(object):
         # time is from  intercom.mqtt
         blacklist = ['_hex_', 'time']
 
+        # Compute list of unique attribute names.
+        if isinstance(data, dict):
+            keys = data.keys()
+        elif isinstance(data, list):
+            keys = set()
+            for item in data:
+                for key in item.keys():
+                    keys.add(key)
+        else:
+            raise ValueError(f"Type of data {type(data)} not accepted")
+
         fields = []
-        for field in data.keys():
+        for field in keys:
             if field in blacklist:
                 continue
 
