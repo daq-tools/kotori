@@ -272,17 +272,40 @@ class GrafanaDashboardBuilder(object):
         Only uses numeric fields and skips all others, because Grafana does not like them.
         """
 
+        accepted_types = (float, int)
+
         def use_field(field_name: str):
-            value = data.get(field_name)
-            return isinstance(value, (float, int))
+            """
+            Use field only if value is numeric.
+            """
+            if isinstance(data, dict):
+                value = data.get(field_name)
+                return isinstance(value, accepted_types)
+            elif isinstance(data, list):
+                for item in data:
+                    value = item.get(field_name)
+                    if isinstance(value, accepted_types):
+                        return True
+            return False
 
         # Filter blacklist fields
         # _hex_ is from intercom.c
         # time is from  intercom.mqtt
         blacklist = ['_hex_', 'time']
 
+        # Compute list of unique attribute names.
+        if isinstance(data, dict):
+            keys = data.keys()
+        elif isinstance(data, list):
+            keys = set()
+            for item in data:
+                for key in item.keys():
+                    keys.add(key)
+        else:
+            raise ValueError(f"Type of data {type(data)} not accepted")
+
         fields = []
-        for field in data.keys():
+        for field in keys:
             if field in blacklist:
                 continue
 

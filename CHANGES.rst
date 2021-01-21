@@ -5,6 +5,7 @@ Changelog
 
 in progress
 ===========
+- **InfluxDB:** Added capability to acquire bulk readings in JSON format
 
 .. _kotori-0.28.0:
 
