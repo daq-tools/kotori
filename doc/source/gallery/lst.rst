@@ -236,7 +236,7 @@ never close tmux sessions, just detache, them using Strg-B and then d.
 Tools
 =====
 
-For using the channel operations, the user basti should navigate to /home/basti/kotori and then start "source .venv27/bin/activate".
+For using the channel operations, the user basti should navigate to /home/basti/kotori and then start "source .venv/bin/activate".
 From this environment, the commandline-based channel operations should be available.
 
 

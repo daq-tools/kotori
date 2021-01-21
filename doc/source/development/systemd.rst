@@ -40,7 +40,7 @@ systemd service
 
     mkdir -p /etc/kotori
     chown kotori:kotori /etc/kotori
-    ln -s /home/kotori/develop/kotori/.venv2/bin/kotori /usr/local/sbin/kotori
+    ln -s /home/kotori/develop/kotori/.venv/bin/kotori /usr/local/sbin/kotori
     ln -s /home/kotori/develop/kotori/etc/hiveeyes.ini /etc/kotori/kotori.ini
 
 2. Create the log directory::
@@ -78,7 +78,7 @@ systemd service
      Main PID: 345 (sh)
        CGroup: /system.slice/kotori.service
                ├─345 /bin/sh -c /usr/local/sbin/kotori --config /etc/kotori/kotori.ini --debug >>/var/log/kotori/kotori.log 2>>/var/log/kotor...
-               └─355 /home/kotori/develop/kotori-daq/.venv2/bin/python /usr/local/sbin/kotori --config /etc/kotori/kotori.ini --debug
+               └─355 /home/kotori/develop/kotori-daq/.venv/bin/python /usr/local/sbin/kotori --config /etc/kotori/kotori.ini --debug
 
     Jan 27 03:47:05 elbanco systemd[1]: Started Kotori data acquisition and graphing toolkit.
 

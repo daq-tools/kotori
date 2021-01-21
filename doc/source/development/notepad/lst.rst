@@ -193,7 +193,7 @@ Build a library from the ``h2m_structs.h`` headers::
 
 Run some simple examples::
 
-    (.venv27)amo offgrid $ cd ~/dev/foss/open.nshare.de/kotori-daq
+    (.venv) amo offgrid $ cd ~/dev/foss/open.nshare.de/kotori-daq
     $ python kotori/vendor/lst/h2m/message.py
 
 

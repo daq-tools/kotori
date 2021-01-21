@@ -22,7 +22,7 @@ $(eval sphinx       := $(venv)/bin/sphinx-build)
 
 # Setup Python virtualenv
 setup-virtualenv:
-	@test -e $(python) || python3 -mvenv $(venv)
+	@test -e $(python) || python3 -m venv $(venv)
 
 virtualenv-docs: setup-virtualenv
 	@$(pip) --quiet install --requirement=requirements-docs.txt

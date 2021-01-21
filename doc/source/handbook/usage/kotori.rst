@@ -32,12 +32,12 @@ Run from virtualenv
 ::
 
     cd develop/kotori
-    source .venv2/bin/activate
+    source .venv/bin/activate
     kotori --config etc/development.ini --debug
 
 .. tip:: Sourcing into the virtualenv is not a must, Kotori also can be called directly::
 
-        ~/develop/kotori/.venv2/bin/kotori --config ~/develop/kotori/etc/development.ini --debug
+        ~/develop/kotori/.venv/bin/kotori --config ~/develop/kotori/etc/development.ini --debug
 
 
 .. _run-configuration-file:
@@ -64,7 +64,7 @@ Run Kotori in tmux session::
 
     ssh kotori@daq.example.org
     tmux new -s kotori
-    source ~/develop/kotori/.venv2/bin/activate
+    source ~/develop/kotori/.venv/bin/activate
     kotori --config ~/develop/kotori/etc/vendor.ini --debug
 
 Attach later::

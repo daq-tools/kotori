@@ -51,10 +51,10 @@ when installing from source.
 ::
 
     # Create virtualenv
-    make virtualenv
+    make setup-virtualenv
 
     # Activate virtualenv
-    source .venv2/bin/activate
+    source .venv/bin/activate
 
 
 *****

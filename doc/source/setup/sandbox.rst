@@ -40,8 +40,8 @@ Setup virtualenv
 ================
 ::
 
-    make virtualenv
-    source .venv2/bin/activate
+    make setup-virtualenv
+    source .venv/bin/activate
     python setup.py develop
 
     # Install extra features

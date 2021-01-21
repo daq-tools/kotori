@@ -219,8 +219,8 @@ Try Python
 
     aptitude install cython python-numpy libcomedi-dev
 
-    virtualenv --system-site-packages .venv27
-    source .venv27/bin/activate
+    python -m venv .venv
+    source .venv/bin/activate
     #pip install numpy
     #pip install pycomedi
 
