@@ -67,13 +67,14 @@ class LuftdatenGrafanaManager(GrafanaManager):
                 log.info(u'Grafana response: {response}', response=json.dumps(response))
 
             except GrafanaPreconditionFailedError as ex:
-                if 'name-exists' in ex.message or 'A dashboard with the same name already exists' in ex.message:
-                    log.warn(ex.message)
+                message = str(ex)
+                if 'name-exists' in message or 'A dashboard with the same name already exists' in message:
+                    log.warn("{message}", message=message)
                 else:
-                    log.error('Grafana Error: {ex}', ex=ex.message)
+                    log.failure('Grafana Error')
 
             except GrafanaClientError as ex:
-                log.error('Grafana Error: {ex}', ex=ex.message)
+                log.failure('Grafana Error')
 
         # Remember dashboard/panel creation for this kind of data inflow
         self.keycache.set(storage_location.database, storage_location.measurement)

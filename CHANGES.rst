@@ -8,6 +8,7 @@ in progress
 - Improve logging for Grafana Api Client
 - Fix logging when running under pytest with "--capture=no"
 - Address compatibility with Grafana 7.4.0
+- Fix error logging after migration to Python 3
 
 
 .. _kotori-0.25.0:

@@ -77,9 +77,8 @@ def lst_message(channel, adapter, options):
             struct = decode_payload(adapter, payload_ascii)
             adapter.pprint(struct)
         except KeyError as ex:
-            message = 'Decoding binary data "{}" to struct failed.'.format(payload_ascii)
-            message += ' ' + ex.message
-            logger.error(message)
+            message = f'Decoding binary data "{payload_ascii}" to struct failed'
+            logger.exception(message)
             sys.exit(1)
 
     elif options.get('transform'):

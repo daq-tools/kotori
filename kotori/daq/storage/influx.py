@@ -86,7 +86,7 @@ class InfluxDBAdapter(object):
 
         except InfluxDBClientError as ex:
 
-            if ex.code == 404 or ex.message == 'database not found':
+            if ex.code == 404 or 'database not found' in ex.content:
 
                 log.info('Creating database "{database}"', database=meta.database)
                 self.influx_client.create_database(meta.database)
@@ -99,7 +99,7 @@ class InfluxDBAdapter(object):
 
             # [0.8] ignore "409: database kotori-dev exists"
             # [0.9] ignore "database already exists"
-            elif ex.code == 409 or ex.message == 'database already exists':
+            elif ex.code == 409 or 'database already exists' in ex.content:
                 pass
             else:
                 raise

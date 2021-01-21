@@ -89,12 +89,13 @@ class GrafanaApi(object):
         # TODO: can delete by datasource "id" only. have to inquire using "GET /api/datasources" first
         """
         try:
-            logger.info('deleting datasource: {}'.format(name))
+            log.info('Deleting datasource: {name}', name=name)
             response = self.grafana_client.datasources[name].delete()
             print response
         except GrafanaClientError as ex:
-            if '404' in ex.message or 'Dashboard not found' in ex.message:
-                logger.warn(slm(ex.message))
+            message = str(ex)
+            if '404' in message or 'Dashboard not found' in message:
+                log.warn("{message}", message=message)
             else:
                 raise
         """

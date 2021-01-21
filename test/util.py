@@ -129,7 +129,7 @@ class InfluxWrapper:
             influx.client.delete_series(self.database, measurement=self.measurement)
             #try:
             #except InfluxDBClientError as ex:
-            #    if 'database not found: mqttkit_1_itest' not in ex.message:
+            #    if 'database not found: mqttkit_1_itest' not in str(ex):
             #        raise
 
         return reset_measurement
