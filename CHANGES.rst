@@ -104,6 +104,7 @@ Tests
 - QA: Improve tests on HTTP API for data acquisition
 - CI: Add testing against Python 3.9
 - CI: Run tests against different versions of Mosquitto, InfluxDB and Grafana
+- Add possibility to acquire bulk readings in JSON format
 
 
 .. _kotori-0.26.8:
