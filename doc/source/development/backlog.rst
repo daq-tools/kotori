@@ -38,6 +38,14 @@ Backlog
   - https://getkotori.org/docs/handbook/acquisition/timestamp.html
   - https://getkotori.org/docs/faq/payload-format.html
 - Implement bulk readings
+- Test against macOS and Windows on CI/GHA
+- Add support for InfluxDB 2.x
+- Add support for Mosquitto 2.x (MQTT5)
+- Test against different versions of Grafana, InfluxDB and Mosquitto
+- Add badges designating support for Grafana, InfluxDB and Mosquitto versions
+- Support more serialization formats like SMILE and UBJSON.
+  https://hiveeyes.org/docs/beradio/test/serialization-size.html#marshallers-suitable-for-embedded-use
+- Have a look at https://github.com/openPMD/openPMD-api and https://github.com/ornladios/ADIOS2
 
 
 ****
