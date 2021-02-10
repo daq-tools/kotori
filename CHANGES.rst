@@ -5,6 +5,12 @@ Changelog
 
 in progress
 ===========
+
+
+.. _kotori-0.26.0:
+
+2021-02-10 0.26.0
+=================
 - Improve logging for Grafana Api Client
 - Fix logging when running under pytest with "--capture=no"
 - Address compatibility with Grafana 7.4.0
