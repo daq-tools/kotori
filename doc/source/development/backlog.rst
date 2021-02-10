@@ -278,7 +278,7 @@ https://grafana.com/docs/reference/sharing/#embed-panel
 
 - [o] Run ``git checkout ${VERSION}`` after cloning
 - [o] Use ``fpm`` option for defining systemd files
-- [o] Make ``make debian-package`` run on top of the most recent version if version is not specified
+- [o] Make ``make package-debian`` run on top of the most recent version if version is not specified
 - [o] Revert ``apt install`` docs to previous variant re. recommends && suggests
 - [o] ``RUN $pip install kotori[${FEATURES}]==${VERSION} --find-links=./dist --upgrade``
       does not use the local sdist, but acquires the egg from PyPI.
@@ -1207,7 +1207,7 @@ BMBF „Open Photonik“
 ==========
 - [x] Float is not iterable when querying with "&from=20160101"
 - [x] Also provide ?include=temp1,temp2,... parameter to data export interface doing the reverse of ?exclude=wght2
-- [o] Packaging: When doing ``make debian-package flavor=daq``, if Kotori is not installed in /opt/kotori::
+- [o] Packaging: When doing ``make package-debian flavor=daq``, if Kotori is not installed in /opt/kotori::
 
       make[1]: /home/workbench/isarengineering/kotori/build/kotori/bin/pip: Command not found
 

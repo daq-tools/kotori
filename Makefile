@@ -18,6 +18,7 @@ $(eval nosetests    := $(venv)/bin/nosetests)
 $(eval bumpversion  := $(venv)/bin/bumpversion)
 $(eval twine        := $(venv)/bin/twine)
 $(eval sphinx       := $(venv)/bin/sphinx-build)
+$(eval fab          := $(venv)/bin/fab)
 
 
 # Setup Python virtualenv
@@ -60,19 +61,43 @@ publish-sdist: sdist
 # ==========================================
 
 
-# Build and publish debian package with flavor
-# Hint: Should be run on an appropriate build slave matching the deployment platform
+# Build baseline images and packages.
+
+package-baseline-images:
+	$(fab) build-docker-debian-baseline-images
+	$(fab) build-docker-ubuntu-baseline-images
+
+package-all: check-version
+
+	# amd64
+	# TODO: Also build "standard" flavors for amd64 to reduce footprint of Docker images.
+	$(MAKE) package-debian flavor=full dist=stretch arch=amd64 version=$(version)
+	$(MAKE) package-debian flavor=full dist=buster arch=amd64 version=$(version)
+	$(MAKE) package-debian flavor=full dist=bionic arch=amd64 version=$(version)
+	$(MAKE) package-debian flavor=full dist=focal arch=amd64 version=$(version)
+
+	# armv7hf
+	$(MAKE) package-debian flavor=standard dist=stretch arch=armv7hf version=$(version)
+	$(MAKE) package-debian flavor=standard dist=buster arch=armv7hf version=$(version)
+
+	# aarch64
+	$(MAKE) package-debian flavor=standard dist=stretch arch=aarch64 version=$(version)
+	$(MAKE) package-debian flavor=standard dist=buster arch=aarch64 version=$(version)
+
+
+# Build and publish debian package with flavor.
+# Hint: Should be run on an appropriate build slave matching the deployment platform.
 
 # Synopsis::
 #
 #    # amd64
-#    make debian-package flavor=full dist=buster arch=amd64 version=0.22.0
+#    make package-debian flavor=full dist=buster arch=amd64 version=0.22.0
 #
 #    # armhf
-#    make debian-package flavor=standard dist=buster arch=armhf version=0.22.0
+#    make package-debian flavor=standard dist=buster arch=armhf version=0.22.0
 #
 
-debian-package: check-flavor-options deb-build-$(flavor) publish-debian
+package-debian: check-flavor-options deb-build-$(flavor) publish-debian
 
 
 deb-build-minimal:
@@ -117,32 +142,30 @@ publish-debian:
 	rsync -auv --progress ./dist/kotori*$(version)*.deb workbench@packages.elmyra.de:/srv/packages/organizations/elmyra/foss/aptly/public/incoming/
 
 
-build-debian-stretch-amd64-baseline:
-	docker build --tag daq-tools/stretch-amd64-baseline:0.7.0 --build-arg BASE_IMAGE=balenalib/amd64-debian:stretch-build - < packaging/dockerfiles/Dockerfile.debian.baseline
-	docker tag daq-tools/stretch-amd64-baseline:0.7.0 daq-tools/stretch-amd64-baseline:latest
 
-build-debian-stretch-armhf-baseline:
-	docker build --tag daq-tools/stretch-armhf-baseline:0.7.0 --build-arg BASE_IMAGE=balenalib/armv7hf-debian:stretch-build - < packaging/dockerfiles/Dockerfile.debian.baseline
-	docker tag daq-tools/stretch-armhf-baseline:0.7.0 daq-tools/stretch-armhf-baseline:latest
+# =================
+# Docker Hub images
+# =================
 
-
-build-debian-buster-amd64-baseline:
-	docker build --tag daq-tools/buster-amd64-baseline:0.7.0 --build-arg BASE_IMAGE=balenalib/amd64-debian:buster-build - < packaging/dockerfiles/Dockerfile.debian.baseline
-	docker tag daq-tools/buster-amd64-baseline:0.7.0 daq-tools/buster-amd64-baseline:latest
-
-build-debian-buster-armhf-baseline:
-	docker build --tag daq-tools/buster-armhf-baseline:0.7.0 --build-arg BASE_IMAGE=balenalib/armv7hf-debian:buster-build - < packaging/dockerfiles/Dockerfile.debian.baseline
-	docker tag daq-tools/buster-armhf-baseline:0.7.0 daq-tools/buster-armhf-baseline:latest
+package-dockerhub-image: check-version
+	docker build --tag daqzilla/kotori:$(version) --build-arg version=$(version) --file packaging/dockerfiles/Dockerfile.hub.kotori .
+	docker tag daqzilla/kotori:$(version) daqzilla/kotori:nightly
+	@#docker tag daqzilla/kotori:$(version) daqzilla/kotori:latest
 
 
-build-ubuntu-bionic-amd64-baseline:
-	docker build --tag daq-tools/bionic-amd64-baseline:0.7.0 --build-arg BASE_IMAGE=ubuntu:bionic-20200219 - < packaging/dockerfiles/Dockerfile.debian.baseline
-	docker tag daq-tools/bionic-amd64-baseline:0.7.0 daq-tools/bionic-amd64-baseline:latest
+# =================
+# Packaging helpers
+# =================
 
+check-version:
+	@if test "$(version)" = ""; then \
+		echo "ERROR: 'version' not set"; \
+		exit 1; \
+	fi
 
 check-flavor-options:
 	@if test "$(flavor)" = ""; then \
-		echo "ERROR: 'flavor' not set, try 'make debian-package flavor={minimal,standard,full}'"; \
+		echo "ERROR: 'flavor' not set, try 'make package-debian flavor={minimal,standard,full}'"; \
 		exit 1; \
 	fi
 
@@ -168,21 +191,6 @@ check-build-options:
 		echo "ERROR: 'version' not set"; \
 		exit 1; \
 	fi
-
-
-# =============
-# Docker images
-# =============
-
-check-dockerbuild:
-	@if test "$(version)" = ""; then \
-		echo "ERROR: 'version' not set"; \
-		exit 1; \
-	fi
-
-build-dockerhub-image: check-dockerbuild
-	docker build --tag daqzilla/kotori:$(version) --build-arg version=$(version) - < packaging/dockerfiles/Dockerfile.hub.kotori
-	docker tag daqzilla/kotori:$(version) daqzilla/kotori:latest
 
 
 

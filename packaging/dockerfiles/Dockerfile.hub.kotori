@@ -7,7 +7,9 @@
 #   make build-dockerhub-image version=0.24.5
 #
 
-FROM debian:buster-slim
+#FROM debian:buster-slim
+#FROM debian:bullseye-slim
+FROM balenalib/amd64-debian-python:3.8-buster-run
 
 LABEL maintainer="Andreas Motl <a.motl@elmyra.de>"
 
@@ -15,30 +17,39 @@ ARG version
 
 #RUN timedatectl set-ntp true
 
+# Tweak: Use `kotori*.deb` from local filesystem.
+COPY ./dist/*.deb /tmp
 
 # Ramping up.
 RUN \
     apt-get update && \
-    apt-get install --yes wget && \
+#    apt-get install --yes wget && \
 \
 # Add repository key.
 # Don't use "apt-key add" for adding key.
 # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=851774
-    wget -q https://packages.elmyra.de/elmyra/foss/debian/pubkey.txt -O /etc/apt/trusted.gpg.d/daqzilla.asc && \
+#    wget -q https://packages.elmyra.de/elmyra/foss/debian/pubkey.txt -O /etc/apt/trusted.gpg.d/daqzilla.asc && \
 \
 # Add package repository.
 # Don't use "apt-add-repository".
-    echo 'deb https://packages.elmyra.de/elmyra/foss/debian/ buster main foundation' > /etc/apt/sources.list.d/daqzilla-buster.list && \
+#    echo 'deb https://packages.elmyra.de/elmyra/foss/debian/ buster main foundation' > /etc/apt/sources.list.d/daqzilla-buster.list && \
+\
+# Install infrastructure services.
+#    apt-get update && apt-get install --yes --install-recommends systemd- influxdb- grafana- mongodb- mosquitto- mosquitto-clients- && \
 \
 # Install Kotori.
-    apt-get update && apt-get install --yes --install-recommends kotori=${version}* systemd- influxdb- grafana- mongodb- mosquitto- mosquitto-clients- && \
-    ln -s /opt/kotori/bin/kotori /usr/local/sbin/ && \
+#apt-get update && apt-get install --yes --install-recommends kotori=${version}* && \
+
+# Tweak: Use `kotori*.deb` from local filesystem.
+apt-get install --yes --install-recommends /tmp/kotori*.deb && \
+ln -s /opt/kotori/bin/kotori /usr/local/sbin/ && \
 \
 # Tearing down.
     apt-get remove --purge --yes wget && \
     apt-get remove --purge --yes build-essential gcc gcc-8 g++-8 libgcc-8-dev libstdc++-8-dev libc-dev-bin linux-libc-dev python-dev libpython-dev libexpat1-dev manpages-dev && \
     apt-get autoremove --yes && apt-get autoclean --yes && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* \
+    rm /tmp/*
 
 EXPOSE 24642
 

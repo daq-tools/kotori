@@ -11,30 +11,30 @@ Run packaging
 *************
 Prerequisites
 *************
+
 Prepare baseline images::
 
-    make build-debian-stretch-amd64-baseline
-    make build-debian-stretch-armhf-baseline
-
-    make build-debian-buster-amd64-baseline
-    make build-debian-buster-armhf-baseline
-
-    make build-ubuntu-bionic-amd64-baseline
+    make package-baseline-images
 
 
 ***************
 Debian packages
 ***************
-Build Kotori package::
+
+Build packages for all targets::
+
+    make package-all
+
+Build individual packages for Debian and Ubuntu::
 
     # amd64
-    make debian-package flavor=full dist=stretch arch=amd64 version=0.24.5
-    make debian-package flavor=full dist=buster arch=amd64 version=0.24.5
-    make debian-package flavor=full dist=bionic arch=amd64 version=0.24.5
+    make package-debian flavor=full dist=stretch arch=amd64 version=0.24.5
+    make package-debian flavor=full dist=buster arch=amd64 version=0.24.5
+    make package-debian flavor=full dist=bionic arch=amd64 version=0.24.5
 
-    # armhf
-    make debian-package flavor=standard dist=stretch arch=armhf version=0.24.5
-    make debian-package flavor=standard dist=buster arch=armhf version=0.24.5
+    # armv7hf
+    make package-debian flavor=standard dist=stretch arch=armv7hf version=0.24.5
+    make package-debian flavor=standard dist=buster arch=armv7hf version=0.24.5
 
 
 *************
@@ -42,6 +42,6 @@ Docker images
 *************
 ::
 
-    make build-dockerhub-image version=0.24.5
+    make package-dockerhub-image version=0.24.5
     docker login
     docker push daqzilla/kotori

@@ -3,47 +3,21 @@
 #
 # Synopsis:
 #
-#   make debian-package flavor=full dist=buster arch=amd64 version=0.24.3
+#   make package-debian flavor=full dist=buster arch=amd64 version=0.24.3
 #
 
 ARG BASE_IMAGE
 
 
 
-# ================
-# Build virtualenv
-# ================
+# =================
+# Create virtualenv
+# =================
 FROM ${BASE_IMAGE} AS python-environment
 
-ENV TMPDIR=/var/tmp
+ARG PREFIX=/opt/kotori
 
-ARG venv=/venv
-ARG pip=${venv}/bin/pip
-
-
-# Create Python virtualenv
-RUN virtualenv --system-site-packages --always-copy --python=python ${venv}
-
-# Remove superfluous "local" folder inside virtualenv
-# See also:
-# - http://stackoverflow.com/questions/8227120/strange-local-folder-inside-virtualenv-folder
-# - https://github.com/pypa/virtualenv/pull/166
-# - https://github.com/pypa/virtualenv/commit/5cb7cd652953441a6696c15bdac3c4f9746dfaa1
-RUN rm -rf ${venv}/local
-
-#RUN $pip install setuptools --upgrade --force-reinstall
-#RUN $pip install setuptools==18.8.1 --upgrade --force-reinstall
-#RUN $pip install setuptools==22.0.5 --upgrade --force-reinstall
-
-# Downgrade pip due to "BackendUnavailable" error with pip >= 19.0.0
-RUN $pip install pip==18.1 --upgrade --force-reinstall
-
-# Install "virtualenv-tools" for relocating the virtualenv
-RUN $pip install virtualenv-tools==1.0  # --upgrade --force-reinstall
-
-# Install other 3rd-party modules
-RUN PIP_EXTRA_INDEX_URL=https://packages.hiveeyes.org/hiveeyes/python/eggs/ $pip install pandas==0.18.1
-RUN $pip install 'https://github.com/jjmalina/pyinfluxql/tarball/d92db4ab8c#egg=pyinfluxql'
+RUN python -m venv --system-site-packages --copies ${PREFIX}
 
 
 
@@ -55,12 +29,13 @@ FROM python-environment AS install-kotori
 ARG VERSION
 ARG FEATURES
 
-ARG venv=/venv
-ARG pip=${venv}/bin/pip
+ARG PREFIX=/opt/kotori
+ARG pip=${PREFIX}/bin/pip
+
+RUN echo hello
 
 # Install Kotori from PyPI.
 ENV TMPDIR=/var/tmp
-#ENV PIP_EXTRA_INDEX_URL=https://packages.hiveeyes.org/hiveeyes/python/eggs/
 RUN $pip install kotori[${FEATURES}]==${VERSION} --upgrade
 
 
@@ -75,16 +50,13 @@ ARG VERSION
 ARG NAME
 ARG FEATURES
 
-ARG venv=/venv
+ARG PREFIX=/opt/kotori
 
 
 # Counter "ValueError: bad marshal data (unknown type code)"
 # coming from manipulation through "virtualenv-tools"".
-RUN find ${venv} -name '*.pyc' -delete
-
-# Relocate the virtualenv by updating the python interpreter in the shebang of installed scripts.
-RUN ${venv}/bin/virtualenv-tools --update-path=/opt/kotori ${venv}
-
+RUN find ${PREFIX} -name '*.pyc' -delete
+RUN find ${PREFIX} -name '__pycache__' -delete
 
 # Copy over specific resources required for package building.
 WORKDIR /

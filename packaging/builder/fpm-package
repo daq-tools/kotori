@@ -32,12 +32,9 @@ fpm \
 	--no-deb-use-file-permissions \
 	--no-python-obey-requirements-txt \
 	--no-python-dependencies \
-	--depends "python3" \
-	--deb-recommends "influxdb, mosquitto, mosquitto-clients, grafana, mongodb" \
-	--deb-recommends "python-requests, python-openssl, python-cryptography, python-certifi" \
-	--deb-recommends "python-numpy, python-scipy, python-matplotlib, python-tables, python-netcdf4" \
 	--deb-recommends "libatlas3-base, libopenblas-base, liblapack3, libhdf5-100, libnetcdf-c++4, libnetcdf11" \
 	--deb-recommends "liblzo2-2, libbz2-1.0, fonts-humor-sans" \
+	--deb-suggests "influxdb, mosquitto, mosquitto-clients, grafana, mongodb" \
 	--provides "kotori" \
 	--provides "${NAME}" \
 	--maintainer "andreas.motl@elmyra.de" \
@@ -55,7 +52,7 @@ fpm \
     --before-remove ./packaging/scripts/before-remove \
     --verbose \
     --force \
-    ${venv}/=/opt/kotori \
+    /opt/kotori \
     ./etc/production.ini=/etc/kotori/kotori.ini \
     ./etc/examples/=/etc/kotori/examples \
     ./packaging/systemd/kotori.service=/usr/lib/systemd/system/kotori.service
@@ -64,6 +61,7 @@ fpm \
 # Optionally
 #		--debug \
 
+#--depends "python3" \
 
 # Might use again when building from feature branches or other references
 #--deb-field 'Branch: $(branch) Commit: $(commit)' \
