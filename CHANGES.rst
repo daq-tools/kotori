@@ -5,6 +5,7 @@ Changelog
 
 in progress
 ===========
+- Expand CI to run tests against different versions of Mosquitto, InfluxDB and Grafana
 
 - Stop running tests for Python 3.5 on CI
 - Improve tests on HTTP API for data acquisition
