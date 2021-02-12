@@ -3,11 +3,20 @@
 from twisted.logger import Logger, LogLevel
 log = Logger()
 
+
 try:
     import pandas
-    from pandas.tslib import Timedelta
 except ImportError:
     log.failure('Dataframe functions not available, please install "pandas".', level=LogLevel.warn)
+
+
+try:
+    from pandas.tslib import Timedelta
+except ImportError:
+    try:
+        from pandas import Timedelta
+    except ImportError:
+        log.failure('Dataframe functions not available, please install "pandas".', level=LogLevel.warn)
 
 
 def dataframe_index_to_column(df, column):

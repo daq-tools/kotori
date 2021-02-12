@@ -157,15 +157,15 @@ def mqtt_sensor(topic, payload):
         elif sys.platform == "darwin":
             mosquitto_pub = "docker run --rm eclipse-mosquitto:1.6.12 mosquitto_pub -h host.docker.internal"
         else:
-            raise NotImplementedError(f"Invoking 'mosquitto_pub' through Docker on '{sys.platform}' not supported yet")
+            raise NotImplementedError("Invoking 'mosquitto_pub' through Docker on '{}' not supported yet".format(sys.platform))
     else:
         mosquitto_pub = "mosquitto_pub -h localhost"
-    command = f"{mosquitto_pub} -t '{topic}' -m '{payload}'"
+    command = "{mosquitto_pub} -t '{topic}' -m '{payload}'".format(mosquitto_pub=mosquitto_pub, topic=topic, payload=payload)
 
     logger.info('Running command {}'.format(command))
     exitcode = os.system(command)
     if exitcode != 0:
-        raise ChildProcessError(f"Invoking command failed: {command}. Exit code: {exitcode}")
+        raise ChildProcessError("Invoking command failed: {command}. Exit code: {exitcode}".format(command=command, exitcode=exitcode))
 
 
 def http_json_sensor(topic, data):

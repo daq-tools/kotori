@@ -249,7 +249,11 @@ class HttpChannelEndpoint(Resource):
         bucket = Munch(path=request.path, request=request)
 
         # Synchronous.
-        return self.dispatch(request, bucket)
+        try:
+            return self.dispatch(request, bucket)
+        except Exception:
+            log.failure("Dispatching request failed: {ex}", ex=last_error_and_traceback())
+            return
 
         # Asynchronous. Request processing chain, worker-threaded
         deferred = threads.deferToThread(self.dispatch, request, bucket)
@@ -316,7 +320,7 @@ class HttpChannelEndpoint(Resource):
 
         content_type = request.getHeader('Content-Type')
 
-        # Read and decode request body
+        # Read and decode request body.
         body = request.content.read()
         bucket.body = body
 
@@ -325,6 +329,9 @@ class HttpChannelEndpoint(Resource):
 
             # Decode data from JSON format
             if content_type.startswith('application/json'):
+                # Python 3.5 compatibility.
+                if isinstance(body, bytes):
+                    body = body.decode()
                 return json.loads(body)
 
             # Decode data from x-www-form-urlencoded format
@@ -496,7 +503,6 @@ class HttpChannelEndpoint(Resource):
 
         message = 'Received #{number} readings'.format(number=len(data))
         bucket.request.messages.append({'type': 'info', 'message': message})
-
 
     def propagate_single(self, item, bucket):
 
