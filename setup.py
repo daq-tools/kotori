@@ -76,15 +76,14 @@ extras = {
     # Data export: Basic formats
     'export': [
         'pyinfluxql>=0.0.1,<1',
-        'pandas>=1.1.5,<1.3',
-        'numpy>=1.19.2,<1.20',
+        'pandas>=0.25,<1.3',
+        'numpy>=1.18,<1.20',
         'XlsxWriter>=1.3.6,<1.4',
     ],
 
     'plotting': [
         #'dyplot==0.8.8',
 
-        # sudo port install py27-matplotlib
         'matplotlib>=3.3.2,<3.4',
         #'cairocffi>=0.5.4',
         'bokeh>=2.2.2,<2.3',
@@ -103,15 +102,14 @@ extras = {
         'h5py>=2.10.0,<4',
 
         # NetCDF (Network Common Data Form)
-        'xarray>=0.16.1,<0.17',
+        'xarray>=0.13.0,<0.17',
         # sudo port install netcdf
         'netCDF4>=1.5.4,<1.6',
         #'h5netcdf==0.2.2',
 
         # Algorithms
         # ----------
-        # sudo port install py27-scipy
-        'scipy>=1.5.3,<1.6',
+        'scipy>=1.4.1,<1.6',
         'ggplot>=0.11.5,<0.12',
 
         # gfortran
@@ -139,6 +137,7 @@ setup(name='kotori',
       classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",

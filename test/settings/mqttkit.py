@@ -3,7 +3,7 @@
 
 from test.util import InfluxWrapper, GrafanaWrapper
 
-PROCESS_DELAY = 0.1
+PROCESS_DELAY = 0.25
 
 
 class TestSettings:
