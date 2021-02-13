@@ -6,7 +6,7 @@ import pytest
 import pytest_twisted
 from twisted.internet import threads
 
-from test.settings.mqttkit import settings, influx_events, PROCESS_DELAY
+from test.settings.mqttkit import settings, influx_events, PROCESS_DELAY_MQTT
 from test.util import mqtt_json_sensor, sleep, http_json_sensor, http_form_sensor
 
 logger = logging.getLogger(__name__)
@@ -32,7 +32,7 @@ def test_event_mqtt(machinery, create_influxdb, reset_influxdb_events):
     yield threads.deferToThread(mqtt_json_sensor, settings.mqtt_topic_event, event_data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that event arrived in InfluxDB.
     record = influx_events.get_first_record()
@@ -53,7 +53,7 @@ def test_event_http_json(machinery, create_influxdb, reset_influxdb):
     yield threads.deferToThread(http_json_sensor, settings.channel_path_event, event_data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that event arrived in InfluxDB.
     record = influx_events.get_first_record()
@@ -75,7 +75,7 @@ def test_event_http_urlencoded(machinery, create_influxdb, reset_influxdb):
     yield threads.deferToThread(http_form_sensor, settings.channel_path_event, event_data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that event arrived in InfluxDB.
     record = influx_events.get_first_record()

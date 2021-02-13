@@ -5,7 +5,7 @@ import logging
 import pytest
 import pytest_twisted
 
-from test.settings.mqttkit import settings, grafana, PROCESS_DELAY
+from test.settings.mqttkit import settings, grafana, PROCESS_DELAY_MQTT
 from test.util import mqtt_json_sensor, sleep
 
 logger = logging.getLogger(__name__)
@@ -27,9 +27,9 @@ def test_mqtt_to_grafana(machinery, create_influxdb, reset_influxdb, reset_grafa
     yield mqtt_json_sensor(settings.mqtt_topic_json, data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
-    yield sleep(PROCESS_DELAY)
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
+    yield sleep(PROCESS_DELAY_MQTT)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that Grafana is well provisioned.
     logger.info('Grafana: Checking datasource')

@@ -3,7 +3,7 @@
 import logging
 import pytest_twisted
 
-from test.settings.mqttkit import settings, influx_sensors, PROCESS_DELAY
+from test.settings.mqttkit import settings, influx_sensors, PROCESS_DELAY_MQTT
 from test.util import mqtt_json_sensor, sleep
 
 logger = logging.getLogger(__name__)
@@ -26,7 +26,7 @@ def test_timestamp_rfc3339(machinery, create_influxdb, reset_influxdb):
     yield mqtt_json_sensor(settings.mqtt_topic_json, data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that data arrived in InfluxDB.
     record = influx_sensors.get_first_record()
@@ -51,7 +51,7 @@ def test_timestamp_seconds(machinery, create_influxdb, reset_influxdb):
     yield mqtt_json_sensor(settings.mqtt_topic_json, data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that data arrived in InfluxDB.
     record = influx_sensors.get_first_record()
@@ -76,7 +76,7 @@ def test_timestamp_milliseconds(machinery, create_influxdb, reset_influxdb):
     yield mqtt_json_sensor(settings.mqtt_topic_json, data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that data arrived in InfluxDB.
     record = influx_sensors.get_first_record()
@@ -101,7 +101,7 @@ def test_timestamp_microseconds(machinery, create_influxdb, reset_influxdb):
     yield mqtt_json_sensor(settings.mqtt_topic_json, data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that data arrived in InfluxDB.
     record = influx_sensors.get_first_record()
@@ -126,7 +126,7 @@ def test_timestamp_nanoseconds(machinery, create_influxdb, reset_influxdb):
     yield mqtt_json_sensor(settings.mqtt_topic_json, data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that data arrived in InfluxDB.
     record = influx_sensors.get_first_record()
