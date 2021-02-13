@@ -233,7 +233,7 @@ check-bump-options:
 pytest: virtualenv-dev
 
 	# Run pytest.
-	$(pytest) kotori test -vvv --log-level DEBUG --log-cli-level DEBUG --log-format='%(asctime)-15s [%(name)-35s] %(levelname)-8s: %(message)s' --log-date-format='%Y-%m-%dT%H:%M:%S%z'
+	$(pytest) kotori test -vvv
 
 nosetest: virtualenv-dev
 
