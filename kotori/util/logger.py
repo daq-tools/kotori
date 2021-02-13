@@ -12,7 +12,8 @@ predicate = None
 def startLogging(settings, stream=None, level=LogLevel.debug):
     global predicate
 
-    fileObserver = logObserver(stream)
+    timeFormat = "%Y-%m-%dT%H:%M:%S.%f%z"
+    fileObserver = logObserver(stream, timeFormat=timeFormat)
     predicate    = LogLevelFilterPredicate(defaultLogLevel=level)
 
     if settings.options.debug_mqtt:
