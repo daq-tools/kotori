@@ -7,7 +7,7 @@ import pytest_twisted
 from bunch import Bunch
 
 from test.conftest import create_machinery
-from test.settings.mqttkit import PROCESS_DELAY
+from test.settings.mqttkit import PROCESS_DELAY_MQTT
 from test.util import mqtt_json_sensor, sleep, InfluxWrapper, GrafanaWrapper
 
 logger = logging.getLogger(__name__)
@@ -48,7 +48,7 @@ def test_mqtt_to_grafana(machinery_hiveeyes, create_influxdb_hiveeyes, reset_inf
     yield mqtt_json_sensor(settings.mqtt_topic, data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Wait for Grafana to create its artefacts.
     yield sleep(2)

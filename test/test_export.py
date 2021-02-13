@@ -9,7 +9,7 @@ import pytest
 import pytest_twisted
 from twisted.internet import threads
 
-from test.settings.mqttkit import settings, PROCESS_DELAY
+from test.settings.mqttkit import settings, PROCESS_DELAY_MQTT
 from test.util import sleep, http_json_sensor, http_get_data
 from pandas.testing import assert_frame_equal
 from datadiff.tools import assert_equal
@@ -35,7 +35,7 @@ def test_export(machinery, create_influxdb, reset_influxdb):
     yield threads.deferToThread(http_json_sensor, settings.channel_path_data, data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that data is available via HTTP API.
     ts_from = '2020-03-10T00:00:00.000Z'

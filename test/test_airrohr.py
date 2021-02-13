@@ -6,7 +6,7 @@ import pytest
 import pytest_twisted
 from twisted.internet import threads
 
-from test.settings.basic import settings, influx_sensors, grafana, create_influxdb, reset_influxdb, reset_grafana, PROCESS_DELAY
+from test.settings.basic import settings, influx_sensors, grafana, create_influxdb, reset_influxdb, reset_grafana, PROCESS_DELAY_MQTT
 from test.util import http_json_sensor, sleep
 
 logger = logging.getLogger(__name__)
@@ -89,7 +89,7 @@ def test_airrohr_http_json(machinery, create_influxdb, reset_influxdb):
     yield threads.deferToThread(http_json_sensor, settings.channel_path_airrohr, data_in)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that data arrived in InfluxDB.
     record = influx_sensors.get_first_record()

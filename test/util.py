@@ -97,7 +97,7 @@ class InfluxWrapper:
         result = self.query()
 
         # One measurement?
-        assert len(result) == 1
+        assert len(result) == 1, "No data in database: len(result) = {}".format(len(result))
 
         # One record.
         records = list(result[self.measurement])

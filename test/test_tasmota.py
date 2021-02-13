@@ -6,7 +6,7 @@ import logging
 import pytest
 import pytest_twisted
 
-from test.settings.mqttkit import influx_sensors, PROCESS_DELAY
+from test.settings.mqttkit import influx_sensors, PROCESS_DELAY_MQTT
 from test.util import mqtt_json_sensor, sleep
 
 logger = logging.getLogger(__name__)
@@ -42,7 +42,7 @@ def test_tasmota_sonoff_sc(machinery, create_influxdb, reset_influxdb):
     yield mqtt_json_sensor(tasmota_sensor_topic, data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Define reference data.
     reference = {
@@ -81,7 +81,7 @@ def test_tasmota_ds18b20(machinery, create_influxdb, reset_influxdb):
     yield mqtt_json_sensor(tasmota_sensor_topic, data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Define reference data.
     reference = {
@@ -116,7 +116,7 @@ def test_tasmota_wemos_dht22(machinery, create_influxdb, reset_influxdb):
     yield mqtt_json_sensor(tasmota_sensor_topic, data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Define reference data.
     reference = {
@@ -169,7 +169,7 @@ def test_tasmota_wemos_multi(machinery, create_influxdb, reset_influxdb):
     yield mqtt_json_sensor(tasmota_sensor_topic, data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Define reference data.
     reference = {
@@ -220,7 +220,7 @@ def test_tasmota_state(machinery, create_influxdb, reset_influxdb):
     yield mqtt_json_sensor(tasmota_state_topic, data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Define reference data.
     reference = {

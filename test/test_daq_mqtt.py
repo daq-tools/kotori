@@ -6,7 +6,7 @@ import pytest
 import pytest_twisted
 from twisted.internet import threads
 
-from test.settings.mqttkit import settings, influx_sensors, PROCESS_DELAY
+from test.settings.mqttkit import settings, influx_sensors, PROCESS_DELAY_MQTT
 from test.util import mqtt_json_sensor, sleep, mqtt_sensor
 
 logger = logging.getLogger(__name__)
@@ -28,7 +28,7 @@ def test_mqtt_to_influxdb_json_single(machinery, create_influxdb, reset_influxdb
     yield threads.deferToThread(mqtt_json_sensor, settings.mqtt_topic_json, data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that data arrived in InfluxDB.
     record = influx_sensors.get_first_record()
@@ -54,7 +54,7 @@ def test_mqtt_to_influxdb_json_legacy_topic(machinery, create_influxdb, reset_in
     yield threads.deferToThread(mqtt_json_sensor, settings.mqtt_topic_json_legacy, data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that data arrived in InfluxDB.
     record = influx_sensors.get_first_record()
@@ -76,7 +76,7 @@ def test_mqtt_to_influxdb_discrete(machinery, create_influxdb, reset_influxdb):
     yield threads.deferToThread(mqtt_sensor, topic_humidity, 83.1)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that data arrived in InfluxDB.
     record = influx_sensors.get_first_record()
