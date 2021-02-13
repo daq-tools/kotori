@@ -101,6 +101,7 @@ jobs:
         uses: ts-graphviz/setup-graphviz@v1
 
       - name: Build documentation
+        if: matrix.python-version >= '3.6'
         run: |
           pip install --requirement=requirements-docs.txt
           SPHINXOPTS="-j auto" make --directory=doc html
