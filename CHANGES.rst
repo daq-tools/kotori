@@ -7,6 +7,14 @@ in progress
 ===========
 
 
+.. _kotori-0.26.1:
+
+2021-02-14 0.26.1
+=================
+- Add support for Python 3.5
+  Debian stretch is still running on Python 3.5.
+
+
 .. _kotori-0.26.0:
 
 2021-02-10 0.26.0
