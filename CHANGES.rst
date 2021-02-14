@@ -7,11 +7,18 @@ in progress
 ===========
 
 
+.. _kotori-0.26.3:
+
+2021-02-14 0.26.3
+=================
+- Relax constraint on ``bokeh`` dependency to aid installation on Python 3.5 / Debian "stretch".
+
+
 .. _kotori-0.26.2:
 
 2021-02-14 0.26.2
 =================
-- Relax constraint on ``matplotlib`` dependency to aid installation on Python 3.5 / Debian Stretch.
+- Relax constraint on ``matplotlib`` dependency to aid installation on Python 3.5 / Debian "stretch".
 
 
 .. _kotori-0.26.1:
