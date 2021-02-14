@@ -3,8 +3,8 @@
 
 from test.util import InfluxWrapper, GrafanaWrapper
 
-PROCESS_DELAY_MQTT = 0.1
-PROCESS_DELAY_HTTP = 0.1
+PROCESS_DELAY_MQTT = 0.2
+PROCESS_DELAY_HTTP = 0.2
 
 
 class TestSettings:
