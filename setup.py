@@ -130,7 +130,7 @@ extras = {
 }
 
 setup(name='kotori',
-      version='0.26.2',
+      version='0.26.3',
       description='Kotori is a data acquisition, processing and graphing toolkit for humans',
       long_description=README,
       license="AGPL 3, EUPL 1.2",
