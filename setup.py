@@ -84,7 +84,7 @@ extras = {
     'plotting': [
         #'dyplot==0.8.8',
 
-        'matplotlib>=3.3.2,<3.4',
+        'matplotlib>=3,<3.4',
         #'cairocffi>=0.5.4',
         'bokeh>=2.2.2,<2.3',
         'vincent>=0.4.4,<0.5',
