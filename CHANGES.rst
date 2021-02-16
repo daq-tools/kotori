@@ -7,6 +7,13 @@ in progress
 ===========
 
 
+.. _kotori-0.26.5:
+
+2021-02-16 0.26.5
+=================
+- Further relax constraints on ``tables`` and ``netCDF4`` dependencies.
+
+
 .. _kotori-0.26.4:
 
 2021-02-16 0.26.4

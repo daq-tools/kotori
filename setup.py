@@ -98,13 +98,13 @@ extras = {
         # HDF5
         # "PyTables" requires HDF5 libraries
         # sudo port install hdf5
-        'tables>=3.6.1,<3.7',
+        'tables>=3.5.2,<3.7',
         'h5py>=2.10.0,<4',
 
         # NetCDF (Network Common Data Form)
         'xarray>=0.13.0,<0.17',
         # sudo port install netcdf
-        'netCDF4>=1.5.4,<1.6',
+        'netCDF4>=1.5.3,<1.6',
         #'h5netcdf==0.2.2',
 
         # Algorithms
