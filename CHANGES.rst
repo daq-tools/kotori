@@ -7,6 +7,13 @@ in progress
 ===========
 
 
+.. _kotori-0.26.4:
+
+2021-02-16 0.26.4
+=================
+- Further relax constraints on ``cryptography`` and ``scipy`` dependencies.
+
+
 .. _kotori-0.26.3:
 
 2021-02-14 0.26.3

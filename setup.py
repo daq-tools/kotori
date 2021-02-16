@@ -36,7 +36,7 @@ requires = [
     'docopt>=0.6.2,<0.7',
 
     # More dependencies
-    'cryptography>=3.1.1',
+    'cryptography>=2.9.2',
     'certifi>=2020.6.20',
 
     'service_identity>=18.1.0,<19',
@@ -109,7 +109,7 @@ extras = {
 
         # Algorithms
         # ----------
-        'scipy>=1.4.1,<1.6',
+        #'scipy>=1.4.1,<1.6',
         'ggplot>=0.11.5,<0.12',
 
         # gfortran
