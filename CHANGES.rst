@@ -7,6 +7,13 @@ in progress
 ===========
 
 
+.. _kotori-0.26.6:
+
+2021-02-17 0.26.6
+=================
+- Adjust ``numpy`` dependency once more to aid installation on ``arm32v7`` and ``arm64v8``.
+
+
 .. _kotori-0.26.5:
 
 2021-02-16 0.26.5

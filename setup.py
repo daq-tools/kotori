@@ -1,9 +1,17 @@
 # -*- coding: utf-8 -*-
 import os
+import sys
 from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
+
+# Pandas on Python 3.5 will attempt to install `numpy==1.20.1`,
+# which will bail out on aarch64 with `RuntimeError: Python version >= 3.7 required.`.
+PYTHON_35 = (3, 5) <= sys.version_info < (3, 6)
+numpy_spec = "numpy>=1.18,<1.20"
+if PYTHON_35:
+    numpy_spec = "numpy==1.18.5"
 
 requires = [
 
@@ -77,7 +85,8 @@ extras = {
     'export': [
         'pyinfluxql>=0.0.1,<1',
         'pandas>=0.25,<1.3',
-        'numpy>=1.18,<1.20',
+        #'numpy>=1.18,<1.20',
+        numpy_spec,
         'XlsxWriter>=1.3.6,<1.4',
     ],
 
@@ -97,13 +106,11 @@ extras = {
         # ----
         # HDF5
         # "PyTables" requires HDF5 libraries
-        # sudo port install hdf5
         'tables>=3.5.2,<3.7',
         'h5py>=2.10.0,<4',
 
         # NetCDF (Network Common Data Form)
         'xarray>=0.13.0,<0.17',
-        # sudo port install netcdf
         'netCDF4>=1.5.3,<1.6',
         #'h5netcdf==0.2.2',
 
