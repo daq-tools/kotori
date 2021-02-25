@@ -137,12 +137,12 @@ Submit
 ======
 Acquire an example HTTP payload message of type ``SENSOR`` and publish it to MQTT broker on ``localhost``::
 
-    http https://raw.githubusercontent.com/daq-tools/kotori/master/doc/source/handbook/decoders/tasmota/sensor-payload.json \
+    http https://raw.githubusercontent.com/daq-tools/kotori/main/doc/source/handbook/decoders/tasmota/sensor-payload.json \
         | mosquitto_pub -h localhost -t universe/milky-way/earth-one/node-42/tele/SENSOR -s
 
 Acquire an example HTTP payload message of type ``STATE`` and publish it to MQTT broker on ``localhost``::
 
-    http https://raw.githubusercontent.com/daq-tools/kotori/master/doc/source/handbook/decoders/tasmota/state-payload.json \
+    http https://raw.githubusercontent.com/daq-tools/kotori/main/doc/source/handbook/decoders/tasmota/state-payload.json \
         | mosquitto_pub -h localhost -t universe/milky-way/earth-one/node-42/tele/STATE -s
 
 

@@ -174,7 +174,7 @@ Then::
 
 Kotori
 ======
-Activate `luftdaten.ini <https://github.com/daq-tools/kotori/blob/master/etc/examples/vendors/luftdaten.ini>`_ as configuration::
+Activate `luftdaten.ini <https://github.com/daq-tools/kotori/blob/main/etc/examples/vendors/luftdaten.ini>`_ as configuration::
 
     ln -sr /etc/kotori/examples/vendors/luftdaten.ini /etc/kotori/apps-available/
     ln -sr /etc/kotori/apps-available/luftdaten.ini /etc/kotori/apps-enabled/

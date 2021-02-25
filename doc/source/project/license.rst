@@ -55,4 +55,4 @@ The documentation is licensed under the terms of the Creative Commons `CC-BY-SA 
 .. _GNU Lesser General Public License: https://www.gnu.org/licenses/lgpl-3.0.en.html
 .. _European Union Public Licence: https://opensource.org/licenses/EUPL-1.2
 .. _CC-BY-SA 4.0 license: https://creativecommons.org/licenses/by-sa/4.0/
-.. _notices about licenses of third-party components: https://github.com/daq-tools/kotori/blob/master/THIRD-PARTY-NOTICES.rst
+.. _notices about licenses of third-party components: https://github.com/daq-tools/kotori/blob/main/THIRD-PARTY-NOTICES.rst

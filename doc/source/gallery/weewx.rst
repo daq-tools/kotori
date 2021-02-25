@@ -173,7 +173,7 @@ Configure plugin in ``weewx.conf``::
 
 Kotori
 ======
-Activate `weewx.ini <https://github.com/daq-tools/kotori/blob/master/etc/examples/vendors/weewx.ini>`_ as configuration::
+Activate `weewx.ini <https://github.com/daq-tools/kotori/blob/main/etc/examples/vendors/weewx.ini>`_ as configuration::
 
     ln -sr /etc/kotori/examples/vendors/weewx.ini /etc/kotori/apps-available/
     ln -sr /etc/kotori/apps-available/weewx.ini /etc/kotori/apps-enabled/

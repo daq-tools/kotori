@@ -50,7 +50,7 @@ source_suffix = '.rst'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'index'
+root_doc = 'index'
 
 # General information about the project.
 project = u'Kotori'
@@ -230,7 +230,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'Kotori.tex', u'Kotori Documentation',
+  (root_doc, 'Kotori.tex', u'Kotori Documentation',
    u'Kotori Developers', 'manual'),
 ]
 
@@ -260,7 +260,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'kotori', u'Kotori Documentation',
+    (root_doc, 'kotori', u'Kotori Documentation',
      [author], 1)
 ]
 
@@ -274,7 +274,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'Kotori', u'Kotori Documentation',
+  (root_doc, 'Kotori', u'Kotori Documentation',
    author, 'Kotori', 'Data Acquisition and Telemetry',
    'DAQ'),
 ]
@@ -334,7 +334,7 @@ html_theme_options = {
     # If True, show hidden TOC entries
     #'globaltoc_includehidden': False,
 
-    "master_doc": False,
+    "root_doc": False,
     "nav_links": [
     ],
 
