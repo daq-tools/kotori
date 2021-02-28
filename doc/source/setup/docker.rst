@@ -7,61 +7,70 @@ Run through Docker
 ##################
 
 
+*******
+Preface
+*******
+
+This part of the documentation covers the installation of Kotori and the whole
+software stack for telemetry data acquisition, processing and visualization on
+systems running Docker.
+
+The first step to using any software package is getting it properly installed.
+Please read this section carefully.
+
+After successfully installing the software, you might want to follow up with
+its configuration at :ref:`getting-started`.
+
+
+************
+Introduction
+************
+
+This section outlines how to conveniently run Mosquitto, InfluxDB, MongoDB,
+Grafana and Kotori using Docker.
+
+The repository provides two files ``docker-compose.yml`` and ``.env``. They
+are needed to run the whole foundation infrastructure. On top of that, Kotori
+will be run within another container bind-mounting the local ``etc/``
+directory in order to bring in the configuration files.
+
+There are two flavors of Kotori Docker images. ``daqzilla/kotori`` includes
+all dependencies to run a full installation while ``daqzilla/kotori-standard``
+is a more trimmed-down variant, which is also offered for ``arm32v7`` and
+``arm64v8`` platforms.
+
+Those images are published to Docker Hub.
+
+- https://hub.docker.com/r/daqzilla/kotori
+- https://hub.docker.com/r/daqzilla/kotori-standard
+
+.. note::
+
+    Please note that this Docker Compose configuration is primarily suited for
+    evaluation and development purposes. As it either disables authentication
+    or uses insecure authentication credentials for Mosquitto, InfluxDB and
+    Grafana, it is not prepared for production setups.
+
+
 *************
 Prerequisites
 *************
-Run Mosquitto::
 
-    docker run \
-        --name=mosquitto \
-        --detach=true \
-        -tip 1883:1883 -p 9001:9001 \
-        eclipse-mosquitto:1.6.12
+This will give you Mosquitto, InfluxDB, MongoDB and Grafana as well as an
+improved Grafana map panel plugin.
 
-Run InfluxDB::
+Just invoke::
 
-    docker run \
-        --name=influxdb \
-        --detach=true \
-        --publish 8083:8083 --publish 8086:8086 \
-        --volume="$(pwd)/var/lib/influxdb":/var/lib/influxdb \
-        influxdb:1.8.3
+    docker-compose up
 
-Run Grafana::
+Setup Panodata Map panel plugin::
 
-    docker run \
-        --name=grafana \
-        --detach=true \
-        --publish=3000:3000 \
-        --link influxdb:influxdb \
-        --volume="$(pwd)/var/lib/grafana":/var/lib/grafana \
-        --env='GF_SECURITY_ADMIN_PASSWORD=admin' \
-        grafana/grafana:7.4.0-beta1
-
-        #--volume=/etc/grafana:/etc/grafana \
-
-Setup Grafana Map Panel::
-
-    docker exec -i grafana grafana-cli \
-        --pluginUrl https://github.com/panodata/grafana-map-panel/releases/download/0.15.0/grafana-map-panel-0.15.0.zip \
-        plugins install grafana-map-panel
-
-    docker restart grafana
-
-
-Run MongoDB::
-
-    docker run \
-        --name=mongodb \
-        --detach=true \
-        --publish 27017:27017 \
-        --volume="$(pwd)/var/lib/mongodb":/var/lib/mongodb \
-        mongo:4.4.3
-
-
-After provisioning, these instances can be spinned up again by invoking::
-
-    docker start mosquitto influxdb grafana mongodb
+    docker exec --interactive kotori_grafana_1 \
+        bash -c '
+            grafana-cli --pluginUrl https://github.com/panodata/grafana-map-panel/releases/download/0.15.0/grafana-map-panel-0.15.0.zip \
+                plugins install grafana-map-panel; \
+            pkill grafana-server
+        '
 
 
 ******
@@ -69,21 +78,18 @@ Kotori
 ******
 Running Kotori through Docker is easy.
 
-Check if installation works::
+Preflight checks::
 
     docker run -it --rm daqzilla/kotori kotori --version
 
-Invoke Kotori container linked to the other containers::
+Invoke Kotori::
 
     docker run \
         --volume="$(pwd)/etc":/etc/kotori \
         --publish=24642:24642 \
-        --link mosquitto:mosquitto \
-        --link influxdb:influxdb \
-        --link grafana:grafana \
-        --link mongodb:mongodb \
+        --network kotori_default \
         -it --rm daqzilla/kotori \
-        kotori --config /etc/kotori/docker-mqttkit.ini
+        kotori --config /etc/kotori/docker.ini
 
 
 *********
@@ -95,17 +101,17 @@ Submit single reading::
 
     export CHANNEL_TOPIC=mqttkit-1/foo/bar/1/data.json
     docker run \
-        --link mosquitto:mosquitto \
-        -it --rm eclipse-mosquitto:1.6.8 \
+        --network kotori_default \
+        -it --rm eclipse-mosquitto:1.6 \
         mosquitto_pub -h mosquitto -t $CHANNEL_TOPIC -m '{"temperature": 42.84, "humidity": 83.1}'
 
 Check if reading has been stored in InfluxDB::
 
     docker run \
-        --link influxdb:influxdb \
-        -it --rm influxdb:1.7.10 \
+        --network kotori_default \
+        -it --rm influxdb:1.8 \
         influx -precision=rfc3339 -host=influxdb -database=mqttkit_1_foo -execute='SELECT * FROM bar_1_sensors'
 
-Go to Grafana::
+Go to Grafana and visit the dashboard just created::
 
-    open http://localhost:3000/
+    open "http://localhost:3000/?orgId=1&search=open&query=mqttkit"

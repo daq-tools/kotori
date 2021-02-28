@@ -7,7 +7,7 @@
 /.crossbar/node.key
 /.crossbar/node.pid
 *.deb
-/build
+/doc/build
 /dist
 /tmp
 /var

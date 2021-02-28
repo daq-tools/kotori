@@ -9,27 +9,35 @@ Setup on Debian and Ubuntu
 ##########################
 
 
-************
-Introduction
-************
-This part of the documentation covers the installation of Kotori and the
-whole software stack for telemetry data acquisition, processing and
-visualization on a Debian-based system.
+*******
+Preface
+*******
+
+This part of the documentation covers the installation of Kotori and the whole
+software stack for telemetry data acquisition, processing and visualization on
+Debian and Ubuntu systems.
 
 The first step to using any software package is getting it properly installed.
 Please read this section carefully.
 
-After successfully installing the software, you might want to
-follow up with its configuration at :ref:`getting-started`.
+After successfully installing the software, you might want to follow up with
+its configuration at :ref:`getting-started`.
+
+
+************
+Introduction
+************
+
+The package repository provides packages for computers with x86-64 and ARM processors.
 
 
 ************
 Installation
 ************
-The package repository supports both architectures ``amd64`` and ``armhf`` (arm32v7).
 
 Prerequisites
 =============
+
 We are going to do telemetry data acquisition, sometimes coming from measurement
 systems which **do not** send appropriate timestamps. Thus, the timekeeping
 of your data acquisition system itself should be accurate.
@@ -97,14 +105,14 @@ Install Kotori together with all recommended and suggested packages::
 InfluxDB and Grafana are not always enabled and started automatically,
 so ensure they are running by invoking::
 
-    systemctl enable influxdb grafana-server
-    systemctl start influxdb grafana-server
+    systemctl enable mosquitto influxdb grafana-server
+    systemctl start mosquitto influxdb grafana-server
 
 Notes for ARM machines
 ======================
-For using Kotori on ARM machines like the RaspberryPi or the BeagleBone,
-we prepared a lightweight package with fewer dependencies
-called ``kotori-standard``. To install it, invoke::
+For using Kotori on ARM machines like the RaspberryPi or the BeagleBone SBCs,
+there is a more lightweight package with fewer dependencies called
+``kotori-standard``. To install it, invoke::
 
     apt install --install-recommends kotori-standard
 
@@ -119,25 +127,3 @@ These are the log files at a glance where system messages might appear::
 
     tail -F /var/log/kotori/*.log /var/log/grafana/*.log /var/log/influxdb/*.log /var/log/mosquitto/*.log
     journalctl -f -u influxdb
-
-
-*************
-Configuration
-*************
-Follow along at :ref:`getting-started` to configure and use your first Kotori application.
-
-
-***************
-Troubleshooting
-***************
-Some effort has been done to make the installation process of Kotori and
-associated software components as easy and straight forward as possible.
-
-However, things are complicated sometimes so there might still be rough
-edges we would love to learn about. So, don't hesitate to drop us a note
-by `opening an issue on GitHub <https://github.com/daq-tools/kotori/issues/new>`_
-or reaching out to ``support@getkotori.org``. Thanks already.
-
-----
-
-Have fun and enjoy your data acquisition!

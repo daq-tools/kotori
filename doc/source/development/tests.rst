@@ -9,8 +9,8 @@ About
 The tests are mostly full integration tests. They are testing the whole system
 and the interactions between the subsystems.
 
-The test suite will assume running instances of Mosquitto, Grafana, InfluxDB and
-MongoDB and fire up an in-process instance of Kotori to complement these. Please
+The test suite will assume running instances of Mosquitto, InfluxDB, MongoDB
+and Grafana and fire up an in-process instance of Kotori to complement these. Please
 have a look at :ref:`setup-docker` in order to get the complementing services
 up and running in a quick and ad hoc manner.
 
@@ -22,12 +22,13 @@ While the shellout can well be optimized for efficiency, it is also pleasant
 to have a full scenario using regular command line tools covered here.
 
 
-*****
-Setup
-*****
-::
+*************
+Prerequisites
+*************
 
-    make virtualenv-dev
+Run Mosquitto, InfluxDB, MongoDB and Grafana as Docker containers::
+
+    make start-foundation-services
 
 
 ***

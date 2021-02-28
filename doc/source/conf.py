@@ -49,7 +49,7 @@ source_suffix = '.rst'
 # The encoding of source files.
 #source_encoding = 'utf-8-sig'
 
-# The master toctree document.
+# The root toctree document.
 root_doc = 'index'
 
 # General information about the project.
@@ -81,7 +81,7 @@ language = 'en'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = []
+exclude_patterns = ["readme.rst"]
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -334,7 +334,7 @@ html_theme_options = {
     # If True, show hidden TOC entries
     #'globaltoc_includehidden': False,
 
-    "root_doc": False,
+    "master_doc": False,
     "nav_links": [
     ],
 

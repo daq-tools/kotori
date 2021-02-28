@@ -13,7 +13,6 @@
 .. Kotori development
 .. _Semantic Versioning: http://semver.org/
 .. _PyCharm: https://www.jetbrains.com/pycharm/
-.. _boot2docker: http://boot2docker.io/
 
 
 .. Foundation DAQ
@@ -92,6 +91,7 @@
 .. _XLSX: https://en.wikipedia.org/wiki/Office_Open_XML
 .. _HDF5: https://en.wikipedia.org/wiki/Hierarchical_Data_Format
 .. _NetCDF: https://en.wikipedia.org/wiki/NetCDF
+.. _virtualenv: https://virtualenv.pypa.io/
 
 .. iLaundry
 .. _BeagleBone Black: http://beagleboard.org/BLACK

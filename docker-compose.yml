@@ -1,0 +1,67 @@
+# Derived from https://github.com/hiveeyes/terkin-datalogger/pull/82 by @WSt89.
+
+version: '3'
+
+services:
+
+  mosquitto:
+    image: eclipse-mosquitto:${MOSQUITTO_VERSION}
+    init: true
+    restart: unless-stopped
+    ports:
+      - ${MOSQUITTO_MQTT_PORT}:1883
+      - ${MOSQUITTO_WS_PORT}:9001
+    volumes:
+      - ${PATH_VAR_LIB}/mosquitto:/mosquitto/data
+      - ${PATH_VAR_LOG}/mosquitto:/mosquitto/log
+    # https://github.com/eclipse/mosquitto/issues/2040
+    environment:
+      NO_AUTHENTICATION: 1
+
+  # https://github.com/robcowart/docker_compose_cookbook/blob/master/STACKS/influx_oss/docker-compose.yml#L21
+  influxdb:
+    image: influxdb:${INFLUXDB_VERSION}
+    init: true
+    restart: unless-stopped
+    ports:
+      - ${INFLUXDB_HTTP_PORT}:8086
+      - ${INFLUXDB_RPC_PORT}:8088
+    volumes:
+      - ${PATH_VAR_LIB}/influxdb:/var/lib/influxdb
+    environment:
+      INFLUXDB_HTTP_AUTH_ENABLED: 'false'
+      INFLUXDB_ADMIN_USER: root
+      INFLUXDB_ADMIN_PASSWORD: root
+      INFLUXDB_USER: root
+      INFLUXDB_PASSWORD: root
+      INFLUXDB_REPORTING_DISABLED: 'true'
+
+  mongodb:
+    image: mongo:${MONGODB_VERSION}
+    init: true
+    restart: unless-stopped
+    ports:
+      - ${MONGODB_PORT}:27017
+    volumes:
+      - ${PATH_VAR_LIB}/mongodb:/data/db
+      - ${PATH_VAR_LOG}/mongodb:/var/log/mongodb
+
+  # https://community.grafana.com/t/influxdb-datasource-in-docker-network-what-url/28732
+  grafana:
+    image: grafana/grafana:${GRAFANA_VERSION}
+    init: true
+    user: "1026"
+    restart: unless-stopped
+    ports:
+      - ${GRAFANA_PORT}:3000
+    volumes:
+      - ${PATH_VAR_LIB}/grafana:/var/lib/grafana
+      - ${PATH_VAR_LOG}/grafana:/var/log/grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_DEFAULT_INSTANCE_NAME: Kotori Grafana
+      GF_ANALYTICS_REPORTING_ENABLED: 'false'
+      GF_SECURITY_DISABLE_GRAVATAR: 'true'
+    depends_on:
+      - influxdb

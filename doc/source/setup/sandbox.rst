@@ -10,18 +10,21 @@ Setup development sandbox
 
 Introduction
 ============
-We're happy you reached this point. You mean it. Let's go.
+
+We are happy you reached this point of the documentation. This will probably
+mean you want to setup a development sandbox in order to hack on the source
+code. We appreciate that, you mean it. Let's go.
 
 
 Prerequisites
 =============
 You will need InfluxDB_, Grafana_, Mosquitto_ and optionally MongoDB_.
 
-For installing them on your workstation, you might want to have a
-look at the :ref:`setup-docker`.
+For installing them on your workstation, you might want to have a look at the
+:ref:`setup-docker`.
 
-When running Linux, you might just want to install the infrastructure
-on your local workstation natively like :ref:`setup-debian`.
+When running Linux, you might just want to install the infrastructure on your
+local workstation natively like :ref:`setup-debian`.
 
 
 Environment
@@ -36,13 +39,21 @@ Get the source code
     git clone https://github.com/daq-tools/kotori.git
     cd kotori
 
+
 Setup virtualenv
 ================
 ::
 
+    # Create and activate virtualenv
     make setup-virtualenv
     source .venv/bin/activate
-    python setup.py develop
+
+    # Set option to make the pip installer prefer binary dependencies
+    # This might prevent compilation steps for some of them
+    export PIP_PREFER_BINARY=1
+
+    # Install package
+    pip install --editable=.
 
     # Install extra features
 
@@ -64,17 +75,6 @@ Setup virtualenv
     See also :ref:`setup-python-package`.
 
 
-.. _run-on-pypy:
-
-Run on PyPy
-===========
-::
-
-    sudo port install pypy
-    virtualenv --python=pypy .venvpypy5
-    source .venvpypy5/bin/activate
-    python setup.py develop
-    pip install -e .[daq]
 
 
 Run ad hoc
@@ -92,6 +92,6 @@ There's a Free Community edition of PyCharm_, you should really give it a try.
 
 Run as service
 ==============
-When having the need to run the application as system service even while being
-in development mode, have a look at :ref:`systemd-development-mode`.
+When having the need to run the application as a system service even while
+still being in development mode, have a look at :ref:`systemd-development-mode`.
 We actively use this scenario for integration scenarios, testing and debugging.

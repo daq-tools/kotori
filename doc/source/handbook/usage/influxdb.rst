@@ -52,11 +52,6 @@ Write data
 Query operations
 ----------------
 
-Inquire IP address from boot2docker host::
-
-    boot2docker ip
-    $INFLUXDB_HOST
-
 Query database using curl::
 
     # pretty-print json using jq

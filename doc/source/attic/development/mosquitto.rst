@@ -1,3 +1,5 @@
+:orphan:
+
 .. _mosquitto-on-osx:
 
 Setup Mosquitto on Mac OSX

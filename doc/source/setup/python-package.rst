@@ -2,84 +2,113 @@
 
 .. _setup-python-package:
 
-####################################
-Setup using Python package from PyPI
-####################################
+################################
+Install Python package from PyPI
+################################
 
 
-*****
-Intro
-*****
+************
+Introduction
+************
+
 Kotori can be installed in different variants.
 
-Setting up Kotori as Python package is suitable for general
-:ref:`kotori-hacking` or for installing on platforms where
-there's no native distribution package available yet.
+Setting up Kotori as Python package is suitable for installing on platforms
+where there is no native distribution package available yet.
 
-Python Eggs can be installed into virtualenvs and into the
-system, both in editable and non-editable modes.
+We recommend to either use the ``pip install --user`` option in order not to
+clutter your distribution Python or use a virtualenv_. In this manner, your
+installation will not require root permissions and the Python libraries of
+your system distribution will stay completely untouched.
+
+When aiming to work on the source code of Kotori, we recommend to read the
+documentation about how to :ref:`kotori-sandbox`.
 
 
-*********
-Get ready
-*********
+.. _setup-python-package-cpython:
+
+***********************
+Installation on CPython
+***********************
+
+
+Prerequisites
+=============
+
+Installing Kotori using a Python package might need development tools properly
+installed::
+
+    apt install build-essential python3-dev python3-pip libffi-dev libssl-dev
+
+
+From PyPI
+=========
+
+Kotori releases are published to https://pypi.org/project/kotori/ ::
+
+    # Set option to make the pip installer prefer binary dependencies
+    # This might prevent compilation steps for some of them
+    export PIP_PREFER_BINARY=1
+
+    # Install latest Kotori release with extra features "daq" and "export"
+    pip install --user kotori[daq,export]
+
+    # Install more extra features
+    pip install --user kotori[daq,daq_geospatial,export,plotting,scientific,firmware]
+
+    # Install particular version
+    pip install --user kotori[daq,export]==0.26.6
+
+
+From git repository
+===================
+::
+
+    pip install --user --prefer-binary --editable git+https://github.com/daq-tools/kotori.git#egg=kotori[daq]
+
+.. seealso:: https://pip.pypa.io/en/stable/reference/pip_install/#examples
+
+
+.. _setup-python-virtualenv:
+
+Using virtualenv
+================
+
+::
+
+    # Create virtualenv
+    python3 -m venv .venv
+
+    # Activate virtualenv
+    source .venv/bin/activate
+
+    # Install package
+    pip install kotori
+
+
+
+.. _run-on-pypy:
+.. _setup-python-package-pypy:
+
+********************
+Installation on PyPy
+********************
+
 
 Prerequisites
 =============
 ::
 
-    # Prepare system
-    apt install build-essential libffi-dev libssl-dev python-dev python-pip python-virtualenv
+    brew install pypy3 openblas lapack
 
 
-.. _setup-python-virtualenv:
-
-virtualenv
-==========
-We definitively recommend to install Kotori inside
-a Python virtualenv in order to isolate the installation
-from the local Python environment on your machine to
-protect against dependency woes.
-
-Your installation will not require root permissions and
-the Python libraries of your system distribution will stay
-completely untouched.
-
-See next section for how to setup a Python *virtulenv* environment.
-See also :ref:`kotori-hacking` for getting hold of the git repository
-when installing from source.
+Using virtualenv
+================
 ::
 
-    # Create virtualenv
-    make setup-virtualenv
+    pypy3 -m venv .venvpypy
+    source .venvpypy/bin/activate
 
-    # Activate virtualenv
-    source .venv/bin/activate
-
-
-*****
-Setup
-*****
-
-Install from package repository
-===============================
-
-Install Kotori::
-
-    # Install latest Kotori release with extra feature "daq"
-    pip install kotori[daq]
-
-    # Install more extra features
-    pip install kotori[daq,daq_geospatial,export,plotting,scientific]
-
-    # Install particular version
-    pip install kotori[daq,export]==0.15.0
-
-
-Install directly from git repository
-====================================
-::
-
-    pip install --editable git+https://github.com/daq-tools/kotori.git#egg=kotori[daq]
-
-.. seealso:: https://pip.pypa.io/en/stable/reference/pip_install/#examples
+    export OPENBLAS="$(brew --prefix openblas)"
+    export LAPACK="$(brew --prefix lapack)"
+    pip install --prefer-binary --no-binary=numpy kotori[daq,export]

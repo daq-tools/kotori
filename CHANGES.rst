@@ -7,6 +7,7 @@ in progress
 ===========
 
 - Fix Luftdaten and Hiveeyes vendor applications after upgrade to Python 3
+- Improve setup documentation
 
 
 .. _kotori-0.26.6:
