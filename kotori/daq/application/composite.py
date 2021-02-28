@@ -45,8 +45,8 @@ class CompositeApplication(RootService):
 
             service = service_factory(
                 channel=self.channel,
-                strategy=strategy_factory(settings=global_settings),
-                graphing=graphing_factory(settings=global_settings, channel=self.channel)
+                graphing=graphing_factory(settings=global_settings, channel=self.channel),
+                strategy=strategy_factory(),
                 )
 
             # Register service component with its container

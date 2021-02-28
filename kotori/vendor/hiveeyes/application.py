@@ -128,7 +128,7 @@ class HiveeyesBeehiveGrafanaManager(GrafanaManager):
         self.tpl_dashboard_weef = self.get_template('grafana-dashboard-weef-de.json')
 
     def get_template(self, filename):
-        return Template(open(resource_filename('kotori.vendor.hiveeyes', filename), "rb").read().decode('utf-8'))
+        return Template(open(resource_filename('kotori.vendor.hiveeyes', filename), "r").read())
 
     def get_dashboard_identity(self, storage_location, topology=None):
 

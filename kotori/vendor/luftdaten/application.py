@@ -12,6 +12,7 @@ from kotori.daq.storage.influx import InfluxDBAdapter
 
 log = Logger()
 
+
 class LuftdatenGrafanaManager(GrafanaManager):
 
     def __init__(self, *args, **kwargs):
@@ -20,7 +21,7 @@ class LuftdatenGrafanaManager(GrafanaManager):
         self.tpl_dashboard_location = self.get_template('grafana-by-location.json')
 
     def get_template(self, filename):
-        return Template(open(resource_filename('kotori.vendor.luftdaten', filename)).read().decode('utf-8'))
+        return Template(open(resource_filename('kotori.vendor.luftdaten', filename), "r").read())
 
     def provision(self, storage_location, message, topology):
 
