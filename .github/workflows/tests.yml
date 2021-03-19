@@ -26,26 +26,26 @@ jobs:
 
       # TODO: Maybe use https://github.com/marketplace/actions/mosquitto-mqtt-broker-in-github-actions
       mosquitto:
-        image: eclipse-mosquitto:1.6.12
+        image: eclipse-mosquitto:1.6
         ports:
           - 1883:1883
           - 9001:9001
 
       influxdb:
-        image: influxdb:1.8.3
+        image: influxdb:1.8
         ports:
           - 8083:8083
           - 8086:8086
 
       grafana:
-        image: grafana/grafana:7.4.0-beta1
+        image: grafana/grafana:7.4.5
         ports:
           - 3000:3000
         env:
           GF_SECURITY_ADMIN_PASSWORD: admin
 
       mongodb:
-        image: mongo:4.4.3
+        image: mongo:4.4
         ports:
           - 27017:27017
 
