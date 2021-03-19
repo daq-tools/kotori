@@ -46,6 +46,32 @@ Backlog
 - Support more serialization formats like SMILE and UBJSON.
   https://hiveeyes.org/docs/beradio/test/serialization-size.html#marshallers-suitable-for-embedded-use
 - Have a look at https://github.com/openPMD/openPMD-api and https://github.com/ornladios/ADIOS2
+- Improve packaging by propagating ``~/.cache/wheelhouse`` into Docker build container
+- Build Docker images for CentOS and Windows
+- Add a way to spawn default configuration files for Kotori and/or provide them
+  within a Docker container for running it out of the box.
+- Find a way to install Grafana plugins within Docker Compose files.
+  - https://github.com/docker/compose/issues/1809
+  - https://github.com/docker/compose/issues/1510
+  - https://github.com/docker/compose/issues/1341
+  - https://github.com/docker/compose/issues/6736
+  - https://github.com/docker-library/wordpress/issues/205
+- Upgrade Docker containers to use Mosquitto 2
+  - https://github.com/eclipse/mosquitto/issues/2040
+- Support the content type feature of MQTT5
+- Add a note about adjusting the Grafana user credentials to the setup documentation.
+- Use Grafana token-based authentication.
+- Provide a Homebrew package.
+- Build packages for Arch Linux. -- ``docker run -it --rm --volume $(pwd)/dist:/dist archlinux:20200908 bash``
+- Allow installation with NumPy 1.20
+- Check out ``shiv``::
+
+    shiv --python "/usr/bin/env python3" --console-script kotori --compressed --output-file kotori kotori[daq,export]
+
+- Improve documentation
+  - https://pydigger.com/keyword/acquisition
+  - https://github.com/daq-tools/kotori/issues/15#issuecomment-789090172
+
 
 
 ****

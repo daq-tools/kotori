@@ -25,7 +25,7 @@ contributed to Kotori in one way or another.
 * Matthias Mehldau <wetter@hiveeyes.org>
 * Richard Pobering <einsiedlerkrebs@ginnungagap.org>
 * Roh <incognito>
-* Rui Pinto <https://github.com/RuiPinto96>
+* Rui Alexandre Teixeira Sousa Pinto <https://github.com/RuiPinto96>
 * Sebastian Donner <info@thunder-gfx.de>
 * Sebastian Henneke <s.henneke@isarengineering.de>
 * Smilie <smilie@posteo.de>

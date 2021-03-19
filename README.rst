@@ -20,6 +20,7 @@ Kotori
     .. figure:: https://ptrace.getkotori.org/2016-05-23_chart-recorder.png
         :alt: Chart recorder
         :width: 200px
+        :target: .
 
     *Telemetry data acquisition and sensor networks for humans.*
 
@@ -42,14 +43,40 @@ Kotori
   .. image:: https://img.shields.io/pypi/v/kotori.svg
         :target: https://pypi.org/project/kotori/
 
-  .. image:: https://img.shields.io/pypi/dm/kotori.svg
-        :target: https://pypi.org/project/kotori/
-
   .. image:: https://img.shields.io/pypi/status/kotori.svg
         :target: https://pypi.org/project/kotori/
 
   .. image:: https://img.shields.io/pypi/l/kotori.svg
         :target: https://pypi.org/project/kotori/
+
+- **Infrastructure**:
+
+  .. image:: https://img.shields.io/badge/Mosquitto-1.5%2C%201.6%2C%202.0-blue.svg
+        :target: https://github.com/eclipse/mosquitto
+        :alt: Supported Mosquitto versions
+
+  .. image:: https://img.shields.io/badge/Grafana-4.x%2C%205.x%2C%206.x%2C%207.x-blue.svg
+        :target: https://github.com/grafana/grafana
+        :alt: Supported Grafana versions
+
+  .. image:: https://img.shields.io/badge/InfluxDB-1.6%2C%201.7%2C%201.8-blue.svg
+        :target: https://github.com/influxdata/influxdb
+        :alt: Supported InfluxDB versions
+
+  .. image:: https://img.shields.io/badge/MongoDB-3.x%2C%204.x-blue.svg
+        :target: https://github.com/mongodb/mongo
+        :alt: Supported MongoDB versions
+
+- **Usage**:
+
+  .. image:: https://img.shields.io/pypi/dm/kotori.svg?label=PyPI%20downloads
+        :target: https://pypi.org/project/kotori/
+
+  .. image:: https://img.shields.io/docker/pulls/daqzilla/kotori.svg?label=docker%20pulls%20(kotori)
+        :target: https://hub.docker.com/r/daqzilla/kotori
+
+  .. image:: https://img.shields.io/docker/pulls/daqzilla/kotori-standard.svg?label=docker%20pulls%20(kotori-standard)
+        :target: https://hub.docker.com/r/daqzilla/kotori-standard
 
 
 ----
@@ -65,7 +92,8 @@ It supports scientific environmental monitoring projects,
 distributed sensor networks and likewise scenarios.
 
 The best way to find out more about Kotori is by looking at how others use it already.
-Enjoy reading about some `examples <https://getkotori.org/docs/examples/>`_ where Kotori has been used.
+Enjoy visiting the `gallery <https://getkotori.org/docs/gallery/>`_ to read about some
+examples where Kotori has been used.
 
 .. _time series: https://en.wikipedia.org/wiki/Time_series
 .. _data historian: https://en.wikipedia.org/wiki/Operational_historian
