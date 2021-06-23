@@ -9,6 +9,7 @@
 *.deb
 /doc/build
 /dist
+/pkgs
 /tmp
 /var
 .coverage

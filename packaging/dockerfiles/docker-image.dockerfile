@@ -1,24 +1,34 @@
 #
 # Build Docker image for publishing on Docker Hub.
-# https://getkotori.org/docs/setup/debian-quickstart.html
+#
+# https://getkotori.org/docs/development/releasing/packaging.html
+# https://getkotori.org/docs/setup/docker.html
 #
 # Synopsis:
 #
-#   make build-dockerhub-image version=0.24.5
+#   make package-dockerhub-image version=0.24.5
 #
 
-#FROM debian:buster-slim
-#FROM debian:bullseye-slim
-FROM balenalib/amd64-debian-python:3.8-buster-run
+ARG BASE_IMAGE
 
-LABEL maintainer="Andreas Motl <a.motl@elmyra.de>"
+FROM ${BASE_IMAGE}
 
-ARG version
+ARG VERSION
+ARG RELEASE_DATE
+
+ARG PACKAGE_FILE
+
+LABEL version="${VERSION}"
+LABEL release-date="${RELEASE_DATE}"
+LABEL description="Kotori is a data acquisition, processing and graphing toolkit for humans"
+LABEL maintainer="Andreas Motl <andreas.motl@elmyra.de>"
+
+#ARG package_name=kotori_${VERSION}-1~buster_amd64.deb
 
 #RUN timedatectl set-ntp true
 
 # Tweak: Use `kotori*.deb` from local filesystem.
-COPY ./dist/*.deb /tmp
+COPY ./${PACKAGE_FILE} /tmp
 
 # Ramping up.
 RUN \
@@ -38,10 +48,10 @@ RUN \
 #    apt-get update && apt-get install --yes --install-recommends systemd- influxdb- grafana- mongodb- mosquitto- mosquitto-clients- && \
 \
 # Install Kotori.
-#apt-get update && apt-get install --yes --install-recommends kotori=${version}* && \
-
+#apt-get update && apt-get install --yes --install-recommends kotori=${VERSION}* && \
+\
 # Tweak: Use `kotori*.deb` from local filesystem.
-apt-get install --yes --install-recommends /tmp/kotori*.deb && \
+apt-get install --yes --install-recommends /tmp/$(basename ${PACKAGE_FILE}) && \
 ln -s /opt/kotori/bin/kotori /usr/local/sbin/ && \
 \
 # Tearing down.
@@ -53,4 +63,4 @@ ln -s /opt/kotori/bin/kotori /usr/local/sbin/ && \
 
 EXPOSE 24642
 
-CMD [ "/opt/kotori/bin/kotori" ]
+CMD [ "kotori" ]

@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 # (c) 2014-2021 Andreas Motl <andreas.motl@getkotori.org>
 
-# ============
-# Main targets
-# ============
 
-
-# -------------
+# =============
 # Configuration
-# -------------
+# =============
 
 $(eval venv         := .venv)
 $(eval pip          := $(venv)/bin/pip)
@@ -18,26 +14,38 @@ $(eval nosetests    := $(venv)/bin/nosetests)
 $(eval bumpversion  := $(venv)/bin/bumpversion)
 $(eval twine        := $(venv)/bin/twine)
 $(eval sphinx       := $(venv)/bin/sphinx-build)
-$(eval fab          := $(venv)/bin/fab)
+$(eval invoke       := $(venv)/bin/invoke)
 
 
-# Setup Python virtualenv
+
+# =====
+# Setup
+# =====
+
+# Setup Python virtualenv.
 setup-virtualenv:
 	@test -e $(python) || python3 -m venv $(venv)
 
+# Install requirements for building the documentation.
 virtualenv-docs: setup-virtualenv
 	@$(pip) --quiet install --requirement=requirements-docs.txt
 
+# Install requirements for development.
 virtualenv-dev: setup-virtualenv
 	@$(pip) install --upgrade --requirement=requirements-test.txt
 	@$(pip) install --upgrade --editable=.[daq,daq_geospatial,export,scientific,firmware]
+
+# Install requirements for releasing.
+install-releasetools: setup-virtualenv
+	@$(pip) install --quiet --requirement=requirements-release.txt --upgrade
+
 
 
 # =======
 # Release
 # =======
-#
-# Release this piece of software
+
+# Release this piece of software.
 # Uses the fine ``bumpversion`` utility.
 #
 # Synopsis::
@@ -47,156 +55,6 @@ virtualenv-dev: setup-virtualenv
 
 release: bumpversion push sdist pypi-upload
 
-
-publish-sdist: sdist
-	# publish Python Eggs to eggserver
-	# TODO: use localshop or one of its sisters
-	rsync -auv --progress ./dist/kotori-*.tar.gz workbench@packages.elmyra.de:/srv/packages/organizations/elmyra/foss/htdocs/python/kotori/
-
-
-
-
-# ==========================================
-#                packaging
-# ==========================================
-
-
-# Build baseline images and packages.
-
-package-baseline-images:
-	$(fab) build-docker-debian-baseline-images
-	$(fab) build-docker-ubuntu-baseline-images
-
-package-all: check-version
-
-	# amd64
-	# TODO: Also build "standard" flavors for amd64 to reduce footprint of Docker images.
-	$(MAKE) package-debian flavor=full dist=stretch arch=amd64 version=$(version)
-	$(MAKE) package-debian flavor=full dist=buster arch=amd64 version=$(version)
-	$(MAKE) package-debian flavor=full dist=bionic arch=amd64 version=$(version)
-	$(MAKE) package-debian flavor=full dist=focal arch=amd64 version=$(version)
-
-	# armv7hf
-	$(MAKE) package-debian flavor=standard dist=stretch arch=armv7hf version=$(version)
-	$(MAKE) package-debian flavor=standard dist=buster arch=armv7hf version=$(version)
-
-	# aarch64
-	$(MAKE) package-debian flavor=standard dist=stretch arch=aarch64 version=$(version)
-	$(MAKE) package-debian flavor=standard dist=buster arch=aarch64 version=$(version)
-
-
-# Build and publish debian package with flavor.
-# Hint: Should be run on an appropriate build slave matching the deployment platform.
-
-# Synopsis::
-#
-#    # amd64
-#    make package-debian flavor=full dist=buster arch=amd64 version=0.22.0
-#
-#    # armhf
-#    make package-debian flavor=standard dist=buster arch=armhf version=0.22.0
-#
-
-package-debian: check-flavor-options deb-build-$(flavor) publish-debian
-
-
-deb-build-minimal:
-	$(MAKE) deb-build name=kotori-minimal features=daq
-
-deb-build-standard:
-	$(MAKE) deb-build name=kotori-standard features=daq,export
-
-deb-build-standard-binary:
-	$(MAKE) deb-build name=kotori-standard-binary features=daq,export,daq_binary
-
-deb-build-full:
-	$(MAKE) deb-build name=kotori features=daq,daq_geospatial,export,plotting,firmware,scientific
-
-
-deb-build: check-build-options
-
-	@# https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
-	@# https://en.wikipedia.org/wiki/ANSI_escape_code
-	$(eval RED := "\033[0;31m")
-	$(eval YELLOW := \033[0;33m\033[1m)
-	$(eval NC := \033[0m)
-
-	@echo "Building package $(YELLOW)$(name)$(NC) version $(YELLOW)$(version)$(NC) with features $(YELLOW)$(features)$(NC)"
-
-	# Build Python virtualenv and Linux distribution package
-	@#docker build --tag daq-tools/kotori-build-arm32v7:$(version) --build-arg VERSION=$(version) --build-arg NAME=$(name) --build-arg FEATURES=$(features) --file packaging/dockerfiles/Dockerfile.kotori.arm32v7 .
-	@#docker build --tag daq-tools/kotori-build-arm32v7:$(version) --build-arg BASE_IMAGE=hiveeyes/arm32v7-baseline --build-arg VERSION=$(version) --build-arg NAME=$(name) --build-arg FEATURES=$(features) --file packaging/dockerfiles/Dockerfile.kotori.arm32v7 .
-
-	docker build --tag daq-tools/kotori-build-$(arch):$(version) --build-arg BASE_IMAGE=daq-tools/$(dist)-$(arch)-baseline:latest --build-arg DISTRIBUTION=$(dist) --build-arg VERSION=$(version) --build-arg NAME=$(name) --build-arg FEATURES=$(features) --file packaging/dockerfiles/Dockerfile.all.kotori .
-
-	# Extract Debian package
-	docker container rm -f finalize; true
-	docker container create --name finalize daq-tools/kotori-build-$(arch):$(version)
-	docker container cp finalize:/dist/$(name)_$(version)-1~$(dist)_$(arch).deb ./dist/
-
-	docker container rm -f finalize
-
-
-publish-debian:
-	# Publish all Debian packages
-	rsync -auv --progress ./dist/kotori*$(version)*.deb workbench@packages.elmyra.de:/srv/packages/organizations/elmyra/foss/aptly/public/incoming/
-
-
-
-# =================
-# Docker Hub images
-# =================
-
-package-dockerhub-image: check-version
-	docker build --tag daqzilla/kotori:$(version) --build-arg version=$(version) --file packaging/dockerfiles/Dockerfile.hub.kotori .
-	docker tag daqzilla/kotori:$(version) daqzilla/kotori:nightly
-	@#docker tag daqzilla/kotori:$(version) daqzilla/kotori:latest
-
-
-# =================
-# Packaging helpers
-# =================
-
-check-version:
-	@if test "$(version)" = ""; then \
-		echo "ERROR: 'version' not set"; \
-		exit 1; \
-	fi
-
-check-flavor-options:
-	@if test "$(flavor)" = ""; then \
-		echo "ERROR: 'flavor' not set, try 'make package-debian flavor={minimal,standard,full}'"; \
-		exit 1; \
-	fi
-
-
-check-build-options:
-	@if test "$(dist)" = ""; then \
-		echo "ERROR: 'dist' not set"; \
-		exit 1; \
-	fi
-	@if test "$(arch)" = ""; then \
-		echo "ERROR: 'arch' not set"; \
-		exit 1; \
-	fi
-	@if test "$(name)" = ""; then \
-		echo "ERROR: 'name' not set"; \
-		exit 1; \
-	fi
-	@if test "$(features)" = ""; then \
-		echo "ERROR: 'features' not set"; \
-		exit 1; \
-	fi
-	@if test "$(version)" = ""; then \
-		echo "ERROR: 'version' not set"; \
-		exit 1; \
-	fi
-
-
-
-# ===============
-# Utility targets
-# ===============
 bumpversion: install-releasetools check-bump-options
 	$(bumpversion) $(bump)
 
@@ -209,10 +67,6 @@ sdist:
 pypi-upload: install-releasetools
 	twine upload --skip-existing --verbose dist/*.tar.gz
 
-install-releasetools: setup-virtualenv
-	@$(pip) install --quiet --requirement=requirements-release.txt --upgrade
-
-
 check-bump-options:
 	@if test "$(bump)" = ""; then \
 		echo "ERROR: 'bump' not set, try 'make release bump={patch,minor,major}'"; \
@@ -221,13 +75,17 @@ check-bump-options:
 
 
 
-# ==========================================
-#                 environment
-# ==========================================
-#
-# Miscellaneous tools:
-# Software tests, Documentation builder, Virtual environment builder
-#
+# =========
+# Packaging
+# =========
+
+include packaging/tasks.mk
+
+
+
+# ==============
+# Software tests
+# ==============
 
 .PHONY: test
 pytest: virtualenv-dev
@@ -252,15 +110,18 @@ test-coverage: virtualenv-dev
 		--with-coverage --cover-package=kotori --cover-tests \
 		--cover-html --cover-html-dir=coverage/html --cover-xml --cover-xml-file=coverage/coverage.xml
 
+
+
+# =============
+# Documentation
+# =============
+
+# Build Sphinx documentation.
 docs-html: virtualenv-docs
 	touch doc/source/index.rst
 	SPHINXBUILD="`pwd`/$(sphinx)" SPHINXOPTS="-j auto" make --directory=doc html
 
-
-# ==========================================
-#           ptrace.getkotori.org
-# ==========================================
-
+# Upload media assets. Images, videos, etc.
 # Don't commit media assets (screenshots, etc.) to the repository.
 # Instead, upload them to https://ptrace.getkotori.org/
 ptrace_target := root@ptrace.getkotori.org:/srv/www/organizations/daq-tools/ptrace.getkotori.org/htdocs/
@@ -286,9 +147,12 @@ check-ptrace-options:
 	fi
 
 
+# ==============
+# Infrastructure
+# ==============
 
-# ==========================================
-#               infrastructure
-# ==========================================
+start-foundation-services:
+	docker-compose up
+
 mongodb-start:
 	mongod --dbpath=./var/lib/mongodb/ --smallfiles
