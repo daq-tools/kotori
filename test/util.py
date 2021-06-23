@@ -153,9 +153,9 @@ def mqtt_sensor(topic, payload):
     # https://stackoverflow.com/questions/24319662
     if os.environ.get("CI"):
         if sys.platform == "linux":
-            mosquitto_pub = "docker run --rm --network=host eclipse-mosquitto:1.6.12 mosquitto_pub -h localhost"
+            mosquitto_pub = "docker run --rm --network=host eclipse-mosquitto:1.6 mosquitto_pub -h localhost"
         elif sys.platform == "darwin":
-            mosquitto_pub = "docker run --rm eclipse-mosquitto:1.6.12 mosquitto_pub -h host.docker.internal"
+            mosquitto_pub = "docker run --rm eclipse-mosquitto:1.6 mosquitto_pub -h host.docker.internal"
         else:
             raise NotImplementedError("Invoking 'mosquitto_pub' through Docker on '{}' not supported yet".format(sys.platform))
     else:

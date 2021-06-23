@@ -38,7 +38,7 @@ Kotori
         :target: https://github.com/daq-tools/kotori/actions?workflow=Tests
 
   .. image:: https://img.shields.io/pypi/pyversions/kotori.svg
-        :target: https://python.org
+        :target: https://pypi.org/project/kotori/
 
   .. image:: https://img.shields.io/pypi/v/kotori.svg
         :target: https://pypi.org/project/kotori/
@@ -47,6 +47,7 @@ Kotori
         :target: https://pypi.org/project/kotori/
 
   .. image:: https://img.shields.io/pypi/l/kotori.svg
+        :alt: License
         :target: https://pypi.org/project/kotori/
 
 - **Infrastructure**:
