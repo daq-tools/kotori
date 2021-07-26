@@ -250,7 +250,12 @@ class HttpChannelEndpoint(Resource):
 
         # Synchronous.
         try:
-            return self.dispatch(request, bucket)
+            outcome = self.dispatch(request, bucket)
+            if outcome is None:
+                outcome = self.render_messages(passthrough=None, request=request)
+            if outcome is not None:
+                outcome = outcome.encode("utf-8")
+            return outcome
         except Exception:
             log.failure("Dispatching request failed: {ex}", ex=last_error_and_traceback())
             return

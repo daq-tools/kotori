@@ -6,7 +6,9 @@ Changelog
 in progress
 ===========
 
-- Fix Luftdaten and Hiveeyes vendor applications after upgrade to Python 3
+- Aftermath from upgrading to Python 3:
+  - Fix Luftdaten and Hiveeyes vendor applications
+  - Fix HTTP data acquisition
 - Improve setup documentation
 
 
