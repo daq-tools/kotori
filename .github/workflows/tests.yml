@@ -75,7 +75,7 @@ jobs:
 
       - name: Install shared libraries
         if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.5'
-        run: sudo apt-get install pkg-config libhdf5-dev libnetcdf-dev
+        run: sudo apt-get update && sudo apt-get install --yes pkg-config libhdf5-dev libnetcdf-dev
 
       - name: Install program
         run: |
