@@ -6,6 +6,8 @@ Changelog
 in progress
 ===========
 
+- Stop running tests for Python 3.5 on CI
+
 
 .. _kotori-0.26.8:
 

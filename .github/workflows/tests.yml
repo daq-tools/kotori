@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest ] # , macos-latest, windows-latest ]
-        python-version: [ "3.5", "3.6", "3.7", "3.8" ]
+        python-version: [ "3.6", "3.7", "3.8" ]
         include:
         - os: ubuntu-latest
           path: ~/.cache/pip
@@ -72,10 +72,6 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('setup.py', 'requirements-test.txt', 'requirements-docs.txt') }}
           restore-keys: |
            ${{ runner.os }}-pip-
-
-      - name: Install shared libraries
-        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.5'
-        run: sudo apt-get update && sudo apt-get install --yes pkg-config libhdf5-dev libnetcdf-dev
 
       - name: Install program
         run: |
