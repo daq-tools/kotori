@@ -168,16 +168,22 @@ def mqtt_sensor(topic, payload):
         raise ChildProcessError("Invoking command failed: {command}. Exit code: {exitcode}".format(command=command, exitcode=exitcode))
 
 
+def http_raw(topic, headers=None, json=None, data=None):
+    uri = 'http://localhost:24642/api{}'.format(topic)
+    logger.info('HTTP: Submitting raw request to {}'.format(uri))
+    return requests.post(uri, headers=headers, json=json, data=data)
+
+
 def http_json_sensor(topic, data):
     uri = 'http://localhost:24642/api{}'.format(topic)
     logger.info('HTTP: Submitting reading to {} using JSON'.format(uri))
-    requests.post(uri, json=data)
+    return requests.post(uri, json=data)
 
 
 def http_form_sensor(topic, data):
     uri = 'http://localhost:24642/api{}'.format(topic)
     logger.info('HTTP: Submitting reading to {} using x-www-form-urlencoded'.format(uri))
-    requests.post(uri, data=data)
+    return requests.post(uri, data=data)
 
 
 def http_csv_sensor(topic, data):
@@ -186,7 +192,7 @@ def http_csv_sensor(topic, data):
     body = ''
     body += '## {}\n'.format(','.join(map(str, list(data.keys()))))
     body += '{}\n'.format(','.join(map(str, list(data.values()))))
-    requests.post(uri, data=body, headers={'Content-Type': 'text/csv'})
+    return requests.post(uri, data=body, headers={'Content-Type': 'text/csv'})
 
 
 def http_get_data(topic=None, format='csv', ts_from=None, ts_to=None):

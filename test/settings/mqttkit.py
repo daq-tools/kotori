@@ -28,6 +28,7 @@ class TestSettings:
 
     # HTTP channel settings.
     channel_path_data    = '/mqttkit-1/itest/foo/bar/data'
+    channel2_path_data   = '/mqttkit-1/itest/foo/bar2/data'
     channel_path_event   = '/mqttkit-1/itest/foo/bar/event'
     channel_path_airrohr = '/mqttkit-1/itest/foo/bar/custom/airrohr'
 

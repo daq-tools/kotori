@@ -7,6 +7,7 @@ in progress
 ===========
 
 - Stop running tests for Python 3.5 on CI
+- Improve tests on HTTP API for data acquisition
 
 
 .. _kotori-0.26.8:

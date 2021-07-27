@@ -259,10 +259,14 @@ class HttpChannelEndpoint(Resource):
         except Error as ex:
             log.failure("Dispatching request failed: {ex}", ex=last_error_and_traceback())
             request.setResponseCode(int(ex.status))
-            return ex.response.encode("utf-8")
-        except Exception:
+            payload = ex.response
+            if isinstance(payload, str):
+                payload = payload.encode("utf-8")
+            return payload
+        except Exception as ex:
             log.failure("Dispatching request failed (unhandled exception): {ex}", ex=last_error_and_traceback())
-            return b'An error with unknown reason happened'
+            request.setResponseCode(400)
+            return "Unhandled exception: {}".format(ex).encode("utf-8")
 
         # Asynchronous. Request processing chain, worker-threaded
         deferred = threads.deferToThread(self.dispatch, request, bucket)
@@ -328,6 +332,10 @@ class HttpChannelEndpoint(Resource):
         request = bucket.request
 
         content_type = request.getHeader('Content-Type')
+        if content_type is None:
+            msg = u"Unable to handle request without Content-Type"
+            log.warn(msg)
+            raise Error(http.UNSUPPORTED_MEDIA_TYPE, response=msg)
 
         # Read and decode request body.
         body = request.content.read()
