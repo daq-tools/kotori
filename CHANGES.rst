@@ -7,6 +7,14 @@ in progress
 ===========
 
 
+.. _kotori-0.26.8:
+
+2021-07-27 0.26.8
+=================
+- Aftermath from upgrading to Python 3:
+  - Fix HTTP data acquisition once more
+
+
 .. _kotori-0.26.7:
 
 2021-07-26 0.26.7

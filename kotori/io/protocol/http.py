@@ -253,12 +253,16 @@ class HttpChannelEndpoint(Resource):
             outcome = self.dispatch(request, bucket)
             if outcome is None:
                 outcome = self.render_messages(passthrough=None, request=request)
-            if outcome is not None:
+            if outcome is not None and isinstance(outcome, str):
                 outcome = outcome.encode("utf-8")
             return outcome
-        except Exception:
+        except Error as ex:
             log.failure("Dispatching request failed: {ex}", ex=last_error_and_traceback())
-            return
+            request.setResponseCode(int(ex.status))
+            return ex.response.encode("utf-8")
+        except Exception:
+            log.failure("Dispatching request failed (unhandled exception): {ex}", ex=last_error_and_traceback())
+            return b'An error with unknown reason happened'
 
         # Asynchronous. Request processing chain, worker-threaded
         deferred = threads.deferToThread(self.dispatch, request, bucket)
