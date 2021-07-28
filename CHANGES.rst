@@ -5,6 +5,12 @@ Changelog
 
 in progress
 ===========
+
+
+.. _kotori-0.26.9:
+
+2021-07-28 0.26.9
+=================
 - CI: Stop running tests for Python 3.5 on CI
 - QA: Improve tests on HTTP API for data acquisition
 - CI: Add testing against Python 3.9
