@@ -1,5 +1,6 @@
 import dataclasses
 import json
+import os
 from pathlib import Path
 
 from invoke import Context
@@ -96,6 +97,7 @@ class PackageBuilder:
         print(json.dumps(dataclasses.asdict(spec), indent=4))
 
         # Build Linux distribution package within Docker container.
+        os.environ["DOCKER_BUILDKIT"] = "0"
         command = f"""
             docker build \
                 --tag {self.build_container_name(spec)} \
