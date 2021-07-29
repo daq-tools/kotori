@@ -5,6 +5,7 @@ Changelog
 
 in progress
 ===========
+- Add support for Grafana 8
 
 
 .. _kotori-0.26.10:

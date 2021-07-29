@@ -43,6 +43,15 @@ class GrafanaWrapper:
     def get_client(self):
         return GrafanaClient((self.settings.grafana_username, self.settings.grafana_password), host='localhost', port=3000)
 
+    def get_dashboard_by_name(self, name):
+        dashboards = self.client.search()
+        for dashboard in dashboards:
+            if dashboard["title"] == name:
+                dashboard_uid = dashboard["uid"]
+                dashboard = self.client.dashboards.uid[dashboard_uid].get()
+                return dashboard
+        raise KeyError(f"Unable to find dashboard '{name}'")
+
     def make_reset(self):
 
         @pytest.fixture(scope="function")
