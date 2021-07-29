@@ -7,7 +7,6 @@ from invoke import Context
 from tasks.packaging.model import PackageRecipe, PackageSpecification
 from tasks.util import print_header, run_commands, task
 
-map()
 
 class PackageBuilder:
     """
