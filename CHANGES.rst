@@ -5,6 +5,7 @@ Changelog
 
 in progress
 ===========
+- Add possibility to adjust MongoDB URI in configuration file
 
 
 .. _kotori-0.26.9:

@@ -67,7 +67,7 @@ class HttpServerService(Service):
 
         # Root resource object representing a channel
         # Contains routing machinery
-        self.root = HttpChannelContainer()
+        self.root = HttpChannelContainer(self.settings)
 
         # Forward route registration method to channel object
         self.registerEndpoint = self.root.registerEndpoint
@@ -111,10 +111,13 @@ class HttpChannelContainer(Resource):
     routing engine based on the Pyramid request router.
     """
 
-    def __init__(self):
+    def __init__(self, settings):
         Resource.__init__(self)
 
         log.info('Initializing HttpChannelContainer')
+
+        # Propagate global settings
+        self.settings = settings
 
         # Reference to Metastore database.
         self.metastore = None
@@ -132,12 +135,12 @@ class HttpChannelContainer(Resource):
         """
         Connect to Metadata storage
         """
-        log.info('Connecting to Metadata storage database')
-
-        # FIXME: Make MongoDB address configurable!
-        mongodb_uri = "mongodb://localhost:27017"
+        mongodb_uri = self.settings.get("mongodb", {}).get("uri") or "mongodb://localhost:27017/"
+        log.info("Connecting to Metadata storage database at: {}".format(mongodb_uri))
         try:
-            self.metastore = pymongo.MongoClient(host='localhost', port=27017, socketTimeoutMS=5000, connectTimeoutMS=5000)
+            self.metastore = pymongo.MongoClient(
+                mongodb_uri,
+                socketTimeoutMS=5000, connectTimeoutMS=5000, serverSelectionTimeoutMS=5000)
 
         except Exception as ex:
             log.failure('Could not connect to Metadata storage database: {ex}\n{log_failure}', ex=ex)
@@ -453,7 +456,7 @@ class HttpChannelEndpoint(Resource):
                 except Exception as ex:
                     log.failure('Could not process CSV data, unknown database error: {0}'.format(ex))
                     raise Error(http.INTERNAL_SERVER_ERROR,
-                                response=b'Could not process CSV data, unknown database error: {0}'.format(ex))
+                                response="Could not process CSV data, unknown database error: {0}".format(ex))
 
                 return parse_data(channel_info)
 
