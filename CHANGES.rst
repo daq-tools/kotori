@@ -5,7 +5,14 @@ Changelog
 
 in progress
 ===========
+
+
+.. _kotori-0.26.10:
+
+2021-07-29 0.26.10
+==================
 - Add possibility to adjust MongoDB URI in configuration file
+- Fix and improve package building
 
 
 .. _kotori-0.26.9:
