@@ -45,9 +45,11 @@ def test_mqtt_strategy_lan(machinery, create_influxdb, reset_influxdb, reset_gra
         datasource_names.append(datasource['name'])
     assert settings.influx_database in datasource_names
 
-    logger.info('Grafana: Checking dashboard')
+    logger.info('Grafana: Retrieving dashboard')
     dashboard_name = settings.grafana_dashboards[0]
-    dashboard = grafana.client.dashboards.db[dashboard_name].get()
+    dashboard = grafana.get_dashboard_by_name(dashboard_name)
+
+    logger.info('Grafana: Checking dashboard layout')
     target = dashboard['dashboard']['rows'][0]['panels'][0]['targets'][0]
     assert target['measurement'] == settings.influx_measurement_sensors
     assert 'temperature' in target['query'] or 'humidity' in target['query']
