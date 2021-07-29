@@ -146,7 +146,10 @@ https://getkotori.org/docs/setup/
 ********
 Examples
 ********
-Data acquisition is easy, both MQTT and HTTP are supported.
+
+Data acquisition
+================
+Submitting measurement data is easy and flexible, both MQTT and HTTP are supported.
 
 First, let's define a data acquisition channel::
 
@@ -165,6 +168,14 @@ HTTP::
 
     HTTP_URI=https://daq.example.org/api/
     echo "$DATA" | curl --request POST --header 'Content-Type: application/json' --data @- $HTTP_URI/$CHANNEL/data
+
+Data export
+===========
+Measurement data can be exported in a variety of formats.
+
+This is a straight-forward example for CSV data export::
+
+    http $HTTP_URI/$CHANNEL/data.csv
 
 
 ****************

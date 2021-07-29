@@ -71,7 +71,9 @@ Backlog
 - Improve documentation
   - https://pydigger.com/keyword/acquisition
   - https://github.com/daq-tools/kotori/issues/15#issuecomment-789090172
-
+- Upgrade to most recent version of Twisted
+- Add packaging for Debian 11 (bullseye)
+- Add support for Python 3.10
 
 
 ****

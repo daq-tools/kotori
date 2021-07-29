@@ -40,7 +40,7 @@ ENV TMPDIR=/var/tmp
 
 # Workaround for Python 3.5.
 RUN \
-    python3 -c 'import sys; assert (3, 5) <= sys.version_info < (3, 6)' \
+    python3 -c 'import sys; assert (3, 5) <= sys.version_info < (3, 6)' >/dev/null 2>&1 \
     && ${pip} install 'incremental>=16.10.1' 'cffi!=1.11.3,>=1.8' \
     || true
 

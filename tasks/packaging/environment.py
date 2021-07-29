@@ -33,7 +33,6 @@ class DockerBaselineImageBuilder:
             distributions=[
                 "bionic",
                 "focal",
-                # "hirsute",
             ],
             architectures=[
                 "amd64",
