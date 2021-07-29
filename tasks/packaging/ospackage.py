@@ -78,7 +78,7 @@ class PackageBuilder:
 
     @staticmethod
     def build_container_name(spec):
-        return f"daq-tools/kotori-build-{spec.distribution}-{spec.architecture}:{spec.version}"
+        return f"ephemeral/kotori-build-{spec.distribution}-{spec.architecture}:{spec.version}"
 
     def deb(self, spec: PackageSpecification):
 
@@ -101,7 +101,7 @@ class PackageBuilder:
         command = f"""
             docker build \
                 --tag {self.build_container_name(spec)} \
-                --build-arg BASE_IMAGE=daq-tools/{spec.distribution}-{spec.architecture}-baseline:latest \
+                --build-arg BASE_IMAGE=ephemeral/{spec.distribution}-{spec.architecture}-baseline:latest \
                 --build-arg NAME={spec.name} \
                 --build-arg FEATURES={spec.features} \
                 --build-arg VERSION={spec.version} \

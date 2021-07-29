@@ -67,8 +67,8 @@ class DockerBaselineImageBuilder:
                     commands = [
                         f"""
                         docker build \
-                            --tag daq-tools/{distribution}-{architecture}-baseline:{self.docker_image_version} \
-                            --tag daq-tools/{distribution}-{architecture}-baseline:latest \
+                            --tag ephemeral/{distribution}-{architecture}-baseline:{self.docker_image_version} \
+                            --tag ephemeral/{distribution}-{architecture}-baseline:latest \
                             --build-arg BASE_IMAGE={image} - \
                             < packaging/dockerfiles/debian-baseline.dockerfile
                         """,

@@ -54,16 +54,16 @@ function invoke_build() {
 
 # Define Docker image names.
 full_images=(
-  daq-tools/stretch-amd64-baseline
-  daq-tools/buster-amd64-baseline
-  daq-tools/bionic-amd64-baseline
-  daq-tools/focal-amd64-baseline
+  ephemeral/stretch-amd64-baseline
+  ephemeral/buster-amd64-baseline
+  ephemeral/bionic-amd64-baseline
+  ephemeral/focal-amd64-baseline
 )
 standard_images=(
-  daq-tools/stretch-arm64v8-baseline
-  daq-tools/buster-arm64v8-baseline
-  daq-tools/stretch-arm32v7-baseline
-  daq-tools/buster-arm32v7-baseline
+  ephemeral/stretch-arm64v8-baseline
+  ephemeral/buster-arm64v8-baseline
+  ephemeral/stretch-arm32v7-baseline
+  ephemeral/buster-arm32v7-baseline
 )
 
 function main() {
