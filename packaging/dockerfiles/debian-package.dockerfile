@@ -35,10 +35,17 @@ RUN ${pip} install --upgrade --force-reinstall "pip<21" wheel
 # Announce extra PyPI repository containing pre-built packages for `aarch64` (arm64v8) and `armv7l` (arm32v7).
 ENV PIP_EXTRA_INDEX_URL=https://packages.elmyra.de/elmyra/foss/python/
 
-# Install package from PyPI.
+# Use a temporary directory allowing to execute programs.
 ENV TMPDIR=/var/tmp
-RUN ${pip} install ${PYTHON_PACKAGE}[${FEATURES}]==${VERSION} --prefer-binary --upgrade
 
+# Workaround for Python 3.5.
+RUN \
+    python3 -c 'import sys; assert (3, 5) <= sys.version_info < (3, 6)' \
+    && ${pip} install 'incremental>=16.10.1' 'cffi!=1.11.3,>=1.8' \
+    || true
+
+# Install package from PyPI.
+RUN ${pip} install ${PYTHON_PACKAGE}[${FEATURES}]==${VERSION} --prefer-binary --upgrade
 
 
 # ===========================
