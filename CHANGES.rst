@@ -5,7 +5,13 @@ Changelog
 
 in progress
 ===========
-- Add support for Grafana 8
+
+
+.. _kotori-0.26.11:
+
+2021-07-30 0.26.11
+==================
+- Add compatibility with Grafana 8
 
 
 .. _kotori-0.26.10:
