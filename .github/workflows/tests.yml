@@ -13,7 +13,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ] # , macos-latest, windows-latest ]
         python-version: [ "3.6", "3.7", "3.8", "3.9" ]
-        mosquitto-version: [ "1.6" ] #, "2.0" ]
+        mosquitto-version: [ "1.6", "2.0" ]
         influxdb-version: [ "1.7", "1.8" ]
         grafana-version: [ "6.7.6", "7.5.10", "8.1.4" ]
         include:
@@ -26,13 +26,6 @@ jobs:
 
     # https://docs.github.com/en/free-pro-team@latest/actions/guides/about-service-containers
     services:
-
-      # TODO: Maybe use https://github.com/marketplace/actions/mosquitto-mqtt-broker-in-github-actions
-      mosquitto:
-        image: eclipse-mosquitto:${{ matrix.mosquitto-version }}
-        ports:
-          - 1883:1883
-          - 9001:9001
 
       influxdb:
         image: influxdb:${{ matrix.influxdb-version }}
@@ -61,6 +54,15 @@ jobs:
 
       - name: Acquire sources
         uses: actions/checkout@v2
+
+      - name: Start Mosquitto
+        uses: namoshek/mosquitto-github-action@v1
+        with:
+          version: ${{ matrix.mosquitto-version }}
+          ports: '1883:1883 8883:8883'
+          # certificates: ${{ github.workspace }}/.ci/tls-certificates
+          config: ${{ github.workspace }}/etc/test/mosquitto-no-auth.conf
+          # container-name: 'mqtt'
 
       - name: Setup Python
         uses: actions/setup-python@v2
