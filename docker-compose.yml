@@ -6,6 +6,8 @@ services:
 
   mosquitto:
     image: eclipse-mosquitto:${MOSQUITTO_VERSION}
+    # https://github.com/eclipse/mosquitto/issues/2040#issuecomment-792349744
+    command: mosquitto -c /mosquitto-no-auth.conf
     init: true
     restart: unless-stopped
     ports:
@@ -14,9 +16,6 @@ services:
     volumes:
       - ${PATH_VAR_LIB}/mosquitto:/mosquitto/data
       - ${PATH_VAR_LOG}/mosquitto:/mosquitto/log
-    # https://github.com/eclipse/mosquitto/issues/2040
-    environment:
-      NO_AUTHENTICATION: 1
 
   # https://github.com/robcowart/docker_compose_cookbook/blob/master/STACKS/influx_oss/docker-compose.yml#L21
   influxdb:
