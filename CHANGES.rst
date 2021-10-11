@@ -7,6 +7,13 @@ in progress
 ===========
 
 
+.. _kotori-0.26.12:
+
+2021-10-11 0.26.12
+==================
+- Add support for Variometer CSV import
+
+
 .. _kotori-0.26.11:
 
 2021-07-30 0.26.11
