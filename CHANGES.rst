@@ -12,6 +12,7 @@ in progress
 2021-10-11 0.26.12
 ==================
 - Add support for Variometer CSV import
+- CI: Use Grafana 8.2.1 and 7.5.11
 
 
 .. _kotori-0.26.11:
