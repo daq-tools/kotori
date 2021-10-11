@@ -23,6 +23,7 @@ contributed to Kotori in one way or another.
 * Markus Euskirchen <m@euse.de>
 * Matthias Büchner <m.buechner@gmail.com>
 * Matthias Mehldau <wetter@hiveeyes.org>
+* Michael Haberler <mah@mah.priv.at>
 * Richard Pobering <einsiedlerkrebs@ginnungagap.org>
 * Roh <incognito>
 * Rui Alexandre Teixeira Sousa Pinto <https://github.com/RuiPinto96>

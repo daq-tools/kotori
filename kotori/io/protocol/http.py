@@ -382,6 +382,8 @@ class HttpChannelEndpoint(Resource):
                     header_line = None
                     options = {}
 
+                    apply_datefield_heuristics = True
+
                     # Regular header announcement
                     if first_line.startswith('## '):
                         header_line = first_line[3:].strip()
@@ -398,6 +400,13 @@ class HttpChannelEndpoint(Resource):
                         data_lines.pop(0)
                         options['rules'] = [{'type': 'fuse', 'source': ['Datum', 'Uhrzeit'], 'target': 'time', 'join': 'T', 'suffix': 'Z'}]
 
+                    # Convenience hack to support Variometer CSV import
+                    elif 'Date;Time' in first_line:
+                        header_line = first_line
+                        data_lines.pop(0)
+                        options['rules'] = [{'type': 'fuse', 'source': ['Date', 'Time'], 'target': 'time', 'join': 'T', 'suffix': 'Z'}]
+                        apply_datefield_heuristics = False
+
                     # Convenience hack to support import from http://archive.luftdaten.info/
                     elif first_line.startswith('sensor_id'):
                         header_line = first_line
@@ -406,11 +415,15 @@ class HttpChannelEndpoint(Resource):
                     if header_line:
                         # Streamline various differences for even more convenience.
                         header_line = header_line.replace(';', ',')
-                        # FIXME: Unify with ``kotori.daq.storage.influx.format_chunk()``.
-                        date_fields = ['Date/Time', 'Date', 'Datum/Zeit', 'timestamp']
-                        for date_field in date_fields:
-                            header_line = header_line.replace(date_field, 'time')
+
+                        if apply_datefield_heuristics:
+                            # FIXME: Unify with ``kotori.daq.storage.influx.format_chunk()``.
+                            date_fields = ['Date/Time', 'Date', 'Datum/Zeit', 'timestamp']
+                            for date_field in date_fields:
+                                header_line = header_line.replace(date_field, 'time')
+
                         header_fields = list(map(str.strip, header_line.split(',')))
+                        header_fields = [field for field in header_fields if field != ""]
                         msg = u'CSV Header: fields={fields}, key={key}'.format(fields=header_fields, key=request.channel_identifier)
                         log.info(msg)
 
@@ -444,6 +457,7 @@ class HttpChannelEndpoint(Resource):
                     data_list = []
                     for data_line in data_lines:
                         data_fields = list(map(str.strip, data_line.replace(';', ',').split(',')))
+                        data_fields = [field for field in data_fields if field != ""]
                         #print 'header_fields, data_fields:', header_fields, data_fields
                         data = OrderedDict(list(zip(header_fields, data_fields)))
                         self.manipulate_data(data, channel_info)
@@ -473,7 +487,7 @@ class HttpChannelEndpoint(Resource):
     def manipulate_data(self, data, channel_info):
         """
         Data fusion on CSV data lines.
-        Convenience hack to support Beelogger CSV import.
+        Convenience hack to support Beelogger and Variometer CSV import.
         """
         if 'options' in channel_info:
             rules = channel_info['options'].get('rules', [])
