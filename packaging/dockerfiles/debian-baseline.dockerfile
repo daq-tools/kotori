@@ -32,7 +32,7 @@ RUN apt-get install --yes --no-install-recommends \
     ruby ruby-dev
 
 # Install fpm (Effing package management).
-RUN gem install fpm --version=1.12.0
+RUN gem install fpm --version=1.14.1
 
 
 FROM debian-fpm
