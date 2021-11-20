@@ -19,10 +19,8 @@ class PackageBuilder:
             enabled=True,
             architecture="amd64",
             distributions=[
-                "stretch",
-                "buster",
-                "bionic",
-                "focal",
+                "bullseye", "buster", "stretch",
+                "focal", "bionic",
             ],
             flavors=[
                 "full",
@@ -33,8 +31,9 @@ class PackageBuilder:
             enabled=True,
             architecture="arm64v8",
             distributions=[
-                "stretch",  # ImportError: cannot import name '_BACKCOMPAT_MAGIC_NUMBER'
+                "bullseye",
                 "buster",
+                "stretch",  # ImportError: cannot import name '_BACKCOMPAT_MAGIC_NUMBER'
             ],
             flavors=["standard"],
         ),
@@ -42,8 +41,9 @@ class PackageBuilder:
             enabled=True,
             architecture="arm32v7",
             distributions=[
-                "stretch",  # ImportError: cannot import name '_BACKCOMPAT_MAGIC_NUMBER'
+                "bullseye",
                 "buster",
+                "stretch",  # ImportError: cannot import name '_BACKCOMPAT_MAGIC_NUMBER'
             ],
             flavors=["standard"],
         ),

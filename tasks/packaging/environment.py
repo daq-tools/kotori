@@ -15,9 +15,9 @@ class DockerBaselineImageBuilder:
             enabled=True,
             vendor="Debian",
             distributions=[
-                "stretch",
+                "bullseye",
                 "buster",
-                # "bullseye",
+                "stretch",
             ],
             architectures=[
                 "amd64",
@@ -31,8 +31,8 @@ class DockerBaselineImageBuilder:
             enabled=True,
             vendor="Ubuntu",
             distributions=[
-                "bionic",
                 "focal",
+                "bionic",
             ],
             architectures=[
                 "amd64",
@@ -41,7 +41,7 @@ class DockerBaselineImageBuilder:
         ),
     ]
 
-    docker_image_version = "0.10.0"
+    docker_image_version = "0.11.0"
 
     def run(self):
         """
