@@ -66,6 +66,7 @@ class DockerBaselineImageBuilder:
                     commands = [
                         f"""
                         docker build \
+                            --pull \
                             --tag ephemeral/{distribution}-{architecture}-baseline:{self.docker_image_version} \
                             --tag ephemeral/{distribution}-{architecture}-baseline:latest \
                             --build-arg BASE_IMAGE={image} - \
