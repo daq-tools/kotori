@@ -111,5 +111,21 @@ Designate specific version as ``latest``::
     make package-docker-link version=0.26.6 tag=latest
 
 
+***************
+Troubleshooting
+***************
+
+If you are observing messages like this when building for ``arm64v8``::
+
+    Processing triggers for libc-bin (2.31-13+deb11u2) ...
+    qemu: uncaught target signal 11 (Segmentation fault) - core dumped
+    Segmentation fault
+
+you might be happy to hear that we found a solution at `Kotori issue #73`_
+already: You will probably need a more recent version of
+``qemu-aarch64-static``. Version 4.2.1 did not work, but version 5.0.0 did.
+
+
 .. _Docker: https://docker.com/
 .. _Install Docker: https://docs.docker.com/get-docker/
+.. _Kotori issue #73: https://github.com/daq-tools/kotori/issues/73
