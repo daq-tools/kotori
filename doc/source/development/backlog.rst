@@ -68,12 +68,33 @@ Backlog
 
     shiv --python "/usr/bin/env python3" --console-script kotori --compressed --output-file kotori kotori[daq,export]
 
+- https://trigboard-docs.readthedocs.io/
 - Improve documentation
   - https://pydigger.com/keyword/acquisition
   - https://github.com/daq-tools/kotori/issues/15#issuecomment-789090172
 - Upgrade to most recent version of Twisted
 - Add packaging for Debian 11 (bullseye)
 - Add support for Python 3.10
+- Add links to Dan Browns testimonials and tutorials
+  - https://community.nethserver.org/t/kotori-simple-painless-data-logging-visualization-with-grafana/18130
+  - https://community.nethserver.org/t/what-are-you-working-on-feb-2021/17593/35
+  - https://www.familybrown.org/dokuwiki/doku.php?id=advanced:kotori_caddy
+- Update documentation on https://getkotori.org/docs/setup/docker.html
+- Look into WebThings:
+  - https://github.com/WebThingsIO
+  - https://webthings.io/
+  - https://iot.mozilla.org/wot/
+- Just two notes
+  - https://github.com/thingsboard/thingsboard
+  - https://github.com/sbtinstruments/asyncio-mqtt
+- ElabNET / Timberwolf
+  - https://elabnet.de/
+  - https://forum.timberwolf.io/
+- PV/Solar
+  - https://solaranzeige.de/
+  - https://www.solarprognose.de/
+  - https://www.epsolarpv.com/
+
 
 
 ****
