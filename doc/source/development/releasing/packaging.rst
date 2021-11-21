@@ -12,11 +12,41 @@ Packaging
 Prerequisites
 *************
 
+The package build system is based on `Docker`_, please read the documentation
+at `Install Docker`_ how to set it up on your system.
+
+For example, on Debian 11 (bullseye), you would install it like this::
+
+    # Acquire package signing key.
+    wget -qO - https://download.docker.com/linux/debian/gpg | apt-key add -
+
+    # Register with package repository.
+    echo "deb [arch=amd64] https://download.docker.com/linux/debian bullseye stable" > /etc/apt/sources.list.d/docker.list
+    apt-get update
+
+    # Install Docker.
+    apt-get install docker-ce
+
+After installing Docker, some additional packages are needed::
+
+    apt-get install python3 python3-venv git make qemu-user-static binfmt-support
+
+Then, get hold of the sources and install a minimum part of the sandbox::
+
+    git clone https://github.com/daq-tools/kotori
+    cd kotori
+    make install-releasetools
+
+
+***************
+Baseline images
+***************
+
 Prepare baseline Docker images::
 
     make package-baseline-images
 
-Prepare dependency wheel packages::
+Optionally, prepare dependency wheel packages (most users can skip this step)::
 
     ./packaging/wheels/build.sh
     ./packaging/wheels/upload.sh
@@ -79,3 +109,7 @@ Run basic QA checks::
 Designate specific version as ``latest``::
 
     make package-docker-link version=0.26.6 tag=latest
+
+
+.. _Docker: https://docker.com/
+.. _Install Docker: https://docs.docker.com/get-docker/
