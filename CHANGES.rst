@@ -5,6 +5,7 @@ Changelog
 
 in progress
 ===========
+- Add basic information about RabbitMQ
 
 
 .. _kotori-0.26.12:
