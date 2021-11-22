@@ -7,6 +7,7 @@ in progress
 ===========
 - Add basic information about RabbitMQ
 - Improve MQTT logging when connection to broker fails
+- Make MQTT broker credential settings ``username`` and ``password`` optional
 
 
 .. _kotori-0.26.12:

@@ -62,8 +62,8 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
             name          = u'mqtt-' + self.channel.realm,
             broker_host   = self.settings.mqtt.host,
             broker_port   = int(self.settings.mqtt.port),
-            broker_username = self.settings.mqtt.username,
-            broker_password = self.settings.mqtt.password,
+            broker_username = self.settings.mqtt.get("username"),
+            broker_password = self.settings.mqtt.get("password"),
             callback      = self.mqtt_receive,
             subscriptions = subscriptions)
 
