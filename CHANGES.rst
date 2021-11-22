@@ -6,6 +6,7 @@ Changelog
 in progress
 ===========
 - Add basic information about RabbitMQ
+- Improve MQTT logging when connection to broker fails
 
 
 .. _kotori-0.26.12:

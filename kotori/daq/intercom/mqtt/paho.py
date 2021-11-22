@@ -64,9 +64,9 @@ class PahoMqttAdapter(BaseMqttAdapter, Service):
         reactor.addSystemEventTrigger('before', 'shutdown', self.client.loop_stop, True)
 
     # The callback for when the client receives a CONNACK response from the server.
-    def on_connect(self, client, userdata, flags, rc):
+    def on_connect(self, client, userdata, flags, rc, properties=None):
         """
-        on_connect(client, userdata, flags, rc): called when the broker responds to our connection
+        on_connect(client, userdata, flags, rc, properties=None): called when the broker responds to our connection
           request.
           flags is a dict that contains response flags from the broker:
             flags['session present'] - this flag is useful for clients that are
@@ -83,8 +83,17 @@ class PahoMqttAdapter(BaseMqttAdapter, Service):
             5: Connection refused - not authorised
             6-255: Currently unused.
         """
-        log.debug("Connected to MQTT. userdata={userdata}, flags={flags}, rc={rc}",
-            userdata=userdata, flags=flags, rc=rc)
+        metadata = "userdata={userdata}, flags={flags}, rc={rc}, properties={properties}".format(
+            userdata=userdata, flags=flags, rc=rc, properties=properties)
+
+        metadata = metadata.replace("{", "{{").replace("}", "}}")
+
+        errmsg = get_connect_error(rc)
+        if rc == mqtt.CONNACK_ACCEPTED:
+            log.info("MQTT connection succeeded: {errmsg} ({metadata})".format(errmsg=errmsg, metadata=metadata))
+        else:
+            log.error("MQTT connection failed: {errmsg} ({metadata})".format(errmsg=errmsg, metadata=metadata))
+            return
 
         # Subscribing in on_connect() means that if we lose the connection and
         # reconnect then subscriptions will be renewed.
@@ -145,3 +154,23 @@ class PahoMqttAdapter(BaseMqttAdapter, Service):
           MQTT_LOG_ERR, and MQTT_LOG_DEBUG. The message itself is in buf.
         """
         log.debug(u'{message}. level={level_mqtt}, userdata={userdata}', message=buf, level_mqtt=level, userdata=userdata)
+
+
+def get_connect_error(rc):
+    """
+    0: Connection successful
+    1: Connection refused - incorrect protocol version
+    2: Connection refused - invalid client identifier
+    3: Connection refused - server unavailable
+    4: Connection refused - bad username or password
+    5: Connection refused - not authorised
+    """
+    errormap = {
+        mqtt.CONNACK_ACCEPTED: "Connection successful",
+        mqtt.CONNACK_REFUSED_PROTOCOL_VERSION: "Connection refused - incorrect protocol version",
+        mqtt.CONNACK_REFUSED_IDENTIFIER_REJECTED: "Connection refused - invalid client identifier",
+        mqtt.CONNACK_REFUSED_SERVER_UNAVAILABLE: "Connection refused - server unavailable",
+        mqtt.CONNACK_REFUSED_BAD_USERNAME_PASSWORD: "Connection refused - bad username or password",
+        mqtt.CONNACK_REFUSED_NOT_AUTHORIZED: "Connection refused - not authorised",
+    }
+    return errormap.get(rc)
