@@ -21,6 +21,7 @@ package-baseline-images:
 #    make package-all version=0.26.6
 
 package-all: check-version
+	mkdir -p dist
 	$(invoke) packaging.ospackage.run --version=$(version)
 
 
@@ -38,6 +39,7 @@ package-all: check-version
 #    make package-debian flavor=standard dist=buster arch=arm32v7 version=0.26.6
 
 package-debian:
+	mkdir -p dist
 	$(invoke) packaging.ospackage.deb --version=$(version) --flavor=$(flavor) --distribution=$(dist) --architecture=$(arch)
 
 
