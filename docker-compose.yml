@@ -8,7 +8,6 @@ services:
     image: eclipse-mosquitto:${MOSQUITTO_VERSION}
     # https://github.com/eclipse/mosquitto/issues/2040#issuecomment-792349744
     command: mosquitto -c /mosquitto-no-auth.conf
-    init: true
     restart: unless-stopped
     ports:
       - ${MOSQUITTO_MQTT_PORT}:1883
@@ -20,7 +19,6 @@ services:
   # https://github.com/robcowart/docker_compose_cookbook/blob/master/STACKS/influx_oss/docker-compose.yml#L21
   influxdb:
     image: influxdb:${INFLUXDB_VERSION}
-    init: true
     restart: unless-stopped
     ports:
       - ${INFLUXDB_HTTP_PORT}:8086
@@ -37,7 +35,6 @@ services:
 
   mongodb:
     image: mongo:${MONGODB_VERSION}
-    init: true
     restart: unless-stopped
     ports:
       - ${MONGODB_PORT}:27017
@@ -48,7 +45,6 @@ services:
   # https://community.grafana.com/t/influxdb-datasource-in-docker-network-what-url/28732
   grafana:
     image: grafana/grafana:${GRAFANA_VERSION}
-    init: true
     user: "1026"
     restart: unless-stopped
     ports:
