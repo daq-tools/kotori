@@ -6,8 +6,7 @@ import pytest
 import pytest_twisted
 from twisted.internet import threads
 
-from test.conftest import create_machinery
-from test.settings.basic import settings, influx_sensors, grafana, create_influxdb, reset_influxdb, reset_grafana, PROCESS_DELAY_MQTT
+from test.settings.basic import settings, influx_sensors, create_influxdb, reset_influxdb, reset_grafana, PROCESS_DELAY_MQTT
 from test.util import http_json_sensor, sleep
 
 logger = logging.getLogger(__name__)
@@ -73,16 +72,10 @@ data_out = {
 }
 
 
-machinery = create_machinery('./etc/test/basic.ini')
-
-create_influxdb = influx_sensors.make_create_db()
-reset_influxdb = influx_sensors.make_reset_measurement()
-
-
 @pytest_twisted.inlineCallbacks
 @pytest.mark.http
 @pytest.mark.airrohr
-def test_airrohr_http_json(machinery, create_influxdb, reset_influxdb):
+def test_airrohr_http_json(machinery_basic, create_influxdb, reset_influxdb):
     """
     Submit single reading in Airrohr JSON format to HTTP API
     and proof it is stored in the InfluxDB database.
@@ -92,6 +85,7 @@ def test_airrohr_http_json(machinery, create_influxdb, reset_influxdb):
     yield threads.deferToThread(http_json_sensor, settings.channel_path_airrohr, data_in)
 
     # Wait for some time to process the message.
+    yield sleep(PROCESS_DELAY_MQTT)
     yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that data arrived in InfluxDB.

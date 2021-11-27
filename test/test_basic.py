@@ -5,19 +5,16 @@ import logging
 import pytest
 import pytest_twisted
 
-from test.conftest import create_machinery
 from test.settings.basic import settings, influx_sensors, grafana, create_influxdb, reset_influxdb, reset_grafana, PROCESS_DELAY_MQTT
 from test.util import mqtt_json_sensor, sleep
 
 logger = logging.getLogger(__name__)
 
-machinery = create_machinery('./etc/test/basic.ini')
-
 
 @pytest_twisted.inlineCallbacks
 @pytest.mark.mqtt
 @pytest.mark.grafana
-def test_mqtt_strategy_lan(machinery, create_influxdb, reset_influxdb, reset_grafana):
+def test_mqtt_strategy_lan(machinery_basic, create_influxdb, reset_influxdb, reset_grafana):
     """
     Publish single reading in JSON format to MQTT broker and proof
     that a corresponding datasource and a dashboard was created in Grafana.
