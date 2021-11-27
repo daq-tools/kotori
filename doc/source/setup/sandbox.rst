@@ -21,28 +21,26 @@ code. We appreciate that, you mean it. Let's go.
 Prerequisites
 *************
 
+Environment
+===========
+
+Install some needed packages::
+
+    apt-get install python3-venv python3-dev docker-compose mosquitto-clients
+
 Foundation services
 ===================
 
 You will need InfluxDB_, Grafana_, Mosquitto_ and optionally MongoDB_.
 
 For installing them on your workstation, you might want to have a look at the
-:ref:`setup-docker`.
+:ref:`setup-docker`. When running Linux, you can also install the
+infrastructure on your local workstation natively like :ref:`setup-debian`.
 
-When running Linux, you can also install the infrastructure on your
-local workstation natively like :ref:`setup-debian`.
-
-Run Mosquitto, InfluxDB, MongoDB and Grafana as Docker containers::
+The most easy way is to run Mosquitto, InfluxDB, MongoDB and Grafana as Docker
+containers::
 
     make start-foundation-services
-
-
-Environment
-===========
-
-Install Python and Docker Compose::
-
-    apt-get install python3-venv python3-dev docker-compose
 
 
 ***********
