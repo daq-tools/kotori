@@ -37,6 +37,8 @@ def create_machinery(config, scope="package"):
         assert isinstance(result, KotoriBootloader)
 
         #pytest_twisted.blockon(result)
+
+        logger.info('Machinery is almost ready')
         yield result
 
     return machinery

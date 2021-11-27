@@ -50,14 +50,15 @@ def test_mqtt_to_grafana(machinery_hiveeyes, create_influxdb_hiveeyes, reset_inf
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY_MQTT)
 
-    # Wait for Grafana to create its artefacts.
-    yield sleep(2)
-
     # Proof that data arrived in InfluxDB.
     record = influx.get_first_record()
     del record['time']
     assert record == {u'temperature': 42.84, u'weight': 33.33}
     yield record
+
+    # Wait for Grafana to create its artefacts.
+    yield sleep(PROCESS_DELAY_MQTT)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that Grafana is well provisioned.
     logger.info('Grafana: Checking datasource')

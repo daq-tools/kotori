@@ -33,6 +33,7 @@ class MqttKitApplication(RootService):
             )
 
         # Register service component with its container
+        log.info('Registering service "{service}" with name "{name}"', service=service, name=self.name)
         self.registerService(service)
 
 

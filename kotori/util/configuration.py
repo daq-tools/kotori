@@ -41,7 +41,7 @@ def get_configuration(*args):
                     config_files.append(include)
             log.info('Expanded configuration files:  {}'.format(make_list(config_files)))
             config, used = read_config(config_files, kind=Bunch)
-        log.info('Used configuration files:      {}'.format(make_list(used)))
+        log.info('Effective configuration files: {}'.format(make_list(used)))
         return config
     else:
         msg = u'Could not read settings from configuration files: {}'.format(config_files)

@@ -181,3 +181,7 @@ class KeyCache(object):
     def exists(self, *args):
         skip_key = self._get_skip_key(*args)
         return skip_key in self.storage
+
+    def reset(self):
+        logger.info("GrafanaManager: Resetting key cache")
+        self.storage = {}

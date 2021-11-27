@@ -101,9 +101,9 @@ class GrafanaApi(object):
         """
 
         try:
-            log.info(u'Checking/Creating datasource "{}"'.format(name))
+            log.info('Checking/creating datasource "{name}" with "{data}"', name=name, data=data)
             response = self.grafana_client.datasources.create(**data)
-            log.info('response: {response}', response=response)
+            log.info('Grafana response: {response}', response=response)
         except GrafanaServerError as ex:
             message = str(ex)
             if 'Failed to add datasource' in message:
@@ -119,7 +119,6 @@ class GrafanaApi(object):
                 raise
 
         #print grafana.datasources()
-
 
     def create_dashboard(self, dashboard, name=None, delete=False):
 

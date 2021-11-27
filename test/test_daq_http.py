@@ -37,6 +37,7 @@ def test_http_json_valid(machinery, create_influxdb, reset_influxdb):
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY_HTTP)
+    yield sleep(PROCESS_DELAY_HTTP)
 
     # Proof that data arrived in InfluxDB.
     record = influx_sensors.get_first_record()

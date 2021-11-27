@@ -5,10 +5,13 @@ import logging
 import pytest
 import pytest_twisted
 
+from test.conftest import create_machinery
 from test.settings.basic import settings, influx_sensors, grafana, create_influxdb, reset_influxdb, reset_grafana, PROCESS_DELAY_MQTT
 from test.util import mqtt_json_sensor, sleep
 
 logger = logging.getLogger(__name__)
+
+machinery = create_machinery('./etc/test/basic.ini')
 
 
 @pytest_twisted.inlineCallbacks
@@ -28,8 +31,6 @@ def test_mqtt_strategy_lan(machinery, create_influxdb, reset_influxdb, reset_gra
     yield mqtt_json_sensor(settings.mqtt_topic_json, data)
 
     # Wait for some time to process the message.
-    yield sleep(PROCESS_DELAY_MQTT)
-    yield sleep(PROCESS_DELAY_MQTT)
     yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that data arrived in InfluxDB.

@@ -29,10 +29,12 @@ APP_NAME = u'Kotori version ' + __VERSION__
 
 # TODO: introduce kotori.core.boot_component(s)
 
+
 class KotoriBootloader(object):
 
     def __init__(self, settings=None):
         self.settings = settings
+        self.applications = []
 
     def boot_applications(self):
         """
@@ -41,7 +43,9 @@ class KotoriBootloader(object):
         applications = list(self.get_applications())
         log.info(u'Enabling applications {applications}', applications=applications)
         for name in applications:
-            self.boot_application(name)
+            app = self.boot_application(name)
+            if app is not None:
+                self.applications.append(app)
 
     def boot_application(self, name):
         """
@@ -59,6 +63,7 @@ class KotoriBootloader(object):
             application_settings = self.settings[name]
             application = factory(name=name, application_settings=application_settings, global_settings=self.settings)
             application.startService()
+            return application
         except Exception as ex:
             log.failure('Error running application factory "{name}":\n{log_failure}', name=name)
             return
