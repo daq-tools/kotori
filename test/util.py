@@ -17,7 +17,7 @@ from twisted.internet import reactor
 from twisted.internet.task import deferLater
 
 import kotori
-
+from kotori.daq.graphing.grafana.manager import GrafanaManager
 
 logger = logging.getLogger(__name__)
 
@@ -43,6 +43,18 @@ class GrafanaWrapper:
     def get_client(self):
         return GrafanaClient((self.settings.grafana_username, self.settings.grafana_password), host='localhost', port=3000)
 
+    def get_datasource_names(self):
+        names = []
+        for datasource in self.client.datasources.get():
+            names.append(datasource['name'])
+        return names
+
+    def get_dashboard_titles(self):
+        titles = []
+        for dashboard in self.client.search():
+            titles.append(dashboard["title"])
+        return titles
+
     def get_dashboard_by_name(self, name):
         dashboards = self.client.search()
         for dashboard in dashboards:
@@ -52,10 +64,19 @@ class GrafanaWrapper:
                 return dashboard
         raise KeyError(f"Unable to find dashboard '{name}'")
 
+    def get_panels(self, dashboard_name):
+        dashboard = self.get_dashboard_by_name(dashboard_name)
+        return dashboard['dashboard']['rows'][0]['panels']
+
+    def get_field_names(self, dashboard_name, panel_index):
+        panels = self.get_panels(dashboard_name)
+        field_names = sorted(map(lambda x: x["fields"][0]["name"], panels[panel_index]['targets']))
+        return field_names
+
     def make_reset(self):
 
         @pytest.fixture(scope="function")
-        def reset_grafana():
+        def reset_grafana(machinery):
             """
             Fixture to delete the Grafana datasource and dashboard.
             """
@@ -63,10 +84,10 @@ class GrafanaWrapper:
             logger.info('Grafana: Resetting artefacts')
 
             for datasource in self.client.datasources.get():
-                if datasource['name'] == self.settings.influx_database:
+                if datasource['name'] == self.settings.influx_database or \
+                        datasource['name'] in getattr(self.settings, "influx_databases", []):
                     datasource_id = datasource['id']
                     self.client.datasources[datasource_id].delete()
-                    break
 
             for dashboard_name in self.settings.grafana_dashboards:
                 try:
@@ -74,6 +95,14 @@ class GrafanaWrapper:
                 except GrafanaClientError as ex:
                     if '404' not in str(ex):
                         raise
+
+            # Find all `GrafanaManager` service instances and invoke `KeyCache.reset()` on them.
+            if machinery:
+                for app in machinery.applications:
+                    for service in app.services:
+                        for subservice in service.services:
+                            if isinstance(subservice, GrafanaManager):
+                                subservice.keycache.reset()
 
         return reset_grafana
 

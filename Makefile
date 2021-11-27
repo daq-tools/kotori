@@ -153,6 +153,7 @@ check-ptrace-options:
 # ==============
 
 start-foundation-services:
+	docker-compose pull
 	docker-compose up
 
 mongodb-start:

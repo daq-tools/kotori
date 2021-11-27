@@ -28,9 +28,10 @@ class GrafanaManager(MultiService, MultiServiceMixin):
         if not 'port' in self.config['grafana']:
             self.config['grafana']['port'] = '3000'
 
-        name = self.__class__.__name__
+        self.name = 'grafana-manager-{realm}-{id}'.format(realm=self.channel.get('realm'), id=str(id(self)))
+
         log.info('Starting GrafanaManager "{}". grafana={}:{}'.format(
-            name,
+            self.name,
             self.config['grafana']['host'],
             self.config['grafana']['port']))
 

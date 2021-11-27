@@ -45,13 +45,14 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         self.log(log.info, u'Bootstrapping')
         self.settings = self.parent.settings
 
-        # Optionally register subsystem component as child service
+        # Register subsystem components as child services.
         for subsystem in self.subsystems:
             if hasattr(self, subsystem):
-                subsystem_service = getattr(self, subsystem)
-                if isinstance(subsystem_service, Service):
-                    log.info('Registering subsystem component "{subsystem}" as service', subsystem=subsystem)
-                    self.registerService(subsystem_service)
+                subsystem_services = to_list(getattr(self, subsystem))
+                for service in subsystem_services:
+                    if isinstance(service, Service):
+                        log.info('Registering subsystem component "{subsystem}" as service at name "{name}"', subsystem=subsystem, name=service.name)
+                        self.registerService(service)
 
         # Configure metrics to be collected each X seconds
         metrics_interval = int(self.channel.get('metrics_logger_interval', 60))

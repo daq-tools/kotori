@@ -86,13 +86,11 @@ class PahoMqttAdapter(BaseMqttAdapter, Service):
         metadata = "userdata={userdata}, flags={flags}, rc={rc}, properties={properties}".format(
             userdata=userdata, flags=flags, rc=rc, properties=properties)
 
-        metadata = metadata.replace("{", "{{").replace("}", "}}")
-
         errmsg = get_connect_error(rc)
         if rc == mqtt.CONNACK_ACCEPTED:
-            log.info("MQTT connection succeeded: {errmsg} ({metadata})".format(errmsg=errmsg, metadata=metadata))
+            log.info("MQTT connection succeeded: {errmsg} ({metadata})", errmsg=errmsg, metadata=metadata)
         else:
-            log.error("MQTT connection failed: {errmsg} ({metadata})".format(errmsg=errmsg, metadata=metadata))
+            log.error("MQTT connection failed: {errmsg} ({metadata})", errmsg=errmsg, metadata=metadata)
             return
 
         # Subscribing in on_connect() means that if we lose the connection and
@@ -139,11 +137,13 @@ class PahoMqttAdapter(BaseMqttAdapter, Service):
         return self.client.publish(topic, payload)
 
     def subscribe(self, *args):
-        #d = self.protocol.subscribe("foo/bar/baz", 0)
+        if not self.subscriptions:
+            return
         log.info(u"Subscribing to topics {subscriptions}. client={client}", subscriptions=self.subscriptions, client=self.client)
         for topic in self.subscriptions:
             log.info(u"Subscribing to topic '{topic}'", topic=topic)
             # Topic name **must not** be unicode, so casting to string
+            # TODO: Evaluate return value.
             e = self.client.subscribe(str(topic), qos=0)
 
     def on_log(self, client, userdata, level, buf):
