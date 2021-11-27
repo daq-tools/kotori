@@ -8,28 +8,46 @@ Setup development sandbox
 #########################
 
 
+************
 Introduction
-============
+************
 
 We are happy you reached this point of the documentation. This will probably
 mean you want to setup a development sandbox in order to hack on the source
 code. We appreciate that, you mean it. Let's go.
 
 
+*************
 Prerequisites
-=============
+*************
+
+Foundation services
+===================
+
 You will need InfluxDB_, Grafana_, Mosquitto_ and optionally MongoDB_.
 
 For installing them on your workstation, you might want to have a look at the
 :ref:`setup-docker`.
 
-When running Linux, you might just want to install the infrastructure on your
+When running Linux, you can also install the infrastructure on your
 local workstation natively like :ref:`setup-debian`.
+
+Run Mosquitto, InfluxDB, MongoDB and Grafana as Docker containers::
+
+    make start-foundation-services
 
 
 Environment
 ===========
 
+Install Python and Docker Compose::
+
+    apt-get install python3-venv python3-dev docker-compose
+
+
+***********
+Walkthrough
+***********
 
 Get the source code
 ===================

@@ -6,6 +6,7 @@ Integration tests
 *****
 About
 *****
+
 The tests are mostly full integration tests. They are testing the whole system
 and the interactions between the subsystems.
 
