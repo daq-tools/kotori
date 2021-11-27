@@ -45,7 +45,8 @@ services:
   # https://community.grafana.com/t/influxdb-datasource-in-docker-network-what-url/28732
   grafana:
     image: grafana/grafana:${GRAFANA_VERSION}
-    user: "1026"
+    # https://community.grafana.com/t/new-docker-install-with-persistent-storage-permission-problem/10896/15
+    user: "${UID}:${GID}"
     restart: unless-stopped
     ports:
       - ${GRAFANA_PORT}:3000
