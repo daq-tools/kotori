@@ -72,14 +72,16 @@ jobs:
 
       - name: Apply caching of dependencies
         uses: actions/cache@v2
+        env:
+          # Increase this value to reset cache even if the output from `hashFiles()` has not changed.
+          CACHE_NUMBER: 1
         with:
           path: ${{ matrix.path }}
-          key: ${{ runner.os }}-pip-py${{ matrix.python-version }}-${{ hashFiles('setup.py', 'requirements-test.txt', 'requirements-docs.txt') }}
-          restore-keys: |
-           ${{ runner.os }}-pip-
+          key: ${{ runner.os }}-pip-py${{ matrix.python-version }}-${{ hashFiles('setup.py', 'requirements-test.txt', 'requirements-docs.txt') }}-${{ env.CACHE_NUMBER }}
 
       - name: Install program
         run: |
+          pip install wheel
           pip install --requirement=requirements-test.txt
           pip install --editable=.[daq,daq_geospatial,export,scientific,firmware]
 
