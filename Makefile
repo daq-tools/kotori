@@ -25,6 +25,7 @@ $(eval invoke       := $(venv)/bin/invoke)
 # Setup Python virtualenv.
 setup-virtualenv:
 	@test -e $(python) || python3 -m venv $(venv)
+	@$(pip) --quiet install wheel
 
 # Install requirements for building the documentation.
 virtualenv-docs: setup-virtualenv
