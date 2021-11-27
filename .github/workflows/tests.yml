@@ -49,7 +49,8 @@ jobs:
       OS: ${{ matrix.os }}
       PYTHON: ${{ matrix.python-version }}
 
-    name: OS ${{ matrix.os }}, Python ${{ matrix.python-version }}, Mosquitto ${{ matrix.mosquitto-version }}, InfluxDB ${{ matrix.influxdb-version }}, Grafana ${{ matrix.grafana-version }}
+    #name: OS ${{ matrix.os }}, Python ${{ matrix.python-version }}, Mosquitto ${{ matrix.mosquitto-version }}, InfluxDB ${{ matrix.influxdb-version }}, Grafana ${{ matrix.grafana-version }}
+    name: Python ${{ matrix.python-version }}, Mosquitto ${{ matrix.mosquitto-version }}, InfluxDB ${{ matrix.influxdb-version }}, Grafana ${{ matrix.grafana-version }}
     steps:
 
       - name: Acquire sources
