@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 def create_machinery(config, scope="package"):
 
-    @pytest_twisted.inlineCallbacks
+    #@pytest_twisted.inlineCallbacks
     @pytest.fixture(scope=scope)
     def machinery():
 
