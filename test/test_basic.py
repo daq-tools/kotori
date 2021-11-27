@@ -23,6 +23,11 @@ def test_mqtt_strategy_lan(machinery, create_influxdb, reset_influxdb, reset_gra
     that a corresponding datasource and a dashboard was created in Grafana.
     """
 
+    # Wait for some time to spin up the machinery.
+    yield sleep(PROCESS_DELAY_MQTT)
+    yield sleep(PROCESS_DELAY_MQTT)
+    yield sleep(PROCESS_DELAY_MQTT)
+
     # Submit a single measurement, without timestamp.
     data = {
         'temperature': 42.84,
