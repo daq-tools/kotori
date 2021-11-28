@@ -15,7 +15,7 @@ from test.settings.mqttkit import influx_sensors, influx_events, grafana
 
 logger = logging.getLogger(__name__)
 
-STARTUP_DELAY = 1.5
+STARTUP_DELAY = 2.5
 
 # Disable ellipsis truncation
 # https://stackoverflow.com/questions/19171554/preventing-truncation-of-long-strings-in-pytest/60321834#60321834
