@@ -81,11 +81,6 @@ def test_airrohr_http_json(machinery_basic, create_influxdb, reset_influxdb):
     and proof it is stored in the InfluxDB database.
     """
 
-    # Wait for some time to let the machinery spin up.
-    yield sleep(PROCESS_DELAY_MQTT)
-    yield sleep(PROCESS_DELAY_MQTT)
-    yield sleep(PROCESS_DELAY_MQTT)
-
     # Submit a single measurement, without timestamp.
     yield threads.deferToThread(http_json_sensor, settings.channel_path_airrohr, data_in)
 
