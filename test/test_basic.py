@@ -55,6 +55,6 @@ def test_mqtt_strategy_lan(machinery_basic, create_influxdb, reset_influxdb, res
     dashboard = grafana.get_dashboard_by_name(dashboard_name)
 
     logger.info('Grafana: Checking dashboard layout')
-    target = dashboard['dashboard']['rows'][0]['panels'][0]['targets'][0]
+    target = dashboard['rows'][0]['panels'][0]['targets'][0]
     assert target['measurement'] == settings.influx_measurement_sensors
     assert 'temperature' in target['query'] or 'humidity' in target['query']

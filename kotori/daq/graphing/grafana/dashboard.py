@@ -41,10 +41,10 @@ class GrafanaDashboardBuilder(object):
         folder_id = folder and folder.get('id') or None
 
         # Get dashboard if already exists
-        dashboard_data = self.grafana_api.get_dashboard(name=dashboard_name)
+        dashboard_data = self.grafana_api.get_dashboard(dashboard_name)
 
         # Debugging
-        #print 'dashboard_data:'; pprint(dashboard_data)
+        # from pprint import pprint; print('dashboard_data:'); pprint(dashboard_data)
 
         # Wrap everything into convenience object
         dashboard = GrafanaDashboard(
