@@ -35,10 +35,10 @@ def test_timestamp_rfc3339(machinery, create_influxdb, reset_influxdb):
 
 
 @pytest_twisted.inlineCallbacks
-def test_timestamp_seconds(machinery, create_influxdb, reset_influxdb):
+def test_timestamp_seconds_integer(machinery, create_influxdb, reset_influxdb):
     """
     Publish single reading in JSON format to MQTT broker,
-    using a timestamp as Unix Epoch in seconds.
+    using a timestamp as Unix Epoch in seconds, as integer number.
     Proof that the timestamp is processed and stored correctly.
     """
 
@@ -56,6 +56,31 @@ def test_timestamp_seconds(machinery, create_influxdb, reset_influxdb):
     # Proof that data arrived in InfluxDB.
     record = influx_sensors.get_first_record()
     assert record == {u'time': u'2020-03-10T03:29:42Z', u'humidity': 83.1, u'temperature': 42.84}
+    yield record
+
+
+@pytest_twisted.inlineCallbacks
+def test_timestamp_seconds_float(machinery, create_influxdb, reset_influxdb):
+    """
+    Publish single reading in JSON format to MQTT broker,
+    using a timestamp as Unix Epoch in seconds, as float number.
+    Proof that the timestamp is processed and stored correctly.
+    """
+
+    # Submit a single measurement, with timestamp.
+    data = {
+        'temperature': 42.84,
+        'humidity': 83.1,
+        'timestamp': 1637431069.6585083
+    }
+    yield mqtt_json_sensor(settings.mqtt_topic_json, data)
+
+    # Wait for some time to process the message.
+    yield sleep(PROCESS_DELAY_MQTT)
+
+    # Proof that data arrived in InfluxDB.
+    record = influx_sensors.get_first_record()
+    assert record == {u'time': u'2021-11-20T17:57:49.658508Z', u'humidity': 83.1, u'temperature': 42.84}
     yield record
 
 
