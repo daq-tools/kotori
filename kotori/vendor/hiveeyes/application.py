@@ -37,10 +37,11 @@ class HiveeyesGenericGrafanaManager(GrafanaManager):
         network = topology.get('network', storage_location.database)
 
         # Derive dashboard uid and name from topology information
+        label = u'{realm}-{network}'.format(realm=realm, network=network)
         identity = SmartBunch(
-            uid=u'{realm}-{network}-instant'.format(realm=realm, network=network),
-            name=u'{realm}-{network}'.format(realm=realm, network=network),
-            title=u'{realm}-{network}'.format(realm=realm, network=network),
+            uid=label,
+            name=label,
+            title=label,
             # TODO: Use real title after fully upgrading to new Grafana API (i.e. don't use get-by-slug anymore!)
             #title=u'Hiveeyes Rohdaten im Netzwerk ' + network,
         )
@@ -139,10 +140,11 @@ class HiveeyesBeehiveGrafanaManager(GrafanaManager):
 
         # Derive dashboard uid and name from topology information
         nodename = u'{gateway} / {node}'.format(gateway=topology.gateway, node=topology.node)
+        label = self.strategy.topology_to_label(topology)
         identity = SmartBunch(
-            #uid=u'{realm}-{network}-instant'.format(realm=realm, network=network),
-            name=self.strategy.topology_to_label(topology),
-            title=self.strategy.topology_to_label(topology),
+            uid=label,
+            name=label,
+            title=label,
             # TODO: Use real title after fully upgrading to new Grafana API (i.e. don't use get-by-slug anymore!)
             # title=u'Hiveeyes Umweltcockpit für Meßknoten {nodename} im Netzwerk {network}'.format(nodename=nodename, network=network),
             # title=u'Hiveeyes Ertragscockpit für Meßknoten {nodename} im Netzwerk {network}'.format(nodename=nodename, network=network),
@@ -180,7 +182,7 @@ class HiveeyesBeehiveGrafanaManager(GrafanaManager):
 
         # Create appropriate Grafana dashboard
         data_dashboard = {
-            #'uid': dashboard_name + '-environment',
+            'uid': dashboard_identity.uid,
             'title': dashboard_identity.title,
             'datasource': datasource_name,
             'measurement_sensors': storage_location.measurement,

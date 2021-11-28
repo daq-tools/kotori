@@ -126,11 +126,13 @@ class GrafanaApi(object):
             name = dashboard.get_title()
 
         name = self.format_dashboard_name(name)
+        uid = name
 
+        # Optionally, delete dashboard upfront.
         if delete:
             try:
                 log.info(u'Deleting dashboard "{}"'.format(name))
-                response = self.grafana_client.dashboards.db[name].delete()
+                response = self.grafana_client.dashboards.uid[uid].delete()
                 log.info(u'Grafana response: {response}', response=response)
 
             except GrafanaClientError as ex:
@@ -140,6 +142,7 @@ class GrafanaApi(object):
                 else:
                     raise
 
+        # Create or update dashboard.
         try:
             log.info(u'Creating/updating dashboard "{}"'.format(name))
             dashboard_payload = dashboard.wrap_api()
@@ -153,26 +156,27 @@ class GrafanaApi(object):
             else:
                 raise
 
+        # Sanity check: Dashboard should exist now.
         try:
             log.info(u'Checking dashboard "{}"'.format(name))
-            dashboard = self.grafana_client.dashboards.db[name].get()
+            self.grafana_client.dashboards.uid[uid].get()
         except GrafanaClientError as ex:
             message = str(ex)
             if '404' in message or 'Dashboard not found' in message:
-                log.warn(u'{message}', message=message)
+                log.error(u'Grafana dashboard not found: {message}', message=message)
             else:
                 raise
 
-    def get_dashboard(self, name):
+    def get_dashboard(self, name_or_uid):
         try:
-            name = self.format_dashboard_name(name)
-            log.info(u'Getting dashboard "{}"'.format(name))
-            dashboard = self.grafana_client.dashboards.db[name].get()
+            name_or_uid = self.format_dashboard_name(name_or_uid)
+            log.info(u'Getting dashboard "{}"'.format(name_or_uid))
+            dashboard = self.get_dashboard_by_uid(uid=name_or_uid)
             return dashboard['dashboard']
         except GrafanaClientError as ex:
             message = str(ex)
             if '404' in message or 'Dashboard not found' in message:
-                log.info(u'{message}', message=message)
+                log.info(u'Grafana dashboard not found: {message}', message=message)
             else:
                 raise
 

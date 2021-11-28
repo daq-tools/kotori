@@ -69,7 +69,7 @@ def test_mqtt_to_grafana(machinery_hiveeyes, create_influxdb_hiveeyes, reset_inf
 
     logger.info('Grafana: Checking dashboards')
     for dashboard_name in settings.grafana_dashboards:
-        dashboard = grafana.get_dashboard_by_name(dashboard_name)['dashboard']
+        dashboard = grafana.get_dashboard_by_name(dashboard_name)
         if 'rows' in dashboard:
             umbrella = dashboard['rows'][0]
         else:

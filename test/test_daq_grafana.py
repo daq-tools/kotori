@@ -38,7 +38,7 @@ def test_mqtt_to_grafana_single(machinery, create_influxdb, reset_influxdb, rese
     dashboard = grafana.get_dashboard_by_name(dashboard_name)
 
     logger.info('Grafana: Checking dashboard layout')
-    target = dashboard['dashboard']['rows'][0]['panels'][0]['targets'][0]
+    target = dashboard['rows'][0]['panels'][0]['targets'][0]
     assert target['measurement'] == settings.influx_measurement_sensors
     assert 'temperature' in target['query'] or 'humidity' in target['query']
 
@@ -71,7 +71,7 @@ def test_mqtt_to_grafana_update_panel(machinery, create_influxdb, reset_influxdb
     dashboard = grafana.get_dashboard_by_name(dashboard_name)
 
     logger.info('Grafana: Checking measurement of first target')
-    target = dashboard['dashboard']['rows'][0]['panels'][0]['targets'][0]
+    target = dashboard['rows'][0]['panels'][0]['targets'][0]
     assert target['measurement'] == settings.influx_measurement_sensors
 
     logger.info('Grafana: Checking panel fields after creation')

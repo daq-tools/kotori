@@ -55,18 +55,31 @@ class GrafanaWrapper:
             titles.append(dashboard["title"])
         return titles
 
-    def get_dashboard_by_name(self, name):
+    def find_dashboard_by_name(self, name):
         dashboards = self.client.search()
         for dashboard in dashboards:
             if dashboard["title"] == name:
                 dashboard_uid = dashboard["uid"]
                 dashboard = self.client.dashboards.uid[dashboard_uid].get()
-                return dashboard
+                return dashboard["dashboard"]
         raise KeyError(f"Unable to find dashboard '{name}'")
+
+    def get_dashboard_by_name(self, name_or_uid):
+        return self.get_dashboard_by_uid(uid=name_or_uid)
+
+    def get_dashboard_by_uid(self, uid):
+        try:
+            dashboard = self.client.dashboards.uid[uid].get()
+            return dashboard["dashboard"]
+        except GrafanaClientError as ex:
+            if '404' in str(ex):
+                raise KeyError(f"Unable to find dashboard with uid={uid}")
+            else:
+                raise
 
     def get_panels(self, dashboard_name):
         dashboard = self.get_dashboard_by_name(dashboard_name)
-        return dashboard['dashboard']['rows'][0]['panels']
+        return dashboard['rows'][0]['panels']
 
     def get_field_names(self, dashboard_name, panel_index):
         panels = self.get_panels(dashboard_name)
@@ -84,15 +97,21 @@ class GrafanaWrapper:
             logger.info('Grafana: Resetting artefacts')
 
             for datasource in self.client.datasources.get():
-                if datasource['name'] == self.settings.influx_database or \
-                        datasource['name'] in getattr(self.settings, "influx_databases", []):
+                datasource_name = datasource['name']
+                logger.info(f"Attempt to delete datasource {datasource_name}")
+                if datasource_name == self.settings.influx_database or \
+                        datasource_name in getattr(self.settings, "influx_databases", []):
                     datasource_id = datasource['id']
                     self.client.datasources[datasource_id].delete()
+                    logger.info(f"Successfully deleted datasource {datasource_name}")
 
             for dashboard_name in self.settings.grafana_dashboards:
+                logger.info(f"Attempt to delete dashboard {dashboard_name}")
                 try:
-                    self.client.dashboards.db[dashboard_name].delete()
+                    self.client.dashboards.uid[dashboard_name].delete()
+                    logger.info(f"Successfully deleted dashboard {dashboard_name}")
                 except GrafanaClientError as ex:
+                    logger.warning(f"Unable to delete dashboard {dashboard_name}: {ex}")
                     if '404' not in str(ex):
                         raise
 

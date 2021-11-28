@@ -100,10 +100,11 @@ class GrafanaManager(MultiService, MultiServiceMixin):
             name = topology.node
 
         # Derive dashboard uid and name from topology information
+        label = u'{realm}-{name}'.format(realm=realm, name=name)
         identity = SmartBunch(
-            #uid=u'{realm}-{name}-instant'.format(realm=realm, name=name),
-            name=u'{realm}-{name}'.format(realm=realm, name=name),
-            title=u'{realm}-{name}'.format(realm=realm, name=name),
+            uid=label,
+            name=label,
+            title=label,
             # TODO: Use real title after fully upgrading to new Grafana API (i.e. don't use get-by-slug anymore!)
             #title=u'Raw data for realm={realm} network={network}'.format(realm=realm, network=network),
         )
@@ -140,7 +141,7 @@ class GrafanaManager(MultiService, MultiServiceMixin):
 
         # Define Grafana dashboard model
         model = GrafanaDashboardModel(
-            #uid=dashboard_identity.uid,
+            uid=dashboard_identity.uid,
             name=dashboard_identity.name,
             title=dashboard_identity.title,
             datasource=datasource_name,
