@@ -29,8 +29,6 @@ def test_mqtt_strategy_lan(machinery_basic, create_influxdb, reset_influxdb, res
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY_MQTT)
-    yield sleep(PROCESS_DELAY_MQTT)
-    yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that data arrived in InfluxDB.
     record = influx_sensors.get_first_record()
