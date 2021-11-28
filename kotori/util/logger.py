@@ -12,7 +12,8 @@ predicate = None
 def startLogging(settings, stream=None, level=LogLevel.debug):
     global predicate
 
-    timeFormat = "%Y-%m-%dT%H:%M:%S.%f%z"
+    #timeFormat = "%Y-%m-%dT%H:%M:%S.%f%z"
+    timeFormat = "%Y-%m-%dT%H:%M:%S.%f"
     fileObserver = logObserver(stream, timeFormat=timeFormat)
     predicate    = LogLevelFilterPredicate(defaultLogLevel=level)
 
