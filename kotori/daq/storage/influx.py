@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2015-2021 Andreas Motl <andreas@getkotori.org>
+import math
+
 import requests
 from copy import deepcopy
 from funcy import project
@@ -177,7 +179,7 @@ class InfluxDBAdapter(object):
                     # Decode timestamp.
                     chunk['time'] = data[time_field]
                     if is_number(chunk['time']):
-                        chunk['time'] = int(float(chunk['time']))
+                        chunk['time'] = float(chunk['time'])
 
                     # Remove timestamp from data payload.
                     del data[time_field]
@@ -209,7 +211,7 @@ class InfluxDBAdapter(object):
             timestamp = chunk['time'] = parse_timestamp(chunk['time'])
 
             # Heuristically compute timestamp precision
-            if isinstance(timestamp, int):
+            if isinstance(timestamp, (int, float)):
                 if timestamp >= 1e17 or timestamp <= -1e17:
                     time_precision = 'n'
                 elif timestamp >= 1e14 or timestamp <= -1e14:
@@ -217,10 +219,27 @@ class InfluxDBAdapter(object):
                 elif timestamp >= 1e11 or timestamp <= -1e11:
                     time_precision = 'ms'
 
-                # FIXME: Is this a reasonable default?
+                # TODO: Is this a reasonable default?
                 else:
                     time_precision = 's'
 
+                    # Support fractional epoch timestamps like `1637431069.6585083`.
+                    if isinstance(timestamp, float):
+                        fractional, whole = math.modf(timestamp)
+                        fracdigits = len(str(fractional)) - 2
+                        if fracdigits > 0:
+                            if fracdigits <= 3:
+                                exponent = 3
+                                time_precision = "ms"
+                            elif fracdigits <= 6:
+                                exponent = 6
+                                time_precision = "u"
+                            else:
+                                exponent = 9
+                                time_precision = "n"
+                            timestamp = timestamp * (10 ** exponent)
+
+                chunk['time'] = int(timestamp)
                 chunk['time_precision'] = time_precision
 
             """
