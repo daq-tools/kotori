@@ -8,6 +8,10 @@ in progress
 - Add basic information about RabbitMQ
 - Improve MQTT logging when connection to broker fails
 - Make MQTT broker credential settings ``username`` and ``password`` optional
+- Improve CI setup, software tests and documentation
+- Because accessing dashboards by slug has been removed with Grafana 8, Kotori
+  will now use the slug-name of the data channel for all of Grafana's ``uid``,
+  ``name`` and ``title`` fields.
 
 
 .. _kotori-0.26.12:
