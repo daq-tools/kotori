@@ -862,7 +862,7 @@ Annotations - "delete event"::
 ==========
 - No appropriate stacktrace when using wrong transformer, e.g.::
 
-    transform       = kotori.daq.intercom.strategies:WanBusStrategy.topology_to_database,
+    transform       = kotori.daq.strategy.foobar:FooBarStrategy.topology_to_storage,
 
 
 2017-01-25

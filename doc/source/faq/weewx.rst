@@ -115,7 +115,7 @@ configuration file. My question is about the ``source``, ``target`` and
     realm           = weewx
     source          = http:/api/{realm:weewx}/{network:.*}/{gateway:.*}/{node:.*}/{slot:(data|event)}.{suffix} [GET]
     target          = influxdb:/{database}?measurement={measurement}
-    transform       = kotori.daq.intercom.strategies:WanBusStrategy.topology_to_storage,
+    transform       = kotori.daq.strategy.wan:WanBusStrategy.topology_to_storage,
                       kotori.io.protocol.influx:QueryTransformer.transform
 
 
