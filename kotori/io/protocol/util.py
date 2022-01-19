@@ -181,6 +181,9 @@ def parse_timestamp(timestamp):
 
     if isinstance(timestamp, text_type):
 
+        # FIXME: Maybe use system timezone here by default.
+        # TODO: Make configurable via channel settings.
+
         # HACK: Assume CET (Europe/Berlin) for human readable timestamp w/o timezone offset
         qualified = any([token in timestamp for token in ['Z', '+', ' CET', ' CEST']])
         if not qualified:

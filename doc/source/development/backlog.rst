@@ -94,6 +94,19 @@ Backlog
   - https://solaranzeige.de/
   - https://www.solarprognose.de/
   - https://www.epsolarpv.com/
+- https://github.com/klein0r
+  - https://haus-automatisierung.com/hardware/2021/12/05/raspberry-pi-von-ssd-booten.html
+  - https://www.youtube.com/watch?v=WolddCfWP5I
+- https://github.com/stefanandres/bms-monitoring-stack
+- LTM Telemetry
+  - https://ardupilot.org/copter/docs/common-ltm-telemetry.html
+  - https://github.com/TauLabs/TauLabs
+  - https://github.com/KipK/Ghettostation
+- https://github.com/theengs/decoder
+  https://theengs.github.io/decoder/
+  https://github.com/1technophile/OpenMQTTGateway
+- https://github.com/simpleiot/simpleiot
+
 
 
 

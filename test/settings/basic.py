@@ -28,6 +28,7 @@ class BasicSettings:
     # HTTP channel settings.
     channel_path_data    = '/basic/node42/data'
     channel_path_event   = '/basic/node42/event'
+    # TODO: Validate arbitrary characters in channel name, like `luftdaten.info-cg-node42`.
     channel_path_airrohr = '/basic/node42/custom/airrohr'
 
 

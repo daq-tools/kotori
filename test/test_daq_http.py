@@ -134,7 +134,7 @@ def test_http_csv_comma_valid(machinery, create_influxdb, reset_influxdb):
 @pytest.mark.mongodb
 def test_http_csv_semicolon_valid(machinery, create_influxdb, reset_influxdb):
     """
-    Submit two readings in CSV format to HTTP API
+    Submit two readings in Variometer CSV format to HTTP API
     and proof they are stored in the InfluxDB database.
     """
 
