@@ -3,6 +3,7 @@
 from kotori.daq.decoder.airrohr import AirrohrDecoder
 from kotori.daq.decoder.tasmota import TasmotaSensorDecoder, TasmotaStateDecoder
 from kotori.daq.decoder.schema import MessageType
+from kotori.daq.decoder.tts_ttn import TheThingsStackDecoder
 
 
 class DecoderInfo:
@@ -18,7 +19,7 @@ class DecoderManager:
         self.topology = topology
         self.info = DecoderInfo()
 
-    def probe(self):
+    def probe(self, payload: str = None):
 
         if 'slot' not in self.topology:
             return False
@@ -39,6 +40,15 @@ class DecoderManager:
         if self.topology.slot.endswith('STATE'):
             self.info.message_type = MessageType.DATA_CONTAINER
             self.info.decoder = TasmotaStateDecoder
+            return True
+
+        # TTS/TTN: The Things Stack / The Things Network
+        if self.topology.slot.endswith('data.json') \
+                and payload is not None \
+                and "uplink_message" in payload \
+                and "decoded_payload" in payload:
+            self.info.message_type = MessageType.DATA_CONTAINER
+            self.info.decoder = TheThingsStackDecoder
             return True
 
         return False
