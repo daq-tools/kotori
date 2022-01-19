@@ -119,7 +119,7 @@ test-coverage: virtualenv-dev
 
 # Build Sphinx documentation.
 docs-html: virtualenv-docs
-	touch doc/source/index.rst
+	/usr/bin/touch doc/source/index.rst
 	SPHINXBUILD="`pwd`/$(sphinx)" SPHINXOPTS="-j auto" make --directory=doc html
 
 # Upload media assets. Images, videos, etc.
