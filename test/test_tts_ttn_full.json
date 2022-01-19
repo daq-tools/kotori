@@ -1,0 +1,99 @@
+{
+  "end_device_ids": {
+    "device_id": "testdrive-foo-bar-baz",
+    "application_ids": {
+      "application_id": "acme"
+    },
+    "dev_eui": "030E202BD5504B52",
+    "join_eui": "FB81CCAAE6D7B2F7",
+    "dev_addr": "4406826C"
+  },
+  "correlation_ids": [
+    "as:up:01FSSVG88HVN4WVXT5X75KG545",
+    "gs:conn:01FSRW4G4EK6JFFREN8CF04YAW",
+    "gs:up:host:01FSRW4G4NF8PN3HZP2MT482ED",
+    "gs:uplink:01FSSVG822Q4KP03T951ZFD9HZ",
+    "ns:uplink:01FSSVG8230BA2CGX4B5M6BQDJ",
+    "rpc:/ttn.lorawan.v3.GsNs/HandleUplink:01FSSVG823BPTEQDJR7EQWA63E",
+    "rpc:/ttn.lorawan.v3.NsAs/HandleUplink:01FSSVG88GDGNTYP2X7MV3DXC9"
+  ],
+  "received_at": "2022-01-19T19:02:34.007345025Z",
+  "uplink_message": {
+    "session_key_id": "QR5vq9sPi2tZPtH8rDSjpA==",
+    "f_port": 1,
+    "f_cnt": 2289,
+    "frm_payload": "AQIXEAICFu0CZwAqAmidA2cAIgMCAV0=",
+    "decoded_payload": {
+      "analog_in_1": 59.04,
+      "analog_in_2": 58.69,
+      "analog_in_3": 3.49,
+      "relative_humidity_2": 78.5,
+      "temperature_2": 4.2,
+      "temperature_3": 3.4
+    },
+    "rx_metadata": [
+      {
+        "gateway_ids": {
+          "gateway_id": "somewhere-ffp",
+          "eui": "FEA9BE611914F97D"
+        },
+        "timestamp": 208623723,
+        "rssi": -107,
+        "channel_rssi": -107,
+        "snr": -6.5,
+        "location": {
+          "latitude": 52.21,
+          "longitude": 12.96,
+          "source": "SOURCE_REGISTRY"
+        },
+        "uplink_token": "amLzqHY2UL1HQfYlwc+vByXUwkZ6FiwUwKh/5T29axuAfl+XOXnpMKzFBVPy9bAmyqvv6qxOsotx8qw=",
+        "channel_index": 2
+      },
+      {
+        "gateway_ids": {
+          "gateway_id": "elsewhere-ffp",
+          "eui": "3398CD3B764F4A14"
+        },
+        "time": "2022-01-19T19:02:33.764357Z",
+        "timestamp": 26499475,
+        "rssi": -90,
+        "channel_rssi": -90,
+        "snr": 7,
+        "location": {
+          "latitude": 52.20,
+          "longitude": 12.99,
+          "altitude": 35,
+          "source": "SOURCE_REGISTRY"
+        },
+        "uplink_token": "AaVQj9emrquiRtdWhDB9+PyZLJeCzJ6zB2ZDGahlF47vhW0vYdFuqUpVj4eqW1OlFwKZUYdH1ArOW6w=",
+        "channel_index": 2
+      }
+    ],
+    "settings": {
+      "data_rate": {
+        "lora": {
+          "bandwidth": 125000,
+          "spreading_factor": 7
+        }
+      },
+      "coding_rate": "4/5",
+      "frequency": "868500000",
+      "timestamp": 208623723
+    },
+    "received_at": "2022-01-19T19:02:33.795669934Z",
+    "consumed_airtime": "0.077056s",
+    "locations": {
+      "user": {
+        "latitude": 52.2134,
+        "longitude": 12.9812,
+        "altitude": 35,
+        "source": "SOURCE_REGISTRY"
+      }
+    },
+    "network_ids": {
+      "net_id": "000013",
+      "tenant_id": "ttn",
+      "cluster_id": "ttn-eu1"
+    }
+  }
+}

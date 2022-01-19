@@ -1,0 +1,8 @@
+{
+  "uplink_message": {
+    "decoded_payload": {
+      "temperature_1": 53.3,
+      "voltage_4": 3.3
+    }
+  }
+}

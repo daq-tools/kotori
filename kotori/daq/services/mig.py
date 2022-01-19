@@ -191,7 +191,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
         # Message can be handled by one of the device-specific decoders.
         decoder_manager = DecoderManager(topology)
-        if decoder_manager.probe():
+        if decoder_manager.probe(payload):
             message.type = decoder_manager.info.message_type
             message.data = decoder_manager.info.decoder.decode(payload)
             return message

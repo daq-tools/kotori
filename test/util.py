@@ -6,6 +6,7 @@ import logging
 import random
 import string
 import sys
+import typing as t
 
 import pytest
 import requests
@@ -275,3 +276,9 @@ def idgen(size=6, chars=string.ascii_uppercase + string.digits):
     - https://stackoverflow.com/questions/2257441/random-string-generation-with-upper-case-letters-and-digits/2257449#2257449
     """
     return ''.join(random.choice(chars) for _ in range(size))
+
+
+def read_jsonfile(name: str) -> t.Dict[str, t.Any]:
+    path = os.path.join(os.path.dirname(__file__), name)
+    with open(path, mode="r") as f:
+        return json.load(f)
