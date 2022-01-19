@@ -5,13 +5,30 @@ Changelog
 
 in progress
 ===========
-- Add basic information about RabbitMQ
+- Add Dockerfile and basic documentation about running Kotori with RabbitMQ
+  as MQTT broker.
 - Improve MQTT logging when connection to broker fails
 - Make MQTT broker credential settings ``username`` and ``password`` optional
-- Improve CI setup, software tests and documentation
+- Improve sandbox and CI setup, software tests and documentation
+- Add software tests for simulating all advanced actions against Grafana
+
+  - Publish single reading in JSON format to MQTT broker and proof that a
+    corresponding datasource and a dashboard was created in Grafana.
+  - Publish two subsequent readings in JSON format to MQTT broker and
+    proof that a corresponding datasource and a dashboard was first
+    created and then updated in Grafana.
+  - Publish two subsequent readings to two different topics and proof that
+    a corresponding datasource and a dashboard with two panels has been
+    created in Grafana.
+  - Publish two subsequent readings to two different topics and proof that
+    a corresponding datasource and two dashboards have been created in
+    Grafana.
+- Adjust logging format re. milli/microseconds
 - Because accessing dashboards by slug has been removed with Grafana 8, Kotori
   will now use the slug-name of the data channel for all of Grafana's ``uid``,
   ``name`` and ``title`` fields.
+- CI: Use Grafana 8.2.5
+- Improve decoding fractional epoch timestamps
 
 
 .. _kotori-0.26.12:
@@ -52,6 +69,7 @@ in progress
 2021-07-27 0.26.8
 =================
 - Aftermath from upgrading to Python 3:
+
   - Fix HTTP data acquisition once more
 
 
@@ -60,6 +78,7 @@ in progress
 2021-07-26 0.26.7
 =================
 - Aftermath from upgrading to Python 3:
+
   - Fix Luftdaten and Hiveeyes vendor applications
   - Fix HTTP data acquisition
 - Improve setup documentation
@@ -324,7 +343,7 @@ Clients
 
 2018-04-09 0.21.0
 =================
-- [core] Improve component loading robustness
+- [core] Improve component loading robustness
 - [core] Improve log level selection when (not) running with ``--debug-mqtt-driver``
 - [code] Module namespace refactoring
 - [io] Make MQTT client identifier more unique by adding process id
@@ -335,40 +354,35 @@ Clients
 - [firmware builder] Add "esp_root" configuration variable to example configuration file
 - [package] Improve list of suggested packages to ease installing on more modern Debian distributions
 - [env] Switch development environment from Docker to native
-
 - [grafana]
 
-    - Improve Grafana dashboard builder in the context of Hiveeyes
-    - Use specific Grafana folder for stuffing instant dashboards into
-    - Use topology information for deriving unique dashboard id from
-    - Add basic mechanisms for taming the dashboard refresh interval
-    - Refactoring. Robustness. Run GrafanaManager as service. Add worker service for taming dashboard refresh intervals.
-    - Relocate template resources (.json files)
-    - Subsystem refactoring
-    - Implement sensible rules for dashboard refresh interval taming
-    - Properly talk to Grafana 5: Fix compatibility with dashboards having ``schemaVersion`` 6 (old) vs. 16 (new)
-    - Properly compute dashboard identity. Don't use the ``uid`` field for stable addressing as it is limited to 40 characters.
-    - Allow unicode strings for dashboard names
-    - Allow multiple graphing subsystems/managers for a single data acquisition channel driver
-
+  - Improve Grafana dashboard builder in the context of Hiveeyes
+  - Use specific Grafana folder for stuffing instant dashboards into
+  - Use topology information for deriving unique dashboard id from
+  - Add basic mechanisms for taming the dashboard refresh interval
+  - Refactoring. Robustness. Run GrafanaManager as service. Add worker service for taming dashboard refresh intervals.
+  - Relocate template resources (.json files)
+  - Subsystem refactoring
+  - Implement sensible rules for dashboard refresh interval taming
+  - Properly talk to Grafana 5: Fix compatibility with dashboards having ``schemaVersion`` 6 (old) vs. 16 (new)
+  - Properly compute dashboard identity. Don't use the ``uid`` field for stable addressing as it is limited to 40 characters.
+  - Allow unicode strings for dashboard names
+  - Allow multiple graphing subsystems/managers for a single data acquisition channel driver
 - [:ref:`vendor-luftdaten.info`] Improve `luftdatenpumpe.py`_
 
-    - Add option ``--dry-run``
-    - Fix filtering by station id
-    - Fix access to Nominatim reverse geocoder API
-    - Use "appdirs" module for computing cache location
-    - Report about cache location at startup
-
+  - Add option ``--dry-run``
+  - Fix filtering by station id
+  - Fix access to Nominatim reverse geocoder API
+  - Use "appdirs" module for computing cache location
+  - Report about cache location at startup
 - [:ref:`vendor-hiveeyes`] Add per-node Grafana dashboard for beekeepers. Thanks, weef!
-
 - [doc]
 
-    - Add comments to MqttInfluxGrafanaService regarding ingress data enrichment
-    - Use ptrace.getkotori.org for documentation media assets
-    - Correct GitHub repository url
-    - Add documentation about Nginx reverse proxy setup
-    - Add installation instructions for macOS
-
+  - Add comments to MqttInfluxGrafanaService regarding ingress data enrichment
+  - Use ptrace.getkotori.org for documentation media assets
+  - Correct GitHub repository url
+  - Add documentation about Nginx reverse proxy setup
+  - Add installation instructions for macOS
 
 
 .. _kotori-0.20.1:
