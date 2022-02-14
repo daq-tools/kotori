@@ -8,7 +8,7 @@ import pytest_twisted
 import requests
 from twisted.internet import threads
 
-from test.settings.mqttkit import settings, influx_sensors, PROCESS_DELAY_HTTP
+from test.settings.mqttkit import settings, influx_sensors, PROCESS_DELAY_HTTP, device_influx_sensors
 from test.util import http_json_sensor, http_form_sensor, http_csv_sensor, sleep, http_raw
 
 logger = logging.getLogger(__name__)
@@ -28,6 +28,74 @@ def test_http_json_valid(machinery, create_influxdb, reset_influxdb):
         'humidity': 51.8,
     }
     deferred = threads.deferToThread(http_json_sensor, settings.channel_path_data, data)
+    yield deferred
+
+    # Check response.
+    response = deferred.result
+    assert response.status_code == 200
+    assert response.content == json.dumps([{"type": "info", "message": "Received #1 readings"}], indent=4).encode("utf-8")
+
+    # Wait for some time to process the message.
+    yield sleep(PROCESS_DELAY_HTTP)
+
+    # Proof that data arrived in InfluxDB.
+    record = influx_sensors.get_first_record()
+    del record['time']
+    assert record == {u'temperature': 25.26, u'humidity': 51.8}
+    yield record
+
+
+@pytest_twisted.inlineCallbacks
+@pytest.mark.http
+@pytest.mark.device
+def test_http_json_wan_device_generic(machinery, device_create_influxdb, device_reset_influxdb):
+    """
+    Run HTTP data acquisition with per-device addressing.
+
+    Addressing: Per-device WAN
+    Example:    mqttkit-1/d/123e4567-e89b-12d3-a456-426614174000
+    """
+
+    # Submit a single measurement, without timestamp.
+    data = {
+        'temperature': 25.26,
+        'humidity': 51.8,
+    }
+    deferred = threads.deferToThread(http_json_sensor, settings.device_http_path_generic, data)
+    yield deferred
+
+    # Check response.
+    response = deferred.result
+    assert response.status_code == 200
+    assert response.content == json.dumps([{"type": "info", "message": "Received #1 readings"}], indent=4).encode("utf-8")
+
+    # Wait for some time to process the message.
+    yield sleep(PROCESS_DELAY_HTTP)
+
+    # Proof that data arrived in InfluxDB.
+    record = device_influx_sensors.get_first_record()
+    del record['time']
+    assert record == {u'temperature': 25.26, u'humidity': 51.8}
+    yield record
+
+
+@pytest_twisted.inlineCallbacks
+@pytest.mark.http
+@pytest.mark.device
+def test_http_json_wan_device_dashed(machinery, create_influxdb, reset_influxdb):
+    """
+    Run MQTT data acquisition with per-device dashed-topo addressing.
+
+    Addressing: Per-device WAN, with dashed topology decoding
+    Example:    mqttkit-1/dt/network-gateway-node
+    """
+
+    # Submit a single measurement, without timestamp.
+    data = {
+        'temperature': 25.26,
+        'humidity': 51.8,
+    }
+    deferred = threads.deferToThread(http_json_sensor, settings.device_http_path_dashed_topo, data)
     yield deferred
 
     # Check response.
