@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2021 Andreas Motl, <andreas@getkotori.org>
+# (c) 2015-2023 Andreas Motl, <andreas@getkotori.org>
 import re
 
 from kotori.daq.strategy import StrategyBase
@@ -9,12 +9,13 @@ from kotori.util.common import SmartMunch
 class WanBusStrategy(StrategyBase):
 
     # Regular expression pattern for decoding MQTT topic address segments.
-    pattern = r'^(?P<realm>.+?)/(?P<network>.+?)/(?P<gateway>.+?)/(?P<node>.+?)(?:/(?P<slot>.+?))?$'
-    matcher = re.compile(pattern)
+    channel_matcher            = re.compile(r'^(?P<realm>.+?)/(?P<network>.+?)/(?P<gateway>.+?)/(?P<node>.+?)(?:/(?P<slot>.+?))?$')
+    device_matcher_dashed_topo = re.compile(r'^(?P<realm>.+?)/dt/(?P<device>.+?)(?:/(?P<slot>.+?))?$')
+    device_matcher_generic     = re.compile(r'^(?P<realm>.+?)/d/(?P<device>.+?)(?:/(?P<slot>.+?))?$')
 
     def topic_to_topology(self, topic):
         """
-        Decode MQTT topic segments implementing the »quadruple hierarchy strategy«.
+        Decode MQTT topic segments implementing the »quadruple hierarchy/topology strategy«.
 
         The topology hierarchy is directly specified by the MQTT topic and is
         made up of a minimum of four identifiers describing the core structure::
@@ -40,16 +41,48 @@ class WanBusStrategy(StrategyBase):
 
             - "node" is the node identifier. Choose anything you like. This usually
               gets transmitted from an embedded device node.
+
+        Other than decoding the classic WAN path topic style, like
+
+            mqttkit-1/network/gateway/node
+
+        the decoder now also knows how to handle per-device addressing schemes, like
+
+            mqttkit-1/d/123e4567-e89b-12d3-a456-426614174000
+
+        Also, it has another special topic decoding scheme, by decomposing a dashed
+        identifier, and transforming it into the quadruple hierarchy.
+
+            mqttkit-1/dt/network-gateway-node
+
         """
 
         # Decode the topic.
-        m = self.matcher.match(topic)
+        address = None
+        m = self.device_matcher_generic.match(topic)
         if m:
             address = SmartMunch(m.groupdict())
-        else:
-            address = {}
+            if "device" in address:
+                address.network = "devices"
+                address.gateway = "default"
+                address.node = address.device
+                del address.device
 
-        return address
+        if address is None:
+            m = self.device_matcher_dashed_topo.match(topic)
+            if m:
+                address = SmartMunch(m.groupdict())
+                if "device" in address:
+                    segments = address.device.split("-")
+                    address.network, address.gateway, address.node = segments
+                    del address.device
+
+        if address is None:
+            m = self.channel_matcher.match(topic)
+            if m:
+                address = SmartMunch(m.groupdict())
+
+        return address or {}
 
     @classmethod
     def topology_to_storage(self, topology, message_type=None):

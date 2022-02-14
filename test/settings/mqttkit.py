@@ -35,9 +35,17 @@ class TestSettings:
     channel_path_event   = '/mqttkit-1/itest/foo/bar/event'
     channel_path_airrohr = '/mqttkit-1/itest/foo/bar/custom/airrohr'
 
+    # Per-device entrypoints.
+    device_influx_database            = 'mqttkit_1_devices'
+    device_influx_measurement_sensors = 'default_123e4567_e89b_12d3_a456_426614174000_sensors'
+    device_mqtt_topic_generic      = 'mqttkit-1/d/123e4567-e89b-12d3-a456-426614174000/data.json'
+    device_mqtt_topic_dashed_topo  = 'mqttkit-1/dt/itest-foo-bar/data.json'
+
 
 settings = TestSettings
 
 influx_sensors = InfluxWrapper(database=settings.influx_database, measurement=settings.influx_measurement_sensors)
 influx_events = InfluxWrapper(database=settings.influx_database, measurement=settings.influx_measurement_events)
 grafana = GrafanaWrapper(settings=settings)
+
+device_influx_sensors = InfluxWrapper(database=settings.device_influx_database, measurement=settings.device_influx_measurement_sensors)
