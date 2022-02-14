@@ -12,6 +12,8 @@ in progress
   mean iterator type: *query.stringInterruptIterator`` or ``InfluxDB Error:
   not executed``.
 - Add TTS (The Things Stack) / TTN (The Things Network) decoder
+- Add experimental TTS/TTN HTTP Webhook forwarder
+  ``/api/mqttkit-1/ttn/itest-foo-bar/uplinks``
 
 
 .. _kotori-0.27.0:

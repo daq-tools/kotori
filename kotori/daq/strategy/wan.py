@@ -42,6 +42,8 @@ class WanBusStrategy(StrategyBase):
               gets transmitted from an embedded device node.
         """
 
+        print("########## TOPIC:", topic)
+
         # Decode the topic.
         m = self.matcher.match(topic)
         if m:

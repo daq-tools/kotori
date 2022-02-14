@@ -115,12 +115,14 @@ class ProtocolForwarderService(MultiServiceMixin, MultiService):
         Receive data bucket from source, run through
         transformation machinery and emit to target.
         """
+        print("bucket:", bucket)
 
         # 1. Map/transform topology address information
         if 'transform' in self.channel:
             for entrypoint in read_list(self.channel.transform):
                 try:
                     transformer = KotoriBootloader.load_entrypoint(entrypoint)
+                    print("transformer:", transformer)
                     bucket.tdata.update(transformer(bucket.tdata))
                 except ImportError as ex:
                     log.error('ImportError "{message}" when loading entrypoint "{entrypoint}"',
@@ -128,6 +130,7 @@ class ProtocolForwarderService(MultiServiceMixin, MultiService):
 
         # MQTT doesn't prefer leading forward slashes with topic names, let's get rid of them
         target_uri_tpl = self.target_uri.path.lstrip('/')
+        print("target_uri_tpl:", target_uri_tpl)
 
         # Compute target bus topic from url matches
         target_uri = target_uri_tpl.format(**bucket.tdata)

@@ -43,6 +43,7 @@ class DecoderManager:
             return True
 
         # TTS/TTN: The Things Stack / The Things Network
+        print("self.topology:", self.topology)
         if self.topology.slot.endswith('data.json') \
                 and payload is not None \
                 and "uplink_message" in payload \

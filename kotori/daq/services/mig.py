@@ -183,6 +183,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
     def decode_message(self, topic, payload):
 
         # Compute topology information from channel topic.
+        print("========== decode_message >>> topic_to_topology:", topic)
         topology = self.strategy.topic_to_topology(topic)
         log.debug(u'Topology address: {topology}', topology=dict(topology))
 
