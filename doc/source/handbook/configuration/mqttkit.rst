@@ -23,18 +23,36 @@ Configuration
 *************
 .. highlight:: ini
 
+
+Application section
+===================
+
 The core of each data acquisition application is its configuration object.
 The file :download:`etc/examples/mqttkit.ini <../../_static/content/etc/examples/mqttkit.ini>`
 can be used as a configuration blueprint.
 
-This configuration snippet will create an
-application object defined as ``[mqttkit-1]``.
+This configuration snippet will create an application object defined as ``[mqttkit-1]``.
 
 .. literalinclude:: ../../_static/content/etc/examples/mqttkit.ini
     :language: ini
     :linenos:
     :lines: 1-16
     :emphasize-lines: 10-15
+
+
+Multiple MQTT brokers
+=====================
+
+It is possible to make Kotori connect to an individual MQTT broker per application.
+On behalf of this example, you would create a separate configuration section
+``[mqttkit-1:mqtt]``, where ``mqttkit-1`` reflects the value of the ``realm``
+attribute of the main application settings section.
+
+.. literalinclude:: ../../_static/content/etc/examples/mqttkit.ini
+    :language: ini
+    :linenos:
+    :lines: 10-27
+    :emphasize-lines: 4,11-18
 
 
 **********

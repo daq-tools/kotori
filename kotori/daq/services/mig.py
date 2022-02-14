@@ -58,13 +58,21 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         metrics_interval = int(self.channel.get('metrics_logger_interval', 60))
         self.metrics = Munch(tx_count=0, starttime=time.time(), interval=metrics_interval)
 
+        # Check if application/channel has an associated MQTT broker definition.
+        # When present, use those connection details instead of the global ones.
+        settings_key = f"{self.channel.realm}:mqtt"
+        if settings_key in self.settings:
+            mqtt_settings = self.settings[settings_key]
+        else:
+            mqtt_settings = self.settings["mqtt"]
+
         subscriptions = read_list(self.channel.mqtt_topics)
         self.mqtt_service = MqttAdapter(
             name          = u'mqtt-' + self.channel.realm,
-            broker_host   = self.settings.mqtt.host,
-            broker_port   = int(self.settings.mqtt.port),
-            broker_username = self.settings.mqtt.get("username"),
-            broker_password = self.settings.mqtt.get("password"),
+            broker_host   = mqtt_settings.host,
+            broker_port   = int(mqtt_settings.get("port", 1883)),
+            broker_username = mqtt_settings.get("username"),
+            broker_password = mqtt_settings.get("password"),
             callback      = self.mqtt_receive,
             subscriptions = subscriptions)
 
