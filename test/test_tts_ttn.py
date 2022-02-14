@@ -66,9 +66,7 @@ def make_testcases():
 @pytest.mark.tts
 @pytest.mark.ttn
 @pytest.mark.parametrize("testcase", make_testcases())
-def test_tts_ttn_http_json_full(
-    testcase, machinery_basic, create_influxdb, reset_influxdb
-):
+def test_tts_ttn_http_json_decoder(testcase, machinery_basic, create_influxdb, reset_influxdb):
     """
     Submit single reading in TTS/TTN webhook JSON format to HTTP API,
     and verify it was correctly stored in the InfluxDB database.
@@ -93,5 +91,33 @@ def test_tts_ttn_http_json_full(
             del record[delete_field]
 
     # Verify the records looks like expected.
+    assert record == data_out
+    yield record
+
+
+@pytest_twisted.inlineCallbacks
+@pytest.mark.http
+@pytest.mark.tts
+@pytest.mark.ttn
+@pytest.mark.amo
+def test_tts_ttn_http_json_forwarder(machinery, create_influxdb, reset_influxdb):
+    """
+    Accept all requests to the `/api/ttn` URL suffix in TTS/TTN webhook JSON format
+    and proof it is stored in the InfluxDB database.
+    """
+
+    from test.settings.mqttkit import settings as mqttkit_settings
+
+    # Submit a single measurement, without timestamp.
+    baseurl = mqttkit_settings.channel_path_ttn
+    device_id = "itest-foo-bar"
+    yield threads.deferToThread(http_json_sensor, f"{baseurl}/{device_id}/uplinks", data_in)
+
+    # Wait for some time to process the message.
+    yield sleep(PROCESS_DELAY_MQTT)
+    yield sleep(PROCESS_DELAY_MQTT)
+
+    # Proof that data arrived in InfluxDB properly.
+    record = influx_sensors.get_first_record()
     assert record == data_out
     yield record

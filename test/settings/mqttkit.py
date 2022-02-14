@@ -34,6 +34,7 @@ class TestSettings:
     channel2_path_data   = '/mqttkit-1/itest/foo/bar2/data'
     channel_path_event   = '/mqttkit-1/itest/foo/bar/event'
     channel_path_airrohr = '/mqttkit-1/itest/foo/bar/custom/airrohr'
+    channel_path_ttn     = '/mqttkit-1/ttn'
 
 
 settings = TestSettings
