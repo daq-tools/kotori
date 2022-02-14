@@ -11,7 +11,8 @@ in progress
 
 2022-11-26 0.27.0
 =================
-- Add documentation about running Kotori with RabbitMQ as MQTT broker, see :ref:`mqtt-broker-rabbitmq`.
+- Add documentation about running Kotori with RabbitMQ as MQTT broker, see :ref:`mqtt-broker-rabbitmq`
+- Allow connecting to individual MQTT broker per application
 - Improve MQTT logging when connection to broker fails
 - Make MQTT broker credential settings ``username`` and ``password`` optional
 - Add software tests for simulating all advanced actions against Grafana
