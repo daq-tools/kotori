@@ -29,6 +29,7 @@ in progress
   ``name`` and ``title`` fields.
 - CI: Use Grafana 8.2.5
 - Improve decoding fractional epoch timestamps
+- Update to Twisted 22.1.0
 
 
 .. _kotori-0.26.12:
