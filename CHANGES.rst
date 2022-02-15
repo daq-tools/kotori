@@ -27,9 +27,10 @@ in progress
 - Because accessing dashboards by slug has been removed with Grafana 8, Kotori
   will now use the slug-name of the data channel for all of Grafana's ``uid``,
   ``name`` and ``title`` fields.
-- CI: Use Grafana 8.2.5
+- CI: Update to Grafana 8.2.5
 - Improve decoding fractional epoch timestamps
 - Update to Twisted 22.1.0
+- CI: Update to Grafana 7.5.15 and 8.3.6
 
 
 .. _kotori-0.26.12:
