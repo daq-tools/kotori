@@ -16,7 +16,7 @@ if PYTHON_35:
 requires = [
 
     # Core
-    'Twisted[tls]==20.3.0',
+    'Twisted[tls]==22.1.0',
     'pyOpenSSL>=16.2.0',
     'six>=1.15.0',
     'pyramid==1.9.4',
