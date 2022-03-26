@@ -16,22 +16,23 @@ if PYTHON_35:
 requires = [
 
     # Core
-    'Twisted[tls]==22.1.0',
+    'Twisted[tls]==22.2.0',
     'pyOpenSSL>=16.2.0',
     'six>=1.15.0',
-    'pyramid==1.9.4',
+    'pyramid==1.10.8',
     'pyramid_jinja2>=2.8,<3',
     'cornice>=5.0.3,<6',
     'simplejson>=3.17.2,<4',
     'Jinja2>=2.11.2,<3',
+    'MarkupSafe>=1,<2',
     'Bunch>=1.0.1,<2',
     'munch>=2.5.0,<3',
     'appdirs>=1.4.3,<2',
     'json-store>=3.0,<4',
     'python-dateutil>=2.8.0,<3',
-    'arrow>=0.17.0,<1',
+    'arrow>=0.17.0,<2',
     'funcy>=1.15,<2',
-    'attrs>=20.2.0,<21',
+    'attrs>=20.2.0,<22',
 
     # Bus adapters
     'paho-mqtt>=1.5.1,<2',
@@ -47,8 +48,8 @@ requires = [
     'cryptography>=2.9.2',
     'certifi>=2020.6.20',
 
-    'service_identity>=18.1.0,<19',
-    'idna>=2.10,<3',
+    'service_identity>=18.1.0,<22',
+    'idna>=2.10,<4',
     'pyasn1>=0.4.8,<0.5',
     'pyasn1-modules>=0.2.8,<0.3',
 
@@ -62,11 +63,11 @@ extras = {
         'grafana_api_client==0.2.0',
         #'grafana-dashboard-builder==0.1.0a7',      # evaluated, but not suitable
         #'txmongo==16.3.0',
-        'pymongo>=3.11.0,<4',
+        'pymongo>=3.11.0,<5',
     ],
     'daq_geospatial': [
         'Geohash>=1.0,<2',
-        'geopy>=1.12.0,<2',
+        'geopy>=1.12.0,<3',
         'Beaker>=1.9.0,<2',
         'tqdm>=4.19.8,<5',
     ],
@@ -87,7 +88,7 @@ extras = {
         'pandas>=0.25,<1.3',
         #'numpy>=1.18,<1.20',
         numpy_spec,
-        'XlsxWriter>=1.3.6,<1.4',
+        'XlsxWriter>=1.3.6,<4',
     ],
 
     'plotting': [
@@ -106,7 +107,7 @@ extras = {
         # ----
         # HDF5
         # "PyTables" requires HDF5 libraries
-        'tables>=3.5.2,<3.7',
+        'tables>=3.5.2,<4',
         'h5py>=2.10.0,<4',
 
         # NetCDF (Network Common Data Form)
