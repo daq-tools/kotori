@@ -29,7 +29,7 @@ in progress
   ``name`` and ``title`` fields.
 - Improve decoding fractional epoch timestamps
 - Update to Twisted 22.2.0
-- CI: Update to Grafana 7.5.15 and 8.4.4
+- CI: Update to Grafana 7.5.15 and 8.4.5
 - CI: Update to MongoDB 5.0
 
 
