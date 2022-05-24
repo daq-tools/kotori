@@ -28,7 +28,7 @@ in progress
   will now use the slug-name of the data channel for all of Grafana's ``uid``,
   ``name`` and ``title`` fields.
 - Improve decoding fractional epoch timestamps
-- Update to Twisted 22.2.0
+- Update to Twisted 22.4.0
 - CI: Update to Grafana 7.5.16, 8.5.3 and 9.0.0
 - CI: Update to MongoDB 5.0
 
