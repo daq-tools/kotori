@@ -56,7 +56,7 @@ Kotori
         :target: https://github.com/eclipse/mosquitto
         :alt: Supported Mosquitto versions
 
-  .. image:: https://img.shields.io/badge/Grafana-5.x%20--%208.x-blue.svg
+  .. image:: https://img.shields.io/badge/Grafana-5.x%20--%209.x-blue.svg
         :target: https://github.com/grafana/grafana
         :alt: Supported Grafana versions
 
