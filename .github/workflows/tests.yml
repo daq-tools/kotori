@@ -41,7 +41,7 @@ jobs:
           GF_SECURITY_ADMIN_PASSWORD: admin
 
       mongodb:
-        image: mongo:4.4
+        image: mongo:5
         ports:
           - 27017:27017
 
@@ -54,7 +54,7 @@ jobs:
     steps:
 
       - name: Acquire sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Start Mosquitto
         uses: namoshek/mosquitto-github-action@v1
@@ -66,7 +66,7 @@ jobs:
           # container-name: 'mqtt'
 
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
