@@ -16,6 +16,17 @@ Backlog
 
 
 ****
+2022
+****
+- https://mbientlab.com/
+  - https://hbldh.github.io/pymetawear/
+  - https://github.com/hbldh/pymetawear
+- Compatibility with InfluxDB 2.2
+- Finalize and document integration with RabbitMQ
+- Support Python 3.10 and 3.11
+
+
+****
 2021
 ****
 - Unlock Python 3.9 (needs PyTables)

@@ -70,7 +70,7 @@ Kotori
 
 - **Usage**:
 
-  .. image:: https://img.shields.io/pypi/dm/kotori.svg?label=PyPI%20downloads
+  .. image:: https://static.pepy.tech/personalized-badge/kotori?period=month&left_text=PyPI%20downloads%20%2F%20month&left_color=gray&right_color=orange
         :target: https://pypi.org/project/kotori/
 
   .. image:: https://img.shields.io/docker/pulls/daqzilla/kotori.svg?label=docker%20pulls%20(kotori)
