@@ -9,7 +9,7 @@ README = open(os.path.join(here, 'README.rst')).read()
 # Pandas on Python 3.5 will attempt to install `numpy==1.20.1`,
 # which will bail out on aarch64 with `RuntimeError: Python version >= 3.7 required.`.
 PYTHON_35 = (3, 5) <= sys.version_info < (3, 6)
-numpy_spec = "numpy>=1.18,<1.20"
+numpy_spec = "numpy>=1.18,<1.22"
 if PYTHON_35:
     numpy_spec = "numpy==1.18.5"
 
