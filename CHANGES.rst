@@ -35,6 +35,7 @@ in progress
 - Build: Use ``python -m build`` for building sdist and wheel packages
 - Add support for Python 3.10
 - CI: Modernize GHA workflow recipe
+- Update to ``numpy<1.24`` on Python 3.10
 
 
 .. _kotori-0.26.12:
