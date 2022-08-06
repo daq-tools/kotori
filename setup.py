@@ -18,7 +18,7 @@ if PYTHON_35:
 pandas_spec = "pandas<1.3"
 if PYTHON_GTE_310:
     pandas_spec = "pandas<1.5"
-    # numpy_spec = "numpy<1.24"
+    numpy_spec = "numpy<1.24"
 
 requires = [
 
