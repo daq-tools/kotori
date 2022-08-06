@@ -36,19 +36,27 @@ Kotori
 
   .. image:: https://github.com/daq-tools/kotori/workflows/Tests/badge.svg
         :target: https://github.com/daq-tools/kotori/actions?workflow=Tests
+        :alt: CI outcome
+
+  .. image:: https://codecov.io/gh/daq-tools/kotori/branch/main/graph/badge.svg
+        :target: https://codecov.io/gh/daq-tools/kotori
+        :alt: Test suite code coverage
 
   .. image:: https://img.shields.io/pypi/pyversions/kotori.svg
         :target: https://pypi.org/project/kotori/
+        :alt: Supported Python versions
 
   .. image:: https://img.shields.io/pypi/v/kotori.svg
         :target: https://pypi.org/project/kotori/
+        :alt: Package version on PyPI
 
   .. image:: https://img.shields.io/pypi/status/kotori.svg
         :target: https://pypi.org/project/kotori/
+        :alt: Project status (alpha, beta, stable)
 
   .. image:: https://img.shields.io/pypi/l/kotori.svg
-        :alt: License
         :target: https://pypi.org/project/kotori/
+        :alt: Project license
 
 - **Infrastructure**:
 
@@ -72,12 +80,15 @@ Kotori
 
   .. image:: https://static.pepy.tech/personalized-badge/kotori?period=month&left_text=PyPI%20downloads%20%2F%20month&left_color=gray&right_color=orange
         :target: https://pypi.org/project/kotori/
+        :alt: PyPI downloads per month
 
   .. image:: https://img.shields.io/docker/pulls/daqzilla/kotori.svg?label=docker%20pulls%20(kotori)
         :target: https://hub.docker.com/r/daqzilla/kotori
+        :alt: Docker image pulls for `kotori` (total)
 
   .. image:: https://img.shields.io/docker/pulls/daqzilla/kotori-standard.svg?label=docker%20pulls%20(kotori-standard)
         :target: https://hub.docker.com/r/daqzilla/kotori-standard
+        :alt: Docker image pulls for `kotori-standard` (total)
 
 
 ----

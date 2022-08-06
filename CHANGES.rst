@@ -34,6 +34,7 @@ in progress
 - Tests: Remove ``nosetests`` test runner, replace with ``pytest``
 - Build: Use ``python -m build`` for building sdist and wheel packages
 - Add support for Python 3.10
+- CI: Modernize GHA workflow recipe
 
 
 .. _kotori-0.26.12:
