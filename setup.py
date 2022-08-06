@@ -6,12 +6,19 @@ from setuptools import setup, find_packages
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 
+PYTHON_35 = (3, 5) <= sys.version_info < (3, 6)
+PYTHON_GTE_310 = (3, 10) <= sys.version_info
+
 # Pandas on Python 3.5 will attempt to install `numpy==1.20.1`,
 # which will bail out on aarch64 with `RuntimeError: Python version >= 3.7 required.`.
-PYTHON_35 = (3, 5) <= sys.version_info < (3, 6)
 numpy_spec = "numpy>=1.18,<1.22"
 if PYTHON_35:
     numpy_spec = "numpy==1.18.5"
+
+pandas_spec = "pandas<1.3"
+if PYTHON_GTE_310:
+    pandas_spec = "pandas<1.5"
+    # numpy_spec = "numpy<1.24"
 
 requires = [
 
@@ -85,8 +92,7 @@ extras = {
     # Data export: Basic formats
     'export': [
         'pyinfluxql>=0.0.1,<1',
-        'pandas>=0.25,<1.3',
-        #'numpy>=1.18,<1.20',
+        pandas_spec,
         numpy_spec,
         'XlsxWriter>=1.3.6,<4',
     ],

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2016-2021 Andreas Motl <andreas@getkotori.org>
-import collections
+import collections.abc
 from twisted.logger import Logger
 from kotori.daq.storage.influx import InfluxDBAdapter
 
@@ -66,7 +66,7 @@ def flatten(l):
     """
     import pandas
     for el in l:
-        if isinstance(el, collections.Iterable) and not isinstance(el, (str, pandas.DataFrame, dict)):
+        if isinstance(el, collections.abc.Iterable) and not isinstance(el, (str, pandas.DataFrame, dict)):
             for sub in flatten(el):
                 yield sub
         else:
