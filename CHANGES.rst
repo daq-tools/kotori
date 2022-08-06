@@ -33,6 +33,7 @@ in progress
 - CI: Update to MongoDB 5.0
 - Tests: Remove ``nosetests`` test runner, replace with ``pytest``
 - Build: Use ``python -m build`` for building sdist and wheel packages
+- Add support for Python 3.10
 
 
 .. _kotori-0.26.12:
