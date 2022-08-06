@@ -1,3 +1,4 @@
+build
 bump2version>=1,<2
 twine>=3,<4
 keyring>=20,<23
