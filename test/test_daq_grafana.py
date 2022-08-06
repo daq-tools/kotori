@@ -28,6 +28,8 @@ def test_mqtt_to_grafana_single(machinery, create_influxdb, reset_influxdb, rese
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY_MQTT)
+    yield sleep(PROCESS_DELAY_MQTT)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that Grafana is well provisioned.
     logger.info('Grafana: Checking datasource')
@@ -60,6 +62,8 @@ def test_mqtt_to_grafana_update_panel(machinery, create_influxdb, reset_influxdb
     yield mqtt_json_sensor(settings.mqtt_topic_json, data)
 
     # Wait for some time to process the message.
+    yield sleep(PROCESS_DELAY_MQTT)
+    yield sleep(PROCESS_DELAY_MQTT)
     yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that Grafana is well provisioned.
@@ -124,6 +128,8 @@ def test_mqtt_to_grafana_two_panels(machinery, create_influxdb, reset_influxdb, 
     yield mqtt_json_sensor(settings.mqtt_topic2_json, data)
 
     # Wait for some time to process the message.
+    yield sleep(PROCESS_DELAY_MQTT)
+    yield sleep(PROCESS_DELAY_MQTT)
     yield sleep(PROCESS_DELAY_MQTT)
 
     logger.info('Grafana: Check number of panels after creation')
