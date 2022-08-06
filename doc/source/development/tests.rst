@@ -46,18 +46,13 @@ Run Mosquitto, InfluxDB, MongoDB and Grafana as Docker containers::
 Run
 ***
 
-::
+Run all tests::
 
     make test
 
-or::
+Run specific tests with maximum verbosity::
 
-    make pytest
-    make nosetest
-
-or run specific tests with maximum verbosity::
-
-    export PYTEST_OPTIONS="--verbose --verbose --log-level DEBUG --log-cli-level DEBUG --capture=no"
+    export PYTEST_OPTIONS="--verbosity=3 --log-level DEBUG --log-cli-level DEBUG --capture=no"
 
     # Run tests starting with "test_tasmota".
     pytest test ${PYTEST_OPTIONS} -k test_tasmota
@@ -67,7 +62,6 @@ or run specific tests with maximum verbosity::
 
     # Run tests marked with "tasmota", "homie" or "airrohr".
     pytest test ${PYTEST_OPTIONS} -m 'tasmota or homie or airrohr'
-
 
 To see available markers, type::
 

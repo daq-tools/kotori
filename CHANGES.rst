@@ -31,6 +31,7 @@ in progress
 - Update to Twisted 22.4.0
 - CI: Update to Grafana 7.5.16, 8.5.6, and 9.0.2
 - CI: Update to MongoDB 5.0
+- Tests: Remove ``nosetests`` test runner, replace with ``pytest``
 
 
 .. _kotori-0.26.12:

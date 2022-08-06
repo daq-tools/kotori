@@ -10,7 +10,6 @@ $(eval venv         := .venv)
 $(eval pip          := $(venv)/bin/pip)
 $(eval python       := $(venv)/bin/python)
 $(eval pytest       := $(venv)/bin/pytest)
-$(eval nosetests    := $(venv)/bin/nosetests)
 $(eval bumpversion  := $(venv)/bin/bumpversion)
 $(eval twine        := $(venv)/bin/twine)
 $(eval sphinx       := $(venv)/bin/sphinx-build)
@@ -88,28 +87,13 @@ include packaging/tasks.mk
 # Software tests
 # ==============
 
-.PHONY: test
-pytest: virtualenv-dev
+.PHONY:
+test: virtualenv-dev
+	$(pytest) kotori test
 
-	# Run pytest.
-	$(pytest) kotori test -vvv
-
-nosetest: virtualenv-dev
-
-	# Run nosetest.
-	@# https://nose.readthedocs.org/en/latest/plugins/doctests.html
-	@# https://nose.readthedocs.org/en/latest/plugins/cover.html
-	export NOSE_IGNORE_FILES="test_.*\.py"; \
-	$(nosetests) --with-doctest --doctest-tests --doctest-extension=rst --verbose \
-		kotori/*.py kotori/daq/{application,graphing,services,storage,strategy} kotori/daq/intercom/{mqtt/paho.py,udp.py,wamp.py} kotori/firmware kotori/io kotori/vendor/hiveeyes
-
-test: pytest nosetest
-
+.PHONY:
 test-coverage: virtualenv-dev
-	$(nosetests) \
-		--with-doctest --doctest-tests --doctest-extension=rst \
-		--with-coverage --cover-package=kotori --cover-tests \
-		--cover-html --cover-html-dir=coverage/html --cover-xml --cover-xml-file=coverage/coverage.xml
+	$(pytest) --cov --cov-report=term-missing --cov-report=xml kotori test
 
 
 

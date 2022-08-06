@@ -13,4 +13,4 @@
 /tmp
 /var
 .coverage
-/coverage
+coverage.xml
