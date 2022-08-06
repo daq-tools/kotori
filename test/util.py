@@ -65,7 +65,7 @@ class GrafanaWrapper:
         raise KeyError(f"Unable to find dashboard '{name}'")
 
     def get_dashboard_by_name(self, name_or_uid):
-        return self.get_dashboard_by_uid(uid=name_or_uid)
+        return self.find_dashboard_by_name(name=name_or_uid)
 
     def get_dashboard_by_uid(self, uid):
         try:
@@ -108,11 +108,12 @@ class GrafanaWrapper:
             for dashboard_name in self.settings.grafana_dashboards:
                 logger.info(f"Attempt to delete dashboard {dashboard_name}")
                 try:
-                    self.client.dashboards.uid[dashboard_name].delete()
+                    dashboard = self.get_dashboard_by_name(dashboard_name)
+                    self.client.dashboards.uid[dashboard["uid"]].delete()
                     logger.info(f"Successfully deleted dashboard {dashboard_name}")
-                except GrafanaClientError as ex:
+                except (GrafanaClientError, KeyError) as ex:
                     logger.warning(f"Unable to delete dashboard {dashboard_name}: {ex}")
-                    if '404' not in str(ex):
+                    if '404' not in str(ex) and not isinstance(ex, KeyError):
                         raise
 
             # Find all `GrafanaManager` service instances and invoke `KeyCache.reset()` on them.
