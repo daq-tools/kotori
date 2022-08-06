@@ -53,7 +53,7 @@ install-releasetools: setup-virtualenv
 #    make release bump={patch,minor,major}
 #
 
-release: bumpversion push sdist pypi-upload
+release: bumpversion push build pypi-upload
 
 bumpversion: install-releasetools check-bump-options
 	$(bumpversion) $(bump)
@@ -61,8 +61,8 @@ bumpversion: install-releasetools check-bump-options
 push:
 	git push && git push --tags
 
-sdist:
-	$(python) setup.py sdist
+build:
+	$(python) -m build
 
 pypi-upload: install-releasetools
 	twine upload --skip-existing --verbose dist/*.tar.gz
