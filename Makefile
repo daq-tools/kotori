@@ -24,20 +24,20 @@ $(eval invoke       := $(venv)/bin/invoke)
 # Setup Python virtualenv.
 setup-virtualenv:
 	@test -e $(python) || python3 -m venv $(venv)
-	@$(pip) --quiet install wheel
+	@$(pip) install --upgrade --prefer-binary wheel
 
 # Install requirements for building the documentation.
 virtualenv-docs: setup-virtualenv
-	@$(pip) --quiet install --requirement=requirements-docs.txt
+	@$(pip) install --upgrade --prefer-binary --requirement=requirements-docs.txt
 
 # Install requirements for development.
 virtualenv-dev: setup-virtualenv
-	@$(pip) install --upgrade --requirement=requirements-test.txt
-	@$(pip) install --upgrade --editable=.[daq,daq_geospatial,export,scientific,firmware]
+	@$(pip) install --upgrade --prefer-binary --requirement=requirements-test.txt
+	@$(pip) install --upgrade --prefer-binary --editable=.[daq,daq_geospatial,export,scientific,firmware]
 
 # Install requirements for releasing.
 install-releasetools: setup-virtualenv
-	@$(pip) install --quiet --requirement=requirements-release.txt --upgrade
+	@$(pip) install --upgrade --prefer-binary --requirement=requirements-release.txt
 
 
 
