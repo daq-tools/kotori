@@ -267,10 +267,9 @@ def idgen(size=6, chars=string.ascii_uppercase + string.digits):
     ========
     Synopsis
     ========
-    ```
+
     >>> idgen()
-    'G5G74W'
-    ```
+    '...'
 
     - https://stackoverflow.com/questions/2257441/random-string-generation-with-upper-case-letters-and-digits/2257449#2257449
     """
