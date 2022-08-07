@@ -104,7 +104,7 @@ test-coverage: virtualenv-dev
 # Build Sphinx documentation.
 docs-html: virtualenv-docs
 	touch doc/source/index.rst
-	SPHINXBUILD="`pwd`/$(sphinx-build)" SPHINXOPTS="-j auto" make --directory=doc html
+	$(sphinx-build) -n -W --keep-going -b html doc/source doc/build
 
 # Run link checker on documentation.
 docs-linkcheck: virtualenv-docs

@@ -1,5 +1,3 @@
-Sphinx<4
-Jinja2<3
-MarkupSafe<2
+Sphinx<6
 sphinx-material<1
 Pygments<3

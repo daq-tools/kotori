@@ -37,6 +37,7 @@ in progress
 - CI: Modernize GHA workflow recipe
 - Update to ``numpy<1.24`` on Python 3.10
 - Documentation: Add link checker and fix a few broken links
+- Documentation: Update to Sphinx 5
 
 
 .. _kotori-0.26.12:
