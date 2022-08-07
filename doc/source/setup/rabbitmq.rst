@@ -1,9 +1,11 @@
+.. _mqtt-broker-rabbitmq:
+
 ############################
 Running Kotori with RabbitMQ
 ############################
 
-Instead of Mosquitto, Kotori can be used together with `RabbitMQ`_ and its
-`MQTT Plugin`_.
+Instead of using Mosquitto as an MQTT broker, Kotori can be used together with
+`RabbitMQ`_ and its `MQTT Plugin`_.
 
 This is a basic description how to run RabbitMQ using Docker, in order to
 verify the functionality.
