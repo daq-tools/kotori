@@ -74,9 +74,14 @@ Open-source ESB, SOA, REST, APIs and Cloud Integrations in Python.
 - https://zato.io/docs/public-api/intro.html
 - https://zato.io/docs/admin/guide/installing-services.html
 - https://zato.io/docs/progguide/service-dev.html
-- https://github.com/zatosource/zato-labs
+- https://github.com/zatosource/zato
 
 
 Pythings
 ========
 - https://pythings.io/
+
+  - https://github.com/pythings/PythingsOS
+  - https://github.com/pythings/PythingsCloud
+  - https://github.com/pythings/Drivers
+  - https://github.com/sarusso/Timeseria

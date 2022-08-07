@@ -374,9 +374,36 @@ intersphinx_mapping = {
     'hiveeyes-arduino': ('https://hiveeyes.org/docs/arduino/', None),
     }
 
-# Disable caching remote inventories completely
+# Disable caching remote inventories completely.
 # http://www.sphinx-doc.org/en/stable/ext/intersphinx.html#confval-intersphinx_cache_limit
 intersphinx_cache_limit = 0
+
+# A list of regular expressions that match documents in which Sphinx
+# should not check the validity of links.
+linkcheck_exclude_documents = [
+    "development/backlog",
+    "development/ideas",
+    "development/notepad/.*",
+    "development/research/.*",
+]
+
+# A list of regular expressions that match URIs that should not be checked when doing a linkcheck build.
+linkcheck_ignore = [
+    "http://daq.example.net",
+    "http://kotori.example.org:3000/.*",
+    "http://kotori.example.org.*",
+    "https://htsql.org/",
+    # Ignore GitHub anchors.
+    "https://github.com/daq-tools/kotori/blob/.*#",
+    "https://github.com/grafana/grafana/blob/.*#",
+    "https://github.com/hiveeyes/arduino/blob/.*#",
+    "https://github.com/influxdata/influxdb/blob/.*#",
+]
+
+# A list of regular expressions that match anchors Sphinx should skip when checking the validity of anchors in links.
+linkcheck_anchors_ignore = [
+#    "https://github.com/daq-tools/kotori/blob/",
+]
 
 
 # Enable proper highlighting for inline PHP by tuning Pygments' PHP lexer.

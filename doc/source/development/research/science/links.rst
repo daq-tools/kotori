@@ -8,7 +8,6 @@ Open Science
 ************
 - https://www.helmholtz.de/forschung/open_science/
 - http://os.helmholtz.de/
-- https://www.helmholtz.de/ueber_uns/presse_und_medien/mediathek/reden/artikel/4/federal_government_offers_prize_for_responsibly_acting_enterprises/
 - https://openaccess.mpg.de/
 - https://openaccess.mpg.de/opencon2017-ankuendigung
 - https://openaccess.mpg.de/23627/Berlin_11
@@ -60,8 +59,9 @@ Organizations
 - https://en.wikipedia.org/wiki/ICSU_World_Data_System
 - https://www.icsu-wds.org/services/data-portal
 - https://www.bcdc.no/
-- http://cdiac.ornl.gov/
-- http://cdiac.ornl.gov/ftp/oceans/ESTOC_data/
+- https://web.archive.org/web/20161009232957/http://cdiac.ornl.gov/
+- https://web.archive.org/web/20161009232957/http://cdiac.ornl.gov/ftp/oceans/ESTOC_data/
+- https://web.archive.org/web/20190110184643/https://cdiac.ess-dive.lbl.gov/
 
 
 
@@ -69,6 +69,5 @@ Organizations
 Citizen Science
 ***************
 - https://www.helmholtz.de/transfer/wissenstransfer/citizen_science/
-- `Citizen Science Strategie 2020 für Deutschland <http://www.buergerschaffenwissen.de/sites/default/files/assets/dokumente/gewiss-gruenbuch_citizen_science_strategie.pdf>`_
+- `Citizen Science Strategie 2020 für Deutschland <https://www.buergerschaffenwissen.de/sites/default/files/assets/dokumente/gewiss-gruenbuch_citizen_science_strategie.pdf>`_
 - https://www.nationalgeographic.org/idea/citizen-science-projects/
-

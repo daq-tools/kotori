@@ -29,7 +29,7 @@ Details
             "password": "I'm a Wi-Fi password!"
         },
         "mqtt": {
-            "host": "kotori.example.net",
+            "host": "kotori.example.org",
             "port": 1883,
             "base_topic": "mqttkit-1/testdrive/area-42/"
         }

@@ -17,7 +17,7 @@ Python
 ***********
 MicroPython
 ***********
-- https://github.com/micropython/micropython-lib/blob/master/umqtt.simple/umqtt/simple.py
+- https://github.com/micropython/micropython-lib/blob/master/micropython/umqtt.simple/umqtt/simple.py
 - See also :ref:`MQTT with MicroPython <daq-micropython-mqtt>`.
 
 

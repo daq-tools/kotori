@@ -65,6 +65,5 @@ Purpose: Enable auth-only access to InfluxDB.
 
 .. seealso::
 
-    - `InfluxDB docs: Set up authentication <https://influxdb.com/docs/v0.9/administration/authentication_and_authorization.html#set-up-authentication>`_
+    - `InfluxDB docs: Set up authentication <https://docs.influxdata.com/influxdb/v1.8/administration/authentication_and_authorization/>`_
     - :ref:`influxdb-handbook`
-

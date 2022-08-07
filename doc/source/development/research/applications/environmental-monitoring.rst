@@ -18,40 +18,43 @@ OSCE
 - https://www.adafruit.com/products/390
 - http://www.aquar-system.com/
 - https://publiclab.org/wiki/riffle
-- https://github.com/OpenWaterProject/riffle
+- https://openwaterproject.github.io/
+- https://github.com/OpenWaterProject/riffle_328
 - http://openpipekit.github.io/
 
-    - http://openpipekit.github.io/index.html#!knight-foundation-prototype-demo-day.md
+  - https://openpipekit.github.io/index.html#!knight-foundation-prototype-demo-day.md
+  - https://openpipekit.github.io/index.html#!README.md
 
 *********
 Earthship
 *********
-- http://www.projektwerkstaetten.tu-berlin.de/menue/laufende_projektwerkstaetten_und_tu_projects/soziodiversitaet/
-- http://www.projektwerkstaetten.tu-berlin.de/fileadmin/f12/SozIng/Projektskizze_zum_tu_project_Earthship_02.pdf
-- http://www.projektwerkstaetten.tu-berlin.de/index.php?id=169299
+- https://www.projektwerkstaetten.tu-berlin.de/menue/laufende_projektwerkstaetten_und_tu_projects/soziodiversitaet/
+- https://www.projektwerkstaetten.tu-berlin.de/fileadmin/f12/SozIng/Projektskizze_zum_tu_project_Earthship_02.pdf
+- https://www.projektwerkstaetten.tu-berlin.de/index.php?id=169299
 - https://www.facebook.com/earthshipberlin/
 - http://www.roofwaterfarm.com/
-- http://www.fona.de/
-- http://www.fona.de/de/foerdermassnahmen
+- https://www.fona.de/
+- https://www.fona.de/de/massnahmen/
 - | Früherkennung von Naturgefahren in Deutschland
-  | http://www.fona.de/de/19916
+  | - https://www.fona.de/de/massnahmen/foerdermassnahmen/archiv/fruehwarnsysteme.php
+  | - https://www.fona.de/de/frueherkennung-von-naturgefahren
 
 
 ****
 DFKI
 ****
-- http://robotik.dfki-bremen.de/
+- https://robotik.dfki-bremen.de/
 
-    - http://robotik.dfki-bremen.de/de/forschung/projekte/prospectiveharvest.html
-    - http://robotik.dfki-bremen.de/de/forschung/projekte/odil.html
-    - http://robotik.dfki-bremen.de/de/forschung/softwaretools/mmlf.html
-    - http://robotik.dfki-bremen.de/de/forschung/softwaretools/respace.html
+    - https://robotik.dfki-bremen.de/de/forschung/projekte/prospectiveharvest.html
+    - https://robotik.dfki-bremen.de/de/forschung/projekte/odil.html
+    - https://robotik.dfki-bremen.de/de/forschung/softwaretools/mmlf.html
+    - https://robotik.dfki-bremen.de/de/forschung/softwaretools/respace.html
 
 
 **************
 Other projects
 **************
-- http://flood.network/
-- http://www.photosynq.org/
+- https://flood.network/
+- https://www.photosynq.org/
 - https://mhkweather.com/
 - https://www.hackster.io/taifur/solar-powered-environmental-monitoring-kit-b1d03d

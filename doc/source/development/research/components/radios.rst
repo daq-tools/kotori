@@ -14,7 +14,7 @@ Hardware
 - http://www.nemeus.fr/en/
 - http://shop.sodaq.com/en/sodaq-lorawan-mbili-development-kit.html
 - http://www.nemeus.fr/en/mg003-l-eu-gateway-2/
-- https://www.loriot.io/gateways.html
+- https://web.archive.org/web/20170730072358/https://www.loriot.io/gateways.html
 - http://www.multitech.com/brands/multiconnect-conduit
 - http://www.kerlink.fr/en/
 - http://www.wireless-solutions.de/products/gateways/iu880a-usb

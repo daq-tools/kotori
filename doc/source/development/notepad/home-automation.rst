@@ -11,7 +11,6 @@ Links
 - https://www.amber-wireless.de/de/portal.html
 - http://web.mac.com/tostmann/iWeb/Web-Site/Home/9436DEE2-7038-11DC-BEB2-001124368D6A.html
 - https://www.symcon.de/
-- https://www.symcon.de/forum/showthread.php?t=9133#post75244
 - https://www.mikrocontroller.net/part/CC1100
 - http://www.homematic-inside.de/software/windows/item/windows/hcstool.html
 - http://www.homematic-inside.de/software/windows/item/windows/hmbinrpc.html

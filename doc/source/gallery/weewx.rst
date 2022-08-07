@@ -32,7 +32,7 @@ Embedded view:
 
     - `Grafana Dashboard <https://swarm.hiveeyes.org/grafana/dashboard/db/weather-leoni>`_
     - `AmatYr Dashboard <http://wetter.simmerding.nshare.de/>`_
-    - `WeeWX Dashboard <http://simmerding.de/webcam-wetter.htm#WETTER>`_
+    - `WeeWX Dashboard <https://www.simmerding.de/webcam-wetter#WETTER>`_
     - `Raw data <https://swarm.hiveeyes.org/api/weewx/097287c4-6fb0-4aeb-a095-00d65ecb15f7/Leoni/VantagePro2/data.txt>`_
 
 

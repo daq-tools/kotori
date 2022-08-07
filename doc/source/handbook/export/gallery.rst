@@ -27,10 +27,9 @@ A weight-loss event from monitoring a beehive on May 19, 2016, plotted using mat
 |clearfix|
 
 
-****
-TODO
-****
+.. todo::
 
-- http://localhost:24642/api/hiveeyes/25a0e5df-9517-405b-ab14-cb5b514ac9e8/3756782252718325761/1/data.png?exclude=wght1,RSSI1,rACK1&from=20160519T040000&to=20160519T170000&pad=true
-- http://localhost:24642/api/hiveeyes/25a0e5df-9517-405b-ab14-cb5b514ac9e8/3756782252718325761/1/data.png?exclude=wght1,RSSI1,rACK1&from=20160519T040000&to=20160519T170000&pad=true
-- http://localhost:24642/api/hiveeyes/25a0e5df-9517-405b-ab14-cb5b514ac9e8/3756782252718325761/1/data.png?include=wght2&from=20160519T040000&to=20160519T170000&pad=true
+    Demonstrate more request parameters like
+
+    - ``?exclude=wght1,RSSI1,rACK1``
+    - ``?pad=true``

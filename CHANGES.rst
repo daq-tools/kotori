@@ -36,6 +36,7 @@ in progress
 - Add support for Python 3.10
 - CI: Modernize GHA workflow recipe
 - Update to ``numpy<1.24`` on Python 3.10
+- Documentation: Add link checker and fix a few broken links
 
 
 .. _kotori-0.26.12:
@@ -636,14 +637,15 @@ Clients
 - Drop support for InfluxDB 0.8
 - Verify compatibility against InfluxDB 1.1.1, see also:
 
-    - https://docs.influxdata.com/influxdb/v1.1/administration/differences/
-    - https://github.com/influxdata/influxdb/blob/master/CHANGELOG.md#v111-2016-12-06
+    - https://archive.docs.influxdata.com/influxdb/v1.1/administration/differences/
+    - https://github.com/influxdata/influxdb/blob/v1.8.10/CHANGELOG.md#v111-2016-12-06
 
 - Verify compatibility against Grafana 4.1.1, see also:
 
-    - http://docs.grafana.org/guides/whats-new-in-v4/
-    - http://docs.grafana.org/guides/whats-new-in-v4-1/
-    - https://github.com/grafana/grafana/blob/master/CHANGELOG.md#411-2017-01-11
+    - https://grafana.com/blog/2016/12/12/grafana-4.0-stable-release/
+    - https://web.archive.org/web/20190331043137/http://docs.grafana.org/guides/whats-new-in-v4/
+    - https://web.archive.org/web/20190331043137/http://docs.grafana.org/guides/whats-new-in-v4-1/
+    - https://github.com/grafana/grafana/blob/v4.6.5/CHANGELOG.md#411-2017-01-11
 
 - Add ``mongod`` as Debian package dependency, required for CSV acquisition support
 

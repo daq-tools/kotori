@@ -13,13 +13,13 @@ September/October 2015: WAMP becomes IETF Draft:
 
 Misc Links
 ----------
-- http://autobahn.ws/js/tutorial.html
+- https://autobahn.readthedocs.io/en/latest/wamp/examples.html
 - https://xkcd.com/927/
 - https://github.com/oberstet/wsperf_results
 - https://github.com/oberstet/scratchbox/tree/master/python/twisted/sharedsocket
 - https://github.com/goeddea/scratchbox/blob/master/yun/serial_to_wamp.js
-- http://www.slideshare.net/sametmax/intro-wamp
-- http://sametmax.com/presentation-de-wamp-round-2/
+- https://www.slideshare.net/sametmax/intro-wamp
+- https://web.archive.org/web/20190929074754/http://sametmax.com/presentation-de-wamp-round-2/
 
 Crossbar
 --------

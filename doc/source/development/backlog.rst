@@ -24,6 +24,8 @@ Backlog
 - Compatibility with InfluxDB 2.2
 - Finalize and document integration with RabbitMQ
 - Support Python 3.10 and 3.11
+- https://www.seeedstudio.com/ReTerminal-with-CM4-p-4904.html
+- https://github.com/victronenergy/dbus-mqtt
 
 
 ****
@@ -649,17 +651,16 @@ New Python packages for InfluxDB
 - Add to documentation: https://github.com/daq-tools/kotori
 - Grok data from safecast
 
-    - http://blog.safecast.org/
-    - http://blog.safecast.org/bgeigie-nano/
+    - https://safecast.org/news/
+    - https://safecast.org/devices/bgeigie-nano/
     - https://github.com/Safecast/GeoSense
-    - http://safecast.org/tilemap/
-    - http://blog.safecast.org/downloads/
+    - https://map.safecast.org/
+    - https://safecast.org/data/download/
     - https://api.safecast.org/
     - https://api.safecast.org/en-US/measurements.json
     - https://github.com/safecast
-    - http://blog.safecast.org/team/
-    - http://blog.safecast.org/thanks/
-    - http://blog.safecast.org/2017/03/event-announcement-our-world-our-data-at-mit/
+    - https://safecast.org/about/
+    - https://safecast.org/2017/03/event-announcement-our-world-our-data-at-mit/
 
 
 2017-05-05
@@ -671,7 +672,7 @@ New Python packages for InfluxDB
     - https://api.opensensemap.org/boxes
 
 - Provide integrated "archive.example.org", e.g. by using the
-  Datalad data management and distribution suite: http://docs.datalad.org/.
+  Datalad data management and distribution suite: https://docs.datalad.org/.
 
 - Update https://getkotori.org/docs/handbook/export/gallery.html
 
@@ -711,7 +712,7 @@ New Python packages for InfluxDB
     - https://github.com/LSIR/gsn
     - https://github.com/LSIR/gsn/wiki
     - https://twitter.com/GSN_LSIR
-    - http://open-platforms.eu/library/global-sensor-networks-gsn/
+    - https://web.archive.org/web/20170604223027/http://open-platforms.eu/library/global-sensor-networks-gsn/
     - https://www.slideshare.net/jpcik/gsn-global-sensor-networks
     - https://pdfs.semanticscholar.org/1e4a/ecd5bf998a64cfb57798de1ffc8685d528b2.pdf
 
@@ -733,13 +734,13 @@ New Python packages for InfluxDB
 
 - HTML panel
 
-    - [17.04.17 03:13:41] Andreas Motl: http://simmerding.de/webcam-wetter.htm check
+    - [17.04.17 03:13:41] Andreas Motl: https://www.simmerding.de/webcam-wetter#WETTER check
     - [17.04.17 03:15:18] Andreas Motl: da gibts ja tolle exportformate:
-    - http://simmerding.nshare.de/weather/RSS/weewx_rss.xml
-    - http://simmerding.nshare.de/weather/mobile.html
-    - http://simmerding.nshare.de/weather/smartphone/
-    - http://simmerding.nshare.de/weather/exfoliation/
-    - http://simmerding.nshare.de/weather/exfoliation/small.html
+    - https://simmerding.nshare.de/weather/RSS/weewx_rss.xml
+    - https://simmerding.nshare.de/weather/mobile.html
+    - https://simmerding.nshare.de/weather/smartphone/
+    - https://simmerding.nshare.de/weather/exfoliation/
+    - https://simmerding.nshare.de/weather/exfoliation/small.html
 
 
 2017-04-08
@@ -751,7 +752,7 @@ New Python packages for InfluxDB
 2017-04-06
 ==========
 - Improve error message CRITICAL: Error connecting to MQTT broker but retrying each 5 seconds
-- https://github.com/arendst/Sonoff-Tasmota
+- https://github.com/arendst/Tasmota
 
 
 2017-04-04
@@ -765,8 +766,8 @@ New Python packages for InfluxDB
 
 2017-04-03
 ==========
-- https://www.pycom.io/pybytes/
-- http://www.openvehicles.com/
+- https://pycom.io/portfolio/device-cloud/
+- https://www.openvehicles.com/
 - https://github.com/openvehicles/Open-Vehicle-Monitoring-System
 
 
@@ -856,16 +857,11 @@ Annotations - "delete event"::
 2017-02-06
 ==========
 - When importing a large CSV file (6MB), parallel imports of other resources are not possible. Why is that?
-  Hint: Thread-pool exhaustion at https://github.com/zerotired/kotori/blob/master/kotori/daq/services/mig.py#L63
+  Hint: Thread-pool exhaustion at https://github.com/daq-tools/kotori/blob/main/kotori/daq/services/mig.py#L75-L77
 - Problem::
 
     2017-02-06T02:49:04+0100 [kotori.daq.storage.influx          ] CRITICAL: Could not format chunk or write data (ex=Unknown string format): data={u'Gewicht1': u'Gewicht1', u'Gewichtsabw2': u'Gewichtsabw2', u'Gewicht3': u'Gewicht3', u'Gewichtsabw1': u'Gewichtsabw1', u'Gewicht4': u'Gewicht4', u'Gewichtsabw4': u'Gewichtsabw4', u'Gewichtsabw3': u'Gewichtsabw3', u'Gesamtgewicht': u'Gesamtgewicht', u'Temp3': u'Temp3', u'Temp2': u'Temp2', u'Temp1': u'Temp1', u'Gewicht2': u'Gewicht2', u'Gewichtabw': u'Gewichtabw'}, meta={'node': 'node-001', 'slot': 'data.json', 'realm': 'hiveeyes', 'network': 'testdrive-mh', 'database': 'hiveeyes_testdrive_mh', 'measurement_events': 'muenchen_node_001_events', 'measurement': 'muenchen_node_001_sensors', 'gateway': 'muenchen'}
 
-- Problem when using unicode characters like "Niederkrüchten-Overhetfeld" or field names like "'Temperatur außen'"::
-
-    exceptions.UnicodeEncodeError: 'ascii' codec can't encode character u'\xdf' in position 13: ordinal not in range(128)
-
-- https://swarm.hiveeyes.org/api/hiveeyes/testdrive-aw/Niederkr%C3%BCchten-Overhetfeld/node-001/data.txt?from=2016-01-01
 
 
 2017-02-01
@@ -935,13 +931,13 @@ Look at Grafana features
 ------------------------
 - | Trend Box
   | Box panel showing trends over series
-  | https://grafana.net/plugins/btplc-trend-box-panel
+  | https://grafana.com/grafana/plugins/btplc-trend-box-panel/
 
 - | Worldmap Panel
-  | https://grafana.net/plugins/grafana-worldmap-panel
+  | https://grafana.com/grafana/plugins/grafana-worldmap-panel/
 
 - | D3 Gauge
-  | https://grafana.net/plugins/briangann-gauge-panel
+  | https://grafana.com/grafana/plugins/briangann-gauge-panel/
 
 
 
@@ -1023,15 +1019,15 @@ using our infrastructure, see also https://wiki.freifunk.net/Umweltstation.
 - | Ponte is a multi-transport Internet of Things / Machine to Machine broker.
   | As the current state it supports MQTT and REST APIs over HTTP and CoAP.
   | https://github.com/eclipse/ponte
-- http://learninginternetofthings.com/bottlenecks-coap-mqtt/
+- https://web.archive.org/web/20161006224408/https://www.learninginternetofthings.com/bottlenecks-coap-mqtt/
 - | CoAP observe
   | https://tools.ietf.org/html/rfc7641
 - | MongoDB on ARM
   | https://github.com/Barryrowe/mongo-arm
   | https://raspberrypi.stackexchange.com/questions/22404/official-mongodb-repo-for-arm-processor-for-debian-base
-  | http://andyfelong.com/2016/05/mongodb-3-2-6-running-under-arch-linux-arm-64-bit/
-- | http://www.reder.eu/
-  | http://www.domoticshop.eu/Flyer/BETTY_schreibt_mit.pdf
+  | https://andyfelong.com/2016/05/mongodb-3-2-6-running-under-arch-linux-arm-64-bit/
+- | https://www.reder.eu/
+  | ``http://www.domoticshop.eu/Flyer/BETTY_schreibt_mit.pdf``
 
 
 2016-11-17
@@ -1041,7 +1037,7 @@ using our infrastructure, see also https://wiki.freifunk.net/Umweltstation.
 - FTP Upload
 - Timeslider-based replay of recorded information (esp. geo)
 - Scheduled aggregation report notifications with mqttwarn.
-  See http://tinkerman.cat/mqtt-topic-naming-convention/
+  See https://tinkerman.cat/post/mqtt-topic-naming-convention
 - Jan-Piet Mens tweeted about Kotori, thanks!
 
     - https://twitter.com/jpmens/status/798888207110770689
@@ -1079,7 +1075,7 @@ Docs
 ----
 - Web search for "open source data historian"
 
-    - http://www.minaandrawos.com/2015/11/20/thoughts-on-process-historians/
+    - https://www.minaandrawos.com/2015/11/20/thoughts-on-process-historians/
     - https://coussej.github.io/2016/04/18/Building-An-Open-Source-Process-Historian/
     - https://github.com/coussej/node-opcua-logger
 
@@ -1087,22 +1083,24 @@ Docs
 
     - https://openhistorian.codeplex.com/
     - https://github.com/GridProtectionAlliance/openHistorian
-    - http://discussions.gridprotectionalliance.org/t/openpdc-to-mysql-database/70
+    - https://discussions.gridprotectionalliance.org/t/openpdc-to-mysql-database/70
     - https://github.com/GridProtectionAlliance/PQDashboard
-    - http://openscada.org/
-    - https://eclipse.org/eclipsescada/
-    - https://eclipse.org/eclipsescada/news.html
-    - http://openscada.org/projects/atlantis
+    - https://web.archive.org/web/20181020214145/http://openscada.org/
+    - https://www.eclipse.org/eclipsescada/
+    - https://www.eclipse.org/eclipsescada/news.html
+    - https://web.archive.org/web/20181027024505/http://openscada.org/projects/atlantis
     - http://openopc.sourceforge.net/
-    - http://www.controlconsulting.com/products/data-historian/
+    - https://www.controlconsulting.com/products/data-historian/
     - https://github.com/volkszaehler/
     - https://github.com/volkszaehler/vzlogger
-    - http://wiki.volkszaehler.org/software/controller/vzlogger
-    - http://blog.canarylabs.com/2016/06/a-guide-to-best-data-historian-software.html
+    - https://wiki.volkszaehler.org/software/controller/vzlogger
+    - https://www.canarylabs.com/product/historian
+    - https://blog.canarylabs.com/2016/06/27/a-guide-to-the-best-data-historian-software-a-review-of-the-canary-historian-versus-rockwell-factorytalk-and-osisoft-pi
+    - https://blog.canarylabs.com/data-historian-options-for-industrial-automation
 
 - Format case studies like on http://rundeck.org/
-- http://www.hivemq.com/mqtt-essentials/
-- https://blog.hypertrack.io/2016/11/10/how-we-ditched-http-and-transitioned-to-mqtt/
+- https://www.hivemq.com/mqtt-essentials/
+- https://hypertrack.com/blog/2016/11/10/how-we-ditched-http-and-transitioned-to-mqtt/
 
 
 2016-11-11
@@ -1111,10 +1109,12 @@ Docs
   | https://www.domoticz.com/forum/viewtopic.php?t=838&start=120
 - https://vrm.victronenergy.com
 - | Bidirectional traffic between CCGX D-Bus and MQTT broker
-  | https://github.com/wiebeytec/dbus-mqtt
+  | ``https://github.com/wiebeytec/dbus-mqtt``
 - https://www.pubnub.com/
 - https://github.com/flukso/lua-mosquitto
-
+- https://github.com/search?q=dbus-mqtt
+- https://github.com/BinaryCraX/dbus-mqtt-bridge
+- https://github.com/fabaff/mqtt-dbus
 
 2016-11-04
 ==========
@@ -1148,9 +1148,15 @@ Docs
 
 2016-10-06
 ==========
-- https://www.movebank.org/node/5788
-- https://www.movebank.org/node/34
-- https://www.movebank.org/node/15294
+- https://www.movebank.org/cms/webapp
+- https://www.movebank.org/cms/movebank-content/env-data
+- https://www.movebank.org/cms/movebank-content/management-analysis
+- https://www.movebank.org/cms/movebank-content/data-repository
+- https://www.movebank.org/cms/movebank-content/software
+- https://www.movebank.org/cms/movebank-content/animal-tagger
+- https://www.movebank.org/cms/movebank-content/animal-tracker
+- https://www.moveapps.org/
+- https://github.com/movebank/movebank-api-doc
 
 
 2016-10-05
@@ -1158,12 +1164,12 @@ Docs
 - Trigger IFTTT event, e.g. http://maker.ifttt.com/trigger/hum_alarm/with/key/nh6E
 - Annotations, finally! http://maxchadwick.xyz/blog/grafana-influxdb-annotations
 
-    - curl -X POST "http://192.168.59.103:8086/write?db=mqttkit_1_testdrive&precision=s" --data-binary 'events title="Deployed v10.2.0",text="<a href='https://github.com'>Release notes</a>",tags="these are the tags",id="482a38ce-791e-11e6-b152-7cd1c55000be" 1470661200'
+    - curl -X POST "http://daq.example.net:8086/write?db=mqttkit_1_testdrive&precision=s" --data-binary 'events title="Deployed v10.2.0",text="<a href='https://github.com'>Release notes</a>",tags="these are the tags",id="482a38ce-791e-11e6-b152-7cd1c55000be" 1470661200'
     - curl -X POST "http://localhost:8086/write?db=mydb&precision=s" --data-binary 'events title="Deployed v10.2.0",text="<a href='https://github.com'>Release notes</a>",tags="these are the tags" 1470661200'
     - SELECT title, tags, text FROM events WHERE $timeFilter
-    - curl -X POST "http://192.168.59.103:8086/delete?db=mqttkit_1_testdrive&precision=s" --data-binary 'events title="Ereignis: Gewichtsabfall",text="Gewichtsabfall auf 31 kg",tags="gewichtsabfall" 1473278400'
-    - echo 'area_33_node_6_events title="Ereignis: Gewichtsabfall",text="Gewichtsabfall auf 31 kg<br/><a href='https://swarm.hiveeyes.org/aaa/bbb/ccc/events?reference=482a38ce-791e-11e6-b152-7cd1c55000be'>see also</a>",tags="gewichtsabfall",reference="482a38ce-791e-11e6-b152-7cd1c55000be" 1484457652' | http POST "http://192.168.59.103:8086/write?db=mqttkit_1_testdrive&precision=s"
-    - echo 'area_33_node_6_events title="Ereignis: Gewichtsabfall",text="Gewichtsabfall auf 31 kg<br/><a href='https://swarm.hiveeyes.org/aaa/bbb/ccc/events?reference=482a38ce-791e-11e6-b152-7cd1c55000be'>see also</a>",tags="gewichtsabfall",reference="482a38ce-791e-11e6-b152-7cd1c55000be" 2017-01-15T050000' | http POST "http://192.168.59.103:8086/write?db=mqttkit_1_testdrive"
+    - curl -X POST "http://daq.example.net:8086/delete?db=mqttkit_1_testdrive&precision=s" --data-binary 'events title="Ereignis: Gewichtsabfall",text="Gewichtsabfall auf 31 kg",tags="gewichtsabfall" 1473278400'
+    - echo 'area_33_node_6_events title="Ereignis: Gewichtsabfall",text="Gewichtsabfall auf 31 kg<br/><a href='https://swarm.hiveeyes.org/aaa/bbb/ccc/events?reference=482a38ce-791e-11e6-b152-7cd1c55000be'>see also</a>",tags="gewichtsabfall",reference="482a38ce-791e-11e6-b152-7cd1c55000be" 1484457652' | http POST "http://daq.example.net:8086/write?db=mqttkit_1_testdrive&precision=s"
+    - echo 'area_33_node_6_events title="Ereignis: Gewichtsabfall",text="Gewichtsabfall auf 31 kg<br/><a href='https://swarm.hiveeyes.org/aaa/bbb/ccc/events?reference=482a38ce-791e-11e6-b152-7cd1c55000be'>see also</a>",tags="gewichtsabfall",reference="482a38ce-791e-11e6-b152-7cd1c55000be" 2017-01-15T050000' | http POST "http://daq.example.net:8086/write?db=mqttkit_1_testdrive"
     - http --form POST http://localhost:24642/api/mqttkit-1/testdrive/area-33/node-1/event title='123' text='<a href="https://swarm.hiveeyes.org/aaa/bbb/ccc/events?reference=482a38ce-791e-11e6-b152-7cd1c55000be">see also</a>' tags='one,two,three' reference='482a38ce-791e-11e6-b152-7cd1c55000be'
 
 select * from events;
@@ -1192,9 +1198,9 @@ MongoDB on ARM
 ==========
 BMBF „Open Photonik“
 
-- http://maker-faire.de/berlin/auftaktveranstaltung-open-photonik/
-- http://www.photonikforschung.de/innovationsunterstuetzung/
-- http://www.photonikforschung.de/forschungsfelder/open-innovation/open-photonik/
+- https://web.archive.org/web/20161004133831/http://maker-faire.de/berlin/auftaktveranstaltung-open-photonik/
+- https://www.photonikforschung.de/foerderung/foerderprogramm.html
+- https://www.photonikforschung.de/projekte/open-innovation/foerdermassnahme/open-photonik-innovationsprozess.html
 - https://sensebox.de/
 
 
@@ -1217,8 +1223,8 @@ BMBF „Open Photonik“
 - | https://github.com/mwasilak/txThings
   | https://github.com/chrysn/aiocoap
   | https://twistedmatrix.com/pipermail/twisted-python/2013-September/027453.html
-  | http://www.sixpinetrees.pl/
-- | http://riot-os.org/
+  | https://web.archive.org/web/20181113121046/http://www.sixpinetrees.pl/
+- | https://riot-os.org/
   | https://github.com/RIOT-OS/RIOT
   | https://github.com/crossbario/autobahn-c/issues/8
 - https://github.com/nikipore/stompest
@@ -1644,9 +1650,9 @@ Misc
 
 2016-04-17
 ==========
-- Let's use the squirrel as a mascot for Terkin. Does the Skype emoticon ``(heidy)`` has a representation in Unicode?
+- Let's use the squirrel as a mascot for Terkin? Does the Skype emoticon ``(heidy)`` has a representation in Unicode?
 
-    - http://users.skynet.be/sky77548/squirrel3.gif
+    - https://web.archive.org/web/20161113211257/http://users.skynet.be/sky77548/squirrel3.gif
     - https://thenounproject.com/term/squirrel/1326/
     - Favourites:
 
@@ -1811,17 +1817,17 @@ maybe go to:
 
     - https://twistedmatrix.com/pipermail/twisted-python/2013-September/027453.html
     - https://github.com/mwasilak/txThings
-    - http://www.sixpinetrees.pl/2013/09/txthings-good-enough-is-good-enough.html
+    - https://web.archive.org/web/20180913084259/http://www.sixpinetrees.pl/2013/09/txthings-good-enough-is-good-enough.html
 
 - [o] Replace Kotori with mqttcollect? :-)
-  http://jpmens.net/2015/05/15/an-exec-plugin-for-collectd-mqttcollect/
+  https://jpmens.net/2015/05/15/an-exec-plugin-for-collectd-mqttcollect/
 
 - [o] Watch TESS
 
     - https://testpypi.python.org/pypi/tessdb
     - https://github.com/astrorafael/tessdb/
-    - http://www.observatorioremoto.com/TESS.pdf
-    - http://www.observatorioremoto.com/
+    - https://www.observatorioremoto.com/
+    - https://www.observatorioremoto.com/TESS.pdf
 
 
 
@@ -1830,7 +1836,7 @@ maybe go to:
 - [o] Documentation: Redesign root index.rst to use panels/boxes for displaying the different documentation sections
 - [o] Get in touch with upstream projects
 
-    - http://wamp-proto.org/
+    - https://wamp-proto.org/
 
 - [o] More logos for "About Kotori"
 - [o] Coin the "MIG" stack
@@ -1850,7 +1856,7 @@ maybe go to:
 
     - https://testpypi.python.org/pypi/tessdb
     - https://github.com/astrorafael/tessdb/
-    - http://www.observatorioremoto.com/TESS.pdf
+    - https://www.observatorioremoto.com/TESS.pdf
 
 - [o] Coupling Real Time Elements in the IoT: A Requirement to Reach Industry 4.0 (2015-07-16)
 
@@ -1962,18 +1968,19 @@ maybe go to:
 ==========
 - [o] Integrate with *Phywe* datalogging system *Cobra3*/*Cobra4*
 
-    - https://www.phywe.com/en/geraetehierarchie/datalogging-system-cobra4/
+    - https://www.phywe.com/sensors-software/cobra-xpert-link/
     - | Cobra4 - The Universal Measurement System for Scientific Instruction
       | https://www.youtube.com/watch?v=1rt6wdMbQYA
-    - https://www.phywe.com/en/software-measure-cobra3.html
-    - https://www.phywe.com/en/cobra3-basic-unit-set.html
+    - https://www.phywe.com/sensors-software/measurement-software-apps/
     - https://www.phywe.com/en/top/downloads/softwaredownload/
-    - https://www.phywe.com/en/software-cobra4-multi-user-licence.html
-    - http://repository.phywe.de/files/bedanl.pdf/14550.61/e/1455061e.pdf
-    - http://www.phywe-es.com/1054n531/Servicios/Descargas/Software.htm
+    - https://www.phywe.com/sensors-software/measurement-software-apps/measurelab-multi-user-license_2218_3149/
+    - https://web.archive.org/web/20190924190023/http://www.phywe-es.com/1054n531/Servicios/Descargas/Software.htm
     - https://appdb.winehq.org/objectManager.php?sClass=application&iId=11332
-    - https://appdb.winehq.org/appimage.php?iId=29368
 
+- [o] Cobra SMARTlink & SMARTsense
+
+    - https://www.phywe.com/sensors-software/cobra-smartlink/
+    - https://www.phywe.com/sensors-software/cobra-smartsense/
 
 2016-03-08
 ==========

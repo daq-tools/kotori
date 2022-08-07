@@ -17,7 +17,7 @@ MQTT
 
 Prerequisites
 =============
-- https://github.com/micropython/micropython-lib/blob/master/umqtt.simple/umqtt/simple.py
+- https://github.com/micropython/micropython-lib/blob/master/micropython/umqtt.simple/umqtt/simple.py
 
 
 Synopsis
@@ -55,7 +55,7 @@ HTTP
 
 Prerequisites
 =============
-- https://github.com/micropython/micropython-lib/blob/master/urequests/urequests.py
+- https://github.com/micropython/micropython-lib/blob/master/python-ecosys/urequests/urequests.py
 
 Synopsis
 ========

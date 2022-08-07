@@ -30,7 +30,7 @@ Devices
     .. container:: pull-left
 
         .. figure:: https://ptrace.getkotori.org/2019-06-04_Sonoff-TH10-TH16.jpg
-            :target: https://www.itead.cc/smart-home/sonoff-th.html
+            :target: https://wiki.iteadstudio.com/Sonoff_TH
             :alt: Sonoff TH: Temperature and Humidity Monitoring WiFi Smart Switch
             :width: 350px
 
@@ -39,7 +39,7 @@ Devices
     .. container:: pull-right
 
         .. figure:: https://ptrace.getkotori.org/2019-06-04_Sonoff-SC.jpg
-            :target: https://www.itead.cc/wiki/Sonoff_SC
+            :target: https://wiki.iteadstudio.com/Sonoff_SC
             :alt: Sonoff SC: Environmental monitoring device
             :width: 350px
 
@@ -89,7 +89,7 @@ Introduction
 See also `Configure MQTT for the Tasmota Firmware`_.
 
 .. figure:: https://user-images.githubusercontent.com/5904370/53048775-d3d16e00-3495-11e9-8917-70b56451ebeb.png
-    :target: https://github.com/arendst/Tasmota/wiki/MQTT#configure-mqtt
+    :target: https://tasmota.github.io/docs/MQTT/#configure-mqtt
     :alt: Configure MQTT using WebUI on Tasmota
     :width: 200px
 

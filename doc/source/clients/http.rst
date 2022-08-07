@@ -17,7 +17,7 @@ Python
 ***********
 MicroPython
 ***********
-- https://github.com/micropython/micropython-lib/blob/master/urequests/urequests.py
+- https://github.com/micropython/micropython-lib/blob/master/python-ecosys/urequests/urequests.py
 - See also :ref:`HTTP with MicroPython <daq-micropython-http>`.
 
 
