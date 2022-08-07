@@ -36,6 +36,11 @@ Details
     macos
     python-package
 
+.. toctree::
+    :caption: Installation variants
+    :maxdepth: 1
+
+    rabbitmq
 
 .. toctree::
     :caption: Production setup
