@@ -104,11 +104,11 @@ test-coverage: virtualenv-dev
 # Build Sphinx documentation.
 docs-html: virtualenv-docs
 	touch doc/source/index.rst
-	$(sphinx-build) -n -W --keep-going -b html doc/source doc/build
+	$(sphinx-build) -n -W --keep-going -b html doc/source doc/build/html
 
 # Run link checker on documentation.
 docs-linkcheck: virtualenv-docs
-	$(sphinx-build) -n -W --keep-going -b linkcheck doc/source doc/build
+	$(sphinx-build) -n -W --keep-going -b linkcheck doc/source doc/build/html
 
 
 # Upload media assets. Images, videos, etc.
