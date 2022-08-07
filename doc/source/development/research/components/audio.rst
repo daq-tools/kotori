@@ -7,7 +7,7 @@ Parisson
 ********
 - https://github.com/Parisson
 - https://github.com/yomguy
-- https://www.irit.fr/recherches/SAMOVA/DIADEMS/fr/welcome/&cultureKey=en
+- https://www.irit.fr/SAMOVA/site/projects/previous/diadems/
 - http://parisson.com/technologies
 - http://parisson.com/
 

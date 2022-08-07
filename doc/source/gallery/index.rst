@@ -105,7 +105,7 @@ luftdaten.info
 
     .. figure:: https://ptrace.getkotori.org/2017-05-05_luftdaten-logo.png
         :alt: luftdaten.info Website
-        :target: http://luftdaten.info/
+        :target: https://luftdaten.info/
 
 .. container:: pull-right width-60
 
@@ -132,7 +132,7 @@ luftdaten.info
 
 |clearfix|
 
-.. _luftdaten.info map: http://deutschland.maps.luftdaten.info/
+.. _luftdaten.info map: https://deutschland.maps.sensor.community/
 
 
 ----

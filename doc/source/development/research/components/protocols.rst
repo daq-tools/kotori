@@ -135,69 +135,70 @@ itself can be used by anybody without any royalty charges to OPC Foundation.
 - http://openopc.sourceforge.net/
 - https://pypi.python.org/pypi/OpenOPC/
 - http://pyopc.sourceforge.net/
-- http://www.controlconsulting.com/products/data-historian/
-- http://www.spinellicreations.com/spark/projects.php
+- https://www.controlconsulting.com/products/data-historian/
+- https://web.archive.org/web/20170714195607/http://www.spinellicreations.com/spark/projects.php
 - https://freeopcua.github.io/
 - https://github.com/FreeOpcUa/python-opcua
 - https://github.com/FreeOpcUa/python-opcua/blob/master/examples/client-minimal.py
 - https://github.com/FreeOpcUa/python-opcua/blob/master/examples/server-minimal.py
 - https://python-opcua.readthedocs.io/
-- http://www.opclabs.com/products/quickopc
-- http://www.opclabs.com/products/quickopc/opc-specifications/data-access
-- http://www.opclabs.com/products/quickopc/opc-specifications/unified-architecture
-- http://www.opclabs.com/products/quickopc/languages-and-tools/python
-- http://www.opcconnect.com/tooltech.php
-- http://www.opcconnect.com/freecli.php
-- http://www.automation.com/automation-news/article/opc-ua-enables-industrial-information-revolution
-- http://www.computer-automation.de/steuerungsebene/steuern-regeln/artikel/117636/
-- http://www.infoplc.net/files/documentacion/industria4/infoPLC_net_2_Industrial-Revolution-2014-StefanHoppe.pdf
+- https://www.opclabs.com/products/quickopc
+- https://www.opclabs.com/products/quickopc/opc-specifications/data-access
+- https://www.opclabs.com/products/quickopc/opc-specifications/unified-architecture
+- https://www.opclabs.com/products/quickopc/languages-and-tools/python
+- https://www.opcconnect.com/tooltech.php
+- https://www.opcconnect.com/freecli.php
+- https://www.automation.com/en-us/articles/2012-2/opc-ua-enables-industrial-information-revolution
+- https://www.computer-automation.de/steuerungsebene/steuern-regeln/hintergruende-des-projektes-hmi-opc-ua-schnittstelle.117636.html
+- https://www.infoplc.net/files/documentacion/industria4/infoPLC_net_2_Industrial-Revolution-2014-StefanHoppe.pdf
 
 - https://github.com/nzfarmer1/mqtt2opcua
 
-- | http://open62541.org/
+- | https://www.open62541.org/
   | https://github.com/open62541/open62541
 
 
 Building An Open Source Process Historian
 -----------------------------------------
 - https://coussej.github.io/2016/04/18/Building-An-Open-Source-Process-Historian/
+- https://coussej.github.io/2019/10/28/Open-Source-Monitoring-of-Industrial-Systems-with-InfluxDB-using-OPC-UA-Part-2/
+- https://github.com/coussej/node-opcua-logger
 - https://en.wikipedia.org/wiki/Operational_historian
 - https://node-opcua.github.io/
 - https://github.com/node-opcua/node-opcua
 - https://node-opcua.github.io/tutorial/2015/07/05/weather-station.html
-- https://github.com/coussej/node-opcua-logger
-- http://www.opclabs.com/resources/product-information/articles/1094-public-demo-opc-xml-da-server-2
+- https://web.archive.org/web/20181125131051/http://www.opclabs.com/resources/product-information/articles/1094-public-demo-opc-xml-da-server-2
 
 
 MTConnect
 =========
-- http://www.mtconnect.org/
-- http://mtcup.org/
+- https://www.mtconnect.org/
+- https://www.mtconnect.org/standard-download20181
+- https://mtcup.org/
 - https://github.com/mtconnect
-- http://mc2conference.com/
-- http://www.mtconnectforum.com/
+- https://web.archive.org/web/20180320044048/http://mt360conference.com/
+- https://web.archive.org/web/20190429124523/http://www.mtconnectforum.com/Default.aspx
 - https://www.mazakusa.com/machines/technology/digital-solutions/mtconnect/
-- http://www.systeminsights.com/vimana-connect
+- https://govimana.com/connect/
 - https://www.challenge.gov/files/2016/03/Rasberry-Pi-for-Data-Visualization.pdf
 - https://www.imts.com/show/newsletter/insider/article-details.cfm?articleid=219
 - http://web.ncdmm.org/cn/ackdg/Mtconnect
-- http://www.todaysmotorvehicles.com/article/mtconnect-student-challenge-amt-041116/
 
 
 M-Bus
 =====
-- | http://www.schleicher.berlin/en/chargeart/
+- | http://schleicher.berlin/index.php/produkte/steuerungen
   | https://en.wikipedia.org/wiki/Schleicher_Electronic
-- | http://www.rscada.se/libmbus/
+- | https://web.archive.org/web/20191228185153/http://www.rscada.se/libmbus/
   | https://github.com/rscada/libmbus
 
 
 Wireless M-Bus
 ==============
-- http://www.ti.com/tool/wmbus
-- http://www.fhemwiki.de/wiki/WMBUS
-- http://www.elektroniknet.de/elektronik/kommunikation/wireless-m-bus-der-neue-smart-metering-standard-1530.html
-- http://fastforward.ag/downloads/docu/FAST_EnergyCam-Protocol-wirelessMBUS.pdf
+- https://www.ti.com/tool/WMBUS
+- https://www.fhemwiki.de/wiki/WMBUS
+- https://www.elektroniknet.de/kommunikation/wireless-m-bus-der-neue-smart-metering-standard.1530.html
+- https://web.archive.org/web/20181222161639/http://fastforward.ag/downloads/docu/FAST_EnergyCam-Protocol-wirelessMBUS.pdf
 
 
 DLMS
@@ -208,15 +209,16 @@ aka. DLMS, IEC-62056-21, COSEM, IEC-61107, IEC-1107
 
 - https://mknx.github.io/smarthome/plugins/dlms.html
 - https://github.com/bsdphk/PyDLMS
-- http://www.icube.ch/
+- https://icube.ch/
 
 
 OMS: Open Metering System
 =========================
-- http://oms-group.org/
+- https://oms-group.org/
 - https://en.wikipedia.org/wiki/Open_Metering_System
 - https://de.wikipedia.org/wiki/Open_Metering_System
-- http://oms-group.org/fileadmin/pdf/OMS-Spec_Vol2_AnnexN_A032.pdf
+- https://oms-group.org/open-metering-system/oms-spezifikation
+- https://oms-group.org/fileadmin/files/download4all/omsSpezifikationen/generation4/spezifikation/vol2/OMS-Spec_Vol2_AnnexN_D103.pdf
 
 
 KNX

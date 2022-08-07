@@ -177,14 +177,14 @@ System overview
 - Subscribe to WAMP_ data streams inside the web browser and process the data points.
 
     .. figure:: https://ptrace.getkotori.org/2016-06-05_H2M-2015-Kotori-Dashboard.png
-        :target: `Live Telemetry at Hydro2Motion`_
+        :target: `Live Telemetrie at Hydro2Motion`_
         :alt: Live telemetry with GPS position on map
         :width: 450px
 
         Live telemetry with GPS position on map (`article in german <Live Telemetrie at Hydro2Motion_>`_)
 
-        - GPS map: Draw a pin on a map widget at the GPS position of the vehicle using Leaflet_.
-        - Oscilloscope: Display received data points in an "osci-style" widget, based on Rickshaw_.
+        - GPS map: Draw a pin on a map widget at the GPS position of the vehicle using `Leaflet`_.
+        - Oscilloscope: Display received data points in an "osci-style" widget, based on `Rickshaw`_.
 
 |clearfix|
 
@@ -225,7 +225,7 @@ Main application::
 
 Receive telemetry data
 ----------------------
-- Open Browser at http://localhost:35000/
+- Open Browser at ``http://localhost:35000/``.
 
 
 Send telemetry data
@@ -255,11 +255,11 @@ URL entrypoints
 Components
 ----------
 - | InfluxDB UI
-  | http://lablab.cicer.de:8083/
+  | http://daq.example.net:8083/
 - | InfluxDB API
-  | http://lablab.cicer.de:8086/
+  | http://daq.example.net:8086/
 - | Grafana
-  | http://lablab.cicer.de:3000/
+  | http://daq.example.net:3000/
 
 
 Query InfluxDB

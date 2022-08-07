@@ -27,64 +27,56 @@ Ideas
     - http://stack4things.unime.it/
     - http://stack4things.unime.it/stack4things-on-github/
     - https://github.com/MDSLab/s4t-iotronic-standalone
-    - http://smartme-data.unime.it/dataset/37968a32-de3b-9fc4-7eeb-ca76ba14b44b/resource/515c4bda-fe18-4a41-b050-ebd457464546
-    - http://docs.ckan.org/en/latest/maintaining/datastore.html
-    - http://docs.ckan.org/projects/datapusher/en/latest/
+    - https://web.archive.org/web/20200226062220/http://smartme-data.unime.it/about
+    - https://web.archive.org/web/20200223211556/http://smartme-data.unime.it/dataset/37968a32-de3b-9fc4-7eeb-ca76ba14b44b/resource/515c4bda-fe18-4a41-b050-ebd457464546
+    - https://docs.ckan.org/en/latest/maintaining/datastore.html
+    - https://github.com/ckan/datapusher
 
 - [o] Use HTSQL
 
-    - http://htsql.org/
+    - https://htsql.org/
     - https://bitbucket.org/prometheus/htsql/
     - https://github.com/okfn/ckanext-htsql
 
-- [o] Get into splash screen of http://wamp-proto.org/
+- [o] Get into https://wamp-proto.org/implementations.html
 - [o] Vehicle dashboard
 
-    - http://www.solarimpulse.com/widget-aircraft
-    - http://www.solarimpulse.com/js/telemetries.js
-    - http://www.solarimpulse.com/js/interface.js
-    - http://www.solarimpulse.com/js/realweb.js
-    - http://www.solarimpulse.com/widgets/embed
+    - https://aroundtheworld.solarimpulse.com/
+    - https://web.archive.org/web/20170930120224/http://www.solarimpulse.com/js/telemetries.js
+    - https://web.archive.org/web/20170930120224/http://www.solarimpulse.com/js/interface.js
+    - https://web.archive.org/web/20170930120224/http://www.solarimpulse.com/js/realweb.js
+    - https://web.archive.org/web/20170929153158/http://www.solarimpulse.com/widgets/embed
 
-        - http://www.solarimpulse.com/widget-flight_profile
-        - http://www.solarimpulse.com/widget-flight_wrapup
+- [o] Integrate with telco tech like
 
-- [o] Integrate with Telcos like
-
-    - http://www.ndsatcom.com/
-    - http://www.satcomglobal.com/
+    - https://www.ndsatcom.com/
+    - https://www.satcomglobal.com/
     - https://www.satcomdirect.com/
 
-        - https://www.satcomdirect.com/products-and-services/flightlogs/
-        - https://www.satcomdirect.com/products-and-services/sdpro/
-        - http://www.satcomstore.com/
-        - http://www.satcomstore.com/solutions/
-        - http://www.satcomstore.com/M2m-communication-solutions
-        - http://www.satcomstore.com/satcom-spotlight/
-        - http://www.satcomstore.com/iridium-go/
+        - https://www.satcomdirect.com/aviation-in-flight-connectivity/flight-deck/
+        - https://www.satcomstore.com/
 
 
 2016-05-24
 ==========
 - [o] Add docs/why-kotori
 - [o] Integrate with Homie
-- [o] Integrate with http://www.volkszaehler.org/
+- [o] Integrate with https://www.volkszaehler.org/
 - [o] Integrate with OBD-II
 
-    - [o] Integrate with OpenXC: http://openxcplatform.com/
+    - [o] Integrate with OpenXC: https://openxcplatform.com/
     - [o] or pyOBD
 
         - http://www.obdtester.com/pyobd
         - http://www.obdtester.com/elm-usb
-        - http://www.elmelectronics.com/obdic.html
+        - https://www.elmelectronics.com/products/ics/obd/
 
-    - http://www.easyobdii.com/
-    - http://obd2software.co.uk/
-    - http://www.bbc.com/autos/story/20160415-how-to-make-1000-a-day-driving-cars
+    - https://www.easyobdii.com/
+    - https://web.archive.org/web/20161124144547/http://obd2software.co.uk/
 
 - https://www.elastic.co/guide/en/elasticsearch/reference/2.3/geo-point.html
 - [o] Packages for OpenWRT
-- [o] Packages for FreedomBox: http://freedomboxfoundation.org/
+- [o] Packages for FreedomBox: https://freedomboxfoundation.org/
 
 
 2016-05-23
@@ -114,7 +106,7 @@ Ideas
 
     - https://en.wikipedia.org/wiki/MAVLink
     - https://pixhawk.ethz.ch/mavlink/
-    - http://qgroundcontrol.org/mavlink/
+    - https://web.archive.org/web/20180320133428/http://qgroundcontrol.org/mavlink/start
 
 
 2016-05-04

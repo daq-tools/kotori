@@ -12,7 +12,7 @@ $(eval python       := $(venv)/bin/python)
 $(eval pytest       := $(venv)/bin/pytest)
 $(eval bumpversion  := $(venv)/bin/bumpversion)
 $(eval twine        := $(venv)/bin/twine)
-$(eval sphinx       := $(venv)/bin/sphinx-build)
+$(eval sphinx-build := $(venv)/bin/sphinx-build)
 $(eval invoke       := $(venv)/bin/invoke)
 
 
@@ -104,7 +104,12 @@ test-coverage: virtualenv-dev
 # Build Sphinx documentation.
 docs-html: virtualenv-docs
 	touch doc/source/index.rst
-	SPHINXBUILD="`pwd`/$(sphinx)" SPHINXOPTS="-j auto" make --directory=doc html
+	SPHINXBUILD="`pwd`/$(sphinx-build)" SPHINXOPTS="-j auto" make --directory=doc html
+
+# Run link checker on documentation.
+docs-linkcheck: virtualenv-docs
+	$(sphinx-build) -n -W --keep-going -b linkcheck doc/source doc/build
+
 
 # Upload media assets. Images, videos, etc.
 # Don't commit media assets (screenshots, etc.) to the repository.

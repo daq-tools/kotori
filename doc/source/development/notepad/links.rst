@@ -10,12 +10,12 @@ Links
 
 2016-05-27
 ==========
-- http://www.sixpinetrees.pl/2013/10/makers-how-to-win-iot-standards-battle.html
-- http://coap.technology/
+- https://web.archive.org/web/20180913084353/http://www.sixpinetrees.pl/2013/10/makers-how-to-win-iot-standards-battle.html
+- https://coap.technology/
 - https://github.com/mwasilak/txThings
 - https://github.com/Tanganelli/CoAPthon
 - https://github.com/joaopedrotaveira/linux-rpl
-- http://www.openwsn.org/
+- https://www.openwsn.org/
 
 
 2016-05-24
@@ -23,18 +23,16 @@ Links
 - | Debug hardware like the pros with the logic analyzer you'll love.
   | https://www.saleae.com/
 
-- http://www.usbee.com/
+- https://www.usbee.com/
 
-    - http://www.usbee.com/protocol-decoder.html
-    - | CWAV, Inc. has been closed and no longer sells the USBee Test Pods
-      | http://www.usbee.com/company.htm
+    - https://www.usbee.com/protocol-decoder.html
 
 - https://grafana.net/plugins/bosun-datasource
 - https://grafana.net/plugins/grafana-worldmap-panel
 
 - | Minoca OS
   | A new operating system for the world of connected devices.
-  | http://www.minocacorp.com/
+  | https://www.minocacorp.com/
   | https://news.ycombinator.com/item?id=11662057
 
 
@@ -66,14 +64,13 @@ BLE through SDR
 
 Environmental monitoring
 ------------------------
-- Kathy Steppe
-- http://www.plantecology.ugent.be/research.shtml
-- http://www.plantecology.ugent.be/people.shtml
+- https://www.plantecology.ugent.be/research/
+- https://www.plantecology.ugent.be/people/
 - https://twitter.com/jochensteiner
 
 Smart farming
 -------------
-- http://www.deutschlandfunk.de/smart-farming-sensoren-und-apps-erobern-den-spargel-acker.676.de.html?dram:article_id=353969
+- https://www.deutschlandfunk.de/smart-farming-sensoren-und-apps-erobern-den-spargel-acker.676.de.html?dram:article_id=353969
 
 IFTTT and more
 --------------
@@ -83,7 +80,7 @@ IFTTT and more
 
 Misc
 ----
-* | http://basho.com/posts/technical/time-series-the-new-shiny/
+* | https://riak.com/posts/technical/time-series-the-new-shiny/
   | via: https://news.ycombinator.com/item?id=11665907
 
 
@@ -98,40 +95,41 @@ Misc
     - OpenWhisk: OpenWhisk is a cloud-first distributed event-based programming service.
       It provides a programming model to upload event handlers to a cloud service, and register the handlers to respond to various events.
 
-        - https://www.ibm.com/cloud-computing/bluemix/openwhisk/
-        - https://github.com/openwhisk/openwhisk
-        - https://developer.ibm.com/openwhisk/
-        - https://new-console.ng.bluemix.net/openwhisk/
-        - https://github.com/openwhisk/openwhisk/tree/master/docs
-        - https://github.com/openwhisk/openwhisk/blob/master/docs/about.md
-        - https://github.com/openwhisk/openwhisk/blob/master/docs/actions.md
+        - https://web.archive.org/web/20170618100841/https://www.ibm.com/cloud-computing/bluemix/openwhisk/
+        - https://web.archive.org/web/20160526233843/https://developer.ibm.com/openwhisk/
+        - https://www.ibm.com/cloud/functions
+        - https://cloud.ibm.com/functions/
+        - https://github.com/apache/openwhisk
+        - https://openwhisk.apache.org/
+        - https://github.com/apache/openwhisk/tree/master/docs
+        - https://github.com/apache/openwhisk/blob/master/docs/about.md
+        - https://github.com/apache/openwhisk/blob/master/docs/actions.md
+        - https://github.com/apache/openwhisk/blob/master/docs/actions-python.md
 
-    - https://www.ibm.com/cloud-computing/bluemix/internet-of-things/
-    - https://console.ng.bluemix.net/catalog/
-    - https://console.ng.bluemix.net/catalog/starters/internet-of-things-platform-starter/
+    - https://web.archive.org/web/20171224182257/https://www.ibm.com/cloud/internet-of-things
+    - https://cloud.ibm.com/catalog
 
 
 2016-05-04
 ==========
 - More
 
-    - http://sodaq.com/lora
+    - https://web.archive.org/web/20170817014341/http://sodaq.com/lora
     - https://www.kukua.cc/
     - https://www.kukua.cc/technology/
     - https://rawgit.com/kukua/concava-intro/master/index.html
     - https://github.com/kukua/
     - https://github.com/kukua/concava
     - https://github.com/mauvm
-    - https://kukua.github.io/concava/
-    - https://kukua.github.io/dashboard/
+    - http://kukua.github.io/concava/
     - SPUL - Sensor Protocol Ultra Light: https://kukua.github.io/concava-connector-spul/latest/introduction/
 
 
 2016-04-27
 ==========
-- | http://www.bbc.com/future/story/20160426-the-invisible-language-of-trains-boats-and-planes
+- | https://www.bbc.com/future/article/20160426-the-invisible-language-of-trains-boats-and-planes
   | via: https://news.ycombinator.com/item?id=11579710
-- http://www.familiars.org/
+- https://web.archive.org/web/20160318162506/http://www.familiars.org/
 
     FAMILIARS
     Lighthouse Arts, Brighton. 7th-20th September 2015, 11am-5pm.
@@ -150,8 +148,8 @@ Misc
 
 2016-04-25
 ==========
-* http://greatscottgadgets.com/hackrf/
-* http://ossmann.blogspot.de/2010/03/16-pocket-spectrum-analyzer.html
+* https://greatscottgadgets.com/hackrf/
+* https://ossmann.blogspot.com/2010/03/16-pocket-spectrum-analyzer.html
 
 
 2016-04-22
@@ -169,10 +167,10 @@ Misc
 - https://github.com/octoblu/meshblu
 - https://allseenalliance.org/framework
 - https://allseenalliance.org/announcement/allseen-alliance-reaches-50-members-expands-smart-home-connected-car-and-security-focus
-- http://www.onalytica.com/blog/posts/the-internet-of-things-top-100-organizations/
-- http://thenewstack.io/a-messaging-network-for-drones-called-skynet/
+- https://onalytica.com/blog/posts/the-internet-of-things-top-100-organizations/
+- https://thenewstack.io/a-messaging-network-for-drones-called-skynet/
 - https://github.com/octoblu/legacy-gateway
-- http://skynet.im/
+- ``http://skynet.im/``
 - https://github.com/octoblu/legacy-gateway/blob/master/plugins.md
 - https://chrome.google.com/webstore/detail/nodeblu/aanmmiaepnlibdlobmbhmfemjioahilm
 - https://github.com/octoblu/the-stack-services
@@ -285,8 +283,7 @@ DigiTemp 1-wire sensor
 
 MicroLAN 1-wire coupler
 -----------------------
-- https://www.maximintegrated.com/en/products/digital/one-wire/DS2409.html
-- https://www.maximintegrated.com/en/products/digital/one-wire/DS2409.html/tb_tab3
+- https://www.maximintegrated.com/en/products/interface/controllers-expanders/DS2409.html
 - https://www.datsi.fi.upm.es/docencia/Micro_C/dallas/tb1.pdf
 
 Pinba
@@ -324,19 +321,19 @@ Environmental Monitoring
 - https://github.com/Merdeka/Home-Automation/tree/master/ESP8266-Wifi_MQTT-WeatherStation
 - https://www.raspberrypi.org/products/sense-hat/
 - https://pythonhosted.org/sense-hat/
-- http://uk.rs-online.com/web/p/interface-development-kits/8949310/
+- https://uk.rs-online.com/web/p/interface-development-kits/8949310/
 - https://www.raspberrypi.org/products/raspberry-pi-touch-display/
-- http://uk.rs-online.com/web/generalDisplay.html?id=raspberrypi
-- http://uk.rs-online.com/web/p/lcd-monochrome-displays/8977147/
-- http://uk.rs-online.com/web/p/lcd-monochrome-displays/8977141/
-- http://uk.rs-online.com/web/p/radio-frequency-development-kits/8110710/
-- http://uk.rs-online.com/web/p/radio-frequency-development-kits/8110732/
-- http://uk.rs-online.com/web/p/processor-microcontroller-development-kits/8110714/
-- http://uk.rs-online.com/web/p/processor-microcontroller-development-kits/8134164/
+- https://uk.rs-online.com/web/generalDisplay.html?id=raspberrypi
+- https://uk.rs-online.com/web/p/lcd-monochrome-displays/8977147/
+- https://uk.rs-online.com/web/p/lcd-monochrome-displays/8977141/
+- https://uk.rs-online.com/web/p/radio-frequency-development-kits/8110710/
+- https://uk.rs-online.com/web/p/radio-frequency-development-kits/8110732/
+- https://uk.rs-online.com/web/p/processor-microcontroller-development-kits/8110714/
+- https://uk.rs-online.com/web/p/processor-microcontroller-development-kits/8134164/
 - https://www.element14.com/community/thread/50002/l/new-7-touchscreen-powering-the-pi-and-the-screen-with-portable-battery
 - http://learn.pimoroni.com/tutorial/pi-lcd/getting-started-with-raspberry-pi-7-touchscreen-lcd
 - http://www.ebay.com/bhp/raspberry-pi-lcd
-- http://uk.rs-online.com/web/p/graphics-display-development-kits/8997466/
+- https://uk.rs-online.com/web/p/graphics-display-development-kits/8997466/
 - http://www.sainsmart.com/7-inch-tft-lcd-monitor-for-raspberry-pi-touch-screen-driver-board-hdmi-vga-2av.html
 - https://projects.drogon.net/raspberry-pi/wiringpi/lcd-library/
 - https://demo.crossbar.io/gauges/
@@ -345,12 +342,12 @@ Environmental Monitoring
 - http://crossbar.io/docs/Database-Programming-with-PostgreSQL/
 - http://findingscience.com/twistar/
 - http://shop.busware.de/advanced_search_result.php?keywords=CUL
-- http://www.sielcosistemi.com/en/products/winlog_scada_hmi/
-- http://robomq.blogspot.de/2015/05/unlocking-modbus-networks-to-internet.html
+- https://www.sielcosistemi.com/en/products/winlog_scada_hmi/winlog.html
+- ``http://robomq.blogspot.de/2015/05/unlocking-modbus-networks-to-internet.html``
 - | A polymer element that implement a client for the MQTT protocol via WebSocket.
   | It is capable of Publish messages and Subscribe multiple topics.
   | https://github.com/centamiv/mqtt-client
-- http://www.slideshare.net/ultrasonic/android-push-server-mqtt
+- https://www.slideshare.net/ultrasonic/android-push-server-mqtt
 - http://dangerousprototypes.com/docs/Bus_Pirate
 
 
@@ -360,9 +357,9 @@ Environmental Monitoring
 - http://www.theinquirer.net/inquirer/news/2451793/gchq-intervenes-to-prevent-catastrophically-insecure-uk-smart-meter-plan
 - http://www.businessinsider.de/googles-nest-closing-smart-home-company-revolv-bricking-devices-2016-4
 - https://medium.com/@arlogilbert/the-time-that-tony-fadell-sold-me-a-container-of-hummus-cb0941c762c1
-- http://www.seeedstudio.com/depot/LinkIt-ONE-p-2017.html
-- http://www.seeedstudio.com/depot/Seeed-Tiny-BLE-BLE-6DOF-Mbed-Platform-p-2268.html
-- http://www.seeedstudio.com/depot/SDLogger-Open-Hardware-Data-Logger-p-723.html
+- https://web.archive.org/web/20201111172559/https://www.seeedstudio.com/LinkIt-ONE-p-2017.html
+- https://web.archive.org/web/20160813171558/http://www.seeedstudio.com/depot/Seeed-Tiny-BLE-BLE-6DOF-Mbed-Platform-p-2268.html
+- https://web.archive.org/web/20200930033022/https://www.seeedstudio.com/SDLogger-Open-Hardware-Data-Logger-p-723.html
 - https://github.com/sparkfun/OpenLog
 - | Automatic identification of Arduino boards
   | https://github.com/nseidle/Ardentify
@@ -372,12 +369,12 @@ Environmental Monitoring
 
 2016-03-30
 ==========
-- http://iot-document.phodal.com/
+- https://iot-document.phodal.com/
 - https://phodal.github.io/awesome-iot/
 - https://github.com/phodal/iot-document
 - https://github.com/phodal/awesome-iot
 - https://github.com/mqtt/mqtt.github.io/wiki/libraries
-- http://dave.thehorners.com/tech-talk/random-tech/499-messaging-messagequeue-pubsub-stomp-amqp-mqtt
+- https://dave.thehorners.com/tech-talk/random-tech/499-messaging-messagequeue-pubsub-stomp-amqp-mqtt
 - https://matrix.org/blog/wp-content/uploads/2015/02/2015-02-01-Matrix-IoT-FOSDEM.pdf
 - https://www.reddit.com/r/Python/comments/1a7lqg/suggestions_for_building_a_real_time_web_app/
 - https://matrix.org/

@@ -15,11 +15,11 @@ contributed to Kotori in one way or another.
 * Carolin Johannsen <caro@hiverize.org>
 * Clemens Gruber <clemens@hiveeyes.org>
 * Georges Gagliano <https://github.com/ggeorges39>
-* Géraldine Farcy-Merlo <https://www.mellisphera.com/>
+* Géraldine Farcy-Merlo <https://mellisphera.com/>
 * Jan Hoffmann <j.hoffmann@isarengineering.de>
 * Jens Schmelkus <jens@schmelkus.net>
 * Karsten Harazim <email@karstenharazim.de>
-* Lorenzo Pons <https://www.mellisphera.com/>
+* Lorenzo Pons <https://mellisphera.com/>
 * Markus Euskirchen <m@euse.de>
 * Matthias Büchner <m.buechner@gmail.com>
 * Matthias Mehldau <wetter@hiveeyes.org>

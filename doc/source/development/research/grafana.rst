@@ -12,7 +12,7 @@ Sub second resolution
 
     - https://github.com/grafana/grafana/commit/ebcf2c3f6854cbe2903ad8c97af18018c5b42c7b
 
-- http://192.168.59.103:3000/api/datasources/proxy/14/query?epoch=ms&q=SELECT+derivative(wght1)+FROM+%22tug22_999%22+WHERE+time+%3E+1447538527s+and+time+%3C+1447538528s+GROUP+BY+time(100ms)
+- http://daq.example.net:3000/api/datasources/proxy/14/query?epoch=ms&q=SELECT+derivative(wght1)+FROM+%22tug22_999%22+WHERE+time+%3E+1447538527s+and+time+%3C+1447538528s+GROUP+BY+time(100ms)
 
 More info
 

@@ -36,8 +36,8 @@ Luftdatenpumpe v0 Backlog
 - Integrate web-gl globe:
 
     - https://github.com/dataarts/webgl-globe
-    - https://luftdaten.getkotori.org/api/luftdaten/info/earth/42/data.globe?magnitudes=P1,P25,temperature&from=2017-01-01
+    - ``https://luftdaten.getkotori.org/api/luftdaten/info/earth/42/data.globe?magnitudes=P1,P25,temperature&from=2017-01-01``
 
-- Generische tag => filter umsetzung à la Grafana
+- Generische Tag => Filter Umsetzung à la Grafana
 
-    - https://luftdaten.getkotori.org/api/luftdaten/info/earth/42/data.txt?{tagA}={valueA}&{tagB}={valueB}
+    - ``https://luftdaten.getkotori.org/api/luftdaten/info/earth/42/data.txt?{tagA}={valueA}&{tagB}={valueB}``

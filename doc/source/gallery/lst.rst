@@ -15,8 +15,9 @@ LST
 *****
 About
 *****
+
 LST is the `Labor für Systemtechnik`_ at the `Munich University of Applied Sciences`_.
-They are into `aviation <LST-aviation_>`_ and conceive a number of `fine projects <LST-projects_>`_.
+They are into `aviation <LST-aviation_>`_ and conceive a number of fine projects.
 Also see some `pictures of the laboratory <LST-pictures_>`_.
 
 
@@ -423,7 +424,7 @@ Query InfluxDB
 
 List databases::
 
-    $ curl --silent --get 'http://192.168.59.103:8086/query?pretty=true' --user admin:Armoojwi --data-urlencode 'q=SHOW DATABASES' | jq '.'
+    $ curl --silent --get 'http://daq.example.net:8086/query?pretty=true' --user admin:Armoojwi --data-urlencode 'q=SHOW DATABASES' | jq '.'
 
     {
       "results": [
@@ -450,7 +451,7 @@ List databases::
 
 Query timeseries::
 
-    $ export INFLUX_URI=http://192.168.59.103:8086/query?pretty=true
+    $ export INFLUX_URI=http://daq.example.net:8086/query?pretty=true
     $ curl --silent --get $INFLUX_URI --user admin:Armoojwi --data-urlencode 'db=edu_hm_lst_h2m' --data-urlencode 'q=select * from "02_cap_r";' | jq '.'
 
     {

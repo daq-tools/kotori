@@ -16,7 +16,7 @@ verify the functionality.
 
     docker run -it --rm --publish=1883:1883 --publish=15672:15672 rabbitmq-mqtt
 
-Visit http://localhost:15672/ and log in with guest / guest.
+Visit ``http://localhost:15672/`` and log in with ``guest`` / ``guest``.
 
 
 .. _MQTT Plugin: https://www.rabbitmq.com/mqtt.html

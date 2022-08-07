@@ -39,7 +39,6 @@ InfluxDB
 ********
 - https://portal.influxdata.com/downloads
 - http://ftp.de.debian.org/debian/pool/main/i/influxdb/
-- https://s3.amazonaws.com/influxdb/ (deprecated)
 
 Download packages
 =================
@@ -63,9 +62,7 @@ Deprecated::
 *******
 Grafana
 *******
-- https://packagecloud.io/grafana/stable
-- http://grafana.org/builds/
-- https://github.com/fg2it/grafana-on-raspberry/releases
+- https://grafana.com/grafana/download
 
 
 Download package

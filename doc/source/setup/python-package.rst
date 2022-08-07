@@ -66,7 +66,7 @@ From git repository
 
     pip install --user --prefer-binary --editable git+https://github.com/daq-tools/kotori.git#egg=kotori[daq]
 
-.. seealso:: https://pip.pypa.io/en/stable/reference/pip_install/#examples
+.. seealso:: https://pip.pypa.io/en/stable/cli/pip_install/
 
 
 .. _setup-python-virtualenv:

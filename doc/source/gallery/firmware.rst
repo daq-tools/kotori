@@ -10,6 +10,7 @@ Firmware builder
 *****
 Intro
 *****
+
 For vendor :ref:`vendor-hiveeyes`, there's a requirement for automating builds
 of Arduino projects using a flexible and powerful build system.
 This infrastructure pulls code sketches including dependencies from the
@@ -26,7 +27,7 @@ for setting up a GPRS device for communication in form of the quadruple
 
 For getting an idea about the variable replacements with an example sketch suitable for
 automatic building using the variables described above, please have a look at
-`node-gprs-any.ino, line 81 ff. <https://github.com/hiveeyes/arduino/blob/master/node-gprs-any/node-gprs-any.ino#L81#>`_
+`node-pipa.ino, line 60 ff. <https://github.com/hiveeyes/arduino/blob/master/node-pipa/examples/legacy-gprsbee/pipa-legacy-gprsbee.ino#L60-L85>`_
 
 See :ref:`hiveeyes-arduino:open-hive-firmware` about how this is used in production.
 

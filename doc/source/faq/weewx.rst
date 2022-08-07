@@ -10,9 +10,10 @@ Ingesting weather data from WeeWX using MQTT
 ************
 Introduction
 ************
+
 I'm writing a thesis about automatic acquisition of meteorological
 data from the Davis Vantage Pro2 station and i'm using Kotori_ and WeeWX_ for that,
-based on `Kotori's WeeWX integration <vendor-weewx>`_.
+based on :ref:`Kotori's WeeWX integration <vendor-weewx>`.
 I have a question about how Kotori_ ingests data to InfluxDB_.
 Is it through HTTP GET requests? What does Kotori do to the JSON that comes from MQTT?
 

@@ -10,7 +10,7 @@ Wired
 LabJack
 =======
 - https://labjack.com/
-- https://www.interfaceinnovations.org/labjackproducts.html
+- https://www.interfaceinnovations.org/labjackutilities.html
 
 Hardware
 --------
@@ -55,9 +55,26 @@ Distributors
 
 Miscellaneous
 =============
-- http://www.linino.org/
-- http://download.linino.org/linino-utils/
+
+Linino
+------
+A MIPS GNU/Linux box for Arduino.
+
+- https://linino2013.wordpress.com/about/
+- https://web.archive.org/web/20190605142957/https://www.linino.org/
+- https://web.archive.org/web/20190815185500/http://download.linino.org/linino-utils/
 - https://github.com/linino
+
+Linino OS
+---------
+- https://github.com/arduino/linino
+- https://docs.arduino.cc/retired/getting-started-guides/ArduinoYunLin
+- https://www.dinotools.de/2014/07/09/kurz-vorgestellt-linino-one/
+- https://www.rhydolabz.com/arduino-compatible-boards-boards-similar-to-arduino-c-152_215/linino-one-p-1876.html
+
+
+More
+----
 
 - http://www.linux-usb-daq.co.uk/
 
@@ -77,17 +94,20 @@ Miscellaneous
 
 - http://addi-data.com/
 
-- http://www.openmsr.org/index.php/de/news/85-h-tronic-8-kanal-12-bit-usb-datenerfassungs-steuerungsmodul
-    - https://www.pollin.de/shop/downloads/D810171B.PDF
-    - http://www.h-tronic.eu/product_info.php?info=p92_8-kanal-12-bit-usb-datenerfassungssystem.html
-    - http://www.h-tronic.com/Presse/download/1191030BA.pdf
+- H-TRONIC HB628 - USB Datenerfassungs- und Steuerungsmodul
+    - https://openmsr.org/index.php/de/news/85-h-tronic-8-kanal-12-bit-usb-datenerfassungs-steuerungsmodul
+    - https://www.h-tronic.de/shop/8-kanal-12-bit-usb-datenerfassungssystem/
+    - https://www.h-tronic.de/shop/8-kanal-usb-datenerfassungs-12-bit-und-steuermodul/
+    - https://www.h-tronic.com/Presse/download/1191030BA.pdf
+    - https://github.com/lnetwalker/openMSR
 
 - http://ab.rockwellautomation.com/IO
 - http://www.redlion.net/products/industrial-automation/process-control/rtus-io-modules/ethertrak-2-io-modules
 
-- https://www.interfaceinnovations.org/cupidcontrolsproducts.html
+- https://www.interfaceinnovations.org/cupidcontrols.html
 
-    - http://shop.interfaceinnovations.org/index.php?route=product/category&path=33
+    - https://web.archive.org/web/20160403113145/http://shop.interfaceinnovations.org/index.php?route=product/category&path=33
+    - https://web.archive.org/web/20150104193118mp_/http://shop.interfaceinnovations.org/index.php?route=product/product&path=33&product_id=50
 
 - Bosch Connected Devices and Solutions
 
@@ -112,21 +132,18 @@ RF69
 
 JeeLabs
 -------
-- http://jeelabs.net/projects/hardware/wiki/JeeNode_USB
-- http://www.digitalsmarties.net/
+- https://jeelabs.org/
+- https://www.digitalsmarties.net/
+- https://web.archive.org/web/20170806051803/http://jeelabs.net/projects/hardware/wiki/JeeNode_USB
 
-    - http://www.digitalsmarties.net/products/jeenode-usb
-    - http://www.digitalsmarties.net/products/wireless-starter-pack
+    - https://www.digitalsmarties.net/products/jeenode-usb
+    - https://www.digitalsmarties.net/products/wireless-starter-pack
 
-- https://moderndevice.com/product-category/jeelabs/
-
-    - https://moderndevice.com/product/jeelabs-mini-starter-kit/
-    - https://moderndevice.com/product/jeelabs-aa-power-board/
-    - https://moderndevice.com/product/jeenode-usb/
+- https://web.archive.org/web/20160729180745/https://moderndevice.com/product-category/jeelabs/
 
 
 Miscellaneous
 =============
 - | Einzel 433Mhz TTL 3DRobotics 3DR Radio-Telemetrie-Kit für APM2 / 2.5 / 2.6 HOT
-  | http://www.ebay.de/itm/like/252405264286
+  | https://www.ebay.de/itm/174419492510
 

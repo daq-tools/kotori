@@ -106,9 +106,10 @@ Eclipse IoT
 - https://iot.eclipse.org/
 - https://www.youtube.com/watch?v=1IsM1sfas-w
 - https://iot.eclipse.org/resources/white-papers/Eclipse%20IoT%20White%20Paper%20-%20The%20Three%20Software%20Stacks%20Required%20for%20IoT%20Architectures.pdf
-- https://www.iotivity.org/
-- https://wiki.iotivity.org/
-- https://wiki.iotivity.org/iotivity_tool_guide
+- http://www.iotivity.org/
+- https://github.com/iotivity/iotivity-lite
+- https://web.archive.org/web/20180426144851/https://wiki.iotivity.org/
+- https://web.archive.org/web/20180426144851/https://wiki.iotivity.org/iotivity_tool_guide
 
 
 Half-open
@@ -122,43 +123,39 @@ Half-open
   | http://docs.relayr.io/
   | https://developer.relayr.io/
   | https://github.com/relayr
-  | https://github.com/relayr/ESP8266_Lua
-  | https://github.com/relayr/ESP8266_Arduino
-  | https://github.com/relayr/SensorDefinitionAPI
-  | https://github.com/relayr/python-sdk
-  | http://docs.relayr.io/Python/
-  | https://forum.relayr.io/latest
+  | https://github.com/daq-tools/SensorDefinitionAPI
+  | https://github.com/interoberlin/Wunderbar-Python-SDK ``https://github.com/relayr/python-sdk``
+  | https://web.archive.org/web/20161017153059/http://docs.relayr.io/ ``http://docs.relayr.io/Python/``
+  | ``https://forum.relayr.io/latest``
 
 - | Synapse
-  | http://readwrite.com/2016/11/02/another-iot-platform/
+  | https://readwrite.com/another-iot-platform/
   | https://github.com/synapse-wireless
-  | http://info.synapse-wireless.com/iot-development-connect-things-marketecture
-  | http://www.synapse-wireless.com/iot-development/hardware-products/rf-modules
-  | http://www.synapse-wireless.com/iot-development/hardware-products/iot-gateways
+  | https://web.archive.org/web/20171026113316/http://info.synapse-wireless.com/iot-development-connect-things-marketecture
+  | https://www.synapsewireless.com/technology
+  | https://www.synapsewireless.com/technology/simplysnap
+  | https://www.synapsewireless.com/technology/industrial-connectivity-hardware
+  | https://www.synapsewireless.com/technology/site-control-and-gateways
   | https://developer.synapse-wireless.com/software/snapcore/index.html
   | https://developer.synapse-wireless.com/software/snapcore/language/index.html
   | https://developer.synapse-wireless.com/software/snapcore/network/index.html
   | https://developer.synapse-wireless.com/software/snapcore/snappy/event-driven.html
   | https://developer.synapse-wireless.com/software/snapcore/snappy/switchboard.html
   | https://developer.synapse-wireless.com/modules/atmega/index.html
-  | http://www.synapse-wireless.com/iot-development/software-products/snapconnect-2
   | https://developer.synapse-wireless.com/software/snapconnect-futures/examples.html
-  | http://www.synapse-wireless.com/iot-development/software-products/portal-2/
   | https://developer.synapse-wireless.com/software/portal/index.html
   | https://developer.synapse-wireless.com/software/snaptoolbelt/install.html
-  | http://info.synapse-wireless.com/ek2100-220
-  | http://www.synapse-wireless.com/iot-development/software-products/snaptoolbelt-and-snapbuild-2/
+  | https://web.archive.org/web/20171230053811/http://info.synapse-wireless.com/ek2100-220
+  | https://web.archive.org/web/20180325201438/http://www.synapse-wireless.com/iot-development/software-products/snaptoolbelt-and-snapbuild-2/
   | https://developer.synapse-wireless.com/software/snapconnect/examples.html
   | https://developer.synapse-wireless.com/software/thing-services/examples.html
-  | http://www.synapse-wireless.com/about-us/company-history/
-  | http://info.synapse-wireless.com/iot-development-get-started
-  | https://github.com/synapse-wireless/snappy-script-examples/tree/master/examples
+  | https://www.synapsewireless.com/about/about-us
+  | https://web.archive.org/web/20180124135055/http://info.synapse-wireless.com/iot-development-get-started
   | https://github.com/synapse-wireless/basic-data-collector-example/blob/master/sensor.py
   | https://github.com/synapse-wireless/snappy-atmega
-  | https://github.com/synapse-wireless/exosite-data-collector-client-example/
   | https://update.synapse-wireless.com/pypi/
 
-- https://www.opensensors.io/
+- https://www.opensensors.com/
 
 
 Closed
@@ -171,41 +168,43 @@ Closed
 
 - | RoboMQ
   | RoboMQ connects devices, systems, clouds and things to create smart and context-aware applications
-  | http://robomq.io/
+  | https://www.robomq.io/
   | https://robomq.readthedocs.org/
   | https://robomq.readthedocs.org/en/latest/connectors/
   | https://robomq.readthedocs.org/en/latest/MQTT/
-  | http://robomq.blogspot.de/2015/05/unlocking-modbus-networks-to-internet.html
+  | ``http://robomq.blogspot.de/2015/05/unlocking-modbus-networks-to-internet.html``
 
 - | ThingSpeak
   | https://thingspeak.com/
 
 - | Pachube
   | Acquired by Xively
-  | http://www.haque.co.uk/pachube.php
+  | https://www.haque.co.uk/work/pachube/
 
 - | Cosm
   | Acquired by Xively
 
 - | Xively
-  | Seems to be the top dog
-  | https://xively.com/
+  | Seems to be the top dog, acquired by Google in 2018.
+  | - ``https://xively.com/``
+  | - https://cloud.google.com/solutions/iot
 
-- | Sen.se
+- | open.sen.se
   | Let Devices, Applications and even Humans simply post on Sen.se what's happening to them, what they are feeling
-  | http://open.sen.se/
-  | http://blog.sen.se/
+  | https://web.archive.org/web/20161222071652/http://open.sen.se/
+  | https://web.archive.org/web/20161106220607/http://blog.sen.se/
+  | https://www.vdsar.net/sensorbox-page/
 
-- | Brillo
-  | https://developers.google.com/brillo/
+- | Android Things, ex. Brillo
+  | https://developer.android.com/things/
 
 - | Exosite
-  | https://exosite.com/
+  | https://www.exosite.com/
   | https://exosite-garage.github.io/
   | https://github.com/exosite-garage
-  | http://playground.arduino.cc/Code/Exosite
+  | https://playground.arduino.cc/Code/Exosite
   | https://github.com/exosite-garage/arduino_exosite_library
-  | http://docs.exosite.com/websocket/
+  | https://docs.exosite.io/murano/reference/scripting/#websocket-endpoints
   | https://github.com/exosite-labs
   | https://exosite-labs.github.io/
   | https://pyonep.readthedocs.org/
@@ -214,10 +213,14 @@ Closed
 
 - | Yaler
   | https://yaler.net/
-  | http://playground.arduino.cc/Code/Yaler
+  | https://playground.arduino.cc/Code/Yaler
 
 - | wot.io
-  | http://www.wot.io
+  | ``http://www.wot.io``
+  | https://www.interdigital.com/post/wot-io-is-now-in-the-thingworx-iot-marketplace
+  | https://web.archive.org/web/20200519212903/https://www.interdigital.com/iot
+  | https://www.ptc.com/en/products/thingworx
+  | https://www.ptc.com/marketplace
 
 - | ARM Mbed IoT Device Platform (mbed.com)
   | https://www.mbed.com/en/
@@ -225,28 +228,28 @@ Closed
 
 - | Polestar
   | https://polestar.io/
-  | http://www.1060research.com/products/
+  | https://netkernel.io/
 
 - https://grovestreams.com/
-- http://sensorcloud.com/
+- https://sensorcloud.com/
 - https://freeboard.io/
 
 - | https://thingspeak.com/
   | https://github.com/iobridge/thingspeak
 
-- http://ubidots.com/
+- https://ubidots.com/
 
-    - http://ubidots.com/docs/devices/gprsbee.html#gprsbee
+    - https://help.ubidots.com/en/articles/513299-connect-a-gprsbee-to-ubidots-over-http
 
-- http://dweet.io/
+- https://dweet.io/
 - https://yaler.net/
-- http://devicepilot.com/
+- https://www.devicepilot.com/
 - https://evrythng.com/
 
 - | Infiswift: The most powerful IoT infrastructure
-  | https://infiswift.com/
+  | https://infiswift.tech/
 
-- | http://gpio.online/
+- | https://web.archive.org/web/20180809110246/http://gpio.online/
   | https://twitter.com/gpioOnline
 
 
@@ -260,6 +263,14 @@ Keen IO
 - https://keen.github.io/explorer/
 - https://github.com/keen/learn
 - https://github.com/keen/radialflows
+
+
+Factry
+------
+- https://www.factry.io/
+- https://twitter.com/factry_io
+- https://demo.factry.io/d/sE-RQ1ZGk/occupation-car-parkings?orgId=1&theme=dark
+- https://twitter.com/coussej
 
 
 Related cloud platforms
@@ -280,4 +291,3 @@ Misc
 Related libraries
 -----------------
 - http://playground.arduino.cc/Main/LibraryList#Cloud
-
