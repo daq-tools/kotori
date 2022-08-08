@@ -4,20 +4,25 @@
 .. _kotori-goals:
 .. _kotori-scenarios:
 
-*********
+#########
 Scenarios
+#########
+
+
+************
+Introduction
+************
+
+The design and development of Kotori follows common needs and requirements from
+the community, reflecting different use cases.
+The :ref:`example gallery <kotori-examples>` outlines some specific cases where
+Kotori has been used.
+
+
+*********
+For users
 *********
 
-The design of Kotori follows requirements from different audiences and use cases.
-
-.. container:: align-center basic-hero
-
-    To get an idea about the diversity of use cases, have a look at
-    the different areas and scopes of integration scenarios
-    collected at :ref:`Kotori Examples <kotori-examples>`.
-
-For consumers
-=============
 :ref:`Kotori` streamlines the process of collecting, storing,
 visualizing and postprocessing measurement and telemetry data.
 Forget about ad-hoc setups for recording data followed up by
@@ -39,8 +44,10 @@ A quick overview should get you an idea:
 - Notify subscribed users or devices of events like above-/below-threshold or data-loss.
 
 
+***************
 For integrators
-===============
+***************
+
 :ref:`Kotori` is a toolbox for creating vendor solutions in different areas:
 
 - Build field systems receiving telemetry data transmitted from vehicles
@@ -62,8 +69,10 @@ For integrators
   binary payloads of their in-house telemetry system.
 
 
+**************
 For developers
-==============
+**************
+
 :ref:`Kotori` is built upon a powerful service composition framework.
 Its goals are making it convenient for developers to ingest, emit
 and distribute data between different data sources and data sinks,

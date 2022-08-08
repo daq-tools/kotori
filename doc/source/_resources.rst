@@ -29,6 +29,11 @@
 .. _SymPy: https://www.sympy.org/
 .. _SymPy Features: https://www.sympy.org/en/features.html
 .. _Autobahn: https://autobahn.readthedocs.io/
+.. _PostgreSQL: https://en.wikipedia.org/wiki/PostgreSQL
+.. _HTTP: https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
+.. _WebSocket: https://en.wikipedia.org/wiki/WebSocket
+.. _TCP: https://en.wikipedia.org/wiki/Transmission_Control_Protocol
+.. _UDP: https://en.wikipedia.org/wiki/User_Datagram_Protocol
 
 .. Foundation SC
 .. _Node-RED: https://nodered.org/
