@@ -195,13 +195,25 @@ LST Mbed Binary
 ----
 
 
-*****************
-More applications
-*****************
+************************
+Arduino firmware builder
+************************
 
-.. toctree::
-    :maxdepth: 1
-    :glob:
+.. container:: pull-left width-60
 
-    ilaundry
-    firmware
+    .. container:: text-larger legroom-sm
+
+        Automate builds of Arduino projects to serve custom firmware images.
+
+    .. container:: btn-outline text-x-large
+
+        :ref:`Read more... <firmware-builder>`
+
+.. container:: pull-right
+
+    .. figure:: https://raw.githubusercontent.com/daq-tools/kotori/main/doc/source/_static/img/logo/arduino-community-logo.svg
+        :alt: Arduino community logo
+        :width: 240px
+        :target: https://www.arduino.cc/
+
+|clearfix|

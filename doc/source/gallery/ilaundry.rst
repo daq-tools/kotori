@@ -1,3 +1,5 @@
+:orphan:
+
 .. include:: ../_resources.rst
 
 .. _vendor-ilaundry:

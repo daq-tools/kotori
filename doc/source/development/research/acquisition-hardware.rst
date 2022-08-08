@@ -107,7 +107,7 @@ More
 - https://www.interfaceinnovations.org/cupidcontrols.html
 
     - https://web.archive.org/web/20160403113145/http://shop.interfaceinnovations.org/index.php?route=product/category&path=33
-    - https://web.archive.org/web/20150104193118mp_/http://shop.interfaceinnovations.org/index.php?route=product/product&path=33&product_id=50
+    - https://web.archive.org/web/20150104193118/http://shop.interfaceinnovations.org/index.php?route=product/product&path=33&product_id=50
 
 - Bosch Connected Devices and Solutions
 
