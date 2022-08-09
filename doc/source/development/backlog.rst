@@ -19,6 +19,8 @@ Backlog
 2022
 ****
 - https://mbientlab.com/
+
+  - https://github.com/mbientlab
   - https://hbldh.github.io/pymetawear/
   - https://github.com/hbldh/pymetawear
 - Compatibility with InfluxDB 2.2
@@ -26,6 +28,27 @@ Backlog
 - Support Python 3.10 and 3.11
 - https://www.seeedstudio.com/ReTerminal-with-CM4-p-4904.html
 - https://github.com/victronenergy/dbus-mqtt
+- Add code coverage reporting
+- Matter (formerly Project CHIP) is a new smart home standard
+
+  - https://www.home-assistant.io/blog/2022/05/29/matter-in-home-assistant-workshop-announcement/
+  - https://news.ycombinator.com/item?id=31749817
+  - https://csa-iot.org/all-solutions/matter/
+  - https://github.com/project-chip/connectedhomeip
+
+- https://www.tuya.com/
+
+- Victron Energy VenusOS
+
+  - https://github.com/victronenergy/venus
+  - https://www.victronenergy.com/blog/2017/09/06/raspberry-pi-running-victrons-venus-firmware/
+  - https://www.victronenergy.com/live/open_source:start
+  - https://github.com/victronenergy/dbus-mqtt
+
+- https://www.mccdaq.de/
+- https://github.com/mccdaq
+- https://github.com/firmata
+
 
 
 ****
