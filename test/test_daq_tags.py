@@ -24,7 +24,7 @@ def test_influxdb_tags(machinery, create_influxdb, reset_influxdb):
 
     # Define field names which are tags.
     # FIXME: Synchronize with ``kotori.daq.influx.storage.format_chunk()``.
-    tag_fields_main = ['geohash', 'latitude', 'longitude']
+    tag_fields_main = ['geohash']
     tag_fields_more = ['location', 'location_id', 'location_name', 'sensor_id', 'sensor_type']
 
     # Submit a single measurement, without timestamp.
@@ -39,15 +39,13 @@ def test_influxdb_tags(machinery, create_influxdb, reset_influxdb):
     for field in tag_fields_more:
         data[field] = idgen()
 
+    # Memorize reference payload to verify that input vs. output is equal.
+    reference = deepcopy(data)
+
     yield threads.deferToThread(mqtt_json_sensor, settings.mqtt_topic_json, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY_MQTT)
-
-    # Define reference payload.
-    reference = deepcopy(data)
-    reference['latitude'] = str(reference['latitude'])
-    reference['longitude'] = str(reference['longitude'])
 
     # Proof that data arrived in InfluxDB.
     record = influx_sensors.get_first_record()
@@ -55,7 +53,7 @@ def test_influxdb_tags(machinery, create_influxdb, reset_influxdb):
     assert record == reference
     yield record
 
-    # Proof that data all special fields have been converged to tags.
+    # Proof that all special fields have been converged to tags.
     resultset = influx_sensors.client.query('SHOW TAG KEYS FROM {measurement};'.format(measurement=settings.influx_measurement_sensors))
     yield resultset
 

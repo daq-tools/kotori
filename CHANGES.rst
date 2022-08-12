@@ -40,6 +40,14 @@ in progress
 - Documentation: Update to Sphinx 5
 
 
+Breaking changes
+----------------
+- Stop converging ``latitude`` and ``longitude`` ingress fields to tags.
+  It has been implemented as a convenience case when processing LDI data,
+  but it is not applicable in standard data acquisition scenarios, specifically
+  when recording positions of moving objects. Thanks, @tonkenfo.
+
+
 .. _kotori-0.26.12:
 
 2021-10-11 0.26.12
