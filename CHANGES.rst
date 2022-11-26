@@ -447,7 +447,7 @@ Clients
     - Update Grafana dashboard "grafana-by-location.json". Thanks, Richard!
     - Update documentation
 
-- Fix data convergence re. “time” field
+- Fix data convergence re. ``time`` field
 
 
 .. _kotori-0.18.2:
@@ -500,13 +500,13 @@ Clients
 
 2017-04-19 0.16.0
 =================
-- Add standalone program “`luftdatenpumpe.py`_”
+- Add standalone program `luftdatenpumpe.py`_
   to request data from `live data API of luftdaten.info <https://api.luftdaten.info/static/v1/data.json>`_,
   enrich geospatial information and publish to MQTT bus. Thanks, Richard!
 - Add documentation and configuration for vendor :ref:`vendor-luftdaten.info`. Thanks again, Richard!
 - Fix HTTP routing for :ref:`firmware-builder`
 - Fix python module dependency woes re. OpenSSL on Darwin vs. Linux
-- Make Kotori run even without having “pandas” installed (w/o “export” extras)
+- Make Kotori run even without having ``pandas`` installed (w/o ``export`` extras)
 - Improve error logging in bootstrapping phase
 - Add support for architecture "ESP" to :ref:`firmware-builder`
 - Make transaction logging interval configurable, default to 60 seconds to reduce log traffic significantly
@@ -576,7 +576,7 @@ Clients
 
 2017-03-20 0.12.1
 =================
-- Add Python dependency “python-dateutil”
+- Add Python dependency ``python-dateutil``
 
 
 .. _kotori-0.12.0:
@@ -676,7 +676,7 @@ Clients
 
 2016-10-31 0.10.10
 ==================
-- Fix Debian package re. superfluous “local” folder containing a redundant Python virtualenv. Thanks Smilie!
+- Fix Debian package re. superfluous ``local`` folder containing a redundant Python virtualenv. Thanks Smilie!
 - Fix receiving discrete measurements via MQTT. Thanks Karsten and Clemens!
 - Update Git repository url for hacking on Kotori
 - Improve documentation
@@ -702,7 +702,7 @@ Clients
 
 2016-07-10 0.10.6
 =================
-- Fix timeseries plotting by using “pad” and “backfill” appropriately
+- Fix timeseries plotting by using ``pad`` and ``backfill`` appropriately
 - Add export parameters "exclude", "include", "interpolate" and "sorted"
 - Fix data routing and processing
 - Add license to documentation
@@ -724,7 +724,7 @@ Clients
 
 2016-07-02 0.10.3
 =================
-- Use matplotlib “agg” backend
+- Use matplotlib ``agg`` backend
 - Improve ggplot rendering context, add font for rendering xkcd theme
 - Upgrade to pandas 0.18.1
 
@@ -864,10 +864,10 @@ Vendor :ref:`vendor-lst`
 
 Vendor :ref:`vendor-hiveeyes`
 -----------------------------
-- improve configuration file “hiveeyes.ini” and logging
+- improve configuration file ``hiveeyes.ini`` and logging
 - fix Grafana panel creation re. Grafana 2.6.0 compatibility, Grafana 2.1.3 still works though
 - fix Grafana panel creation re. InfluxDB select expression
-- don’t put global realm “hiveeyes” into Grafana dashboard name
+- don’t put global realm ``hiveeyes`` into Grafana dashboard name
 - improve Grafana panel automation
 - accept single values on mqtt topic
 - tune the default Grafana dashboard and panel
@@ -889,7 +889,7 @@ Miscellaneous
 
 2015-11-26 0.5.1
 ================
-- overhaul configuration files, activate “hydro2motion” channel with vendor :ref:`vendor-lst`
+- overhaul configuration files, activate ``hydro2motion`` channel with vendor :ref:`vendor-lst`
 - fix hydro2motion re. database authentication
 - lst: improve documentation
 
@@ -906,7 +906,7 @@ Vendor :ref:`vendor-lst`
 - apply transformation rules before publishing to software bus
 - fix grafana dashboard update when having no panels
 - nasty hack to get proper struct initializer data from CParser results
-- show “average” column in Grafana
+- show ``average`` column in Grafana
 - flexible compiler detection re. Linux vs. Mac OSX (MacPorts)
 - improve error handling when using interactive commands
 - explicitly convert values to float when evaluating SymPy expressions
@@ -915,8 +915,8 @@ Vendor :ref:`vendor-lst`
 - rename ``etc/lst-h2m.ini`` to ``etc/lst.ini``
 - generalize h2m-message and sattracker-message into lst-message
 - specify configuration file via KOTORI_CONFIG environment variable
-- add “lst-message list-channels” command
-- wording: change “application” to “channel”
+- add ``lst-message list-channels`` command
+- wording: change ``application`` to ``channel``
 - refactor configuration mechanics
 
 
@@ -936,8 +936,8 @@ Proof-of-concept for vendor :ref:`vendor-lst`
 - add initial docs about lst/h2m spikes
 - properly tweak "h2m_structs.h" to be grokked by patched pyclibrary
 - make message receiving actually work in dry-dock, improve pretty-printing
-- add command line entrypoint “h2m-message” with “decode” and “info” actions
-- implement “h2m-message send”
+- add command line entrypoint ``h2m-message`` with ``decode`` and ``info`` actions
+- implement ``h2m-message send``
 - lst main application component: receive, decode and store binary messages
 - automatic Grafana dashboard- and panel creation
 
@@ -948,7 +948,7 @@ General improvements
 - use nanosecond time precision with InfluxDB
 - lst: honour struct field order in Grafana
 - add more details to Grafana dashboard panels
-- improve error messages “h2m-message send/decode”
+- improve error messages ``h2m-message send/decode``
 - generalize c library adapter, multi-project capabilities for vendor lst
 
 
