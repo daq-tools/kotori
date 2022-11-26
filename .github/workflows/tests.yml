@@ -24,9 +24,9 @@ jobs:
       matrix:
         os: [ ubuntu-20.04 ] # , macos-latest, windows-latest ]
         python-version: [ "3.6", "3.7", "3.8", "3.9", "3.10", "3.11" ]
-        mosquitto-version: [ "1.6", "2.0" ]
-        influxdb-version: [ "1.7", "1.8" ]
-        grafana-version: [ "6.7.6", "7.5.17", "8.5.15", "9.2.6" ]
+        mosquitto-version: [ "2.0" ]
+        influxdb-version: [ "1.8" ]
+        grafana-version: [ "7.5.17", "8.5.15", "9.2.6" ]
 
     # https://docs.github.com/en/free-pro-team@latest/actions/guides/about-service-containers
     services:
