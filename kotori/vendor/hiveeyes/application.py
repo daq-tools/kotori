@@ -4,7 +4,7 @@ import re
 import json
 
 import attr
-from bunch import Bunch
+from munch import Munch
 from collections import OrderedDict
 
 from grafana_api_client import GrafanaPreconditionFailedError, GrafanaClientError
@@ -15,7 +15,7 @@ from kotori.daq.services import RootService
 from kotori.daq.services.mig import MqttInfluxGrafanaService
 from kotori.daq.strategy.wan import WanBusStrategy
 from kotori.daq.graphing.grafana.manager import GrafanaManager
-from kotori.util.common import SmartBunch
+from kotori.util.common import SmartMunch
 
 log = Logger()
 
@@ -38,7 +38,7 @@ class HiveeyesGenericGrafanaManager(GrafanaManager):
 
         # Derive dashboard uid and name from topology information
         label = u'{realm}-{network}'.format(realm=realm, network=network)
-        identity = SmartBunch(
+        identity = SmartMunch(
             uid=label,
             name=label,
             title=label,
@@ -141,7 +141,7 @@ class HiveeyesBeehiveGrafanaManager(GrafanaManager):
         # Derive dashboard uid and name from topology information
         nodename = u'{gateway} / {node}'.format(gateway=topology.gateway, node=topology.node)
         label = self.strategy.topology_to_label(topology)
-        identity = SmartBunch(
+        identity = SmartMunch(
             uid=label,
             name=label,
             title=label,
@@ -255,7 +255,7 @@ class BeekeeperFields(object):
         }
         #pprint(candidates)
 
-        results = SmartBunch()
+        results = SmartMunch()
         for name, patterns in candidates.items():
             fieldname = self.find_match(patterns)
             if fieldname is not None:
@@ -302,7 +302,7 @@ def hiveeyes_boot(settings, debug=False):
     rootService = RootService(settings=settings)
 
     # Channel realm
-    channel = Bunch(**settings.hiveeyes)
+    channel = Munch(**settings.hiveeyes)
 
     # Main application service
     service = MqttInfluxGrafanaService(

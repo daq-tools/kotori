@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2015-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import os
-from bunch import Bunch
+from munch import Munch
 from binascii import hexlify
 from copy import deepcopy
 from pkg_resources import resource_filename
@@ -106,7 +106,7 @@ class InfluxStorage(BusInfluxForwarder):
         Compute storage location (database- and timeseries-names) from message information
         """
         sanitize = self.sanitize_db_identifier
-        location = Bunch({
+        location = Munch({
             'database': sanitize(self.topic),
             'series':   '{:02d}_{}'.format(data['ID'], sanitize(data['_name_'].replace('struct_', ''))),
         })
@@ -144,7 +144,7 @@ class StorageAdapter(object):
         log.info('Starting InfluxStorage')
         # TODO: Refactor the _active_ mechanics
         topic = str(self.config['_active_']['wamp_topic'])
-        channel = Bunch(
+        channel = Munch(
             settings = self.config['_active_']
         )
         # TODO: Improve parameter passing

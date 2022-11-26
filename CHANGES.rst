@@ -34,6 +34,7 @@ in progress
   ``name`` and ``title`` fields.
 - Improve decoding fractional epoch timestamps
 - Update to ``numpy<1.24`` on Python >3.10
+- Replace ``Bunch`` with ``Munch``
 
 Breaking changes
 ----------------

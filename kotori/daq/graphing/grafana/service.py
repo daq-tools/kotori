@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2018-2021 Andreas Motl <andreas@getkotori.org>
-from bunch import Bunch
+from munch import Munch
 from twisted.application.service import MultiService
 from twisted.logger import Logger
 from kotori.daq.services import MultiServiceMixin
@@ -15,7 +15,7 @@ class DashboardRefreshTamingService(MultiServiceMixin, MultiService):
     """
 
     def __init__(self, channel=None, preset='standard'):
-        self.channel = channel or Bunch()
+        self.channel = channel or Munch()
         self.preset = preset
         MultiService.__init__(self)
 

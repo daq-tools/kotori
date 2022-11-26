@@ -2,7 +2,7 @@
 # (c) 2015-2016 Andreas Motl, Elmyra UG <andreas.motl@elmyra.de>
 import sys
 import logging
-from bunch import Bunch
+from munch import Munch
 from docopt import docopt
 from kotori.version import __VERSION__
 from kotori.util.common import setup_logging
@@ -80,7 +80,7 @@ def message():
     channel_name  = sanitize_channel_label(channel_label)
     if channel_name == channel_label:
         channel_label = compute_channel_label(channel_name)
-    channel = Bunch(
+    channel = Munch(
         name  = channel_name,
         label = channel_label)
     # TODO: overhaul _active_ mechanics

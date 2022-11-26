@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2015-2021 Andreas Motl <andreas.motl@getkotori.org>
-from bunch import Bunch
+from munch import Munch
 from twisted.logger import Logger
 from kotori.daq.services import RootService
 from kotori.daq.services.mig import MqttInfluxGrafanaService
@@ -22,7 +22,7 @@ class MqttKitApplication(RootService):
         self.name = u'app-{name}'.format(name=name)
 
         # Make channel object from application settings configuration object
-        self.channel = Bunch(**application_settings)
+        self.channel = Munch(**application_settings)
 
         # Create application service object composed of subsystem components
         service = MqttInfluxGrafanaService(

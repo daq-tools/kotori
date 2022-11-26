@@ -8,7 +8,7 @@ import uuid
 from io import StringIO
 
 import arrow
-from bunch import Bunch
+from munch import Munch
 from appdirs import user_cache_dir
 from tempfile import NamedTemporaryFile
 from contextlib import contextmanager
@@ -321,7 +321,7 @@ class FirmwareBuilder(object):
 
         # The result object containing build success flag and error outputs.
         # This gets bound to the context manager variable.
-        result = Bunch()
+        result = Munch()
         self.build_result['capture'] = result
 
         # A temporary file to redirect make output to

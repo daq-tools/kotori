@@ -4,7 +4,7 @@ import os
 import json
 
 import attr
-from bunch import Bunch
+from munch import Munch
 from jinja2 import Template
 from pkg_resources import resource_filename
 from twisted.logger import Logger
@@ -297,7 +297,7 @@ class GrafanaDashboardBuilder(object):
 class GrafanaDashboard(object):
 
     def __init__(self, channel=None, uid=None, title='default', datasource='default', folder_id=None, dashboard_data=None):
-        self.channel = channel or Bunch()
+        self.channel = channel or Munch()
         self.dashboard_uid = uid
         self.dashboard_title = title
         self.datasource = datasource

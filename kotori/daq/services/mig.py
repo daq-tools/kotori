@@ -4,7 +4,7 @@ import time
 import json
 
 import arrow
-from bunch import Bunch
+from munch import Munch
 from cornice.util import to_list
 from twisted.logger import Logger, LogLevel
 from twisted.internet import reactor
@@ -34,7 +34,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
         # TODO: Make subsystems dynamic
         self.subsystems = ['channel', 'graphing', 'strategy']
-        self.channel = channel or Bunch(realm=None, subscriptions=[])
+        self.channel = channel or Munch(realm=None, subscriptions=[])
         self.graphing = to_list(graphing)
         self.strategy = strategy
 
@@ -56,7 +56,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
         # Configure metrics to be collected each X seconds
         metrics_interval = int(self.channel.get('metrics_logger_interval', 60))
-        self.metrics = Bunch(tx_count=0, starttime=time.time(), interval=metrics_interval)
+        self.metrics = Munch(tx_count=0, starttime=time.time(), interval=metrics_interval)
 
         subscriptions = read_list(self.channel.mqtt_topics)
         self.mqtt_service = MqttAdapter(

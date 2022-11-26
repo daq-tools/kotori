@@ -4,7 +4,7 @@ import os
 import logging
 from configparser import ConfigParser
 from glob import glob
-from bunch import Bunch
+from munch import Munch
 from cornice.util import to_list
 
 log = logging.getLogger()
@@ -30,7 +30,7 @@ def get_configuration(*args):
     config_files += [os.path.expanduser('~/.kotori.ini')]
     config_files += list(args)
     log.info('Requested configuration files: {}'.format(make_list(config_files)))
-    config, used = read_config(config_files, kind=Bunch)
+    config, used = read_config(config_files, kind=Munch)
     if config:
         if 'main' in config and 'include' in config.main:
             includes = read_list(config.main.include)
@@ -40,7 +40,7 @@ def get_configuration(*args):
                 else:
                     config_files.append(include)
             log.info('Expanded configuration files:  {}'.format(make_list(config_files)))
-            config, used = read_config(config_files, kind=Bunch)
+            config, used = read_config(config_files, kind=Munch)
         log.info('Effective configuration files: {}'.format(make_list(used)))
         return config
     else:
