@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2020-2021 Andreas Motl <andreas@getkotori.org>
+# (c) 2020-2022 Andreas Motl <andreas@getkotori.org>
 import json
 import logging
 
@@ -17,10 +17,15 @@ from datadiff.tools import assert_equal
 logger = logging.getLogger(__name__)
 
 
+# Define date ranges for querying.
+ts_from = '2020-03-10T00:00:00.000Z'
+ts_to = '2020-03-10T23:59:59.000Z'
+
+
 @pytest_twisted.inlineCallbacks
 @pytest.mark.http
 @pytest.mark.export
-def test_export(machinery, create_influxdb, reset_influxdb):
+def test_export_general(machinery, create_influxdb, reset_influxdb):
     """
     Submit single reading in JSON format to HTTP API and proof
     it can be retrieved back from the HTTP API in different formats.
@@ -36,10 +41,6 @@ def test_export(machinery, create_influxdb, reset_influxdb):
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY_MQTT)
-
-    # Proof that data is available via HTTP API.
-    ts_from = '2020-03-10T00:00:00.000Z'
-    ts_to = '2020-03-10T23:59:59.000Z'
 
     # Reference DataFrame to compare with.
     df_should = pd.DataFrame([[pd.to_datetime("2020-03-10T03:29:42.000000Z"), 51.8, 25.26]], columns=["time", "humidity", "temperature"])
@@ -78,6 +79,39 @@ def test_export(machinery, create_influxdb, reset_influxdb):
         '<th>humidity</th>' in deferred.result and \
         '<td>51.8</td>' in deferred.result
 
+    # NetCDF format.
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='nc', ts_from=ts_from, ts_to=ts_to)
+    yield deferred
+    assert deferred.result.startswith(b'\x89HDF\r\n\x1a\n\x02\x08\x08\x00\x00\x00')
+
+    # Datatables HTML.
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='dt', ts_from=ts_from, ts_to=ts_to)
+    yield deferred
+    assert b"cdn.datatables.net" in deferred.result
+
+
+@pytest_twisted.inlineCallbacks
+@pytest.mark.http
+@pytest.mark.export
+def test_export_hdf5(machinery, create_influxdb, reset_influxdb):
+    """
+    Submit single reading in JSON format to HTTP API and proof
+    it can be retrieved back from the HTTP API in HDF5 format.
+    """
+
+    pytest.importorskip("tables", reason="Packages `h5py` and `tables` not available for Python 3.11 yet")
+
+    # Submit a single measurement, with timestamp.
+    data = {
+        'time': 1583810982,
+        'temperature': 25.26,
+        'humidity': 51.8,
+    }
+    yield threads.deferToThread(http_json_sensor, settings.channel_path_data, data)
+
+    # Wait for some time to process the message.
+    yield sleep(PROCESS_DELAY_MQTT)
+
     # HDF5 format.
     deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='hdf5', ts_from=ts_from, ts_to=ts_to)
     yield deferred
@@ -95,13 +129,3 @@ def test_export(machinery, create_influxdb, reset_influxdb):
     assert hdf["/itest_foo_bar/table"][()] == array(
         [(1583810982000000000, 51.8, 25.26)],
         dtype=[('index', '<i8'), ('humidity', '<f8'), ('temperature', '<f8')])
-
-    # NetCDF format.
-    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='nc', ts_from=ts_from, ts_to=ts_to)
-    yield deferred
-    assert deferred.result.startswith(b'\x89HDF\r\n\x1a\n\x00\x00\x00\x00\x00')
-
-    # Datatables HTML.
-    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='dt', ts_from=ts_from, ts_to=ts_to)
-    yield deferred
-    assert b"cdn.datatables.net" in deferred.result

@@ -7,7 +7,8 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 
 PYTHON_35 = (3, 5) <= sys.version_info < (3, 6)
-PYTHON_GTE_310 = (3, 10) <= sys.version_info
+PYTHON_GTE_310 = sys.version_info >= (3, 10)
+PYTHON_LT_311 = sys.version_info < (3, 11)
 
 # Pandas on Python 3.5 will attempt to install `numpy==1.20.1`,
 # which will bail out on aarch64 with `RuntimeError: Python version >= 3.7 required.`.
@@ -109,10 +110,7 @@ extras = {
 
         # Data
         # ----
-        # HDF5
-        # "PyTables" requires HDF5 libraries
-        'tables>=3.5.2,<4',
-        'h5py>=2.10.0,<4',
+        # HDF5 - see below.
 
         # NetCDF (Network Common Data Form)
         'xarray>=0.13.0,<0.17',
@@ -140,6 +138,16 @@ extras = {
     ],
 
 }
+
+
+# "PyTables" requires HDF5 libraries.
+# Wheels for `h5py` and `tables` not available for cp311 yet.
+if PYTHON_LT_311:
+    extras["scientific"] += [
+        "h5py>=2.10.0,<4",
+        "tables>=3.5.2,<4",
+    ]
+
 
 setup(name='kotori',
       version='0.26.12',
