@@ -21,6 +21,10 @@ if PYTHON_GTE_310:
     pandas_spec = "pandas<1.6"
     numpy_spec = "numpy<1.24"
 
+xarray_spec = 'xarray>=0.13.0,<0.22'
+if PYTHON_GTE_310:
+    xarray_spec = 'xarray<2023'
+
 requires = [
 
     # Core
@@ -113,8 +117,8 @@ extras = {
         # HDF5 - see below.
 
         # NetCDF (Network Common Data Form)
-        'xarray>=0.13.0,<0.17',
-        'netCDF4>=1.5.3,<1.6',
+        xarray_spec,
+        'netCDF4>=1.5.3,<1.7',
         #'h5netcdf==0.2.2',
 
         # Algorithms
