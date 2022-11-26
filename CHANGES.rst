@@ -5,11 +5,16 @@ Changelog
 
 in progress
 ===========
+
+
+.. _kotori-0.27.0:
+
+2022-11-26 0.27.0
+=================
 - Add Dockerfile and basic documentation about running Kotori with RabbitMQ
   as MQTT broker.
 - Improve MQTT logging when connection to broker fails
 - Make MQTT broker credential settings ``username`` and ``password`` optional
-- Improve sandbox and CI setup, software tests and documentation
 - Add software tests for simulating all advanced actions against Grafana
 
   - Publish single reading in JSON format to MQTT broker and proof that a
@@ -28,17 +33,7 @@ in progress
   will now use the slug-name of the data channel for all of Grafana's ``uid``,
   ``name`` and ``title`` fields.
 - Improve decoding fractional epoch timestamps
-- Update to Twisted <23
-- CI: Update to Grafana 7.5.17, 8.5.15, and 9.2.6
-- CI: Update to MongoDB 5.0
-- Tests: Remove ``nosetests`` test runner, replace with ``pytest``
-- Build: Use ``python -m build`` for building sdist and wheel packages
-- Add support for Python 3.10 and 3.11
-- CI: Modernize GHA workflow recipe
-- Update to ``numpy<1.24`` on Python 3.10
-- Documentation: Add link checker and fix a few broken links
-- Documentation: Update to Sphinx 5
-
+- Update to ``numpy<1.24`` on Python >3.10
 
 Breaking changes
 ----------------
@@ -46,6 +41,19 @@ Breaking changes
   It has been implemented as a convenience case when processing LDI data,
   but it is not applicable in standard data acquisition scenarios, specifically
   when recording positions of moving objects. Thanks, @tonkenfo.
+
+Infrastructure
+--------------
+- Improve sandbox and CI setup, software tests and documentation
+- Update to Twisted <23
+- CI: Update to Grafana 7.5.17, 8.5.15, and 9.2.6
+- CI: Update to MongoDB 5.0
+- Tests: Remove ``nosetests`` test runner, replace with ``pytest``
+- Build: Use ``python -m build`` for building sdist and wheel packages
+- Add support for Python 3.10 and 3.11
+- CI: Modernize GHA workflow recipe
+- Documentation: Add link checker and fix a few broken links
+- Documentation: Update to Sphinx 5
 
 
 .. _kotori-0.26.12:
