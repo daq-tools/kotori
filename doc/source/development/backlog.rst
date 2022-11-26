@@ -58,7 +58,6 @@ Backlog
 - Run black and isort
 - Add CI testing on GHA
 - Logrotate configuration for kotori.log
-- Completely replace Bunch with Munch
 - Measure and increase code coverage on testing
 - Inline or publish https://github.com/jjmalina/pyinfluxql
 - Improve message when invoking Kotori w/o configuration file.

@@ -12,7 +12,7 @@ from uuid import uuid4
 from appdirs import user_data_dir
 from datetime import timedelta
 
-from bunch import Bunch
+from munch import Munch
 
 logger = logging.getLogger()
 
@@ -132,7 +132,7 @@ def tdelta(input):
     return timedelta(**kwargs)
 
 
-class SmartBunch(Bunch):
+class SmartMunch(Munch):
 
     def dump(self):
         return self.toJSON()
@@ -144,15 +144,15 @@ class SmartBunch(Bunch):
         return self.pretty()
 
     @classmethod
-    def bunchify(cls, x):
+    def munchify(cls, x):
         """
-        Recursively transforms a dictionary into a SmartBunch via copy.
-        Generic "bunchify", also works with descendants of Bunch.
+        Recursively transforms a dictionary into a SmartMunch via copy.
+        Generic `munchify`, also works with descendants of Munch.
         """
         if isinstance(x, dict):
-            return cls((k, cls.bunchify(v)) for k, v in x.items())
+            return cls((k, cls.munchify(v)) for k, v in x.items())
         elif isinstance(x, (list, tuple)):
-            return type(x)(cls.bunchify(v) for v in x)
+            return type(x)(cls.munchify(v) for v in x)
         else:
             return x
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # (c) 2016-2021 Andreas Motl, <andreas@getkotori.org>
-from bunch import Bunch
+from munch import Munch
 from twisted.logger import Logger
 from kotori import KotoriBootloader
 from kotori.daq.services import RootService
@@ -21,7 +21,7 @@ class CompositeApplication(RootService):
         self.name = u'app-{name}'.format(name=name)
 
         # Make channel object from application settings configuration object
-        self.channel = Bunch(**application_settings)
+        self.channel = Munch(**application_settings)
 
         # Main application components
         for service_reference in read_list(application_settings.services):

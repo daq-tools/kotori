@@ -4,7 +4,7 @@ import logging
 
 import pytest
 import pytest_twisted
-from bunch import Bunch
+from munch import Munch
 
 from test.conftest import create_machinery
 from test.settings.mqttkit import PROCESS_DELAY_MQTT
@@ -13,7 +13,7 @@ from test.util import mqtt_json_sensor, sleep, InfluxWrapper, GrafanaWrapper
 logger = logging.getLogger(__name__)
 
 
-settings = Bunch(
+settings = Munch(
     influx_database='hiveeyes_itest',
     influx_measurement='site_box_sensors',
     mqtt_topic='hiveeyes/itest/site/box/data.json',

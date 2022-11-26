@@ -17,7 +17,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 import sys
-from bunch import Bunch
+from munch import Munch
 from docopt import docopt
 from pkgutil import extend_path
 from twisted.internet import reactor
@@ -74,7 +74,7 @@ def boot(options=None):
     apply_default_settings(settings)
 
     # Merge command line options into settings
-    settings.setdefault('options', Bunch())
+    settings.setdefault('options', Munch())
     for key, value in options.items():
         key = key.lstrip(u'--')
         key = key.replace(u'-', u'_')

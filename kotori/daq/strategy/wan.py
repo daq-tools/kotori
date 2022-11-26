@@ -3,7 +3,7 @@
 import re
 
 from kotori.daq.strategy import StrategyBase
-from kotori.util.common import SmartBunch
+from kotori.util.common import SmartMunch
 
 
 class WanBusStrategy(StrategyBase):
@@ -45,7 +45,7 @@ class WanBusStrategy(StrategyBase):
         # Decode the topic.
         m = self.matcher.match(topic)
         if m:
-            address = SmartBunch(m.groupdict())
+            address = SmartMunch(m.groupdict())
         else:
             address = {}
 
@@ -74,7 +74,7 @@ class WanBusStrategy(StrategyBase):
         table_suffix = self.get_table_suffix(topology, message_type)
 
         # Use topology information as blueprint for storage address.
-        storage = SmartBunch(topology)
+        storage = SmartMunch(topology)
 
         # Format and sanitize all input parameters used for database addressing.
         # Todo: Investigate using tags additionally to / instead of only "storage.measurement".

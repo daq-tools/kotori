@@ -31,7 +31,6 @@ requires = [
     'cornice>=5.0.3,<6',
     'simplejson>=3.17.2,<4',
     'Jinja2<4',
-    'Bunch>=1.0.1,<2',
     'munch>=2.5.0,<3',
     'appdirs>=1.4.3,<2',
     'json-store>=3.1,<4',

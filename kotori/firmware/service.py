@@ -2,7 +2,7 @@
 # (c) 2016-2017 Andreas Motl <andreas@getkotori.org>
 import threading
 from copy import deepcopy
-from bunch import Bunch, bunchify
+from munch import Munch, munchify
 from collections import defaultdict
 from pyramid.settings import asbool
 from twisted.web import http
@@ -37,7 +37,7 @@ class FirmwareBuilderApplication(RootService):
         # Make channel object from application settings configuration object
         application_settings = deepcopy(application_settings)
         application_settings.update(name=name)
-        self.channel = Bunch(**application_settings)
+        self.channel = Munch(**application_settings)
 
         # Create application service object composed of subsystem components
         service = FirmwareBuilderService(
@@ -54,7 +54,7 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
 
         MultiService.__init__(self)
 
-        self.channel = channel or Bunch(realm=None, subscriptions=[])
+        self.channel = channel or Munch(realm=None, subscriptions=[])
 
         self.name = u'service-fb-' + self.channel.get('realm', str(id(self)))
 
@@ -103,7 +103,7 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
                 data['MQTT_TOPIC'] = '{TELEMETRY_REALM}/{TELEMETRY_USER}/{TELEMETRY_SITE}/{TELEMETRY_NODE}/data.json'.format(**data)
 
         # Extract option fields and delete them from transformation dict
-        options = Bunch()
+        options = Munch()
         option_fields = ['url', 'ref', 'update_submodules', 'path', 'architecture', 'makefile', 'suffix']
         for field in option_fields:
             if field in data:
@@ -134,7 +134,7 @@ class FirmwareBuilderService(MultiService, MultiServiceMixin):
 
 
         # 3. Build firmware, capturing error output, if any
-        payload = self.build_firmware_safe(bucket=bucket, options=bunchify(options), data=bunchify(data))
+        payload = self.build_firmware_safe(bucket=bucket, options=munchify(options), data=munchify(data))
 
 
         # 4. TODO: Announce to appropriate channel via MQTT

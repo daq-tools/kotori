@@ -2,7 +2,7 @@
 # (c) 2015-2021 Andreas Motl <andreas@getkotori.org>
 from copy import deepcopy
 
-from bunch import Bunch
+from munch import Munch
 from twisted.application.service import MultiService
 
 
@@ -32,7 +32,7 @@ class MultiServiceMixin(object):
         channel = deepcopy(channel)
         if name:
             channel.update(name=name)
-        self.channel = Bunch(**channel)
+        self.channel = Munch(**channel)
 
     @property
     def logname(self):

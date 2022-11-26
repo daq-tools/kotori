@@ -8,7 +8,7 @@ from kotori.daq.services import MultiServiceMixin
 from kotori.daq.graphing.grafana.api import GrafanaApi
 from kotori.daq.graphing.grafana.dashboard import GrafanaDashboardBuilder, GrafanaDashboardModel
 from kotori.daq.graphing.grafana.service import DashboardRefreshTamingService
-from kotori.util.common import KeyCache, SmartBunch
+from kotori.util.common import KeyCache, SmartMunch
 
 log = Logger()
 
@@ -101,7 +101,7 @@ class GrafanaManager(MultiService, MultiServiceMixin):
 
         # Derive dashboard uid and name from topology information
         label = u'{realm}-{name}'.format(realm=realm, name=name)
-        identity = SmartBunch(
+        identity = SmartMunch(
             uid=label,
             name=label,
             title=label,
@@ -206,7 +206,7 @@ class GrafanaManager(MultiService, MultiServiceMixin):
 
         for dashboard_meta in dashboard_list:
 
-            dashboard_meta = SmartBunch.bunchify(dashboard_meta)
+            dashboard_meta = SmartMunch.munchify(dashboard_meta)
             #print dashboard_meta.prettify()
 
             whoami = u'title="{title}", uid="{uid}"'.format(title=dashboard_meta['title'], uid=dashboard_meta['uid'])
@@ -214,7 +214,7 @@ class GrafanaManager(MultiService, MultiServiceMixin):
             # Request dashboard by uid
             dashboard_uid = dashboard_meta['uid']
             response = self.grafana_api.get_dashboard_by_uid(dashboard_uid)
-            response = SmartBunch.bunchify(response)
+            response = SmartMunch.munchify(response)
 
             # Get effective dashboard information from response
             folder_id = response.meta.folderId
