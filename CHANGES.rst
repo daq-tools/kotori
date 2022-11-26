@@ -11,8 +11,7 @@ in progress
 
 2022-11-26 0.27.0
 =================
-- Add Dockerfile and basic documentation about running Kotori with RabbitMQ
-  as MQTT broker.
+- Add documentation about running Kotori with RabbitMQ as MQTT broker, see :ref:`mqtt-broker-rabbitmq`.
 - Improve MQTT logging when connection to broker fails
 - Make MQTT broker credential settings ``username`` and ``password`` optional
 - Add software tests for simulating all advanced actions against Grafana
