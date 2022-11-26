@@ -52,6 +52,7 @@ Infrastructure
 - Tests: Remove ``nosetests`` test runner, replace with ``pytest``
 - Build: Use ``python -m build`` for building sdist and wheel packages
 - Add support for Python 3.10 and 3.11
+- Drop support for Python 3.5 and 3.6
 - CI: Modernize GHA workflow recipe
 - Documentation: Add link checker and fix a few broken links
 - Documentation: Update to Sphinx 5
