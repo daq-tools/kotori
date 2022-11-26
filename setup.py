@@ -23,7 +23,7 @@ if PYTHON_GTE_310:
 requires = [
 
     # Core
-    'Twisted[tls]==22.4.0',
+    'Twisted[tls]<23',
     'pyOpenSSL>=16.2.0',
     'six>=1.15.0',
     'pyramid==1.10.8',
