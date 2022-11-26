@@ -33,7 +33,7 @@ in progress
 - CI: Update to MongoDB 5.0
 - Tests: Remove ``nosetests`` test runner, replace with ``pytest``
 - Build: Use ``python -m build`` for building sdist and wheel packages
-- Add support for Python 3.10
+- Add support for Python 3.10 and 3.11
 - CI: Modernize GHA workflow recipe
 - Update to ``numpy<1.24`` on Python 3.10
 - Documentation: Add link checker and fix a few broken links
