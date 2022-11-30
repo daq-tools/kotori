@@ -65,7 +65,7 @@ build:
 	$(python) -m build
 
 pypi-upload: install-releasetools
-	twine upload --skip-existing --verbose dist/*.tar.gz
+	twine upload --skip-existing --verbose dist/*.tar.gz dist/*.whl
 
 check-bump-options:
 	@if test "$(bump)" = ""; then \
