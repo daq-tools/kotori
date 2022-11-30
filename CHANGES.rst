@@ -6,6 +6,8 @@ Changelog
 in progress
 ===========
 
+- CI: Update to Grafana 9.3.0
+
 
 .. _kotori-0.27.0:
 
