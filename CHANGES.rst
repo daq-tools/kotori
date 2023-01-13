@@ -13,23 +13,11 @@ in progress
 
 2022-11-26 0.27.0
 =================
-- Add documentation about running Kotori with RabbitMQ as MQTT broker, see :ref:`mqtt-broker-rabbitmq`
+- Add documentation about running Kotori with RabbitMQ as MQTT broker, see
+  :ref:`mqtt-broker-rabbitmq`
 - Allow connecting to individual MQTT broker per application
 - Improve MQTT logging when connection to broker fails
 - Make MQTT broker credential settings ``username`` and ``password`` optional
-- Add software tests for simulating all advanced actions against Grafana
-
-  - Publish single reading in JSON format to MQTT broker and proof that a
-    corresponding datasource and a dashboard was created in Grafana.
-  - Publish two subsequent readings in JSON format to MQTT broker and
-    proof that a corresponding datasource and a dashboard was first
-    created and then updated in Grafana.
-  - Publish two subsequent readings to two different topics and proof that
-    a corresponding datasource and a dashboard with two panels has been
-    created in Grafana.
-  - Publish two subsequent readings to two different topics and proof that
-    a corresponding datasource and two dashboards have been created in
-    Grafana.
 - Adjust logging format re. milli/microseconds
 - Because accessing dashboards by slug has been removed with Grafana 8, Kotori
   will now use the slug-name of the data channel for all of Grafana's ``uid``,
@@ -58,6 +46,22 @@ Infrastructure
 - CI: Modernize GHA workflow recipe
 - Documentation: Add link checker and fix a few broken links
 - Documentation: Update to Sphinx 5
+
+Tests
+-----
+- Add software tests for simulating all advanced actions against Grafana.
+
+  - Publish single reading in JSON format to MQTT broker and proof that a
+    corresponding datasource and a dashboard was created in Grafana.
+  - Publish two subsequent readings in JSON format to MQTT broker and
+    proof that a corresponding datasource and a dashboard was first
+    created and then updated in Grafana.
+  - Publish two subsequent readings to two different topics and proof that
+    a corresponding datasource and a dashboard with two panels has been
+    created in Grafana.
+  - Publish two subsequent readings to two different topics and proof that
+    a corresponding datasource and two dashboards have been created in
+    Grafana.
 
 
 .. _kotori-0.26.12:
