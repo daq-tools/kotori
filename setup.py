@@ -82,7 +82,7 @@ extras = {
         'tqdm>=4.19.8,<5',
     ],
     'daq_binary': [
-        'pycparser==2.17',          # 2.18
+        'pycparser==2.21',          # 2.18
         'pyparsing==2.2.0',
         'pyclibrary==0.1.3',
         'tabulate==0.7.5',          # 0.8.2
