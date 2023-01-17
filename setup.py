@@ -33,7 +33,7 @@ requires = [
     'six>=1.15.0',
     'pyramid==1.10.8',
     'pyramid_jinja2>=2.8,<3',
-    'cornice>=5.0.3,<6',
+    'cornice>=5.0.3,<7',
     'simplejson>=3.17.2,<4',
     'Jinja2<4',
     'munch>=2.5.0,<3',
