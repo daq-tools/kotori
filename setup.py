@@ -84,7 +84,7 @@ extras = {
     'daq_binary': [
         'pycparser==2.17',          # 2.18
         'pyparsing==2.2.0',
-        'pyclibrary==0.1.3',
+        'pyclibrary==0.2.1',
         'tabulate==0.7.5',          # 0.8.2
         'sympy==0.7.6.1',           # 1.1.1
     ],
