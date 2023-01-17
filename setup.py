@@ -19,7 +19,7 @@ if PYTHON_35:
 pandas_spec = "pandas<1.3"
 if PYTHON_GTE_310:
     pandas_spec = "pandas<1.6"
-    numpy_spec = "numpy<1.24"
+    numpy_spec = "numpy<1.25"
 
 xarray_spec = 'xarray>=0.13.0,<0.22'
 if PYTHON_GTE_310:
