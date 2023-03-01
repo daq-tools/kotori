@@ -9,6 +9,7 @@ in progress
 - Export: Repaired ``png`` rendering with modern ``pandas``
 - Export: Repaired ``png`` rendering with ``matplotlib >= 3.8.0``
 - General: Dropped support for Python 3.7
+- DAQ: Masked ``PASSKEY`` variable coming from HTTP, emitted by Ecowitt
 
 .. _kotori-0.28.1:
 
