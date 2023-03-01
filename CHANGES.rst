@@ -11,6 +11,7 @@ in progress
   Other types will make the panel croak like ``InfluxDB Error: unsupported
   mean iterator type: *query.stringInterruptIterator`` or ``InfluxDB Error:
   not executed``.
+- DAQ: Mask ``PASSKEY`` variable coming from HTTP, emitted by Ecowitt
 
 
 .. _kotori-0.27.0:
