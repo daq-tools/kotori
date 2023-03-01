@@ -328,7 +328,15 @@ class HttpChannelEndpoint(Resource):
 
         # Data acquisition uses HTTP POST
         if request.method == 'POST':
-            return self.data_acquisition(bucket)
+            data = self.data_acquisition(bucket)
+
+            # Mask `PASSKEY` ingress variable.
+            # https://github.com/daq-tools/kotori/discussions/122
+            # https://community.hiveeyes.org/t/ecowitt-wunderground-api-fur-weather-hiveeyes-org-nutzbar/4735
+            if "PASSKEY" in data:
+                del data["PASSKEY"]
+
+            return data
 
     def data_acquisition(self, bucket):
 

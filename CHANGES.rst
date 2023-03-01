@@ -7,6 +7,7 @@ in progress
 ===========
 
 - CI: Update to Grafana 9.3.0
+- DAQ: Mask ``PASSKEY`` variable coming from HTTP, emitted by Ecowitt
 
 
 .. _kotori-0.27.0:
