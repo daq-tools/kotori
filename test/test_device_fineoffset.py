@@ -1,5 +1,7 @@
 import json
-from test.settings.mqttkit import PROCESS_DELAY_HTTP, influx_sensors, settings
+import logging
+
+from test.settings.mqttkit import PROCESS_DELAY_HTTP, influx_sensors, settings, grafana
 from test.util import http_form_sensor, sleep
 
 import pytest
@@ -7,15 +9,19 @@ import pytest_twisted
 from twisted.internet import threads
 
 
+logger = logging.getLogger(__name__)
+
+
 @pytest_twisted.inlineCallbacks
 @pytest.mark.http
-def test_ecowitt_post(machinery, create_influxdb, reset_influxdb):
+@pytest.mark.grafana
+def test_device_ecowitt_post(machinery, create_influxdb, reset_influxdb, reset_grafana):
     """
     Submit single reading in ``x-www-form-urlencoded`` format to HTTP API
     and proof it is stored in the InfluxDB database.
     """
 
-    # Submit a single measurement, without timestamp.
+    # Submit a single measurement.
     data = {
         "PASSKEY": "B950C...[obliterated]",
         "stationtype": "EasyWeatherPro_V5.0.6",
@@ -78,11 +84,49 @@ def test_ecowitt_post(machinery, create_influxdb, reset_influxdb):
     # Proof that data arrived in InfluxDB.
     record = influx_sensors.get_first_record()
 
-    assert record["tempf"] == 48.4
+    # Standard values, converted to "metric" unit system.
+    # Temperature converted from 48.4 degrees Fahrenheit, wind speed converted
+    # from 1.12 mph, humidity untouched.
+    assert round(record["temp"], 1) == 9.1
+    assert round(record["windspeed"], 1) == 1.8
     assert record["humidity"] == 80.0
-    assert record["model"] == "HP1000SE-PRO_Pro_V1.8.5"
 
-    # Make sure this will not be public.
+    # Verify the data includes additional computed fields.
+    assert round(record["dewpoint"], 1) == 5.8
+    assert round(record["feelslike"], 1) == 9.1
+
+    # Only newer releases of `ecowitt2mqtt` will compute those fields.
+    if "frostpoint" in record:
+        assert round(record["frostpoint"], 1) == 4.7
+        assert record["frostrisk"] == "No risk"
+        assert record["thermalperception"] == "Dry"
+
+    # Make sure those fields got purged, so they don't leak into public data.
     assert "PASSKEY" not in record
+    assert "stationtype" not in record
+    assert "model" not in record
 
-    yield record
+    # Timestamp field also gets removed, probably to avoid ambiguities.
+    assert "dateutc" not in record
+
+    # Proof that Grafana is well provisioned.
+    logger.info('Grafana: Checking datasource')
+    assert settings.influx_database in grafana.get_datasource_names()
+
+    logger.info('Grafana: Retrieving dashboard')
+    dashboard_name = settings.grafana_dashboards[0]
+    dashboard = grafana.get_dashboard_by_name(dashboard_name)
+
+    logger.info('Grafana: Checking dashboard layout')
+    targets = dashboard["rows"][0]["panels"][0]["targets"]
+    assert targets[0]["measurement"] == settings.influx_measurement_sensors
+
+    fieldnames = []
+    for target in targets:
+        fieldnames.append(target.get("fields")[0]["name"])
+
+    # Verify that text fields are not part of the graph. Otherwise, Grafana would croak like:
+    # - InfluxDB Error: unsupported mean iterator type: *query.stringInterruptIterator
+    # - InfluxDB Error: not executed
+    assert "batt1" not in fieldnames, "'batt1' should have been removed, because it is a text field"
+    assert "frostrisk" not in fieldnames, "'frostrisk' should have been removed, because it is a text field"

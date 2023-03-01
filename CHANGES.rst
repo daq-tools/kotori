@@ -12,6 +12,9 @@ in progress
   mean iterator type: *query.stringInterruptIterator`` or ``InfluxDB Error:
   not executed``.
 - DAQ: Mask ``PASSKEY`` variable coming from HTTP, emitted by Ecowitt
+- DAQ: Add adapter/decoder for Fine Offset weather station equipment,
+  with white-label products by Ambient Weather, Ecowitt, and Froggit.
+  Configure it to output data in "metric" unit system by default.
 
 
 .. _kotori-0.27.0:
