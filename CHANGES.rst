@@ -5,6 +5,7 @@ Changelog
 
 in progress
 ===========
+- DAQ: Masked ``PASSKEY`` variable coming from HTTP, emitted by Ecowitt
 
 .. _kotori-0.28.0:
 
