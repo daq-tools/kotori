@@ -119,7 +119,7 @@ setup(name='kotori',
       ],
       extras_require={
 
-        'full': ['kotori[daq,daq_geospatial,export,scientific,firmware]'],
+        'full': ['kotori[daq,daq_fineoffset,daq_geospatial,export,scientific,firmware]'],
 
         'daq': [
             'influxdb>=5.3.0,<6',
@@ -142,6 +142,9 @@ setup(name='kotori',
             'pyclibrary<0.4',
             'tabulate<0.8',
             'sympy<1.15',
+        ],
+        'daq_fineoffset': [
+            'ecowitt2mqtt<2024'
         ],
         'storage_plus': [
             'alchimia>=0.4,<1',
