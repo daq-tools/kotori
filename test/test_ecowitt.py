@@ -1,4 +1,6 @@
 import json
+
+from kotori.io.protocol.util import parse_timestamp
 from test.settings.mqttkit import PROCESS_DELAY_HTTP, influx_sensors, settings
 from test.util import http_form_sensor, sleep
 
@@ -84,5 +86,9 @@ def test_ecowitt_post(machinery, create_influxdb, reset_influxdb):
 
     # Make sure this will not be public.
     assert "PASSKEY" not in record
+
+    # Make sure decoding the timestamp works.
+    print(record["time"])
+    assert parse_timestamp(record["time"]) == parse_timestamp("2023-02-20 16:02:19", use_utc=True)
 
     yield record
