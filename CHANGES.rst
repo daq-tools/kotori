@@ -10,6 +10,9 @@ in progress
 - Export: Repaired ``png`` rendering with ``matplotlib >= 3.8.0``
 - General: Dropped support for Python 3.7
 - DAQ: Masked ``PASSKEY`` variable coming from HTTP, emitted by Ecowitt
+- DAQ: Added adapter/decoder for Fine Offset weather station equipment,
+  with white-label products by Ambient Weather, Ecowitt, and Froggit.
+  Configure it to output data in "metric" unit system by default.
 
 .. _kotori-0.28.1:
 
