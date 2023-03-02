@@ -7,6 +7,10 @@ in progress
 ===========
 
 - CI: Update to Grafana 9.3.0
+- Grafana: Only permit numeric fields to be established on Graph panels.
+  Other types will make the panel croak like ``InfluxDB Error: unsupported
+  mean iterator type: *query.stringInterruptIterator`` or ``InfluxDB Error:
+  not executed``.
 
 
 .. _kotori-0.27.0:

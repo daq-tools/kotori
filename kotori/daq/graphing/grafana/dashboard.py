@@ -57,7 +57,7 @@ class GrafanaDashboardBuilder(object):
 
         # Generate panels
         panels_new = self.panel_generator(data=data)
-        #print 'panels_new:'; pprint(panels_new)
+        # from pprint import pprint; print("panels_new:"); pprint(panels_new)
 
         # Create whole dashboard with all panels
         if not dashboard.dashboard_data:
@@ -268,7 +268,13 @@ class GrafanaDashboardBuilder(object):
         Field name collection helper.
         Does a prefix search over all fields in "data" and builds
         a list of field names like temp1, temp2, etc. in sorted order.
+
+        Only uses numeric fields and skips all others, because Grafana does not like them.
         """
+
+        def use_field(field_name: str):
+            value = data.get(field_name)
+            return isinstance(value, (float, int))
 
         # Filter blacklist fields
         # _hex_ is from intercom.c
@@ -280,12 +286,12 @@ class GrafanaDashboardBuilder(object):
             if field in blacklist:
                 continue
 
-            if prefixes is None:
+            if prefixes is None and use_field(field):
                 fields.append(field)
 
             elif isinstance(prefixes, list):
                 for prefix in prefixes:
-                    if field.startswith(prefix) or field.endswith(prefix):
+                    if (field.startswith(prefix) or field.endswith(prefix)) and use_field(field):
                         fields.append(field)
                         break
 
