@@ -75,6 +75,10 @@ extras = {
         #'txmongo==16.3.0',
         'pymongo>=3.11.0,<5',
     ],
+    'daq_ndjson': [
+        pandas_spec,
+        numpy_spec,
+    ],
     'daq_geospatial': [
         'Geohash>=1.0,<2',
         'geopy>=1.12.0,<3',
