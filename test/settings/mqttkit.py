@@ -28,6 +28,7 @@ class TestSettings:
     mqtt_topic_event  = 'mqttkit-1/itest/foo/bar/event.json'
     mqtt_topic_homie  = 'mqttkit-1/itest/foo/bar/data/__json__'
     mqtt_topic_json_compact = 'mqttkit-1/itest/foo/bar/tc.json'
+    mqtt_topic_ndjson   = 'mqttkit-1/itest/foo/bar/data.ndjson'
     mqtt_topic_json_legacy = 'mqttkit-1/itest/foo/bar/message-json'
 
     # HTTP channel settings.

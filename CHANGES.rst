@@ -8,6 +8,7 @@ incomplete
 - Add possibility to acquire bulk readings in JSON format
 - Add possibility to acquire bulk readings in compact JSON format,
   with timestamps as keys
+- Add decoder for acquiring data in NDJSON format
 
 
 in progress
