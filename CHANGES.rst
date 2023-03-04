@@ -6,6 +6,8 @@ Changelog
 incomplete
 ==========
 - Add possibility to acquire bulk readings in JSON format
+- Add possibility to acquire bulk readings in compact JSON format,
+  with timestamps as keys
 
 
 in progress
