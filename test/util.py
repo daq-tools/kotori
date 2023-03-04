@@ -8,6 +8,7 @@ import string
 import sys
 import typing as t
 
+import pandas as pd
 import pytest
 import requests
 from influxdb import InfluxDBClient
@@ -202,6 +203,12 @@ def sleep(secs):
 
 def mqtt_json_sensor(topic, data):
     payload = json.dumps(data)
+    return mqtt_sensor(topic, payload)
+
+
+def mqtt_ndjson_sensor(topic, data):
+    df = pd.DataFrame.from_records(data)
+    payload = df.to_json(orient="records", lines=True)
     return mqtt_sensor(topic, payload)
 
 

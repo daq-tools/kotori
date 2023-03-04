@@ -8,7 +8,7 @@ import pytest_twisted
 from twisted.internet import threads
 
 from test.settings.mqttkit import settings, influx_sensors, PROCESS_DELAY_MQTT, device_influx_sensors
-from test.util import mqtt_json_sensor, sleep, mqtt_sensor
+from test.util import mqtt_json_sensor, sleep, mqtt_sensor, mqtt_ndjson_sensor
 
 logger = logging.getLogger(__name__)
 
@@ -108,6 +108,42 @@ def test_mqtt_to_influxdb_json_compact_bulk(machinery, create_influxdb, reset_in
 
     record = influx_sensors.get_record(index=1)
     assert record == {u'time': '2021-01-19T18:56:08Z', u'temperature': 42.84, u'humidity': 83.1}
+
+
+@pytest_twisted.inlineCallbacks
+@pytest.mark.mqtt
+def test_mqtt_to_influxdb_ndjson_bulk(machinery, create_influxdb, reset_influxdb):
+    """
+    Publish multiple readings in NDJSON format to MQTT broker
+    and proof they are stored in the InfluxDB database.
+
+    TODO: Grafana provisioning failed!
+    """
+
+    # Submit multiple measurements, without timestamp.
+    data = [
+        {
+            'temperature': 21.42,
+            'humidity': 41.55,
+        },
+        {
+            'temperature': 42.84,
+            'humidity': 83.1,
+        },
+    ]
+    yield threads.deferToThread(mqtt_ndjson_sensor, settings.mqtt_topic_ndjson, data)
+
+    # Wait for some time to process the message.
+    yield sleep(PROCESS_DELAY_MQTT)
+
+    # Proof that data arrived in InfluxDB.
+    record = influx_sensors.get_record(index=0)
+    del record['time']
+    assert record == {u'temperature': 21.42, u'humidity': 41.55}
+
+    record = influx_sensors.get_record(index=1)
+    del record['time']
+    assert record == {u'temperature': 42.84, u'humidity': 83.1}
 
 
 @pytest_twisted.inlineCallbacks
