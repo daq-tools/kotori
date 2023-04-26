@@ -88,6 +88,9 @@ extras = {
         'tabulate==0.7.5',          # 0.8.2
         'sympy==0.7.6.1',           # 1.1.1
     ],
+    'daq_fineoffset': [
+        'ecowitt2mqtt<=2023.02.1'
+    ],
     'storage_plus': [
         'alchimia>=0.4,<1',
     ],

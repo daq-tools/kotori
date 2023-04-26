@@ -33,7 +33,7 @@ virtualenv-docs: setup-virtualenv
 # Install requirements for development.
 virtualenv-dev: setup-virtualenv
 	@$(pip) install --upgrade --prefer-binary --requirement=requirements-test.txt
-	@$(pip) install --upgrade --prefer-binary --editable=.[daq,daq_geospatial,export,scientific,firmware]
+	@$(pip) install --upgrade --prefer-binary --editable=.[daq,daq_geospatial,daq_fineoffset,export,scientific,firmware]
 
 # Install requirements for releasing.
 install-releasetools: setup-virtualenv

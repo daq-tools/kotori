@@ -17,9 +17,9 @@ function invoke_build() {
   flavor=$1
 
   if [ $flavor = "full" ]; then
-    extras="daq,daq_geospatial,export,plotting,firmware,scientific"
+    extras="daq,daq_geospatial,daq_fineoffset,export,plotting,firmware,scientific"
   elif [ $flavor = "standard" ]; then
-    extras="daq,daq_geospatial,export"
+    extras="daq,daq_geospatial,daq_fineoffset,export"
   else
     echo "ERROR: Package flavor '${flavor}' unknown or not implemented"
     exit 1
