@@ -1,3 +1,4 @@
-Sphinx<6
+pygments<3
+sphinx<6
+sphinx-autobuild
 sphinx-material<1
-Pygments<3

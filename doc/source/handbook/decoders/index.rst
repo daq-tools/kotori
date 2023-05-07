@@ -21,3 +21,4 @@ shipped with Kotori.
 
     tasmota
     airrohr
+    tts-ttn

@@ -13,6 +13,7 @@ $(eval pytest       := $(venv)/bin/pytest)
 $(eval bumpversion  := $(venv)/bin/bumpversion)
 $(eval twine        := $(venv)/bin/twine)
 $(eval sphinx-build := $(venv)/bin/sphinx-build)
+$(eval sphinx-autobuild := $(venv)/bin/sphinx-autobuild)
 $(eval invoke       := $(venv)/bin/invoke)
 
 
@@ -105,6 +106,9 @@ test-coverage: virtualenv-dev
 docs-html: virtualenv-docs
 	touch doc/source/index.rst
 	$(sphinx-build) -j auto -n -W --keep-going -b html doc/source doc/build/html
+
+docs-autobuild: virtualenv-docs
+	$(sphinx-autobuild) --open-browser doc/source doc/build/html
 
 # Run link checker on documentation.
 docs-linkcheck: virtualenv-docs
