@@ -12,6 +12,8 @@ in progress
   mean iterator type: *query.stringInterruptIterator`` or ``InfluxDB Error:
   not executed``.
 - Add TTS (The Things Stack) / TTN (The Things Network) decoder
+- Documentation: Modernize documentation and migrate to Read the Docs
+  https://kotori.readthedocs.io/
 
 
 .. _kotori-0.27.0:

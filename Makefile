@@ -29,7 +29,7 @@ setup-virtualenv:
 
 # Install requirements for building the documentation.
 virtualenv-docs: setup-virtualenv
-	@$(pip) install --upgrade --prefer-binary --requirement=requirements-docs.txt
+	@$(pip) install --upgrade --prefer-binary --requirement=doc/source/requirements.txt
 
 # Install requirements for development.
 virtualenv-dev: setup-virtualenv
@@ -105,14 +105,15 @@ test-coverage: virtualenv-dev
 # Build Sphinx documentation.
 docs-html: virtualenv-docs
 	touch doc/source/index.rst
-	$(sphinx-build) -j auto -n -W --keep-going -b html doc/source doc/build/html
+	$(sphinx-build) -j auto -n -W --keep-going -b html doc/source doc/build
 
 docs-autobuild: virtualenv-docs
-	$(sphinx-autobuild) --open-browser doc/source doc/build/html
+	$(pip) install sphinx-autobuild
+	$(sphinx-autobuild) --open-browser doc/source doc/build
 
 # Run link checker on documentation.
 docs-linkcheck: virtualenv-docs
-	$(sphinx-build) -j auto -n -W --keep-going -b linkcheck doc/source doc/build/html
+	$(sphinx-build) -j auto -n -W --keep-going -b linkcheck doc/source doc/build
 
 
 # Upload media assets. Images, videos, etc.
