@@ -16,6 +16,43 @@ Backlog
 
 
 ****
+2023
+****
+
+General
+=======
+- [o] Verify compatibility with https://github.com/moscajs/aedes
+- [o] Look at more JSON formats
+
+  - https://en.wikipedia.org/wiki/JSON_streaming
+  - Record separator-delimited JSON
+  - Concatenated JSON
+  - Length-prefixed JSON
+
+- [o] SBFspot - Yet another tool to read power production of SMA® solar/battery inverters
+
+  - https://github.com/SBFspot/SBFspot
+  - https://github.com/SBFspot/SBFspot/wiki/MQTT
+  - https://github.com/chrishrb/solarlog-exporter
+
+- [o] https://github.com/Koenkk/zigbee2mqtt
+- [o] https://mryslab.github.io/telemetrix/
+- https://github.com/sitewhere/sitewhere
+- https://github.com/lensesio/stream-reactor, https://lenses.io/
+- https://github.com/facontidavide/PlotJuggler
+- https://github.com/hobbyquaker/awesome-mqtt
+
+Alternative MQTT brokers
+========================
+- https://github.com/bytebeamio/rumqtt
+- https://github.com/emitter-io/emitter
+- https://github.com/moquette-io/moquette
+- https://github.com/fhmq/hmq
+- https://github.com/zentures/surgemq
+- https://github.com/VolantMQ/volantmq
+
+
+****
 2022
 ****
 - https://mbientlab.com/

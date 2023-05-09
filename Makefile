@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2014-2021 Andreas Motl <andreas.motl@getkotori.org>
+# (c) 2014-2023 Andreas Motl <andreas.motl@getkotori.org>
 
 
 # =============

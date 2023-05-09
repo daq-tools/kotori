@@ -14,3 +14,4 @@
 /var
 .coverage
 coverage.xml
+.DS_Store
