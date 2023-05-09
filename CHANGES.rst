@@ -11,11 +11,11 @@ in progress
   Other types will make the panel croak like ``InfluxDB Error: unsupported
   mean iterator type: *query.stringInterruptIterator`` or ``InfluxDB Error:
   not executed``.
-- Add TTS (The Things Stack) / TTN (The Things Network) decoder.
-  Thanks, @thiasB and @u-l-m-i.
 - Documentation: Modernize documentation and migrate to Read the Docs
   https://kotori.readthedocs.io/
-
+- [TTN] Add TTS (The Things Stack) / TTN (The Things Network) decoder.
+  Thanks, @thiasB and @u-l-m-i.
+- [TTN] Decode metadata from full TTN payload. Thanks, @thiasB.
 
 .. _kotori-0.27.0:
 
