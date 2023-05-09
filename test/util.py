@@ -278,7 +278,14 @@ def idgen(size=6, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 
+def read_file(name: str) -> bytes:
+    path = os.path.join(os.path.dirname(__file__), name)
+    with open(path, mode="rb") as f:
+        return f.read()
+
+
 def read_jsonfile(name: str) -> t.Dict[str, t.Any]:
+    return json.loads(read_file(name))
     path = os.path.join(os.path.dirname(__file__), name)
     with open(path, mode="r") as f:
         return json.load(f)
