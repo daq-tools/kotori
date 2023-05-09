@@ -1,3 +1,8 @@
+furo
+jinja2<4
 pygments<3
-sphinx<6
-sphinx-material<1
+myst-parser[linkify]<2
+sphinx>=6,<7
+sphinx-copybutton<1
+sphinx-togglebutton<1
+sphinxext-opengraph<1

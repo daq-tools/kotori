@@ -12,11 +12,11 @@
     :hidden:
 
     about/index
-    gallery/index
-    clients/index
-    faq/index
-    setup/index
     getting-started/index
     handbook/index
-    development/index
+    setup/index
+    clients/index
+    gallery/index
+    faq/index
     project/index
+    development/index

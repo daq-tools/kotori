@@ -8,7 +8,7 @@ License
 ***********
 Source code
 ***********
-This software is copyright © 2013-2022 The Kotori Developers. All rights reserved.
+This software is copyright © 2013-2023 The Kotori Developers. All rights reserved.
 
 The source code of Kotori is licensed under the terms of the
 `GNU Affero General Public License`_ and the `European Union Public Licence`_.
@@ -20,7 +20,7 @@ It is and will always be **free and open source software**.
 
     Kotori is a data acquisition, processing and graphing toolkit.
 
-    Copyright (C) 2013-2022 The Kotori Developers <developers@getkotori.org>.
+    Copyright (C) 2013-2023 The Kotori Developers <developers@getkotori.org>.
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
