@@ -54,6 +54,12 @@ Please configure the following settings:
 - ``Enabled event types``: For the event type ``Uplink message``, add the URL
   path suffix ``/data``.
 
+.. important::
+
+    If you want to receive the full TTN message payload, in order to decode additional
+    metadata, for example gateway information, please leave the ``Filter event data``
+    field empty.
+
 Example
 -------
 
@@ -66,28 +72,38 @@ This would be a corresponding set of example default values::
     Enabled event types:    /data
 
 
-*******
-Example
-*******
+********
+Examples
+********
 
-Now, JSON data payloads submitted from the TTN infrastructure to your system, like this
-example, will be decoded by Kotori transparently.
+Now, JSON data payloads submitted from the TTN infrastructure to your system, like those
+examples, will be decoded by Kotori transparently.
 
 .. literalinclude:: tts-ttn-uplink.json
     :language: json
 
-.. todo::
+Acquire and submit a minimal TTN JSON payload to Kotori's HTTP API.
 
-    Provide an example how a corresponding message can be submitted to TTN
-    from the terminal, in order to emulate the real scenario, but demonstrate
-    the telemetry data acquisition works well, almost end-to-end. In the meanwhile,
-    submit an example JSON message payload to Kotori's HTTP API directly::
+.. code-block:: shell
 
-        http https://github.com/daq-tools/kotori/raw/main/doc/source/handbook/decoders/tts-ttn-uplink.json \
-            | http POST https://daq.example.org/api/mqttkit-1/testdrive/area-42/node-1/data
+    wget https://github.com/daq-tools/kotori/raw/main/test/test_tts_ttn_minimal.json
+    cat test_tts_ttn_minimal.json | http POST https://daq.example.org/api/mqttkit-1/testdrive/area-42/node-minimal/data
+
+Acquire and submit a full TTN JSON payload to Kotori's HTTP API.
+
+.. code-block:: shell
+
+    wget https://github.com/daq-tools/kotori/raw/main/test/test_tts_ttn_full.json
+    cat test_tts_ttn_full.json | http POST https://daq.example.org/api/mqttkit-1/testdrive/area-42/node-full/data
+
+.. tip::
+
+    For submitting JSON data to the HTTP endpoint of Kotori, the authors recommend the
+    excellent `HTTPie`_ program. However, the same can also be achieved by using ``curl``.
 
 
 .. _configure an outbound Webhook: https://www.thethingsindustries.com/docs/integrations/webhooks/
+.. _HTTPie: https://httpie.io/
 .. _The Things Stack (TTS): https://www.thethingsindustries.com/docs/
 .. _The Things Network (TTN): https://www.thethingsnetwork.org/
 .. _The Things Network Console: https://www.thethingsnetwork.org/docs/network/console/
