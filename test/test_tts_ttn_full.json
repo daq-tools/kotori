@@ -1,6 +1,6 @@
 {
   "end_device_ids": {
-    "device_id": "testdrive-foo-bar-baz",
+    "device_id": "foo-bar-baz",
     "application_ids": {
       "application_id": "acme"
     },

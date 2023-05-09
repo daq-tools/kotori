@@ -19,6 +19,8 @@ References
 - https://community.hiveeyes.org/t/tts-ttn-daten-an-kotori-weiterleiten/1422/34
 """
 import logging
+
+from kotori.daq.decoder import TheThingsStackDecoder
 from test.settings.basic import (
     settings,
     influx_sensors,
@@ -27,7 +29,7 @@ from test.settings.basic import (
     reset_grafana,
     PROCESS_DELAY_MQTT,
 )
-from test.util import http_json_sensor, read_jsonfile, sleep
+from test.util import http_json_sensor, read_jsonfile, sleep, read_file
 
 import pytest
 import pytest_twisted
@@ -44,6 +46,7 @@ def make_testcases():
         {
             "in": read_jsonfile("test_tts_ttn_full.json"),
             "out": {
+                "device_id": "foo-bar-baz",
                 "time": "2022-01-19T19:02:34.007345Z",
                 "analog_in_1": 59.04,
                 "analog_in_2": 58.69,
@@ -51,6 +54,15 @@ def make_testcases():
                 "relative_humidity_2": 78.5,
                 "temperature_2": 4.2,
                 "temperature_3": 3.4,
+                "bw": 125.0,
+                "counter": 2289.0,
+                'freq': 868.5,
+                'sf': 7.0,
+                'gtw_count': 2.0,
+                'gw_elsewhere-ffp_rssi': -90.0,
+                'gw_elsewhere-ffp_snr': 7.0,
+                'gw_somewhere-ffp_rssi': -107.0,
+                'gw_somewhere-ffp_snr': -6.5,
             },
         },
         {
@@ -95,3 +107,40 @@ def test_tts_ttn_http_json_full(
     # Verify the records looks like expected.
     assert record == data_out
     yield record
+
+
+@pytest.mark.tts
+@pytest.mark.ttn
+def test_ttn_decode_minimal():
+    payload = read_file("test_tts_ttn_minimal.json").decode("utf-8")
+    decoded = dict(TheThingsStackDecoder.decode(payload))
+    assert decoded == {
+        "temperature_1": 53.3,
+        "voltage_4": 3.3,
+    }
+
+
+@pytest.mark.tts
+@pytest.mark.ttn
+def test_ttn_decode_full():
+    payload = read_file("test_tts_ttn_full.json").decode("utf-8")
+    decoded = dict(TheThingsStackDecoder.decode(payload))
+    assert decoded == {
+        "device_id": "foo-bar-baz",
+        "timestamp": "2022-01-19T19:02:34.007345025Z",
+        "analog_in_1": 59.04,
+        "analog_in_2": 58.69,
+        "analog_in_3": 3.49,
+        "relative_humidity_2": 78.5,
+        "temperature_2": 4.2,
+        "temperature_3": 3.4,
+        "bw": 125.0,
+        "counter": 2289,
+        'freq': 868.5,
+        'sf': 7,
+        'gtw_count': 2,
+        'gw_elsewhere-ffp_rssi': -90,
+        'gw_elsewhere-ffp_snr': 7,
+        'gw_somewhere-ffp_rssi': -107,
+        'gw_somewhere-ffp_snr': -6.5,
+    }
