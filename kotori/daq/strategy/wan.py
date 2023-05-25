@@ -10,8 +10,8 @@ class WanBusStrategy(StrategyBase):
 
     # Regular expression pattern for decoding MQTT topic address segments.
     channel_matcher            = re.compile(r'^(?P<realm>.+?)/(?P<network>.+?)/(?P<gateway>.+?)/(?P<node>.+?)(?:/(?P<slot>.+?))?$')
-    device_matcher_dashed_topo = re.compile(r'^(?P<realm>.+?)/dt/(?P<device>.+?)(?:/(?P<slot>.+?))?$')
-    device_matcher_generic     = re.compile(r'^(?P<realm>.+?)/d/(?P<device>.+?)(?:/(?P<slot>.+?))?$')
+    device_matcher_dashed_topo = re.compile(r'^(?P<realm>.+?)/dt/(?P<device>.+?)/(?:(?P<slot>.+?))$')
+    device_matcher_generic     = re.compile(r'^(?P<realm>.+?)/d/(?P<device>.+?)/(?:(?P<slot>.+?))$')
 
     def topic_to_topology(self, topic):
         """
@@ -59,6 +59,8 @@ class WanBusStrategy(StrategyBase):
 
         # Decode the topic.
         address = None
+
+        # Try to match the per-device pattern.
         m = self.device_matcher_generic.match(topic)
         if m:
             address = SmartMunch(m.groupdict())
@@ -68,21 +70,41 @@ class WanBusStrategy(StrategyBase):
                 address.node = address.device
                 del address.device
 
+        # Try to match the per-device pattern with dashed topology encoding for topics.
         if address is None:
             m = self.device_matcher_dashed_topo.match(topic)
             if m:
                 address = SmartMunch(m.groupdict())
                 if "device" in address:
                     segments = address.device.split("-")
+
+                    # Compensate "too few segments": Fill up with "default" at the front.
+                    missing_segments = 3 - len(segments)
+                    segments = ["default"] * missing_segments + segments
+
+                    # When the first topic path fragment is equal to the realm, we assume a
+                    # slight misconfiguration, and ignore the first decoded segment completely.
+                    if segments[0] == address.realm:
+                        segments = segments[1:]
+
+                    # Compensate "too many segments": Merge trailing segments.
+                    if len(segments) > 3:
+                        segments = segments[:2] + ["-".join(segments[2:])]
+
+                    # Destructure three components / segments.
                     address.network, address.gateway, address.node = segments
+
+                    # Do not propagate the `device` slot. It either has been
+                    # dissolved, or it was propagated into the `node` slot.
                     del address.device
 
+        # Try to match the classic path-based WAN topic encoding scheme.
         if address is None:
             m = self.channel_matcher.match(topic)
             if m:
                 address = SmartMunch(m.groupdict())
 
-        return address or {}
+        return address
 
     @classmethod
     def topology_to_storage(self, topology, message_type=None):
