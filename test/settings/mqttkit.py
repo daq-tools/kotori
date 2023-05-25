@@ -40,6 +40,8 @@ class TestSettings:
     device_influx_measurement_sensors = 'default_123e4567_e89b_12d3_a456_426614174000_sensors'
     device_mqtt_topic_generic      = 'mqttkit-1/d/123e4567-e89b-12d3-a456-426614174000/data.json'
     device_mqtt_topic_dashed_topo  = 'mqttkit-1/dt/itest-foo-bar/data.json'
+    device_http_path_generic       = '/mqttkit-1/d/123e4567-e89b-12d3-a456-426614174000/data'
+    device_http_path_dashed_topo   = '/mqttkit-1/dt/itest-foo-bar/data'
 
 
 settings = TestSettings
