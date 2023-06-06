@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2020-2021 Andreas Motl <andreas@getkotori.org>
 import logging
+import re
 
 import pytest
 import pytest_twisted
@@ -123,7 +124,7 @@ def test_mqtt_to_influxdb_json_wan_device(machinery, device_create_influxdb, dev
 @pytest_twisted.inlineCallbacks
 @pytest.mark.mqtt
 @pytest.mark.device
-def test_mqtt_to_influxdb_json_wan_channel(machinery, create_influxdb, reset_influxdb):
+def test_mqtt_to_influxdb_json_wan_channel_success(machinery, create_influxdb, reset_influxdb):
     """
     Run MQTT data acquisition with per-device dashed-topo addressing.
 
@@ -146,3 +147,32 @@ def test_mqtt_to_influxdb_json_wan_channel(machinery, create_influxdb, reset_inf
     del record['time']
     assert record == {u'humidity': 83.1, u'temperature': 42.84}
     yield record
+
+
+@pytest_twisted.inlineCallbacks
+@pytest.mark.mqtt
+@pytest.mark.device
+def test_mqtt_to_influxdb_json_wan_channel_access_denied(machinery, create_influxdb, reset_influxdb):
+    """
+    Run MQTT data acquisition with per-device dashed-topo addressing.
+
+    Addressing: Per-device WAN, with dashed topology decoding
+    Example:    mqttkit-1/channel/network-gateway-node
+    """
+
+    # Submit a single measurement, without timestamp.
+    data = {
+        'temperature': 42.84,
+        'humidity': 83.1,
+    }
+    yield threads.deferToThread(mqtt_json_sensor, settings.direct_mqtt_topic_channel_denied, data)
+
+    # Wait for some time to process the message.
+    yield sleep(PROCESS_DELAY_MQTT)
+
+    # Proof that no data arrived in InfluxDB.
+    with pytest.raises(AssertionError) as ex:
+        influx_sensors.get_first_record()
+    assert ex.match(re.escape("No data in database: len(result) = 0"))
+
+    # FIXME: How to find `"Rejected access to SensorWAN network: another"` within log output?
