@@ -95,12 +95,12 @@ def test_mqtt_to_influxdb_discrete(machinery, create_influxdb, reset_influxdb):
 @pytest_twisted.inlineCallbacks
 @pytest.mark.mqtt
 @pytest.mark.device
-def test_mqtt_to_influxdb_json_wan_device_generic(machinery, device_create_influxdb, device_reset_influxdb):
+def test_mqtt_to_influxdb_json_wan_device(machinery, device_create_influxdb, device_reset_influxdb):
     """
     Run MQTT data acquisition with per-device addressing.
 
-    Addressing: Per-device WAN
-    Example:    mqttkit-1/d/123e4567-e89b-12d3-a456-426614174000
+    Addressing: SensorWAN direct-device
+    Example:    mqttkit-1/device/123e4567-e89b-12d3-a456-426614174000
     """
 
     # Submit a single measurement, without timestamp.
@@ -108,7 +108,7 @@ def test_mqtt_to_influxdb_json_wan_device_generic(machinery, device_create_influ
         'temperature': 42.84,
         'humidity': 83.1,
     }
-    yield threads.deferToThread(mqtt_json_sensor, settings.device_mqtt_topic_generic, data)
+    yield threads.deferToThread(mqtt_json_sensor, settings.direct_mqtt_topic_device, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY_MQTT)
@@ -123,12 +123,12 @@ def test_mqtt_to_influxdb_json_wan_device_generic(machinery, device_create_influ
 @pytest_twisted.inlineCallbacks
 @pytest.mark.mqtt
 @pytest.mark.device
-def test_mqtt_to_influxdb_json_wan_device_dashed(machinery, create_influxdb, reset_influxdb):
+def test_mqtt_to_influxdb_json_wan_channel(machinery, create_influxdb, reset_influxdb):
     """
     Run MQTT data acquisition with per-device dashed-topo addressing.
 
     Addressing: Per-device WAN, with dashed topology decoding
-    Example:    mqttkit-1/dt/network-gateway-node
+    Example:    mqttkit-1/channel/network-gateway-node
     """
 
     # Submit a single measurement, without timestamp.
@@ -136,7 +136,7 @@ def test_mqtt_to_influxdb_json_wan_device_dashed(machinery, create_influxdb, res
         'temperature': 42.84,
         'humidity': 83.1,
     }
-    yield threads.deferToThread(mqtt_json_sensor, settings.device_mqtt_topic_dashed_topo, data)
+    yield threads.deferToThread(mqtt_json_sensor, settings.direct_mqtt_topic_channel, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY_MQTT)

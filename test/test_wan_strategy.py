@@ -7,7 +7,7 @@ from kotori.util.common import SmartMunch
 
 
 @pytest.mark.strategy
-def test_wan_strategy_channel():
+def test_wan_strategy_wide_channel():
     """
     Verify the classic WAN topology decoding, using a channel-based addressing scheme.
     """
@@ -30,7 +30,7 @@ def test_wan_strategy_device_generic_success():
     Verify the per-device WAN topology decoding, using a generic device identifier.
     """
     strategy = WanBusStrategy()
-    topology = strategy.topic_to_topology("myrealm/d/123e4567-e89b-12d3-a456-426614174000/data.json")
+    topology = strategy.topic_to_topology("myrealm/device/123e4567-e89b-12d3-a456-426614174000/data.json")
     assert topology == SmartMunch(
         {
             "realm": "myrealm",
@@ -48,7 +48,7 @@ def test_wan_strategy_device_dashed_topo_basic():
     Verify the per-device WAN topology decoding, using a dashed device identifier, which translates to the topology.
     """
     strategy = WanBusStrategy()
-    topology = strategy.topic_to_topology("myrealm/dt/acme-area42-eui70b3d57ed005dac6/data.json")
+    topology = strategy.topic_to_topology("myrealm/channel/acme-area42-eui70b3d57ed005dac6/data.json")
     assert topology == SmartMunch(
         {
             "realm": "myrealm",
@@ -69,7 +69,7 @@ def test_wan_strategy_device_dashed_topo_too_few_components():
     This specific test uses a vanilla TTN device identifier.
     """
     strategy = WanBusStrategy()
-    topology = strategy.topic_to_topology("myrealm/dt/eui-70b3d57ed005dac6/data.json")
+    topology = strategy.topic_to_topology("myrealm/channel/eui-70b3d57ed005dac6/data.json")
     assert topology == SmartMunch(
         {
             "realm": "myrealm",
@@ -88,7 +88,7 @@ def test_wan_strategy_device_dashed_topo_three_components():
     This topic will be decoded as-is.
     """
     strategy = WanBusStrategy()
-    topology = strategy.topic_to_topology("myrealm/dt/acme-area42-eui70b3d57ed005dac6/data.json")
+    topology = strategy.topic_to_topology("myrealm/channel/acme-area42-eui70b3d57ed005dac6/data.json")
     assert topology == SmartMunch(
         {
             "realm": "myrealm",
@@ -107,7 +107,7 @@ def test_wan_strategy_device_dashed_topo_too_many_components_merge_suffixes():
     The solution is to merge all trailing segments into the `node` slot, re-joining them with `-`.
     """
     strategy = WanBusStrategy()
-    topology = strategy.topic_to_topology("myrealm/dt/acme-area42-eui70b3d57ed005dac6-suffix/data.json")
+    topology = strategy.topic_to_topology("myrealm/channel/acme-area42-eui70b3d57ed005dac6-suffix/data.json")
     assert topology == SmartMunch(
         {
             "realm": "myrealm",
@@ -132,7 +132,7 @@ def test_wan_strategy_device_dashed_topo_too_many_components_redundant_realm():
     Cheers, @thiasB.
     """
     strategy = WanBusStrategy()
-    topology = strategy.topic_to_topology("myrealm/dt/myrealm-acme-area42-eui70b3d57ed005dac6/data.json")
+    topology = strategy.topic_to_topology("myrealm/channel/myrealm-acme-area42-eui70b3d57ed005dac6/data.json")
     assert topology == SmartMunch(
         {
             "realm": "myrealm",
@@ -151,7 +151,7 @@ def test_wan_strategy_device_generic_empty():
     Topic-to-topology decoding should return `None`.
     """
     strategy = WanBusStrategy()
-    topology = strategy.topic_to_topology("myrealm/d/data.json")
+    topology = strategy.topic_to_topology("myrealm/device/data.json")
     assert topology is None
 
 
@@ -162,5 +162,5 @@ def test_wan_strategy_device_dashed_topo_empty():
     Topic-to-topology decoding should return `None`.
     """
     strategy = WanBusStrategy()
-    topology = strategy.topic_to_topology("myrealm/dt/data.json")
+    topology = strategy.topic_to_topology("myrealm/channel/data.json")
     assert topology is None
