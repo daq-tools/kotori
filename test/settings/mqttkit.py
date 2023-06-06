@@ -40,6 +40,7 @@ class TestSettings:
     direct_influx_measurement_sensors = 'default_123e4567_e89b_12d3_a456_426614174000_sensors'
     direct_mqtt_topic_device          = 'mqttkit-1/device/123e4567-e89b-12d3-a456-426614174000/data.json'
     direct_mqtt_topic_channel         = 'mqttkit-1/channel/itest-foo-bar/data.json'
+    direct_mqtt_topic_channel_denied  = 'mqttkit-1/channel/another-foo-bar/data.json'
     direct_http_path_device           = '/mqttkit-1/device/123e4567-e89b-12d3-a456-426614174000/data'
     direct_http_path_channel          = '/mqttkit-1/channel/itest-foo-bar/data'
 

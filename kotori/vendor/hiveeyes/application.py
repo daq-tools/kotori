@@ -311,7 +311,7 @@ def hiveeyes_boot(settings, debug=False):
             HiveeyesGenericGrafanaManager(settings=settings, channel=channel),
             HiveeyesBeehiveGrafanaManager(settings=settings, channel=channel),
         ],
-        strategy = WanBusStrategy()
+        strategy = WanBusStrategy(channel_settings=channel)
     )
 
     rootService.registerService(service)

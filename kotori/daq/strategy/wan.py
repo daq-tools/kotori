@@ -2,8 +2,10 @@
 # (c) 2015-2023 Andreas Motl, <andreas@getkotori.org>
 import re
 
+from kotori.daq.exception import ChannelAccessDenied
 from kotori.daq.strategy import StrategyBase
 from kotori.util.common import SmartMunch
+from kotori.util.configuration import read_list
 
 
 class WanBusStrategy(StrategyBase):
@@ -72,6 +74,12 @@ class WanBusStrategy(StrategyBase):
 
         # Try to match the per-device pattern with dashed topology encoding for topics.
         if address is None:
+
+            # Decode permission setting from channel configuration object.
+            direct_channel_allowed_networks = None
+            if "direct_channel_allowed_networks" in self.channel_settings:
+                direct_channel_allowed_networks = read_list(self.channel_settings.direct_channel_allowed_networks)
+
             m = self.direct_channel_matcher.match(topic)
             if m:
                 address = SmartMunch(m.groupdict())
@@ -97,6 +105,10 @@ class WanBusStrategy(StrategyBase):
                     # Do not propagate the `channel` slot. It either has been
                     # dissolved, or it was propagated into the `node` slot.
                     del address.channel
+
+                    # Evaluate permissions.
+                    if direct_channel_allowed_networks and address.network not in direct_channel_allowed_networks:
+                        raise ChannelAccessDenied(f"Rejected access to SensorWAN network: {address.network}")
 
         # Try to match the classic path-based WAN topic encoding scheme.
         if address is None:

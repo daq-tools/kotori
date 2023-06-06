@@ -51,13 +51,17 @@ attribute of the main application settings section.
 .. literalinclude:: ../../_static/content/etc/examples/mqttkit.ini
     :language: ini
     :linenos:
-    :lines: 10-27
-    :emphasize-lines: 4,11-18
+    :lines: 10-30
+    :emphasize-lines: 4,14-21
 
 
 **********
 Addressing
 **********
+
+Wide channel
+============
+
 To successfully publish data to the platform, you should get familiar with the MQTTKit addressing scheme.
 We call it the »quadruple hierarchy strategy« and it is reflected on the mqtt bus topic topology.
 
@@ -89,6 +93,36 @@ The topology identifiers are specified as:
 In the following examples, this topology address will be encoded into the variable ``CHANNEL``.
 
 
+Direct channel
+==============
+
+When using the :ref:`hiveeyes-arduino:sensorwan-direct-addressing` scheme of
+:ref:`hiveeyes-arduino:sensorwan`, it is possible to detour from the "wide" addressing scheme,
+and submit data "directly" to a channel address like ``mqttkit-1/channel/<network>-<gateway>-<node>``
+instead.
+
+In order to restrict access to that addressing flavour to specific networks/owners only,
+you can use the ``direct_channel_allowed_networks`` configuration setting, where you can
+enumerate network/owner path components, which are allowed to submit data on their
+corresponding channel groups.
+
+.. literalinclude:: ../../_static/content/etc/examples/mqttkit.ini
+    :language: ini
+    :linenos:
+    :lines: 20-21
+
+For all others, access will be rejected by raising an ``ChannelAccessDenied`` exception.
+
+
+Direct device
+=============
+
+The :ref:`hiveeyes-arduino:sensorwan-direct-addressing` scheme also allows you to address
+channels by device identifiers only, also detouring from the "wide" addressing scheme.
+
+| An example for a corresponding channel address, identifying devices by `UUID`_, would be
+| ``mqttkit-1/device/123e4567-e89b-12d3-a456-426614174000``.
+
 
 ************
 Sending data
@@ -105,6 +139,12 @@ will be encoded into the variable ``CHANNEL``.
     DATA='{"temperature": 42.84, "humidity": 83.1}'
 
     # Publish telemetry data to MQTT topic.
+    echo "$DATA" | mosquitto_pub -t $CHANNEL/data.json -l
+
+When using the "direct channel" addressing scheme, those invocations would address
+the same channel as in the previous example::
+
+    CHANNEL=mqttkit-1/channel/testdrive-foobar-42
     echo "$DATA" | mosquitto_pub -t $CHANNEL/data.json -l
 
 
