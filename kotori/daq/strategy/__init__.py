@@ -1,9 +1,15 @@
 # -*- coding: utf-8 -*-
 # (c) 2015-2021 Andreas Motl, <andreas@getkotori.org>
+from munch import Munch
+
 from kotori.daq.decoder import MessageType
 
 
 class StrategyBase:
+
+    def __init__(self, channel_settings=None):
+        channel_settings = channel_settings or Munch()
+        self.channel_settings = channel_settings
 
     @staticmethod
     def sanitize_db_identifier(value):

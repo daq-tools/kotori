@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 # (c) 2023 Andreas Motl <andreas@getkotori.org>
 import pytest
+from munch import munchify
 
+from kotori.daq.exception import ChannelAccessDenied
 from kotori.daq.strategy.wan import WanBusStrategy
 from kotori.util.common import SmartMunch
 
@@ -43,7 +45,7 @@ def test_wan_strategy_device_generic_success():
 
 
 @pytest.mark.strategy
-def test_wan_strategy_device_dashed_topo_basic():
+def test_wan_strategy_device_dashed_topo_basic_success():
     """
     Verify the per-device WAN topology decoding, using a dashed device identifier, which translates to the topology.
     """
@@ -58,6 +60,17 @@ def test_wan_strategy_device_dashed_topo_basic():
             "slot": "data.json",
         }
     )
+
+
+@pytest.mark.strategy
+def test_wan_strategy_device_dashed_topo_basic_access_denied():
+    """
+    Verify the per-device WAN topology decoding, using a dashed device identifier, which translates to the topology.
+    """
+    strategy = WanBusStrategy(channel_settings=munchify({"direct_channel_allowed_networks": "foo, bar"}))
+    with pytest.raises(ChannelAccessDenied) as ex:
+        strategy.topic_to_topology("myrealm/channel/baz-qux-eui70b3d57ed005dac6/data.json")
+    assert ex.match("Rejected access to SensorWAN network: baz")
 
 
 @pytest.mark.strategy

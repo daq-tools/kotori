@@ -28,7 +28,7 @@ class MqttKitApplication(RootService):
         service = MqttInfluxGrafanaService(
             channel  = self.channel,
             # Data processing strategy and graphing components
-            strategy=WanBusStrategy(),
+            strategy=WanBusStrategy(channel_settings=self.channel),
             graphing=GrafanaManager(settings=global_settings, channel=self.channel)
             )
 
