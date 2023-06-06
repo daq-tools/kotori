@@ -34,6 +34,7 @@
 .. _WebSocket: https://en.wikipedia.org/wiki/WebSocket
 .. _TCP: https://en.wikipedia.org/wiki/Transmission_Control_Protocol
 .. _UDP: https://en.wikipedia.org/wiki/User_Datagram_Protocol
+.. _UUID: https://en.wikipedia.org/wiki/UUID
 
 .. Foundation SC
 .. _Node-RED: https://nodered.org/

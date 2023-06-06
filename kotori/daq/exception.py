@@ -1,0 +1,2 @@
+class ChannelAccessDenied(Exception):
+    pass
