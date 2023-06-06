@@ -48,12 +48,12 @@ def test_http_json_valid(machinery, create_influxdb, reset_influxdb):
 @pytest_twisted.inlineCallbacks
 @pytest.mark.http
 @pytest.mark.device
-def test_http_json_wan_device_generic(machinery, device_create_influxdb, device_reset_influxdb):
+def test_http_json_wan_device(machinery, device_create_influxdb, device_reset_influxdb):
     """
     Run HTTP data acquisition with per-device addressing.
 
-    Addressing: Per-device WAN
-    Example:    mqttkit-1/d/123e4567-e89b-12d3-a456-426614174000
+    Addressing: SensorWAN direct-device
+    Example:    mqttkit-1/device/123e4567-e89b-12d3-a456-426614174000
     """
 
     # Submit a single measurement, without timestamp.
@@ -61,7 +61,7 @@ def test_http_json_wan_device_generic(machinery, device_create_influxdb, device_
         'temperature': 25.26,
         'humidity': 51.8,
     }
-    deferred = threads.deferToThread(http_json_sensor, settings.device_http_path_generic, data)
+    deferred = threads.deferToThread(http_json_sensor, settings.direct_http_path_device, data)
     yield deferred
 
     # Check response.
@@ -82,12 +82,12 @@ def test_http_json_wan_device_generic(machinery, device_create_influxdb, device_
 @pytest_twisted.inlineCallbacks
 @pytest.mark.http
 @pytest.mark.device
-def test_http_json_wan_device_dashed(machinery, create_influxdb, reset_influxdb):
+def test_http_json_wan_channel(machinery, create_influxdb, reset_influxdb):
     """
     Run MQTT data acquisition with per-device dashed-topo addressing.
 
-    Addressing: Per-device WAN, with dashed topology decoding
-    Example:    mqttkit-1/dt/network-gateway-node
+    Addressing: SensorWAN direct-channel, with dashed topology decoding
+    Example:    mqttkit-1/channel/network-gateway-node
     """
 
     # Submit a single measurement, without timestamp.
@@ -95,7 +95,7 @@ def test_http_json_wan_device_dashed(machinery, create_influxdb, reset_influxdb)
         'temperature': 25.26,
         'humidity': 51.8,
     }
-    deferred = threads.deferToThread(http_json_sensor, settings.device_http_path_dashed_topo, data)
+    deferred = threads.deferToThread(http_json_sensor, settings.direct_http_path_channel, data)
     yield deferred
 
     # Check response.

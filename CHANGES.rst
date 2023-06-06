@@ -16,9 +16,11 @@ in progress
 - [TTN] Add TTS (The Things Stack) / TTN (The Things Network) decoder.
   Thanks, @thiasB and @u-l-m-i.
 - [TTN] Decode metadata from full TTN payload. Thanks, @thiasB.
-- [DA] Add per-device addressing and topic decoding strategies. Thanks, @thiasB.
-  ``mqttkit-1/d/123e4567-e89b-12d3-a456-426614174000``
-  ``mqttkit-1/dt/network-gateway-node``
+- [DA] Add per-device addressing and topic decoding strategies. Thanks,
+  @thiasB and @ClemensGruber. Examples:
+
+  - ``mqttkit-1/device/123e4567-e89b-12d3-a456-426614174000``
+  - ``mqttkit-1/channel/network-gateway-node``
 
 
 .. _kotori-0.27.0:

@@ -9,9 +9,9 @@ from kotori.util.common import SmartMunch
 class WanBusStrategy(StrategyBase):
 
     # Regular expression pattern for decoding MQTT topic address segments.
-    channel_matcher            = re.compile(r'^(?P<realm>.+?)/(?P<network>.+?)/(?P<gateway>.+?)/(?P<node>.+?)(?:/(?P<slot>.+?))?$')
-    device_matcher_dashed_topo = re.compile(r'^(?P<realm>.+?)/dt/(?P<device>.+?)/(?:(?P<slot>.+?))$')
-    device_matcher_generic     = re.compile(r'^(?P<realm>.+?)/d/(?P<device>.+?)/(?:(?P<slot>.+?))$')
+    wide_channel_matcher    = re.compile(r'^(?P<realm>.+?)/(?P<network>.+?)/(?P<gateway>.+?)/(?P<node>.+?)(?:/(?P<slot>.+?))?$')
+    direct_channel_matcher  = re.compile(r'^(?P<realm>.+?)/channel/(?P<channel>.+?)/(?:(?P<slot>.+?))$')
+    direct_device_matcher   = re.compile(r'^(?P<realm>.+?)/device/(?P<device>.+?)/(?:(?P<slot>.+?))$')
 
     def topic_to_topology(self, topic):
         """
@@ -48,12 +48,12 @@ class WanBusStrategy(StrategyBase):
 
         the decoder now also knows how to handle per-device addressing schemes, like
 
-            mqttkit-1/d/123e4567-e89b-12d3-a456-426614174000
+            mqttkit-1/device/123e4567-e89b-12d3-a456-426614174000
 
         Also, it has another special topic decoding scheme, by decomposing a dashed
         identifier, and transforming it into the quadruple hierarchy.
 
-            mqttkit-1/dt/network-gateway-node
+            mqttkit-1/channel/network-gateway-node
 
         """
 
@@ -61,7 +61,7 @@ class WanBusStrategy(StrategyBase):
         address = None
 
         # Try to match the per-device pattern.
-        m = self.device_matcher_generic.match(topic)
+        m = self.direct_device_matcher.match(topic)
         if m:
             address = SmartMunch(m.groupdict())
             if "device" in address:
@@ -72,11 +72,11 @@ class WanBusStrategy(StrategyBase):
 
         # Try to match the per-device pattern with dashed topology encoding for topics.
         if address is None:
-            m = self.device_matcher_dashed_topo.match(topic)
+            m = self.direct_channel_matcher.match(topic)
             if m:
                 address = SmartMunch(m.groupdict())
-                if "device" in address:
-                    segments = address.device.split("-")
+                if "channel" in address:
+                    segments = address.channel.split("-")
 
                     # Compensate "too few segments": Fill up with "default" at the front.
                     missing_segments = 3 - len(segments)
@@ -94,13 +94,13 @@ class WanBusStrategy(StrategyBase):
                     # Destructure three components / segments.
                     address.network, address.gateway, address.node = segments
 
-                    # Do not propagate the `device` slot. It either has been
+                    # Do not propagate the `channel` slot. It either has been
                     # dissolved, or it was propagated into the `node` slot.
-                    del address.device
+                    del address.channel
 
         # Try to match the classic path-based WAN topic encoding scheme.
         if address is None:
-            m = self.channel_matcher.match(topic)
+            m = self.wide_channel_matcher.match(topic)
             if m:
                 address = SmartMunch(m.groupdict())
 
