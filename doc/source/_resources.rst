@@ -170,10 +170,15 @@
 .. _Raumfahrtagentur: http://www.raumfahrtagentur.org/
 
 .. NEW
+.. _curl: https://en.wikipedia.org/wiki/CURL
 .. _Funky v3: https://harizanov.com/product/funky-v3/
 .. _OpenXC: https://openxcplatform.com/
 .. _OpenXC for Python: http://python.openxcplatform.com/
+.. _multi-tenant: https://en.wikipedia.org/wiki/Multitenancy
 .. _NodeUSB: https://web.archive.org/web/20210621192219/http://www.nodeusb.com/
+.. _trunking: https://en.wikipedia.org/wiki/Trunking
+.. _webhook: https://en.wikipedia.org/wiki/Webhook
+.. _webhooks: https://en.wikipedia.org/wiki/Webhook
 
 
 .. Companies

@@ -21,6 +21,9 @@ in progress
 
   - ``mqttkit-1/device/123e4567-e89b-12d3-a456-426614174000``
   - ``mqttkit-1/channel/network-gateway-node``
+- [TTN] Add documentation about multi-tenant data acquisition using only
+  a single TTN Application. Thanks, @thiasB, @einsiedlerkrebs, and @ClemensGruber.
+
 
 
 .. _kotori-0.27.0:
