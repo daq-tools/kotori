@@ -12,10 +12,16 @@
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    "myst_parser",
+    "sphinx_copybutton",
+    "sphinx_design",
+    "sphinx_togglebutton",
     "sphinx.ext.intersphinx",
     "sphinx.ext.todo",
     "sphinx.ext.ifconfig",
     "sphinx.ext.graphviz",
+    "sphinxcontrib.mermaid",
+    "sphinxext.opengraph",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -375,6 +381,22 @@ from sphinx.highlighting import lexers
 # Enable highlighting for PHP code not between <?php ... ?> by default
 lexers["php"] = PhpLexer(startinline=True)
 lexers["php-annotations"] = PhpLexer(startinline=True)
+
+
+# -- Options for MyST -------------------------------------------------
+
+myst_heading_anchors = 3
+myst_enable_extensions = [
+    "attrs_block",
+    "attrs_inline",
+    "colon_fence",
+    "deflist",
+    "fieldlist",
+    "html_admonition",
+    "linkify",
+    "strikethrough",
+    "tasklist",
+]
 
 
 # -- Runtime setup --------------------------------------------------------

@@ -189,6 +189,19 @@ Upload the file all at once::
     cat data.csv | http POST http://localhost:24642/api/mqttkit-1/testdrive/area-42/node-1/data Content-Type:text/csv
 
 
+************
+Integrations
+************
+
+The HTTP data acquisition interface offers integrations with other upstream systems.
+
+The Things Stack + Network
+==========================
+
+The :ref:`integration-tts-ttn` provides efficient integration with the TTS server
+and TTN network, in both single-device and `multi-tenant`_ scenarios.
+
+
 ****************************
 Periodic acquisition example
 ****************************
