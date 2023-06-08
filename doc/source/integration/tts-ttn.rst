@@ -1,20 +1,20 @@
-.. include:: ../../_resources.rst
+.. include:: ../_resources.rst
 
 .. _tts-ttn-decoder:
 .. _integration-tts-ttn:
 
-###############
-TTS/TTN decoder
-###############
+#####################################
+The Things Stack & Network (TTS, TTN)
+#####################################
 
 
 *****
 About
 *****
 
-Receive and decode telemetry data from devices on the `The Things Stack (TTS)`_
-/ `The Things Network (TTN)`_, using HTTP `webhooks`_, and store it into timeseries
-databases for near real-time querying.
+Receive and decode telemetry data from devices on the `LoRaWAN`_ network controller
+implementation `The Things Stack (TTS)`_ / `The Things Network (TTN)`_, using HTTP
+`webhooks`_, and store it into timeseries databases for near real-time querying.
 
 .. figure:: https://upload.wikimedia.org/wikipedia/commons/b/bb/The_Things_Network_logo.svg
     :target: https://de.wikipedia.org/wiki/The_Things_Network
@@ -66,7 +66,7 @@ for real-time querying.
 Glossary
 ========
 
-:The Things Stack (TTS): A robust, yet flexible LoRaWAN® Network Server for demanding
+:The Things Stack (TTS): A robust, yet flexible `LoRaWAN`_ Network Server for demanding
     LoRaWAN deployments, from covering the essentials to advanced security configurations
     and device life cycle management.
 
@@ -118,8 +118,8 @@ On the custom webhook configuration dialog, please enter the following settings:
 This screenshot of the corresponding dialog in TTS guides you which parameters to
 configure correspondingly.
 
-.. figure:: https://github.com/daq-tools/kotori/assets/453543/8948044e-8411-44ec-bbe5-100bf925f4dd
-    :target: https://github.com/daq-tools/kotori/assets/453543/8948044e-8411-44ec-bbe5-100bf925f4dd
+.. figure:: https://github.com/daq-tools/kotori/assets/453543/c808412a-7ce1-4733-84a4-c4adab67985f
+    :target: https://github.com/daq-tools/kotori/assets/453543/c808412a-7ce1-4733-84a4-c4adab67985f
     :alt: The Things Network Console Webhook configuration
     :width: 600px
 
@@ -229,8 +229,8 @@ Acquire and submit a full TTN JSON payload to Kotori's HTTP API.
 Grafana screenshot
 ******************
 
-This is an example screenshot of a `Grafana`_ dashboard, which demonstrates what colleagues
-have been doing with this system.
+This is an example screenshot of a `Grafana`_ dashboard, which demonstrates the outcome
+of LoRaWAN transmissions.
 
 .. figure:: https://github.com/daq-tools/kotori/assets/453543/45786928-d54a-4052-a124-f4adac3b5604
     :target: https://swarm.hiveeyes.org/grafana/d/763KRx7mk/freiland-potsdam-thias-lora-multi-hive

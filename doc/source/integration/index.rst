@@ -1,24 +1,23 @@
-.. include:: ../../_resources.rst
-.. include:: ../../_meta.rst
+.. include:: ../_resources.rst
+.. include:: ../_meta.rst
 
+.. _integrations:
 .. _kotori-decoders:
 
-################
-Channel decoders
-################
+############
+Integrations
+############
 
-Decoders will know about device- or platform-specific payload formats
-and will decode telemetry messages appropriately.
-This documentation section is about the collection of decoders already
+Integration adapter and decoder components will know about device- or platform-
+specific payload formats, and will decode telemetry messages appropriately and
+mostly transparently.
+
+This documentation section is about the collection of integrations already
 shipped with Kotori.
 
-----
-
 .. toctree::
-    :caption: Contents
     :maxdepth: 1
-    :glob:
 
-    tasmota
     airrohr
+    tasmota
     tts-ttn
