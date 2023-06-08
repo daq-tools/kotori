@@ -25,6 +25,8 @@ in progress
   a single TTN Application. Thanks, @thiasB, @einsiedlerkrebs, and @ClemensGruber.
 - [core] Fix error when connecting to MQTT broker without authentication credentials
 - [docs] Refactor "decoders" section to "integrations", and improve index/overview page
+- [export] Improve export capabilities by adding parameters ``sort``, ``direction``,
+  ``limit``, and ``scalar``. Thanks, @ClemensGruber.
 
 
 .. _kotori-0.27.0:

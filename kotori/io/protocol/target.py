@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2016-2021 Andreas Motl <andreas@getkotori.org>
+# (c) 2016-2023 Andreas Motl <andreas@getkotori.org>
 from pyramid.settings import asbool
 from twisted.internet import threads
 from twisted.web import http, server
@@ -108,6 +108,10 @@ class ForwarderTargetService(MultiServiceMixin, MultiService):
 
             # DataFrame manipulation
 
+            if 'sort' in bucket.tdata and bucket.tdata.sort:
+                # http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.sort.html
+                df.sort_values(by=read_list(bucket.tdata.sort), ascending=bucket.tdata.get("direction", "ascending").startswith("asc"), inplace=True)
+
             # Drop some fields from DataFrame as requested
             if 'exclude' in bucket.tdata and bucket.tdata.exclude:
                 drop_fields = read_list(bucket.tdata.exclude, empty_elements=False)
@@ -144,10 +148,14 @@ class ForwarderTargetService(MultiServiceMixin, MultiService):
                 # http://pandas.pydata.org/pandas-docs/stable/missing_data.html#interpolation
                 df.interpolate(inplace=True)
 
-            if 'sorted' in bucket.tdata and asbool(bucket.tdata.sorted):
-                # http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.sort.html
-                df.sort(axis='columns', inplace=True)
+            # Only return specified number of records.
+            if 'limit' in bucket.tdata and bucket.tdata.limit:
+                df = df[:int(bucket.tdata.limit)]
 
+            if 'scalar' in bucket.tdata and bucket.tdata.scalar:
+                bucket.request.setHeader('Content-Type', 'text/plain; charset=utf-8')
+                value = df[bucket.tdata.scalar].values[0]
+                return str(value)
 
             # Compute http response from DataFrame, taking designated output format into account
             response = HttpDataFrameResponse(bucket, dataframe=df)
