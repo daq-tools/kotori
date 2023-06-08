@@ -51,6 +51,9 @@ Alternative MQTT brokers
 - https://github.com/zentures/surgemq
 - https://github.com/VolantMQ/volantmq
 
+- https://github.com/arduino-libraries/ArduinoIoTCloud
+- https://docs.arduino.cc/arduino-cloud/
+
 
 ****
 2022
