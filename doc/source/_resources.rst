@@ -172,6 +172,7 @@
 .. NEW
 .. _curl: https://en.wikipedia.org/wiki/CURL
 .. _Funky v3: https://harizanov.com/product/funky-v3/
+.. _LoRaWAN: https://en.wikipedia.org/wiki/LoRa#LoRaWAN
 .. _OpenXC: https://openxcplatform.com/
 .. _OpenXC for Python: http://python.openxcplatform.com/
 .. _multi-tenant: https://en.wikipedia.org/wiki/Multitenancy

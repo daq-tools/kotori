@@ -1,10 +1,11 @@
-.. include:: ../../_resources.rst
+.. include:: ../_resources.rst
 
+.. _integration-airrohr:
 .. _airrohr-decoder:
 
-###############
-Airrohr decoder
-###############
+#######
+Airrohr
+#######
 
 
 *****
@@ -66,7 +67,7 @@ Example
 *******
 Submit an example JSON message payload to the HTTP API::
 
-    http https://raw.githubusercontent.com/daq-tools/kotori/main/doc/source/handbook/decoders/airrohr.json \
+    http https://raw.githubusercontent.com/daq-tools/kotori/main/doc/source/integration/airrohr.json \
         | http POST http://daq.example.org/api-notls/universe/milky-way/earth-one/node-42/custom/airrohr
 
 The payload will be forwarded to this MQTT topic::
