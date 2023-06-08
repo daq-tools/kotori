@@ -42,19 +42,24 @@ class ForwarderTargetService(MultiServiceMixin, MultiService):
         downstream service object for handling the target address scheme.
         """
 
-        log.info(u'Starting {name} for serving address {address}', name=self.logname, address=self.address)
+        log.info('Starting {name} for serving address {address} with scheme {scheme}',
+                 name=self.logname, address=self.address, scheme=self.scheme)
 
         self.settings = self.parent.settings
 
         if self.scheme == 'mqtt':
 
             # Register MqttAdapter service as downstream subsystem service object
-            self.downstream = MqttAdapter(
-                name          = self.name + '-downstream',
-                broker_host   = self.settings.mqtt.host,
-                broker_port   = int(self.settings.mqtt.port),
-                broker_username = self.settings.mqtt.username,
-                broker_password = self.settings.mqtt.password)
+            try:
+                self.downstream = MqttAdapter(
+                    name          = self.name + '-downstream',
+                    broker_host   = self.settings.mqtt.host,
+                    broker_port   = int(self.settings.mqtt.port),
+                    broker_username = self.settings.mqtt.get("username"),
+                    broker_password = self.settings.mqtt.get("password"),
+                )
+            except Exception as ex:
+                log.failure("Connecting to MQTT broker failed: {ex}", ex=last_error_and_traceback())
 
         elif self.scheme == 'influxdb':
             # InfluxDB has no subsystem service, it's just an adapter

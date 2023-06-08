@@ -23,7 +23,7 @@ in progress
   - ``mqttkit-1/channel/network-gateway-node``
 - [TTN] Add documentation about multi-tenant data acquisition using only
   a single TTN Application. Thanks, @thiasB, @einsiedlerkrebs, and @ClemensGruber.
-
+- [core] Fix error when connecting to MQTT broker without authentication credentials
 
 
 .. _kotori-0.27.0:
