@@ -11,9 +11,9 @@ Airrohr
 *****
 About
 *****
-Ingest telemetry data from air particulate measurement devices of the
-`Sensor.Community`_ (formerly `Luftdaten.Info`_) project running the
-`Airrohr Firmware`_.
+
+Receive and record telemetry data from air particulate measurement devices of the
+`Sensor.Community`_ (formerly `Luftdaten.Info`_) project running the `Airrohr Firmware`_.
 
 
 *********

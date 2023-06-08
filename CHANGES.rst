@@ -24,6 +24,7 @@ in progress
 - [TTN] Add documentation about multi-tenant data acquisition using only
   a single TTN Application. Thanks, @thiasB, @einsiedlerkrebs, and @ClemensGruber.
 - [core] Fix error when connecting to MQTT broker without authentication credentials
+- [docs] Refactor "decoders" section to "integrations", and improve index/overview page
 
 
 .. _kotori-0.27.0:
