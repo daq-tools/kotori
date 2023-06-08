@@ -256,11 +256,16 @@ def http_csv_sensor(topic, data):
     return requests.post(uri, data=body, headers={'Content-Type': 'text/csv'})
 
 
-def http_get_data(path: str = None, format='csv', ts_from=None, ts_to=None, port=24642):
+def http_get_data(path: str = None, format='csv', params=None, ts_from=None, ts_to=None, port=24642):
     path = path.lstrip("/")
-    uri = f'http://localhost:{port}/api/{path}.{format}?from={ts_from}&to={ts_to}'
+    uri = f'http://localhost:{port}/api/{path}.{format}'
     logger.info('HTTP: Exporting data from {} using format "{}"'.format(uri, format))
-    payload = requests.get(uri).content
+    params = params or {}
+    if ts_from:
+        params["from"] = ts_from
+    if ts_to:
+        params["to"] = ts_to
+    payload = requests.get(uri, params=params).content
     if format in ["csv", "txt", "json", "html"]:
         payload = payload.decode()
     return payload

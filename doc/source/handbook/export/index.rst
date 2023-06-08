@@ -160,13 +160,31 @@ This would yield the result with "weight" field omitted::
     2016-07-01 16:58:34.788767764,64.64,48.48
     2016-07-01 16:58:37.645754806,64.64,48.48
 
-There's also the url parameter ``include`` which does things the other way round:
+Include fields
+==============
+There is also the url parameter ``include`` which does things the other way round:
 It will only export the named fields::
 
     http GET $HTTP_URI/api/$MQTT_TOPIC/data.csv include=weight
 
 Both parameters take a comma-separated list of field names.
 
+Sort records
+============
+The URL parameter ``sort`` specifies a field name you would like to sort by, e.g.
+``sort=temperature``. The parameter ``direction`` can be used to control the sort
+oder, e.g. ``direction=desc`` for sorting in descending order. If you omit the
+``direction`` parameter, the sort order is ascending.
+
+Limit result size
+=================
+The ``limit`` parameter controls the number of records to be returned.
+
+Return scalar values
+====================
+In order to return a single scalar value, use the ``scalar`` parameter. It will
+omit any headers. For example, ``sort=time&direction=desc&scalar=humidity`` will
+return the most recent humidity value in the database.
 
 Hierarchical data
 =================
@@ -182,8 +200,4 @@ Todo
 
     Describe parameters::
 
-        include, exclude, pad
-        interpolate=true
-        &from=20160519
-        sorted
-
+        pad, interpolate=true

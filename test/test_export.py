@@ -107,6 +107,109 @@ def verify_export_general(channel_path, http_submit, http_fetch):
 @pytest_twisted.inlineCallbacks
 @pytest.mark.http
 @pytest.mark.export
+def test_export_exclude_include(machinery, create_influxdb, reset_influxdb):
+    """
+    Verify `exclude` and `include` transformation parameters of HTTP export API.
+    """
+
+    # Submit a single measurement, with timestamp.
+    data = {
+        'time': 1583810982,
+        'temperature': 25.26,
+        'humidity': 51.8,
+    }
+    yield threads.deferToThread(http_json_sensor, settings.channel_path_data, data)
+
+    # Wait for some time to process the message.
+    yield sleep(PROCESS_DELAY_MQTT)
+
+    # Excluding fields.
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format="json", params={
+        "from": ts_from,
+        "to": ts_to,
+        "exclude": "time,humidity",
+    })
+    yield deferred
+    result = json.loads(deferred.result)
+    assert_equal(result, [{"temperature": 25.26}])
+
+    # Including fields.
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format="json", params={
+        "from": ts_from,
+        "to": ts_to,
+        "include": "temperature",
+    })
+    yield deferred
+    result = json.loads(deferred.result)
+    assert_equal(result, [{"time": "2020-03-10T03:29:42.000Z", "temperature": 25.26}])
+
+
+@pytest_twisted.inlineCallbacks
+@pytest.mark.http
+@pytest.mark.export
+def test_export_sorting_limit_scalar(machinery, create_influxdb, reset_influxdb):
+    """
+    Verify `sort` and `direction` transformation parameters of HTTP export API.
+    """
+
+    # Submit two measurements, with timestamp.
+    data = {
+        'time': 1583810982,
+        'temperature': 25.26,
+        'humidity': 51.8,
+    }
+    yield threads.deferToThread(http_json_sensor, settings.channel_path_data, data)
+
+    data = {
+        'time': 1583810993,
+        'temperature': 32.26,
+        'humidity': 64.8,
+    }
+    yield threads.deferToThread(http_json_sensor, settings.channel_path_data, data)
+
+    # Wait for some time to process the message.
+    yield sleep(PROCESS_DELAY_MQTT)
+
+    # Sorting.
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format="json", params={
+        "from": ts_from,
+        "to": ts_to,
+        "exclude": "time,humidity",
+        "sort": "temperature",
+        "direction": "descending",
+    })
+    yield deferred
+    result = json.loads(deferred.result)
+    assert_equal(result, [{"temperature": 32.26}, {'temperature': 25.26}])
+
+    # Limit.
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format="json", params={
+        "from": ts_from,
+        "to": ts_to,
+        "exclude": "time,humidity",
+        "sort": "temperature",
+        "direction": "descending",
+        "limit": 1,
+    })
+    yield deferred
+    result = json.loads(deferred.result)
+    assert_equal(result, [{"temperature": 32.26}])
+
+    # Scalar.
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format="txt", params={
+        "from": ts_from,
+        "to": ts_to,
+        "sort": "temperature",
+        "direction": "descending",
+        "scalar": "temperature",
+    })
+    yield deferred
+    assert deferred.result == "32.26"
+
+
+@pytest_twisted.inlineCallbacks
+@pytest.mark.http
+@pytest.mark.export
 def test_export_hdf5(machinery, create_influxdb, reset_influxdb):
     """
     Submit single reading in JSON format to HTTP API and proof
