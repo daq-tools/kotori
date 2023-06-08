@@ -22,7 +22,7 @@ Framework support
     :maxdepth: 1
 
     homie
-    Tasmota <../handbook/decoders/tasmota>
+    Tasmota <../integration/tasmota>
 
 
 *************

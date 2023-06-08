@@ -5,7 +5,7 @@ Decode JSON payloads in Tasmota format.
 
 Documentation
 =============
-- https://getkotori.org/docs/handbook/decoders/tasmota.html
+- https://getkotori.org/docs/integration/tasmota.html
 
 Resources
 =========
