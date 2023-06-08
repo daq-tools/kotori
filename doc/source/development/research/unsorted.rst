@@ -28,3 +28,7 @@ Unsorted links
 
 Global Sensor Networks
 - https://github.com/topics/sensor-network
+
+- IO-Link
+  - https://io-link.com/
+  - https://www.hydac.com.au/io-link-digital-communication-interface.html
