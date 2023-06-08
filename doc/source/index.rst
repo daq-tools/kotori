@@ -14,6 +14,7 @@
     about/index
     getting-started/index
     handbook/index
+    integration/index
     setup/index
     clients/index
     gallery/index

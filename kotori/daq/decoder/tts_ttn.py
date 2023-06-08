@@ -16,7 +16,7 @@ class TheThingsStackDecoder:
 
     Documentation
     =============
-    - https://getkotori.org/docs/handbook/decoders/tts-ttn.html
+    - https://getkotori.org/docs/integration/tts-ttn.html
 
     References
     ==========

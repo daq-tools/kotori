@@ -10,7 +10,7 @@ class AirrohrDecoder:
 
     Documentation
     =============
-    - https://getkotori.org/docs/handbook/decoders/airrohr.html
+    - https://getkotori.org/docs/integration/airrohr.html
     - https://community.hiveeyes.org/t/more-data-acquisition-payload-formats-for-kotori/1421/2
 
     Example

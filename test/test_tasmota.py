@@ -24,7 +24,7 @@ def test_tasmota_sonoff_sc(machinery, create_influxdb, reset_influxdb):
     to MQTT broker, including a timestamp.
     Proof that the reading is processed and stored correctly.
 
-    https://kotori.readthedocs.io/en/latest/handbook/decoders/tasmota.html#submit
+    https://kotori.readthedocs.io/en/latest/integration/tasmota.html#submit
     """
 
     # Submit a single measurement.
@@ -68,7 +68,7 @@ def test_tasmota_ds18b20(machinery, create_influxdb, reset_influxdb):
     to MQTT broker, including a timestamp.
     Proof that the reading is processed and stored correctly.
 
-    https://kotori.readthedocs.io/en/latest/handbook/decoders/tasmota.html#submit
+    https://kotori.readthedocs.io/en/latest/integration/tasmota.html#submit
     """
 
     # Submit a single measurement.
@@ -196,7 +196,7 @@ def test_tasmota_state(machinery, create_influxdb, reset_influxdb):
     to MQTT broker, including a timestamp.
     Proof that the reading is processed and stored correctly.
 
-    https://kotori.readthedocs.io/en/latest/handbook/decoders/tasmota.html#submit
+    https://kotori.readthedocs.io/en/latest/integration/tasmota.html#submit
     """
 
     # Submit a single measurement.

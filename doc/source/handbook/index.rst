@@ -30,15 +30,14 @@ Configuration
     configuration/mqttkit
 
 
-**********
-Components
-**********
+************
+Integrations
+************
 
 .. toctree::
-    :maxdepth: 1
+    :maxdepth: 2
 
     forwarders/index
-    decoders/index
 
 
 *****
