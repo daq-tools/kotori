@@ -147,12 +147,50 @@ global sensor network
 
 :::{grid-item}
 :columns: 8
+#### [](inv:hiveeyes-arduino#sensorwan)
+
+The SensorWAN channel addressing scheme can be used for assigning telemetry
+data communication channels to individual sensor nodes in wide-area sensor
+network scenarios, or similar multi-node, multi-sensor environments.
+
+It is able to handle addressing individual devices and channel bundles in
+a natural way, enabling both direct and trunking communications.
+
+<small>
+<strong>Categories:</strong> polyglot, multi-sensor, multi-device, open source specification
+</small>
+:::
+:::{grid-item}
+:columns: 4
+{bdg-primary-line}`network` {bdg-primary-line}`bus:any` {bdg-primary-line}`request-response:any`
+
+{bdg-success-line}`MANY`
+
+{bdg-secondary-line}`MANY`
+:::
+::::
+:::::
+
+::::::
+
+
+::::::{grid} 1
+:margin: 0
+:padding: 0
+
+:::::{grid-item-card}
+::::{grid} 2
+:margin: 0
+:padding: 0
+
+:::{grid-item}
+:columns: 8
 #### [](#integration-tasmota)
 
 Receive and record telemetry data over MQTT, from devices running the Tasmota firmware.
 
 <small>
-<strong>Categories:</strong> polyglot, multi-sensor, multi-device, open source framework, MQTT
+<strong>Categories:</strong> polyglot, multi-sensor, multi-device, open source framework
 </small>
 :::
 :::{grid-item}
