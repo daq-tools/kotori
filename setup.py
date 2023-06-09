@@ -124,7 +124,7 @@ extras = {
         # Algorithms
         # ----------
         #'scipy>=1.4.1,<1.6',
-        'ggplot>=0.11.5,<0.12',
+        'plotnine<0.13',
 
         # gfortran
         # aptitude install libatlas-base-dev lapack-dev gfortran or

@@ -246,3 +246,57 @@ def test_export_hdf5(machinery, create_influxdb, reset_influxdb):
     assert hdf["/itest_foo_bar/table"][()] == array(
         [(1583810982000000000, 51.8, 25.26)],
         dtype=[('index', '<i8'), ('humidity', '<f8'), ('temperature', '<f8')])
+
+
+@pytest_twisted.inlineCallbacks
+@pytest.mark.http
+@pytest.mark.export
+def test_export_png(machinery, create_influxdb, reset_influxdb):
+    """
+    Verify `sort` and `direction` transformation parameters of HTTP export API.
+    """
+
+    # Submit two measurements, with timestamp.
+    data = {
+        'time': 1583810982,
+        'temperature': 25.26,
+        'humidity': 51.8,
+    }
+    yield threads.deferToThread(http_json_sensor, settings.channel_path_data, data)
+
+    data = {
+        'time': 1583810993,
+        'temperature': 32.26,
+        'humidity': 64.8,
+    }
+    yield threads.deferToThread(http_json_sensor, settings.channel_path_data, data)
+
+    # Wait for some time to process the message.
+    yield sleep(PROCESS_DELAY_MQTT)
+
+    # PNG: matplotlib.
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format="png", params={
+        "from": ts_from,
+        "to": ts_to,
+    })
+    yield deferred
+    assert deferred.result.startswith(b"\x89PNG")
+
+    # PNG: ggplot.
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format="png", params={
+        "from": ts_from,
+        "to": ts_to,
+        "renderer": "ggplot",
+    })
+    yield deferred
+    assert deferred.result.startswith(b"\x89PNG")
+
+    # PNG: ggplot/xkcd.
+    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format="png", params={
+        "from": ts_from,
+        "to": ts_to,
+        "renderer": "ggplot",
+        "theme": "xkcd",
+    })
+    yield deferred
+    assert deferred.result.startswith(b"\x89PNG")
