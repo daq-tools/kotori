@@ -24,11 +24,18 @@ jobs:
         os: [ ubuntu-20.04 ] # , macos-latest, windows-latest ]
         python-version: [ "3.7", "3.8", "3.9", "3.10", "3.11" ]
         mosquitto-version: [ "2.0" ]
+        cratedb-version: [ "5.3" ]
         influxdb-version: [ "1.8" ]
         grafana-version: [ "7.5.17", "8.5.27", "9.5.7", "10.0.3" ]
 
     # https://docs.github.com/en/free-pro-team@latest/actions/guides/about-service-containers
     services:
+
+      cratedb:
+        image: crate:${{ matrix.cratedb-version }}
+        ports:
+          - 4200:4200
+          - 5432:5432
 
       influxdb:
         image: influxdb:${{ matrix.influxdb-version }}
@@ -52,7 +59,7 @@ jobs:
       OS: ${{ matrix.os }}
       PYTHON: ${{ matrix.python-version }}
 
-    name: Python ${{ matrix.python-version }}, Grafana ${{ matrix.grafana-version }}, Mosquitto ${{ matrix.mosquitto-version }}, InfluxDB ${{ matrix.influxdb-version }}
+    name: Py ${{ matrix.python-version }}, Grafana ${{ matrix.grafana-version }}, Mosquitto ${{ matrix.mosquitto-version }}, InfluxDB ${{ matrix.influxdb-version }}, CrateDB ${{ matrix.cratedb-version }}
     steps:
 
       - name: Acquire sources
