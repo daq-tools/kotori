@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2021 Andreas Motl <andreas@getkotori.org>
+# (c) 2015-2023 Andreas Motl <andreas@getkotori.org>
+import os
 import time
 import json
 
@@ -17,6 +18,7 @@ from kotori.daq.decoder import DecoderManager
 from kotori.daq.decoder.schema import MessageType, TopicMatchers
 from kotori.daq.services import MultiServiceMixin
 from kotori.daq.intercom.mqtt import MqttAdapter
+from kotori.daq.storage.cratedb import CrateDBAdapter
 from kotori.daq.storage.influx import InfluxDBAdapter
 from kotori.util.configuration import read_list
 from kotori.util.thimble import Thimble
@@ -79,7 +81,14 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
         self.registerService(self.mqtt_service)
 
-        self.influx = InfluxDBAdapter(settings = self.settings.influxdb)
+        # TODO: Support multiple databases at the same time.
+        log.info("Creating database adapter")
+        if "influxdb" in self.settings:
+            self.database = InfluxDBAdapter(settings=self.settings.influxdb)
+        elif "cratedb" in self.settings:
+            self.database = CrateDBAdapter(settings = self.settings.cratedb)
+        else:
+            log.warn("No time-series database configured")
 
         # Perform MQTT message processing using a different thread pool
         self.threadpool = ThreadPool()
@@ -311,7 +320,8 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         :param storage: The storage location object
         :param data:    The data ready for storing
         """
-        self.influx.write(storage, data)
+        if self.database is not None:
+            self.database.write(storage, data)
 
     def mqtt_process_error(self, failure, topic, payload):
         """
