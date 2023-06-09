@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # (c) 2020-2021 Andreas Motl <andreas@getkotori.org>
 import logging
+
+import pytest
 import pytest_twisted
 
 from test.settings.mqttkit import settings, influx_sensors, PROCESS_DELAY_MQTT
@@ -10,11 +12,13 @@ logger = logging.getLogger(__name__)
 
 
 @pytest_twisted.inlineCallbacks
-def test_timestamp_rfc3339(machinery, create_influxdb, reset_influxdb):
+@pytest.mark.influxdb
+def test_timestamp_rfc3339_influxdb(machinery, create_influxdb, reset_influxdb):
     """
-    Publish single reading in JSON format to MQTT broker,
-    using a timestamp in RFC3339 format.
-    Proof that the timestamp is processed and stored correctly.
+    Publish single reading in JSON format to MQTT broker, using a timestamp in
+    RFC3339 format. Proof that the timestamp is processed and stored correctly.
+
+    Here, InfluxDB is used as database backend.
     """
 
     # Submit a single measurement, with timestamp.

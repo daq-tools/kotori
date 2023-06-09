@@ -39,6 +39,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         self.strategy = strategy
 
         self.name = u'service-mig-' + self.channel.get('realm', str(id(self)))
+        self.database = None
 
     def setupService(self):
 

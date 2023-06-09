@@ -91,6 +91,24 @@ def flatten_request_args(args):
     return result
 
 
+def convert_floats_legacy(data):
+    for key, value in data.items():
+
+        # Sanity checks
+        if isinstance(value, str):
+            continue
+
+        if value is None:
+            data[key] = None
+            continue
+
+        # Convert to float
+        try:
+            data[key] = float(value)
+        except (TypeError, ValueError) as ex:
+            log.warn(u'Measurement "{key}: {value}" float conversion failed: {ex}', key=key, value=value, ex=ex)
+
+
 def convert_floats(data, integers=None):
     """
     Convert all numeric values in dictionary to float type.
