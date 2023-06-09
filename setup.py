@@ -166,9 +166,8 @@ setup(name='kotori',
             #'dyplot==0.8.8',
 
             'matplotlib>=3,<3.11',
+            'plotnine<0.13',
             #'cairocffi>=0.5.4',
-            'bokeh>=1.4.0,<4',
-            'vincent>=0.4.4,<0.5',
         ],
 
         # Data export: Scientific data formats like HDF5 and NetCDF and plots from ggplot
@@ -189,7 +188,6 @@ setup(name='kotori',
             # Algorithms
             # ----------
             #'scipy>=1.4.1,<1.6',
-            'ggplot>=0.11.5,<0.12',
 
             # gfortran
             # aptitude install libatlas-base-dev lapack-dev gfortran or
@@ -197,7 +195,9 @@ setup(name='kotori',
 
             # Visualization
             # -------------
+            'bokeh>=1.4.0,<4',
             #'seaborn==0.7.1',
+            'vincent>=0.4.4,<0.5',
 
         ],
 

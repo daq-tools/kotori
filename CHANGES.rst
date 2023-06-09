@@ -5,6 +5,7 @@ Changelog
 
 in progress
 ===========
+- [export] Repair ``ggplot`` graph rendering by switching to ``plotnine``
 
 .. _kotori-0.28.0:
 
