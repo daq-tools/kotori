@@ -1,13 +1,20 @@
 # -*- coding: utf-8 -*-
-# (c) 2020 Andreas Motl <andreas@getkotori.org>
+# (c) 2020-2023 Andreas Motl <andreas@getkotori.org>
 
-from test.util import InfluxWrapper, GrafanaWrapper
+from test.util import CrateDBWrapper, InfluxWrapper, GrafanaWrapper
 
 PROCESS_DELAY_MQTT = 0.3
 PROCESS_DELAY_HTTP = 0.3
 
 
 class TestSettings:
+
+    # CrateDB settings.
+    cratedb_database = 'mqttkit_2_itest'
+    cratedb_databases = ['mqttkit_2_itest', 'mqttkit_2_itest3']
+    cratedb_measurement_sensors = 'foo_bar_sensors'
+    cratedb_measurement_events = 'foo_bar_events'
+    mqtt2_topic_json   = 'mqttkit-2/itest/foo/bar/data.json'
 
     # InfluxDB settings.
     influx_database = 'mqttkit_1_itest'
@@ -47,6 +54,8 @@ class TestSettings:
 
 settings = TestSettings
 
+cratedb_sensors = CrateDBWrapper(database=settings.cratedb_database, measurement=settings.cratedb_measurement_sensors)
+cratedb_events = CrateDBWrapper(database=settings.cratedb_database, measurement=settings.cratedb_measurement_events)
 influx_sensors = InfluxWrapper(database=settings.influx_database, measurement=settings.influx_measurement_sensors)
 influx_events = InfluxWrapper(database=settings.influx_database, measurement=settings.influx_measurement_events)
 grafana = GrafanaWrapper(settings=settings)

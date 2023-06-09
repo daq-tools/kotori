@@ -63,6 +63,9 @@ Run specific tests with maximum verbosity::
     # Run tests marked with "tasmota", "homie" or "airrohr".
     pytest test ${PYTEST_OPTIONS} -m 'tasmota or homie or airrohr'
 
+    # Run tests with CrateDB as database backend.
+    pytest test ${PYTEST_OPTIONS} -m cratedb
+
 To see available markers, type::
 
     pytest --markers
