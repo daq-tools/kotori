@@ -22,6 +22,7 @@ def test_mqtt_to_influxdb_json_single(machinery, create_influxdb, reset_influxdb
 
     Addressing: Classic WAN path
     Example:    mqttkit-1/network/gateway/node
+    Database:   InfluxDB
     """
 
     # Submit a single measurement, without timestamp.

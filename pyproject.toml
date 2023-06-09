@@ -1,0 +1,19 @@
+[tool.coverage.run]
+branch = false
+omit = [
+  ".venv*",
+  "setup.py",
+  "test/*",
+]
+source = ["kotori"]
+
+[tool.coverage.report]
+fail_under = 0
+show_missing = true
+omit = [
+  "kotori/firmware/*",
+  "kotori/vendor/hydro2motion/*",
+  "kotori/vendor/ilaundry/*",
+  "kotori/vendor/luftdaten/*",
+  "kotori/vendor/lst/*",
+]

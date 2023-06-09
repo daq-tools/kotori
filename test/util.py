@@ -148,8 +148,7 @@ class InfluxWrapper:
     def query(self):
         logger.info('InfluxDB: Querying database')
         expression = Query('*').from_(self.measurement) # .where(time__gte=time_begin, time__lte=time_end, **tags)
-        influx_client = self.get_client()
-        result = influx_client.query(str(expression))
+        result = self.client.query(str(expression))
         return result
 
     def get_record(self, index=None):
@@ -185,11 +184,13 @@ class InfluxWrapper:
             logger.info('InfluxDB: Resetting database')
             # Clear out the database.
             influx = InfluxWrapper(database=self.database, measurement=self.measurement)
-            influx.client.delete_series(self.database, measurement=self.measurement)
-            #try:
-            #except InfluxDBClientError as ex:
-            #    if 'database not found: mqttkit_1_itest' not in str(ex):
-            #        raise
+            try:
+                influx.client.delete_series(self.database, measurement=self.measurement)
+            except InfluxDBClientError as ex:
+                if "database not found" not in str(ex):
+                    raise
+
+        return reset_measurement
 
         return reset_measurement
 

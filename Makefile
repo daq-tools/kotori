@@ -10,6 +10,7 @@ $(eval venv         := .venv)
 $(eval pip          := $(venv)/bin/pip)
 $(eval python       := $(venv)/bin/python)
 $(eval pytest       := $(venv)/bin/pytest)
+$(eval coverage     := $(venv)/bin/coverage)
 $(eval bumpversion  := $(venv)/bin/bumpversion)
 $(eval twine        := $(venv)/bin/twine)
 $(eval sphinx-build := $(venv)/bin/sphinx-build)
@@ -94,8 +95,10 @@ test: virtualenv-dev
 
 .PHONY:
 test-coverage: virtualenv-dev
-	$(pytest) --cov --cov-report=term-missing --cov-report=xml kotori test
-
+	$(coverage) run --concurrency=multiprocessing,thread --parallel-mode --timid $(pytest) kotori test
+	$(coverage) combine
+	$(coverage) report
+	$(coverage) xml
 
 
 # =============
