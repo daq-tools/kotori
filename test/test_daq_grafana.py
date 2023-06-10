@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2020-2021 Andreas Motl <andreas@getkotori.org>
+# (c) 2020-2023 Andreas Motl <andreas@getkotori.org>
 import logging
 
 import pytest
@@ -13,10 +13,11 @@ logger = logging.getLogger(__name__)
 
 @pytest_twisted.inlineCallbacks
 @pytest.mark.grafana
-def test_mqtt_to_grafana_single(machinery, create_influxdb, reset_influxdb, reset_grafana):
+@pytest.mark.influxdb
+def test_mqtt_influxdb_grafana_single(machinery, create_influxdb, reset_influxdb, reset_grafana):
     """
-    Publish single reading in JSON format to MQTT broker and proof
-    that a corresponding datasource and a dashboard was created in Grafana.
+    Publish single reading in JSON format to MQTT broker and proof that a
+    corresponding InfluxDB datasource and a dashboard was created in Grafana.
     """
 
     # Submit a single measurement, without timestamp.
@@ -43,6 +44,42 @@ def test_mqtt_to_grafana_single(machinery, create_influxdb, reset_influxdb, rese
     target = dashboard['rows'][0]['panels'][0]['targets'][0]
     assert target['measurement'] == settings.influx_measurement_sensors
     assert 'temperature' in target['query'] or 'humidity' in target['query']
+
+
+@pytest_twisted.inlineCallbacks
+@pytest.mark.grafana
+@pytest.mark.cratedb
+def test_mqtt_cratedb_grafana_single(machinery_cratedb, reset_cratedb, reset_grafana_cratedb):
+    """
+    Publish single reading in JSON format to MQTT broker and proof that a
+    corresponding CrateDB datasource and a dashboard was created in Grafana.
+    """
+
+    # Submit a single measurement, without timestamp.
+    data = {
+        'temperature': 42.84,
+        'humidity': 83.1,
+    }
+    yield mqtt_json_sensor(settings.mqtt2_topic_json, data)
+
+    # Wait for some time to process the message.
+    yield sleep(PROCESS_DELAY_MQTT)
+    yield sleep(PROCESS_DELAY_MQTT)
+    yield sleep(PROCESS_DELAY_MQTT)
+    yield sleep(PROCESS_DELAY_MQTT)
+
+    # Proof that Grafana is well provisioned.
+    logger.info('Grafana: Checking datasource')
+    assert settings.cratedb_database in grafana.get_datasource_names()
+
+    logger.info('Grafana: Retrieving dashboard')
+    dashboard_name = settings.grafana2_dashboards[0]
+    dashboard = grafana.get_dashboard_by_name(dashboard_name)
+
+    logger.info('Grafana: Checking dashboard layout')
+    target = dashboard['rows'][0]['panels'][0]['targets'][0]
+    assert target['measurement'] == settings.cratedb_measurement_sensors
+    assert target['rawSql'] == "SELECT time, fields['humidity'] AS humidity FROM mqttkit_2_itest.foo_bar_sensors WHERE $__timeFilter(time)"
 
 
 @pytest_twisted.inlineCallbacks
