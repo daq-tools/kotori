@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2021 Andreas Motl, <andreas@getkotori.org>
+# (c) 2015-2023 Andreas Motl, <andreas@getkotori.org>
 import arrow
 from twisted.logger import Logger
 from twisted.application.service import MultiService
 
+from kotori.daq.model import TimeseriesDatabaseType
 from kotori.daq.services import MultiServiceMixin
 from kotori.daq.graphing.grafana.api import GrafanaApi
 from kotori.daq.graphing.grafana.dashboard import GrafanaDashboardBuilder, GrafanaDashboardModel
@@ -24,6 +25,13 @@ class GrafanaManager(MultiService, MultiServiceMixin):
 
         # Shortcut to global settings
         self.config = settings
+
+        if "cratedb" in self.config:
+            self.dbtype = TimeseriesDatabaseType.CRATEDB
+        elif "influxdb" in self.config:
+            self.dbtype = TimeseriesDatabaseType.INFLUXDB1
+        else:
+            raise ValueError("Timeseries database type not defined")
 
         if not 'port' in self.config['grafana']:
             self.config['grafana']['port'] = '3000'
@@ -76,15 +84,34 @@ class GrafanaManager(MultiService, MultiServiceMixin):
 
         datasource_name = storage_location.database
 
-        self.grafana_api.create_datasource(datasource_name, {
-            "type":     "influxdb",
-            "url":      "http://{host}:{port}/".format(
-                host=self.config['influxdb']['host'],
-                port=int(self.config['influxdb'].get('port', '8086'))),
-            "database": storage_location.database,
-            "user":     self.config['influxdb']['username'],
-            "password": self.config['influxdb']['password'],
+        if self.dbtype is TimeseriesDatabaseType.CRATEDB:
+            db_config = self.config['cratedb']
+            self.grafana_api.create_datasource(datasource_name, {
+                "type":     "postgres",
+                "url":      "{host}:{port}".format(
+                    host=db_config.get('host', 'localhost'),
+                    port=int(db_config.get('port', '5432'))),
+                "database": storage_location.database,
+                "user":     db_config.get('username', 'crate'),
+                "password": db_config.get('password'),
+                "jsonData": {
+                    "sslmode": "disable",
+                    "postgresVersion": 1400,
+                },
+                })
+        elif self.dbtype is TimeseriesDatabaseType.INFLUXDB1:
+            self.grafana_api.create_datasource(datasource_name, {
+                "type": "influxdb",
+                "url": "http://{host}:{port}/".format(
+                    host=self.config['influxdb']['host'],
+                    port=int(self.config['influxdb'].get('port', '8086'))),
+                "database": storage_location.database,
+                "user": self.config['influxdb']['username'],
+                "password": self.config['influxdb']['password'],
             })
+        else:
+            log.warn("No time-series database enabled, skipping Grafana provisioning")
+
 
         return datasource_name
 
@@ -145,6 +172,8 @@ class GrafanaManager(MultiService, MultiServiceMixin):
             name=dashboard_identity.name,
             title=dashboard_identity.title,
             datasource=datasource_name,
+            database_type=self.dbtype,
+            database_name=storage_location.database,
             measurement_sensors=storage_location.measurement,
             measurement_events=storage_location.measurement_events
         )

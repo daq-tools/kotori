@@ -1,0 +1,10 @@
+{
+    "alias": "{{ alias }}",
+    "format": "table",
+    "resultFormat": "time_series",
+    "tags": {{ tags }},
+    "groupByTags": [],
+    "measurement": "{{ measurement }}",
+    "rawQuery": true,
+    "rawSql": "SELECT time, fields['{{ name }}'] AS {{ alias }} FROM {{ table }} WHERE $__timeFilter(time)"
+}
