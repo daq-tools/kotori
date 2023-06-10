@@ -15,6 +15,7 @@ class TestSettings:
     cratedb_measurement_sensors = 'foo_bar_sensors'
     cratedb_measurement_events = 'foo_bar_events'
     mqtt2_topic_json   = 'mqttkit-2/itest/foo/bar/data.json'
+    grafana2_dashboards = ['mqttkit-2-itest', 'mqttkit-2-itest3']
 
     # InfluxDB settings.
     influx_database = 'mqttkit_1_itest'

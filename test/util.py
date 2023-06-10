@@ -22,6 +22,7 @@ from twisted.internet.task import deferLater
 
 import kotori
 from kotori.daq.graphing.grafana.manager import GrafanaManager
+from kotori.daq.model import TimeseriesDatabaseType
 
 logger = logging.getLogger(__name__)
 
@@ -90,10 +91,19 @@ class GrafanaWrapper:
         field_names = sorted(map(lambda x: x["fields"][0]["name"], panels[panel_index]['targets']))
         return field_names
 
-    def make_reset(self):
+    def make_reset(self, dbtype: TimeseriesDatabaseType = TimeseriesDatabaseType.INFLUXDB1):
+
+        if dbtype is TimeseriesDatabaseType.CRATEDB:
+            database = self.settings.cratedb_database
+            databases = getattr(self.settings, "cratedb_databases", [])
+            dashboards = self.settings.grafana2_dashboards
+        elif dbtype is TimeseriesDatabaseType.INFLUXDB1:
+            database = self.settings.influx_database
+            databases = getattr(self.settings, "influx_databases", [])
+            dashboards = self.settings.grafana_dashboards
 
         @pytest.fixture(scope="function")
-        def reset_grafana(machinery):
+        def resetfun(machinery, machinery_cratedb):
             """
             Fixture to delete the Grafana datasource and dashboard.
             """
@@ -103,13 +113,12 @@ class GrafanaWrapper:
             for datasource in self.client.datasources.get():
                 datasource_name = datasource['name']
                 logger.info(f"Attempt to delete datasource {datasource_name}")
-                if datasource_name == self.settings.influx_database or \
-                        datasource_name in getattr(self.settings, "influx_databases", []):
+                if datasource_name == database or datasource_name in databases:
                     datasource_id = datasource['id']
                     self.client.datasources[datasource_id].delete()
                     logger.info(f"Successfully deleted datasource {datasource_name}")
 
-            for dashboard_name in self.settings.grafana_dashboards:
+            for dashboard_name in dashboards:
                 logger.info(f"Attempt to delete dashboard {dashboard_name}")
                 try:
                     dashboard = self.get_dashboard_by_name(dashboard_name)
@@ -121,14 +130,16 @@ class GrafanaWrapper:
                         raise
 
             # Find all `GrafanaManager` service instances and invoke `KeyCache.reset()` on them.
-            if machinery:
+            for machinery in [machinery, machinery_cratedb]:
+                if machinery is None:
+                    continue
                 for app in machinery.applications:
                     for service in app.services:
                         for subservice in service.services:
                             if isinstance(subservice, GrafanaManager):
                                 subservice.keycache.reset()
 
-        return reset_grafana
+        return resetfun
 
 
 class InfluxWrapper:
