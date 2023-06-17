@@ -79,7 +79,9 @@ def test_mqtt_cratedb_grafana_single(machinery_cratedb, reset_cratedb, reset_gra
     logger.info('Grafana: Checking dashboard layout')
     target = dashboard['rows'][0]['panels'][0]['targets'][0]
     assert target['measurement'] == settings.cratedb_measurement_sensors
-    assert target['rawSql'] == "SELECT time, fields['humidity'] AS humidity FROM mqttkit_2_itest.foo_bar_sensors WHERE $__timeFilter(time)"
+    assert target['rawSql'] == \
+           "SELECT $__timeGroupAlias(time, $__interval), MEAN(fields['humidity']) AS humidity " \
+           "FROM mqttkit_2_itest.foo_bar_sensors WHERE $__timeFilter(time) GROUP BY time ORDER BY time"
 
 
 @pytest_twisted.inlineCallbacks
