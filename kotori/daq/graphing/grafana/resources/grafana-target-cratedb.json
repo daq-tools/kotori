@@ -6,5 +6,5 @@
     "groupByTags": [],
     "measurement": "{{ measurement }}",
     "rawQuery": true,
-    "rawSql": "SELECT time, fields['{{ name }}'] AS {{ alias }} FROM {{ table }} WHERE $__timeFilter(time)"
+    "rawSql": "SELECT $__timeGroupAlias(time, $__interval), MEAN(fields['{{ name }}']) AS {{ alias }} FROM {{ table }} WHERE $__timeFilter(time) GROUP BY time ORDER BY time"
 }
