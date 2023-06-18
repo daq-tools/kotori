@@ -1,17 +1,21 @@
 # -*- coding: utf-8 -*-
 # (c) 2023 Andreas Motl <andreas@getkotori.org>
 import calendar
+import functools
 import json
+from collections import OrderedDict
 from decimal import Decimal
 from copy import deepcopy
-from datetime import datetime, date
+from datetime import datetime, date, timezone
 
 import crate.client.http
 import pytz
 import requests
 from crate import client
+from crate.client.converter import DefaultTypeConverter
 from crate.client.exceptions import ProgrammingError
 from funcy import project
+from munch import Munch
 from twisted.logger import Logger
 
 from kotori.daq.storage.util import format_chunk
@@ -19,7 +23,7 @@ from kotori.daq.storage.util import format_chunk
 log = Logger()
 
 
-class CrateDBAdapter(object):
+class CrateDBAdapter:
     """
     Kotori database backend adapter for CrateDB.
 
@@ -87,6 +91,79 @@ CREATE TABLE IF NOT EXISTS {tablename} (
         cursor = self.db_client.cursor()
         cursor.execute(sql_ddl)
         cursor.close()
+
+    def query(self, expression: str, tdata: Munch = None):
+        """
+        Query CrateDB and respond with results in suitable shape.
+
+        Make sure to synchronize data by using `REFRESH TABLE ...` before running
+        the actual `SELECT` statement. This is applicable in test case scenarios.
+
+        Response format::
+
+            [
+              {
+                "time": ...,
+                "tags": {"city": "berlin", "location": "balcony"},
+                "fields": {"temperature": 42.42, "humidity": 84.84},
+              },
+              ...
+            ]
+
+        TODO: Unify with `kotori.test.util:CrateDBWrapper.query`.
+        """
+
+        log.info(f"Database query: {expression}")
+
+        tdata = tdata or {}
+
+        # Before reading data from CrateDB, synchronize it.
+        # Currently, it is mostly needed to satisfy synchronization constraints when running the test suite.
+        # However, users also may expect to see data "immediately". On the other hand, in order to satisfy
+        # different needs, this should be made configurable per realm, channel and/or request.
+        # TODO: Maybe just _optionally_ synchronize with the database when reading data.
+        if tdata:
+            refresh_sql = f"REFRESH TABLE {self.get_tablename(tdata)}"
+            self.execute(refresh_sql)
+
+        def dict_from_row(columns, row):
+            """
+            https://stackoverflow.com/questions/3300464/how-can-i-get-dict-from-sqlite-query
+            https://stackoverflow.com/questions/4147707/python-mysqldb-sqlite-result-as-dictionary
+            """
+            return dict(zip(columns, row))
+
+        def record_from_dict(item):
+            record = OrderedDict()
+            record.update({"time": item["time"]})
+            record.update(item["tags"])
+            record.update(item["fields"])
+            return record
+
+        # Query database, with convenience data type converters. Assume timestamps to be in UTC.
+        cursor = self.db_client.cursor(converter=DefaultTypeConverter(), time_zone=timezone.utc)
+        cursor.execute(expression)
+        data_raw = cursor.fetchall()
+
+        # Provide fully-qualified records to downstream components, including column names.
+        column_names = [column_info[0] for column_info in cursor.description]
+        data_tags_fields = map(functools.partial(dict_from_row, column_names), data_raw)
+
+        # Bring results into classic "records" shape.
+        data_records = map(record_from_dict, data_tags_fields)
+
+        cursor.close()
+        return data_records
+
+    def execute(self, expression: str):
+        """
+        Execute a database query, using a cursor, and return its results.
+        """
+        cursor = self.db_client.cursor()
+        cursor.execute(expression)
+        result = cursor._result
+        cursor.close()
+        return result
 
     def write(self, meta, data):
         """
