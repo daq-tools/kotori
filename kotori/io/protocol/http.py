@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-# (c) 2016-2021 Andreas Motl <andreas@getkotori.org>
+# (c) 2016-2023 Andreas Motl <andreas@getkotori.org>
+import dataclasses
 import re
 import json
 import mimetypes
@@ -48,61 +49,89 @@ class LocalSite(Site):
         log.debug(line)
 
 
+@dataclasses.dataclass
+class HttpServerAddress:
+    """
+    Represent a typical host/port pair for configuring IP server listening addresses.
+    Other than this, provide sensible factory and helper methods.
+    """
+    host: str
+    port: int
+
+    @classmethod
+    def from_settings(cls, settings):
+        return cls(host=settings.kotori.http_listen, port=int(settings.kotori.http_port))
+
+    @property
+    def combined(self):
+        return f"{self.host}:{self.port}"
+
+    @property
+    def slug(self):
+        return f"{self.host}-{self.port}"
+
+
 class HttpServerService(Service):
     """
-    Singleton instance of a Twisted service wrapping
-    the Twisted TCP/HTTP server object "Site", in turn
-    obtaining a ``HttpChannelContainer`` as root resource.
+    A Twisted service for managing multiple Twisted TCP/HTTP `Site` server objects,
+    and associating them with corresponding `HttpChannelContainer` root resources.
     """
 
-    _instance = None
+    _instances = {}
 
     def __init__(self, settings):
+        log.info(f"Initializing HttpServerService. settings={settings}")
 
-        # Propagate global settings
+        # Propagate global settings.
         self.settings = settings
 
-        # Unique name of this service
-        self.name = 'http-server-default'
+        # Extract listen address settings.
+        self.address = HttpServerAddress.from_settings(self.settings)
 
-        # Root resource object representing a channel
-        # Contains routing machinery
+        # Assign a unique name to the Twisted service object.
+        self.name = f'http-server-{self.address.slug}'
+
+        # Assign a root resource object, representing
+        # a channel containing the routing machinery.
         self.root = HttpChannelContainer(self.settings)
 
-        # Forward route registration method to channel object
+        # Forward route registration method to channel object.
         self.registerEndpoint = self.root.registerEndpoint
 
     def startService(self):
         """
-        Start TCP listener on designated HTTP port,
-        serving ``HttpChannelContainer`` as root resource.
+        Start TCP listener on designated HTTP port, serving a
+        `HttpChannelContainer` as root resource.
         """
 
-        # Don't start service twice
+        # Don't start service twice.
         if self.running == 1:
             return
 
         self.running = 1
 
-        # Prepare startup
-        http_listen = self.settings.kotori.http_listen
-        http_port   = int(self.settings.kotori.http_port)
-        log.info('Starting HTTP service on {http_listen}:{http_port}', http_listen=http_listen, http_port=http_port)
+        # Prepare startup.
+        log.info(f"Starting HTTP service on {self.address.combined}")
 
         # Configure root Site object and start listening to requests.
         # This must take place only once - can't bind to the same port multiple times!
         factory = LocalSite(self.root)
-        reactor.listenTCP(http_port, factory, interface=http_listen)
+        reactor.listenTCP(self.address.port, factory, interface=self.address.host)
 
     @classmethod
     def create(cls, settings):
         """
-        Singleton factory
+        Factory method for creating `HttpServerService` instances.
+
+        It makes sure to create only one instance per listening address,
+        in order not to bind to the same port multiple times.
         """
-        if not cls._instance:
-            cls._instance = HttpServerService(settings)
-            cls._instance.startService()
-        return cls._instance
+        key = HttpServerAddress.from_settings(settings).combined
+        if key not in cls._instances:
+            instance = HttpServerService(settings)
+            instance.startService()
+            cls._instances[key] = instance
+        return cls._instances[key]
 
 
 class HttpChannelContainer(Resource):

@@ -58,7 +58,7 @@ class ProtocolForwarderService(MultiServiceMixin, MultiService):
 
     def setupService(self):
         #self.log(log.info, u'Setting up')
-        log.info(u'Starting {name}'.format(name=self.logname))
+        log.info(u'Starting ProtocolForwarderService: {name}'.format(name=self.logname))
 
         self.settings = self.parent.settings
 

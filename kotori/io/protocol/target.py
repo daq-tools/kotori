@@ -15,7 +15,7 @@ from kotori.util.errors import last_error_and_traceback
 log = Logger()
 
 try:
-    from kotori.io.export.influx import DataFrameQuery
+    from kotori.io.export.database import DataFrameQuery
 except ImportError:
     log.failure('InfluxDB export not available, please install "pandas".', level=LogLevel.warn)
 
