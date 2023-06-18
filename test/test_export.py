@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-# (c) 2020-2022 Andreas Motl <andreas@getkotori.org>
+# (c) 2020-2023 Andreas Motl <andreas@getkotori.org>
+import functools
 import json
 import logging
 
@@ -25,11 +26,24 @@ ts_to = '2020-03-10T23:59:59.000Z'
 @pytest_twisted.inlineCallbacks
 @pytest.mark.http
 @pytest.mark.export
-def test_export_general(machinery, create_influxdb, reset_influxdb):
+@pytest.mark.influxdb
+def test_export_influxdb_general(machinery, create_influxdb, reset_influxdb):
     """
     Submit single reading in JSON format to HTTP API and proof
     it can be retrieved back from the HTTP API in different formats.
+
+    This uses InfluxDB as timeseries database.
     """
+
+    channel_path = settings.channel_path_data
+    http_submit = functools.partial(http_json_sensor, port=24642)
+    http_fetch = functools.partial(http_get_data, port=24642)
+
+    yield verify_export_general(channel_path, http_submit, http_fetch)
+
+
+@pytest_twisted.inlineCallbacks
+def verify_export_general(channel_path, http_submit, http_fetch):
 
     # Submit a single measurement, with timestamp.
     data = {
@@ -37,7 +51,7 @@ def test_export_general(machinery, create_influxdb, reset_influxdb):
         'temperature': 25.26,
         'humidity': 51.8,
     }
-    yield threads.deferToThread(http_json_sensor, settings.channel_path_data, data)
+    yield threads.deferToThread(http_submit, channel_path, data)
 
     # Wait for some time to process the message.
     yield sleep(PROCESS_DELAY_MQTT)
@@ -46,31 +60,31 @@ def test_export_general(machinery, create_influxdb, reset_influxdb):
     df_should = pd.DataFrame([[pd.to_datetime("2020-03-10T03:29:42.000000Z"), 51.8, 25.26]], columns=["time", "humidity", "temperature"])
 
     # CSV format.
-    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='csv', ts_from=ts_from, ts_to=ts_to)
+    deferred = threads.deferToThread(http_fetch, channel_path, format='csv', ts_from=ts_from, ts_to=ts_to)
     yield deferred
     result = pd.read_csv(io.StringIO(deferred.result), parse_dates=["time"])
     assert_frame_equal(result, df_should, check_names=False, check_like=True, check_datetimelike_compat=True)
 
     # TXT format (same as CSV).
-    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='txt', ts_from=ts_from, ts_to=ts_to)
+    deferred = threads.deferToThread(http_fetch, channel_path, format='txt', ts_from=ts_from, ts_to=ts_to)
     yield deferred
     result = pd.read_csv(io.StringIO(deferred.result), parse_dates=["time"])
     assert_frame_equal(result, df_should, check_names=False, check_like=True, check_datetimelike_compat=True)
 
     # JSON format.
-    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='json', ts_from=ts_from, ts_to=ts_to)
+    deferred = threads.deferToThread(http_fetch, channel_path, format='json', ts_from=ts_from, ts_to=ts_to)
     yield deferred
     result = json.loads(deferred.result)
     should = [{"time": "2020-03-10T03:29:42.000Z", "humidity": 51.8, "temperature": 25.26}]
     assert_equal(result, should)
 
     # XLSX format.
-    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='xlsx', ts_from=ts_from, ts_to=ts_to)
+    deferred = threads.deferToThread(http_fetch, channel_path, format='xlsx', ts_from=ts_from, ts_to=ts_to)
     yield deferred
     assert deferred.result.startswith(b'PK\x03\x04\x14\x00\x00\x00\x08\x00')
 
     # HTML format.
-    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='html', ts_from=ts_from, ts_to=ts_to)
+    deferred = threads.deferToThread(http_fetch, channel_path, format='html', ts_from=ts_from, ts_to=ts_to)
     yield deferred
     assert \
         '<html>' in deferred.result and \
@@ -80,12 +94,12 @@ def test_export_general(machinery, create_influxdb, reset_influxdb):
         '<td>51.8</td>' in deferred.result
 
     # NetCDF format.
-    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='nc', ts_from=ts_from, ts_to=ts_to)
+    deferred = threads.deferToThread(http_fetch, channel_path, format='nc', ts_from=ts_from, ts_to=ts_to)
     yield deferred
     assert deferred.result.startswith(b'\x89HDF\r\n\x1a\n\x02\x08\x08\x00\x00\x00')
 
     # Datatables HTML.
-    deferred = threads.deferToThread(http_get_data, settings.channel_path_data, format='dt', ts_from=ts_from, ts_to=ts_to)
+    deferred = threads.deferToThread(http_fetch, channel_path, format='dt', ts_from=ts_from, ts_to=ts_to)
     yield deferred
     assert b"cdn.datatables.net" in deferred.result
 

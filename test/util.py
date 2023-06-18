@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2020-2021 Andreas Motl <andreas@getkotori.org>
+# (c) 2020-2023 Andreas Motl <andreas@getkotori.org>
 import os
 import json
 import logging
@@ -234,8 +234,9 @@ def http_raw(topic, headers=None, json=None, data=None):
     return requests.post(uri, headers=headers, json=json, data=data)
 
 
-def http_json_sensor(topic, data):
-    uri = 'http://localhost:24642/api{}'.format(topic)
+def http_json_sensor(path: str, data, port=24642):
+    path = path.lstrip("/")
+    uri = f'http://localhost:{port}/api/{path}'
     logger.info('HTTP: Submitting reading to {} using JSON'.format(uri))
     return requests.post(uri, json=data)
 
@@ -255,9 +256,9 @@ def http_csv_sensor(topic, data):
     return requests.post(uri, data=body, headers={'Content-Type': 'text/csv'})
 
 
-def http_get_data(topic=None, format='csv', ts_from=None, ts_to=None):
-    uri = 'http://localhost:24642/api{topic}.{format}?from={ts_from}&to={ts_to}'.format(
-        topic=topic, format=format, ts_from=ts_from, ts_to=ts_to)
+def http_get_data(path: str = None, format='csv', ts_from=None, ts_to=None, port=24642):
+    path = path.lstrip("/")
+    uri = f'http://localhost:{port}/api/{path}.{format}?from={ts_from}&to={ts_to}'
     logger.info('HTTP: Exporting data from {} using format "{}"'.format(uri, format))
     payload = requests.get(uri).content
     if format in ["csv", "txt", "json", "html"]:

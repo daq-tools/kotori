@@ -4,6 +4,8 @@ import requests
 from copy import deepcopy
 from funcy import project
 from collections import OrderedDict
+
+from munch import Munch
 from twisted.logger import Logger
 from influxdb.client import InfluxDBClient, InfluxDBClientError
 
@@ -12,7 +14,7 @@ from kotori.daq.storage.util import format_chunk
 log = Logger()
 
 
-class InfluxDBAdapter(object):
+class InfluxDBAdapter:
 
     def __init__(self, settings=None, database=None):
 
@@ -63,6 +65,10 @@ class InfluxDBAdapter(object):
             if entry['name'] == name:
                 return True
         return False
+
+    def query(self, expression: str, tdata: Munch = None):
+        log.info(f"Database query: {expression}")
+        return self.influx_client.query(expression)
 
     def write(self, meta, data):
 
@@ -122,7 +128,7 @@ class InfluxDBAdapter(object):
         return project(data, ['gateway', 'node'])
 
 
-class BusInfluxForwarder(object):
+class BusInfluxForwarder:  # pragma: nocover
     """
     Generic software bus -> influxdb forwarder based on prototypic implementation at HiveEyes
     TODO: Generalize and refactor
