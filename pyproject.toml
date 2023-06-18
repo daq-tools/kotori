@@ -11,7 +11,12 @@ source = ["kotori"]
 fail_under = 0
 show_missing = true
 omit = [
+  "kotori/daq/intercom/c.py",
+  "kotori/daq/intercom/pyclibrary_ext/*",
+  "kotori/daq/intercom/udp.py",
+  "kotori/daq/intercom/wamp.py",
   "kotori/firmware/*",
+  "kotori/frontend/*",
   "kotori/vendor/hydro2motion/*",
   "kotori/vendor/ilaundry/*",
   "kotori/vendor/luftdaten/*",
