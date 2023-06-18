@@ -31,6 +31,11 @@ class DataFrameQuery:
                 settings=self.settings.influxdb,
                 database=bucket.tdata.database,
             )
+        elif "cratedb" in self.settings:
+            from kotori.daq.storage.cratedb import CrateDBAdapter
+            database = CrateDBAdapter(
+                settings=self.settings.cratedb,
+            )
         else:
             log.warn("No time-series database configured")
             return

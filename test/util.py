@@ -263,6 +263,9 @@ class CrateDBWrapper:
               },
               ...
             ]
+
+        TODO: Refactor to / unify with `kotori.daq.storage.cratedb:CrateDBAdapter.query`.
+        TODO: Add dict-based record retrieval as a row factory to `crate` library.
         """
         logger.info('CrateDB: Querying database')
         db_table = self.get_tablename()
@@ -284,6 +287,8 @@ class CrateDBWrapper:
     def execute(self, expression):
         """
         Actually execute the database query, using a cursor.
+
+        TODO: Use `kotori.daq.storage.cratedb:CrateDBAdapter.execute`.
         """
         cursor = self.client.cursor()
         cursor.execute(expression)
