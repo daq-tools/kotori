@@ -72,6 +72,16 @@ Linino OS
 - https://www.dinotools.de/2014/07/09/kurz-vorgestellt-linino-one/
 - https://www.rhydolabz.com/arduino-compatible-boards-boards-similar-to-arduino-c-152_215/linino-one-p-1876.html
 
+Digilent
+--------
+- https://shop.trenz-electronic.de/de/Produkte/Digilent/DAQ-und-Data-Logging/
+
+KiDAQ
+-----
+- https://www.kistler.com/DE/en/c/kidaq-data-acquisition-system/CG21-kidaq-data-acquisition-system
+- KiStudio Lab: https://www.kistler.com/DE/en/c/kistudio-lab-package-software-for-data-acquisition-and-analysis/CG31-kistudio-lab-package-software-for-data-acquisition-and-analysis
+- jBEAM Lab analysis software: https://www.kistler.com/DE/en/cp/data-analysis-software-jbeam-lab-for-generic-analysis-2897a/P0000212
+- https://kistler.cdn.celum.cloud/SAPCommerce_Download_original/003-476e.pdf
 
 More
 ----

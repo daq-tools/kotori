@@ -92,17 +92,22 @@ Kotori
 About
 *****
 
-Kotori is a multi-channel, multi-protocol, telemetry data acquisition and
-graphing toolkit for `time-series`_ data processing. Free, open, simple.
-It supports scientific environmental monitoring projects,
-distributed sensor networks, and likewise scenarios.
+Kotori is a multi-channel, multi-protocol telemetry data acquisition and graphing
+toolkit for `time-series`_ data processing.
+
+It supports a variety of scenarios in scientific environmental monitoring projects,
+for building and operating distributed sensor networks, and for industrial data
+acquisition applications.
 
 
 Details
 =======
 
-Kotori is a `data historian`_ based on Grafana_, Mosquitto_, and InfluxDB_,
-and is written in Python_ with Twisted_.
+Kotori takes the role of the `data historian`_ component within a `SCADA`_ / `MDE`_
+system, exclusively built upon industry-grade `free and open-source software`_
+like Grafana_, Mosquitto_, or InfluxDB_. It is written in Python_,
+and uses the Twisted_ networking library.
+
 The best way to find out what you can do with Kotori, is by looking at
 some outlined `scenarios`_ and by reading how others are using it at the
 `example gallery <gallery_>`_. To learn more about the technical details, have
@@ -220,14 +225,17 @@ The project is licensed under the terms of the GNU AGPL license, see `LICENSE`_.
 .. _Create an issue: https://github.com/daq-tools/kotori/issues/new
 .. _data historian: https://en.wikipedia.org/wiki/Operational_historian
 .. _development sandbox: https://getkotori.org/docs/setup/sandbox.html
+.. _free and open-source software: https://en.wikipedia.org/wiki/Free_and_open-source_software
 .. _gallery: https://getkotori.org/docs/gallery/
 .. _Grafana: https://en.wikipedia.org/wiki/Grafana
 .. _InfluxDB: https://en.wikipedia.org/wiki/InfluxDB
 .. _LICENSE: https://github.com/daq-tools/kotori/blob/main/LICENSE
+.. _MDE: https://de.wikipedia.org/wiki/Maschinendatenerfassung
 .. _MongoDB: https://en.wikipedia.org/wiki/MongoDB
 .. _Mosquitto: https://github.com/eclipse/mosquitto
 .. _MQTT: https://en.wikipedia.org/wiki/MQTT
 .. _Python: https://www.python.org/
+.. _SCADA: https://en.wikipedia.org/wiki/SCADA
 .. _scenarios: https://getkotori.org/docs/about/scenarios.html
 .. _technologies: https://getkotori.org/docs/about/technologies.html
 .. _time-series: https://en.wikipedia.org/wiki/Time_series

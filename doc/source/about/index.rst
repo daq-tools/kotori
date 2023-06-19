@@ -1,10 +1,40 @@
 .. include:: ../_resources.rst
 
 .. _kotori-about:
+.. _kotori-introduction:
 
-#####
-About
-#####
+############
+Introduction
+############
+
+
+********
+Examples
+********
+
+.. container:: pull-left basic-hero
+
+    .. container:: legroom-md
+
+        The example gallery demonstrates a few data acquisition systems which
+        have been assembled using Kotori and auxiliary software components.
+
+    .. container:: btn-outline text-x-large
+
+        :ref:`Read more... <kotori-examples>`
+
+
+.. container:: pull-right
+
+    .. raw:: html
+
+        <a href="#">
+            <span class="hb hb-md hb-google-plus">
+                <i class="fa fa-camera-retro"></i>
+            </span>
+        </a>
+
+|clearfix|
 
 
 *********
@@ -15,11 +45,8 @@ Scenarios
 
     .. container:: legroom-md
 
-        The design and development of Kotori follows common needs and requirements from
-        the community, reflecting different use cases.
-
-        The :ref:`example gallery <kotori-examples>` outlines some specific cases where
-        Kotori has been used.
+        The design and development follows common needs and requirements from
+        the data acquisition community, reflecting different needs and requirements.
 
     .. container:: btn-outline text-x-large
 
@@ -31,7 +58,7 @@ Scenarios
     .. raw:: html
 
         <a href="#">
-            <span class="hb hb-md hb-google-plus">
+            <span class="hb hb-md hb-linkedin">
                 <i class="fa fa-plug"></i>
             </span>
         </a>
@@ -48,9 +75,9 @@ Technologies
 
     .. container:: legroom-md
 
-        The system is based on a number of fine infrastructure components and
-        technologies and supports a number of protocols in one way or another.
-        Standing on the shoulders of giants.
+        The framework is based on a number of best-of-breed infrastructure components
+        and technologies, and supports a number of networking protocols and data
+        payload formats in one way or another.
 
     .. container:: btn-outline text-x-large
 
