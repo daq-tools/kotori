@@ -10,8 +10,8 @@ Data acquisition in a nutshell
 ********
 Question
 ********
-    - I am seeing lots of things about MQTT_. How is the data actually imported into InfluxDB_?
-    - Is data acquisition also possible through HTTP POST requests to the defined topic / channel address?
+- I am seeing lots of things about MQTT_. How is the data actually imported into the database?
+- Is data acquisition also possible through HTTP POST requests to the defined topic / channel address?
 
 
 ******
