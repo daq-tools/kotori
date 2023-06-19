@@ -1,23 +1,40 @@
+.. include:: ../../_resources.rst
+
 .. _influxdb-handbook:
 
-========
-InfluxDB
-========
+#####################
+InfluxDB 1.x handbook
+#####################
+
 
 .. admonition:: Please note
 
-    This page is just a stub.
+    Content on this page may need an update.
 
 
-- https://docs.influxdata.com/influxdb/v1.1/query_language/spec/
 
-::
+**************
+Query language
+**************
+
+InfluxDB 1.x supports both the `Influx Query Language (InfluxQL)`_ and the `Flux data
+scripting language`_.
+
+
+***********
+Walkthrough
+***********
+
+Prerequisites
+=============
+
+Define hostname of InfluxDB server::
 
     export INFLUXDB_HOST=daq.example.org
 
 
 Authentication
---------------
+==============
 
 Enable auth-only access by creating admin user::
 
@@ -28,7 +45,7 @@ Enable auth-only access by creating admin user::
 
 
 Database operations
--------------------
+===================
 Create database::
 
     curl --silent --get 'http://$INFLUXDB_HOST:8086/query?pretty=true' --user admin:admin --data-urlencode 'q=CREATE DATABASE "hiveeyes_100"'
@@ -43,14 +60,14 @@ Drop database::
 
     curl --silent --get 'http://$INFLUXDB_HOST:8086/query?pretty=true' --user admin:admin --data-urlencode 'q=DROP DATABASE "hiveeyes_100"'
 
-Write data
-----------
+Writing
+=======
 
 .. seealso:: https://docs.influxdata.com/influxdb/v1.1/guides/writing_data/
 
 
-Query operations
-----------------
+Querying
+========
 
 Query database using curl::
 
@@ -60,7 +77,7 @@ Query database using curl::
 .. seealso:: https://docs.influxdata.com/influxdb/v1.1/guides/querying_data/
 
 
-Querying from Python
+Querying with Python
 --------------------
 ::
 
@@ -72,7 +89,7 @@ Querying from Python
 
 
 Backup and Restore
-------------------
+==================
 Backup example::
 
     influxd backup -database hiveeyes_25a0e5df_9517_405b_ab14_cb5b514ac9e8 -host swarm.hiveeyes.org:8088 hiveeyes_25a0e5df_9517_405b_ab14_cb5b514ac9e8
@@ -85,9 +102,12 @@ Restore example::
 .. seealso:: https://docs.influxdata.com/influxdb/v1.1/administration/backup_and_restore/
 
 
+*****************
 Export and Import
------------------
-CSV-based import and export using https://github.com/jpillora/csv-to-influxdb.
+*****************
+
+CSV
+===
 
 Export::
 
@@ -102,5 +122,6 @@ Import::
     2016/07/05 21:55:15 Done (wrote 34304 points)
 
 
-- If you like Python, see https://github.com/fabio-miranda/csv-to-influxdb
-- If you like Javascript, see https://github.com/CorpGlory/csv2influx
+- Golang: https://github.com/jpillora/csv-to-influxdb
+- JavaScript: https://github.com/CorpGlory/csv2influx
+- Python: https://github.com/fabio-miranda/csv-to-influxdb

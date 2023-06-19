@@ -171,8 +171,15 @@
 
 .. NEW
 .. _curl: https://en.wikipedia.org/wiki/CURL
+.. _Flux data scripting language: https://docs.influxdata.com/flux/
 .. _Funky v3: https://harizanov.com/product/funky-v3/
+.. _InfluxDB OSS documentation: https://docs.influxdata.com/influxdb/
+.. _Influx Query Language (InfluxQL): https://docs.influxdata.com/influxdb/v1.8/query_language/spec/
+.. _InfluxDB line protocol: https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_reference/
+.. _InfluxDB storage engine: https://docs.influxdata.com/influxdb/v2.7/reference/internals/storage-engine/
 .. _LoRaWAN: https://en.wikipedia.org/wiki/LoRa#LoRaWAN
+.. _MongoDB manual: https://www.mongodb.com/docs/manual/
+.. _MongoDB Wire Protocol: https://www.mongodb.com/docs/manual/reference/mongodb-wire-protocol/
 .. _OpenXC: https://openxcplatform.com/
 .. _OpenXC for Python: http://python.openxcplatform.com/
 .. _multi-tenant: https://en.wikipedia.org/wiki/Multitenancy
@@ -180,6 +187,8 @@
 .. _trunking: https://en.wikipedia.org/wiki/Trunking
 .. _webhook: https://en.wikipedia.org/wiki/Webhook
 .. _webhooks: https://en.wikipedia.org/wiki/Webhook
+.. _WiredTiger: https://github.com/wiredtiger
+
 
 
 .. Companies
