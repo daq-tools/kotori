@@ -780,7 +780,7 @@ Data export
 2016-06-29 0.10.0
 =================
 - Flexible InfluxDB data export and plotting machinery through HTTP,
-  see :ref:`data-export` and :ref:`forward-http-to-influx`.
+  see :ref:`data-export` and :ref:`http-api-export`.
 - Some words about the background and configuration of the :ref:`firmware-builder`.
 
 

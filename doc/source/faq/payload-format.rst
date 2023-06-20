@@ -12,7 +12,7 @@ The payload format
     https://github.com/daq-tools/kotori/issues/25
 
 
-Time field candidates from ``kotori.daq.storage.influx``::
+Time field candidates from ``kotori.daq.storage.util``::
 
     time_field_candidates = [
         'time',         # Vanilla
