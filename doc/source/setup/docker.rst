@@ -26,7 +26,7 @@ its configuration at :ref:`getting-started`.
 Introduction
 ************
 
-This section outlines how to conveniently run Mosquitto, InfluxDB,
+This section outlines how to conveniently run Mosquitto, CrateDB, InfluxDB,
 MongoDB, Grafana and Kotori using Docker.
 
 The repository provides two files ``docker-compose.yml`` and ``.env``. They
@@ -48,7 +48,7 @@ Those images are published to Docker Hub.
 
     Please note that this Docker Compose configuration is primarily suited for
     evaluation and development purposes. As it either disables authentication
-    or uses insecure authentication credentials for Mosquitto, InfluxDB,
+    or uses insecure authentication credentials for Mosquitto, CrateDB, InfluxDB,
     and Grafana, it is not prepared for production setups.
 
 
@@ -56,7 +56,7 @@ Those images are published to Docker Hub.
 Prerequisites
 *************
 
-This will give you Mosquitto, InfluxDB, MongoDB, Grafana, an improved
+This will give you Mosquitto, CrateDB, InfluxDB, MongoDB, Grafana, an improved
 Grafana map panel plugin, and a command alias for invoking Kotori.
 
 In order to invoke the auxiliary services, run::
@@ -93,6 +93,34 @@ Testdrive
 
 This is a basic test walkthrough, to check if data is correctly routed from the
 telemetry message bus to the database.
+
+CrateDB
+=======
+
+This example uses CrateDB as timeseries-database.
+
+Invoke Kotori::
+
+    kotori --config /etc/kotori/docker/docker-cratedb.ini
+
+Publish single reading using MQTT::
+
+    export CHANNEL_TOPIC=sensorwan-cratedb/foo/bar/1/data.json
+    docker run \
+        --network kotori_default \
+        -it --rm eclipse-mosquitto \
+        mosquitto_pub -d -h mosquitto -t $CHANNEL_TOPIC -m '{"temperature": 42.84, "humidity": 83.1}'
+
+Check if reading has been stored in CrateDB::
+
+    docker run \
+        --network kotori_default \
+        -it --rm crate \
+        crash --hosts cratedb -c 'SELECT * FROM sensorwan_cratedb_foo.bar_1_sensors;'
+
+Go to Grafana and visit the dashboard just created::
+
+    open "http://localhost:3000/?orgId=1&search=open&query=sensorwan-cratedb"
 
 InfluxDB
 ========

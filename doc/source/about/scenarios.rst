@@ -85,8 +85,8 @@ We are standing on the shoulders of giants:
 - Leverage the open infrastructure based on Twisted_ - an event-driven networking engine -
   to implement custom software components.
 - Listen and talk M2M_ using the *MQ Telemetry Transport* connectivity protocol and software bus (MQTT_).
-- Store data points into InfluxDB_, a leading open source time series database suitable
-  for realtime analytics and sensor data storage.
+- Store data points into CrateDB_, InfluxDB_, or other open source time series databases
+  suitable for realtime analytics and sensor data storage.
 - Automate dashboard management in the context of data arriving on different data channels
   using Grafana_, an open source, feature rich metrics dashboard and graph editor.
 - Make Browser clients first-class citizens of the underpinning software bus framework

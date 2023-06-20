@@ -14,6 +14,7 @@ with Kotori. Adding more adapters is possible.
 :maxdepth: 1
 :hidden:
 
+cratedb
 influxdb
 mongodb
 ```
@@ -22,6 +23,35 @@ mongodb
 ::::::{grid} 1
 :margin: 0
 :padding: 0
+
+
+:::::{grid-item-card}
+::::{grid} 2
+:margin: 0
+:padding: 0
+
+:::{grid-item}
+:columns: 8
+#### [](#database-cratedb)
+
+CrateDB is a distributed and scalable SQL database for storing and analyzing massive
+amounts of data in near real-time, even with complex queries. It is PostgreSQL-compatible,
+and based on Lucene.
+
+<small>
+<strong>Categories:</strong> timeseries-database, multi-modal database
+</small>
+:::
+:::{grid-item}
+:columns: 4
+{bdg-primary-line}`eth` {bdg-primary-line}`wifi` {bdg-primary-line}`http` {bdg-primary-line}`postgresql`
+
+{bdg-success-line}`sql` {bdg-success-line}`blob`
+
+{bdg-secondary-line}`amd64` {bdg-secondary-line}`arm64`
+:::
+::::
+:::::
 
 
 :::::{grid-item-card}

@@ -49,4 +49,5 @@ Usage
 
     usage/kotori
     usage/grafana
+    usage/cratedb
     usage/influxdb
