@@ -48,13 +48,24 @@ the system will respond with a MQTT "response" on the corresponding topic with s
         "description": "Error processing MQTT message \"{\"value\": 42.42\" from topic \"mqttkit-1/testdrive/area-42/node-1/data.json\"."
     }
 
-Database error
-==============
-When sending a payload with an existing field already seeded in a different data type::
+Database errors
+===============
+When sending a payload with an existing field already materialized using a different data type::
 
     echo '{"value": "invalid"}' | mosquitto_pub -h kotori.example.org -t mqttkit-1/testdrive/area-42/node-1/data.json -l
 
-the system will respond with::
+the system will respond correspondingly.
+
+CrateDB::
+
+    mqttkit-1/testdrive/area-42/node-1/error.json {
+        "type": "<class 'crate.client.exceptions.ProgrammingError'>",
+        "message": "SQLParseException[Cannot cast object element `humidity` with value `invalid` to type `double precision`]",
+        "description": "Error processing MQTT message \"b'{\"temperature\": 42.84, \"humidity\": \"invalid\"}'\" from topic \"mqttkit-2/foo/bar/1/data.json\".",
+        "timestamp": "2023-06-20T12:00:08+00:00"
+    }
+
+InfluxDB::
 
     mqttkit-1/testdrive/area-42/node-1/error.json {
         "message": "400: {\"error\":\"field type conflict: input field \\\"value\\\" on measurement \\\"area_42_node_1_sensors\\\" is type string, already exists as type float dropped=1\"}\n",
@@ -73,11 +84,4 @@ and then sending an invalid payload like::
 
     echo '2017-05-01 22:39:09,invalid' | http POST http://kotori.example.org/api/mqttkit-1/testdrive/area-42/node-1/data Content-Type:text/csv
 
-The system will also respond over MQTT with::
-
-    mqttkit-1/testdrive/area-42/node-1/error.json {
-        "message": "400: {\"error\":\"field type conflict: input field \\\"value\\\" on measurement \\\"area_42_node_1_sensors\\\" is type string, already exists as type float dropped=1\"}\n",
-        "type": "<class 'influxdb.exceptions.InfluxDBClientError'>",
-        "description": "Error processing MQTT message \"{\"time\": \"2017-05-01 22:40:09\", \"value\": \"invalid\"}\" from topic \"mqttkit-1/testdrive/area-42/node-1/data.json\"."
-    }
-
+The system will also respond over MQTT correspondingly, like outlined above.

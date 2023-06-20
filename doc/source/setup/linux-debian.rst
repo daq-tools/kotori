@@ -102,11 +102,11 @@ Install Kotori together with all recommended and suggested packages::
 
     apt install --install-recommends kotori
 
-InfluxDB and Grafana are not always enabled and started automatically,
+CrateDB, InfluxDB, and Grafana are not always enabled and started automatically,
 so ensure they are running by invoking::
 
-    systemctl enable mosquitto influxdb grafana-server
-    systemctl start mosquitto influxdb grafana-server
+    systemctl enable mosquitto crate influxdb grafana-server
+    systemctl start mosquitto crate influxdb grafana-server
 
 Notes for ARM machines
 ======================
@@ -117,13 +117,21 @@ there is a more lightweight package with fewer dependencies called
     apt install --install-recommends kotori-standard
 
 
-*********
-Operation
-*********
+**********
+Operations
+**********
 
-Watching the system
-===================
-These are the log files at a glance where system messages might appear::
+Watching the system logs
+========================
 
-    tail -F /var/log/kotori/*.log /var/log/grafana/*.log /var/log/influxdb/*.log /var/log/mosquitto/*.log
-    journalctl -f -u influxdb
+Being able to investigate problems is crucial. The first step is to inspect corresponding
+log files. At a glance, those are the log files where system messages may appear, depending
+on how you installed and run the corresponding services::
+
+    tail -F /var/log/kotori/*.log /var/log/grafana/*.log /var/log/crate/*.log /var/log/influxdb/*.log /var/log/mosquitto/*.log
+
+On modern Linux systems, log messages may be routed to systemd's journal daemon. In order to
+inspect them, invoke, for example::
+
+    journalctl -u kotori -u grafana -u crate -u influxdb -u mosquitto
+
