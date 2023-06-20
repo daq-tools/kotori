@@ -25,6 +25,7 @@ in progress
   a single TTN Application. Thanks, @thiasB, @einsiedlerkrebs, and @ClemensGruber.
 - [core] Fix error when connecting to MQTT broker without authentication credentials
 - [docs] Refactor "decoders" section to "integrations", and improve index/overview page
+- [CrateDB] Add support for data acquisition and data export
 
 
 .. _kotori-0.27.0:

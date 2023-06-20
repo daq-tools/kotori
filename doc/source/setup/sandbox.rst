@@ -31,13 +31,13 @@ Install some needed packages::
 Foundation services
 ===================
 
-You will need InfluxDB_, Grafana_, Mosquitto_ and optionally MongoDB_.
+You will need Grafana_, Mosquitto_, one of CrateDB_ or InfluxDB_, and optionally MongoDB_.
 
 For installing them on your workstation, you might want to have a look at the
 :ref:`setup-docker`. When running Linux, you can also install the
 infrastructure on your local workstation natively like :ref:`setup-debian`.
 
-The most easy way is to run Mosquitto, InfluxDB, MongoDB and Grafana as Docker
+The most easy way is to run Mosquitto, CrateDB, InfluxDB, MongoDB and Grafana as Docker
 containers::
 
     make start-foundation-services
