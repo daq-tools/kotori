@@ -11,17 +11,12 @@ InfluxDB
 
 /etc/influxdb/influxdb.conf::
 
-    # Outside of any scope
+    # Bind address to use for the RPC service for backup and restore.
     bind-address = "localhost:8088"
-
-    [admin]
-    bind-address = "localhost:8083"
 
     [http]
+    # The bind address used by the HTTP service.
     bind-address = "localhost:8086"
-
-    [meta]
-    bind-address = "localhost:8088"
 
 ::
 

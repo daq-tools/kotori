@@ -65,11 +65,11 @@ scheme like outlined within the `MQTTKit addressing scheme`_::
 
 Implementation details
 ======================
-The main workhorse here is definitively MqttInfluxGrafanaService_,
-which is spun up through `mqttkit.py <https://github.com/daq-tools/kotori/blob/0.24.5/kotori/daq/application/mqttkit.py#L26-L32>`_,
+The main workhorse is the `DAQ core router`_, which is spun up at
+`mqttkit.py, l. 26 <https://github.com/daq-tools/kotori/blob/0.24.5/kotori/daq/application/mqttkit.py#L26-L32>`_,
 essentially tying all things together.
 
-The addressing scheme is implemented through the WanBusStrategy_ component
-used within MqttInfluxGrafanaService_. It will take the responsibility of
-properly receiving and decoding message payloads arriving on the MQTT bus
-according to the specific conventions implemented in there.
+The addressing scheme is implemented through the `WanBusStrategy`_ component.
+It will take the responsibility of properly receiving and decoding message
+payloads arriving on the MQTT bus according to the specific conventions
+implemented in there.

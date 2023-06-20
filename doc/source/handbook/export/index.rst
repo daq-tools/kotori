@@ -29,7 +29,7 @@ Introduction
 ************
 Kotori offers a HTTP interface for exporting timeseries data to various
 tabular and hierarchical data formats and different timeseries plots.
-After querying InfluxDB, data is channeled through a pandas_ DataFrame_
+After querying the timeseries database, data is channeled through a pandas_ DataFrame_
 object and routed to a flexible rendering machinery, which supports a
 number of output formats out of the box:
 
@@ -70,8 +70,8 @@ Details
 Setup
 =====
 To make Kotori listen to HTTP requests for raw data export and data plot
-rendering, please have a look at :ref:`forward-http-to-influx` about how to
-configure a HTTP endpoint for accessing and querying data in InfluxDB_.
+rendering, please have a look at :ref:`http-api-export` about how to
+configure a HTTP endpoint for accessing and querying timeseries data.
 
 List of output formats
 ======================

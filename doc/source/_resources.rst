@@ -4,7 +4,7 @@
 
 .. Kotori service
 .. _Kotori: https://www.getkotori.org/
-.. _MqttInfluxGrafanaService: https://github.com/daq-tools/kotori/blob/0.24.5/kotori/daq/services/mig.py
+.. _DAQ core router: https://github.com/daq-tools/kotori/blob/0.24.5/kotori/daq/services/mig.py
 .. _WanBusStrategy: https://github.com/daq-tools/kotori/blob/0.26.12/kotori/daq/strategy/wan.py
 .. _MQTTKit communication flavor: https://getkotori.org/docs/handbook/mqttkit.html
 .. _MQTTKit addressing scheme: https://getkotori.org/docs/handbook/mqttkit.html#addressing
