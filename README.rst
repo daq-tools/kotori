@@ -76,6 +76,10 @@ Kotori
         :target: https://github.com/grafana/grafana
         :alt: Supported Grafana versions
 
+  .. image:: https://img.shields.io/badge/CrateDB-4.2%20--%205.x-blue.svg
+        :target: https://github.com/crate/crate
+        :alt: Supported CrateDB versions
+
   .. image:: https://img.shields.io/badge/InfluxDB-1.6%2C%201.7%2C%201.8-blue.svg
         :target: https://github.com/influxdata/influxdb
         :alt: Supported InfluxDB versions
@@ -105,7 +109,7 @@ Details
 
 Kotori takes the role of the `data historian`_ component within a `SCADA`_ / `MDE`_
 system, exclusively built upon industry-grade `free and open-source software`_
-like Grafana_, Mosquitto_, or InfluxDB_. It is written in Python_,
+like Grafana_, Mosquitto_, CrateDB_, or InfluxDB_. It is written in Python_,
 and uses the Twisted_ networking library.
 
 The best way to find out what you can do with Kotori, is by looking at
@@ -222,6 +226,7 @@ The project is licensed under the terms of the GNU AGPL license, see `LICENSE`_.
 
 .. _Autobahn: https://crossbar.io/autobahn/
 .. _contributors: https://getkotori.org/docs/project/contributors.html
+.. _CrateDB: https://github.com/crate/crate
 .. _Create an issue: https://github.com/daq-tools/kotori/issues/new
 .. _data historian: https://en.wikipedia.org/wiki/Operational_historian
 .. _development sandbox: https://getkotori.org/docs/setup/sandbox.html
