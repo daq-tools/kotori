@@ -66,6 +66,7 @@ def test_mqtt_cratedb_grafana_single(machinery_cratedb, reset_cratedb, reset_gra
     yield sleep(PROCESS_DELAY_MQTT)
     yield sleep(PROCESS_DELAY_MQTT)
     yield sleep(PROCESS_DELAY_MQTT)
+    yield sleep(PROCESS_DELAY_MQTT)
 
     # Proof that Grafana is well provisioned.
     logger.info('Grafana: Checking datasource')
