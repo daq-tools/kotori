@@ -41,7 +41,7 @@ requires = [
     'json-store>=3.1,<4',
     'python-dateutil>=2.8.0,<3',
     'arrow>=0.17.0,<2',
-    'funcy>=1.15,<2',
+    'funcy>=1.15,<3',
     'attrs>=20.2.0,<22',
 
     # Bus adapters
