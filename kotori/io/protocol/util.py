@@ -4,7 +4,6 @@ import math
 from datetime import timedelta, datetime
 
 import arrow
-import datetime
 
 from arrow.parser import DateTimeParser
 from six import text_type
@@ -123,7 +122,7 @@ def convert_floats(data, integers=None):
     delete_keys = []
     for key, value in data.items():
         try:
-            if isinstance(value, datetime.datetime):
+            if isinstance(value, datetime):
                 continue
             if is_number(value):
                 if key in integers:
