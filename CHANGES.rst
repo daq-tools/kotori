@@ -6,6 +6,7 @@ Changelog
 in progress
 ===========
 - [export] Repair ``ggplot`` graph rendering by switching to ``plotnine``
+- Drop support for Python 3.7
 
 .. _kotori-0.28.0:
 
