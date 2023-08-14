@@ -6,15 +6,10 @@ from setuptools import setup, find_packages
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 
-PYTHON_35 = (3, 5) <= sys.version_info < (3, 6)
 PYTHON_GTE_310 = sys.version_info >= (3, 10)
 PYTHON_LT_311 = sys.version_info < (3, 11)
 
-# Pandas on Python 3.5 will attempt to install `numpy==1.20.1`,
-# which will bail out on aarch64 with `RuntimeError: Python version >= 3.7 required.`.
 numpy_spec = "numpy>=1.18,<1.22"
-if PYTHON_35:
-    numpy_spec = "numpy==1.18.5"
 
 pandas_spec = "pandas<1.3"
 if PYTHON_GTE_310:
@@ -161,7 +156,6 @@ setup(name='kotori',
       classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
