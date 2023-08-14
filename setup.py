@@ -97,11 +97,9 @@ extras = {
 
     'plotting': [
         #'dyplot==0.8.8',
-
-        'matplotlib>=3,<3.4',
+        'matplotlib>=3.7,<3.8',
+        'plotnine<0.13',
         #'cairocffi>=0.5.4',
-        'bokeh>=1.4.0,<3.1',
-        'vincent>=0.4.4,<0.5',
     ],
 
     # Data export: Scientific data formats like HDF5 and NetCDF and plots from ggplot
@@ -119,7 +117,6 @@ extras = {
         # Algorithms
         # ----------
         #'scipy>=1.4.1,<1.6',
-        'plotnine<0.13',
 
         # gfortran
         # aptitude install libatlas-base-dev lapack-dev gfortran or
@@ -127,7 +124,9 @@ extras = {
 
         # Visualization
         # -------------
+        'bokeh>=1.4.0,<3.1',
         #'seaborn==0.7.1',
+        'vincent>=0.4.4,<0.5',
 
     ],
 
