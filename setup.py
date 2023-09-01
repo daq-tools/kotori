@@ -23,7 +23,7 @@ if PYTHON_GTE_310:
 
 xarray_spec = 'xarray>=0.13.0,<0.22'
 if PYTHON_GTE_310:
-    xarray_spec = 'xarray<2023'
+    xarray_spec = 'xarray<2024'
 
 requires = [
 
