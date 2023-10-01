@@ -61,7 +61,7 @@ requires = [
     'service_identity>=18.1.0,<22',
     'idna>=2.10,<4',
     'pyasn1>=0.4.8,<0.5',
-    'pyasn1-modules>=0.2.8,<0.3',
+    'pyasn1-modules>=0.2.8,<0.4',
 
 ]
 
