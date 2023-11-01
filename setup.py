@@ -138,7 +138,7 @@ extras = {
 
     'firmware': [
         'GitPython>=2.0.5,<3',
-        'plumbum>=1.6.1,<1.7',
+        'plumbum>=1.6.1,<1.9',
     ],
 
 }
