@@ -46,7 +46,7 @@ requires = [
 
     # Bus adapters
     'paho-mqtt>=1.5.1,<2',
-    'autobahn[twisted]>=20.7.1,<21',
+    'autobahn[twisted]>=20.7.1,<24',
     'msgpack-python>=0.5.6,<0.6',
     'PyTrie>=0.4.0,<1',
 
