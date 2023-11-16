@@ -3,6 +3,11 @@ Changelog
 *********
 
 
+incomplete
+==========
+- Add possibility to acquire bulk readings in JSON format
+
+
 in progress
 ===========
 
