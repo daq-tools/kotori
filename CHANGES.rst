@@ -27,6 +27,8 @@ in progress
 - [docs] Refactor "decoders" section to "integrations", and improve index/overview page
 - [export] Improve export capabilities by adding parameters ``sort``, ``direction``,
   ``limit``, and ``scalar``. Thanks, @ClemensGruber.
+- [export] Repair ``ggplot`` graph rendering by switching to ``plotnine``
+- Drop support for Python 3.7
 
 
 .. _kotori-0.27.0:
