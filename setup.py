@@ -42,7 +42,7 @@ requires = [
     'python-dateutil>=2.8.0,<3',
     'arrow>=0.17.0,<2',
     'funcy>=1.15,<3',
-    'attrs>=20.2.0,<22',
+    'attrs>=20.2.0,<24',
 
     # Bus adapters
     'paho-mqtt>=1.5.1,<2',
