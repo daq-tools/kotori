@@ -1,7 +1,7 @@
 build
 bump2version<2
 twine<5
-keyring<24
+keyring<25
 invoke<2
 requests<3
 sh<2
