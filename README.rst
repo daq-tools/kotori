@@ -219,6 +219,16 @@ License
 The project is licensed under the terms of the GNU AGPL license, see `LICENSE`_.
 
 
+************
+Supported by
+************
+
+.. image:: https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.svg
+    :target: https://jb.gg/OpenSourceSupport
+
+Special thanks to the people at JetBrains s.r.o. for supporting us with
+excellent development tooling.
+
 
 .. _Autobahn: https://crossbar.io/autobahn/
 .. _contributors: https://getkotori.org/docs/project/contributors.html
