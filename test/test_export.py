@@ -26,6 +26,25 @@ ts_to = '2020-03-10T23:59:59.000Z'
 @pytest_twisted.inlineCallbacks
 @pytest.mark.http
 @pytest.mark.export
+@pytest.mark.cratedb
+def test_export_cratedb_general(machinery_cratedb, reset_cratedb):
+    """
+    Submit single reading in JSON format to HTTP API and proof
+    it can be retrieved back from the HTTP API in different formats.
+
+    This uses CrateDB as timeseries database.
+    """
+
+    channel_path = settings.io_channel_path
+    http_submit = functools.partial(http_json_sensor, port=24643)
+    http_fetch = functools.partial(http_get_data, port=24643)
+
+    yield verify_export_general(channel_path, http_submit, http_fetch)
+
+
+@pytest_twisted.inlineCallbacks
+@pytest.mark.http
+@pytest.mark.export
 @pytest.mark.influxdb
 def test_export_influxdb_general(machinery, create_influxdb, reset_influxdb):
     """

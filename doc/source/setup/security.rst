@@ -6,6 +6,11 @@ Secure the installation
 Close ports
 ===========
 
+CrateDB
+-------
+
+.. todo:: Outline how to protect CrateDB's public listening ports.
+
 InfluxDB
 --------
 
@@ -38,6 +43,14 @@ Grafana
 
 Enable authentication
 =====================
+
+CrateDB
+-------
+
+.. todo::
+
+    Outline how to enable authentication with CrateDB, and how to amend the default
+    credentials.
 
 InfluxDB
 --------

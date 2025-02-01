@@ -67,6 +67,8 @@ requires = [
 
 extras = {
     'daq': [
+        'crash<1',
+        'sqlalchemy-cratedb>=0.37,<1',
         'influxdb>=5.3.0,<6',
         'pytz>=2020.1',
         'requests>=2.12.4,<3',
