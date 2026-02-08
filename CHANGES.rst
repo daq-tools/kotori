@@ -28,6 +28,7 @@ in progress
 - [export] Improve export capabilities by adding parameters ``sort``, ``direction``,
   ``limit``, and ``scalar``. Thanks, @ClemensGruber.
 - Dependencies: Downgrade to setuptools v80 to bring back ``pkg_resources``
+- Runtime: Validated support for Python 3.12
 
 
 .. _kotori-0.27.0:
