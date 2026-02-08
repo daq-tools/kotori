@@ -8,6 +8,7 @@ README = open(os.path.join(here, 'README.rst')).read()
 
 PYTHON_35 = (3, 5) <= sys.version_info < (3, 6)
 PYTHON_GTE_310 = sys.version_info >= (3, 10)
+PYTHON_GTE_312 = sys.version_info >= (3, 12)
 PYTHON_LT_311 = sys.version_info < (3, 11)
 
 # Pandas on Python 3.5 will attempt to install `numpy==1.20.1`,
@@ -20,6 +21,10 @@ pandas_spec = "pandas<1.3"
 if PYTHON_GTE_310:
     pandas_spec = "pandas<1.6"
     numpy_spec = "numpy<1.25"
+
+if PYTHON_GTE_312:
+    pandas_spec = "pandas<3"
+    numpy_spec = "numpy>1.24.4,<2"
 
 xarray_spec = 'xarray>=0.13.0,<0.22'
 if PYTHON_GTE_310:
@@ -167,6 +172,7 @@ setup(name='kotori',
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
         "License :: OSI Approved :: GNU Affero General Public License v3",

@@ -22,7 +22,14 @@ jobs:
       fail-fast: true
       matrix:
         os: [ "ubuntu-22.04" ] # , macos-latest, windows-latest ]
-        python-version: [ "3.7", "3.8", "3.9", "3.10", "3.11" ]
+        python-version: [
+          "3.7",
+          "3.8",
+          "3.9",
+          "3.10",
+          "3.11",
+          "3.12",
+        ]
         mosquitto-version: [ "2.0" ]
         influxdb-version: [ "1.8" ]
         grafana-version: [ "7.5.17", "8.5.27", "9.5.7", "10.0.3" ]
