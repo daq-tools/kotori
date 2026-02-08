@@ -27,6 +27,7 @@ in progress
 - [docs] Refactor "decoders" section to "integrations", and improve index/overview page
 - [export] Improve export capabilities by adding parameters ``sort``, ``direction``,
   ``limit``, and ``scalar``. Thanks, @ClemensGruber.
+- Dependencies: Downgrade to setuptools v80 to bring back ``pkg_resources``
 
 
 .. _kotori-0.27.0:
