@@ -65,7 +65,7 @@ jobs:
     steps:
 
       - name: Acquire sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Start Mosquitto
         uses: namoshek/mosquitto-github-action@v1
