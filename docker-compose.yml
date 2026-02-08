@@ -1,7 +1,5 @@
 # Derived from https://github.com/hiveeyes/terkin-datalogger/pull/82 by @WSt89.
 
-version: '3'
-
 services:
 
   mosquitto:
@@ -45,8 +43,6 @@ services:
   # https://community.grafana.com/t/influxdb-datasource-in-docker-network-what-url/28732
   grafana:
     image: grafana/grafana:${GRAFANA_VERSION}
-    # https://community.grafana.com/t/new-docker-install-with-persistent-storage-permission-problem/10896/15
-    user: "${UID}:${GID}"
     restart: unless-stopped
     ports:
       - ${GRAFANA_PORT}:3000
