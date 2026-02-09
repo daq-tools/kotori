@@ -137,7 +137,7 @@ setup(name='kotori',
             'pyparsing<3.4',
             'pyclibrary<0.3',
             'tabulate<0.8',
-            'sympy<1.13',
+            'sympy<1.15',
         ],
         'storage_plus': [
             'alchimia>=0.4,<1',
