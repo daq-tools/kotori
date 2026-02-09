@@ -178,7 +178,7 @@ setup(name='kotori',
             "tables>=3.5.2,<4; python_version<'3.11'",
 
             # NetCDF (Network Common Data Form)
-            'xarray<2025',
+            'xarray<2027',
             'netCDF4>=1.5.3,<1.8',
             #'h5netcdf==0.2.2',
 
