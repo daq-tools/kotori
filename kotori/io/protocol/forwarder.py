@@ -173,7 +173,7 @@ class ForwarderAddress(object):
     ['POST']
     """
 
-    address_pattern = re.compile('^(?P<uri>.*?)(?: \[(?P<predicates>.+)\])?$')
+    address_pattern = re.compile(r'^(?P<uri>.*?)(?: \[(?P<predicates>.+)\])?$')
 
     def __init__(self, address):
         self.raw_uri = None
