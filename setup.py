@@ -97,7 +97,7 @@ extras = {
         'pycparser==2.21',          # 2.18
         'pyparsing==2.2.0',
         'pyclibrary==0.2.1',
-        'tabulate==0.7.5',          # 0.8.2
+        'tabulate==0.9.0',          # 0.8.2
         'sympy==1.12',           # 1.1.1
     ],
     'storage_plus': [
