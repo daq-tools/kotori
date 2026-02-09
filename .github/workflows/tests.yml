@@ -79,7 +79,7 @@ jobs:
           GF_SECURITY_ADMIN_PASSWORD: admin
 
       mongodb:
-        image: mongo:5
+        image: mongo:6
         ports:
           - 27017:27017
 

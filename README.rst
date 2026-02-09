@@ -80,7 +80,7 @@ Kotori
         :target: https://github.com/influxdata/influxdb
         :alt: Supported InfluxDB versions
 
-  .. image:: https://img.shields.io/badge/MongoDB-3.x%20--%205.x-blue.svg
+  .. image:: https://img.shields.io/badge/MongoDB-3.x%20--%206.x-blue.svg
         :target: https://github.com/mongodb/mongo
         :alt: Supported MongoDB versions
 
