@@ -199,7 +199,7 @@ setup(name='kotori',
 
         'firmware': [
             'GitPython>=2.0.5,<4',
-            'plumbum>=1.6.1,<1.9',
+            'plumbum>=1.10,<1.11',
         ],
       },
       entry_points={
