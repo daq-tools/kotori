@@ -11,6 +11,7 @@ setup(name='kotori',
       description='Kotori is a data acquisition, processing and graphing toolkit for humans',
       long_description=README,
       license="AGPL 3, EUPL 1.2",
+      python_requires='>=3.5',
       classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
