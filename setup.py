@@ -111,7 +111,7 @@ setup(name='kotori',
         'cryptography>=2.9.2',
         'certifi>=2020.6.20',
 
-        'service_identity>=18.1.0,<22',
+        'service_identity>=24.2,<25',
         'idna>=2.10,<4',
         'pyasn1>=0.4.8,<0.5',
         'pyasn1-modules>=0.2.8,<0.4',
