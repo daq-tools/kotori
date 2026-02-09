@@ -1,5 +1,0 @@
-pytest<9
-pytest-cov<8
-pytest-twisted<2
-datadiff<3
-coverage<8

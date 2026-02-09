@@ -33,12 +33,11 @@ virtualenv-docs: setup-virtualenv
 
 # Install requirements for development.
 virtualenv-dev: setup-virtualenv
-	@$(pip) install --upgrade --prefer-binary --requirement=requirements-test.txt
-	@$(pip) install --upgrade --prefer-binary --requirement=requirements-full.txt
+	@$(pip) install --upgrade --prefer-binary --editable='.[full,test]'
 
 # Install requirements for releasing.
 install-releasetools: setup-virtualenv
-	@$(pip) install --upgrade --prefer-binary --requirement=requirements-release.txt
+	@$(pip) install --upgrade --prefer-binary --editable='.[release]'
 
 
 
