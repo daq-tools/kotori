@@ -1,6 +1,6 @@
 build
 bump2version<2
-twine<5
+twine<7
 keyring<25
 invoke<3
 requests<3
