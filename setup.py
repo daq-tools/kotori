@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
-import sys
 from setuptools import setup, find_packages
+from versioningit import get_cmdclasses
 
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
@@ -25,6 +25,7 @@ requires = [
     'arrow>=0.17.0,<2',
     'funcy>=1.15,<3',
     'attrs>=20.2.0,<24',
+    "importlib-metadata; python_version<'3.8'",
 
     # Bus adapters
     'paho-mqtt>=1.5.1,<2',
@@ -136,7 +137,7 @@ extras = {
 }
 
 setup(name='kotori',
-      version='0.27.0',
+      cmdclass=get_cmdclasses(),
       description='Kotori is a data acquisition, processing and graphing toolkit for humans',
       long_description=README,
       license="AGPL 3, EUPL 1.2",
