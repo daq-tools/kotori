@@ -133,7 +133,7 @@ setup(name='kotori',
             'tqdm>=4.19.8,<5',
         ],
         'daq_binary': [
-            'pycparser<2.22',
+            'pycparser<2.24',
             'pyparsing<3.4',
             'pyclibrary<0.3',
             'tabulate<0.8',
