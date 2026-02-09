@@ -6,11 +6,11 @@ Changelog
 in progress
 ===========
 
-- CI: Update to Grafana 9.5.7 and 10.0.3
+- CI: Validated against Grafana 9.5.21, 10.4.19, 11.6.9, 12.3.2
 - Grafana: Only permit numeric fields to be established on Graph panels.
-  Other types will make the panel croak like ``InfluxDB Error: unsupported
-  mean iterator type: *query.stringInterruptIterator`` or ``InfluxDB Error:
-  not executed``.
+  Other types will make the panel croak like
+  ``InfluxDB Error: unsupported mean iterator type: *query.stringInterruptIterator``
+  or ``InfluxDB Error: not executed``.
 - Documentation: Modernize documentation and migrate to Read the Docs
   https://kotori.readthedocs.io/
 - [TTN] Add TTS (The Things Stack) / TTN (The Things Network) decoder.
