@@ -4,4 +4,4 @@ twine<7
 keyring<25
 invoke<3
 requests<3
-sh<2
+sh<3
