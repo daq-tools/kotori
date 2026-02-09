@@ -66,7 +66,7 @@ setup(name='kotori',
                'mqtt http rest amqp wamp sql web html csv json cdf hdf5 png ' +
                'twisted pyramid autobahn influxdb mosquitto grafana mongodb matplotlib ggplot ' +
                'telemetry m2m iot',
-      packages=find_packages(),
+      packages=find_packages(include=["kotori*"], exclude=["tasks", "test"]),
       include_package_data=True,
       package_data={
         'kotori': [
@@ -76,7 +76,6 @@ setup(name='kotori',
         ],
       },
       zip_safe=False,
-      test_suite='kotori.test',
       install_requires=[
 
         # Core
