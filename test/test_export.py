@@ -216,7 +216,7 @@ def test_export_hdf5(machinery, create_influxdb, reset_influxdb):
     it can be retrieved back from the HTTP API in HDF5 format.
     """
 
-    pytest.importorskip("tables", reason="Packages `h5py` and `tables` not available for Python 3.11 yet")
+    pytest.importorskip("tables", reason="Package `tables` not available")
 
     # Submit a single measurement, with timestamp.
     data = {

@@ -6,36 +6,6 @@ from setuptools import setup, find_packages
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 
-PYTHON_35 = (3, 5) <= sys.version_info < (3, 6)
-PYTHON_GTE_310 = sys.version_info >= (3, 10)
-PYTHON_GTE_312 = sys.version_info >= (3, 12)
-PYTHON_GTE_313 = sys.version_info >= (3, 13)
-PYTHON_LT_311 = sys.version_info < (3, 11)
-
-# Pandas on Python 3.5 will attempt to install `numpy==1.20.1`,
-# which will bail out on aarch64 with `RuntimeError: Python version >= 3.7 required.`.
-numpy_spec = "numpy>=1.18,<1.22"
-if PYTHON_35:
-    numpy_spec = "numpy==1.18.5"
-
-pandas_spec = "pandas<1.3"
-if PYTHON_GTE_310:
-    pandas_spec = "pandas<1.6"
-    numpy_spec = "numpy<1.25"
-
-xarray_spec = 'xarray>=0.13.0,<0.22'
-if PYTHON_GTE_310:
-    xarray_spec = 'xarray<2024'
-
-if PYTHON_GTE_312:
-    pandas_spec = "pandas<3"
-    numpy_spec = "numpy>1.24.4,<2"
-
-if PYTHON_GTE_313:
-    pandas_spec = "pandas<4"
-    numpy_spec = "numpy>1.24.4,<3"
-    xarray_spec = 'xarray<2025'
-
 requires = [
 
     # Core
@@ -43,7 +13,7 @@ requires = [
     'pyOpenSSL>=16.2.0',
     'setuptools<81',
     'six>=1.15.0',
-    'pyramid==1.10.8',
+    'pyramid<1.11',
     'pyramid_jinja2>=2.8,<3',
     'cornice>=5.0.3,<7',
     'simplejson>=3.17.2,<4',
@@ -94,11 +64,11 @@ extras = {
         'tqdm>=4.19.8,<5',
     ],
     'daq_binary': [
-        'pycparser==2.21',          # 2.18
+        'pycparser<2.22',
         'pyparsing<3.4',
-        'pyclibrary==0.2.1',
-        'tabulate==0.7.5',          # 0.8.2
-        'sympy==1.12',           # 1.1.1
+        'pyclibrary<0.3',
+        'tabulate<0.8',
+        'sympy<1.13',
     ],
     'storage_plus': [
         'alchimia>=0.4,<1',
@@ -107,8 +77,15 @@ extras = {
     # Data export: Basic formats
     'export': [
         'pyinfluxql>=0.0.1,<1',
-        pandas_spec,
-        numpy_spec,
+        'numpy==1.18.5; python_version=="3.5"',
+        'pandas<1.3; python_version<"3.10"',
+        'numpy<1.22; python_version<"3.10"',
+        'pandas<1.6; python_version<"3.12"',
+        'numpy<1.25; python_version<"3.12"',
+        'pandas<3; python_version<"3.13"',
+        'numpy<2; python_version<"3.13"',
+        'pandas<4',
+        'numpy<3',
         'XlsxWriter>=1.3.6,<4',
     ],
 
@@ -126,10 +103,13 @@ extras = {
 
         # Data
         # ----
-        # HDF5 - see below.
+
+        # "PyTables" requires HDF5 libraries.
+        "h5py>=2.10.0,<4; python_version<'3.11'",
+        "tables>=3.5.2,<4; python_version<'3.11'",
 
         # NetCDF (Network Common Data Form)
-        xarray_spec,
+        'xarray<2025',
         'netCDF4>=1.5.3,<1.8',
         #'h5netcdf==0.2.2',
 
@@ -154,16 +134,6 @@ extras = {
     ],
 
 }
-
-
-# "PyTables" requires HDF5 libraries.
-# Wheels for `h5py` and `tables` not available for cp311 yet.
-if PYTHON_LT_311:
-    extras["scientific"] += [
-        "h5py>=2.10.0,<4",
-        "tables>=3.5.2,<4",
-    ]
-
 
 setup(name='kotori',
       version='0.27.0',

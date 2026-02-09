@@ -29,6 +29,7 @@ in progress
   ``limit``, and ``scalar``. Thanks, @ClemensGruber.
 - Dependencies: Downgrade to setuptools v80 to bring back ``pkg_resources``
 - Runtime: Validated support on Python 3.12, 3.13, 3.14
+- Runtime: Relaxed dependency specifications
 
 
 .. _kotori-0.27.0:
