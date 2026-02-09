@@ -231,6 +231,7 @@ setup(name='kotori',
         'kotori': [
           'daq/graphing/grafana/resources/*.json',
           'io/export/*.html',
+          'frontend/templates/*.html',
         ],
       },
       zip_safe=False,
