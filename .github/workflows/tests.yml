@@ -46,7 +46,7 @@ jobs:
             mosquitto-version: "2.0"
             influxdb-version: "1.8"
             os: "ubuntu-22.04"
-          - grafana-version: "9.5.7"
+          - grafana-version: "9.5.21"
             python-version: "3.14"
             mosquitto-version: "2.0"
             influxdb-version: "1.8"
