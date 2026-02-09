@@ -118,6 +118,9 @@ setup(name='kotori',
         'pyasn1-modules<0.5',
       ],
       extras_require={
+
+        'full': ['kotori[daq,daq_geospatial,export,scientific,firmware]'],
+
         'daq': [
             'influxdb>=5.3.0,<6',
             'pytz>=2020.1',
@@ -201,6 +204,24 @@ setup(name='kotori',
         'firmware': [
             'GitPython>=2.0.5,<4',
             'plumbum>=1.6.1,<1.11',
+        ],
+
+        # Development.
+        'test': [
+            'pytest<8',
+            'pytest-cov<8',
+            'pytest-twisted<2',
+            'datadiff<3',
+            'coverage<8',
+        ],
+        'release': [
+            'build',
+            'bump2version<2',
+            'twine<7',
+            'keyring<26',
+            'invoke<3',
+            'requests<3',
+            'sh<3',
         ],
       },
       entry_points={

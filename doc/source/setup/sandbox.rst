@@ -69,21 +69,21 @@ Setup virtualenv
     export PIP_PREFER_BINARY=1
 
     # Install package with all extra features.
-    pip install -r requirements-full.txt
+    pip install --editable='.[full,test]'
 
     # Install specific extra features.
 
     # Data acquisition base
-    pip install --editable=.[daq]
+    pip install --editable='.[daq]'
 
     # Data acquisition base, with export features
-    pip install --editable=.[daq,export]
+    pip install --editable='.[daq,export]'
 
     # Data acquisition with data sink for binary payloads
-    pip install --editable=.[daq_binary]
+    pip install --editable='.[daq_binary]'
 
     # Data storage for RDBMS databases and MongoDB
-    pip install --editable=.[storage_plus]
+    pip install --editable='.[storage_plus]'
 
 
 .. note::
