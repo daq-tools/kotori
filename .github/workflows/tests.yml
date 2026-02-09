@@ -34,7 +34,7 @@ jobs:
         ]
         mosquitto-version: [ "2.0" ]
         influxdb-version: [ "1.8" ]
-        grafana-version: [ "10.0.3" ]
+        grafana-version: [ "10.4.19" ]
         include:
           - grafana-version: "7.5.17"
             python-version: "3.14"
