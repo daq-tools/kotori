@@ -80,7 +80,7 @@ setup(name='kotori',
       install_requires=[
 
         # Core
-        'Twisted[tls]<24',
+        'Twisted[tls]<25',
         'pyOpenSSL>=16.2.0',
         'setuptools<81',
         'six>=1.15.0',
