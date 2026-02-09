@@ -11,7 +11,6 @@ $(eval pip          := $(venv)/bin/pip)
 $(eval python       := $(venv)/bin/python)
 $(eval pytest       := $(venv)/bin/pytest)
 $(eval coverage     := $(venv)/bin/coverage)
-$(eval bumpversion  := $(venv)/bin/bumpversion)
 $(eval twine        := $(venv)/bin/twine)
 $(eval sphinx-build := $(venv)/bin/sphinx-build)
 $(eval sphinx-autobuild := $(venv)/bin/sphinx-autobuild)
@@ -47,18 +46,12 @@ install-releasetools: setup-virtualenv
 # Release
 # =======
 
-# Release this piece of software.
-# Uses the fine ``bumpversion`` utility.
-#
 # Synopsis::
 #
-#    make release bump={patch,minor,major}
+#    make release
 #
 
-release: bumpversion push build pypi-upload
-
-bumpversion: install-releasetools check-bump-options
-	$(bumpversion) $(bump)
+release: push build pypi-upload
 
 push:
 	git push && git push --tags
