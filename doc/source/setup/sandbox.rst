@@ -68,10 +68,10 @@ Setup virtualenv
     # This might prevent compilation steps for some of them
     export PIP_PREFER_BINARY=1
 
-    # Install package
-    pip install --editable=.
+    # Install package with all extra features.
+    pip install -r requirements-full.txt
 
-    # Install extra features
+    # Install specific extra features.
 
     # Data acquisition base
     pip install --editable=.[daq]
