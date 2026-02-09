@@ -1,6 +1,6 @@
 furo
 jinja2<4
-myst-parser[linkify]<2
+myst-parser[linkify]<6
 pygments<3
 sphinx>=6,<9
 sphinx-copybutton<1
