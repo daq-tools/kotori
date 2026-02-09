@@ -6,85 +6,98 @@ Changelog
 in progress
 ===========
 
-- CI: Validated against Grafana 9.5.21, 10.4.19, 11.6.9, 12.3.2
-- Grafana: Only permit numeric fields to be established on Graph panels.
-  Other types will make the panel croak like
+.. rubric:: DAQ
+
+- [MQTT] Fixed error when connecting to MQTT broker without authentication credentials.
+- [HTTP] Improved export capabilities by adding parameters ``sort``, ``direction``,
+  ``limit``, and ``scalar``. Thanks, @ClemensGruber.
+- [Grafana] Started permitting only numeric fields to be established on graph panels.
+  Other types would make the panel raise errors like
   ``InfluxDB Error: unsupported mean iterator type: *query.stringInterruptIterator``
   or ``InfluxDB Error: not executed``.
-- Documentation: Modernize documentation and migrate to Read the Docs
-  https://kotori.readthedocs.io/
-- [TTN] Add TTS (The Things Stack) / TTN (The Things Network) decoder.
-  Thanks, @thiasB and @u-l-m-i.
-- [TTN] Decode metadata from full TTN payload. Thanks, @thiasB.
-- [DA] Add per-device addressing and topic decoding strategies. Thanks,
+
+.. rubric:: Integrations
+
+- [SensorWAN] Added per-device addressing and topic decoding strategies. Thanks,
   @thiasB and @ClemensGruber. Examples:
 
   - ``mqttkit-1/device/123e4567-e89b-12d3-a456-426614174000``
   - ``mqttkit-1/channel/network-gateway-node``
-- [TTN] Add documentation about multi-tenant data acquisition using only
+- [TTN] Added decoder for TTS/TTN (The Things Stack, The Things Network).
+  Thanks, @thiasB and @u-l-m-i.
+- [TTN] Started decoding metadata from full TTN payload. Thanks, @thiasB.
+- [TTN] Added documentation about multi-tenant data acquisition using only
   a single TTN Application. Thanks, @thiasB, @einsiedlerkrebs, and @ClemensGruber.
-- [core] Fix error when connecting to MQTT broker without authentication credentials
-- [docs] Refactor "decoders" section to "integrations", and improve index/overview page
-- [export] Improve export capabilities by adding parameters ``sort``, ``direction``,
-  ``limit``, and ``scalar``. Thanks, @ClemensGruber.
-- Dependencies: Downgrade to setuptools v80 to bring back ``pkg_resources``
-- Runtime: Validated support on Python 3.12, 3.13, 3.14
-- Runtime: Relaxed dependency specifications
+- Documentation: Refactored "decoders" section to "integrations", and improve
+  ``index/overview`` page.
+
+.. rubric:: Maintenance
+
+- Documentation: Modernized documentation and migrate to Read the Docs.
+
+  See https://kotori.readthedocs.io/.
+- CI: Validated support on Python 3.12, 3.13, 3.14.
+- CI: Validated against Grafana 9.5.21, 10.4.19, 11.6.9, 12.3.2.
+- Python: Downgraded to ``setuptools`` v80 to bring back ``pkg_resources``.
+- Python: Relaxed dependency specifications.
 
 
 .. _kotori-0.27.0:
 
 2022-11-26 0.27.0
 =================
-- Add documentation about running Kotori with RabbitMQ as MQTT broker, see
-  :ref:`mqtt-broker-rabbitmq`
-- Allow connecting to individual MQTT broker per application
-- Improve MQTT logging when connection to broker fails
-- Make MQTT broker credential settings ``username`` and ``password`` optional
-- Adjust logging format re. milli/microseconds
-- Because accessing dashboards by slug has been removed with Grafana 8, Kotori
-  will now use the slug-name of the data channel for all of Grafana's ``uid``,
-  ``name`` and ``title`` fields.
-- Improve decoding fractional epoch timestamps
-- Update to ``numpy<1.24`` on Python >3.10
-- Replace ``Bunch`` with ``Munch``
 
-Breaking changes
-----------------
-- Stop converging ``latitude`` and ``longitude`` ingress fields to tags.
+.. rubric:: DAQ
+
+- [Core] Adjusted logging format re. milli/microseconds
+- [Core] Improved decoding fractional epoch timestamps
+- [MQTT] Allowed connecting to individual MQTT broker per application.
+- [MQTT] Improved MQTT logging when connection to broker fails.
+- [MQTT] Made MQTT broker credential settings ``username`` and ``password`` optional.
+- [MQTT] Added documentation about running Kotori with RabbitMQ as MQTT
+  broker, see :ref:`mqtt-broker-rabbitmq`.
+- [Grafana] Accompanied Grafana 8: Because accessing dashboards by slug was removed
+  with Grafana 8, Kotori will now use the slug-name of the data channel for all
+  of Grafana's ``uid``, ``name`` and ``title`` fields.
+
+.. rubric:: Breaking changes
+
+- [DAQ] Stopped converging ``latitude`` and ``longitude`` ingress fields to tags.
   It has been implemented as a convenience case when processing LDI data,
   but it is not applicable in standard data acquisition scenarios, specifically
   when recording positions of moving objects. Thanks, @tonkenfo.
 
-Infrastructure
---------------
-- Improve sandbox and CI setup, software tests and documentation
-- Update to Twisted <23
-- CI: Update to Grafana 7.5.17, 8.5.15, and 9.2.6
-- CI: Update to MongoDB 5.0
-- Tests: Remove ``nosetests`` test runner, replace with ``pytest``
-- Build: Use ``python -m build`` for building sdist and wheel packages
-- Add support for Python 3.10 and 3.11
-- Drop support for Python 3.5 and 3.6
-- CI: Modernize GHA workflow recipe
-- Documentation: Add link checker and fix a few broken links
-- Documentation: Update to Sphinx 5
+.. rubric:: Maintenance
 
-Tests
------
-- Add software tests for simulating all advanced actions against Grafana.
+- Improved sandbox and CI setup, software tests and documentation
+- Updated to Twisted <23
+- CI: Updated to Grafana 7.5.17, 8.5.15, and 9.2.6
+- CI: Updated to MongoDB 5.0
+- Tests: Removed ``nosetests`` test runner, replace with ``pytest``
+- Build: Used ``python -m build`` for building sdist and wheel packages
+- Added support for Python 3.10 and 3.11
+- Dropped support for Python 3.5 and 3.6
+- CI: Modernized GHA workflow recipe
+- Documentation: Added link checker and fix a few broken links
+- Documentation: Updated to Sphinx 5
+- Updated to ``numpy<1.24`` on Python >3.10
+- Replaced ``Bunch`` with ``Munch``
 
-  - Publish single reading in JSON format to MQTT broker and proof that a
-    corresponding datasource and a dashboard was created in Grafana.
-  - Publish two subsequent readings in JSON format to MQTT broker and
-    proof that a corresponding datasource and a dashboard was first
-    created and then updated in Grafana.
-  - Publish two subsequent readings to two different topics and proof that
-    a corresponding datasource and a dashboard with two panels has been
-    created in Grafana.
-  - Publish two subsequent readings to two different topics and proof that
-    a corresponding datasource and two dashboards have been created in
-    Grafana.
+.. rubric:: Tests
+
+Added software tests for simulating all advanced actions against Grafana.
+
+- Publish single reading in JSON format to MQTT broker and proof that a
+  corresponding datasource and a dashboard was created in Grafana.
+- Publish two subsequent readings in JSON format to MQTT broker and
+  proof that a corresponding datasource and a dashboard was first
+  created and then updated in Grafana.
+- Publish two subsequent readings to two different topics and proof that
+  a corresponding datasource and a dashboard with two panels has been
+  created in Grafana.
+- Publish two subsequent readings to two different topics and proof that
+  a corresponding datasource and two dashboards have been created in
+  Grafana.
 
 
 .. _kotori-0.26.12:
