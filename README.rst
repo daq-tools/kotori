@@ -1,8 +1,8 @@
 .. _kotori-readme:
 
-######
-Kotori
-######
+##########
+Kotori DAQ
+##########
 
 .. container:: align-center
 
@@ -26,7 +26,11 @@ Kotori
 
 ----
 
-- **Status**:
+:**Status**:
+
+  .. image:: https://img.shields.io/pypi/status/kotori.svg
+        :target: https://pypi.org/project/kotori/
+        :alt: Project status (alpha, beta, stable)
 
   .. image:: https://github.com/daq-tools/kotori/workflows/Tests/badge.svg
         :target: https://github.com/daq-tools/kotori/actions?workflow=Tests
@@ -34,25 +38,17 @@ Kotori
 
   .. image:: https://codecov.io/gh/daq-tools/kotori/branch/main/graph/badge.svg
         :target: https://codecov.io/gh/daq-tools/kotori
-        :alt: Test suite code coverage
-
-  .. image:: https://img.shields.io/pypi/pyversions/kotori.svg
-        :target: https://pypi.org/project/kotori/
-        :alt: Supported Python versions
+        :alt: Code coverage
 
   .. image:: https://img.shields.io/pypi/v/kotori.svg
         :target: https://pypi.org/project/kotori/
         :alt: Package version on PyPI
 
-  .. image:: https://img.shields.io/pypi/status/kotori.svg
-        :target: https://pypi.org/project/kotori/
-        :alt: Project status (alpha, beta, stable)
-
   .. image:: https://img.shields.io/pypi/l/kotori.svg
         :target: https://pypi.org/project/kotori/
         :alt: Project license
 
-- **Usage**:
+:**Usage**:
 
   .. image:: https://static.pepy.tech/personalized-badge/kotori?period=month&left_text=PyPI%20downloads%20%2F%20month&left_color=gray&right_color=orange
         :target: https://pepy.tech/project/kotori
@@ -66,7 +62,7 @@ Kotori
         :target: https://hub.docker.com/r/daqzilla/kotori-standard
         :alt: Docker image pulls for `kotori-standard` (total)
 
-- **Compatibility**:
+:**Compatibility**:
 
   .. image:: https://img.shields.io/badge/Mosquitto-1.5%2C%201.6%2C%202.0-blue.svg
         :target: https://github.com/eclipse/mosquitto
@@ -84,6 +80,9 @@ Kotori
         :target: https://github.com/mongodb/mongo
         :alt: Supported MongoDB versions
 
+  .. image:: https://img.shields.io/pypi/pyversions/kotori.svg
+        :target: https://pypi.org/project/kotori/
+        :alt: Supported Python versions
 
 ----
 
@@ -93,7 +92,7 @@ About
 *****
 
 Kotori is a multi-channel, multi-protocol telemetry data acquisition and graphing
-toolkit for `time-series`_ data processing.
+toolkit for `time series`_ data processing also known as `data historian`_.
 
 It supports a variety of scenarios in scientific environmental monitoring projects,
 for building and operating distributed sensor networks, and for industrial data
@@ -103,8 +102,8 @@ acquisition applications.
 Details
 =======
 
-Kotori takes the role of the `data historian`_ component within a `SCADA`_ / `MDE`_
-system, exclusively built upon industry-grade `free and open-source software`_
+Kotori is a data and protocol broker within `SCADA`_ / `MDE`_
+systems, exclusively built upon industry-grade `free and open-source software`_
 like Grafana_, Mosquitto_, or InfluxDB_. It is written in Python_,
 and uses the Twisted_ networking library.
 
@@ -140,7 +139,7 @@ package, install it from the Python Package Index (PyPI), or run it within
 a `development sandbox`_ directly from the Git repository.
 
 Corresponding installation instructions are bundled at
-https://getkotori.org/docs/setup/.
+https://kotori.readthedocs.io/setup/.
 
 
 ********
@@ -231,12 +230,12 @@ excellent development tooling.
 
 
 .. _Autobahn: https://crossbar.io/autobahn/
-.. _contributors: https://getkotori.org/docs/project/contributors.html
+.. _contributors: https://kotori.readthedocs.io/project/contributors.html
 .. _Create an issue: https://github.com/daq-tools/kotori/issues/new
 .. _data historian: https://en.wikipedia.org/wiki/Operational_historian
-.. _development sandbox: https://getkotori.org/docs/setup/sandbox.html
+.. _development sandbox: https://kotori.readthedocs.io/setup/sandbox.html
 .. _free and open-source software: https://en.wikipedia.org/wiki/Free_and_open-source_software
-.. _gallery: https://getkotori.org/docs/gallery/
+.. _gallery: https://kotori.readthedocs.io/gallery/index.html
 .. _Grafana: https://en.wikipedia.org/wiki/Grafana
 .. _InfluxDB: https://en.wikipedia.org/wiki/InfluxDB
 .. _LICENSE: https://github.com/daq-tools/kotori/blob/main/LICENSE
@@ -246,7 +245,7 @@ excellent development tooling.
 .. _MQTT: https://en.wikipedia.org/wiki/MQTT
 .. _Python: https://www.python.org/
 .. _SCADA: https://en.wikipedia.org/wiki/SCADA
-.. _scenarios: https://getkotori.org/docs/about/scenarios.html
-.. _technologies: https://getkotori.org/docs/about/technologies.html
-.. _time-series: https://en.wikipedia.org/wiki/Time_series
+.. _scenarios: https://kotori.readthedocs.io/about/scenarios.html
+.. _technologies: https://kotori.readthedocs.io/about/technologies.html
+.. _time series: https://en.wikipedia.org/wiki/Time_series
 .. _Twisted: https://en.wikipedia.org/wiki/Twisted_(software)
