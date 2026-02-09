@@ -104,7 +104,7 @@ setup(name='kotori',
         'PyTrie>=0.4.0,<1',
 
         # Misc
-        'distlib>=0.3.1,<0.4',
+        'distlib>=0.4,<0.5',
         'docopt>=0.6.2,<0.7',
 
         # More dependencies
