@@ -1,1 +1,4 @@
+include *.rst
 recursive-include kotori *.json *.html
+recursive-include doc *.*
+prune doc/build
