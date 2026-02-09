@@ -2,7 +2,7 @@ furo
 jinja2<4
 myst-parser[linkify]<2
 pygments<3
-sphinx>=6,<7
+sphinx>=6,<9
 sphinx-copybutton<1
 sphinx-design<1
 sphinx-togglebutton<1
