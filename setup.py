@@ -98,7 +98,7 @@ setup(name='kotori',
         "importlib-metadata; python_version<'3.8'",
 
         # Bus adapters
-        'paho-mqtt>=1.5.1,<2',
+        'paho-mqtt>=2.1,<3',
         'autobahn[twisted]>=20.7.1,<24',
         'msgpack-python>=0.5.6,<0.6',
         'PyTrie>=0.4.0,<1',
