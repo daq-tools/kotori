@@ -221,13 +221,13 @@ class AnnotationParser(object):
         """
 
         # e.g. "typedef struct struct_position         // added 06.03.2014 C.L."
-        struct_head_pattern  = re.compile('^.*struct\s+([\w]+).*?$')
+        struct_head_pattern  = re.compile(r'^.*struct\s+([\w]+).*?$')
 
         # e.g. "/* @rule: name=heading; expr=hdg * 20; unit=degrees */"
-        rule_extract_pattern = re.compile('^.*name=(?P<name>\w+?);.*expr=(?P<expression>.+?);.*unit=(?P<unit>\w+).*$')
+        rule_extract_pattern = re.compile(r'^.*name=(?P<name>\w+?);.*expr=(?P<expression>.+?);.*unit=(?P<unit>\w+).*$')
 
         # e.g. "   int16_t  hdg                ;"
-        original_fieldname_pattern = re.compile('^.*?(?P<type>[\w]+)\s+(?P<name>[\w]+).*;.*$')
+        original_fieldname_pattern = re.compile(r'^.*?(?P<type>[\w]+)\s+(?P<name>[\w]+).*;.*$')
 
         for source_file in self.source_files:
 

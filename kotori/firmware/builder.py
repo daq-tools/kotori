@@ -99,11 +99,11 @@ class FirmwareBuilder(object):
 
             # Preprocessor defines .ino, .pde, .cpp, .h, e.g.
             # #define HE_USER         "testdrive"
-            '#define\s+(?P<name>{name})\s+(?P<value>.+)',
+            r'#define\s+(?P<name>{name})\s+(?P<value>.+)',
 
             # Makefile variables, e.g.
             # BOARD_TAG         = pro328
-            '^(?!#)(?P<name>{name})\s+:?=\s+(?P<value>.*)$',
+            r'^(?!#)(?P<name>{name})\s+:?=\s+(?P<value>.*)$',
             ]
 
     def acquire_source(self):
