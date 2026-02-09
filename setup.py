@@ -164,7 +164,7 @@ setup(name='kotori',
 
             'matplotlib>=3,<3.4',
             #'cairocffi>=0.5.4',
-            'bokeh>=1.4.0,<3.4',
+            'bokeh>=3.8.2,<4',
             'vincent>=0.4.4,<0.5',
         ],
 
