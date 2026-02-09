@@ -6,136 +6,6 @@ from versioningit import get_cmdclasses
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 
-requires = [
-
-    # Core
-    'Twisted[tls]<24',
-    'pyOpenSSL>=16.2.0',
-    'setuptools<81',
-    'six>=1.15.0',
-    'pyramid<1.11',
-    'pyramid_jinja2>=2.8,<3',
-    'cornice>=5.0.3,<7',
-    'simplejson>=3.17.2,<4',
-    'Jinja2<4',
-    'munch>=2.5.0,<5',
-    'appdirs>=1.4.3,<2',
-    'json-store>=3.1,<4',
-    'python-dateutil>=2.8.0,<3',
-    'arrow>=0.17.0,<2',
-    'funcy>=1.15,<3',
-    'attrs>=20.2.0,<24',
-    "importlib-metadata; python_version<'3.8'",
-
-    # Bus adapters
-    'paho-mqtt>=1.5.1,<2',
-    'autobahn[twisted]>=20.7.1,<24',
-    'msgpack-python>=0.5.6,<0.6',
-    'PyTrie>=0.4.0,<1',
-
-    # Misc
-    'distlib>=0.3.1,<0.4',
-    'docopt>=0.6.2,<0.7',
-
-    # More dependencies
-    'cryptography>=2.9.2',
-    'certifi>=2020.6.20',
-
-    'service_identity>=18.1.0,<22',
-    'idna>=2.10,<4',
-    'pyasn1>=0.4.8,<0.5',
-    'pyasn1-modules>=0.2.8,<0.4',
-
-]
-
-extras = {
-    'daq': [
-        'influxdb>=5.3.0,<6',
-        'pytz>=2020.1',
-        'requests>=2.12.4,<3',
-        'grafana_api_client==0.2.0',
-        #'grafana-dashboard-builder==0.1.0a7',      # evaluated, but not suitable
-        #'txmongo==16.3.0',
-        'pymongo>=3.11.0,<5',
-    ],
-    'daq_geospatial': [
-        'Geohash>=1.0,<2',
-        'geopy>=1.12.0,<3',
-        'Beaker>=1.9.0,<2',
-        'tqdm>=4.19.8,<5',
-    ],
-    'daq_binary': [
-        'pycparser<2.22',
-        'pyparsing<3.4',
-        'pyclibrary<0.3',
-        'tabulate<0.8',
-        'sympy<1.13',
-    ],
-    'storage_plus': [
-        'alchimia>=0.4,<1',
-    ],
-
-    # Data export: Basic formats
-    'export': [
-        'pyinfluxql>=0.0.1,<1',
-        'numpy==1.18.5; python_version=="3.5"',
-        'pandas<1.3; python_version<"3.10"',
-        'numpy<1.22; python_version<"3.10"',
-        'pandas<1.6; python_version<"3.12"',
-        'numpy<1.25; python_version<"3.12"',
-        'pandas<3; python_version<"3.13"',
-        'numpy<2; python_version<"3.13"',
-        'pandas<4',
-        'numpy<3',
-        'XlsxWriter>=1.3.6,<4',
-    ],
-
-    'plotting': [
-        #'dyplot==0.8.8',
-
-        'matplotlib>=3,<3.4',
-        #'cairocffi>=0.5.4',
-        'bokeh>=1.4.0,<3.4',
-        'vincent>=0.4.4,<0.5',
-    ],
-
-    # Data export: Scientific data formats like HDF5 and NetCDF and plots from ggplot
-    'scientific': [
-
-        # Data
-        # ----
-
-        # "PyTables" requires HDF5 libraries.
-        "h5py>=2.10.0,<4; python_version<'3.11'",
-        "tables>=3.5.2,<4; python_version<'3.11'",
-
-        # NetCDF (Network Common Data Form)
-        'xarray<2025',
-        'netCDF4>=1.5.3,<1.8',
-        #'h5netcdf==0.2.2',
-
-        # Algorithms
-        # ----------
-        #'scipy>=1.4.1,<1.6',
-        'ggplot>=0.11.5,<0.12',
-
-        # gfortran
-        # aptitude install libatlas-base-dev lapack-dev gfortran or
-        # https://gcc.gnu.org/wiki/GFortranBinaries
-
-        # Visualization
-        # -------------
-        #'seaborn==0.7.1',
-
-    ],
-
-    'firmware': [
-        'GitPython>=2.0.5,<4',
-        'plumbum>=1.6.1,<1.9',
-    ],
-
-}
-
 setup(name='kotori',
       cmdclass=get_cmdclasses(),
       description='Kotori is a data acquisition, processing and graphing toolkit for humans',
@@ -207,8 +77,132 @@ setup(name='kotori',
       },
       zip_safe=False,
       test_suite='kotori.test',
-      install_requires=requires,
-      extras_require=extras,
+      install_requires=[
+
+        # Core
+        'Twisted[tls]<24',
+        'pyOpenSSL>=16.2.0',
+        'setuptools<81',
+        'six>=1.15.0',
+        'pyramid<1.11',
+        'pyramid_jinja2>=2.8,<3',
+        'cornice>=5.0.3,<7',
+        'simplejson>=3.17.2,<4',
+        'Jinja2<4',
+        'munch>=2.5.0,<5',
+        'appdirs>=1.4.3,<2',
+        'json-store>=3.1,<4',
+        'python-dateutil>=2.8.0,<3',
+        'arrow>=0.17.0,<2',
+        'funcy>=1.15,<3',
+        'attrs>=20.2.0,<24',
+        "importlib-metadata; python_version<'3.8'",
+
+        # Bus adapters
+        'paho-mqtt>=1.5.1,<2',
+        'autobahn[twisted]>=20.7.1,<24',
+        'msgpack-python>=0.5.6,<0.6',
+        'PyTrie>=0.4.0,<1',
+
+        # Misc
+        'distlib>=0.3.1,<0.4',
+        'docopt>=0.6.2,<0.7',
+
+        # More dependencies
+        'cryptography>=2.9.2',
+        'certifi>=2020.6.20',
+
+        'service_identity>=18.1.0,<22',
+        'idna>=2.10,<4',
+        'pyasn1>=0.4.8,<0.5',
+        'pyasn1-modules>=0.2.8,<0.4',
+      ],
+      extras_require={
+        'daq': [
+            'influxdb>=5.3.0,<6',
+            'pytz>=2020.1',
+            'requests>=2.12.4,<3',
+            'grafana_api_client==0.2.0',
+            #'grafana-dashboard-builder==0.1.0a7',      # evaluated, but not suitable
+            #'txmongo==16.3.0',
+            'pymongo>=3.11.0,<5',
+        ],
+        'daq_geospatial': [
+            'Geohash>=1.0,<2',
+            'geopy>=1.12.0,<3',
+            'Beaker>=1.9.0,<2',
+            'tqdm>=4.19.8,<5',
+        ],
+        'daq_binary': [
+            'pycparser<2.22',
+            'pyparsing<3.4',
+            'pyclibrary<0.3',
+            'tabulate<0.8',
+            'sympy<1.13',
+        ],
+        'storage_plus': [
+            'alchimia>=0.4,<1',
+        ],
+
+        # Data export: Basic formats
+        'export': [
+            'pyinfluxql>=0.0.1,<1',
+            'numpy==1.18.5; python_version=="3.5"',
+            'pandas<1.3; python_version<"3.10"',
+            'numpy<1.22; python_version<"3.10"',
+            'pandas<1.6; python_version<"3.12"',
+            'numpy<1.25; python_version<"3.12"',
+            'pandas<3; python_version<"3.13"',
+            'numpy<2; python_version<"3.13"',
+            'pandas<4',
+            'numpy<3',
+            'XlsxWriter>=1.3.6,<4',
+        ],
+
+        'plotting': [
+            #'dyplot==0.8.8',
+
+            'matplotlib>=3,<3.4',
+            #'cairocffi>=0.5.4',
+            'bokeh>=1.4.0,<3.4',
+            'vincent>=0.4.4,<0.5',
+        ],
+
+        # Data export: Scientific data formats like HDF5 and NetCDF and plots from ggplot
+        'scientific': [
+
+            # Data
+            # ----
+
+            # "PyTables" requires HDF5 libraries.
+            "h5py>=2.10.0,<4; python_version<'3.11'",
+            "tables>=3.5.2,<4; python_version<'3.11'",
+
+            # NetCDF (Network Common Data Form)
+            'xarray<2025',
+            'netCDF4>=1.5.3,<1.8',
+            #'h5netcdf==0.2.2',
+
+            # Algorithms
+            # ----------
+            #'scipy>=1.4.1,<1.6',
+            'ggplot>=0.11.5,<0.12',
+
+            # gfortran
+            # aptitude install libatlas-base-dev lapack-dev gfortran or
+            # https://gcc.gnu.org/wiki/GFortranBinaries
+
+            # Visualization
+            # -------------
+            #'seaborn==0.7.1',
+
+        ],
+
+        'firmware': [
+            'GitPython>=2.0.5,<4',
+            'plumbum>=1.6.1,<1.9',
+        ],
+      },
       entry_points={
           'console_scripts': [
               'kotori              = kotori:run',
