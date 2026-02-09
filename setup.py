@@ -91,11 +91,11 @@ setup(name='kotori',
         'Jinja2<4',
         'munch>=2.5.0,<5',
         'appdirs>=1.4.3,<2',
-        'json-store>=3.1,<4',
+        'json-store>=3.1,<5',
         'python-dateutil>=2.8.0,<3',
         'arrow>=0.17.0,<2',
         'funcy>=1.15,<3',
-        'attrs>=20.2.0,<24',
+        'attrs>=20.2.0,<26',
         "importlib-metadata; python_version<'3.8'",
 
         # Bus adapters
@@ -105,17 +105,17 @@ setup(name='kotori',
         'PyTrie>=0.4.0,<1',
 
         # Misc
-        'distlib>=0.3.1,<0.4',
-        'docopt>=0.6.2,<0.7',
+        'distlib<0.5',
+        'docopt-ng<0.10',
 
         # More dependencies
         'cryptography>=2.9.2',
         'certifi>=2020.6.20',
 
-        'service_identity>=18.1.0,<22',
-        'idna>=2.10,<4',
-        'pyasn1>=0.4.8,<0.5',
-        'pyasn1-modules>=0.2.8,<0.4',
+        'service_identity<25',
+        'idna<4',
+        'pyasn1<0.7',
+        'pyasn1-modules<0.5',
       ],
       extras_require={
         'daq': [
@@ -131,7 +131,7 @@ setup(name='kotori',
             'Geohash>=1.0,<2',
             'geopy>=1.12.0,<3',
             'Beaker>=1.9.0,<2',
-            'tqdm>=4.19.8,<5',
+            'tqdm<5',
         ],
         'daq_binary': [
             'pycparser<3.1',
@@ -164,7 +164,7 @@ setup(name='kotori',
 
             'matplotlib>=3,<3.11',
             #'cairocffi>=0.5.4',
-            'bokeh>=1.4.0,<3.4',
+            'bokeh>=1.4.0,<4',
             'vincent>=0.4.4,<0.5',
         ],
 
@@ -200,7 +200,7 @@ setup(name='kotori',
 
         'firmware': [
             'GitPython>=2.0.5,<4',
-            'plumbum>=1.6.1,<1.9',
+            'plumbum>=1.6.1,<1.11',
         ],
       },
       entry_points={
