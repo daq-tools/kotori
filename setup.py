@@ -43,7 +43,7 @@ requires = [
     'pyOpenSSL>=16.2.0',
     'setuptools<81',
     'six>=1.15.0',
-    'pyramid==1.10.8',
+    'pyramid==2.0.2',
     'pyramid_jinja2>=2.8,<3',
     'cornice>=5.0.3,<7',
     'simplejson>=3.17.2,<4',
