@@ -100,15 +100,15 @@ test-coverage: virtualenv-dev
 # Build Sphinx documentation.
 docs-html: virtualenv-docs
 	touch doc/source/index.rst
-	$(sphinx-build) -j auto -n -W --keep-going -b html doc/source doc/build
+	$(sphinx-build) --jobs auto -n -W --keep-going -b html doc/source doc/build
 
 docs-autobuild: virtualenv-docs
 	$(pip) install sphinx-autobuild
-	$(sphinx-autobuild) --open-browser doc/source doc/build
+	$(sphinx-autobuild) --jobs auto --open-browser doc/source doc/build
 
 # Run link checker on documentation.
 docs-linkcheck: virtualenv-docs
-	$(sphinx-build) -j auto -n -W --keep-going -b linkcheck doc/source doc/build
+	$(sphinx-build) --jobs auto -n -W --keep-going -b linkcheck doc/source doc/build
 
 
 # Upload media assets. Images, videos, etc.
