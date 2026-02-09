@@ -95,7 +95,7 @@ setup(name='kotori',
         'python-dateutil>=2.8.0,<3',
         'arrow>=0.17.0,<2',
         'funcy>=1.15,<3',
-        'attrs>=20.2.0,<24',
+        'attrs>=25.4,<26',
         "importlib-metadata; python_version<'3.8'",
 
         # Bus adapters
