@@ -134,12 +134,10 @@ Features
 Installation
 ************
 
-Kotori can be installed in different ways. You may prefer using a Debian
-package, install it from the Python Package Index (PyPI), or run it within
-a `development sandbox`_ directly from the Git repository.
-
-Corresponding installation instructions are bundled at
-https://kotori.readthedocs.io/setup/.
+Kotori can be installed in different ways, see `all installation options`_.
+You may prefer using a Debian package, install it from the Python Package
+Index (PyPI), or run it within a development environment directly from the
+Git repository, see `sandbox installation instructions`_.
 
 
 ********
@@ -229,6 +227,7 @@ Special thanks to the people at JetBrains s.r.o. for supporting us with
 excellent development tooling.
 
 
+.. _all installation options: https://kotori.readthedocs.io/setup/
 .. _Autobahn: https://crossbar.io/autobahn/
 .. _contributors: https://kotori.readthedocs.io/project/contributors.html
 .. _Create an issue: https://github.com/daq-tools/kotori/issues/new
@@ -244,6 +243,7 @@ excellent development tooling.
 .. _Mosquitto: https://github.com/eclipse/mosquitto
 .. _MQTT: https://en.wikipedia.org/wiki/MQTT
 .. _Python: https://www.python.org/
+.. _sandbox installation instructions: https://kotori.readthedocs.io/setup/sandbox.html
 .. _SCADA: https://en.wikipedia.org/wiki/SCADA
 .. _scenarios: https://kotori.readthedocs.io/about/scenarios.html
 .. _technologies: https://kotori.readthedocs.io/about/technologies.html
