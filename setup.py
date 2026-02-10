@@ -66,7 +66,7 @@ setup(name='kotori',
       keywords='data acquisition graphing export plotting daq routing engine ' +
                'mqtt http rest amqp wamp sql web html csv json cdf hdf5 png ' +
                'twisted pyramid autobahn influxdb mosquitto grafana mongodb matplotlib ggplot ' +
-               'telemetry m2m iot',
+               'telemetry m2m iot sensor-network sensorwan',
       packages=find_packages(include=["kotori*"], exclude=["tasks", "test"]),
       include_package_data=True,
       package_data={

@@ -20,6 +20,14 @@ with Kotori. Adding more integrations is possible.
 ```
 
 ```{toctree}
+:caption: Conventions
+:maxdepth: 1
+:hidden:
+
+SensorWAN <sensorwan/index>
+```
+
+```{toctree}
 :caption: Device/vendor integrations
 :maxdepth: 1
 :hidden:
@@ -98,8 +106,47 @@ Measurement readings can be acquired through HTTP, using JSON, CSV, or other pay
 ::::::
 
 
+## Conventions
 
-## Device/vendor integrations
+::::::{grid} 1
+:margin: 0
+:padding: 0
+
+:::::{grid-item-card}
+::::{grid} 2
+:margin: 0
+:padding: 0
+
+:::{grid-item}
+:columns: 8
+#### {ref}`sensorwan`
+
+The SensorWAN channel addressing scheme can be used for assigning telemetry
+data communication channels to individual sensor nodes in wide-area sensor
+network scenarios, or similar multi-node, multi-sensor environments.
+
+It is able to handle addressing individual devices and channel bundles in
+a natural way, enabling both direct and trunking communications.
+
+<small>
+<strong>Categories:</strong> polyglot, multi-sensor, multi-device, open source specification
+</small>
+:::
+:::{grid-item}
+:columns: 4
+{bdg-primary-line}`network` {bdg-primary-line}`bus:any` {bdg-primary-line}`request-response:any`
+
+{bdg-success-line}`MANY`
+
+{bdg-secondary-line}`MANY`
+:::
+::::
+:::::
+
+::::::
+
+
+## Vendors
 
 ::::::{grid} 1
 :margin: 0
@@ -129,44 +176,6 @@ global sensor network
 {bdg-success-line}`SPS30` {bdg-success-line}`SDS011` {bdg-success-line}`BMP180` {bdg-success-line}`BMP/E 280` {bdg-success-line}`NEO-6M` {bdg-success-line}`DHT22` 
 
 {bdg-secondary-line}`esp8266`
-:::
-::::
-:::::
-
-::::::
-
-
-::::::{grid} 1
-:margin: 0
-:padding: 0
-
-:::::{grid-item-card}
-::::{grid} 2
-:margin: 0
-:padding: 0
-
-:::{grid-item}
-:columns: 8
-#### [](inv:hiveeyes-arduino#sensorwan)
-
-The SensorWAN channel addressing scheme can be used for assigning telemetry
-data communication channels to individual sensor nodes in wide-area sensor
-network scenarios, or similar multi-node, multi-sensor environments.
-
-It is able to handle addressing individual devices and channel bundles in
-a natural way, enabling both direct and trunking communications.
-
-<small>
-<strong>Categories:</strong> polyglot, multi-sensor, multi-device, open source specification
-</small>
-:::
-:::{grid-item}
-:columns: 4
-{bdg-primary-line}`network` {bdg-primary-line}`bus:any` {bdg-primary-line}`request-response:any`
-
-{bdg-success-line}`MANY`
-
-{bdg-secondary-line}`MANY`
 :::
 ::::
 :::::
