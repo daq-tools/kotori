@@ -6,6 +6,11 @@ Changelog
 in progress
 ===========
 
+.. _kotori-0.28.0:
+
+2026-02-10 0.28.0
+=================
+
 .. rubric:: DAQ
 
 - **MQTT:** Fixed error when connecting to MQTT broker without authentication credentials.
