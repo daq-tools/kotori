@@ -155,6 +155,8 @@ scheme, in order to dispatch messages to channels of individual devices, would b
     With this configuration variant, you will configure the full-qualified SensorWAN
     address within the "Base URL" field of your application.
 
+.. _ttn-multi-tenant:
+
 Multi-tenant connectivity
 =========================
 

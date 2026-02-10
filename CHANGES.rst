@@ -8,40 +8,41 @@ in progress
 
 .. rubric:: DAQ
 
-- [MQTT] Fixed error when connecting to MQTT broker without authentication credentials.
-- [HTTP] Improved export capabilities by adding parameters ``sort``, ``direction``,
+- **MQTT:** Fixed error when connecting to MQTT broker without authentication credentials.
+- **HTTP:** Improved export capabilities by adding parameters ``sort``, ``direction``,
   ``limit``, and ``scalar``. Thanks, @ClemensGruber.
-- [Grafana] Started permitting only numeric fields to be established on graph panels.
-  Other types would make the panel raise errors like
+- **Grafana/InfluxDB:** Started permitting only numeric fields to be established
+  on graph panels. Other types would make the panel raise errors like
   ``InfluxDB Error: unsupported mean iterator type: *query.stringInterruptIterator``
   or ``InfluxDB Error: not executed``.
 
 .. rubric:: Integrations
 
-- [SensorWAN] Added per-device addressing and topic decoding strategies. Thanks,
+- **SensorWAN:** Added per-device addressing and topic decoding strategies. Thanks,
   @thiasB and @ClemensGruber. Examples:
 
   - ``mqttkit-1/device/123e4567-e89b-12d3-a456-426614174000``
   - ``mqttkit-1/channel/network-gateway-node``
-- [SensorWAN] Added the :ref:`SensorWAN 3.0 specification <sensorwan-spec>` page
+- **SensorWAN:** Added the :ref:`SensorWAN 3.0 specification <sensorwan-spec>` page
   to the documentation.
-- [TTN] Added decoder for TTS/TTN (The Things Stack, The Things Network).
+- **TTN:** Added decoder for TTS/TTN (The Things Stack, The Things Network).
   Thanks, @thiasB and @u-l-m-i.
-- [TTN] Started decoding metadata from full TTN payload. Thanks, @thiasB.
-- [TTN] Added documentation about multi-tenant data acquisition using only
-  a single TTN Application. Thanks, @thiasB, @einsiedlerkrebs, and @ClemensGruber.
-- Documentation: Refactored "decoders" section to "integrations", and improve
-  ``index/overview`` page.
+- **TTN:** Started decoding metadata from full TTN payload. Thanks, @thiasB.
+- **TTN:** Added documentation about :ref:`multi-tenant connectivity <ttn-multi-tenant>`
+  using only a single TTN Application. Thanks, @thiasB, @einsiedlerkrebs, and @ClemensGruber.
+
+.. rubric:: Documentation
+
+- Migrated to Read the Docs, see https://kotori.readthedocs.io/.
+- Updated to Sphinx 9. Switched to Furo theme. Copy editing.
+- Established new sections ":ref:`databases`" and ":ref:`integrations`".
 
 .. rubric:: Maintenance
 
-- Documentation: Modernized documentation and migrate to Read the Docs.
-
-  See https://kotori.readthedocs.io/.
-- CI: Validated support on Python 3.12, 3.13, 3.14.
-- CI: Validated against Grafana 9.5.21, 10.4.19, 11.6.9, 12.3.2.
-- Python: Downgraded to ``setuptools`` v80 to bring back ``pkg_resources``.
-- Python: Relaxed dependency specifications.
+- **CI:** Validated support on Python 3.12, 3.13, 3.14.
+- **CI:** Validated support for Grafana 9.5.21, 10.4.19, 11.6.9, 12.3.2.
+- **Python:** Downgraded to setuptools v80 to bring back ``pkg_resources``.
+- **Python:** Relaxed dependency specifications.
 
 
 .. _kotori-0.27.0:
@@ -51,43 +52,47 @@ in progress
 
 .. rubric:: DAQ
 
-- [Core] Adjusted logging format re. milli/microseconds
-- [Core] Improved decoding fractional epoch timestamps
-- [MQTT] Allowed connecting to individual MQTT broker per application.
-- [MQTT] Improved MQTT logging when connection to broker fails.
-- [MQTT] Made MQTT broker credential settings ``username`` and ``password`` optional.
-- [MQTT] Added documentation about running Kotori with RabbitMQ as MQTT
+- **Core:** Adjusted logging format re. milli/microseconds
+- **Core:** Improved decoding fractional epoch timestamps
+- **MQTT:** Allowed connecting to individual MQTT broker per application.
+- **MQTT:** Improved MQTT logging when connection to broker fails.
+- **MQTT:** Made MQTT broker credential settings ``username`` and ``password`` optional.
+- **MQTT:** Added documentation about running Kotori with RabbitMQ as MQTT
   broker, see :ref:`mqtt-broker-rabbitmq`.
-- [Grafana] Accompanied Grafana 8: Because accessing dashboards by slug was removed
+- **Grafana:** Accompanied Grafana 8: Because accessing dashboards by slug was removed
   with Grafana 8, Kotori will now use the slug-name of the data channel for all
   of Grafana's ``uid``, ``name`` and ``title`` fields.
 
 .. rubric:: Breaking changes
 
-- [DAQ] Stopped converging ``latitude`` and ``longitude`` ingress fields to tags.
+- **DAQ:** Stopped converging ``latitude`` and ``longitude`` ingress fields to tags.
   It has been implemented as a convenience case when processing LDI data,
   but it is not applicable in standard data acquisition scenarios, specifically
   when recording positions of moving objects. Thanks, @tonkenfo.
 
+.. rubric:: Documentation
+
+- Updated to Sphinx 5
+- Added link checker and fix a few broken links
+
 .. rubric:: Maintenance
 
-- Improved sandbox and CI setup, software tests and documentation
-- Updated to Twisted <23
-- CI: Updated to Grafana 7.5.17, 8.5.15, and 9.2.6
-- CI: Updated to MongoDB 5.0
-- Tests: Removed ``nosetests`` test runner, replace with ``pytest``
-- Build: Used ``python -m build`` for building sdist and wheel packages
-- Added support for Python 3.10 and 3.11
-- Dropped support for Python 3.5 and 3.6
-- CI: Modernized GHA workflow recipe
-- Documentation: Added link checker and fix a few broken links
-- Documentation: Updated to Sphinx 5
-- Updated to ``numpy<1.24`` on Python >3.10
-- Replaced ``Bunch`` with ``Munch``
+- **CI:** Improved sandbox and CI setup, software tests and documentation
+- **CI:** Validated support on Python 3.10 and 3.11
+- **CI:** Validated support for Grafana 7.5.17, 8.5.15, and 9.2.6
+- **CI:** Validated support for MongoDB 5.0
+- **CI:** Dropped support for Python 3.5 and 3.6
+- **CI:** Modernized GHA workflow recipe
+- **Tests:** Removed ``nosetests`` test runner, replaced with ``pytest``
+- **Build:** Used ``python -m build`` for building sdist and wheel packages
+- **Python:** Updated to Twisted 22
+- **Python:** Updated to NumPy 1.23 on Python >3.10
+- **Python:** Replaced ``Bunch`` with ``Munch``
 
 .. rubric:: Tests
 
-Added software tests for simulating all advanced actions against Grafana.
+Added software tests for exercising and validating a few advanced
+end-to-end operations against the DAQ subsystem and Grafana.
 
 - Publish single reading in JSON format to MQTT broker and proof that a
   corresponding datasource and a dashboard was created in Grafana.
@@ -152,7 +157,7 @@ Added software tests for simulating all advanced actions against Grafana.
 
   - Fix Luftdaten and Hiveeyes vendor applications
   - Fix HTTP data acquisition
-- Improve setup documentation
+- Improve documentation setup
 
 
 .. _kotori-0.26.6:
