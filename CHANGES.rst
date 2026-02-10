@@ -23,6 +23,8 @@ in progress
 
   - ``mqttkit-1/device/123e4567-e89b-12d3-a456-426614174000``
   - ``mqttkit-1/channel/network-gateway-node``
+- [SensorWAN] Added the :ref:`SensorWAN 3.0 specification <sensorwan-spec>` page
+  to the documentation.
 - [TTN] Added decoder for TTS/TTN (The Things Stack, The Things Network).
   Thanks, @thiasB and @u-l-m-i.
 - [TTN] Started decoding metadata from full TTN payload. Thanks, @thiasB.
