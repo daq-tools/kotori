@@ -140,7 +140,7 @@ Name
 Channel type
 ************
 
-On the last segment of a full-qualified channel specifier, the addressing scheme adds
+On the last segment of a fully qualified channel specifier, the addressing scheme adds
 a suffix component, which designates the channel type. It can be used to discriminate
 between uplink, downlink, and other message types.
 

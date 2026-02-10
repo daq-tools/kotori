@@ -119,13 +119,13 @@ Measurement readings can be acquired through HTTP, using JSON, CSV, or other pay
 
 :::{grid-item}
 :columns: 8
-#### {ref}`sensorwan`
+### {ref}`sensorwan`
 
 The SensorWAN channel addressing scheme can be used for assigning telemetry
 data communication channels to individual sensor nodes in wide-area sensor
 network scenarios, or similar multi-node, multi-sensor environments.
 
-It is able to handle addressing individual devices and channel bundles in
+It can handle addressing individual devices and channel bundles in
 a natural way, enabling both direct and trunking communications.
 
 <small>
@@ -159,7 +159,7 @@ a natural way, enabling both direct and trunking communications.
 
 :::{grid-item}
 :columns: 8
-#### [](#integration-airrohr)
+#### :ref:`integration-airrohr`
 
 Receive and record telemetry data from air particulate measurement devices of the
 Sensor.Community (formerly Luftdaten.Info) project, running the Airrohr Firmware.
