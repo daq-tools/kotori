@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # (c) 2019-2021 Andreas Motl <andreas@getkotori.org>
 from kotori.daq.decoder.airrohr import AirrohrDecoder
+from kotori.daq.decoder.json import CompactTimestampedJsonDecoder
 from kotori.daq.decoder.tasmota import TasmotaSensorDecoder, TasmotaStateDecoder
 from kotori.daq.decoder.schema import MessageType
 from kotori.daq.decoder.tts_ttn import TheThingsStackDecoder
@@ -23,6 +24,12 @@ class DecoderManager:
 
         if 'slot' not in self.topology:
             return False
+
+        # Compact JSON format, with timestamps as keys
+        if self.topology.slot.endswith('tc.json'):
+            self.info.message_type = MessageType.DATA_CONTAINER
+            self.info.decoder = CompactTimestampedJsonDecoder
+            return True
 
         # Airrohr
         if self.topology.slot.endswith('airrohr.json'):

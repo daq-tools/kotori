@@ -78,6 +78,40 @@ def test_mqtt_to_influxdb_json_bulk(machinery, create_influxdb, reset_influxdb):
 
 @pytest_twisted.inlineCallbacks
 @pytest.mark.mqtt
+def test_mqtt_to_influxdb_json_compact_bulk(machinery, create_influxdb, reset_influxdb):
+    """
+    Publish multiple readings in compact JSON format to MQTT broker
+    and proof they are stored in the InfluxDB database.
+
+    https://github.com/daq-tools/kotori/issues/39
+    """
+
+    # Submit multiple measurements, with timestamp.
+    data = {
+        "1611082554": {
+            "temperature": 21.42,
+            "humidity": 41.55,
+        },
+        "1611082568": {
+            "temperature": 42.84,
+            "humidity": 83.1,
+        },
+    }
+    yield threads.deferToThread(mqtt_json_sensor, settings.mqtt_topic_json_compact, data)
+
+    # Wait for some time to process the message.
+    yield sleep(PROCESS_DELAY_MQTT)
+
+    # Proof that data arrived in InfluxDB.
+    record = influx_sensors.get_record(index=0)
+    assert record == {u'time': '2021-01-19T18:55:54Z', u'temperature': 21.42, u'humidity': 41.55}
+
+    record = influx_sensors.get_record(index=1)
+    assert record == {u'time': '2021-01-19T18:56:08Z', u'temperature': 42.84, u'humidity': 83.1}
+
+
+@pytest_twisted.inlineCallbacks
+@pytest.mark.mqtt
 @pytest.mark.legacy
 def test_mqtt_to_influxdb_json_legacy_topic(machinery, create_influxdb, reset_influxdb):
     """
