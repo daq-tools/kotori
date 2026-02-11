@@ -169,12 +169,12 @@ systemd troubleshooting
 
 ::
 
-    systemctl status influxdb mosquitto grafana-server kotori
+    systemctl status crate influxdb mosquitto grafana-server kotori
 
 
 ::
 
-    systemctl list-unit-files kotori* influx* grafana* mosquitto*
+    systemctl list-unit-files kotori* crate* influx* grafana* mosquitto*
 
 
 ::

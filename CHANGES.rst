@@ -5,6 +5,7 @@ Changelog
 
 in progress
 ===========
+- [CrateDB] Add support for data acquisition and data export
 
 .. _kotori-0.28.0:
 

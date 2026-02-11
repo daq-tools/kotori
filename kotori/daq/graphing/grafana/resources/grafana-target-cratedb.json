@@ -1,0 +1,10 @@
+{
+    "alias": "{{ alias }}",
+    "format": "table",
+    "resultFormat": "time_series",
+    "tags": {{ tags }},
+    "groupByTags": [],
+    "measurement": "{{ measurement }}",
+    "rawQuery": true,
+    "rawSql": "SELECT $__timeGroupAlias(time, $__interval), MEAN(fields['{{ name }}']) AS {{ alias }} FROM {{ table }} WHERE $__timeFilter(time) GROUP BY time ORDER BY time"
+}

@@ -61,8 +61,8 @@ class ForwarderTargetService(MultiServiceMixin, MultiService):
             except Exception as ex:
                 log.failure("Connecting to MQTT broker failed: {ex}", ex=last_error_and_traceback())
 
-        elif self.scheme == 'influxdb':
-            # InfluxDB has no subsystem service, it's just an adapter
+        # CrateDB and InfluxDB are not subsystem services, they are just adapters.
+        elif self.scheme in ['cratedb', 'influxdb']:
             pass
 
         else:
@@ -87,7 +87,7 @@ class ForwarderTargetService(MultiServiceMixin, MultiService):
             # TODO: Use threads.deferToThread here?
             return self.downstream.publish(topic, payload)
 
-        elif self.scheme == 'influxdb':
+        elif self.scheme in ['cratedb', 'influxdb']:
 
             # InfluxDB query wrapper using expression derived from transformation data
             dfq = DataFrameQuery(settings=self.settings, bucket=bucket)

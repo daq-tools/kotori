@@ -16,5 +16,5 @@
     :keywords lang=es: adquisición de datos, gráficas, conjunto de herramientas, telemetría
     :keywords lang=fr: acquisition de données, graphiques, boîte à outils, télémétrie
     :keywords:         m2m, iot, mqtt, wamp, http, rest, udp, binary struct,
-                       Kotori, Grafana, InfluxDB, Mosquitto, MongoDB, XMPP, SMTP
+                       Kotori, Grafana, CrateDB, InfluxDB, Mosquitto, MongoDB, XMPP, SMTP
 
