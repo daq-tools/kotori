@@ -140,7 +140,7 @@ setup(name='kotori',
             'pycparser<3.1',
             'pyparsing<3.4',
             'pyclibrary<0.4',
-            'tabulate<0.8',
+            'tabulate<0.10',
             'sympy<1.15',
         ],
         'storage_plus': [
