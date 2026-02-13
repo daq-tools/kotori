@@ -144,7 +144,7 @@ setup(name='kotori',
             'sympy<1.15',
         ],
         'daq_fineoffset': [
-            'ecowitt2mqtt<2024'
+            'ecowitt2mqtt<=2026.1.0'
         ],
         'storage_plus': [
             'alchimia>=0.4,<1',

@@ -189,28 +189,21 @@ class FineOffsetDecoder:
         Decode data payload submitted by a Fine Offset device, using `ecowitt2mqtt`.
         """
 
-        # This variant is compatible with modern releases like `ecowitt2mqtt-2023.2.1`.
-        try:
-            from ecowitt2mqtt.config import Config
-            from ecowitt2mqtt.data import ProcessedData
+        params = {
+            # Both configuration variables are currently *required* by `ecowitt2mqtt`.
+            # Fortunately, `mqtt_broker` can be left empty.
+            # TODO: Can this be improved if upstream would accept a corresponding patch?
+            "hass_discovery": True,
+            "mqtt_broker": "",
+            # Output values in *metric* unit system by default.
+            # TODO: Make output unit system configurable.
+            "output_unit_system": "metric",
+        }
 
-            config = Config(
-                {
-                    # Both configuration variables are currently *required* by `ecowitt2mqtt`.
-                    # Fortunately, `mqtt_broker` can be left empty.
-                    # TODO: Can this be improved if upstream would accept a corresponding patch?
-                    "hass_discovery": True,
-                    "mqtt_broker": "",
-                    # Output values in *metric* unit system by default.
-                    # TODO: Make output unit system configurable.
-                    "output_unit_system": "metric",
-                }
-            )
-            processed_data = ProcessedData(config=config, data=data)
-            data = {key: value.value for key, value in processed_data.output.items()}
+        import ecowitt2mqtt.data
 
-        # This variant is compatible with earlier releases like `ecowitt2mqtt-2022.5.0`.
-        except ImportError:
+        # Support releases like `ecowitt2mqtt-2022.5.0`.
+        if hasattr(ecowitt2mqtt.data, "DataProcessor"):
             import argparse
 
             from ecowitt2mqtt.data import DataProcessor
@@ -221,6 +214,18 @@ class FineOffsetDecoder:
             args.raw_data = None
 
             data_processor = DataProcessor(data, args)
-            data = data_processor.generate_data()
+            return data_processor.generate_data()
 
-        return data
+        # Support releases like `ecowitt2mqtt-2023.2.1`.
+        if not hasattr(ecowitt2mqtt.config, "Configs"):
+            from ecowitt2mqtt.config import Config
+            config = Config(params)
+
+        # Support releases like `ecowitt2mqtt-2024.10.0` and higher.
+        else:
+            from ecowitt2mqtt.config import Configs
+            config = Configs(params).default_config
+
+        from ecowitt2mqtt.data import ProcessedData
+        processed_data = ProcessedData(config=config, data=data)
+        return {key: value.value for key, value in processed_data.output.items()}
