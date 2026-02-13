@@ -87,6 +87,7 @@ jobs:
     env:
       OS: ${{ matrix.os }}
       PYTHON: ${{ matrix.python-version }}
+      DOCKER_MIN_API_VERSION: v1.24
 
     name: Python ${{ matrix.python-version }}, Grafana ${{ matrix.grafana-version }}, Mosquitto ${{ matrix.mosquitto-version }}, InfluxDB ${{ matrix.influxdb-version }}
     steps:
@@ -96,6 +97,8 @@ jobs:
 
       - name: Start Mosquitto
         uses: namoshek/mosquitto-github-action@v1
+        env:
+          DOCKER_MIN_API_VERSION: v1.24
         with:
           version: ${{ matrix.mosquitto-version }}
           ports: '1883:1883 8883:8883'
