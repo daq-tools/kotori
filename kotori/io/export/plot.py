@@ -171,18 +171,28 @@ class UniversalPlotter(object):
             """
 
 
-        elif renderer == 'ggplot':
+        elif renderer in ['ggplot', 'plotnine']:
+            """
+            Renderer based on ggplot, now in plotnine.
 
-            # https://yhat.github.io/ggplot/notebook.html?page=build/docs/examples/Multiple%20Line%20Plot.html
-            # https://stackoverflow.com/questions/23541497/is-there-a-way-to-plot-a-pandas-series-in-ggplot
-            # https://stackoverflow.com/questions/24478925/is-it-possible-to-plot-multiline-chart-on-python-ggplot/24479513#24479513
+            ggplot
+            ======
+            - https://yhat.github.io/ggplot/notebook.html?page=build/docs/examples/Multiple%20Line%20Plot.html
+            - https://stackoverflow.com/questions/23541497/is-there-a-way-to-plot-a-pandas-series-in-ggplot
+            - https://stackoverflow.com/questions/24478925/is-it-possible-to-plot-multiline-chart-on-python-ggplot/24479513#24479513
 
-            # https://github.com/yhat/ggplot/blob/master/docs/how-to/Building%20Faceted%20(or%20Trellised)%20Plots.ipynb
-            # https://github.com/yhat/ggplot/blob/master/docs/how-to/Annotating%20Plots%20-%20Titles%20and%20Labels.ipynb
-            # https://github.com/yhat/ggplot/blob/master/docs/how-to/How%20to%20make%20xkcd%20style%20graphs.ipynb
+            - https://github.com/yhat/ggplot/blob/master/docs/how-to/Building%20Faceted%20(or%20Trellised)%20Plots.ipynb
+            - https://github.com/yhat/ggplot/blob/master/docs/how-to/Annotating%20Plots%20-%20Titles%20and%20Labels.ipynb
+            - https://github.com/yhat/ggplot/blob/master/docs/how-to/How%20to%20make%20xkcd%20style%20graphs.ipynb
 
-            from ggplot import ggplot, aes, qplot, geom_line, geom_text, ggtitle, stat_smooth, scale_x_date, date_format, date_breaks
-            from ggplot import theme_538, theme_bw, theme_gray, theme_xkcd
+            plotnine
+            ========
+            - https://github.com/has2k1/plotnine
+            - https://plotnine.readthedocs.io/
+            """
+
+            from plotnine import ggplot, aes, qplot, geom_line, geom_text, ggtitle, stat_smooth, scale_x_datetime
+            from plotnine import theme_538, theme_bw, theme_gray, theme_xkcd
 
             # https://stackoverflow.com/questions/24478925/is-it-possible-to-plot-multiline-chart-on-python-ggplot/24479513#24479513
             # https://stackoverflow.com/questions/23541497/is-there-a-way-to-plot-a-pandas-series-in-ggplot
@@ -196,8 +206,11 @@ class UniversalPlotter(object):
 
             plot = ggplot(df, aes(x='time', y='value', color='variable'))\
                    + geom_line()\
-                   + scale_x_date(limits=(datetime_min, datetime_max), breaks=locator, labels=formatter)\
+                   + scale_x_datetime(limits=(datetime_min, datetime_max))\
                    + ggtitle(bucket.title.human)
+
+            # FIXME: Currently croaks.
+            # + scale_x_date(limits=(datetime_min, datetime_max), breaks=locator, labels=formatter) \
 
             # Axis labels
             plot.xlab = 'Time'
