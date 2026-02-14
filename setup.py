@@ -119,7 +119,7 @@ setup(name='kotori',
       ],
       extras_require={
 
-        'full': ['kotori[daq,daq_fineoffset,daq_geospatial,export,scientific,firmware]'],
+        'full': ['kotori[daq,daq-fineoffset,daq-geospatial,export,scientific,firmware]'],
 
         'daq': [
             'influxdb>=5.3.0,<6',
@@ -130,20 +130,20 @@ setup(name='kotori',
             #'txmongo==16.3.0',
             'pymongo>=3.11.0,<5',
         ],
-        'daq_geospatial': [
+        'daq-geospatial': [
             'Geohash>=1.0,<2',
             'geopy>=1.12.0,<3',
             'Beaker>=1.9.0,<2',
             'tqdm<5',
         ],
-        'daq_binary': [
+        'daq-binary': [
             'pycparser<3.1',
             'pyparsing<3.4',
             'pyclibrary<0.4',
             'tabulate<0.8',
             'sympy<1.15',
         ],
-        'daq_fineoffset': [
+        'daq-fineoffset': [
             'ecowitt2mqtt<=2026.1.0'
         ],
         'storage_plus': [

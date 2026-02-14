@@ -83,10 +83,10 @@ class PackageSpecification:
             self.features = "daq"
         elif self.flavor == "standard":
             self.name = "kotori-standard"
-            self.features = "daq,daq_fineoffset,daq_geospatial,export"
+            self.features = "daq,daq-fineoffset,daq-geospatial,export"
         elif self.flavor == "full":
             self.name = "kotori"
-            self.features = "daq,daq_fineoffset,daq_geospatial,export,plotting,firmware,scientific"
+            self.features = "daq,daq-fineoffset,daq-geospatial,export,plotting,firmware,scientific"
         else:
             raise ValueError("Unknown package flavor")
 
