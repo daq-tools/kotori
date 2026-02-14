@@ -172,6 +172,8 @@ setup(name='kotori',
         # Data export: Scientific data formats like HDF5 and NetCDF and plots from ggplot
         'scientific': [
 
+            "kotori[plotting]",
+
             # Data
             # ----
 
