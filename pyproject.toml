@@ -34,3 +34,18 @@ omit = [
   "kotori/vendor/luftdaten/*",
   "kotori/vendor/lst/*",
 ]
+
+[tool.poe.tasks]
+test = [
+  {cmd="pytest kotori test"},
+]
+test-coverage = [
+  {cmd="coverage erase"},
+  {shell="coverage run --concurrency=multiprocessing,thread --parallel-mode --timid $(command -v pytest) kotori test"},
+  {cmd="coverage combine"},
+  {cmd="coverage report"},
+  {cmd="coverage xml"},
+]
+check = [
+  "test",
+]
