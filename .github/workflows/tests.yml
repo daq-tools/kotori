@@ -92,7 +92,6 @@ jobs:
     env:
       OS: ${{ matrix.os }}
       PYTHON: ${{ matrix.python-version }}
-      UV_SYSTEM_PYTHON: true
 
     name: Python ${{ matrix.python-version }}, Grafana ${{ matrix.grafana-version }}, Mosquitto ${{ matrix.mosquitto-version }}, InfluxDB ${{ matrix.influxdb-version }}
     steps:
@@ -109,20 +108,10 @@ jobs:
           config: ${{ github.workspace }}/etc/test/mosquitto-no-auth.conf
           # container-name: 'mqtt'
 
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ matrix.python-version }}
-          architecture: x64
-          cache: 'pip'
-          cache-dependency-path: |
-            setup.py
-
       - name: Set up uv
         uses: astral-sh/setup-uv@v7
         with:
-          cache-dependency-glob: |
-            setup.py
+          activate-environment: true
           cache-suffix: ${{ matrix.python-version }}
           enable-cache: true
           python-version: ${{ matrix.python-version }}
@@ -130,7 +119,6 @@ jobs:
 
       - name: Install dependency packages
         run: |
-          uv venv --seed .venv
           uv pip install --upgrade --editable='.[full,test]' --overrides .github/workflows/requirements-overrides.txt
 
       - name: Run tests, with coverage
