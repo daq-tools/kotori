@@ -92,6 +92,7 @@ jobs:
     env:
       OS: ${{ matrix.os }}
       PYTHON: ${{ matrix.python-version }}
+      UV_SYSTEM_PYTHON: true
 
     name: Python ${{ matrix.python-version }}, Grafana ${{ matrix.grafana-version }}, Mosquitto ${{ matrix.mosquitto-version }}, InfluxDB ${{ matrix.influxdb-version }}
     steps:
@@ -116,6 +117,21 @@ jobs:
           cache: 'pip'
           cache-dependency-path: |
             setup.py
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          cache-dependency-glob: |
+            setup.py
+          cache-suffix: ${{ matrix.python-version }}
+          enable-cache: true
+          python-version: ${{ matrix.python-version }}
+          version: 'latest'
+
+      - name: Install dependency packages
+        run: |
+          uv venv --seed .venv
+          uv pip install --upgrade --editable='.[full,test]'
 
       - name: Run tests, with coverage
         run: |
