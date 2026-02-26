@@ -131,7 +131,7 @@ jobs:
       - name: Install dependency packages
         run: |
           uv venv --seed .venv
-          uv pip install --upgrade --editable='.[full,test]'
+          uv pip install --upgrade --editable='.[full,test]' --overrides .github/workflows/requirements-overrides.txt
 
       - name: Run tests, with coverage
         run: |

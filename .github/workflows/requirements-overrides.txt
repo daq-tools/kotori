@@ -1,0 +1,4 @@
+# Error on CI/GHA with Python 3.7 when using `uv`.
+# Failed to build `netcdf4==1.6.5`.
+# Package hdf5 was not found in the pkg-config search path.
+netcdf4>=1.5.3,<1.8; python_version>="3.8"
