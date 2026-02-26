@@ -213,6 +213,7 @@ setup(name='kotori',
             'pytest-twisted<2',
             'datadiff<3',
             'coverage<8',
+            'poethepoet<1',
         ],
         'release': [
             'build',
