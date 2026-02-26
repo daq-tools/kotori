@@ -5,6 +5,8 @@ import json
 import logging
 
 import io
+import sys
+
 import pandas as pd
 import pytest
 import pytest_twisted
@@ -94,9 +96,11 @@ def verify_export_general(channel_path, http_submit, http_fetch):
         '<td>51.8</td>' in deferred.result
 
     # NetCDF format.
-    deferred = threads.deferToThread(http_fetch, channel_path, format='nc', ts_from=ts_from, ts_to=ts_to)
-    yield deferred
-    assert deferred.result.startswith(b'\x89HDF\r\n\x1a\n\x02\x08\x08\x00\x00\x00')
+    # netcdf4 fails to build on Python 3.7 with uv (missing hdf5 in pkg-config).
+    if sys.version_info >= (3, 8):
+        deferred = threads.deferToThread(http_fetch, channel_path, format='nc', ts_from=ts_from, ts_to=ts_to)
+        yield deferred
+        assert deferred.result.startswith(b'\x89HDF\r\n\x1a\n\x02\x08\x08\x00\x00\x00')
 
     # Datatables HTML.
     deferred = threads.deferToThread(http_fetch, channel_path, format='dt', ts_from=ts_from, ts_to=ts_to)
