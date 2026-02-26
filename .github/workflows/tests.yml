@@ -34,9 +34,9 @@ jobs:
         ]
         mosquitto-version: [ "2.0" ]
         influxdb-version: [ "1.8" ]
-        grafana-version: [ "12.3.2" ]
+        grafana-version: [ "12.4.0" ]
         
-#        include:
+        include:
 #          - grafana-version: "7.5.17"
 #            python-version: "3.14"
 #            mosquitto-version: "2.0"
@@ -57,11 +57,16 @@ jobs:
 #            mosquitto-version: "2.0"
 #            influxdb-version: "1.8"
 #            os: "ubuntu-22.04"
-#          - grafana-version: "11.6.9"
+#          - grafana-version: "11.6.12"
 #            python-version: "3.14"
 #            mosquitto-version: "2.0"
 #            influxdb-version: "1.8"
 #            os: "ubuntu-22.04"
+          - grafana-version: "12.3.4"
+            python-version: "3.14"
+            mosquitto-version: "2.0"
+            influxdb-version: "1.8"
+            os: "ubuntu-22.04"
 
     # https://docs.github.com/en/free-pro-team@latest/actions/guides/about-service-containers
     services:
