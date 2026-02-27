@@ -16,7 +16,10 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-from pkg_resources import EntryPoint
+try:
+    from importlib.metadata import EntryPoint
+except ImportError:
+    from importlib_metadata import EntryPoint
 from pyramid.settings import asbool
 from twisted.logger import Logger, LogLevel
 from kotori.util.configuration import read_list
@@ -92,28 +95,32 @@ class KotoriBootloader(object):
 
     @classmethod
     def load_entrypoint(cls, reference, onerror='raise'):
+        """
+        Load a callable from a module:attribute reference string.
 
-        # Resolve entrypoint
-        expression = u'_ = {reference}'.format(reference=reference)
+        Args:
+            reference: A string like "kotori.application.foo:bar"
+                       where "kotori.application.foo" is the module
+                       and "bar" is the attribute/callable
+            onerror: 'raise' or 'ignore'
+        """
+
+        # Create an EntryPoint object directly.
         try:
-            entrypoint = EntryPoint.parse(expression)
-        except:
-            log.failure('Error parsing entrypoint "{reference}" from expression "{expression}"',
-                reference=reference, expression=expression)
+            entrypoint = EntryPoint(name='_', value=reference, group='_')
+        except Exception:
+            log.failure('Error creating entrypoint from reference "{reference}"', reference=reference)
             raise
 
-        # Load entrypoint
+        # Load the module and get the attribute.
         try:
-            thing = entrypoint.resolve()
-        except:
+            return entrypoint.load()
+        except Exception:
             log.failure('Error loading entrypoint "{reference}"', reference=reference)
             if onerror == 'raise':
                 raise
             elif onerror == 'ignore':
                 return cls.noop_callable
-            #raise
-
-        return thing
 
     @classmethod
     def noop_callable(cls, *args, **kwargs):
