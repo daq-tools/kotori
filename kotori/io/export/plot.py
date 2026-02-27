@@ -191,7 +191,7 @@ class UniversalPlotter(object):
             - https://plotnine.readthedocs.io/
             """
 
-            from plotnine import ggplot, aes, qplot, geom_line, geom_text, ggtitle, stat_smooth, scale_x_datetime
+            from plotnine import ggplot, aes, qplot, geom_line, geom_text, ggtitle, stat_smooth, scale_x_date, scale_x_datetime
             from plotnine import theme_538, theme_bw, theme_gray, theme_xkcd
 
             # https://stackoverflow.com/questions/24478925/is-it-possible-to-plot-multiline-chart-on-python-ggplot/24479513#24479513
@@ -206,11 +206,9 @@ class UniversalPlotter(object):
 
             plot = ggplot(df, aes(x='time', y='value', color='variable'))\
                    + geom_line()\
+                   + scale_x_date(limits=(datetime_min, datetime_max), breaks=locator, labels=formatter)\
                    + scale_x_datetime(limits=(datetime_min, datetime_max))\
                    + ggtitle(bucket.title.human)
-
-            # FIXME: Currently croaks.
-            # + scale_x_date(limits=(datetime_min, datetime_max), breaks=locator, labels=formatter) \
 
             # Axis labels
             plot.xlab = 'Time'
