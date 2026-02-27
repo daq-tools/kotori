@@ -35,7 +35,7 @@ jobs:
           "3.14",
         ]
         mosquitto-version: [ "2.0" ]
-        cratedb-version: [ "5.3" ]
+        cratedb-version: [ "6.2" ]
         influxdb-version: [ "1.8" ]
         grafana-version: [ "12.4.0" ]
         
@@ -43,6 +43,7 @@ jobs:
           - grafana-version: "7.5.17"
             python-version: "3.14"
             mosquitto-version: "2.0"
+            cratedb-version: "6.2"
             influxdb-version: "1.8"
             os: "ubuntu-22.04"
 #          - grafana-version: "8.5.27"
@@ -68,6 +69,7 @@ jobs:
           - grafana-version: "12.3.4"
             python-version: "3.14"
             mosquitto-version: "2.0"
+            cratedb-version: "6.2"
             influxdb-version: "1.8"
             os: "ubuntu-22.04"
 
