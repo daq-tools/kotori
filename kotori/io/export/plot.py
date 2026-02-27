@@ -92,7 +92,7 @@ class UniversalPlotter(object):
             # matplotlib would not plot the sparse data frame properly.
             # With time series data, using pad/ffill is extremely common so that the “last known value” is available at every time point.
             # http://pandas.pydata.org/pandas-docs/stable/missing_data.html#filling-missing-values-fillna
-            df.fillna(method='pad', inplace=True)
+            df.ffill(inplace=True)
 
             # Make plots of DataFrame using matplotlib / pylab.
             # http://matplotlib.org/
