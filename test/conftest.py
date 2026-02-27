@@ -24,6 +24,13 @@ STARTUP_DELAY = 1.5
 #truncate.DEFAULT_MAX_CHARS = 9999
 
 
+@pytest.fixture(scope="session", autouse=True)
+def mask_logs():
+
+    # Tame logging of matplotlib, otherwise it would emit way too many log messages.
+    logging.getLogger("matplotlib.font_manager").setLevel(logging.INFO)
+
+
 def create_machinery(config, scope="package"):
 
     @pytest_twisted.inlineCallbacks
