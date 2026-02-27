@@ -7,9 +7,12 @@ import random
 import string
 import sys
 import typing as t
+from collections import OrderedDict
 
 import pytest
 import requests
+from crate import client as cratedb_client
+from crate.client.exceptions import ProgrammingError
 from influxdb import InfluxDBClient
 from influxdb.exceptions import InfluxDBClientError
 from pyinfluxql import Query
@@ -19,6 +22,7 @@ from twisted.internet.task import deferLater
 
 import kotori
 from kotori.daq.graphing.grafana.manager import GrafanaManager
+from kotori.daq.model import TimeseriesDatabaseType
 
 logger = logging.getLogger(__name__)
 
@@ -87,10 +91,19 @@ class GrafanaWrapper:
         field_names = sorted(map(lambda x: x["fields"][0]["name"], panels[panel_index]['targets']))
         return field_names
 
-    def make_reset(self):
+    def make_reset(self, dbtype: TimeseriesDatabaseType = TimeseriesDatabaseType.INFLUXDB1):
+
+        if dbtype is TimeseriesDatabaseType.CRATEDB:
+            database = self.settings.cratedb_database
+            databases = getattr(self.settings, "cratedb_databases", [])
+            dashboards = self.settings.grafana2_dashboards
+        elif dbtype is TimeseriesDatabaseType.INFLUXDB1:
+            database = self.settings.influx_database
+            databases = getattr(self.settings, "influx_databases", [])
+            dashboards = self.settings.grafana_dashboards
 
         @pytest.fixture(scope="function")
-        def reset_grafana(machinery):
+        def resetfun(machinery, machinery_cratedb):
             """
             Fixture to delete the Grafana datasource and dashboard.
             """
@@ -100,13 +113,12 @@ class GrafanaWrapper:
             for datasource in self.client.datasources.get():
                 datasource_name = datasource['name']
                 logger.info(f"Attempt to delete datasource {datasource_name}")
-                if datasource_name == self.settings.influx_database or \
-                        datasource_name in getattr(self.settings, "influx_databases", []):
+                if datasource_name == database or datasource_name in databases:
                     datasource_id = datasource['id']
                     self.client.datasources[datasource_id].delete()
                     logger.info(f"Successfully deleted datasource {datasource_name}")
 
-            for dashboard_name in self.settings.grafana_dashboards:
+            for dashboard_name in dashboards:
                 logger.info(f"Attempt to delete dashboard {dashboard_name}")
                 try:
                     dashboard = self.get_dashboard_by_name(dashboard_name)
@@ -118,14 +130,16 @@ class GrafanaWrapper:
                         raise
 
             # Find all `GrafanaManager` service instances and invoke `KeyCache.reset()` on them.
-            if machinery:
+            for machinery in [machinery, machinery_cratedb]:
+                if machinery is None:
+                    continue
                 for app in machinery.applications:
                     for service in app.services:
                         for subservice in service.services:
                             if isinstance(subservice, GrafanaManager):
                                 subservice.keycache.reset()
 
-        return reset_grafana
+        return resetfun
 
 
 class InfluxWrapper:
@@ -191,6 +205,147 @@ class InfluxWrapper:
                     raise
 
         return reset_measurement
+
+
+class CrateDBWrapper:
+    """
+    Utilities for testing with CrateDB.
+
+    Those helper functions are mostly used for test layer setup/teardown purposes.
+    """
+
+    def __init__(self, database, measurement):
+        self.database = database
+        self.measurement = measurement
+        self.client = self.client_factory()
+        self.create = None
+        self.reset = None
+
+    @staticmethod
+    def client_factory():
+        """
+        Database client adapter factory.
+        """
+        # FIXME: Connectivity parameters are hardcoded.
+        # TODO: Get configuration parameters from .ini file or from runtime application.
+        return cratedb_client.connect(
+            'localhost:4200',
+            username="crate",
+            pool_size=20,
+            # TODO: Does configuring `timeout` actually work?
+            timeout=2,
+        )
+
+    def get_tablename(self):
+        """
+        Provide table name per SensorWAN specification.
+        """
+        return f"{self.database}.{self.measurement}"
+
+    def query(self):
+        """
+        Query CrateDB and respond with results in suitable shape.
+
+        Make sure to synchronize data by using `REFRESH TABLE ...` before running
+        the actual `SELECT` statement. This is applicable in test case scenarios.
+
+        Response format::
+
+            [
+              {
+                "time": ...,
+                "tags": {"city": "berlin", "location": "balcony"},
+                "fields": {"temperature": 42.42, "humidity": 84.84},
+              },
+              ...
+            ]
+
+        TODO: Refactor to / unify with `kotori.daq.storage.cratedb:CrateDBAdapter.query`.
+        TODO: Add dict-based record retrieval as a row factory to `crate` library.
+        """
+        logger.info('CrateDB: Querying database')
+        db_table = self.get_tablename()
+        self.execute(f"REFRESH TABLE {db_table};")
+        result = self.execute(f"SELECT * FROM {db_table};")
+        cols = result["cols"]
+        rows = result["rows"]
+        records = []
+        for row in rows:
+            # Build a merged record from `tags` and `fields`.
+            item = dict(zip(cols, row))
+            record = OrderedDict()
+            record.update({"time": item["time"]})
+            record.update(item["tags"])
+            record.update(item["fields"])
+            records.append(record)
+        return records
+
+    def execute(self, expression):
+        """
+        Actually execute the database query, using a cursor.
+
+        TODO: Use `kotori.daq.storage.cratedb:CrateDBAdapter.execute`.
+        """
+        cursor = self.client.cursor()
+        cursor.execute(expression)
+        result = cursor._result
+        cursor.close()
+        return result
+
+    def get_record(self, index=None):
+        """
+        Convenience method for getting specific records.
+        """
+        records = self.query()
+
+        # Check number of records.
+        assert len(records) >= 1, "No data in database: len(result) = {}".format(len(records))
+
+        # Pick and return requested record.
+        return records[index]
+
+    def get_first_record(self):
+        """
+        Convenience method for getting the first record.
+        """
+        return self.get_record(index=0)
+
+    def drop_table(self, tablename: str):
+        """
+        Drop the table on test suite teardown.
+        """
+        sql_ddl = f"DROP TABLE {tablename}"
+        self.execute(sql_ddl)
+
+    def make_create_db(self):
+        """
+        Support fixture for test suite setup: Creates the `database` entity.
+
+        Attention: Creating a database is effectively a no-op with CrateDB, so
+                   this is only here for symmetry reasons.
+        """
+        @pytest.fixture(scope="package")
+        def create():
+            # logger.info('CrateDB: Creating database')
+            # self.client.drop_database(self.database)
+            # self.client.create_database(self.database)
+            pass
+        return create
+
+    def make_reset_measurement(self):
+        """
+        Support fixture for test suite setup: Make sure to start without existing tables.
+        """
+
+        @pytest.fixture(scope="function")
+        def reset_measurement():
+            logger.info('CrateDB: Resetting database')
+            # Clear out the database table.
+            try:
+                self.drop_table(self.get_tablename())
+            except ProgrammingError as ex:
+                if "SchemaUnknownException" not in ex.message:
+                    raise
 
         return reset_measurement
 
