@@ -7,6 +7,7 @@ in progress
 ===========
 - Export: Repaired ``ggplot`` graph rendering by switching to ``plotnine``
 - Export: Repaired ``png`` rendering with modern ``pandas``
+- Export: Repaired ``png`` rendering with ``matplotlib >= 3.8.0``
 - General: Dropped support for Python 3.7
 
 .. _kotori-0.28.1:
