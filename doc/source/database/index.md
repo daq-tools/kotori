@@ -3,7 +3,7 @@
 # Databases
 
 Database adapter components will know about vendor-specific dialects and optimal
-communication strategies to timeseries-databases.
+communication strategies to time series databases.
 
 This documentation section enumerates the collection of database adapters shipped
 with Kotori. Adding more adapters is possible.
@@ -39,7 +39,7 @@ amounts of data in near real-time, even with complex queries. It is PostgreSQL-c
 and based on Lucene.
 
 <small>
-<strong>Categories:</strong> timeseries-database, multi-modal database
+<strong>Categories:</strong> time series database, multi-modal database
 </small>
 :::
 :::{grid-item}
@@ -68,7 +68,7 @@ and real-time analytics. It covers storing and querying data, background ETL pro
 for monitoring and alerting purposes, and visualization and exploration features. 
 
 <small>
-<strong>Categories:</strong> timeseries-database
+<strong>Categories:</strong> time series database
 </small>
 :::
 :::{grid-item}
