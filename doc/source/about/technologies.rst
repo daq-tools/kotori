@@ -26,12 +26,12 @@ Infrastructure components
 
 - Kotori_, a data acquisition, graphing and telemetry toolkit
 - Grafana_, a graph and dashboard builder for visualizing time series metrics
-- CrateDB_, a time-series database ¹
-- InfluxDB_, a time-series database ¹
+- CrateDB_, a time series database with document features and more ¹
+- InfluxDB_, a time series database ¹
 - Mosquitto_, an MQTT message broker
 - MongoDB_, a document store (optional) ²³
 
-| ¹ Kotori can either use CrateDB or InfluxDB as timeseries database.
+| ¹ Kotori can either use CrateDB or InfluxDB as time series database.
 | ² MongoDB is only required when doing CSV data acquisition, so it is completely
 | optional for regular operations of Kotori.
 | ³ As MongoDB - strictly speaking - stopped being free software recently (2018/2019),

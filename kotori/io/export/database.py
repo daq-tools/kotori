@@ -37,7 +37,7 @@ class DataFrameQuery:
                 settings=self.settings.cratedb,
             )
         else:
-            log.warn("No time-series database configured")
+            log.warn("No time series database configured")
             return
 
         # Get query expression from transformation dictionary.

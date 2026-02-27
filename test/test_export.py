@@ -34,7 +34,7 @@ def test_export_cratedb_general(machinery_cratedb, reset_cratedb):
     Submit single reading in JSON format to HTTP API and proof
     it can be retrieved back from the HTTP API in different formats.
 
-    This uses CrateDB as timeseries database.
+    This uses CrateDB as time series database.
     """
 
     channel_path = settings.io_channel_path
@@ -53,7 +53,7 @@ def test_export_influxdb_general(machinery, create_influxdb, reset_influxdb):
     Submit single reading in JSON format to HTTP API and proof
     it can be retrieved back from the HTTP API in different formats.
 
-    This uses InfluxDB as timeseries database.
+    This uses InfluxDB as time series database.
     """
 
     channel_path = settings.channel_path_data

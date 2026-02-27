@@ -88,7 +88,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
         elif "cratedb" in self.settings:
             self.database = CrateDBAdapter(settings = self.settings.cratedb)
         else:
-            log.warn("No time-series database configured")
+            log.warn("No time series database configured")
 
         # Perform MQTT message processing using a different thread pool
         self.threadpool = ThreadPool()
@@ -315,7 +315,7 @@ class MqttInfluxGrafanaService(MultiService, MultiServiceMixin):
 
     def store_message(self, storage, data):
         """
-        Store data to timeseries database
+        Store data to time series database
 
         :param storage: The storage location object
         :param data:    The data ready for storing

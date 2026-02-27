@@ -97,7 +97,7 @@ telemetry message bus to the database.
 CrateDB
 =======
 
-This example uses CrateDB as timeseries-database.
+This example uses CrateDB as time series database.
 
 Invoke Kotori::
 
@@ -125,7 +125,7 @@ Go to Grafana and visit the dashboard just created::
 InfluxDB
 ========
 
-This example uses InfluxDB as timeseries-database.
+This example uses InfluxDB as time series database.
 
 Invoke Kotori::
 

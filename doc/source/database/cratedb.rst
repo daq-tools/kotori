@@ -25,7 +25,7 @@ This section summarizes CrateDB's data model and query interface.
 Data model
 ==========
 
-As a time-series/document/OLAP/RDBMS database with an SQL interface, CrateDB stores records
+As a timeseries/document/OLAP/RDBMS database with an SQL interface, CrateDB stores records
 into tables. Tables are grouped into schemas, which is equivalent to the concept of hosting
 multiple databases on the same server instance.
 
@@ -71,7 +71,7 @@ At a glance
 - Use standard SQL via the PostgreSQL wire protocol or an HTTP API.
 - Dynamic table schemas and queryable objects provide document-oriented features in
   addition to the relational features of SQL.
-- Support for time-series data, realtime full-text search, geospatial data types and
+- Support for time series data, realtime full-text search, geospatial data types and
   search capabilities.
 - Horizontally scalable, highly available and fault tolerant clusters that run very
   well in virtualized and containerised environments.
@@ -315,7 +315,7 @@ Typical queries
 Advanced queries
 ================
 
-Time-series data
+Time series data
 ----------------
 
 .. code-block:: sql
@@ -520,7 +520,7 @@ Usage
 Purpose
 =======
 
-Kotori uses CrateDB to store **timeseries-data** of data acquisition channels.
+Kotori uses CrateDB to store time series data of data acquisition channels.
 
 Documentation
 =============

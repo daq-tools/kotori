@@ -31,7 +31,7 @@ class GrafanaManager(MultiService, MultiServiceMixin):
         elif "influxdb" in self.config:
             self.dbtype = TimeseriesDatabaseType.INFLUXDB1
         else:
-            raise ValueError("Timeseries database type not defined")
+            raise ValueError("Time series database type not defined")
 
         if not 'port' in self.config['grafana']:
             self.config['grafana']['port'] = '3000'
@@ -110,7 +110,7 @@ class GrafanaManager(MultiService, MultiServiceMixin):
                 "password": self.config['influxdb']['password'],
             })
         else:
-            log.warn("No time-series database enabled, skipping Grafana provisioning")
+            log.warn("No time series database enabled, skipping Grafana provisioning")
 
 
         return datasource_name
