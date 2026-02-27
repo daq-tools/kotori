@@ -150,7 +150,8 @@ setup(name='kotori',
         'export': [
             'pyinfluxql>=0.0.1,<1',
             'numpy==1.22.0; python_version=="3.5"',
-            'pandas<1.3; python_version<"3.10"',
+            'mizani<0.10; python_version<"3.10"',
+            'pandas<1.4; python_version<"3.10"',
             'numpy<1.23; python_version<"3.10"',
             'pandas<1.6; python_version<"3.12"',
             'numpy<1.25; python_version<"3.12"',
@@ -165,7 +166,7 @@ setup(name='kotori',
             #'dyplot==0.8.8',
 
             'matplotlib>=3,<3.12',
-            'plotnine<0.13',
+            'plotnine>=0.10,<0.16',
             #'cairocffi>=0.5.4',
         ],
 
