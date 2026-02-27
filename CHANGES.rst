@@ -6,6 +6,13 @@ Changelog
 in progress
 ===========
 
+.. _kotori-0.28.1:
+
+2026-02-27 0.28.1
+=================
+
+- Core: Got rid of a few runtime warnings
+
 .. _kotori-0.28.0:
 
 2026-02-10 0.28.0
