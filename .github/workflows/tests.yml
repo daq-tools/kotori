@@ -39,11 +39,11 @@ jobs:
         grafana-version: [ "12.4.0" ]
         
         include:
-#          - grafana-version: "7.5.17"
-#            python-version: "3.14"
-#            mosquitto-version: "2.0"
-#            influxdb-version: "1.8"
-#            os: "ubuntu-22.04"
+          - grafana-version: "7.5.17"
+            python-version: "3.14"
+            mosquitto-version: "2.0"
+            influxdb-version: "1.8"
+            os: "ubuntu-22.04"
 #          - grafana-version: "8.5.27"
 #            python-version: "3.14"
 #            mosquitto-version: "2.0"
