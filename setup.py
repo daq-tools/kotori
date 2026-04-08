@@ -208,7 +208,7 @@ setup(name='kotori',
 
         # Development.
         'test': [
-            'pytest<8',
+            'pytest<10',
             'pytest-cov<8',
             'pytest-twisted<2',
             'datadiff<3',
