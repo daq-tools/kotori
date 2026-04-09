@@ -1673,7 +1673,7 @@ Misc
 - [o] Issues after installing Kotori-0.5.0 from Debian package
 
     - | tabulate,pyclibrary,sympy muß noch via pip in venv.
-      | => pip install kotori[daq_binary]
+      | => pip install kotori[daq-binary]
     - | die dateien fehlen: /opt/kotori/lib/python2.7/site-packages/kotori/daq/graphing/resources/grafana-dashboard.json ...
       | ERROR: IOError: [Errno 2] No such file or directory: '/opt/kotori/lib/python2.7/site-packages/kotori/frontend/development.ini'
     - | [04.05.16 00:23:33] Janosch: ahh ja nochwas. irgendwie hat er die rechte nicht richtig gesetzt auf /opt/kotori.

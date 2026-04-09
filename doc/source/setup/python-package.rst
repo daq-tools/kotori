@@ -54,7 +54,7 @@ Kotori releases are published to https://pypi.org/project/kotori/ ::
     pip install --user kotori[daq,export]
 
     # Install more extra features
-    pip install --user kotori[daq,daq_geospatial,export,plotting,scientific,firmware]
+    pip install --user kotori[daq,daq-fineoffset,daq-geospatial,export,plotting,scientific,firmware]
 
     # Install particular version
     pip install --user kotori[daq,export]==0.26.6
