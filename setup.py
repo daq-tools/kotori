@@ -151,7 +151,8 @@ setup(name='kotori',
         'export': [
             'pyinfluxql>=0.0.1,<1',
             'numpy==1.18.5; python_version=="3.5"',
-            'pandas<1.3; python_version<"3.10"',
+            'mizani<0.10; python_version<"3.10"',
+            'pandas<1.4; python_version<"3.10"',
             'numpy<1.22; python_version<"3.10"',
             'pandas<1.6; python_version<"3.12"',
             'numpy<1.25; python_version<"3.12"',
@@ -166,13 +167,14 @@ setup(name='kotori',
             #'dyplot==0.8.8',
 
             'matplotlib>=3,<3.11',
+            'plotnine>=0.10,<0.13',
             #'cairocffi>=0.5.4',
-            'bokeh>=1.4.0,<4',
-            'vincent>=0.4.4,<0.5',
         ],
 
         # Data export: Scientific data formats like HDF5 and NetCDF and plots from ggplot
         'scientific': [
+
+            "kotori[plotting]",
 
             # Data
             # ----
@@ -189,7 +191,6 @@ setup(name='kotori',
             # Algorithms
             # ----------
             #'scipy>=1.4.1,<1.6',
-            'ggplot>=0.11.5,<0.12',
 
             # gfortran
             # aptitude install libatlas-base-dev lapack-dev gfortran or
@@ -197,7 +198,9 @@ setup(name='kotori',
 
             # Visualization
             # -------------
+            'bokeh>=1.4.0,<4',
             #'seaborn==0.7.1',
+            'vincent>=0.4.4,<0.5',
 
         ],
 
