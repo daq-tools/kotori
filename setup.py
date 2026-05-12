@@ -150,9 +150,9 @@ setup(name='kotori',
         # Data export: Basic formats
         'export': [
             'pyinfluxql>=0.0.1,<1',
-            'numpy==1.18.5; python_version=="3.5"',
+            'numpy==1.22.0; python_version=="3.5"',
             'pandas<1.3; python_version<"3.10"',
-            'numpy<1.22; python_version<"3.10"',
+            'numpy<1.23; python_version<"3.10"',
             'pandas<1.6; python_version<"3.12"',
             'numpy<1.25; python_version<"3.12"',
             'pandas<3; python_version<"3.13"',
