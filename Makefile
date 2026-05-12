@@ -142,8 +142,8 @@ check-ptrace-options:
 # ==============
 
 start-foundation-services:
-	docker-compose pull
-	docker-compose up
+	docker compose pull
+	docker compose up
 
 mongodb-start:
 	mongod --dbpath=./var/lib/mongodb/ --smallfiles
