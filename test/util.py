@@ -102,8 +102,8 @@ class GrafanaWrapper:
                 logger.info(f"Attempt to delete datasource {datasource_name}")
                 if datasource_name == self.settings.influx_database or \
                         datasource_name in getattr(self.settings, "influx_databases", []):
-                    datasource_id = datasource['id']
-                    self.client.datasources[datasource_id].delete()
+                    datasource_uid = datasource['uid']
+                    self.client.make_raw_request("delete", f"datasources/uid/{datasource_uid}", None)
                     logger.info(f"Successfully deleted datasource {datasource_name}")
 
             for dashboard_name in self.settings.grafana_dashboards:
