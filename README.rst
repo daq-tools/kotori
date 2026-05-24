@@ -68,7 +68,7 @@ Kotori DAQ
         :target: https://github.com/eclipse/mosquitto
         :alt: Supported Mosquitto versions
 
-  .. image:: https://img.shields.io/badge/Grafana-5.x%20--%2012.x-blue.svg
+  .. image:: https://img.shields.io/badge/Grafana-5.x%20--%2013.x-blue.svg
         :target: https://github.com/grafana/grafana
         :alt: Supported Grafana versions
 
