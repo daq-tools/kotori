@@ -203,7 +203,7 @@ setup(name='kotori',
 
         'firmware': [
             'GitPython>=2.0.5,<4',
-            'plumbum>=1.6.1,<1.11',
+            'plumbum>=1.6.1,<2.1',
         ],
 
         # Development.
