@@ -165,7 +165,7 @@ setup(name='kotori',
         'plotting': [
             #'dyplot==0.8.8',
 
-            'matplotlib>=3,<3.11',
+            'matplotlib>=3,<3.12',
             #'cairocffi>=0.5.4',
             'bokeh>=1.4.0,<4',
             'vincent>=0.4.4,<0.5',
