@@ -71,6 +71,15 @@ class InfluxDBAdapter:
         return self.influx_client.query(expression)
 
     def write(self, meta, data):
+        if isinstance(data, dict):
+            self.write_single(meta, data)
+        elif isinstance(data, list):
+            for item in data:
+                self.write_single(meta, item)
+        else:
+            raise ValueError(f"Type of data {type(data)} not accepted")
+
+    def write_single(self, meta, data):
 
         meta_copy = deepcopy(dict(meta))
         data_copy = deepcopy(data)
