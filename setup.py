@@ -100,7 +100,7 @@ setup(name='kotori',
 
         # Bus adapters
         'paho-mqtt>=1.5.1,<3',
-        'autobahn[twisted]>=20.7.1,<26',
+        'autobahn[twisted]>=20.7.1,<27',
         'msgpack-python>=0.5.6,<0.6',
         'PyTrie>=0.4.0,<1',
 
