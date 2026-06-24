@@ -170,6 +170,8 @@
 .. _Raumfahrtagentur: http://www.raumfahrtagentur.org/
 
 .. NEW
+.. _CrateDB: https://github.com/crate/crate
+.. _CrateDB reference documentation: https://crate.io/docs/crate/reference/
 .. _curl: https://en.wikipedia.org/wiki/CURL
 .. _Flux data scripting language: https://docs.influxdata.com/flux/
 .. _Funky v3: https://harizanov.com/product/funky-v3/
@@ -178,12 +180,15 @@
 .. _InfluxDB line protocol: https://docs.influxdata.com/influxdb/v1.8/write_protocols/line_protocol_reference/
 .. _InfluxDB storage engine: https://docs.influxdata.com/influxdb/v2.7/reference/internals/storage-engine/
 .. _LoRaWAN: https://en.wikipedia.org/wiki/LoRa#LoRaWAN
+.. _Lucene: https://lucene.apache.org/
 .. _MongoDB manual: https://www.mongodb.com/docs/manual/
 .. _MongoDB Wire Protocol: https://www.mongodb.com/docs/manual/reference/mongodb-wire-protocol/
 .. _OpenXC: https://openxcplatform.com/
 .. _OpenXC for Python: http://python.openxcplatform.com/
 .. _multi-tenant: https://en.wikipedia.org/wiki/Multitenancy
+.. _near real-time: https://en.wikipedia.org/wiki/Near_real-time#Near_real-time
 .. _NodeUSB: https://web.archive.org/web/20210621192219/http://www.nodeusb.com/
+.. _PostgreSQL wire protocol: https://www.postgresql.org/docs/16/protocol.html
 .. _trunking: https://en.wikipedia.org/wiki/Trunking
 .. _webhook: https://en.wikipedia.org/wiki/Webhook
 .. _webhooks: https://en.wikipedia.org/wiki/Webhook

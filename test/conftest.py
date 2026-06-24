@@ -10,8 +10,9 @@ import logging
 import pytest_twisted
 
 from kotori import KotoriBootloader
+from kotori.daq.model import TimeseriesDatabaseType
 from test.util import boot_kotori, sleep
-from test.settings.mqttkit import influx_sensors, influx_events, grafana, device_influx_sensors
+from test.settings.mqttkit import cratedb_sensors, influx_sensors, influx_events, grafana, device_influx_sensors
 
 logger = logging.getLogger(__name__)
 
@@ -48,9 +49,12 @@ def create_machinery(config, scope="package"):
 
 
 machinery = create_machinery('./etc/test/main.ini')
+machinery_cratedb = create_machinery('./etc/test/cratedb.ini')
+reset_cratedb = cratedb_sensors.make_reset_measurement()
 create_influxdb = influx_sensors.make_create_db()
 reset_influxdb = influx_sensors.make_reset_measurement()
-reset_grafana = grafana.make_reset()
+reset_grafana = grafana.make_reset(dbtype=TimeseriesDatabaseType.INFLUXDB1)
+reset_grafana_cratedb = grafana.make_reset(dbtype=TimeseriesDatabaseType.CRATEDB)
 reset_influxdb_events = influx_events.make_reset_measurement()
 
 device_create_influxdb = device_influx_sensors.make_create_db()

@@ -34,6 +34,9 @@ on macOS through Homebrew or by using Docker.
 Native
 ******
 
+Package-based installation
+==========================
+
 Setup packages::
 
     brew install mosquitto influxdb grafana mongodb/brew/mongodb-community
@@ -73,10 +76,21 @@ Testdrive::
     export PATH="~/Library/Python/3.9/bin:$PATH"
     kotori --version
 
+Manual installation
+===================
+
+`CrateDB`_ does not offer packages for macOS yet. In order to install it, select and download
+a tarball archive from the `CrateDB for macOS`_ downloads folder, and follow the `CrateDB
+tarball setup`_ instructions for extracting the tarball, and for running CrateDB.
+
 
 ******
 Docker
 ******
 
-Please have a look at :ref:`setup-docker` in order to run Mosquitto_, InfluxDB_,
-MongoDB_, Grafana_ and Kotori by using Docker.
+Please have a look at :ref:`setup-docker` in order to run Mosquitto_, CrateDB_, InfluxDB_,
+MongoDB_, Grafana_, and Kotori by using Docker.
+
+
+.. _CrateDB for macOS: https://cdn.crate.io/downloads/releases/cratedb/x64_mac/
+.. _CrateDB tarball setup: https://crate.io/docs/crate/tutorials/en/latest/basic/index.html#ad-hoc-unix-macos

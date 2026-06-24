@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (c) 2015-2021 Andreas Motl, <andreas@getkotori.org>
+# (c) 2015-2023 Andreas Motl, <andreas@getkotori.org>
 import os
 import json
 
@@ -10,6 +10,8 @@ from pkg_resources import resource_filename
 from twisted.logger import Logger
 from pyramid.settings import asbool
 
+from kotori.daq.model import TimeseriesDatabaseType
+
 log = Logger()
 
 @attr.s
@@ -17,6 +19,8 @@ class GrafanaDashboardModel(object):
     name = attr.ib()
     title = attr.ib()
     datasource = attr.ib()
+    database_type: TimeseriesDatabaseType = attr.ib()
+    database_name = attr.ib()
     measurement_sensors = attr.ib()
     measurement_events = attr.ib()
     uid = attr.ib(default=None)
@@ -49,6 +53,7 @@ class GrafanaDashboardBuilder(object):
         # Wrap everything into convenience object
         dashboard = GrafanaDashboard(
             channel=self.channel,
+            model=self.model,
             uid=dashboard_uid,
             title=dashboard_title,
             datasource=datasource,
@@ -302,8 +307,9 @@ class GrafanaDashboardBuilder(object):
 
 class GrafanaDashboard(object):
 
-    def __init__(self, channel=None, uid=None, title='default', datasource='default', folder_id=None, dashboard_data=None):
+    def __init__(self, channel=None, model=None, uid=None, title='default', datasource='default', folder_id=None, dashboard_data=None):
         self.channel = channel or Munch()
+        self.model: GrafanaDashboardModel = model
         self.dashboard_uid = uid
         self.dashboard_title = title
         self.datasource = datasource
@@ -351,11 +357,17 @@ class GrafanaDashboard(object):
                 if panel_ids:
                     self.panel_id = max(panel_ids)
 
+        if self.model.database_type is TimeseriesDatabaseType.CRATEDB:
+            target_template = 'grafana-target-cratedb.json'
+        elif self.model.database_type is TimeseriesDatabaseType.INFLUXDB1:
+            target_template = 'grafana-target-influxdb1.json'
+        else:
+            raise ValueError(f"Unknown database type: {self.model.database_type}")
 
         self.tpl_dashboard = self.get_template('grafana-dashboard.json')
         self.tpl_annotation = self.get_template('grafana-annotation.json')
         self.tpl_panel = self.get_template('grafana-panel.json')
-        self.tpl_target = self.get_template('grafana-target.json')
+        self.tpl_target = self.get_template(target_template)
 
     def get_template(self, filename):
         filename = os.path.join('resources', filename)
@@ -450,8 +462,15 @@ class GrafanaDashboard(object):
             log.failure(u'Failed building valid JSON for Grafana panel. data={data}, json={json}',
                 data=data_panel, json=panel_json)
 
+    def get_tablename(self):
+        """
+        Produce full-qualified table name, like `<database>.<table>`, or `<schema>.<table>`.
+        """
+        return f"{self.model.database_name}.{self.model.measurement_sensors}"
+
     def get_target(self, panel, measurement, fieldname):
         data_target = {
+            'table': self.get_tablename(),
             'measurement': measurement,
             'name': fieldname,
             'alias': fieldname,
