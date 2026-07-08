@@ -11,6 +11,11 @@ in progress
 - General: Dropped support for Python 3.7
 - DAQ: Masked ``PASSKEY`` variable coming from HTTP, emitted by Ecowitt
 
+Breaking changes
+----------------
+
+- DAQ: Obtain naive timestamps as UTC by default, instead of CET
+
 .. _kotori-0.28.1:
 
 2026-02-27 0.28.1
