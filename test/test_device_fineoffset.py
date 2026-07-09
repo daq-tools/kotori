@@ -1,6 +1,7 @@
 import json
 import logging
 
+from kotori.io.protocol.util import parse_timestamp
 from test.settings.mqttkit import PROCESS_DELAY_HTTP, influx_sensors, settings, grafana
 from test.util import http_form_sensor, sleep
 
@@ -106,8 +107,8 @@ def test_device_ecowitt_post(machinery, create_influxdb, reset_influxdb, reset_g
     assert "stationtype" not in record
     assert "model" not in record
 
-    # Timestamp field also gets removed, probably to avoid ambiguities.
-    assert "dateutc" not in record
+    # Make sure decoding the timestamp works.
+    assert parse_timestamp(record["time"]) == parse_timestamp("2023-02-20 16:02:19")
 
     # Proof that Grafana is well provisioned.
     logger.info('Grafana: Checking datasource')

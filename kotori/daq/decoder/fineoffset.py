@@ -109,6 +109,7 @@ class FineOffsetDecoder:
 
         {
           "runtime": 456128.0,
+          "timestamp": "2023-02-20 16:02:19",
           "tempin": 20.999999999999996,
           "humidityin": 47.0,
           "baromrel": 1006.1976567045213,
@@ -189,6 +190,9 @@ class FineOffsetDecoder:
         Decode data payload submitted by a Fine Offset device, using `ecowitt2mqtt`.
         """
 
+        # Extract timestamp, because it will get ignored by the ecowitt2mqtt decoder.
+        timestamp = data["dateutc"]
+
         params = {
             # Both configuration variables are currently *required* by `ecowitt2mqtt`.
             # Fortunately, `mqtt_broker` can be left empty.
@@ -228,4 +232,7 @@ class FineOffsetDecoder:
 
         from ecowitt2mqtt.data import ProcessedData
         processed_data = ProcessedData(config=config, data=data)
-        return {key: value.value for key, value in processed_data.output.items()}
+        outdata = {key: value.value for key, value in processed_data.output.items()}
+        # Inject timestamp again.
+        outdata.update({"timestamp": timestamp})
+        return outdata
