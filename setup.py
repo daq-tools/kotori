@@ -220,7 +220,7 @@ setup(name='kotori',
         'release': [
             'build',
             'bump2version<2',
-            'twine<7',
+            'twine<8',
             'keyring<26',
             'invoke<4',
             'requests<3',
