@@ -45,6 +45,7 @@ Overview
 
       subgraph backend
         direction LR
+        Kotori --> CrateDB
         Kotori --> InfluxDB
         Kotori --> Grafana
       end

@@ -16,7 +16,7 @@ Intro
 Install the whole stack on a Debian-based system. It is currently made of these free and open source software components:
 
 - Mosquitto_, a MQTT message broker
-- InfluxDB_, a time-series database
+- InfluxDB_, a time series database
 - Grafana_, a graph and dashboard builder for visualizing time series metrics
 - :ref:`Kotori`, a data acquisition, graphing and telemetry toolkit
 
