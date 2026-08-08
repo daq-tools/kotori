@@ -81,7 +81,7 @@ setup(name='kotori',
         # Core
         'Twisted[tls]<27',
         'pyOpenSSL>=16.2.0',
-        'setuptools<81',
+        'setuptools<85',
         'six>=1.15.0',
         'pyramid<1.11',
         'pyramid_jinja2>=2.8,<3',
