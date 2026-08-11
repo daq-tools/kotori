@@ -80,7 +80,7 @@ Setup virtualenv
     pip install --editable='.[daq,export]'
 
     # Data acquisition with data sink for binary payloads
-    pip install --editable='.[daq_binary]'
+    pip install --editable='.[daq-binary]'
 
     # Data storage for RDBMS databases and MongoDB
     pip install --editable='.[storage_plus]'
