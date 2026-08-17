@@ -150,7 +150,7 @@ setup(name='kotori',
         'export': [
             'pyinfluxql>=0.0.1,<1',
             'numpy==1.22.0; python_version=="3.5"',
-            'mizani<0.10; python_version<"3.10"',
+            'mizani<0.15; python_version<"3.10"',
             'pandas<1.4; python_version<"3.10"',
             'numpy<1.23; python_version<"3.10"',
             'pandas<1.6; python_version<"3.12"',
