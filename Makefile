@@ -87,7 +87,7 @@ test: virtualenv-dev
 
 .PHONY:
 test-coverage: virtualenv-dev
-	$(coverage) run --concurrency=multiprocessing,thread --parallel-mode --timid $(pytest) kotori test
+	$(coverage) run --concurrency=multiprocessing,thread --parallel-mode $(pytest) kotori test
 	$(coverage) combine
 	$(coverage) report
 	$(coverage) xml
