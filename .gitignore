@@ -12,6 +12,6 @@
 /pkgs
 /tmp
 /var
-.coverage
+.coverage*
 coverage.xml
 .DS_Store
