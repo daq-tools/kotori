@@ -59,6 +59,7 @@ MongoDB is provided through the Arch User Repository (AUR)::
     cd mongodb-tools-bin
     makepkg -si
 
+.. todo:: Add walkthrough how to install CrateDB on Arch Linux.
 
 Kotori
 ======
