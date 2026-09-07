@@ -21,6 +21,8 @@ from twisted.web.resource import Resource
 from twisted.web.server import Site
 from twisted.web.error import Error
 from twisted.python.compat import nativeString
+
+from kotori.daq.decoder.fineoffset import FineOffsetDecoder
 from kotori.io.router.path import PathRoutingEngine
 from kotori.io.export.tabular import UniversalTabularExporter
 from kotori.io.export.plot import UniversalPlotter
@@ -359,11 +361,10 @@ class HttpChannelEndpoint(Resource):
         if request.method == 'POST':
             data = self.data_acquisition(bucket)
 
-            # Mask `PASSKEY` ingress variable.
-            # https://github.com/daq-tools/kotori/discussions/122
-            # https://community.hiveeyes.org/t/ecowitt-wunderground-api-fur-weather-hiveeyes-org-nutzbar/4735
-            if "PASSKEY" in data:
-                del data["PASSKEY"]
+            # Decode data from specific devices.
+            # TODO: Handle decoding data from specific devices in a more generic way.
+            if FineOffsetDecoder.detect(data):
+                data = FineOffsetDecoder.decode(data)
 
             return data
 
