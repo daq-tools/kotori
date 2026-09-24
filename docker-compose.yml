@@ -14,6 +14,19 @@ services:
       - ${PATH_VAR_LIB}/mosquitto:/mosquitto/data
       - ${PATH_VAR_LOG}/mosquitto:/mosquitto/log
 
+  cratedb:
+    image: crate:${CRATEDB_VERSION}
+    ports:
+      - "${CRATEDB_HTTP_PORT}:${CRATEDB_HTTP_PORT}"
+      - "${CRATEDB_POSTGRESQL_PORT}:${CRATEDB_POSTGRESQL_PORT}"
+    environment:
+      CRATE_HEAP_SIZE: 2g
+
+    command: ["crate",
+              "-Cdiscovery.type=single-node",
+              "-Ccluster.routing.allocation.disk.threshold_enabled=false",
+             ]
+
   # https://github.com/robcowart/docker_compose_cookbook/blob/master/STACKS/influx_oss/docker-compose.yml#L21
   influxdb:
     image: influxdb:${INFLUXDB_VERSION}

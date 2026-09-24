@@ -3,7 +3,7 @@
 # Databases
 
 Database adapter components will know about vendor-specific dialects and optimal
-communication strategies to timeseries-databases.
+communication strategies to time series databases.
 
 This documentation section enumerates the collection of database adapters shipped
 with Kotori. Adding more adapters is possible.
@@ -14,6 +14,7 @@ with Kotori. Adding more adapters is possible.
 :maxdepth: 1
 :hidden:
 
+cratedb
 influxdb
 mongodb
 ```
@@ -31,6 +32,35 @@ mongodb
 
 :::{grid-item}
 :columns: 8
+#### [](#database-cratedb)
+
+CrateDB is a distributed and scalable SQL database for storing and analyzing massive
+amounts of data in near real-time, even with complex queries. It is PostgreSQL-compatible,
+and based on Lucene.
+
+<small>
+<strong>Categories:</strong> time series database, multi-modal database
+</small>
+:::
+:::{grid-item}
+:columns: 4
+{bdg-primary-line}`eth` {bdg-primary-line}`wifi` {bdg-primary-line}`http` {bdg-primary-line}`postgresql`
+
+{bdg-success-line}`sql` {bdg-success-line}`blob`
+
+{bdg-secondary-line}`amd64` {bdg-secondary-line}`arm64`
+:::
+::::
+:::::
+
+
+:::::{grid-item-card}
+::::{grid} 2
+:margin: 0
+:padding: 0
+
+:::{grid-item}
+:columns: 8
 #### [](#database-influxdb)
 
 InfluxDB is a scalable datastore and time series platform for metrics, events,
@@ -38,7 +68,7 @@ and real-time analytics. It covers storing and querying data, background ETL pro
 for monitoring and alerting purposes, and visualization and exploration features. 
 
 <small>
-<strong>Categories:</strong> timeseries-database
+<strong>Categories:</strong> time series database
 </small>
 :::
 :::{grid-item}

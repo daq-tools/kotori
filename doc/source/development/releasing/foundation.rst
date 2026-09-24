@@ -34,6 +34,24 @@ Download packages
     scp mosquitto*.deb workbench@packages.example.org:/srv/packages/organizations/elmyra/foss/aptly/public/incoming
 
 
+*******
+CrateDB
+*******
+- https://github.com/crate/crate
+- https://crate.io/docs/crate/tutorials/
+
+Download packages
+=================
+::
+
+    # Download amd64 packages
+    wget https://cdn.crate.io/downloads/apt/stable/pool/main/c/crate/crate_5.3.2-1~buster_amd64.deb
+    wget https://cdn.crate.io/downloads/apt/stable/pool/main/c/crate/crate_5.3.2-1~bullseye_amd64.deb
+
+    # Upload to "incoming" directory
+    scp crate_*.deb workbench@packages.example.org:/srv/packages/organizations/elmyra/foss/aptly/public/incoming
+
+
 ********
 InfluxDB
 ********
@@ -100,7 +118,7 @@ Publish packages
 
     # Add packages to repository
     aptly repo add -config=$APTLY_CONFIG -remove-files=true $APTLY_REPOSITORY \
-        $PACKAGES_INCOMING/influxdb*.deb $PACKAGES_INCOMING/grafana*.deb $PACKAGES_INCOMING/*mosquitto*.deb
+        $PACKAGES_INCOMING/crate*.deb $PACKAGES_INCOMING/influxdb*.deb $PACKAGES_INCOMING/grafana*.deb $PACKAGES_INCOMING/*mosquitto*.deb
 
     # Publish repository
     aptly publish update -config=$APTLY_CONFIG -gpg-key=2543A838 -passphrase=esp $APTLY_DISTRIBUTION

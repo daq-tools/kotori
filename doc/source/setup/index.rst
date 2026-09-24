@@ -16,7 +16,7 @@ from Docker Hub, from the Python Package Index (PyPI) or from the Git
 repository.
 
 For running Kotori in a full configuration, you will need some other
-infrastructure services like Mosquitto_, InfluxDB_, Grafana_ and optionally
+infrastructure services like Mosquitto_, CrateDB_, InfluxDB_, Grafana_ and optionally
 MongoDB_.
 
 Have fun and enjoy your data acquisition!
@@ -62,7 +62,7 @@ Details
 
 
 ¹ When choosing to install from the Debian package repository, you will also be
-able to receive appropriate Debian packages for Mosquitto, InfluxDB and Grafana
+able to receive appropriate Debian packages for Mosquitto, CrateDB, InfluxDB, and Grafana
 through the `DaqZilla package repository <https://packages.elmyra.de/elmyra/foss/debian/>`_.
 This makes it easy to setup the complete DAQ system from a single package source.
 

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# (c) 2020-2021 Andreas Motl <andreas@getkotori.org>
+# (c) 2020-2023 Andreas Motl <andreas@getkotori.org>
 import logging
 
 import pytest
 import pytest_twisted
 
-from test.settings.mqttkit import settings, influx_sensors, PROCESS_DELAY_MQTT
+from test.settings.mqttkit import settings, cratedb_sensors, influx_sensors, PROCESS_DELAY_MQTT
 from test.util import mqtt_json_sensor, sleep
 
 logger = logging.getLogger(__name__)
@@ -35,6 +35,35 @@ def test_timestamp_rfc3339_influxdb(machinery, create_influxdb, reset_influxdb):
     # Proof that data arrived in InfluxDB.
     record = influx_sensors.get_first_record()
     assert record == {u'time': u'2020-03-10T02:38:37.937059Z', u'humidity': 83.1, u'temperature': 42.84}
+    yield record
+
+
+@pytest_twisted.inlineCallbacks
+@pytest.mark.cratedb
+def test_timestamp_rfc3339_cratedb(machinery_cratedb, reset_cratedb):
+    """
+    Publish single reading in JSON format to MQTT broker, using a timestamp in
+    RFC3339 format. Proof that the timestamp is processed and stored correctly.
+
+    Here, CrateDB is used as database backend.
+    """
+
+    # Submit a single measurement, with timestamp.
+    data = {
+        'temperature': 42.84,
+        'humidity': 83.1,
+        'timestamp': '2020-03-10 03:38:37.937059000+01:00'
+    }
+    yield mqtt_json_sensor(settings.mqtt2_topic_json, data)
+
+    # Wait for some time to process the message.
+    yield sleep(PROCESS_DELAY_MQTT)
+    yield sleep(PROCESS_DELAY_MQTT)
+
+    # Proof that data arrived in InfluxDB.
+    record = cratedb_sensors.get_first_record()
+    # TODO: Original value for `time` is `2020-03-10T02:38:37.937059Z`.
+    assert record == {'time': 1583807917937, 'humidity': 83.1, 'temperature': 42.84}
     yield record
 
 

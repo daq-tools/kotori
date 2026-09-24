@@ -10,8 +10,8 @@ in progress
 - Export: Repaired ``png`` rendering with ``matplotlib >= 3.8.0``
 - General: Dropped support for Python 3.7
 - DAQ: Masked ``PASSKEY`` variable coming from HTTP, emitted by Ecowitt
-
 - **Grafana:** Validated support with Grafana v13
+- CrateDB: Add support for data acquisition and data export
 
 .. _kotori-0.28.1:
 
