@@ -13,6 +13,11 @@ in progress
 - Python: Validated support on Python 3.15
 - **Grafana:** Validated support with Grafana v13
 
+Breaking changes
+----------------
+
+- DAQ: Obtain naive timestamps as UTC by default, instead of CET
+
 .. _kotori-0.28.1:
 
 2026-02-27 0.28.1
