@@ -32,8 +32,8 @@ Kotori DAQ
         :target: https://pypi.org/project/kotori/
         :alt: Project status (alpha, beta, stable)
 
-  .. image:: https://github.com/daq-tools/kotori/workflows/Tests/badge.svg
-        :target: https://github.com/daq-tools/kotori/actions?workflow=Tests
+  .. image:: https://github.com/daq-tools/kotori/actions/workflows/tests.yml/badge.svg?branch=main
+        :target: https://github.com/daq-tools/kotori/actions/workflows/tests.yml
         :alt: CI outcome
 
   .. image:: https://codecov.io/gh/daq-tools/kotori/branch/main/graph/badge.svg
