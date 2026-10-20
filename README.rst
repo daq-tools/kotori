@@ -64,7 +64,7 @@ Kotori DAQ
 
 :**Compatibility**:
 
-  .. image:: https://img.shields.io/badge/Mosquitto-1.5%2C%201.6%2C%202.0-blue.svg
+  .. image:: https://img.shields.io/badge/Mosquitto-1.5%2C%201.6%2C%202.x-blue.svg
         :target: https://github.com/eclipse/mosquitto
         :alt: Supported Mosquitto versions
 
@@ -76,7 +76,7 @@ Kotori DAQ
         :target: https://github.com/influxdata/influxdb
         :alt: Supported InfluxDB versions
 
-  .. image:: https://img.shields.io/badge/MongoDB-3.x%20--%208.x-blue.svg
+  .. image:: https://img.shields.io/badge/MongoDB-3.x%20--%209.x-blue.svg
         :target: https://github.com/mongodb/mongo
         :alt: Supported MongoDB versions
 

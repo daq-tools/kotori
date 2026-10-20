@@ -12,6 +12,7 @@ in progress
 - DAQ: Masked ``PASSKEY`` variable coming from HTTP, emitted by Ecowitt
 - Python: Validated support on Python 3.15
 - Grafana: Validated support with Grafana v13
+- MQTT: Validated support with Mosquitto v2.1
 
 .. _kotori-0.28.1:
 
