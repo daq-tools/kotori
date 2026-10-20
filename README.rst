@@ -64,7 +64,7 @@ Kotori DAQ
 
 :**Compatibility**:
 
-  .. image:: https://img.shields.io/badge/Mosquitto-1.5%2C%201.6%2C%202.0-blue.svg
+  .. image:: https://img.shields.io/badge/Mosquitto-1.5%2C%201.6%2C%202.0%2C%202.1-blue.svg
         :target: https://github.com/eclipse/mosquitto
         :alt: Supported Mosquitto versions
 
