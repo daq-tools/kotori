@@ -5,6 +5,12 @@ Changelog
 
 in progress
 ===========
+
+.. _kotori-0.29.0:
+
+2026-10-20 0.29.0
+=================
+
 - Export: Repaired ``ggplot`` graph rendering by switching to ``plotnine``
 - Export: Repaired ``png`` rendering with modern ``pandas``
 - Export: Repaired ``png`` rendering with ``matplotlib >= 3.8.0``
