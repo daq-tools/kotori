@@ -11,7 +11,7 @@ in progress
 - General: Dropped support for Python 3.7
 - DAQ: Masked ``PASSKEY`` variable coming from HTTP, emitted by Ecowitt
 - Python: Validated support on Python 3.15
-- **Grafana:** Validated support with Grafana v13
+- Grafana: Validated support with Grafana v13
 
 .. _kotori-0.28.1:
 
