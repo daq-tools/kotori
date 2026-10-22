@@ -5,6 +5,9 @@ Changelog
 
 in progress
 ===========
+- Downgraded to pandas 3.0
+- Updated to python-dateutil v3
+- Updated to pycparser 3.12
 
 .. _kotori-0.29.0:
 
