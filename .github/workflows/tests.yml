@@ -109,7 +109,7 @@ jobs:
           # container-name: 'mqtt'
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@v10.3.2
+        uses: astral-sh/setup-uv@v10.3.3
         with:
           activate-environment: true
           cache-suffix: ${{ matrix.python-version }}
