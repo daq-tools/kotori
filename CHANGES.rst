@@ -29,6 +29,11 @@ in progress
 - Grafana: Validated support with Grafana v13
 - MQTT: Validated support with Mosquitto v2.1
 
+Breaking changes
+----------------
+
+- DAQ: Obtain naive timestamps as UTC by default, instead of CET
+
 .. _kotori-0.28.1:
 
 2026-02-27 0.28.1
